@@ -114,3 +114,39 @@ stat(area) = base × Π_{a=2..area} curve_lookup(a)
 
 > **perk 等级数据缺口**：`UserProfileSnapshot` 未暴露 patron perk 已购等级（同 11.1 blessings 缺口）。raw user save 是否含 perk levels 待 13.2 提取阶段一并确认；MVP 先用满级理论值进 pool。
 
+---
+
+## 12.1 restrictions 高频模式评估
+
+**结论：restrictions 高度离散，可模板化的高频模式仅 slot-occupying 一类；其余为 flavor 文本，低频手工补。**
+
+### 数据源
+
+- `variants.json.items[].restrictions: Array<{original, display}>`（normalize 后，双语）。1405 variant 全部有 restrictions。
+- 来源字段：`adventure_defines.restrictions_text`（raw，字符串）；variant 继承自父 adventure。
+- 现状：`buildOfficialScenarioModel` 把 `variant.restrictions` 非空时仅标 warning「自由文本，尚未自动解析，请人工复核」，`bannedHeroes` 恒空。
+
+### 模式分布（jq 全量统计）
+
+restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制：疯牛/暗影怪/无限亡灵等），不映射到阵型约束。可操作（影响阵型合法性/候选池）的模式只有两类，且**各模式频次极低（1–2 次）**：
+
+**① slot-occupying（→ lockedSlots，最高价值）**：全文仅 5 条 EN 提及 "slots" + 占据语义：
+
+| 模式（EN） | ZH | 锁定格数 |
+|---|---|---|
+| Four slots...occupied by chickens | 四格会被小鸡占据 | 4 |
+| Two random slots...cursed | 两格被诅咒 | 2 |
+| Three friendly imps take up slots | 三个友好小鬼占据 | 3 |
+| The Farmer's Daughter and Son take up two slots | 农夫之女与子占两格 | 2 |
+| Friendly animals take up slots...one slot...then every... | 友好动物占格（1 + 随层数递增） | 变量（复杂，手工补） |
+
+**② champion-tag 限制（→ allowedTags，已被 mechanics 覆盖）**：「Only Evil Champions」「may only use Ranger, Druid, and/or Barbarian」等。这些已被结构化 `only_allow_crusaders` mechanics 捕获（scenario.allowedTags/allowedHeroes），restrictions_text 版本冗余，不重复解析。
+
+### 接入策略（阶段 12.2/12.3）
+
+- **slot-occupying 模板匹配**：关键词模板 `（数字词）slots...（take up|occupied|cursed）`（EN）+ `（中文数词）格...占据`（ZH）→ lockedSlots 数。变量版（friendly animals）进 semantic-overrides.json 手工补。
+- **champion-tag 不重复解析**：已由 mechanics 覆盖。
+- **flavor 文本不解析**：特殊冒险机制（疯牛/暗影等）不映射阵型约束，进 warning 提示「含特殊机制，请人工评估」。
+- 不用 NLP（批判③），纯关键词模板 + 手工 semantic-overrides。
+
+

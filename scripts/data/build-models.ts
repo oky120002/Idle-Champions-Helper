@@ -9,6 +9,7 @@ import {
 } from './effect-helpers.ts'
 import { readJson, writeJson } from './io-utils.ts'
 import { parsePatronPerkSignals } from './patron-perk-signals.ts'
+import { parseRestrictions } from './restrictions-parser.ts'
 import type {
   HeroAbilityProfile,
   HeroAbilitySignal,
@@ -53,6 +54,8 @@ interface ScenarioModel {
   allowedHeroes: unknown[]
   allowedTags: unknown[]
   scenarioWarnings: string[]
+  /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析，阶段 12）。 */
+  occupiedSlotCount: number
 }
 
 interface SemanticOverrideItem {
@@ -238,6 +241,24 @@ function buildOfficialScenarioModel(
   const allowedHeroIds = asArray(variant.allowedHeroIds)
   const allowedTags = asArray(variant.allowedTags)
 
+  // 阶段 12：restrictions 文本模板匹配 → slot-occupying 格数 + 未解析 warning。
+  const restrictionTexts = restrictions.map((raw) => {
+    const item = asRecord(raw) ?? {}
+    const original = typeof item.original === 'string' ? item.original : ''
+    const localized = asRecord(item.display) ?? {}
+    const display = typeof item.display === 'string'
+      ? item.display
+      : (typeof localized.display === 'string' ? localized.display : '')
+    return { original, display }
+  })
+  const parsedRestrictions = parseRestrictions(restrictionTexts)
+  const restrictionWarnings: string[] = []
+  if (parsedRestrictions.lockedSlotCount > 0) {
+    restrictionWarnings.push(`当前场景有 ${parsedRestrictions.lockedSlotCount} 个槽位被非英雄实体占据，不参与英雄占位。`)
+  }
+  // 未解析的非平凡 restriction → 提示含特殊机制，请人工评估（flavor 文本不映射阵型约束）。
+  restrictionWarnings.push(...parsedRestrictions.warnings.map((w) => `${w}（含特殊机制，请人工评估对阵型的影响）`))
+
   return {
     variantId: variant.id,
     scenarioRef: { kind: 'variant', id: variant.id },
@@ -251,11 +272,10 @@ function buildOfficialScenarioModel(
     enemyTypes: asArray(variant.enemyTypes),
     allowedHeroes: allowedHeroIds,
     allowedTags,
+    occupiedSlotCount: parsedRestrictions.lockedSlotCount,
     scenarioWarnings: [
       ...mechanicWarnings,
-      ...(restrictions.length > 0
-        ? ['当前场景 restrictions 为自由文本，尚未自动解析，请人工复核规则限制。']
-        : []),
+      ...restrictionWarnings,
       ...(formation ? [] : ['当前场景没有匹配的阵型布局。']),
       ...(allowedHeroIds.length > 0 || allowedTags.length > 0
         ? ['当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。']

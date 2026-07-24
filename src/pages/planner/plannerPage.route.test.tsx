@@ -138,6 +138,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
       enemyTypes: [],
       allowedHeroes: [],
       allowedTags: [],
+  occupiedSlotCount: 0,
       scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
     },
   ],

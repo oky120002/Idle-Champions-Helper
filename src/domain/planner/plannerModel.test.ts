@@ -152,6 +152,7 @@ describe('findPlannerScenarioForVariant', () => {
         enemyTypes: [],
         allowedHeroes: [],
         allowedTags: [],
+  occupiedSlotCount: 0,
         scenarioWarnings: [],
       },
     ]

@@ -85,7 +85,9 @@
 **目标**：restrictions 文本规则结构化（mechanics 之外的补充）。
 **风险**：中英自由文本 NLP 不可靠（批判③），用关键词模板。
 
-### 12.1 评估高频模式
+### 12.1 评估高频模式 [x]
+
+> 报告：`m3-data-source-confirmations.md` §12.1。结论：restrictions 高度离散，可模板化的高频模式仅 slot-occupying（5 条 EN + ZH 对应）；champion-tag 已被 mechanics 覆盖；flavor 文本不解析。
 - **改动**：jq 统计 restrictions 文本高频模式（escort/cursed/banned/occupied/stunned 等）。
 - **测试**：统计报告归档。
 - **验证**：jq 统计完成。
@@ -97,7 +99,9 @@
 - **验证**：`npm run test:run`。
 - **commit**：`feat(data): 12.2 restrictions 模板匹配解析器`。
 
-### 12.3 高频变体校验 + 手工补
+### 12.3 高频变体校验 + 手工补 [x]
+
+> 全量校验（1405 variant）：62 slot-occupying 模板匹配 + 3 手工补 override（具名列表 / "of the" 间隔）= 65 scenario 产 `occupiedSlotCount`；其余 flavor 文本进 warning。`RESTRICTION_OVERRIDES` 提供手工补机制（`restrictions-parser.ts`）。wired 进 `buildOfficialScenarioModel` → `scenario.occupiedSlotCount` + 具体 warning 替代原「自由文本未解析」。
 - **改动**：高频变体 rules 手工校验；低频的记录但手工补到 `semantic-overrides.json`。
 - **测试**：校验通过。
 - **验证**：`npm run test:run`。

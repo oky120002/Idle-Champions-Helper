@@ -37,6 +37,11 @@ export interface OfficialPlannerScenarioModel {
   allowedHeroes: string[]
   /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=不限，阶段 9.2）。 */
   allowedTags: string[]
+  /**
+   * 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 文本解析，阶段 12）。
+   * 这些槽位不参与英雄占位；formation 搜索可用容量 = slotTopology.length − occupiedSlotCount。
+   */
+  occupiedSlotCount: number
 }
 
 export type ResolvedPlannerScenarioModel = OfficialPlannerScenarioModel

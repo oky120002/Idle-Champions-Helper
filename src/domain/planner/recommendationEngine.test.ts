@@ -126,6 +126,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     enemyTypes: [],
     allowedHeroes: [],
     allowedTags: [],
+  occupiedSlotCount: 0,
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
   {
@@ -146,6 +147,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     enemyTypes: [],
     allowedHeroes: [],
     allowedTags: [],
+  occupiedSlotCount: 0,
     scenarioWarnings: ['当前场景含护送任务，前排一个槽位预留给护送目标，不参与英雄占位。'],
   },
 ]
@@ -236,6 +238,7 @@ describe('planner recommendation engine', () => {
       enemyTypes: [],
       allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
       allowedTags: [],
+  occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
@@ -290,6 +293,7 @@ describe('planner recommendation engine', () => {
       enemyTypes: [],
       allowedHeroes: [],
       allowedTags: [],
+  occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
     const forcedCollections: PlannerCollections = {
