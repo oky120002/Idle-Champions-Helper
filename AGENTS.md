@@ -27,7 +27,7 @@
 ### 1.3 数据源格式追溯
 
 - 上游格式异常（malformed / 非法 JSON / 字段缺失 / 分隔符异常）先追溯 raw 源头（`tmp/idle-champions-api/definitions-*.json`），区分「数据源格式特性」vs「归一化 bug」，禁止直接在消费层加兜底；合理性判据：游戏能正常线上运行 = 源数据大概率没坏，出现矛盾优先怀疑自己的解析假设或 normalize 脚本，raw 证实前不得下"数据源 bug"结论。
-- 格式特性优先在归一化层（`normalize-idle-champions-definitions.mjs`）适配；已确认特性见 `docs/research/data/game-data-source/format-quirks.md`。
+- 格式特性优先在归一化层（`normalize-idle-champions-definitions.ts`）适配；已确认特性见 `docs/research/data/game-data-source/format-quirks.md`。
 
 ## 2. AI-first 根目标
 
@@ -40,6 +40,6 @@
 
 ## 4. 测试与构建
 
-- 测试遵循 co-located 规范（`docs/product/testing-conventions.md`）：单测/组件/夹具就近放被测模块同目录，E2E 与全局 setup 集中 `tests/`；新增测试必须接入运行器（vitest 覆盖 `src/**/*.test.{ts,tsx}` 与 `scripts/**/*.test.ts`、node:test 覆盖 `scripts/**/*.test.mjs`、playwright 覆盖 `tests/e2e/`），新增测试目录同步扩展对应 glob，禁止游离。
-- 派生统计（覆盖率/支持度）若与 scorer 平行白名单，优先合并单一来源；跨边界（.ts scorer 与 .mjs 脚本）合不了时必须配 keys 同步守护测试（如 `scoringSupportSync.test.ts`）强制一致。
+- 测试遵循 co-located 规范（`docs/product/testing-conventions.md`）：单测/组件/夹具就近放被测模块同目录，E2E 与全局 setup 集中 `tests/`；新增测试必须接入运行器（vitest 覆盖 `src/**/*.test.{ts,tsx}` 与 `scripts/**/*.test.ts`、playwright 覆盖 `tests/e2e/`），新增测试目录同步扩展对应 glob，禁止游离。
+- 派生统计（覆盖率/支持度）若与 scorer 平行白名单，优先合并单一来源；跨边界（src 侧 scorer 与 scripts 侧脚本）合不了时必须配 keys 同步守护测试（如 `scoringSupportSync.test.ts`）强制一致。
 - `npm run preview:pages` 只读当前 `dist/`，不反映源码最新改动：截图、验收、Playwright 视觉检查前必须先 `npm run build`；拿不准 preview 进程是否对应最新 build 时直接重启，不得把旧 `dist` 当"当前基线"或"修改后效果"。
