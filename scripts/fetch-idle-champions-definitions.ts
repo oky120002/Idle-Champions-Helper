@@ -164,7 +164,7 @@ export async function fetchDefinitionsSnapshot(
 
 function printUsage(): void {
   console.log(`用法：
-  node scripts/fetch-idle-champions-definitions.mjs [--outDir <dir>] [--masterApiUrl <url>]
+  node scripts/fetch-idle-champions-definitions.ts [--outDir <dir>] [--masterApiUrl <url>]
 
 可选参数：
   --outDir <dir>                     原始 definitions 快照输出目录，默认 ${DEFAULT_OUT_DIR}

@@ -241,7 +241,7 @@ export async function auditChampionAnimations(
     const assetFile = resolvePublishedAssetFile(outputDir, currentVersion, animation.asset.path)
     const rawBuffer = await readFile(assetFile)
     const skelAnim = decodeSkelAnimGraphicBuffer(
-      // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段原 .mjs 传入但未使用，TS strict 下省略。
+      // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段未使用，TS strict 下省略。
       { delivery: 'zlib-png' },
       rawBuffer,
     )

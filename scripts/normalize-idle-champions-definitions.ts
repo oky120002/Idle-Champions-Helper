@@ -56,7 +56,7 @@ import type { LocalizedText } from '../src/domain/types/common.ts'
 
 type RawDefinition = Record<string, unknown>
 
-// ponytail: String() on unknown 触发 no-base-to-string；统一经此 helper 收口，对齐 .mjs 原始的 String() 行为。
+// ponytail: String() on unknown 触发 no-base-to-string；统一经此 helper 收口为 String() 行为。
 function toStr(value: unknown): string {
   return String(value)
 }

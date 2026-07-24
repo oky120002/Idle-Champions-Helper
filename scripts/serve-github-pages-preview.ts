@@ -200,7 +200,7 @@ const distDirectory = path.resolve(currentDirectory, '../dist')
 await access(distDirectory)
 
 const server: Server = createServer((request, response) => {
-  // ponytail: 沿用 .mjs 的 async handler；未处理异常由 node 默认行为接管，不画蛇添足加 500 兜底。
+  // ponytail: async handler 未处理异常由 node 默认行为接管，不画蛇添足加 500 兜底。
   void handleRequest(request, response, distDirectory, host, port)
 })
 

@@ -300,7 +300,7 @@ function canReuseExistingAnimation(
 }
 
 function decodeAnimationGraphic(task: AnimationTask, rawBuffer: Buffer) {
-  // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段原 .mjs 传入但未使用，TS strict 下省略。
+  // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段未使用，TS strict 下省略。
   return decodeSkelAnimGraphicBuffer(task.asset, rawBuffer)
 }
 

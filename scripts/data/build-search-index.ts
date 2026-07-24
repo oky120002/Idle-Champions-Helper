@@ -74,7 +74,7 @@ interface BuildSearchIndexResult {
 }
 
 // ponytail: 不为 raw champion/detail 形状过度声明 interface；readJson 返回 unknown，这里用
-// Record<string, unknown> 收窄 + 局部 typeof/Array.isArray 防御，对齐 .mjs 原始行为。
+// Record<string, unknown> 收窄 + 局部 typeof/Array.isArray 防御。
 type RawRecord = Record<string, unknown>
 
 // 业界 char-filter 做法：分词前把模板占位符剥成空格。替换值运行时才确定（stacks/area/BUD/buff 多层放大），
