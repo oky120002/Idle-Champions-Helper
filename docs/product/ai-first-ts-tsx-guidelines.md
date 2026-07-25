@@ -46,6 +46,7 @@
 - 禁止新增 `utils.ts`、`helpers.ts`、`common.ts`、`misc.ts`。
 - Barrel 只允许局部、稳定、低扇出的聚合；禁止跨 feature 全量出口。
 - Effect 只用于外部同步；能在 render 或纯函数阶段完成的计算，不放进 Effect。
+- 共享渲染组件（Canvas 等纯渲染壳）的副作用回调（drop/scroll/拖放等）必须条件挂载：回调未传则不挂 handler，避免只读消费方误接 `preventDefault` 等副作用而成为错误的事件目标。
 
 ## 6. 例外与迁移
 
