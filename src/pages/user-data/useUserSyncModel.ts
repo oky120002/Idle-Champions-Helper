@@ -7,6 +7,7 @@ import {
   savePreferredUserProfileSource,
   saveUserProfileSnapshot,
 } from '../../data/user-profile-store'
+import { clearPlannerHeroOverrides } from '../../data/plannerOverridesStore'
 import { fetchUserProfilePayloads } from '../../data/user-sync/officialClient'
 import { buildUserProfileSnapshot } from '../../data/user-sync/userProfileNormalizer'
 import type { UserCredentials } from '../../domain/types'
@@ -117,10 +118,15 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     trySelectLocalDevSnapshot(handleSelectProfileSource)
   }, [handleSelectProfileSource])
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = useCallback(async (clearOverrides: boolean) => {
     setBusy(true)
     try {
       await deleteUserProfileData()
+      // 手动能力覆盖与官方存档是两类数据（覆盖是玩家本地手调，不随同步生灭）；
+      // 由调用方经弹窗让玩家决定是否一并清除。
+      if (clearOverrides) {
+        await clearPlannerHeroOverrides()
+      }
       setSyncState({ status: 'no-snapshot' })
       await loadProfileResolution(selectedProfileSource)
     } catch {

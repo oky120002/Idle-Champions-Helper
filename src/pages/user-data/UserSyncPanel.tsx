@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import type { UserCredentials } from '../../domain/types'
+import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { LocalDevSnapshotSection } from './LocalDevSnapshotSection'
 import { useUserSyncModel } from './useUserSyncModel'
 
@@ -22,6 +24,12 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
     handleRefreshLocalDevSnapshot,
     handleDelete,
   } = useUserSyncModel(credentials)
+  const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
+
+  const confirmDelete = (clearOverrides: boolean) => {
+    setDeleteConfirmOpen(false)
+    void handleDelete(clearOverrides)
+  }
 
   return (
     <section aria-label="同步状态" role="region">
@@ -56,13 +64,49 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
         {syncState.status !== 'no-snapshot' && (
           <button
             type="button"
-            onClick={() => void handleDelete()}
+            onClick={() => setDeleteConfirmOpen(true)}
             disabled={busy}
           >
             删除
           </button>
         )}
       </div>
+
+      <ConfirmDialog
+        open={isDeleteConfirmOpen}
+        title="删除个人数据"
+        onClose={() => setDeleteConfirmOpen(false)}
+      >
+        <p className="confirm-dialog__message">
+          将清除浏览器同步快照与凭证。是否同时删除手动配置的英雄能力覆盖（planner 里手调的能力数据）？
+        </p>
+        <div className="confirm-dialog__actions">
+          <button
+            type="button"
+            className="confirm-dialog__action confirm-dialog__action--danger"
+            onClick={() => confirmDelete(true)}
+            disabled={busy}
+          >
+            同时清除覆盖
+          </button>
+          <button
+            type="button"
+            className="confirm-dialog__action"
+            onClick={() => confirmDelete(false)}
+            disabled={busy}
+          >
+            保留覆盖
+          </button>
+          <button
+            type="button"
+            className="confirm-dialog__action"
+            onClick={() => setDeleteConfirmOpen(false)}
+            disabled={busy}
+          >
+            取消
+          </button>
+        </div>
+      </ConfirmDialog>
 
       {showLocalDevSnapshotAction && (
         <LocalDevSnapshotSection

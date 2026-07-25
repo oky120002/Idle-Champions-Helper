@@ -414,6 +414,8 @@ describe('user data sync flow', () => {
 
     const user = userEvent.setup()
     await user.click(await screen.findByRole('button', { name: /删除/i }))
+    // 删除前弹窗让玩家选择是否同时清除手动能力覆盖；点「保留覆盖」继续删除。
+    await user.click(await screen.findByRole('button', { name: '保留覆盖' }))
 
     await waitFor(async () => {
       expect(await readUserProfileSnapshot()).toBeNull()

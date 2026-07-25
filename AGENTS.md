@@ -45,3 +45,11 @@
 - 测试遵循 co-located 规范（`docs/product/testing-conventions.md`）：单测/组件/夹具就近放被测模块同目录，E2E 与全局 setup 集中 `tests/`；新增测试必须接入运行器（vitest 覆盖 `src/**/*.test.{ts,tsx}` 与 `scripts/**/*.test.ts`、playwright 覆盖 `tests/e2e/`），新增测试目录同步扩展对应 glob，禁止游离。
 - 派生统计（覆盖率/支持度）若与 scorer 平行白名单，优先合并单一来源；跨边界（src 侧 scorer 与 scripts 侧脚本）合不了时必须配 keys 同步守护测试（如 `scoringSupportSync.test.ts`）强制一致。
 - `npm run preview:pages` 只读当前 `dist/`，不反映源码最新改动：截图、验收、Playwright 视觉检查前必须先 `npm run build`；拿不准 preview 进程是否对应最新 build 时直接重启，不得把旧 `dist` 当"当前基线"或"修改后效果"。
+
+## 5. 沟通用语
+
+面向用户的对话文本（非代码标识符、注释）遵循：
+
+- 默认简体中文，优先用游戏术语描述概念；**禁止直接搬用代码里的英文 key**（如 `slot_escort`、`forcedHeroes`、`scenarioRef`）——这些多为程序员自定的标识符，常与游戏实际概念有偏差，直接用易误导用户。规则：先用游戏术语或中文讲清概念，必要时在括号标注对应代码标识符方便定位。
+- 引用代码位置用文件路径（如 `build-models.ts:208`）；引用游戏 JSON 字段时说明它在游戏中对应什么，不假设用户认识该字段名。
+- 本规则只约束面向用户的对话文本；代码内的函数名、变量名、类型名、注释保持英文（遵循代码规范），游戏 JSON 字段名按数据源事实使用。

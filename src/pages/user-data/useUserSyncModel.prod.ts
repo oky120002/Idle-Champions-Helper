@@ -5,6 +5,7 @@ import {
   readUserProfileSnapshot,
   saveUserProfileSnapshot,
 } from '../../data/user-profile-store'
+import { clearPlannerHeroOverrides } from '../../data/plannerOverridesStore'
 import { fetchUserProfilePayloads } from '../../data/user-sync/officialClient'
 import { buildUserProfileSnapshot } from '../../data/user-sync/userProfileNormalizer'
 import type { UserCredentials } from '../../domain/types'
@@ -88,10 +89,13 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     }
   }, [credentials, loadProfileResolution, loadSnapshot])
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = useCallback(async (clearOverrides: boolean) => {
     setBusy(true)
     try {
       await deleteUserProfileData()
+      if (clearOverrides) {
+        await clearPlannerHeroOverrides()
+      }
       setSyncState({ status: 'no-snapshot' })
       await loadProfileResolution()
     } catch {

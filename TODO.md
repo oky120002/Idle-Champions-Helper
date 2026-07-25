@@ -8,13 +8,6 @@ repair: rebuild
 -->
 ## Auto Todo
 
-- formation-persistence validation 不校验 scenarioRef <!-- auto-todo:id=atd_c6d7b8b82a -->
-  - 记录时间: `2026-07-20T11:43:52+08:00`
-  - 类型: follow-up
-  - 位置: `src/data/formation-persistence/validation.ts`
-  - 备注: validation.ts 只校验 slotIds/championIds，不校验 scenarioRef.kind/id（文档已按代码事实修正）
-    - 处置：若产品需识别失效场景身份，再补 scenarioRef 校验
-
 - 9.1 escort 锁槽按 column 降序启发式，官方未标注具体槽位 <!-- auto-todo:id=atd_492b5b61bd -->
   - 记录时间: `2026-07-20T11:43:52+08:00`
   - 类型: issue
@@ -93,5 +86,14 @@ repair: rebuild
     - 需 UX 设计桌面拖拽 / 移动 HeroPicker 的 exact-formation 评估面板
     - 区别于现有 lockedSlots 重搜：lockedSlots 仍搜索最优排列，evaluateFormation 评估用户指定阵型
     - 当前调整→重算闭环由 lockedSlots 承担，exact-formation 评估是下一步
+
+- 阵型预设卡片显示场景原始标识串（如 variant:v80），玩家无法识别对应关卡 <!-- auto-todo:id=atd_83d6a91777 -->
+  - 记录时间: `2026-07-25T23:39:00+08:00`
+  - 类型: optimization
+  - 位置: `src/pages/formation/FormationPresetCard.tsx:48`
+  - 备注: FormationPresetCard.tsx:48 与 PresetCard.tsx:85-86 把阵型绑定的场景标识渲染为 `${kind}:${id}` 原始串（如 variant:v80），玩家看不懂对应哪个关卡
+    - 深入评估原 atd_c6d7b8b82a（validation 校验场景标识）时发现方向有误：场景标识是元数据，不参与恢复/推荐/评分任何功能逻辑；真问题是 UI 展示不友好
+    - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
+    - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
 
 <!-- auto-todo:end -->
