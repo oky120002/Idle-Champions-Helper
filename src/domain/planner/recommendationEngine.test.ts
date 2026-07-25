@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import type { Champion, LocalizedOption, LocalizedText, Variant } from '../types'
-import { buildPlannerRecommendation } from './recommendationEngine'
+import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 import type { PlannerCollections } from './recommendationTypes'
@@ -367,5 +367,61 @@ describe('planner recommendation engine', () => {
     expect(recommendation.result).not.toBeNull()
     const placedHeroIds = Object.values(recommendation.result?.placements ?? {})
     expect(placedHeroIds).toContain('nayeli')
+  })
+})
+
+describe('evaluateFormation 指定阵型评估', () => {
+  const snapshot = createUserProfileSnapshot({
+    ownedHeroes: [
+      createOwnedHero({ heroId: 'bruenor', level: 500 }),
+      createOwnedHero({ heroId: 'asharra', level: 500 }),
+      createOwnedHero({ heroId: 'celeste', level: 500 }),
+      createOwnedHero({ heroId: 'nayeli', level: 500 }),
+      createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+    ],
+  })
+
+  it('无快照时返回 missing-profile blocker', () => {
+    const evaluation = evaluateFormation(selectedVariant, collections, null, { s1: 'bruenor' })
+    expect(evaluation.blocker).toBe('missing-profile')
+    expect(evaluation.result).toBeNull()
+    expect(evaluation.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
+  })
+
+  it('评估给定阵型，原样返回 placements 与对应 breakdown（不搜索）', () => {
+    // 刻意放一个非最优阵型：验证 evaluateFormation 不改成搜索结果。
+    const placements = { s1: 'bruenor', s2: 'asharra', s3: 'celeste', s4: 'nayeli' }
+
+    const evaluation = evaluateFormation(selectedVariant, collections, snapshot, placements)
+
+    expect(evaluation.blocker).toBeNull()
+    expect(evaluation.layoutId).toBe('layout-catacombs')
+    expect(evaluation.slots).toHaveLength(4)
+    expect(evaluation.result).not.toBeNull()
+    // 不搜索：placements 原样返回
+    expect(evaluation.result?.placements).toEqual(placements)
+    expect(evaluation.result?.placementEntries).toHaveLength(4)
+    // breakdown 透传且自洽：carryHeroId 与顶层一致、contributions 非空、carryDps 为字符串
+    const breakdown = evaluation.result?.breakdown
+    expect(breakdown).not.toBeNull()
+    expect(breakdown?.carryHeroId).toBe(evaluation.result?.carryHeroId)
+    expect(breakdown?.contributions.length).toBeGreaterThan(0)
+    expect(typeof breakdown?.carryDps).toBe('string')
+    expect(breakdown?.carryDps.length).toBeGreaterThan(0)
+    // placementEntries 覆盖所有放置槽位
+    const entrySlots = evaluation.result?.placementEntries?.map((entry) => entry.slotId) ?? []
+    expect(entrySlots).toEqual(Object.keys(placements))
+  })
+
+  it('seat 冲突的非法阵型：附加合法性 warning 但仍输出拆解', () => {
+    // bruenor 与 asharra 同属 seat 1，放不同槽位 → seat 冲突（evaluate 不搜索、不丢弃用户阵型）。
+    const placements = { s1: 'bruenor', s2: 'asharra' }
+
+    const evaluation = evaluateFormation(selectedVariant, collections, snapshot, placements)
+
+    expect(evaluation.blocker).toBeNull()
+    expect(evaluation.result?.warnings.some((warning) => warning.includes('冲突'))).toBe(true)
+    expect(evaluation.result?.breakdown).not.toBeNull()
+    expect(evaluation.result?.placements).toEqual(placements)
   })
 })

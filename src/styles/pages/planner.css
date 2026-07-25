@@ -489,4 +489,124 @@
       radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 42%),
       rgba(255, 255, 255, 0.03);
   }
+
+  .planner-breakdown {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid rgba(227, 214, 193, 0.1);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.016);
+  }
+
+  .planner-breakdown__formula {
+    margin: 0;
+    color: #fff5e4;
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+
+  .planner-breakdown__factors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .planner-breakdown__factor {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: baseline;
+    padding: 0.4rem 0.62rem;
+    border-radius: 0.65rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .planner-breakdown__factor-label {
+    color: rgba(201, 188, 166, 0.66);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .planner-breakdown__factor-value {
+    color: #fff6e5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .planner-breakdown__sources-title {
+    margin: 0.2rem 0 0;
+    color: rgba(212, 192, 158, 0.88);
+    font-size: 0.9rem;
+  }
+
+  .planner-breakdown__contributions {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .planner-breakdown__contribution {
+    display: grid;
+    gap: 0.32rem;
+    padding: 0.6rem 0.72rem;
+    border-radius: 0.8rem;
+    background: rgba(255, 255, 255, 0.022);
+  }
+
+  .planner-breakdown__contribution-head {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  .planner-breakdown__contribution-head span {
+    color: rgba(239, 231, 214, 0.6);
+    font-size: 0.82rem;
+  }
+
+  .planner-breakdown__signals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .planner-breakdown__signals li {
+    display: inline-flex;
+    gap: 0.35rem;
+    align-items: baseline;
+    padding: 0.3rem 0.55rem;
+    border-radius: 0.55rem;
+    background: rgba(200, 167, 127, 0.08);
+    color: rgba(245, 237, 219, 0.86);
+    font-size: 0.84rem;
+  }
+
+  .planner-breakdown__signals li strong {
+    color: #fff6e5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .planner-breakdown__more {
+    color: rgba(201, 188, 166, 0.6) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+  }
+
+  @media (max-width: 720px) {
+    .planner-breakdown__contribution-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+    }
+  }
 }

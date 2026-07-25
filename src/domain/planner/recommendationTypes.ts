@@ -2,6 +2,7 @@ import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { AreaEstimationResult } from './areaEstimation'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type { SimulationBreakdown } from './steadyStateScoring'
 
 export interface PlannerNarrativeLine {
   zh: string
@@ -29,6 +30,11 @@ export interface PlannerResult {
   warnings: string[]
   /** 推图层数预估（阶段 15.2）；team-gold 模式或缺 carry 时为 null。绝对值未校准，仅相对比较参考。 */
   areaEstimate?: AreaEstimationResult | null
+  /**
+   * 结构化加成拆解（阵型模拟 JSON 契约）：baseDps/factors/pools/contributions，
+   * UI 据此渲染每位英雄加成，CLI 据此输出 JSON；team-gold 模式或缺 carry 时为 null。
+   */
+  breakdown: SimulationBreakdown | null
 }
 
 export interface PlannerCollections {

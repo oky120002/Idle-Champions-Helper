@@ -10,10 +10,9 @@ function makeResult(score: number, carryHeroId: string | null = null): ScoringRe
   return {
     score: value,
     warnings: [],
-    explanations: [],
     carryHeroId,
-    objective: { value, breakdown: [] },
     activeSignalKinds: new Set<HeroAbilityKind>(),
+    breakdown: null,
   }
 }
 
@@ -57,7 +56,7 @@ describe('beam search ranking', () => {
     expect(results.length).toBeGreaterThan(0)
   })
 
-  it('top results 包含 score、placements、explanations 和 warnings', () => {
+  it('top results 包含 score、placements、breakdown 和 warnings', () => {
     const value = new Decimal(5)
     const results = beamSearch({
       heroes,
@@ -66,17 +65,16 @@ describe('beam search ranking', () => {
       scoreFormation: () => ({
         score: value,
         warnings: ['test warning'],
-        explanations: ['test explanation'],
         carryHeroId: 'jarlaxle',
-        objective: { value, breakdown: [] },
         activeSignalKinds: new Set<HeroAbilityKind>(),
+        breakdown: null,
       }),
     })
 
     const top = results[0]!
     expect(top).toHaveProperty('score')
     expect(top).toHaveProperty('placements')
-    expect(top).toHaveProperty('explanations')
+    expect(top).toHaveProperty('breakdown')
     expect(top).toHaveProperty('warnings')
     expect(top).toHaveProperty('carryHeroId')
   })

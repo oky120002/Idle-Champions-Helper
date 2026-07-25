@@ -3,7 +3,7 @@ import Decimal from 'break_eternity.js'
 import { formatGameNumber } from '../simulator/gameNumber'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
-import type { FormationSlot, Variant } from '../types'
+import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool, type CandidateMode } from './candidatePool'
@@ -15,6 +15,7 @@ import {
   type PlannerNarrativeLine,
   type PlannerPlacementEntry,
   type PlannerRecommendation,
+  type PlannerRecommendationBlocker,
   type PlannerResult,
 } from './recommendationTypes'
 import { scoreFormation, type ScoringMode } from './steadyStateScoring'
@@ -160,6 +161,136 @@ export interface PlannerRecommendationOptions {
   equipmentAdjustmentByHero?: Map<string, number>
 }
 
+/**
+ * 解析 variant → scenario + blocker（搜索 buildPlannerRecommendation 与评估 evaluateFormation 共用）。
+ * - 无 variant/英雄数据：scenarioRef=null、blocker=null（调用方按"无输入"处理）。
+ * - 缺 profileSnapshot：blocker='missing-profile'。
+ * - scenario/阵型缺失：blocker='missing-formation'。
+ * - 否则 scenario 就绪、blocker=null。
+ */
+function resolvePlannerScenario(
+  selectedVariant: Variant | null,
+  collections: PlannerCollections,
+  profileSnapshot: UserProfileSnapshot | null,
+): { scenario: ResolvedPlannerScenarioModel | null; scenarioRef: ScenarioRef | null; blocker: PlannerRecommendationBlocker | null } {
+  if (!selectedVariant || collections.plannerHeroes.length === 0) {
+    return { scenario: null, scenarioRef: null, blocker: null }
+  }
+
+  const scenarioRef: ScenarioRef = { kind: 'variant', id: selectedVariant.id }
+
+  if (!profileSnapshot) {
+    return { scenario: null, scenarioRef, blocker: 'missing-profile' }
+  }
+
+  const scenario = findPlannerScenarioForVariant(collections.plannerScenarios, selectedVariant)
+  if (!scenario || !scenario.formationLayoutId || scenario.slotTopology.length === 0) {
+    return { scenario: null, scenarioRef, blocker: 'missing-formation' }
+  }
+
+  return { scenario, scenarioRef, blocker: null }
+}
+
+/** 指定阵型评估结果：单条 PlannerResult + 棋盘上下文（与 PlannerRecommendation 同构但单结果）。 */
+export interface FormationEvaluation {
+  result: PlannerResult | null
+  layoutId: string | null
+  slots: FormationSlot[]
+  scenarioRef: ScenarioRef | null
+  blocker: PlannerRecommendationBlocker | null
+}
+
+/**
+ * 评估用户指定的单一阵型（slotId→heroId），输出该阵型的完整模拟拆解（DPS/加成/站位）。
+ * 与 buildPlannerRecommendation（beam search 找最佳）对应：本函数不搜索，直接对给定 placements 计算。
+ * 用于 UI 调整英雄后重算当前阵型、CLI 指定阵型输出 JSON。合法性违规作为 warning 附加（仍出拆解）。
+ */
+export function evaluateFormation(
+  selectedVariant: Variant | null,
+  collections: PlannerCollections,
+  profileSnapshot: UserProfileSnapshot | null,
+  placements: Record<string, string>,
+  options: PlannerRecommendationOptions = {},
+): FormationEvaluation {
+  const scoringMode = options.scoringMode ?? 'carry-dps'
+  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot)
+
+  // resolvePlannerScenario 返回 scenario 非空即保证 profileSnapshot 非空（函数内已检查 missing-profile）。
+  if (!scenario || !scenarioRef || blocker || !profileSnapshot) {
+    return { result: null, layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
+  }
+
+  // evaluateFormation 不做候选过滤——用户已显式指定阵型，heroById 用全量英雄保证放置的英雄都能解析。
+  const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
+  const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
+  const candidateIds = new Set(
+    buildCandidatePool({
+      mode: options.candidateMode ?? 'owned-only',
+      ownedHeroes: profileSnapshot.ownedHeroes,
+      allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
+    }),
+  )
+  const heroLevels = new Map(
+    profileSnapshot.ownedHeroes
+      .filter((owned) => candidateIds.has(owned.heroId))
+      .map((owned) => [owned.heroId, owned.level]),
+  )
+
+  const variantRules: VariantRuleResult = {
+    constraints: [
+      ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),
+      ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
+    ],
+    warnings: scenario.scenarioWarnings,
+  }
+  const legality = checkFormationLegality({
+    placements,
+    heroSeats,
+    variantRules,
+    lockedSlots: scenario.lockedSlots,
+  })
+  const legalityWarnings = legality.legal ? [] : legality.violations.map(formatLegalityViolation)
+
+  const scoring = scoreFormation({
+    placements,
+    heroesById: heroById,
+    scenario,
+    heroLevels,
+    scoringMode,
+    lockedCarryHeroId: options.lockedCarryHeroId ?? undefined,
+    // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
+    globalBuffMultiplier: options.globalBuffMultiplier,
+    equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+  })
+
+  const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
+  const result: PlannerResult = {
+    score: formatGameNumber(scoring.score),
+    carryHeroId: scoring.carryHeroId,
+    placements,
+    placementEntries,
+    explanations: buildPlannerExplanations(
+      scenario,
+      placementEntries,
+      heroById,
+      scoring.carryHeroId,
+      scoring.score,
+      scoring.activeSignalKinds,
+    ),
+    warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...scenario.scenarioWarnings])],
+    areaEstimate: scoring.areaEstimate ?? null,
+    breakdown: scoring.breakdown,
+  }
+
+  return {
+    result,
+    layoutId: scenario.formationLayoutId,
+    slots: toFormationSlots(scenario),
+    scenarioRef,
+    blocker: null,
+  }
+}
+
 export function buildPlannerRecommendation(
   selectedVariant: Variant | null,
   collections: PlannerCollections,
@@ -167,32 +298,11 @@ export function buildPlannerRecommendation(
   options: PlannerRecommendationOptions = {},
 ): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
+  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot)
 
-  if (!selectedVariant || collections.plannerHeroes.length === 0) {
-    return { result: null, results: [], layoutId: null, slots: [], scenarioRef: null, blocker: null }
-  }
-
-  if (!profileSnapshot) {
-    return {
-      result: null,
-      results: [],
-      layoutId: null,
-      slots: [],
-      scenarioRef: { kind: 'variant', id: selectedVariant.id },
-      blocker: 'missing-profile',
-    }
-  }
-
-  const scenario = findPlannerScenarioForVariant(collections.plannerScenarios, selectedVariant)
-  if (!scenario || !scenario.formationLayoutId || scenario.slotTopology.length === 0) {
-    return {
-      result: null,
-      results: [],
-      layoutId: null,
-      slots: [],
-      scenarioRef: { kind: 'variant', id: selectedVariant.id },
-      blocker: 'missing-formation',
-    }
+  // resolvePlannerScenario 返回 scenario 非空即保证 profileSnapshot 非空（函数内已检查 missing-profile）。
+  if (!scenario || !scenarioRef || blocker || !profileSnapshot) {
+    return { result: null, results: [], layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
   }
 
   const candidateIds = new Set(
@@ -248,7 +358,7 @@ export function buildPlannerRecommendation(
       results: [],
       layoutId: scenario.formationLayoutId,
       slots: toFormationSlots(scenario),
-      scenarioRef: { kind: 'variant', id: selectedVariant.id },
+      scenarioRef,
       blocker: 'insufficient-owned-heroes',
     }
   }
@@ -285,10 +395,9 @@ export function buildPlannerRecommendation(
         return {
           score: SCORE_ZERO,
           warnings: legality.violations.map(formatLegalityViolation),
-          explanations: ['非法阵型已被过滤。'],
           carryHeroId: null,
-          objective: { value: SCORE_ZERO, breakdown: [] },
           activeSignalKinds: new Set<HeroAbilityKind>(),
+          breakdown: null,
         }
       }
 
@@ -327,7 +436,7 @@ export function buildPlannerRecommendation(
       results: [],
       layoutId: scenario.formationLayoutId,
       slots: toFormationSlots(scenario),
-      scenarioRef: { kind: 'variant', id: selectedVariant.id },
+      scenarioRef,
       blocker: 'no-legal-recommendation',
     }
   }
@@ -364,6 +473,7 @@ export function buildPlannerRecommendation(
       ),
       warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
       areaEstimate: top.areaEstimate ?? null,
+      breakdown: top.breakdown,
     }
   })
 
@@ -372,7 +482,7 @@ export function buildPlannerRecommendation(
     results: plannerResults,
     layoutId: scenario.formationLayoutId,
     slots: toFormationSlots(scenario),
-    scenarioRef: { kind: 'variant', id: selectedVariant.id },
+    scenarioRef,
     blocker: null,
   }
 }

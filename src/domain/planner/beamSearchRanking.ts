@@ -1,4 +1,4 @@
-import type { ScoringResult } from './steadyStateScoring'
+import type { ScoringResult, SimulationBreakdown } from './steadyStateScoring'
 import type { AreaEstimationResult } from './areaEstimation'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
 import type { GameNumberValue } from '../simulator/gameNumber'
@@ -16,11 +16,12 @@ export interface BeamSearchInput {
 export interface BeamSearchResult {
   score: GameNumberValue
   placements: Record<string, string>
-  explanations: string[]
   warnings: string[]
   carryHeroId: string | null
   activeSignalKinds: Set<HeroAbilityKind>
   areaEstimate?: AreaEstimationResult | null
+  /** best carry 的结构化加成拆解（透传给 PlannerResult，供 UI/CLI 消费）。 */
+  breakdown: SimulationBreakdown | null
 }
 
 interface BeamCandidate {
@@ -86,11 +87,11 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
     .map((s) => ({
       score: s.result.score,
       placements: s.candidate.placements,
-      explanations: s.result.explanations,
       warnings: s.result.warnings,
       carryHeroId: s.result.carryHeroId,
       activeSignalKinds: s.result.activeSignalKinds,
       areaEstimate: s.result.areaEstimate ?? null,
+      breakdown: s.result.breakdown ?? null,
     }))
     .sort((a, b) => compareGameNumbers(b.score, a.score))
 }

@@ -80,6 +80,25 @@ baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
 
 第一版使用 deterministic beam search。默认参数由领域常量集中管理，不写死在 UI 中：每个 seat 保留 Top N、主 DPS Top N、beam width、result count。结果排序必须稳定，同分使用 deterministic tie-breaker。
 
+## 模拟/UI 分离与 JSON 输出契约
+
+模拟引擎全部在 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/`，零 React/UI 依赖。脱离 webUI 直接调用同样能完成模拟并以 JSON 输出。
+
+两个纯函数入口（共享 `resolvePlannerScenario` 做 variant→scenario 与 blocker 解析）：
+
+- `buildPlannerRecommendation(variant, collections, profile, options)`：beam search 找 Top K 最佳阵型。
+- `evaluateFormation(variant, collections, profile, placements, options)`：评估用户指定的单一阵型（不搜索），输出该阵型的完整拆解。UI 调整英雄后重算、CLI 指定阵型均走这里；合法性违规作为 warning 附加，仍出拆解。
+
+`PlannerResult.breakdown`（`SimulationBreakdown`，JSON 可序列化）承载每位英雄加成拆解：
+
+- `carryHeroId` / `carrySlotId` / `carryLevel`：核心输出位
+- `baseDps` / `levelCurve` / `carryDps`：加成前基线、增长率、最终 DPS（游戏记数法字符串，可超 `Number.MAX_VALUE`）
+- `factors`：`damagePool` / `crit` / `vulnerability` / `globalBuff` / `equipmentAdjustment`（`carryDps = baseDps × 各因子之积`）
+- `pools`：damage 维度聚合池（`dimension:scope`，`addPercent`/`multFactor`/`poolMultiplier`）
+- `contributions`：每位支持位的 active signal 拆解（`signalKind`/`multiplier`/`reasonCode`/`rawEffect`）
+
+CLI 证明（"丢 UI 输出 JSON"）：`npm run simulate -- recommend|evaluate`（`scripts/simulator/simulate.ts`）读 `public/data/v1/*.json` → `resolvePlannerModel` → 引擎 → stdout JSON。无 `--profile` 时合成"全英雄已拥有（level 1）"快照演示完整链路；真实使用传账号快照路径。
+
 ## UI 和测试
 
 Planner 页面是工作台，不是 landing page。

@@ -1,15 +1,18 @@
 import Decimal from 'break_eternity.js'
 
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
-import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type {
+  HeroAbilityDimension,
+  HeroAbilityKind,
+  ResolvedHeroAbilityProfile,
+} from '../abilities/abilityModel'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
-import type { ObjectiveResult } from './objectiveModel'
-import { computeCarryDps } from '../simulator/baseDps'
+import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeTeamGoldFind } from './goldObjective'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
 import { computeSingleHitDamage } from '../simulator/budCalculation'
 import { estimateMaxArea, type AreaEstimationResult } from './areaEstimation'
-import type { GameNumberValue } from '../simulator/gameNumber'
+import { formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 
 /**
@@ -46,12 +49,52 @@ export interface ScoringInput {
   lockedCarryHeroId?: string | undefined
 }
 
+export interface SimulationFactor {
+  /** damage 维度 pool 间乘积（global_dps × hero_dps × formation × static_dps）*/
+  damagePool: number
+  /** crit 期望因子（基线归一；无 crit signal 时为 1）*/
+  crit: number
+  /** vulnerability 因子（按场景怪物类型条件匹配后聚合）*/
+  vulnerability: number
+  /** 全局 buff pool 乘数（patron-perk 等，调用方传入）*/
+  globalBuff: number
+  /** 装备调整比（owned 装备相对理论最大的缩放，调用方传入）*/
+  equipmentAdjustment: number
+}
+
+export interface SimulationContribution {
+  supportHeroId: string
+  supportSlotId: string
+  /** 该支持位对 carry 的 active signal（damage + crit + 已匹配 vulnerability），含 multiplier/reasonCode */
+  signals: PlacementFitScorePart[]
+}
+
+/**
+ * 单次模拟的结构化加成拆解（JSON 可序列化）：把 scoreFormation 内部已计算但原先压成字符串丢弃的
+ * pool/signal/factor 中间量透出，供 UI 渲染每位英雄加成与 CLI JSON 输出。
+ * baseDps/carryDps 用游戏记数法字符串（可超 Number.MAX_VALUE）；levelCurve = costCurve rate^level，
+ * 常规 level 下为有限数，极端高 level 可能溢出为 Infinity（权威值看 carryDps 字符串）。
+ */
+export interface SimulationBreakdown {
+  carryHeroId: string
+  carrySlotId: string
+  carryLevel: number
+  /** baseDamage × levelCurve（加成前基线）*/
+  baseDps: string
+  levelCurve: number
+  /** 最终 carryDps = baseDps × factors 各项之积 */
+  carryDps: string
+  factors: SimulationFactor
+  /** damage 维度聚合 pools（跨支持位合并；pool 间相乘 = factors.damagePool）*/
+  pools: AggregatedPool[]
+  /** 每位支持位对 carry 的 active signal 拆解 */
+  contributions: SimulationContribution[]
+}
+
 export interface ScoringResult {
   score: GameNumberValue
   warnings: string[]
-  explanations: string[]
   carryHeroId: string | null
-  objective: ObjectiveResult
   /** best carry 的 active signal kind 集合，供叙事层结构化消费（避免字符串匹配）。 */
   activeSignalKinds: Set<HeroAbilityKind>
   /**
@@ -59,6 +102,8 @@ export interface ScoringResult {
    * 经 estimateMaxArea 得出。team-gold 模式或缺 carry 时为 null。
    */
   areaEstimate?: AreaEstimationResult | null
+  /** best carry 的结构化加成拆解；team-gold 模式或空阵型时为 null。 */
+  breakdown: SimulationBreakdown | null
 }
 
 const ZERO: GameNumberValue = new Decimal(0)
@@ -214,13 +259,9 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
   return {
     score: teamGold,
     warnings: [...new Set(warnings)],
-    explanations: [],
     carryHeroId: null,
     activeSignalKinds: activeKinds,
-    objective: {
-      value: teamGold,
-      breakdown: [{ label: 'teamGoldFind', value: teamGold }],
-    },
+    breakdown: null,
   }
 }
 
@@ -236,10 +277,9 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     return {
       score: ZERO,
       warnings: [],
-      explanations: [],
       carryHeroId: null,
-      objective: { value: ZERO, breakdown: [] },
       activeSignalKinds: new Set(),
+      breakdown: null,
     }
   }
 
@@ -249,11 +289,42 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
   let bestScore: GameNumberValue = ZERO
   let bestWarnings: string[] = []
-  let bestExplanations: string[] = []
   let bestCarryHeroId: string | null = null
   let bestActiveKinds: Set<HeroAbilityKind> = new Set()
+  // best carry 的拆解中间量；循环结束据此构建 SimulationBreakdown。
+  let bestBreakdownData: {
+    carryEntry: PlacedEntry
+    carryLevel: number
+    pools: Map<string, AggregatedPool>
+    critFactor: number
+    vulnFactor: number
+    globalBuff: number
+    equipmentAdjustment: number
+    damagePool: number
+    contributions: SimulationContribution[]
+  } | null = null
 
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
+
+  // 维度评分闭包：damage/crit/vulnerability 三维度共用同一组位置/目标参数，仅 dimension 不同，
+  // 抽出来避免三段重复（原三段 evaluatePlacementFit 仅 dimension 字段不同）。
+  const scoreSupportDimension = (
+    carry: PlacedEntry,
+    support: PlacedEntry,
+    dimension: HeroAbilityDimension,
+  ) =>
+    evaluatePlacementFit({
+      carryHero: carry.hero,
+      carrySlotId: carry.slotId,
+      supportHero: support.hero,
+      supportSlotId: support.slotId,
+      scenario: input.scenario,
+      placements: input.placements,
+      heroesById: input.heroesById,
+      // carryDps 只聚合 damage 维度；gold/crit/survival 等非伤害 pool 必须显式过滤，
+      // 否则阶段 3+ 引入新维度后会泄漏进 carryDps（同 typecheck masking 教训）。
+      dimension,
+    })
 
   for (const carryEntry of placedEntries) {
     if (input.lockedCarryHeroId && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
@@ -261,7 +332,6 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     }
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
     const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
-    const explanations: string[] = []
     const activeKinds = new Set<HeroAbilityKind>()
     // pool 在整队层面聚合：同一 dimension:scope 的 pool 跨所有支持位合并
     // （addPercent 相加、multFactor 相乘），pool 间再相乘。
@@ -269,65 +339,36 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const sharedPools = new Map<string, AggregatedPool>()
     const critParts: PlacementFitScorePart[] = []
     const vulnParts: PlacementFitScorePart[] = []
+    const contributions: SimulationContribution[] = []
 
     for (const supportEntry of placedEntries) {
-      const fit = evaluatePlacementFit({
-        carryHero: carryEntry.hero,
-        carrySlotId: carryEntry.slotId,
-        supportHero: supportEntry.hero,
-        supportSlotId: supportEntry.slotId,
-        scenario: input.scenario,
-        placements: input.placements,
-        heroesById: input.heroesById,
-        // carryDps 只聚合 damage 维度；gold/crit/survival 等非伤害 pool 必须显式过滤，
-        // 否则阶段 3+ 引入新维度后会泄漏进 carryDps（同 typecheck masking 教训）。
-        dimension: 'damage',
-      })
-
-      warnings.push(...fit.warnings)
-
-      for (const part of fit.scoreBreakdown) {
-        if (!part.active) {
-          continue
-        }
-
-        activeKinds.add(part.signalKind)
-        explanations.push(
-          `${supportEntry.hero.heroId}: ${part.signalKind} x${part.multiplier.toFixed(2)} -> ${carryEntry.hero.heroId}`,
-        )
-      }
-
-      mergePools(sharedPools, fit.pools)
+      const damageFit = scoreSupportDimension(carryEntry, supportEntry, 'damage')
+      warnings.push(...damageFit.warnings)
+      mergePools(sharedPools, damageFit.pools)
 
       // crit 维度单独聚合（chance/damage 不能混入 damage pool），供 crit_factor 使用。
-      const critFit = evaluatePlacementFit({
-        carryHero: carryEntry.hero,
-        carrySlotId: carryEntry.slotId,
-        supportHero: supportEntry.hero,
-        supportSlotId: supportEntry.slotId,
-        scenario: input.scenario,
-        placements: input.placements,
-        heroesById: input.heroesById,
-        dimension: 'crit',
-      })
-      for (const part of critFit.scoreBreakdown) {
-        if (part.active) {
-          activeKinds.add(part.signalKind)
-        }
-      }
+      const critFit = scoreSupportDimension(carryEntry, supportEntry, 'crit')
       critParts.push(...critFit.scoreBreakdown)
 
       // vulnerability 维度按场景怪物类型条件性匹配（阶段 6），进 vulnFactor。
-      const vulnFit = evaluatePlacementFit({
-        carryHero: carryEntry.hero,
-        carrySlotId: carryEntry.slotId,
-        supportHero: supportEntry.hero,
-        supportSlotId: supportEntry.slotId,
-        scenario: input.scenario,
-        placements: input.placements,
-        heroesById: input.heroesById,
-        dimension: 'vulnerability',
-      })
+      const vulnFit = scoreSupportDimension(carryEntry, supportEntry, 'vulnerability')
+
+      // 该支持位对 carry 的 active signal（三维度合并）→ 结构化 contributions。
+      const supportActiveParts: PlacementFitScorePart[] = []
+      for (const part of damageFit.scoreBreakdown) {
+        if (!part.active) {
+          continue
+        }
+        activeKinds.add(part.signalKind)
+        supportActiveParts.push(part)
+      }
+      for (const part of critFit.scoreBreakdown) {
+        if (!part.active) {
+          continue
+        }
+        activeKinds.add(part.signalKind)
+        supportActiveParts.push(part)
+      }
       for (const part of vulnFit.scoreBreakdown) {
         if (!part.active) {
           continue
@@ -339,6 +380,15 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         }
         activeKinds.add(part.signalKind)
         vulnParts.push(part)
+        supportActiveParts.push(part)
+      }
+
+      if (supportActiveParts.length > 0) {
+        contributions.push({
+          supportHeroId: supportEntry.hero.heroId,
+          supportSlotId: supportEntry.slotId,
+          signals: supportActiveParts,
+        })
       }
     }
 
@@ -346,18 +396,29 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const vulnFactor = computeVulnerabilityFactor(vulnParts)
     const globalBuff = input.globalBuffMultiplier ?? 1
     const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1
+    const damagePool = productOfPoolMultipliers(sharedPools)
     const carryDps = computeCarryDps(
       carryEntry.hero,
       carryLevel,
-      productOfPoolMultipliers(sharedPools) * critFactor * vulnFactor * globalBuff * equipmentAdjustment,
+      damagePool * critFactor * vulnFactor * globalBuff * equipmentAdjustment,
     )
 
     if (compareGameNumbers(carryDps, bestScore) > 0) {
       bestScore = carryDps
       bestWarnings = [...new Set(warnings)]
-      bestExplanations = explanations
       bestCarryHeroId = carryEntry.hero.heroId
       bestActiveKinds = activeKinds
+      bestBreakdownData = {
+        carryEntry,
+        carryLevel,
+        pools: sharedPools,
+        critFactor,
+        vulnFactor,
+        globalBuff,
+        equipmentAdjustment,
+        damagePool,
+        contributions,
+      }
     }
   }
 
@@ -392,18 +453,47 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     }
   }
 
+  let breakdown: SimulationBreakdown | null = null
+  if (bestBreakdownData) {
+    const {
+      carryEntry,
+      carryLevel,
+      pools,
+      critFactor,
+      vulnFactor,
+      globalBuff,
+      equipmentAdjustment,
+      damagePool,
+      contributions,
+    } = bestBreakdownData
+    const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
+    const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
+    const baseDps = new Decimal(baseDamage).times(levelCurve)
+    breakdown = {
+      carryHeroId: carryEntry.hero.heroId,
+      carrySlotId: carryEntry.slotId,
+      carryLevel,
+      baseDps: formatGameNumber(baseDps),
+      levelCurve: levelCurve.toNumber(),
+      carryDps: formatGameNumber(bestScore),
+      factors: {
+        damagePool,
+        crit: critFactor,
+        vulnerability: vulnFactor,
+        globalBuff,
+        equipmentAdjustment,
+      },
+      pools: [...pools.values()],
+      contributions,
+    }
+  }
+
   return {
     score: bestScore,
     warnings: bestWarnings,
-    explanations: bestExplanations,
     carryHeroId: bestCarryHeroId,
     activeSignalKinds: bestActiveKinds,
     areaEstimate,
-    objective: {
-      value: bestScore,
-      breakdown: bestCarryHeroId
-        ? [{ label: `carryDps:${bestCarryHeroId}`, value: bestScore }]
-        : [],
-    },
+    breakdown,
   }
 }

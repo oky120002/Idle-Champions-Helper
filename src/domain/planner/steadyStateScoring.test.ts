@@ -382,6 +382,106 @@ describe('steady state scoring', () => {
     expect(compareGameNumbers(withGlobalBuff.score, withoutGlobalBuff.score)).toBeGreaterThan(0)
   })
 
+  describe('breakdown 结构化拆解', () => {
+    it('carry-dps 输出 best carry 的完整加成拆解（baseDps/factors/pools/contributions）', () => {
+      const carry = createHero('carry', {
+        seat: 1,
+        baseDamage: 10,
+        carrySignals: [
+          { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_mult,100', source: 'official-parsed' },
+        ],
+      })
+      const support = createHero('buf', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 200, rawEffect: 'global_dps,200', source: 'official-parsed' },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['buf', support]])
+
+      const result = scoreFormation({
+        placements: { s1: 'carry', s2: 'buf' },
+        heroesById,
+        scenario,
+      })
+
+      const breakdown = result.breakdown
+      expect(breakdown).not.toBeNull()
+      expect(breakdown!.carryHeroId).toBe('carry')
+      expect(breakdown!.carrySlotId).toBe('s1')
+      expect(breakdown!.carryLevel).toBe(1)
+      // baseDps = baseDamage(10) × levelCurve(1.06) = 10.6；加成前基线
+      expect(Number(breakdown!.baseDps)).toBeCloseTo(10.6, 4)
+      expect(breakdown!.levelCurve).toBeCloseTo(1.06, 4)
+      // carryDps = baseDps × damagePool(2×3) = 10.6 × 6 = 63.6；与 score 一致
+      expect(Number(breakdown!.carryDps)).toBeCloseTo(63.6, 4)
+      expect(breakdown!.factors.damagePool).toBeCloseTo(6, 4)
+      expect(breakdown!.factors.crit).toBeCloseTo(1, 6)
+      expect(breakdown!.factors.vulnerability).toBeCloseTo(1, 6)
+      expect(breakdown!.factors.globalBuff).toBeCloseTo(1, 6)
+      expect(breakdown!.factors.equipmentAdjustment).toBeCloseTo(1, 6)
+      // pools：hero self（addPercent 100 → ×2）与 global（addPercent 200 → ×3）
+      const heroPool = breakdown!.pools.find((p) => p.addPercent === 100)
+      expect(heroPool?.poolMultiplier).toBeCloseTo(2, 6)
+      const globalPool = breakdown!.pools.find((p) => p.addPercent === 200)
+      expect(globalPool?.poolMultiplier).toBeCloseTo(3, 6)
+      // contributions：carry 自带 heroDpsMultiplier、buf 贡献 globalDpsMultiplier
+      const bufContribution = breakdown!.contributions.find((c) => c.supportHeroId === 'buf')
+      expect(bufContribution?.signals.some((s) => s.signalKind === 'globalDpsMultiplier' && Math.abs(s.multiplier - 3) < 1e-6)).toBe(true)
+      const carryContribution = breakdown!.contributions.find((c) => c.supportHeroId === 'carry')
+      expect(carryContribution?.signals.some((s) => s.signalKind === 'heroDpsMultiplier')).toBe(true)
+    })
+
+    it('team-gold 模式与空阵型 breakdown 为 null', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const gold = createHero('gold', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalGoldMultiplier', value: 200, rawEffect: 'gold,200', source: 'official-parsed' },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['gold', gold]])
+
+      const empty = scoreFormation({ placements: {}, heroesById, scenario })
+      expect(empty.breakdown).toBeNull()
+
+      const teamGold = scoreFormation({
+        placements: { s1: 'gold', s2: 'carry' },
+        heroesById,
+        scenario,
+        scoringMode: 'team-gold',
+      })
+      expect(teamGold.breakdown).toBeNull()
+    })
+
+    it('crit/vulnerability factor 在 breakdown 中体现', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const critBuf = createHero('crit', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalCritDamage', value: 100, rawEffect: 'crit_dmg,100', source: 'official-parsed' },
+        ],
+      })
+      const vulnBuf = createHero('vuln', {
+        seat: 3,
+        supportSignals: [
+          { kind: 'enemyVulnerability', value: 100, rawEffect: 'vuln,100', source: 'official-parsed', monsterTags: [] },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['crit', critBuf], ['vuln', vulnBuf]])
+
+      const result = scoreFormation({
+        placements: { s1: 'carry', s2: 'crit', s3: 'vuln' },
+        heroesById,
+        scenario,
+      })
+
+      expect(result.breakdown!.factors.crit).toBeGreaterThan(1)
+      // monsterTags 空 → 视为无条件匹配（与 computeVulnerabilityFactor 一致）
+      expect(result.breakdown!.factors.vulnerability).toBeGreaterThan(1)
+    })
+  })
+
   it('装备调整比缩放 carryDps（13.4：owned rarity < max → 下调）', () => {
     const carry = createHero('carry', { seat: 1, baseDamage: 10 })
     const heroesById = new Map([['carry', carry]])

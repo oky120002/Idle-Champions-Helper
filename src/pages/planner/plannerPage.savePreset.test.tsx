@@ -36,6 +36,7 @@ function renderSavePreset() {
             placements: { s1: '1', s2: '5' },
             explanations: [{ zh: '当前结果优先保证基线输出。', en: 'This result prioritizes the baseline output.' }],
             warnings: [],
+            breakdown: null,
           }}
           layoutId="layout-grand-hero"
           scenarioRef={{ kind: 'adventure', id: '10' }}

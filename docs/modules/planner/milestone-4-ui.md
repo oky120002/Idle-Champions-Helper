@@ -75,3 +75,22 @@
 
 ### 16.5 浏览器手验 [x]
 - **验证**：桌面拖拽主链路 + 移动端 HeroPicker；`npm run test:regression`。
+
+---
+
+## 模块化分离与 JSON 契约（第4轮审计·阵型模拟器）
+
+**目标**：模拟计算与 UI 显示模块化区分；丢掉 webUI 直接调用引擎也能模拟并输出 JSON（阵型/站位/每位英雄加成/总 DPS）。UI 拿数据渲染，UI 调整英雄→引擎重算→渲染。
+
+**审计结论**：依赖边界本就干净（`src/domain/planner/` 零 React 依赖）；真正缺口在"输出契约"——`evaluatePlacementFit` 已算出 pool/signal 拆解，却被 `scoreFormation` 压成字符串丢弃，`ScoringResult.objective` 是零消费者死输出。
+
+**改动**：
+- `steadyStateScoring`：`ScoringResult` 删死字段 `explanations`/`objective`，增结构化 `breakdown`（`SimulationBreakdown`：baseDps/factors/pools/contributions）；评分循环抽 `scoreSupportDimension` 闭包消除三维度重复调用。
+- `recommendationTypes`：`PlannerResult` 增 `breakdown`（JSON 可序列化），`recommendationEngine` 透传。
+- `recommendationEngine`：抽共享 `resolvePlannerScenario`（搜索与评估共用场景/blocker 解析）；新增 `evaluateFormation` 纯入口（评估指定阵型，合法性违规进 warning 仍出拆解）。删死文件 `objectiveModel.ts`。
+- CLI 证明：`scripts/simulator/simulate.ts` + `npm run simulate`（recommend/evaluate），读 `public/data/v1` JSON → 引擎 → stdout JSON。
+- UI：`PlannerBreakdown.tsx` 渲染 baseDps→carryDps 因子构成 + 按英雄 top-N 加成（超 3 折叠）；`PlannerResultCard` 接入。
+
+**测试**：`steadyStateScoring.test.ts` breakdown 断言；`recommendationEngine.test.ts` evaluateFormation（不搜索/原样返回/seat 冲突 warning）；`PlannerBreakdown.test.tsx`（null 不渲染/因子/按英雄/折叠）；`beamSearchRanking.test.ts` mock 同步。验证 `test:run` + `build` + CLI 实跑双模式。
+
+**编辑→重算闭环**：planner 已有锁槽/指定 carry（15.4）→ `buildPlannerRecommendation` 重搜 → 新 breakdown 渲染；`evaluateFormation` 为未来"可编辑阵型棋盘按 exact 阵型评估"备好引擎入口（CLI 已证明）。

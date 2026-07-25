@@ -3,6 +3,7 @@ import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { useI18n } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
+import { PlannerBreakdown } from './PlannerBreakdown'
 
 export type PlannerResultCardProps = PlannerResult & {
   scoringMode?: ScoringMode
@@ -18,6 +19,7 @@ export function PlannerResultCard({
   explanations,
   warnings,
   areaEstimate,
+  breakdown,
   scoringMode = 'carry-dps',
   slots,
   championById,
@@ -36,6 +38,9 @@ export function PlannerResultCard({
   const displayPlacementEntries = placementEntries && placementEntries.length > 0
     ? placementEntries
     : fallbackPlacementEntries
+  const heroNameById = new Map<string, string>(
+    displayPlacementEntries.map((entry) => [entry.heroId, entry.heroName]),
+  )
   const carrySlotId = carryHeroId
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
@@ -131,6 +136,8 @@ export function PlannerResultCard({
                 </ul>
               </section>
             )}
+
+            <PlannerBreakdown breakdown={breakdown} heroNameById={heroNameById} />
 
             {areaEstimate ? (
               <section data-section="area-estimate" className="planner-result-card__area-estimate">

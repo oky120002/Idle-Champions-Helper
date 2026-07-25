@@ -36,6 +36,7 @@ describe('PlannerResultCard', () => {
     warnings: [] as string[],
     slots,
     championById,
+    breakdown: null,
   }
 
   it('显示游戏记分法表示的得分', () => {

@@ -111,6 +111,7 @@ BUD = 阵型近期最高单次伤害。
    - **JSON 产物按通用性改名**：`planner-heroes.json`→`hero-abilities.json`、`planner-scenarios.json`→`scenarios.json`、`planner-semantic-overrides.json`→`semantic-overrides.json`；IndexedDB key（`plannerHeroOverrides`/`planner-heroes`/`planner-scenarios`）同步改名，旧 key 清理（用户本地数据因 schema 变化重建，可接受）。
    - **planner 推荐引擎模块保留**（`src/domain/planner/`：recommendationEngine/beamSearch/steadyStateScoring/candidatePool/placementFit 是“阵型推荐引擎”职责，`planner` 命名在此准确）；内部引用通用数据时用新名。
    - 执行时全面搜索 `Planner`/`planner` 残留，逐个评估：通用符号去前缀，专属模块保留。阶段 1 的 1.4-1.8/1.11 涵盖函数/文件/JSON 改名。
+9. **模拟/UI 分离 + JSON 输出契约（第4轮审计）**：引擎纯 domain 零 UI 依赖（本就就绪）；补输出契约——`ScoringResult`/`PlannerResult` 增结构化 `breakdown`（`SimulationBreakdown`：baseDps/factors/pools/contributions），删死字段 `explanations`/`objective` 与死文件 `objectiveModel.ts`；新增 `evaluateFormation` 纯入口（评估指定阵型，与 `buildPlannerRecommendation` 共用 `resolvePlannerScenario`）；`scripts/simulator/simulate.ts` + `npm run simulate` CLI 证明"丢 UI 输出 JSON"。详见 `development-design-simulator.md`「模拟/UI 分离与 JSON 输出契约」。
 
 ## 设计修正要点
 
