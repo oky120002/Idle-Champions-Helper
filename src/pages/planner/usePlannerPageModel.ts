@@ -22,6 +22,7 @@ export function usePlannerPageModel() {
   const [championById, setChampionById] = useState<Map<string, Champion>>(() => new Map())
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
+  const [selectedResultIndex, setSelectedResultIndex] = useState(0)
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
   const [loadError, setLoadError] = useState<string | null>(null)
 
@@ -65,6 +66,11 @@ export function usePlannerPageModel() {
     }
   }, [])
 
+  // 阶段 15.2：切换场景时 Top K 重新计算，选中索引回到 top1。
+  useEffect(() => {
+    setSelectedResultIndex(0)
+  }, [selectedVariantId])
+
   const selectedVariant = useMemo(
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
     [collections.variants, selectedVariantId],
@@ -79,6 +85,9 @@ export function usePlannerPageModel() {
   const selectScoringMode = useCallback((mode: ScoringMode) => {
     setScoringMode(mode)
   }, [])
+  const selectResultIndex = useCallback((index: number) => {
+    setSelectedResultIndex(index)
+  }, [])
 
   return {
     championById,
@@ -87,7 +96,9 @@ export function usePlannerPageModel() {
     loadState,
     plannerRecommendation,
     scoringMode,
+    selectedResultIndex,
     selectedVariantId,
+    selectResultIndex,
     selectVariantId,
     selectScoringMode,
   }

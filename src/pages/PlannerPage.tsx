@@ -8,6 +8,8 @@ import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
+import { PlannerTopLineups } from './planner/PlannerTopLineups'
+import { PlannerCarryRanking } from './planner/PlannerCarryRanking'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
 
 function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnType<typeof useI18n>['t']) {
@@ -57,10 +59,17 @@ export function PlannerPage() {
     loadState,
     plannerRecommendation,
     scoringMode,
+    selectedResultIndex,
     selectedVariantId,
+    selectResultIndex,
     selectVariantId,
     selectScoringMode,
   } = usePlannerPageModel()
+
+  const safeResultIndex = plannerRecommendation.results.length > 0
+    ? Math.min(selectedResultIndex, plannerRecommendation.results.length - 1)
+    : 0
+  const selectedResult = plannerRecommendation.results[safeResultIndex] ?? plannerRecommendation.result
 
   return (
     <ConfiguredWorkbenchPage
@@ -142,16 +151,28 @@ export function PlannerPage() {
                   </section>
                 ) : null}
 
-                {plannerRecommendation.result ? (
+                {selectedResult ? (
                   <>
+                    <PlannerTopLineups
+                      results={plannerRecommendation.results}
+                      selectedIndex={safeResultIndex}
+                      championById={championById}
+                      onSelect={selectResultIndex}
+                    />
                     <PlannerResultCard
-                      {...plannerRecommendation.result}
+                      {...selectedResult}
                       scoringMode={scoringMode}
                       slots={plannerRecommendation.slots}
                       championById={championById}
                     />
+                    <PlannerCarryRanking
+                      results={plannerRecommendation.results}
+                      selectedIndex={safeResultIndex}
+                      championById={championById}
+                      onSelect={selectResultIndex}
+                    />
                     <PlannerSavePreset
-                      result={plannerRecommendation.result}
+                      result={selectedResult}
                       layoutId={plannerRecommendation.layoutId}
                       scenarioRef={plannerRecommendation.scenarioRef}
                     />

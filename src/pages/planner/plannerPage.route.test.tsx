@@ -152,6 +152,7 @@ const plannerSemanticOverridesFixture: DataCollection<{ heroId: string }> = {
 function mockPlannerCollections() {
   mockedLoadCollection.mockImplementation(async (name) => {
     if (name === 'variants') return variantsFixture
+    if (name === 'champions') return championsFixture
     if (name === 'hero-abilities') return plannerHeroesFixture
     if (name === 'scenarios') return plannerScenariosFixture
     if (name === 'semantic-overrides') return plannerSemanticOverridesFixture

@@ -6,6 +6,9 @@ import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart }
 import type { ObjectiveResult } from './objectiveModel'
 import { computeCarryDps } from '../simulator/baseDps'
 import { computeTeamGoldFind } from './goldObjective'
+import { computeEffectiveHealth } from '../simulator/survivalCalculation'
+import { computeSingleHitDamage } from '../simulator/budCalculation'
+import { estimateMaxArea, type AreaEstimationResult } from './areaEstimation'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 
@@ -49,6 +52,11 @@ export interface ScoringResult {
   objective: ObjectiveResult
   /** best carry 的 active signal kind 集合，供叙事层结构化消费（避免字符串匹配）。 */
   activeSignalKinds: Set<HeroAbilityKind>
+  /**
+   * 推图层数预估（阶段 15.2）：best carry 的 BUD（carry 单次伤害近似）+ effectiveHealth（survival pool）
+   * 经 estimateMaxArea 得出。team-gold 模式或缺 carry 时为 null。
+   */
+  areaEstimate?: AreaEstimationResult | null
 }
 
 const ZERO: GameNumberValue = new Decimal(0)
@@ -348,12 +356,44 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     }
   }
 
+  let areaEstimate: AreaEstimationResult | null = null
+  if (bestCarryHeroId) {
+    const bestCarryEntry = placedEntries.find((entry) => entry.hero.heroId === bestCarryHeroId)
+    if (bestCarryEntry) {
+      const survivalPools = new Map<string, AggregatedPool>()
+      for (const supportEntry of placedEntries) {
+        const fit = evaluatePlacementFit({
+          carryHero: bestCarryEntry.hero,
+          carrySlotId: bestCarryEntry.slotId,
+          supportHero: supportEntry.hero,
+          supportSlotId: supportEntry.slotId,
+          scenario: input.scenario,
+          placements: input.placements,
+          heroesById: input.heroesById,
+          dimension: 'survival',
+        })
+        mergePools(survivalPools, fit.pools)
+      }
+      const carryLevel = input.heroLevels?.get(bestCarryHeroId) ?? DEFAULT_CARRY_LEVEL
+      const effectiveHealth = computeEffectiveHealth(
+        bestCarryEntry.hero,
+        carryLevel,
+        productOfPoolMultipliers(survivalPools),
+      )
+      // ponytail: BUD 用 carry 单次伤害近似（carryDps × attackCooldown）；carry 通常设 BUD，
+      // 绝对值偏差归 7.5 BUD 实测校准。相对比较保序。
+      const bud = computeSingleHitDamage(bestScore, bestCarryEntry.hero.baseAttackCooldown)
+      areaEstimate = estimateMaxArea({ bud, effectiveHealth })
+    }
+  }
+
   return {
     score: bestScore,
     warnings: bestWarnings,
     explanations: bestExplanations,
     carryHeroId: bestCarryHeroId,
     activeSignalKinds: bestActiveKinds,
+    areaEstimate,
     objective: {
       value: bestScore,
       breakdown: bestCarryHeroId

@@ -15,6 +15,7 @@ import {
   type PlannerNarrativeLine,
   type PlannerPlacementEntry,
   type PlannerRecommendation,
+  type PlannerResult,
 } from './recommendationTypes'
 import { scoreFormation, type ScoringMode } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
@@ -158,12 +159,13 @@ export function buildPlannerRecommendation(
   const scoringMode = options.scoringMode ?? 'carry-dps'
 
   if (!selectedVariant || collections.plannerHeroes.length === 0) {
-    return { result: null, layoutId: null, slots: [], scenarioRef: null, blocker: null }
+    return { result: null, results: [], layoutId: null, slots: [], scenarioRef: null, blocker: null }
   }
 
   if (!profileSnapshot) {
     return {
       result: null,
+      results: [],
       layoutId: null,
       slots: [],
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
@@ -175,6 +177,7 @@ export function buildPlannerRecommendation(
   if (!scenario || !scenario.formationLayoutId || scenario.slotTopology.length === 0) {
     return {
       result: null,
+      results: [],
       layoutId: null,
       slots: [],
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
@@ -225,6 +228,7 @@ export function buildPlannerRecommendation(
   if (heroes.length < slots.length) {
     return {
       result: null,
+      results: [],
       layoutId: scenario.formationLayoutId,
       slots: toFormationSlots(scenario),
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
@@ -283,15 +287,25 @@ export function buildPlannerRecommendation(
     },
   })
 
-  // results 已按 carryDps 降序；scoreFormation 回调已把非法阵型置零，
-  // 故首个 score>0 即最高分合法阵型。slice(PLANNER_TOP_K) 为 M4 15.2 多阵型输出预留。
-  const top = results
+  // 阶段 15.2：distinct-carry Top K。beamSearch 已按 carryDps 降序；先过滤非法（score≤0），
+  // 再按 carryHeroId 去重（每个 carry 取最高分阵型），取前 PLANNER_TOP_K 作为多阵型输出。
+  const legal = results.filter((result) => compareGameNumbers(result.score, SCORE_ZERO) > 0)
+  const bestByCarry = new Map<string, (typeof legal)[number]>()
+  for (const result of legal) {
+    const key = result.carryHeroId ?? '__none__'
+    const existing = bestByCarry.get(key)
+    if (!existing || compareGameNumbers(result.score, existing.score) > 0) {
+      bestByCarry.set(key, result)
+    }
+  }
+  const topResults = [...bestByCarry.values()]
+    .sort((left, right) => compareGameNumbers(right.score, left.score))
     .slice(0, PLANNER_TOP_K)
-    .find((result) => compareGameNumbers(result.score, SCORE_ZERO) > 0)
 
-  if (!top) {
+  if (topResults.length === 0) {
     return {
       result: null,
+      results: [],
       layoutId: scenario.formationLayoutId,
       slots: toFormationSlots(scenario),
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
@@ -299,10 +313,10 @@ export function buildPlannerRecommendation(
     }
   }
 
-  const placementEntries = buildPlacementEntries(slots, top.placements, heroById)
-
-  return {
-    result: {
+  const scenarioWarnings = buildPlannerWarnings(scenario, profileSnapshot)
+  const plannerResults: PlannerResult[] = topResults.map((top) => {
+    const placementEntries = buildPlacementEntries(slots, top.placements, heroById)
+    return {
       score: formatGameNumber(top.score),
       carryHeroId: top.carryHeroId,
       placements: top.placements,
@@ -315,8 +329,14 @@ export function buildPlannerRecommendation(
         top.score,
         top.activeSignalKinds,
       ),
-      warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(scenario, profileSnapshot)])],
-    },
+      warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
+      areaEstimate: top.areaEstimate ?? null,
+    }
+  })
+
+  return {
+    result: plannerResults[0] ?? null,
+    results: plannerResults,
     layoutId: scenario.formationLayoutId,
     slots: toFormationSlots(scenario),
     scenarioRef: { kind: 'variant', id: selectedVariant.id },

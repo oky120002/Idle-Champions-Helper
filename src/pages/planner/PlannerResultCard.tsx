@@ -17,6 +17,7 @@ export function PlannerResultCard({
   placementEntries,
   explanations,
   warnings,
+  areaEstimate,
   scoringMode = 'carry-dps',
   slots,
   championById,
@@ -38,6 +39,11 @@ export function PlannerResultCard({
   const carrySlotId = carryHeroId
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
+  const boundLabel = areaEstimate?.boundBy === 'survival'
+    ? t({ zh: '存活受限', en: 'survival-bound' })
+    : areaEstimate?.boundBy === 'bud'
+      ? t({ zh: '伤害受限', en: 'BUD-bound' })
+      : t({ zh: '已达上限', en: 'max-area' })
 
   return (
     <article
@@ -125,6 +131,23 @@ export function PlannerResultCard({
                 </ul>
               </section>
             )}
+
+            {areaEstimate ? (
+              <section data-section="area-estimate" className="planner-result-card__area-estimate">
+                <h4 className="planner-result-card__section-title">
+                  {t({ zh: '推图预估', en: 'Area estimate' })}
+                </h4>
+                <p data-testid="planner-area-estimate">
+                  {t({ zh: `约可推进到第 ${areaEstimate.area} 层`, en: `~ area ${areaEstimate.area}` })}
+                </p>
+                <p className="planner-result-card__area-estimate-note">
+                  {t({
+                    zh: `约束：${boundLabel}（击杀上限 ${areaEstimate.killableArea} / 存活上限 ${areaEstimate.survivableArea}，绝对值未校准）`,
+                    en: `bound: ${boundLabel} (killable ${areaEstimate.killableArea} / survivable ${areaEstimate.survivableArea}, uncalibrated)`,
+                  })}
+                </p>
+              </section>
+            ) : null}
 
             {warnings.length > 0 && (
               <section data-section="warnings" className="planner-result-card__warnings">
