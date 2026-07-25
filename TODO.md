@@ -48,15 +48,6 @@ repair: rebuild
   - 备注: deleteUserProfileData 语义是删 profile snapshot（handleDelete 后 setSyncState no-snapshot），不清 heroAbilityOverrides；override 是否随 profile 删待产品决策
     - 原 generateCoverageReport 孤学子项已于 2026-07-24 删除（simulator-data-coverage.ts + simulatorDataCoverage.test.ts，无调用方、无文档计划），本条仅剩 heroAbilityOverrides
 
-- crit/vuln 维度的 evaluatePlacementFit pools 是死代码（计算后从不消费） <!-- auto-todo:id=atd_6badc71012 -->
-  - 记录时间: `2026-07-24T13:20:44+08:00`
-  - 类型: optimization
-  - 位置: `src/domain/planner/steadyStateScoring.ts:269`
-  - 备注: scoreFormation 对 dimension='crit'/'vulnerability' 调 evaluatePlacementFit，但其返回的 fit.pools（addPercent/multFactor 聚合）从不被读取——只用 scoreBreakdown 喂给 computeCritFactor/computeVulnerabilityFactor。
-    - 影响：2/3 pool 聚合计算被丢弃，热路径无谓开销
-    - 修复方向：evaluatePlacementFit 支持只产 scoreBreakdown（跳过 pool 聚合），或合并到三重调用消除方案
-    - 证据：steadyStateScoring.ts 只 mergePools 了 damage 的 fit.pools（:266），critFit.pools/vulnFit.pools 无引用
-
 - equipmentAdjustment 结构性局限（stage 15 接线前需重审） <!-- auto-todo:id=atd_4410248f38 -->
   - 记录时间: `2026-07-24T22:10:04+08:00`
   - 类型: follow-up
@@ -72,7 +63,7 @@ repair: rebuild
   - 类型: optimization
   - 位置: `src/domain/planner/steadyStateScoring.ts:260`
   - 备注: 第十二轮审计复核修正原描述：dimension filter 在 matchesPositionQualifier/matchesHeroQualifier 之前（placementFit.ts:218-223），每个信号只在自己维度的调用里做 position/hero 检查一次——原「position/hero 检查 3×」是事实错误。
-    - 实际冗余：collectSignals 跑 3 次（廉价 array spread）+ for-loop 3 次（每信号 dimension check 跑 3 次但 position/hero/pool 只 1 次）+ crit/vuln pool 聚合后被丢弃（见 atd_6badc71012）。
+    - 实际冗余：collectSignals 跑 3 次（廉价 array spread）+ for-loop 3 次（每信号 dimension check 跑 3 次但 position/hero/pool 只 1 次）；crit/vuln 维度的 pool 聚合已由 evaluatePlacementFit 的 aggregatePools:false 跳过（原 atd_6badc71012 已解决），剩余冗余仅 collectSignals 与 dimension filter 重复。
     - 量级：crit/vuln 活跃信号通常 0-2 个，pool 聚合是廉价 Map op；整体浪费可忽略（H² 对 × 少量 op）。
     - 处置：不优先优化（ponytail：无实测性能需求不重构热路径；scoring core 改动风险 > 收益）。若 profiling 显示 scoreFormation 是瓶颈再统一调用 + 按 dimension 分区。
 
@@ -84,25 +75,6 @@ repair: rebuild
     - 三种数据形态：① v80 hero_id（干净，可直接提取）；② v181/v186 NPC names（非英雄）；③ v232 hero by name（脆弱，本地化敏感）。
     - 语义疑点：slot_escort hero_id 是「force-include（玩家须含该英雄）」还是「slot-occupied-by-hero（预占特定槽位）」？forcedHeroes 是 slot 无关的，不捕捉 slot_id=4 的槽位锁定。
     - 处置：影响面极小（1 variant 干净 + 1 variant 需 name 解析），语义需确认；不优先。若修，hero_id 路径在 collectHeroRestrictions 加 slot_escort.hero_id → forcedHeroIds（NPC 天然排除）。
-
-- filter-layout-stability E2E 抽屉折叠动画并行下 flaky <!-- auto-todo:id=atd_928b2bd127 -->
-  - 记录时间: `2026-07-25T14:53:20+08:00`
-  - 类型: bug
-  - 位置: `tests/e2e/filter-layout-stability.spec.ts:250`
-  - 备注: 抽屉折叠/展开动画 E2E 在 fullyParallel 下偶发失败，失败行每次不同（250/303/304）：collapseTravel/expandTravel 偶发为 0，或 rightGaps 超阈（186 > 18）。
-    - 影响：CI 可靠性——并行负载下浏览器节流动画导致计时断言失败；单独跑该文件通过（10/10）。
-    - 证据：全量 E2E 29/30，唯一失败即此；失败点漂移说明是动画计时而非逻辑错。
-    - 与 formation 无关：测试针对 champions 筛选页抽屉，M4 未触及。
-    - 后续：串行化该测试 / 放宽动画阈值容差 / 用 expect.toPass 重试。
-
-- 拖拽 slot 无 dragover 视觉反馈（桌面 DnD UX 增强，非 bug） <!-- auto-todo:id=atd_7f3a2c9d1e -->
-  - 记录时间: `2026-07-25T16:12:00+08:00`
-  - 类型: optimization
-  - 位置: `src/pages/formation/FormationBoardCanvas.tsx:70`
-  - 备注: M4 第2轮审计发现：Canvas slot `onDragOver` 只 `preventDefault`，无视觉高亮；用户拖拽英雄时不知哪些 slot 可放。
-    - 当前：drop 生效（handleAssignChampion），slot 有 emptyIndicator（Plus）与已放置英雄提供位置感；移动端走 picker 无 DnD；键盘路径由原生 `<select>` 兜底。
-    - 修复方向：`onDragEnter`/`onDragLeave` 设 `data-drag-over` 属性 + CSS `.formation-slot[data-drag-over]` 高亮（Canvas 需加 per-slot drag state）。
-    - 暂不修：UX 增强，非功能缺陷；Canvas 是纯渲染组件，加 drag state 增复杂度，等实测用户反馈再权衡。
 
 - StatusMessage 单语 string，英文 locale 下状态条全中文（系统性 i18n 缺口） <!-- auto-todo:id=atd_ad52385c59 -->
   - 记录时间: `2026-07-25T16:37:17+08:00`
@@ -121,13 +93,5 @@ repair: rebuild
     - 需 UX 设计桌面拖拽 / 移动 HeroPicker 的 exact-formation 评估面板
     - 区别于现有 lockedSlots 重搜：lockedSlots 仍搜索最优排列，evaluateFormation 评估用户指定阵型
     - 当前调整→重算闭环由 lockedSlots 承担，exact-formation 评估是下一步
-
-- PlannerBreakdown signalKind 友好中文标签 <!-- auto-todo:id=atd_ccf5ecd03f -->
-  - 记录时间: `2026-07-25T21:03:18+08:00`
-  - 类型: optimization
-  - 位置: `src/pages/planner/PlannerBreakdown.tsx`
-  - 备注: PlannerBreakdown 当前渲染技术名（heroDpsMultiplier / globalDpsMultiplier / adjacentBuff 等）
-    - 加 HeroAbilityKind→中文友好标签映射可提升玩家可读性
-    - multiplier 值已是关键信息，signalKind 标签属增量优化
 
 <!-- auto-todo:end -->

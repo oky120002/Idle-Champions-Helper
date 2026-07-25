@@ -1,4 +1,4 @@
-import type { CSSProperties, DragEvent, ReactNode } from 'react'
+import { useState, type CSSProperties, type DragEvent, type ReactNode } from 'react'
 import { Crown } from 'lucide-react'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { useI18n } from '../../app/i18n'
@@ -42,10 +42,18 @@ export function FormationBoardCanvas({
   onSlotDrop,
 }: FormationBoardCanvasProps) {
   const { t, locale } = useI18n()
+  // 阶段 16.5：桌面 DnD 时高亮当前 dragover 槽位，给用户「可放在这里」的视觉反馈。
+  // dragOver 持续触发，只在 slot 变化时 setState 避免高频渲染；dragEnd（拖出/松开）兜底清除。
+  const [dragOverSlotId, setDragOverSlotId] = useState<string | null>(null)
 
   return (
     <div className="formation-board-wrap">
-      <div className="formation-board" data-testid={testId} style={boardStyle}>
+      <div
+        className="formation-board"
+        data-testid={testId}
+        style={boardStyle}
+        onDragEnd={() => setDragOverSlotId(null)}
+      >
         {slots.map((slot) => {
           const championId = placements[slot.id]
           const champion = championId ? championById.get(championId) ?? null : null
@@ -59,6 +67,7 @@ export function FormationBoardCanvas({
               data-slot-id={slot.id}
               data-hero-id={championId ?? undefined}
               data-carry={isCarry ? 'true' : undefined}
+              data-drag-over={dragOverSlotId === slot.id ? 'true' : undefined}
               className={[
                 'formation-slot',
                 isCarry ? 'formation-slot--carry' : '',
@@ -69,9 +78,15 @@ export function FormationBoardCanvas({
               style={{ gridColumn: slot.column, gridRow: slot.row }}
               {...(onSlotDrop
                 ? {
-                    onDragOver: (event: DragEvent<HTMLDivElement>) => event.preventDefault(),
+                    onDragOver: (event: DragEvent<HTMLDivElement>) => {
+                      event.preventDefault()
+                      if (dragOverSlotId !== slot.id) {
+                        setDragOverSlotId(slot.id)
+                      }
+                    },
                     onDrop: (event: DragEvent<HTMLDivElement>) => {
                       event.preventDefault()
+                      setDragOverSlotId(null)
                       onSlotDrop(slot.id, event)
                     },
                   }

@@ -325,6 +325,9 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       // carryDps 只聚合 damage 维度；gold/crit/survival 等非伤害 pool 必须显式过滤，
       // 否则阶段 3+ 引入新维度后会泄漏进 carryDps（同 typecheck masking 教训）。
       dimension,
+      // crit/vulnerability 只消费 scoreBreakdown（喂 computeCritFactor/computeVulnerabilityFactor），
+      // 不读 pools——跳过聚合避免死代码计算。damage 维度的 pools 才喂 productOfPoolMultipliers。
+      aggregatePools: dimension === 'damage',
     })
 
   for (const carryEntry of placedEntries) {

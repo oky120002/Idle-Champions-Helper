@@ -1133,6 +1133,28 @@ describe('placement fit', () => {
     expect(fit.totalMultiplier).toBeCloseTo(4.5, 6)
   })
 
+  it('aggregatePools: false 时跳过 pool 聚合，只产 scoreBreakdown', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_multiplier_mult,100', source: 'official-parsed' },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+      aggregatePools: false,
+    })
+
+    // scoreBreakdown 照常产出（crit/vulnerability 维度消费它算 factor）
+    expect(fit.scoreBreakdown[0]?.reasonCode).toBe('global-match')
+    expect(fit.scoreBreakdown[0]?.multiplier).toBe(2)
+    // pool 聚合被跳过——消费方不读 pools/totalMultiplier
+    expect(fit.pools).toEqual([])
+    expect(fit.totalMultiplier).toBe(1)
+  })
+
   it('per_upgrade_targets 根据命中的目标数量累乘', () => {
     const carryHero = createHero('carry', { tags: ['female'] })
     const supportHero = createHero('support', {

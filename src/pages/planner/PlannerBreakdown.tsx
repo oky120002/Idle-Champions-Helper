@@ -1,5 +1,6 @@
 import type { SimulationBreakdown } from '../../domain/planner/steadyStateScoring'
-import { useI18n } from '../../app/i18n'
+import type { HeroAbilityKind } from '../../domain/abilities/abilityModel'
+import { useI18n, type LocaleText } from '../../app/i18n'
 
 /** 紧凑格式化因子数值：极大/极小用科学计数，常规保留两位。 */
 function formatFactor(value: number): string {
@@ -14,6 +15,30 @@ function formatFactor(value: number): string {
 
 /** 每位英雄最多展示的加成条目数；超出折叠为「+N」，避免几十条 signal 刷屏。 */
 const SIGNAL_SHOW_LIMIT = 3
+
+/**
+ * HeroAbilityKind → 友好标签（双语）。Record 强制 17 种全覆盖，
+ * 新增 kind 时 TS 报错提醒补标签，避免技术名直出。
+ */
+const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
+  globalDpsMultiplier: { zh: '全局 DPS', en: 'Global DPS' },
+  heroDpsMultiplier: { zh: '英雄 DPS', en: 'Hero DPS' },
+  adjacentBuff: { zh: '邻位加成', en: 'Adjacent buff' },
+  taggedChampionBuff: { zh: '标签加成', en: 'Tagged buff' },
+  globalGoldMultiplier: { zh: '全局金币', en: 'Global gold' },
+  heroGoldMultiplier: { zh: '英雄金币', en: 'Hero gold' },
+  globalCritChance: { zh: '全局暴击率', en: 'Global crit chance' },
+  heroCritChance: { zh: '英雄暴击率', en: 'Hero crit chance' },
+  globalCritDamage: { zh: '全局暴击伤', en: 'Global crit dmg' },
+  heroCritDamage: { zh: '英雄暴击伤', en: 'Hero crit dmg' },
+  globalHealthMultiplier: { zh: '全局生命', en: 'Global health' },
+  heroHealthMultiplier: { zh: '英雄生命', en: 'Hero health' },
+  damageReduction: { zh: '伤害减免', en: 'Damage reduction' },
+  enemyVulnerability: { zh: '易伤', en: 'Vulnerability' },
+  attackSpeedMult: { zh: '攻速', en: 'Attack speed' },
+  cooldownReduction: { zh: '冷却缩减', en: 'Cooldown' },
+  patronPerkMult: { zh: '保卫者特权', en: 'Patron perk' },
+}
 
 interface PlannerBreakdownProps {
   breakdown: SimulationBreakdown | null
@@ -92,7 +117,7 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
                   <ul className="planner-breakdown__signals">
                     {top.map((signal, index) => (
                       <li key={`${signal.signalKind}:${index}`}>
-                        <span>{signal.signalKind}</span>
+                        <span>{t(SIGNAL_KIND_LABEL[signal.signalKind])}</span>
                         <strong>×{formatFactor(signal.multiplier)}</strong>
                       </li>
                     ))}

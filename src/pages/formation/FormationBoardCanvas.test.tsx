@@ -129,4 +129,50 @@ describe('FormationBoardCanvas', () => {
 
     expect(badge).not.toHaveAttribute('draggable')
   })
+
+  it('dragOver 槽位时加 data-drag-over 视觉反馈，drop 后清除', () => {
+    const { container } = renderCanvas({ onSlotDrop: vi.fn() })
+    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+
+    expect(slot).not.toHaveAttribute('data-drag-over')
+
+    fireEvent(slot, createEvent.dragOver(slot))
+    expect(container.querySelector('[data-slot-id="slot-a"][data-drag-over="true"]')).not.toBeNull()
+
+    fireEvent(slot, createEvent.drop(slot))
+    expect(slot).not.toHaveAttribute('data-drag-over')
+  })
+
+  it('切换 dragOver 到另一槽位时，旧槽位高亮转移到新槽位', () => {
+    const { container } = renderCanvas({ onSlotDrop: vi.fn() })
+    const slotA = container.querySelector('[data-slot-id="slot-a"]')!
+    const slotB = container.querySelector('[data-slot-id="slot-b"]')!
+
+    fireEvent(slotA, createEvent.dragOver(slotA))
+    expect(slotA).toHaveAttribute('data-drag-over', 'true')
+
+    fireEvent(slotB, createEvent.dragOver(slotB))
+    expect(slotA).not.toHaveAttribute('data-drag-over')
+    expect(slotB).toHaveAttribute('data-drag-over', 'true')
+  })
+
+  it('dragEnd 清除 dragOver 高亮（拖出 board 松开场景）', () => {
+    const { container } = renderCanvas({ onSlotDrop: vi.fn() })
+    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const board = container.querySelector('.formation-board')!
+
+    fireEvent(slot, createEvent.dragOver(slot))
+    expect(container.querySelector('[data-drag-over="true"]')).not.toBeNull()
+
+    fireEvent(board, createEvent.dragEnd(board))
+    expect(container.querySelector('[data-drag-over="true"]')).toBeNull()
+  })
+
+  it('未传 onSlotDrop 时只读棋盘不响应 dragOver（不设 data-drag-over）', () => {
+    const { container } = renderCanvas()
+    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+
+    fireEvent(slot, createEvent.dragOver(slot))
+    expect(slot).not.toHaveAttribute('data-drag-over')
+  })
 })

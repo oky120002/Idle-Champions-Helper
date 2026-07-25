@@ -77,6 +77,20 @@ describe('PlannerBreakdown', () => {
     expect(screen.getByText('×3.00')).toBeInTheDocument()
   })
 
+  it('signalKind 渲染为友好中文标签而非技术名', () => {
+    render(
+      <I18nProvider>
+        <PlannerBreakdown breakdown={buildBreakdown()} heroNameById={new Map([['carry', '威尔'], ['buf', '斯凯拉']])} />
+      </I18nProvider>,
+    )
+    // heroDpsMultiplier → 「英雄 DPS」；globalDpsMultiplier → 「全局 DPS」
+    expect(screen.getByText('英雄 DPS')).toBeInTheDocument()
+    expect(screen.getByText('全局 DPS')).toBeInTheDocument()
+    // 技术名不再直出
+    expect(screen.queryByText('heroDpsMultiplier')).toBeNull()
+    expect(screen.queryByText('globalDpsMultiplier')).toBeNull()
+  })
+
   it('每位英雄超过 3 条加成时折叠为 +N', () => {
     const signals: PlacementFitScorePart[] = Array.from({ length: 5 }, (_, index) => ({
       signalKind: 'heroDpsMultiplier',

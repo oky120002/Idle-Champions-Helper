@@ -47,6 +47,19 @@
     inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
+/* 阶段 16.5：桌面 DnD dragover 视觉反馈——告知用户该槽位可放置。 */
+.formation-slot[data-drag-over="true"] {
+  border-color: rgba(220, 170, 90, 0.7);
+  border-style: solid;
+  background:
+    radial-gradient(circle at top right, rgba(220, 170, 90, 0.16), transparent 54%),
+    var(--surface-gloss),
+    rgba(7, 12, 18, 0.24);
+  box-shadow:
+    inset 0 0 0 2px rgba(220, 170, 90, 0.3),
+    inset 0 1px 0 rgba(255, 243, 223, 0.05);
+}
+
 .formation-slot__label {
   font-weight: 700;
   color: #fff5e5;

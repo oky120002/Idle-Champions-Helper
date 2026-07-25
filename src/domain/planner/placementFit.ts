@@ -213,6 +213,8 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
   const poolsByKey = new Map<string, AggregatedPool>()
 
   const dimensionFilter = input.dimension ?? null
+  // aggregatePools=false 时跳过 pool 构建，只产 scoreBreakdown（crit/vulnerability 维度省去死代码计算）。
+  const aggregatePools = input.aggregatePools ?? true
 
   for (const signal of collectSignals(input)) {
     if (dimensionFilter) {
@@ -285,25 +287,28 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
     const multiplier = multiplierResult.multiplier
     const relation = resolvePositionRelation(signal)
     const reasonCode = resolveActiveReasonCode(signal, relation)
-    const dimension = DIMENSION_BY_KIND[signal.kind]
-    const scope = POOL_SCOPE_BY_KIND[signal.kind]
-    const poolKey = `${dimension}:${scope}`
 
-    const pool = poolsByKey.get(poolKey) ?? {
-      dimension,
-      scope,
-      addPercent: 0,
-      multFactor: 1,
-      poolMultiplier: 1,
+    if (aggregatePools) {
+      const dimension = DIMENSION_BY_KIND[signal.kind]
+      const scope = POOL_SCOPE_BY_KIND[signal.kind]
+      const poolKey = `${dimension}:${scope}`
+
+      const pool = poolsByKey.get(poolKey) ?? {
+        dimension,
+        scope,
+        addPercent: 0,
+        multFactor: 1,
+        poolMultiplier: 1,
+      }
+      if (signal.amountFunc === 'mult') {
+        pool.multFactor *= multiplier
+      } else {
+        // add / unknown / 默认：把已折算倍率还原为百分比，同一 pool 内 additive 相加。
+        pool.addPercent += (multiplier - 1) * 100
+      }
+      pool.poolMultiplier = (1 + pool.addPercent / 100) * pool.multFactor
+      poolsByKey.set(poolKey, pool)
     }
-    if (signal.amountFunc === 'mult') {
-      pool.multFactor *= multiplier
-    } else {
-      // add / unknown / 默认：把已折算倍率还原为百分比，同一 pool 内 additive 相加。
-      pool.addPercent += (multiplier - 1) * 100
-    }
-    pool.poolMultiplier = (1 + pool.addPercent / 100) * pool.multFactor
-    poolsByKey.set(poolKey, pool)
 
     scoreBreakdown.push({
       signalKind: signal.kind,
@@ -318,8 +323,10 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
   }
 
   let totalMultiplier = 1
-  for (const pool of poolsByKey.values()) {
-    totalMultiplier *= pool.poolMultiplier
+  if (aggregatePools) {
+    for (const pool of poolsByKey.values()) {
+      totalMultiplier *= pool.poolMultiplier
+    }
   }
 
   return {

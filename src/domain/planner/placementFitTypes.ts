@@ -90,4 +90,10 @@ export interface EvaluatePlacementFitInput {
   heroesById?: Map<string, ResolvedHeroAbilityProfile>
   /** 按 dimension 过滤；不传时聚合全部 damage 维度 signal。 */
   dimension?: HeroAbilityDimension
+  /**
+   * 是否聚合 pools/totalMultiplier；默认 true。
+   * false 时跳过 pool 聚合（pools 返回空、totalMultiplier 返回 1），只产 scoreBreakdown——
+   * 供 crit/vulnerability 等不消费 pool、直接走 scoreBreakdown→factor 的维度省去死代码计算。
+   */
+  aggregatePools?: boolean
 }
