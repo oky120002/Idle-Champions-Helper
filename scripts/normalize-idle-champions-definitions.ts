@@ -326,6 +326,8 @@ export async function normalizeDefinitionsSnapshot(
   const localizedUpgradesById = buildIdMap(asRawArray(localizedDefinitions.upgrade_defines))
   const effectDefinitionsById = buildIdMap(asRawArray(rawDefinitions.effect_defines))
   const localizedEffectDefinitionsById = buildIdMap(asRawArray(localizedDefinitions.effect_defines))
+  // 阶段 14.4：ability_defines（ult/主动技能，id===hero_id 对齐）。
+  const abilityDefinesById = buildIdMap(asRawArray(rawDefinitions.ability_defines))
   const featsByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.hero_feat_defines))
   const localizedFeatsById = buildIdMap(asRawArray(localizedDefinitions.hero_feat_defines))
   const skinsByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.hero_skin_defines))
@@ -468,6 +470,7 @@ export async function normalizeDefinitionsSnapshot(
       localizedLootById,
       legendaryEffectDefinitionsById,
       localizedLegendaryEffectDefinitionsById,
+      abilityDefinesById.get(champion.id),
     ),
   )
 

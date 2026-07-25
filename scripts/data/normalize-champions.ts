@@ -597,6 +597,79 @@ export function normalizeChampionVisual(
   }
 }
 
+/**
+ * 阶段 14.4：英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。
+ * effect 三形态：裸 string、JSON 串（'{"effect_string":"..."}'）、effect_def,N 引用（展开 effect_defines[N].effect_keys）。
+ */
+export interface ChampionAbility {
+  id: string
+  duration: number
+  baseCooldown: number
+  /** uptime 折算后的 effect_string 列表（value × min(1, duration/baseCooldown)，effect_def 引用已展开）。 */
+  effects: string[]
+}
+
+/** 解析 ability.effect（三形态）→ 标准 effect_string 列表（effect_def 引用已展开）。 */
+function expandAbilityEffectStrings(
+  effect: unknown,
+  effectDefinitionsById: DefinitionMap,
+): string[] {
+  if (typeof effect !== 'string' || effect === '') return []
+  // 形态 1：effect_def,N 引用 → 展开 effect_defines[N].effect_keys（顶层，raw effect_defines 结构）。
+  const defMatch = /^effect_def,(.+)$/.exec(effect)
+  if (defMatch) {
+    const def = effectDefinitionsById.get(defMatch[1]!)
+    return asRawArray(asRawRecord(def).effect_keys)
+      .map((key) => asRawRecord(key))
+      .map((key) => (typeof key.effect_string === 'string' ? key.effect_string : ''))
+      .filter((s) => s !== '')
+  }
+  // 形态 2：JSON 串 → parse 取 effect_string
+  if (effect.startsWith('{')) {
+    try {
+      const parsed = JSON.parse(effect) as { effect_string?: unknown }
+      return typeof parsed.effect_string === 'string' && parsed.effect_string !== ''
+        ? [parsed.effect_string]
+        : []
+    } catch {
+      return []
+    }
+  }
+  // 形态 3：裸 string
+  return [effect]
+}
+
+/** effect_string 的 value 段 × uptime（modron 满级 steady-state 折算）。 */
+function foldEffectValueByUptime(effectString: string, uptime: number): string {
+  if (uptime >= 1) return effectString
+  const parts = effectString.split(',')
+  if (parts.length < 2) return effectString
+  const value = Number(parts[1])
+  if (!Number.isFinite(value)) return effectString
+  parts[1] = String(value * uptime)
+  return parts.join(',')
+}
+
+/**
+ * 提取 ability_defines → champion-details.ability（阶段 14.4）。
+ * uptime = duration/baseCooldown（modron 满级自动施放 steady-state）；value × uptime 预折算进 effect_string，
+ * 消费层（collectRawEffectEntries 'ability' 源）直接收折算后串进 pool（global_dps/hero_dps/attack_speed/buff_upgrades）。
+ * 无 modron 降级留消费层（阶段 13/15 按玩家状态）。
+ */
+export function normalizeChampionAbility(
+  abilityDefine: RawDefinition | undefined,
+  effectDefinitionsById: DefinitionMap,
+): ChampionAbility | null {
+  if (!abilityDefine) return null
+  const duration = normalizeNumber(abilityDefine.duration) ?? 0
+  const baseCooldown = normalizeNumber(abilityDefine.base_cooldown) ?? 0
+  const uptime = duration > 0 && baseCooldown > 0 ? Math.min(1, duration / baseCooldown) : 0
+  const effects = expandAbilityEffectStrings(abilityDefine.effect, effectDefinitionsById).map(
+    (effectString) => foldEffectValueByUptime(effectString, uptime),
+  )
+  return { id: toText(abilityDefine.id) ?? '', duration, baseCooldown, effects }
+}
+
 export interface ChampionDetail {
   updatedAt: unknown
   summary: NormalizedChampion
@@ -633,6 +706,8 @@ export interface ChampionDetail {
   skins: ChampionSkin[]
   loot: ChampionLoot[]
   legendaryEffects: LegendaryEffect[]
+  /** 阶段 14.4 英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。 */
+  ability: ChampionAbility | null
   raw: {
     hero: RawSnapshotPair
     attacks: RawEntry[]
@@ -663,6 +738,7 @@ export function normalizeChampionDetail(
   localizedLootById: DefinitionMap,
   legendaryEffectDefinitionsById: DefinitionMap,
   localizedLegendaryEffectDefinitionsById: DefinitionMap,
+  abilityDefine: RawDefinition | undefined,
 ): ChampionDetail {
   const baseAttackId = toText(originalDefinition.base_attack_id)
   const ultimateAttackId = toText(originalDefinition.ultimate_attack_id)
@@ -771,6 +847,7 @@ export function normalizeChampionDetail(
     skins,
     loot,
     legendaryEffects,
+    ability: normalizeChampionAbility(abilityDefine, effectDefinitionsById),
     raw: {
       hero: buildRawSnapshotPair(originalDefinition, localizedDefinition ?? null),
       attacks: [baseAttackId, ultimateAttackId]

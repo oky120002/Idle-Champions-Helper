@@ -897,6 +897,31 @@ it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 �
   expect(heroDpsEntry?.effect.filter_targets).toEqual([{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
 })
 
+it('collectEffectEntries 收集 ability effects（阶段 14.4 ult/主动技能，uptime 已在 normalize 折算）', () => {
+  // detail.ability.effects 是 normalize 层折算后的 effect_string 列表（value × uptime）。
+  // collectRawEffectEntries 加第六源 'ability' 收集，与 loot/legendary/feat 同结构进 M1 基线。
+  const detail = {
+    upgrades: [],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+    ability: {
+      id: '1',
+      duration: 30,
+      baseCooldown: 3600,
+      effects: ['global_dps_multiplier_mult,0.8333333333333333', 'do_nothing'],
+    },
+  }
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const abilityEntries = entries.filter((entry) => entry.sourceBucket === 'ability')
+  const effectStrings = abilityEntries.map((entry) => entry.effectString).sort()
+  expect(effectStrings).toEqual(['do_nothing', 'global_dps_multiplier_mult,0.8333333333333333'])
+  // duration/baseCooldown 随 entry.effect 流入（供消费层 modron gating，阶段 15 按玩家状态）。
+  const dpsEntry = abilityEntries.find((entry) => entry.effectString.startsWith('global_dps_multiplier_mult,'))
+  expect(dpsEntry?.effect.duration).toBe(30)
+  expect(dpsEntry?.effect.baseCooldown).toBe(3600)
+})
+
 it('collectEffectEntries sentinel（required_level>=9999）完全相同副本去重（CNE 数据展开产物）', () => {
   // CNE 把非可购（required_level=9999）的逻辑 buff 序列化成多条完全相同 upgrade（仅 id 不同，
   // magnitude 相同）。如 Jaheira 38 条 buff_upgrades,100,9714,...，只生效一次。

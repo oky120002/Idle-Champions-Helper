@@ -636,6 +636,23 @@ function collectRawEffectEntries(detail: unknown): {
     }
   }
 
+  // ability 源（阶段 14.4）：detail.ability.effects 已在 normalize 层完成 uptime 折算
+  // （value × min(1, duration/baseCooldown)，modron 满级 steady-state），此处按 effect_string 收集，
+  // 消费层正常进对应 pool（global_dps/hero_dps/attack_speed/buff_upgrades）。
+  const ability = asRecord(detailRecord?.ability)
+  if (ability) {
+    for (const effectStringRaw of asUnknownArray(ability.effects)) {
+      if (typeof effectStringRaw !== 'string' || effectStringRaw === '') continue
+      effectEntries.push(buildEffectEntry({
+        effectString: effectStringRaw,
+        effect: { duration: ability.duration, baseCooldown: ability.baseCooldown },
+        effectPayload: parseEffectPayload(effectStringRaw),
+        effectPayloads: [],
+        sourceBucket: 'ability',
+      }))
+    }
+  }
+
   // 附加 upgradePayloadsById 到所有 entry，使 resolveNumericValue 能跨 upgrade 解析 amount_expr。
   for (const entry of effectEntries) {
     entry.upgradePayloadsById = upgradePayloadsById

@@ -178,11 +178,11 @@
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 14.3 modron 辅助信息展示`（阶段 15 执行）。
 
-### 14.4 ult/主动技能 buff（ability_defines）提取 + uptime 折算 [部分]
+### 14.4 ult/主动技能 buff（ability_defines）提取 + uptime 折算 [x]
 
 > **uptime 核心已实现**：`src/domain/simulator/ultUptime.ts`（`computeUltUptime` duration/base_cooldown modron 折算 + `foldUltBuffValue`，7 测试）。
-> **pipeline 集成待执行**（方案见 `m3-data-source-confirmations.md` §14.4）：normalize 提取 ability_defines[id]→champion-details.ability + collectRawEffectEntries 第五源 'ability' + build 层 uptime 折算进 pool + modron gating。三层数据流改动风险高，本轮聚焦 uptime 核心，pipeline 集成留后续。
-> **数据源已确认**：ability_defines 10 条，id===hero_id 对齐，effect 双形态（裸 string / JSON 串），DPS 信号经 effect_def 展开。
+> **pipeline 集成已完成（第十三轮）**：normalize 层提取 ability_defines[id]→champion-details.ability（`normalizeChampionAbility`：effect 三形态展开——裸 string / JSON 串 / `effect_def,N` 引用查 effect_defines 展开 + uptime 折算 `value × min(1, duration/baseCooldown)`，modron 满级 steady-state）+ collectRawEffectEntries 第六源 `'ability'` 收集 detail.ability.effects。uptime 折算收敛在 normalize 层（effect_string 预折算），消费侧（collectEffectEntries / buildOfficialHeroModel）零改动。端到端验证：Commander（hero 1）产 `globalDpsMultiplier value=0.833` signal（100 × 30/3600）。**产物待 `npm run data:official` 重跑生效**（champion-details.ability + hero-abilities ult buff signal）。
+> **数据源已确认**：ability_defines 10 条，id===hero_id 对齐，effect 三形态（裸 string / JSON 串 / effect_def,N 引用），DPS 信号经 effect_def 展开。
 
 **背景**：第五轮数据流审计（2026-07-21）发现 `ability_defines`（10 英雄 ult/主动技能，id===hero_id）含 carryDps signal（Commander `global_dps_multiplier_mult,100` 全队 DPS x2、Pact Weapon `hero_dps_multiplier_mult,100`、Cunning Action `attack_speed_mult,100`、Channel Divinity `buff_upgrades` 等），但 normalize 层未提取到 champion-details，消费层无数据。raw 无字段引用 ability_defines，关联纯靠 id 对齐。详见 `docs/research/data/official-data-normalization-audit.md`「ability_defines」。
 
