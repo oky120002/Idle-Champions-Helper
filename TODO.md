@@ -113,4 +113,21 @@ repair: rebuild
     - M1-M3 既有，非 M4 引入；M4 第3轮审计发现
     - 处置：StatusMessage 改持 zh/en 双语字段，create*StatusMessage 改传 {zh,en}，StatusMessageBanner 经 t() 渲染；跨模块重构
 
+- Planner 可编辑阵型棋盘（exact-formation 评估 UI） <!-- auto-todo:id=atd_147941fa1e -->
+  - 记录时间: `2026-07-25T21:03:14+08:00`
+  - 类型: follow-up
+  - 位置: `src/pages/planner/`
+  - 备注: evaluateFormation 纯入口已就绪（评估指定阵型不搜索，CLI 已证明），planner UI 尚无可编辑棋盘触发它
+    - 需 UX 设计桌面拖拽 / 移动 HeroPicker 的 exact-formation 评估面板
+    - 区别于现有 lockedSlots 重搜：lockedSlots 仍搜索最优排列，evaluateFormation 评估用户指定阵型
+    - 当前调整→重算闭环由 lockedSlots 承担，exact-formation 评估是下一步
+
+- PlannerBreakdown signalKind 友好中文标签 <!-- auto-todo:id=atd_ccf5ecd03f -->
+  - 记录时间: `2026-07-25T21:03:18+08:00`
+  - 类型: optimization
+  - 位置: `src/pages/planner/PlannerBreakdown.tsx`
+  - 备注: PlannerBreakdown 当前渲染技术名（heroDpsMultiplier / globalDpsMultiplier / adjacentBuff 等）
+    - 加 HeroAbilityKind→中文友好标签映射可提升玩家可读性
+    - multiplier 值已是关键信息，signalKind 标签属增量优化
+
 <!-- auto-todo:end -->
