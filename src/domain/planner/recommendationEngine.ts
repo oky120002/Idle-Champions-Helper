@@ -6,7 +6,7 @@ import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 import type { FormationSlot, Variant } from '../types'
 import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
-import { buildCandidatePool } from './candidatePool'
+import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
@@ -137,6 +137,12 @@ function buildPlannerExplanations(
 export interface PlannerRecommendationOptions {
   scoringMode?: ScoringMode
   /**
+   * 候选范围（阶段 15.3）；默认 owned-only。
+   * owned-only = 仅本地已拥有英雄；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）；
+   * manual-override = 所有英雄 + 调用方 overrides。hypothetical 候选的装备精确化由 equipmentAdjustmentByHero（13.4）负责。
+   */
+  candidateMode?: CandidateMode
+  /**
    * 全局 buff pool 乘数（阶段 11.4：patron-perk）。
    * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入；
    * 默认 1（无全局加成）。UI 接入（patron 选择）在阶段 15。
@@ -186,7 +192,7 @@ export function buildPlannerRecommendation(
   }
 
   const candidatePool = buildCandidatePool({
-    mode: 'owned-only',
+    mode: options.candidateMode ?? 'owned-only',
     ownedHeroes: profileSnapshot.ownedHeroes,
     allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
   })

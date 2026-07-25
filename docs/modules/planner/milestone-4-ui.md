@@ -22,7 +22,7 @@
 - **验证**：`npm run test:run` + 浏览器。
 - **commit**：`feat(planner): 15.2 Top K + carryRanking + 推图预估展示`。
 
-### 15.3 候选模式控件
+### 15.3 候选模式控件 [x]
 - **改动**：`usePlannerPageModel` 加 candidateMode；`buildPlannerRecommendation` 加 options；接通 hypotheticalBaseline；新建 `PlannerCandidateMode.tsx`。
 - **测试**：三档切换改变 candidatePool；all-hypothetical 走 hypotheticalBaseline。
 - **验证**：`npm run test:run` + 浏览器。

@@ -4,6 +4,7 @@ import { loadCollection } from '../../data/client'
 import { loadResolvedPlannerModel } from '../../data/plannerModel'
 import { buildPlannerRecommendation } from '../../domain/planner/recommendationEngine'
 import type { PlannerCollections } from '../../domain/planner/recommendationTypes'
+import type { CandidateMode } from '../../domain/planner/candidatePool'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
 import type { Champion, Variant } from '../../domain/types'
@@ -22,6 +23,7 @@ export function usePlannerPageModel() {
   const [championById, setChampionById] = useState<Map<string, Champion>>(() => new Map())
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
+  const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -66,18 +68,18 @@ export function usePlannerPageModel() {
     }
   }, [])
 
-  // 阶段 15.2：切换场景时 Top K 重新计算，选中索引回到 top1。
+  // 阶段 15.2/15.3：切换场景/模式/候选范围时 Top K 重新计算，选中索引回到 top1。
   useEffect(() => {
     setSelectedResultIndex(0)
-  }, [selectedVariantId])
+  }, [selectedVariantId, scoringMode, candidateMode])
 
   const selectedVariant = useMemo(
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
     [collections.variants, selectedVariantId],
   )
   const plannerRecommendation = useMemo(
-    () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, { scoringMode }),
-    [collections, profileSnapshot, scoringMode, selectedVariant],
+    () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, { scoringMode, candidateMode }),
+    [collections, profileSnapshot, scoringMode, candidateMode, selectedVariant],
   )
   const selectVariantId = useCallback((variantId: string | null) => {
     setSelectedVariantId(variantId)
@@ -85,11 +87,15 @@ export function usePlannerPageModel() {
   const selectScoringMode = useCallback((mode: ScoringMode) => {
     setScoringMode(mode)
   }, [])
+  const selectCandidateMode = useCallback((mode: CandidateMode) => {
+    setCandidateMode(mode)
+  }, [])
   const selectResultIndex = useCallback((index: number) => {
     setSelectedResultIndex(index)
   }, [])
 
   return {
+    candidateMode,
     championById,
     collections,
     loadError,
@@ -98,6 +104,7 @@ export function usePlannerPageModel() {
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
+    selectCandidateMode,
     selectResultIndex,
     selectVariantId,
     selectScoringMode,

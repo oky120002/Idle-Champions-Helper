@@ -7,8 +7,10 @@ export interface CandidateEntry {
   assumptions?: { level: number; equipment: Record<string, number> }
 }
 
+export type CandidateMode = 'owned-only' | 'all-hypothetical' | 'manual-override'
+
 export interface CandidatePoolInput {
-  mode: 'owned-only' | 'all-hypothetical' | 'manual-override'
+  mode: CandidateMode
   ownedHeroes: OwnedHero[]
   allChampionIds: string[]
   overrides?: Map<string, { level: number; equipment: Record<string, number> }>

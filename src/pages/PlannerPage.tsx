@@ -5,6 +5,7 @@ import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold
 import { useI18n } from '../app/i18n'
 import { PlannerProfileState } from './planner/PlannerProfileState'
 import { PlannerResultCard } from './planner/PlannerResultCard'
+import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
@@ -53,6 +54,7 @@ export function PlannerPage() {
   const { t } = useI18n()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
   const {
+    candidateMode,
     championById,
     collections,
     loadError,
@@ -61,6 +63,7 @@ export function PlannerPage() {
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
+    selectCandidateMode,
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
@@ -129,6 +132,7 @@ export function PlannerPage() {
                     onSelectedIdChange={selectVariantId}
                   />
                   <PlannerScoringMode value={scoringMode} onChange={selectScoringMode} />
+                  <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                 </div>
               </section>
 
