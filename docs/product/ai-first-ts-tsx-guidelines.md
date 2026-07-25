@@ -49,6 +49,9 @@
 - 共享渲染组件（Canvas 等纯渲染壳）的副作用回调（drop/scroll/拖放等）必须条件挂载：回调未传则不挂 handler，避免只读消费方误接 `preventDefault` 等副作用而成为错误的事件目标。
 - 同页可能多实例的组件，DOM `id` 用 `useId()` 实例唯一化：模块常量 id 在 `display:none` 共存或多实例渲染时重复（违反 HTML 唯一性 + `aria-controls` 指向错误目标 + 测试被迫用多匹配 scoping 适配）；`data-testid` 多实例重复同理，能合并实例或加后缀就先合并，别让测试靠 scoping 兜底。
 - 交互元素语义必须与实际行为一致：可点击元素用 `<button>` 且必须接 `onClick`；纯拖拽源（无点击动作）用 `<div draggable>`，不渲染 `<button onClick={undefined}>`（button 不可激活却消耗 tab 顺序 + 误导用户可点击）。
+- ARIA 角色必须补齐其要求的容器与关联属性：`role="radio"` 在 `role="radiogroup"` 内、`role="tab"` 在 `role="tablist"` 内并接 `aria-controls`+`tabpanel`；半实现的 ARIA 比不用更误导（承诺了不提供的交互契约）。复制既有组件模式时连 a11y 一起复制正确，否则缺口随复制扩散。
+- 同一数据 + 同一动作不建两个展示组件：两个组件消费同一 props 集合、触发同一回调、渲染同源数据时合并为一个；"换皮再展示一遍"是冗余，不是新增价值。
+- 简化数据生产者时同步删无人消费的字段，测试不得断言死字段：删一条生产分支后留下无人读取的字段即死代码；若仅测试在断言该字段（如 `buildCandidatePool` 产的 `isHypothetical` 无生产消费方），测试反而掩盖死代码——简化后回归一遍字段消费方。
 
 ## 6. 例外与迁移
 
