@@ -158,7 +158,7 @@ describe('PresetsPage restore flow', () => {
     await user.click(screen.getByRole('button', { name: '恢复到阵型页' }))
 
     expect(await screen.findByText('已从方案“方案 Alpha”恢复到阵型页')).toBeInTheDocument()
-    expect(screen.getByText('布鲁诺')).toBeInTheDocument()
+    expect(screen.getAllByText('布鲁诺').length).toBeGreaterThan(0)
 
     await waitFor(async () => {
       await expect(readRecentFormationDraft()).resolves.toMatchObject({
