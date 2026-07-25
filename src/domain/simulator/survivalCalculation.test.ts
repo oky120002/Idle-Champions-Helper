@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import Decimal from 'break_eternity.js'
 
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
-import { canSurviveBurst, computeEffectiveHealth, computeHealthLevelCurve } from './survivalCalculation'
+import { computeEffectiveHealth, computeHealthLevelCurve } from './survivalCalculation'
 
 function createHero(overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
@@ -48,11 +47,5 @@ describe('survivalCalculation', () => {
   it('healthCurves 缺失回退默认率 1.06', () => {
     const hero = createHero({ baseHealth: 10, healthCurves: null })
     expect(computeHealthLevelCurve(hero, 1).toNumber()).toBeCloseTo(1.06, 6)
-  })
-
-  it('canSurviveBurst：effectiveHealth ≥ 单次伤害方可存活（5.3 约束）', () => {
-    expect(canSurviveBurst(new Decimal(100), new Decimal(50))).toBe(true)
-    expect(canSurviveBurst(new Decimal(100), new Decimal(100))).toBe(true)
-    expect(canSurviveBurst(new Decimal(100), new Decimal(101))).toBe(false)
   })
 })

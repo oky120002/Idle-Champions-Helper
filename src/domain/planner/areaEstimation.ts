@@ -18,7 +18,7 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from '../simulator/monsterSta
  *
  * 量纲缺口（第八轮审计）：`monsterDamageAt` 当前由 `monsterDpsAt` 担任（raw `base_dps` +
  * `dps_growth_rate_curve`）。raw 字段名为 dps，但 `base_speed`(=50) 语义未确认
- * （per-second vs per-hit），survivalCalculation.canSurviveBurst 的正确判据是单次伤害
+ * （per-second vs per-hit），survival 的精确判据是单次伤害
  * （incomingDamagePerHit）。故 survival 当前以「怪物伤害随层数缩放」近似——绝对值未校准
  * （继承 7.5 边界），精确的单次伤害判据需 base_speed 语义确认后补 monsterDamagePerHitAt。
  *

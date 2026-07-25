@@ -2,7 +2,6 @@ import Decimal from 'break_eternity.js'
 
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { GameNumberValue } from './gameNumber'
-import { compareGameNumbers } from './gameNumberArithmetic'
 
 /**
  * 生存（survival）计算。阶段 5.2。
@@ -12,7 +11,8 @@ import { compareGameNumbers } from './gameNumberArithmetic'
  *   （不含 damage_reduction；damage_reduction 是玩家侧减伤，单独作用于 incoming damage）。
  * - healthLevelCurve 用 healthCurves["1"]^level 近似（与 costCurves 同构，ponytail MVP 近似）。
  *
- * survival 作为推图约束（阶段 5.3 / 10）：effectiveHealth < monster_damage 则限制推图层数。
+ * survival 作为推图约束（阶段 5.3 / 10）：推图层数预估（areaEstimation）拿 effectiveHealth
+ * 与怪物伤害二分求 survivableArea。绝对值未校准（怪物伤害用 dps 近似单次伤害，见 areaEstimation）。
  */
 const DEFAULT_HEALTH_CURVE_RATE = 1.06
 
@@ -36,17 +36,4 @@ export function computeEffectiveHealth(
   const levelCurve = computeHealthLevelCurve(hero, level)
   const mult = Number.isFinite(healthPoolMultiplier) && healthPoolMultiplier > 0 ? healthPoolMultiplier : 1
   return new Decimal(baseHealth).times(levelCurve).times(mult)
-}
-
-/**
- * survival 约束（阶段 5.3）：effectiveHealth 能否抵御单次怪物伤害。
- * IC 机制：单次伤害 ≥ 英雄当前生命 → 被秒杀，推图中断。damage_reduction 已在 incomingDamage 折算。
- * 推图层数限制的完整建模（effectiveHealth 随 area 缩放 vs monster_damage 增长）在阶段 10 接入；
- * 此处提供纯判定函数供 stage 10 消费。
- */
-export function canSurviveBurst(
-  effectiveHealth: GameNumberValue,
-  incomingDamagePerHit: GameNumberValue,
-): boolean {
-  return compareGameNumbers(effectiveHealth, incomingDamagePerHit) >= 0
 }
