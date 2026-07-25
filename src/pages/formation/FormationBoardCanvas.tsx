@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties, DragEvent, ReactNode } from 'react'
 import { Crown } from 'lucide-react'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { useI18n } from '../../app/i18n'
@@ -25,6 +25,8 @@ export interface FormationBoardCanvasProps {
   slotExtras?: (slot: FormationSlot, champion: Champion | null, index: number) => ReactNode
   /** 每槽位追加的 className（conflict/active 等状态修饰）。 */
   slotClassName?: (slot: FormationSlot, champion: Champion | null) => string | undefined
+  /** 阶段 16.2：槽位 drop 回调（HTML5 DnD）；planner 只读棋盘不传。 */
+  onSlotDrop?: (slotId: string, event: DragEvent<HTMLDivElement>) => void
 }
 
 export function FormationBoardCanvas({
@@ -37,6 +39,7 @@ export function FormationBoardCanvas({
   emptyIndicator = null,
   slotExtras,
   slotClassName,
+  onSlotDrop,
 }: FormationBoardCanvasProps) {
   const { t, locale } = useI18n()
 
@@ -64,6 +67,11 @@ export function FormationBoardCanvas({
                 .filter(Boolean)
                 .join(' ')}
               style={{ gridColumn: slot.column, gridRow: slot.row }}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => {
+                event.preventDefault()
+                onSlotDrop?.(slot.id, event)
+              }}
             >
               <span className="formation-slot__label">{slotLabel}</span>
               <div className="formation-slot__summary" aria-hidden="true">

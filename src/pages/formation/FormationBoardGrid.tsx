@@ -42,6 +42,12 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
       placements={placements}
       championById={championById}
       boardStyle={formationBoardStyle}
+      onSlotDrop={(slotId, event) => {
+        const heroId = event.dataTransfer?.getData('text/plain')
+        if (heroId) {
+          handleAssignChampion(slotId, heroId)
+        }
+      }}
       emptyIndicator={
         <span className="formation-slot__summary-empty">
           <Plus aria-hidden="true" strokeWidth={2} />

@@ -51,13 +51,13 @@
 **目标**：阵型编辑器拖拽重做。
 **边界**：移动端无原生 DnD，用 tap-target。
 
-### 16.1 HeroPicker 选择器
+### 16.1 HeroPicker 选择器 [x]
 - **改动**：新建 `src/pages/formation/HeroPicker.tsx`（搜索/分组/头像，替代 select）；FormationBoardGrid 改用 HeroPicker。
 - **测试（先写）**：搜索过滤/分组/选中/灰显。
 - **验证**：`npm run test:run` + 浏览器。
 - **commit**：`feat(formation): 16.1 HeroPicker 选择器`。
 
-### 16.2 拖拽 API（HTML5 DnD）
+### 16.2 拖拽 API（HTML5 DnD） [x]
 - **改动**：HeroPicker 英雄卡 draggable；FormationBoardGrid slot 设 drop target；drop 调 handleAssignChampion。
 - **测试（先写）**：dragstart 设 dataTransfer；drop 触发 handleAssignChampion。
 - **验证**：`npm run test:run` + 浏览器。

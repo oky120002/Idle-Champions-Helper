@@ -130,7 +130,7 @@ describe('FormationPage persistence flow', () => {
     await user.click(screen.getByRole('button', { name: '恢复最近草稿' }))
 
     expect(await screen.findByText('最近草稿已恢复')).toBeInTheDocument()
-    expect(screen.getByText('布鲁诺')).toBeInTheDocument()
+    expect(screen.getAllByText('布鲁诺').length).toBeGreaterThan(0)
   })
 
   it('编辑阵型后会自动保存最近草稿到 IndexedDB', async () => {

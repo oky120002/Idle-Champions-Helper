@@ -4,6 +4,7 @@ import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
 import { getLocalizedTextPair } from '../../domain/localizedText'
 import { FormationBoardGrid } from './FormationBoardGrid'
+import { HeroPicker } from './HeroPicker'
 import { FormationMobileEditor } from './FormationMobileEditor'
 import type { FormationPageModel } from './types'
 
@@ -110,6 +111,17 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
       />
 
       <StatusBannerStack items={statusItems} />
+
+      <HeroPicker
+        champions={model.championOptions}
+        value={model.activeMobileChampionId}
+        onChange={(heroId) => {
+          if (model.activeMobileSlot) {
+            model.handleAssignChampion(model.activeMobileSlot.id, heroId)
+          }
+        }}
+        draggable
+      />
 
       <FormationBoardGrid model={model} />
       <FormationMobileEditor model={model} />
