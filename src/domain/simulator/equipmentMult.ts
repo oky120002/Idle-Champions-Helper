@@ -56,7 +56,10 @@ function indexCatalogByHero(
     if (entry.heroId !== heroId) continue
     const value = parseLootEffectValue(entry.effectString)
     if (value === null) continue
-    index.set(`${entry.slotId}:${entry.rarity}`, value)
+    // 累加（不覆盖）：与 computeTheoreticalLootMult 聚合对称，避免同 (slot,rarity) 多 DPS effect
+    // 时 owned 取末值、theoretical 累加导致 ratio 失配（当前 raw 0 例，防御上游变更）。
+    const key = `${entry.slotId}:${entry.rarity}`
+    index.set(key, (index.get(key) ?? 0) + value)
   }
   return index
 }

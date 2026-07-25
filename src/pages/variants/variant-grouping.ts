@@ -1,4 +1,5 @@
 import type { FormationLayout, Variant } from '../../domain/types'
+import { NON_DISPLAY_ENEMY_TAGS } from './variant-labels'
 import type { VariantCampaignGroup } from './types'
 
 function buildFormationLookup(formations: FormationLayout[]) {
@@ -165,7 +166,12 @@ export function groupVariantsByCampaign(options: {
       adventureGroup.objectiveAreas,
       variant.objectiveArea,
     )
-    adventureGroup.enemyTypes = mergeSortedStrings(adventureGroup.enemyTypes, variant.enemyTypes)
+    adventureGroup.enemyTypes = mergeSortedStrings(
+      adventureGroup.enemyTypes,
+      // boss 等非种族 tag 不进展示用聚合（group.enemyTypes 仅 VariantAdventureSection chip 消费）；
+      // vulnerability 匹配在 planner 侧用 scenario.enemyTypes（含 boss），此处过滤不影响。
+      variant.enemyTypes.filter((tag) => !NON_DISPLAY_ENEMY_TAGS.has(tag)),
+    )
     adventureGroup.attackMix = {
       melee: adventureGroup.attackMix.melee + variant.attackMix.melee,
       ranged: adventureGroup.attackMix.ranged + variant.attackMix.ranged,

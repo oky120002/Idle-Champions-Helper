@@ -147,7 +147,6 @@ export function buildPlannerRecommendation(
   options: PlannerRecommendationOptions = {},
 ): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
-  const globalBuffMultiplier = options.globalBuffMultiplier ?? 1
 
   if (!selectedVariant || collections.plannerHeroes.length === 0) {
     return { result: null, layoutId: null, scenarioRef: null, blocker: null }
@@ -265,10 +264,9 @@ export function buildPlannerRecommendation(
         scenario,
         heroLevels,
         scoringMode,
-        globalBuffMultiplier,
-        ...(options.equipmentAdjustmentByHero
-          ? { equipmentAdjustmentByHero: options.equipmentAdjustmentByHero }
-          : {}),
+        // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
+        globalBuffMultiplier: options.globalBuffMultiplier,
+        equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
       })
     },
   })

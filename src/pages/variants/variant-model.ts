@@ -5,6 +5,7 @@ import {
   getAttackProfileLabel,
   getEnemyTypeLabel,
   getSpecialEnemyRangeLabel,
+  NON_DISPLAY_ENEMY_TAGS,
 } from './variant-labels'
 import type {
   AttackProfileFilterId,
@@ -12,8 +13,6 @@ import type {
   SpecialEnemyFilterId,
   VariantFilterOption,
 } from './types'
-
-const GENERIC_SEARCH_TAGS = new Set(['boss', 'melee', 'ranged', 'hits_based', 'armor_based', 'static'])
 
 export function isCampaignEnumGroup(value: unknown): value is CampaignEnumGroup {
   return (
@@ -101,6 +100,7 @@ export function buildVariantOptions(options: {
 
   for (const variant of variants) {
     for (const enemyType of variant.enemyTypes) {
+      if (NON_DISPLAY_ENEMY_TAGS.has(enemyType)) continue
       enemyTypeCounts.set(enemyType, (enemyTypeCounts.get(enemyType) ?? 0) + 1)
     }
 
@@ -148,7 +148,7 @@ function matchesVariantSearch(variant: Variant, query: string, locale: 'zh-CN' |
     variant.restrictions.some((item) => matchesLocalizedText(item, query)) ||
     variant.rewards.some((item) => matchesLocalizedText(item, query)) ||
     variant.enemyTypes.some((item) => {
-      if (GENERIC_SEARCH_TAGS.has(item)) {
+      if (NON_DISPLAY_ENEMY_TAGS.has(item)) {
         return false
       }
 

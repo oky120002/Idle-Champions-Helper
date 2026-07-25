@@ -32,13 +32,13 @@ export interface ScoringInput {
    * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入。
    * 默认 1（无全局加成）；乘进 carryDps：baseDps × levelCurve × damagePool × crit × vuln × globalBuff。
    */
-  globalBuffMultiplier?: number
+  globalBuffMultiplier?: number | undefined
   /**
    * 装备调整比（阶段 13.4）：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
    * 把 M1 理论 loot 基线缩放到玩家实际装备；默认无（=1，保持理论基线）。
    * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustment 解析后传入。
    */
-  equipmentAdjustmentByHero?: Map<string, number>
+  equipmentAdjustmentByHero?: Map<string, number> | undefined
 }
 
 export interface ScoringResult {

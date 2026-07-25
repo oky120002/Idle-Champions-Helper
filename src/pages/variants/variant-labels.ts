@@ -37,6 +37,22 @@ const ENEMY_TYPE_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = 
   zhentarim: { 'zh-CN': '散塔林', 'en-US': 'Zhentarim' },
 }
 
+/**
+ * 不展示给用户的 enemyType tag（非种族的怪物 tag）。
+ * enemyTypes 数据层是 vulnerability 匹配词表（data-normalization-guidelines §3），含 boss；
+ * 但「敌人类型」chip/过滤器/占比面向种族展示，boss 等非种族 tag 须过滤——boss 已在
+ * specialEnemyCount 独立展示，melee/ranged 由 attackMix 承载，hits_based/armor_based/static
+ * 是伤害/移动机制。UI 消费 enemyTypes 的所有展示/筛选点统一经此集合过滤。
+ */
+export const NON_DISPLAY_ENEMY_TAGS: ReadonlySet<string> = new Set([
+  'boss',
+  'melee',
+  'ranged',
+  'hits_based',
+  'armor_based',
+  'static',
+])
+
 const ATTACK_PROFILE_LABELS: Record<Exclude<AttackProfileFilterId, '__all__'>, { 'zh-CN': string; 'en-US': string }> = {
   meleeHeavy: { 'zh-CN': '近战主导', 'en-US': 'Melee-heavy' },
   rangedThreat: { 'zh-CN': '远程威胁', 'en-US': 'Ranged pressure' },

@@ -1,6 +1,6 @@
 import type { AppLocale } from '../../app/i18n'
 import type { VariantAreaHighlight, VariantAttackMix } from '../../domain/types'
-import { getAreaHighlightLabel, getAttackMixSummary, getEnemyTypeLabel, getMechanicLabel } from './variant-labels'
+import { getAreaHighlightLabel, getAttackMixSummary, getEnemyTypeLabel, getMechanicLabel, NON_DISPLAY_ENEMY_TAGS } from './variant-labels'
 import type { VariantAdventureGroup } from './types'
 
 export type VariantRatioStat = {
@@ -29,7 +29,7 @@ export function getEnemyTypeStats(group: VariantAdventureGroup, locale: AppLocal
   for (const variant of group.variants) {
     if (variant.enemyTypeCounts && Object.keys(variant.enemyTypeCounts).length > 0) {
       for (const [enemyType, count] of Object.entries(variant.enemyTypeCounts)) {
-        if (count <= 0) {
+        if (count <= 0 || NON_DISPLAY_ENEMY_TAGS.has(enemyType)) {
           continue
         }
 
@@ -40,7 +40,7 @@ export function getEnemyTypeStats(group: VariantAdventureGroup, locale: AppLocal
       continue
     }
 
-    const uniqueTypes = Array.from(new Set(variant.enemyTypes))
+    const uniqueTypes = Array.from(new Set(variant.enemyTypes.filter((tag) => !NON_DISPLAY_ENEMY_TAGS.has(tag))))
 
     for (const enemyType of uniqueTypes) {
       counts.set(enemyType, (counts.get(enemyType) ?? 0) + 1)

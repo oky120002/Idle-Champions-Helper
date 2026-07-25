@@ -18,6 +18,8 @@ normalize 层（normalize-adventures 等）同理：改动后必须重跑 normal
 
 vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种族 beast/humanoid/…）做条件性匹配时，两端值域必须相交。第十二轮审计修正原误判：曾以为 boss 是独立 `is_boss` 维度、不该进 enemyTypes——实际 raw `monster_defines` 用 `tags:["boss"]` 标记 boss（808/2326 怪），与 fiend 同维；boss 不在 enemyTypes 的真因是 `GENERIC_MONSTER_TAGS` 把 boss 当"非类型通用 tag"排除了（与 melee/ranged 同列），而 vulnerability 词表含 boss → 3 个 boss vulnerability 信号在 `steadyStateScoring` 永远命中不了。修复：从 `GENERIC_MONSTER_TAGS` 移除 boss（melee/ranged 由 attackMix 承载、hits_based/armor_based/static/flying 不在 vulnerability 词表，仍排除）。规则：enemyTypes 的排除集不得包含任何出现在 `monsterTags` 里的 tag——全量枚举两端值域（jq unique）取交集，排除集 ∩ vulnerability 词表 必须为空。
 
+**UI 展示层消费 enemyTypes 须过滤非种族 tag**（第十三轮审计）：enemyTypes 含 boss 是 vulnerability 词表对齐的需要（数据层），但「敌人类型」chip/过滤器/占比面向种族展示——boss 已在 `specialEnemyCount` 独立展示，melee/ranged 由 attackMix 承载。UI 所有消费点（`variant-model` 过滤器选项 + 搜索、`variant-grouping` 聚合、`variant-detail-model` 占比、`VariantAdventureSection` chip）统一经 `variant-labels.ts` 的 `NON_DISPLAY_ENEMY_TAGS` 过滤；planner 侧 `scenario.enemyTypes` 不过滤（vulnerability 匹配需要 boss）。教训：字段同时服务「vulnerability 词表」与「UI 种族展示」两个语义时，在消费层分离视图，不污染展示——别为匹配便利往展示字段塞非展示值。
+
 ## 4. 设计文档里的每个公式 / pool / 乘区都要有实现 + 测试
 
 `Π(static_dps_mults)` 类公式写了但 `upgrade.static_dps_mult` 字段长期未读，35 个复杂 effect upgrade 的 dps 丢失。文档公式与实现定期核对，避免「设计了但没做」；`docs/research/data/game-data-source/format-quirks.md` / 加成调研里的特殊 pool 尤其易漏。
@@ -25,6 +27,8 @@ vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种
 ## 5. 硬编码的 raw 派生常量必须逐值核对，不能假设序列规律
 
 monsterStats 的 dps boss spike 假设「50,100,150,200...每 50 层」，但 raw `dps_growth_rate_curve` 第 3 个 spike 在 **151**（非 150），从第 3 个起整体 +1 偏移（差值集合 {50,51}）。stepped curve / 枚举型常量（非连续函数）必须 dump 全量 key 逐个比对；「看起来有规律」的假设要 raw 证实，交叉验证用 per-area 复合 log 对比。
+
+**守护测试也必须全量逐边界，不能采样**（第十三轮审计）：`gameRulesSync.test` 原只采样 area 50 首个 dps spike + 第一段 health 增长率，漏掉其余 48 个 spike 与 2001/2251 分段边界——硬编码值当前正确但守护盲区大，上游改任意 spike 位置/倍率或分段值都发现不了。stepped curve / spike 序列的守护用「逐 area 局部增长率 `statFn(A)/statFn(A-1) === raw curve[A]`」全量遍历 raw curve 的每个 key（用 Decimal 比值避免大 area 量级溢出 number；`toBeCloseTo(6)` 容纳末位浮点误差，仍能检出 >= 1e-3 量级的真实分段/spike 漂移）。
 
 ## 6. 新增数据字段必须同步接入消费层，否则是数据孤岛
 
