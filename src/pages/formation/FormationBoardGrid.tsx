@@ -65,17 +65,17 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
             .join(' ') || undefined
         )
       }}
-      slotExtras={(slot, champion, index) => {
+      slotExtras={(slot, champion) => {
         const selectedChampionId = champion?.id ?? ''
         const isMobileSlotActive = activeMobileSlot?.id === slot.id
         const slotAriaLabel = champion
           ? t({
-              zh: `编辑槽位 ${index + 1}，当前为 ${getPrimaryLocalizedText(champion.name, locale)}`,
-              en: `Edit slot ${index + 1}, current champion ${getPrimaryLocalizedText(champion.name, locale)}`,
+              zh: `编辑槽位 ${slot.id}，当前为 ${getPrimaryLocalizedText(champion.name, locale)}`,
+              en: `Edit slot ${slot.id}, current champion ${getPrimaryLocalizedText(champion.name, locale)}`,
             })
           : t({
-              zh: `编辑槽位 ${index + 1}，当前未放置`,
-              en: `Edit slot ${index + 1}, currently empty`,
+              zh: `编辑槽位 ${slot.id}，当前未放置`,
+              en: `Edit slot ${slot.id}, currently empty`,
             })
 
         return (

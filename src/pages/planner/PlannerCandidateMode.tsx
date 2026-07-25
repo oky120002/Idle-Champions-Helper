@@ -9,13 +9,12 @@ export interface PlannerCandidateModeProps {
 const MODES: Array<{ id: CandidateMode; zh: string; en: string }> = [
   { id: 'owned-only', zh: '仅已拥有', en: 'Owned only' },
   { id: 'all-hypothetical', zh: '全部英雄（假设基线）', en: 'All hypothetical' },
-  { id: 'manual-override', zh: '手动覆盖', en: 'Manual override' },
 ]
 
 /**
  * 候选范围选择器（阶段 15.3）。
- * owned-only = 仅本地已拥有；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）；
- * manual-override = 所有英雄 + overrides。复用 planner-scoring-mode 样式保持视觉一致。
+ * owned-only = 仅本地已拥有；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）。
+ * 复用 planner-scoring-mode 样式保持视觉一致。
  */
 export function PlannerCandidateMode({ value, onChange }: PlannerCandidateModeProps) {
   const { t } = useI18n()

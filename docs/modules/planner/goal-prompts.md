@@ -62,7 +62,7 @@ or stop after 40 turns
 - 最终：/planner 全链路手验（选场景→Top K+棋盘+carryDps/BUD+carry 标记→候选模式/C 位指定/锁槽→推图预估→导入编辑器→存方案；桌面拖拽+移动端 tap）+ npm run test:regression（含 e2e）。
 完成条件：
 - 阶段 15.1-15.6 + 16.1-16.5 全完成（[x]）。
-- UI 接通：抽 FormationBoardCanvas（纯渲染）+ FormationBoardGrid 改组装 + PlannerResultCard 复用棋盘 + carryDps/BUD/carry 标记 + Top K 切换 + carryRanking + 候选模式控件（owned-only/all-hypothetical/manual-override）+ C 位指定/锁槽（所有英雄候选不限 dps）+ 推图层数预估展示 + survival 约束展示 + 推荐结果导入阵型编辑器。
+- UI 接通：抽 FormationBoardCanvas（纯渲染）+ FormationBoardGrid 改组装 + PlannerResultCard 复用棋盘 + carryDps/BUD/carry 标记 + Top K 切换 + carryRanking + 候选模式控件（owned-only/all-hypothetical）+ C 位指定/锁槽（所有英雄候选不限 dps）+ 推图层数预估展示 + survival 约束展示 + 推荐结果导入阵型编辑器。
 - 拖拽：HeroPicker + 拖拽 API（dragstart/drop 调 handleAssignChampion）+ 放入/替换/移除/槽位间（原子清原 slot）+ seat 冲突提示 + 移动端 tap-target+HeroPicker 弹层。
 - npm run test:regression（lint+typecheck+test:run+build+privacy:scan+e2e）退出码 0。
 约束：按 evolution-plan.md；复用 FormationBoardGrid 不破坏 formation 编辑器（formation 全量回归）；所有英雄候选（不限 dps 角色）；click damage 不影响推荐排序；移动端无原生 DnD 用 tap-target；不削弱测试；每阶段 commit + [x]。

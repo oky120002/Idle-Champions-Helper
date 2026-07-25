@@ -101,7 +101,7 @@ export function usePlannerPageModel() {
   const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
     setLockedCarryHeroId(heroId)
   }, [])
-  const toggleSlotLock = useCallback((slotId: string, heroId: string) => {
+  const lockSlot = useCallback((slotId: string, heroId: string) => {
     setLockedSlots((current) => ({ ...current, [slotId]: heroId }))
   }, [])
   const clearSlotLock = useCallback((slotId: string) => {
@@ -133,6 +133,6 @@ export function usePlannerPageModel() {
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
-    toggleSlotLock,
+    lockSlot,
   }
 }

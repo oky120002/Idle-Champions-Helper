@@ -6,7 +6,7 @@ import { I18nProvider } from '../../app/i18n'
 import { PlannerCandidateMode } from './PlannerCandidateMode'
 
 describe('PlannerCandidateMode', () => {
-  it('渲染三档候选范围并标记当前值', () => {
+  it('渲染两档候选范围并标记当前值', () => {
     const { container } = render(
       <I18nProvider>
         <PlannerCandidateMode value="owned-only" onChange={() => {}} />
@@ -15,7 +15,6 @@ describe('PlannerCandidateMode', () => {
 
     expect(container.querySelector('[data-candidate-mode="owned-only"]')).toHaveAttribute('aria-checked', 'true')
     expect(container.querySelector('[data-candidate-mode="all-hypothetical"]')).toHaveAttribute('aria-checked', 'false')
-    expect(container.querySelector('[data-candidate-mode="manual-override"]')).toBeInTheDocument()
   })
 
   it('点击切换触发 onChange', async () => {

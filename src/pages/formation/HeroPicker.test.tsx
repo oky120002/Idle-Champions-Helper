@@ -63,19 +63,19 @@ describe('HeroPicker', () => {
     expect(screen.queryByTestId('hero-picker-panel')).toBeNull()
   })
 
-  it('draggable 时英雄卡带 draggable 属性（供槽位 drop 消费）', async () => {
+  it('picker 模式英雄卡为 button（可点击选择），不可拖', async () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <HeroPicker champions={champions} value="" onChange={() => {}} draggable />
+        <HeroPicker champions={champions} value="" onChange={() => {}} />
       </I18nProvider>,
     )
 
     await user.click(screen.getByTestId('hero-picker-trigger'))
     const jimCard = screen.getByText('吉姆').closest('button')!
 
-    // jsdom 不实现 DataTransfer，无法验证 dataTransfer 写入；仅校验 draggable 标记落到 DOM。
-    expect(jimCard).toHaveAttribute('draggable', 'true')
+    expect(jimCard).toHaveAttribute('data-hero-id', 'jim')
+    expect(jimCard).not.toHaveAttribute('draggable')
   })
 
   it('trigger 的 aria-expanded 随面板开关切换', async () => {
@@ -125,11 +125,11 @@ describe('HeroPicker', () => {
     expect(screen.queryByTestId('hero-picker-panel')).toBeNull()
   })
 
-  it('拖拽源模式（不传 onChange）：trigger 显示拖拽提示、不渲染未放置、英雄卡 draggable', async () => {
+  it('拖拽源模式（不传 onChange）：trigger 显示拖拽提示、不渲染未放置、英雄卡为 div 且 draggable', async () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <HeroPicker champions={champions} draggable />
+        <HeroPicker champions={champions} />
       </I18nProvider>,
     )
 
@@ -138,6 +138,9 @@ describe('HeroPicker', () => {
     await user.click(screen.getByTestId('hero-picker-trigger'))
 
     expect(screen.queryByText('未放置')).toBeNull()
-    expect(screen.getByText('吉姆').closest('button')).toHaveAttribute('draggable', 'true')
+    // jsdom 不实现 DataTransfer，无法验证 dataTransfer 写入；仅校验英雄卡为 div + draggable + data-hero-id。
+    const jimCard = screen.getByText('吉姆').closest('div')!
+    expect(jimCard).toHaveAttribute('draggable', 'true')
+    expect(jimCard).toHaveAttribute('data-hero-id', 'jim')
   })
 })

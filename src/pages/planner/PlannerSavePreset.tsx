@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useI18n } from '../../app/i18n'
+import { loadVersion } from '../../data/client'
 import { saveFormationPreset } from '../../data/formationPresetStore'
+import { PRESET_SCHEMA_VERSION } from '../formation/types'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { FormationPreset, ScenarioRef } from '../../domain/types/formation'
 
@@ -39,10 +41,11 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
 
     try {
       const now = new Date().toISOString()
+      const { current: dataVersion } = await loadVersion()
       const preset: FormationPreset = {
         id: `planner-${Date.now()}`,
-        schemaVersion: 1,
-        dataVersion: 'planner-local',
+        schemaVersion: PRESET_SCHEMA_VERSION,
+        dataVersion,
         name: t({ zh: '自动计划推荐', en: 'Planner recommendation' }),
         description: t({
           zh: `自动计划生成，评分 ${presetResult.score}`,

@@ -32,25 +32,4 @@ describe('candidate pool modes', () => {
     expect(unowned).toHaveLength(2)
     expect(unowned.map((c: { heroId: string }) => c.heroId).sort()).toEqual(['12', '24'])
   })
-
-  it('manual override 模式应用显式假设但不改变 profile data', () => {
-    const overrides = new Map([
-      ['12', { level: 200, equipment: { '0': 2 } }],
-    ])
-
-    const pool = buildCandidatePool({
-      mode: 'manual-override',
-      ownedHeroes,
-      allChampionIds: ['1', '5', '12'],
-      overrides,
-    })
-
-    const hero12 = pool.candidates.find((c: { heroId: string }) => c.heroId === '12')
-    expect(hero12).toBeDefined()
-    expect(hero12!.assumptions).toBeTruthy()
-
-    // Original ownedHeroes should not be modified
-    expect(ownedHeroes).toHaveLength(2)
-    expect(ownedHeroes.find((h) => h.heroId === '12')).toBeUndefined()
-  })
 })

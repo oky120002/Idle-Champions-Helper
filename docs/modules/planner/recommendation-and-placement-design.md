@@ -119,7 +119,7 @@ scenario + layout
 - 手动模式：用户先锁定一个 C 位，系统只围绕它推荐。
 - 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位并产出 `carryRanking`（无 `isCarryViable` 角色门控）。
 - 无论手动还是自动，完整阵型搜索时都必须有且仅有一个主 C 位。
-- 引擎结构兼容 `owned-only / all-hypothetical / manual-override`，首期默认落地 `owned-only`。
+- 引擎结构支持 `owned-only / all-hypothetical` 两种候选模式，默认落地 `owned-only`。
 - 同 seat 冲突属于硬约束，在搜索前就生效。
 - 搜索单位是**完整阵型**，不是逐槽位贪心挑人。
 - 继续采用 deterministic beam search。

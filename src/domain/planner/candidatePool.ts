@@ -7,13 +7,12 @@ export interface CandidateEntry {
   assumptions?: { level: number; equipment: Record<string, number> }
 }
 
-export type CandidateMode = 'owned-only' | 'all-hypothetical' | 'manual-override'
+export type CandidateMode = 'owned-only' | 'all-hypothetical'
 
 export interface CandidatePoolInput {
   mode: CandidateMode
   ownedHeroes: OwnedHero[]
   allChampionIds: string[]
-  overrides?: Map<string, { level: number; equipment: Record<string, number> }>
 }
 
 export interface CandidatePoolResult {
@@ -21,7 +20,7 @@ export interface CandidatePoolResult {
 }
 
 export function buildCandidatePool(input: CandidatePoolInput): CandidatePoolResult {
-  const { mode, ownedHeroes, allChampionIds, overrides } = input
+  const { mode, ownedHeroes, allChampionIds } = input
   const ownedMap = new Map(ownedHeroes.map((h) => [h.heroId, h]))
 
   if (mode === 'owned-only') {
@@ -34,37 +33,18 @@ export function buildCandidatePool(input: CandidatePoolInput): CandidatePoolResu
     }
   }
 
-  if (mode === 'all-hypothetical') {
-    return {
-      candidates: allChampionIds.map((id) => {
-        const owned = ownedMap.get(id)
-        if (owned) {
-          return { heroId: id, isHypothetical: false, ownedData: owned }
-        }
-        return {
-          heroId: id,
-          isHypothetical: true,
-          ownedData: null,
-          assumptions: { level: 1, equipment: {} },
-        }
-      }),
-    }
-  }
-
-  // manual-override
+  // all-hypothetical：所有英雄候选，未拥有走 default 假设（level 1 / 无装备）。
   return {
     candidates: allChampionIds.map((id) => {
       const owned = ownedMap.get(id)
       if (owned) {
         return { heroId: id, isHypothetical: false, ownedData: owned }
       }
-
-      const override = overrides?.get(id)
       return {
         heroId: id,
         isHypothetical: true,
         ownedData: null,
-        assumptions: override ?? { level: 1, equipment: {} },
+        assumptions: { level: 1, equipment: {} },
       }
     }),
   }

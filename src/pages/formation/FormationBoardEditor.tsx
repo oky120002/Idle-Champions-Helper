@@ -114,7 +114,6 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
 
       <HeroPicker
         champions={model.championOptions}
-        draggable
         className="hero-picker--source"
       />
 

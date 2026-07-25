@@ -49,6 +49,13 @@ describe('FormationBoardCanvas', () => {
     expect(container.querySelector('[data-slot-id="slot-b"][data-hero-id]')).toBeNull()
   })
 
+  it('槽位标签用 slot.id（与 placementEntries/移动端编辑器稳定对应，不随过滤重编号）', () => {
+    const { container } = renderCanvas()
+
+    expect(container.querySelector('[data-slot-id="slot-a"] .formation-slot__label')?.textContent).toBe('槽位 slot-a')
+    expect(container.querySelector('[data-slot-id="slot-b"] .formation-slot__label')?.textContent).toBe('槽位 slot-b')
+  })
+
   it('已放置槽位显示 seat', () => {
     const { container } = renderCanvas()
 

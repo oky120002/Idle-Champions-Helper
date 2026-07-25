@@ -74,7 +74,7 @@ export function PlannerPage() {
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
-    toggleSlotLock,
+    lockSlot,
   } = usePlannerPageModel()
 
   const safeResultIndex = plannerRecommendation.results.length > 0
@@ -187,7 +187,7 @@ export function PlannerPage() {
                       placements={selectedResult.placements}
                       championById={championById}
                       lockedSlots={lockedSlots}
-                      onToggleLock={toggleSlotLock}
+                      onLock={lockSlot}
                       onClearLock={clearSlotLock}
                     />
                     <PlannerCarryRanking

@@ -95,4 +95,13 @@ repair: rebuild
     - 与 formation 无关：测试针对 champions 筛选页抽屉，M4 未触及。
     - 后续：串行化该测试 / 放宽动画阈值容差 / 用 expect.toPass 重试。
 
+- 拖拽 slot 无 dragover 视觉反馈（桌面 DnD UX 增强，非 bug） <!-- auto-todo:id=atd_7f3a2c9d1e -->
+  - 记录时间: `2026-07-25T16:12:00+08:00`
+  - 类型: optimization
+  - 位置: `src/pages/formation/FormationBoardCanvas.tsx:70`
+  - 备注: M4 第2轮审计发现：Canvas slot `onDragOver` 只 `preventDefault`，无视觉高亮；用户拖拽英雄时不知哪些 slot 可放。
+    - 当前：drop 生效（handleAssignChampion），slot 有 emptyIndicator（Plus）与已放置英雄提供位置感；移动端走 picker 无 DnD；键盘路径由原生 `<select>` 兜底。
+    - 修复方向：`onDragEnter`/`onDragLeave` 设 `data-drag-over` 属性 + CSS `.formation-slot[data-drag-over]` 高亮（Canvas 需加 per-slot drag state）。
+    - 暂不修：UX 增强，非功能缺陷；Canvas 是纯渲染组件，加 drag state 增复杂度，等实测用户反馈再权衡。
+
 <!-- auto-todo:end -->

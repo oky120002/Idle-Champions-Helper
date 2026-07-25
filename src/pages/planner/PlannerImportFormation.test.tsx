@@ -6,6 +6,9 @@ import { describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/i18n'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 
+vi.mock('../../data/client', () => ({
+  loadVersion: vi.fn(async () => ({ current: 'v1' })),
+}))
 vi.mock('../../data/formationDraftStore', () => ({
   saveRecentFormationDraft: vi.fn(async () => {}),
 }))
@@ -58,6 +61,7 @@ describe('PlannerImportFormation', () => {
         placements: { s1: 'bruenor' },
         scenarioRef: { kind: 'variant', id: 'v1' },
         schemaVersion: 1,
+        dataVersion: 'v1',
       }),
     )
   })

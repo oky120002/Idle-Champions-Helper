@@ -22,7 +22,7 @@ export interface FormationBoardCanvasProps {
   /** 空槽位占位节点（formation 编辑器用 Plus 图标，planner 默认空）。 */
   emptyIndicator?: ReactNode
   /** 每槽位的额外交互控件（tap-target/select/拖放），渲染在 summary 之后。 */
-  slotExtras?: (slot: FormationSlot, champion: Champion | null, index: number) => ReactNode
+  slotExtras?: (slot: FormationSlot, champion: Champion | null) => ReactNode
   /** 每槽位追加的 className（conflict/active 等状态修饰）。 */
   slotClassName?: (slot: FormationSlot, champion: Champion | null) => string | undefined
   /** 阶段 16.2：槽位 drop 回调（HTML5 DnD）；planner 只读棋盘不传。 */
@@ -46,12 +46,12 @@ export function FormationBoardCanvas({
   return (
     <div className="formation-board-wrap">
       <div className="formation-board" data-testid={testId} style={boardStyle}>
-        {slots.map((slot, index) => {
+        {slots.map((slot) => {
           const championId = placements[slot.id]
           const champion = championId ? championById.get(championId) ?? null : null
           const isCarry = carrySlotId != null && slot.id === carrySlotId
           const extraClass = slotClassName?.(slot, champion)
-          const slotLabel = t({ zh: `槽位 ${index + 1}`, en: `Slot ${index + 1}` })
+          const slotLabel = t({ zh: `槽位 ${slot.id}`, en: `Slot ${slot.id}` })
 
           return (
             <div
@@ -106,7 +106,7 @@ export function FormationBoardCanvas({
                   emptyIndicator
                 )}
               </div>
-              {slotExtras?.(slot, champion, index)}
+              {slotExtras?.(slot, champion)}
             </div>
           )
         })}

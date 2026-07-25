@@ -7,7 +7,7 @@ interface PlannerSlotLockProps {
   placements: Record<string, string>
   championById: Map<string, Champion>
   lockedSlots: Record<string, string>
-  onToggleLock: (slotId: string, heroId: string) => void
+  onLock: (slotId: string, heroId: string) => void
   onClearLock: (slotId: string) => void
 }
 
@@ -19,7 +19,7 @@ export function PlannerSlotLock({
   placements,
   championById,
   lockedSlots,
-  onToggleLock,
+  onLock,
   onClearLock,
 }: PlannerSlotLockProps) {
   const { t, locale } = useI18n()
@@ -55,7 +55,7 @@ export function PlannerSlotLock({
                   data-testid={`planner-slot-lock-toggle-${slot.id}`}
                   data-locked={isLocked}
                   className={isLocked ? 'is-locked' : ''}
-                  onClick={() => (isLocked ? onClearLock(slot.id) : onToggleLock(slot.id, heroId))}
+                  onClick={() => (isLocked ? onClearLock(slot.id) : onLock(slot.id, heroId))}
                 >
                   {isLocked ? t({ zh: '解锁', en: 'Unlock' }) : t({ zh: '锁定', en: 'Lock' })}
                 </button>

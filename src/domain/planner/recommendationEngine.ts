@@ -62,13 +62,13 @@ function buildPlacementEntries(
 ): PlannerPlacementEntry[] {
   return slots
     .filter((slotId) => placements[slotId] !== undefined)
-    .map((slotId, index) => {
+    .map((slotId) => {
       const heroId = placements[slotId]!
       const hero = heroById.get(heroId)
 
       return {
         slotId,
-        slotLabel: String(index + 1),
+        slotLabel: slotId,
         heroId,
         heroName: hero?.name.display ?? heroId,
         seat: hero?.seat ?? null,
@@ -138,8 +138,8 @@ export interface PlannerRecommendationOptions {
   scoringMode?: ScoringMode
   /**
    * 候选范围（阶段 15.3）；默认 owned-only。
-   * owned-only = 仅本地已拥有英雄；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）；
-   * manual-override = 所有英雄 + 调用方 overrides。hypothetical 候选的装备精确化由 equipmentAdjustmentByHero（13.4）负责。
+   * owned-only = 仅本地已拥有英雄；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）。
+   * hypothetical 候选的装备精确化由 equipmentAdjustmentByHero（13.4）负责。
    */
   candidateMode?: CandidateMode
   /** 阶段 15.4：强制指定核心输出位英雄（结果 carryHeroId 与之一致）。 */
@@ -332,6 +332,9 @@ export function buildPlannerRecommendation(
   }
 
   const scenarioWarnings = buildPlannerWarnings(scenario, profileSnapshot)
+  // placementEntries 按场景槽位拓扑顺序（row/column/slotId）排序，让 locked 与搜索结果合并后
+  // 仍与棋盘格子在视觉上一一对应，而非 locked 追加末尾。
+  const slotOrder = new Map(sortSlots(scenario).map((slotId, index) => [slotId, index]))
   const lockedPlacementEntries = Object.entries(userLockedSlots).map(([slotId, heroId]) => {
     const hero = heroById.get(heroId)
     return {
@@ -344,6 +347,7 @@ export function buildPlannerRecommendation(
   })
   const plannerResults: PlannerResult[] = topResults.map((top) => {
     const placementEntries = [...buildPlacementEntries(slots, top.placements, heroById), ...lockedPlacementEntries]
+      .sort((left, right) => (slotOrder.get(left.slotId) ?? Infinity) - (slotOrder.get(right.slotId) ?? Infinity))
     return {
       score: formatGameNumber(top.score),
       carryHeroId: top.carryHeroId,

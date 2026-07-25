@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
+import { loadVersion } from '../../data/client'
 import { saveRecentFormationDraft } from '../../data/formationDraftStore'
+import { DRAFT_SCHEMA_VERSION } from '../formation/types'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScenarioRef } from '../../domain/types'
 
@@ -29,15 +31,18 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
     setImporting(true)
     setError(null)
     try {
+      // dataVersion 复用当前数据版本（loadVersion 命中 formation 启动时已写入的内存缓存），
+      // 让 formation 编辑器恢复 draft 时走「版本一致」快路径，不触发对不存在路径的 404 加载。
+      const { current: dataVersion } = await loadVersion()
       await saveRecentFormationDraft({
-        schemaVersion: 1,
-        dataVersion: 'planner-local',
+        schemaVersion: DRAFT_SCHEMA_VERSION,
+        dataVersion,
         layoutId: layoutId!,
         scenarioRef,
         placements: result!.placements,
         updatedAt: new Date().toISOString(),
       })
-      await navigate('/formation')
+      navigate('/formation')
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : String(caught))
       setImporting(false)

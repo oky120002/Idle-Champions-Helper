@@ -3,7 +3,11 @@ import 'fake-indexeddb/auto'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
+vi.mock('../../data/client', () => ({
+  loadVersion: vi.fn(async () => ({ current: 'v1' })),
+}))
 
 import { I18nProvider } from '../../app/i18n'
 import { listFormationPresets } from '../../data/formationPresetStore'

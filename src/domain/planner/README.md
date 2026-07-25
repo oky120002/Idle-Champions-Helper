@@ -24,7 +24,7 @@
 - `recommendationTypes.ts`
   - 定义推荐结果、解释文本、阵位条目和 blocker 契约。
 - `candidatePool.ts`
-  - 定义 `owned-only / all-hypothetical / manual-override` 三种候选模式。
+  - 定义 `owned-only / all-hypothetical` 两种候选模式。
 - `formationLegality.ts`
   - 检查 seat 冲突、禁用英雄、强制英雄和锁槽。
 - `steadyStateScoring.ts`

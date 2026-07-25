@@ -61,7 +61,6 @@ baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
 
 - `owned-only`：只使用账号快照中已拥有英雄，按真实装备、feat、传奇、专精和已保存阵型信息计算。
 - `all-hypothetical`：包含未拥有英雄，默认使用公平投影假设。
-- `manual-override`：允许手动指定装备、feat、专精和传奇等级，不修改原始 snapshot。
 
 未拥有英雄公平基线：
 
@@ -87,7 +86,7 @@ Planner 页面是工作台，不是 landing page。
 
 - profile 状态：无快照、快照年龄、warnings、手动刷新入口、删除入口。
 - scenario 区：variant 搜索、formation layout、限制摘要。
-- candidate 区：owned-only、all-hypothetical、manual override。
+- candidate 区：owned-only、all-hypothetical。
 - baseline 区：金币预算、最后专精状态、below-baseline warning。
 - result 区：Top 3-5，显示游戏记数法 score、slot assignments、核心解释和 unsupported warnings。
 - save 区：把有效结果保存到现有 formation preset。

@@ -63,7 +63,7 @@
 进入 planner 页
   -> 读取本地 UserProfileSnapshot
   -> 选择目标 variant/adventure 和 formation layout
-  -> 选择候选模式 owned-only / all-hypothetical / manual override
+  -> 选择候选模式 owned-only / all-hypothetical
   -> 选择或确认金币预算基线
   -> 运行 legality + scoring + search
   -> 查看 top results 和 warnings
