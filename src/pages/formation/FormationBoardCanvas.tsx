@@ -80,7 +80,17 @@ export function FormationBoardCanvas({
               <span className="formation-slot__label">{slotLabel}</span>
               <div className="formation-slot__summary" aria-hidden="true">
                 {champion ? (
-                  <div className="formation-slot__summary-badge">
+                  <div
+                    className="formation-slot__summary-badge"
+                    {...(onSlotDrop
+                      ? {
+                          draggable: true,
+                          onDragStart: (event: DragEvent<HTMLDivElement>) => {
+                            event.dataTransfer?.setData('text/plain', champion.id)
+                          },
+                        }
+                      : null)}
+                  >
                     <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot-mini" />
                     <span className="formation-slot__summary-seat">{champion.seat}</span>
                     {isCarry ? (

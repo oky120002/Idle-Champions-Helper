@@ -104,8 +104,9 @@
       display: none;
     }
 
-  /* HeroPicker 是桌面 HTML5 DnD 拖拽源；移动端无触摸 DnD，由 MobileEditor 原生 select + tap-target 接管。 */
-  .hero-picker {
+  /* 桌面 HTML5 DnD 专属：拖拽源面板与移除区。移动端无触摸 DnD，由 MobileEditor 内 HeroPicker 接管。 */
+  .hero-picker--source,
+  .formation-remove-zone {
       display: none;
     }
 

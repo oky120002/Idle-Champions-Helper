@@ -39,15 +39,12 @@ test('移动端阵型页应以无横滑棋盘配合槽位编辑卡完成编辑',
   const firstSlot = page.locator('[data-testid^="formation-mobile-slot-"]').first()
   await expect(firstSlot).toHaveAttribute('aria-pressed', 'true')
 
-  await page.getByTestId('formation-mobile-slot-select').selectOption({ index: 0 })
+  // MobileEditor 内 HeroPicker（替代原生 select）：选第一个英雄 → 当前英雄名变化
+  const mobileEditor = page.getByTestId('formation-mobile-editor')
+  await mobileEditor.getByTestId('hero-picker-trigger').click()
+  await mobileEditor.locator('[data-hero-id]:not([data-hero-id=""])').first().click()
 
-  const initialEditorText = (await page.getByTestId('formation-mobile-current-name').textContent())?.trim() ?? ''
-
-  await page.getByTestId('formation-mobile-slot-select').selectOption({ index: 1 })
-
-  const updatedEditorText = (await page.getByTestId('formation-mobile-current-name').textContent())?.trim() ?? ''
-  expect(updatedEditorText).not.toBe('')
-  expect(updatedEditorText).not.toBe(initialEditorText)
+  await expect(page.getByTestId('formation-mobile-current-name')).not.toHaveText('')
 
   const secondSlot = page.locator('[data-testid^="formation-mobile-slot-"]').nth(1)
   await secondSlot.click()

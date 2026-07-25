@@ -124,4 +124,20 @@ describe('HeroPicker', () => {
 
     expect(screen.queryByTestId('hero-picker-panel')).toBeNull()
   })
+
+  it('拖拽源模式（不传 onChange）：trigger 显示拖拽提示、不渲染未放置、英雄卡 draggable', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <HeroPicker champions={champions} draggable />
+      </I18nProvider>,
+    )
+
+    expect(screen.getByTestId('hero-picker-trigger')).toHaveTextContent('拖拽英雄到槽位')
+
+    await user.click(screen.getByTestId('hero-picker-trigger'))
+
+    expect(screen.queryByText('未放置')).toBeNull()
+    expect(screen.getByText('吉姆').closest('button')).toHaveAttribute('draggable', 'true')
+  })
 })

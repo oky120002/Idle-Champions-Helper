@@ -114,14 +114,27 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
 
       <HeroPicker
         champions={model.championOptions}
-        value={model.activeMobileChampionId}
-        onChange={(heroId) => {
-          if (model.activeMobileSlot) {
-            model.handleAssignChampion(model.activeMobileSlot.id, heroId)
+        draggable
+        className="hero-picker--source"
+      />
+
+      <div
+        className="formation-remove-zone"
+        data-testid="formation-remove-zone"
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={(event) => {
+          event.preventDefault()
+          const heroId = event.dataTransfer?.getData('text/plain')
+          if (!heroId) return
+          // 仅已放置英雄可移除；HeroPicker 未放置英雄拖入此处为 no-op。
+          const placement = model.selectedChampions.find((item) => item.champion.id === heroId)
+          if (placement) {
+            model.handleAssignChampion(placement.slotId, '')
           }
         }}
-        draggable
-      />
+      >
+        {t({ zh: '拖到此处移除', en: 'Drop here to remove' })}
+      </div>
 
       <FormationBoardGrid model={model} />
       <FormationMobileEditor model={model} />

@@ -6,21 +6,26 @@ import type { Champion } from '../../domain/types'
 
 export interface HeroPickerProps {
   champions: Champion[]
-  value: string
-  onChange: (heroId: string) => void
-  /** 阶段 16.2：拖拽源用；为 true 时英雄卡 draggable=true 并写 dataTransfer，供槽位 drop 消费。 */
+  /** 当前选中英雄 id；仅 picker 模式（传 onChange）有意义。 */
+  value?: string
+  /** 传入即启用 picker 模式（点击选择 + 未放置 + 选中态）；省略则作纯拖拽源面板。 */
+  onChange?: (heroId: string) => void
+  /** 为 true 时英雄卡 draggable=true 并写 dataTransfer（heroId），供槽位 drop 消费。 */
   draggable?: boolean
+  className?: string
 }
 
 const PANEL_ID = 'hero-picker-panel'
 
 /**
  * 英雄选择器（阶段 16.1）：搜索 + 按 seat 分组 + 头像。
- * 16.2 起 draggable 英雄卡写 dataTransfer，供阵型槽位 drop 消费。
+ * - picker 模式（传 onChange）：点击选择 + 未放置 + 选中态，供移动端 MobileEditor 使用。
+ * - 拖拽源模式（省略 onChange）：英雄卡 draggable 写 dataTransfer，供桌面槽位 drop 消费。
  * seat 标签复用 formatSeatLabel，与 FormationMobileEditor 等消费方一致。
  */
-export function HeroPicker({ champions, value, onChange, draggable = false }: HeroPickerProps) {
+export function HeroPicker({ champions, value = '', onChange, draggable = false, className }: HeroPickerProps) {
   const { locale, t } = useI18n()
+  const hasPicker = onChange !== undefined
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -71,15 +76,21 @@ export function HeroPicker({ champions, value, onChange, draggable = false }: He
     return [...bySeat.entries()].sort((left, right) => left[0] - right[0])
   }, [filtered])
 
-  const selected = value ? champions.find((champion) => champion.id === value) ?? null : null
+  const selected = hasPicker && value ? champions.find((champion) => champion.id === value) ?? null : null
 
   function commit(heroId: string) {
-    onChange(heroId)
+    onChange?.(heroId)
     setOpen(false)
   }
 
+  const triggerLabel = selected
+    ? getPrimaryLocalizedText(selected.name, locale)
+    : hasPicker
+      ? t({ zh: '选择英雄', en: 'Pick champion' })
+      : t({ zh: '拖拽英雄到槽位', en: 'Drag champion to a slot' })
+
   return (
-    <div className="hero-picker" data-testid="hero-picker" ref={containerRef}>
+    <div className={['hero-picker', className].filter(Boolean).join(' ')} data-testid="hero-picker" ref={containerRef}>
       <button
         type="button"
         className="hero-picker__trigger"
@@ -88,7 +99,7 @@ export function HeroPicker({ champions, value, onChange, draggable = false }: He
         aria-controls={open ? PANEL_ID : undefined}
         onClick={() => setOpen((current) => !current)}
       >
-        {selected ? getPrimaryLocalizedText(selected.name, locale) : t({ zh: '选择英雄', en: 'Pick champion' })}
+        {triggerLabel}
       </button>
 
       {open ? (
@@ -116,30 +127,32 @@ export function HeroPicker({ champions, value, onChange, draggable = false }: He
           ) : null}
 
           <ul className="hero-picker__list">
-            <li>
-              <button
-                type="button"
-                data-hero-id=""
-                aria-pressed={value === ''}
-                className={value === '' ? 'is-selected' : ''}
-                onClick={() => commit('')}
-              >
-                {t({ zh: '未放置', en: 'Empty' })}
-              </button>
-            </li>
+            {hasPicker ? (
+              <li>
+                <button
+                  type="button"
+                  data-hero-id=""
+                  aria-pressed={value === ''}
+                  className={value === '' ? 'is-selected' : ''}
+                  onClick={() => commit('')}
+                >
+                  {t({ zh: '未放置', en: 'Empty' })}
+                </button>
+              </li>
+            ) : null}
 
             {grouped.map(([seat, list]) => (
               <li key={seat} className="hero-picker__group">
                 <span className="hero-picker__group-label">{formatSeatLabel(seat, locale)}</span>
                 <ul>
                   {list.map((champion) => {
-                    const isSelected = champion.id === value
+                    const isSelected = hasPicker && champion.id === value
                     return (
                       <li key={champion.id}>
                         <button
                           type="button"
                           data-hero-id={champion.id}
-                          aria-pressed={isSelected}
+                          aria-pressed={hasPicker ? isSelected : undefined}
                           draggable={draggable}
                           onDragStart={(event) => {
                             if (draggable) {
@@ -149,7 +162,7 @@ export function HeroPicker({ champions, value, onChange, draggable = false }: He
                           className={['hero-picker__option', isSelected ? 'is-selected' : '']
                             .filter(Boolean)
                             .join(' ')}
-                          onClick={() => commit(champion.id)}
+                          onClick={hasPicker ? () => commit(champion.id) : undefined}
                         >
                           <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot-mini" />
                           <span>{getPrimaryLocalizedText(champion.name, locale)}</span>

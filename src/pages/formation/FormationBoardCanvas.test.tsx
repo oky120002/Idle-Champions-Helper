@@ -108,4 +108,18 @@ describe('FormationBoardCanvas', () => {
 
     expect(event.defaultPrevented).toBe(false)
   })
+
+  it('传 onSlotDrop 时已放置英雄 badge 可拖（slot→slot / 拖出移除）', () => {
+    const { container } = renderCanvas({ onSlotDrop: vi.fn() })
+    const badge = container.querySelector('[data-slot-id="slot-a"] .formation-slot__summary-badge')!
+
+    expect(badge).toHaveAttribute('draggable', 'true')
+  })
+
+  it('未传 onSlotDrop 时已放置英雄 badge 不可拖（planner 只读棋盘）', () => {
+    const { container } = renderCanvas()
+    const badge = container.querySelector('[data-slot-id="slot-a"] .formation-slot__summary-badge')!
+
+    expect(badge).not.toHaveAttribute('draggable')
+  })
 })

@@ -1,6 +1,7 @@
 import { ActionButton } from '../../components/ActionButton'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
+import { HeroPicker } from './HeroPicker'
 import type { FormationPageModel } from './types'
 
 interface FormationMobileEditorProps {
@@ -16,7 +17,6 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
     championOptions,
     locale,
     t,
-    getChampionOptionLabel,
     handleAssignChampion,
   } = model
 
@@ -57,19 +57,11 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
         ) : null}
       </div>
 
-      <select
-        data-testid="formation-mobile-slot-select"
-        className="slot-select"
+      <HeroPicker
+        champions={championOptions}
         value={activeMobileChampionId}
-        onChange={(event) => handleAssignChampion(activeMobileSlot.id, event.target.value)}
-      >
-        <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
-        {championOptions.map((item) => (
-          <option key={item.id} value={item.id}>
-            {getChampionOptionLabel(item)}
-          </option>
-        ))}
-      </select>
+        onChange={(heroId) => handleAssignChampion(activeMobileSlot.id, heroId)}
+      />
 
       {activeMobileChampion ? (
         <div className="formation-mobile-editor__current">
