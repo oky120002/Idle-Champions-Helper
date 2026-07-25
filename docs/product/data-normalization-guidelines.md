@@ -55,3 +55,7 @@ override 用 `includes` 子串匹配，**一条 match 可能命中多个 variant
 **歧义标记须用二级标记消歧**：排除「变量递增占格」时，"每经过 N 区域" 既可表计数递增（每周期 +1 格）也可表位置轮换（固定 N 格换位置）甚至无关机制（气味/伤害改变）。必须先用位置轮换标记放行再判递增——否则固定 N 格换位置的 variant（v241 两格换位置）被 "每经过" 误清零。任何"看起来有规律"的排除标记都要 raw 全量核对两类语义后再生效。
 
 **位置轮换标记不能用孤立短词**：原用孤立「移动」做标记，误匹配 v296「守望者...无法被移动或移除」（forcedHeroes 英雄锁定，非 NPC 换位置），把变量递增（每 50 区域 +1 格）误判为位置轮换、跳过排除、误产 occ=1。改为只收明确的位置变化短语（阵型中移动 / 移动位置 / 改变位置 / 变换位置 / 切换位置）。标记词越短（单字「移动」），命中否定语境（无法被移动 / 可以被移动 / 移动速度）的概率越高——位置轮换标记须与实体主动换位置的动作绑定，不留孤立短词。
+
+## 11. 派生值的折算/缩放收敛在 normalize 层，不分散到消费层多路径
+
+ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放消费层，会因 `collectEffectEntries` 的多派生路径（wrapper 派生 `upgrade-buffed-signal` / static-dps fallback / 直接 entry）各自折算或丢失 entry 标记——Channel Divinity（`buff_upgrades` wrapper）派生 signal 会丢原 entry 的 duration/base_cooldown，无法折算。**根因方案**：折算收敛在 normalize 层（`normalizeChampionAbility` 把 `value × uptime` 预折算进 effect_string），消费层（`collectRawEffectEntries` `'ability'` 源）按折算后串正常处理——wrapper 派生自动用折算后 magnitude，所有路径一致。规则：当派生值（uptime / rarity 缩放 / level 折算等）需穿越消费层多路径时，在 normalize 层预折算进 effect_string，而非要求每个消费路径各自识别 + 折算。
