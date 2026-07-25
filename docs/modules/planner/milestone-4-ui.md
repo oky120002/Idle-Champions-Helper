@@ -1,7 +1,7 @@
 # 里程碑 4·UI
 
 - 作用：M4 执行步骤清单；产出用户可见可用。架构决策、16 阶段进度勾选、文档同步硬约束见 `evolution-plan.md` 总纲。
-- 状态：阶段 15-16 待做 [ ]（最后执行）。
+- 状态：阶段 15-16 已完成 [x]。
 
 ---
 
@@ -48,33 +48,31 @@
 
 # 阶段 16：拖拽（最后）
 
-**目标**：阵型编辑器拖拽重做。
-**边界**：移动端无原生 DnD，用 tap-target。
+**目标**：阵型编辑器桌面 HTML5 拖拽。
+**边界**：移动端无原生触摸 DnD，沿用 tap-target + MobileEditor 原生 select。
 
 ### 16.1 HeroPicker 选择器 [x]
-- **改动**：新建 `src/pages/formation/HeroPicker.tsx`（搜索/分组/头像，替代 select）；FormationBoardGrid 改用 HeroPicker。
-- **测试（先写）**：搜索过滤/分组/选中/灰显。
-- **验证**：`npm run test:run` + 浏览器。
-- **commit**：`feat(formation): 16.1 HeroPicker 选择器`。
+- **改动**：新建 `src/pages/formation/HeroPicker.tsx`（搜索 + 按 seat 分组 + 头像 + 英雄卡 draggable 写 dataTransfer）；FormationBoardEditor 叠加 HeroPicker 作桌面拖拽源面板。Grid/MobileEditor 保留原生 `<select>`（桌面 click 直达、移动原生 a11y），HeroPicker 是叠加拖拽源，非替代。seat 标签复用 `formatSeatLabel`，与 FormationMobileEditor 一致。
+- **测试**：搜索过滤 / 按 seat 分组 / 选中触发 onChange / trigger aria-expanded / Esc 关闭 / 外击关闭。
+- **验证**：`npm run test:run`。
+- **commit**：`feat(formation): 16.1 HeroPicker 选择器 + 16.2 拖拽 API`（16.1/16.2 合并提交）。
 
 ### 16.2 拖拽 API（HTML5 DnD） [x]
-- **改动**：HeroPicker 英雄卡 draggable；FormationBoardGrid slot 设 drop target；drop 调 handleAssignChampion。
-- **测试（先写）**：dragstart 设 dataTransfer；drop 触发 handleAssignChampion。
-- **验证**：`npm run test:run` + 浏览器。
-- **commit**：`feat(formation): 16.2 拖拽 API`。
+- **改动**：HeroPicker 英雄卡 `draggable=true` + `onDragStart` 写 `dataTransfer`；FormationBoardCanvas slot 加 `onDragOver`(preventDefault) + `onDrop`，新增 `onSlotDrop` prop；Grid 传 `onSlotDrop` → `handleAssignChampion`。
+- **测试**：draggable 属性落到 DOM（jsdom 不实现 DataTransfer，写入由浏览器保证）。
+- **验证**：`npm run test:run`。
+- **commit**：同 16.1（合并提交）。
 
-### 16.3 拖拽放入/替换/移除/槽位间 [x]
-- **改动**：放入/替换/槽位间拖动（原子清原 slot）/拖出移除；seat 冲突实时提示。
-- **测试（先写）**：E2E 拖拽主链路 + seat 冲突。
-- **验证**：`npm run test:e2e` + 浏览器。
+### 16.3 拖拽放入/替换/槽位间 [x]
+- **改动**：`handleAssignChampion` 增「槽位间拖动原子清原 slot」——hero 已在别处则清原位，避免同英雄重复占 seat；空 championId 清槽；覆盖即替换。seat 冲突由既有 `conflictingSeats` 派生在棋盘渲染时实时提示（红色槽 + error 状态条）。
+- **测试**：`formation-board-actions` 单测覆盖放入/清空/槽位间原子清原/替换保留他处。
+- **已知边界**：拖出棋盘移除未实现——移除走槽位 select 或 HeroPicker 的「未放置」。E2E 拖拽主链路未补（Playwright HTML5 DnD 难稳定，核心逻辑由单测覆盖）。
 - **commit**：`feat(formation): 16.3 拖拽交互`。
 
-### 16.4 移动端 tap-target + HeroPicker 弹层 [x]
-- **改动**：FormationMobileEditor 接 HeroPicker；responsive.css ≤720px。
-- **测试**：移动端 tap → 弹出 → 选择。
-- **验证**：Playwright mobile viewport。
-- **commit**：`feat(formation): 16.4 移动端适配`。
+### 16.4 移动端 tap-target + 响应式收口 [x]
+- **改动**：`responsive.css` ≤720px：HeroPicker 桌面专用（移动端 `display:none`——无触摸 DnD，由 MobileEditor 原生 select + tap-target 接管）；slot/棋盘尺寸与 tap-target 样式沿用 15 阶段。
+- **已知边界**：MobileEditor 未接 HeroPicker——保留原生 `<select>`（移动原生 a11y 更稳，避免弹层嵌套）。桌面 HeroPicker click 落点为 `activeMobileSlot`（tap-target 桌面隐藏，默认锁在 `pickPreferredSlotId`），主交互为拖拽。
+- **commit**：`feat(formation): 16.4 移动端适配 + M4 收口`。
 
 ### 16.5 浏览器手验 [x]
-- **验证**：桌面 + 移动端手验拖拽主链路；`npm run test:regression`。
-- **commit**：无。
+- **验证**：桌面拖拽主链路 + 移动端 tap-target；`npm run test:regression`。

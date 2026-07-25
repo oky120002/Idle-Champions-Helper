@@ -13,7 +13,7 @@ const champions: Champion[] = [
 ]
 
 describe('HeroPicker', () => {
-  it('打开面板后按 seat 分组列出英雄', async () => {
+  it('打开面板后按 seat 分组列出英雄（复用 formatSeatLabel）', async () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
@@ -24,8 +24,9 @@ describe('HeroPicker', () => {
     await user.click(screen.getByTestId('hero-picker-trigger'))
 
     expect(screen.getByTestId('hero-picker-panel')).toBeInTheDocument()
-    expect(screen.getByText('Seat 1')).toBeInTheDocument()
-    expect(screen.getByText('Seat 2')).toBeInTheDocument()
+    // 默认 zh-CN → formatSeatLabel 输出「N 号位」，与 FormationMobileEditor 一致。
+    expect(screen.getByText('1 号位')).toBeInTheDocument()
+    expect(screen.getByText('2 号位')).toBeInTheDocument()
     expect(screen.getByText('布鲁诺')).toBeInTheDocument()
     expect(screen.getByText('西莉亚')).toBeInTheDocument()
     expect(screen.getByText('吉姆')).toBeInTheDocument()
@@ -62,21 +63,65 @@ describe('HeroPicker', () => {
     expect(screen.queryByTestId('hero-picker-panel')).toBeNull()
   })
 
-  it('draggable 时英雄卡触发 onDragStartHero 并写 dataTransfer', async () => {
+  it('draggable 时英雄卡带 draggable 属性（供槽位 drop 消费）', async () => {
     const user = userEvent.setup()
-    const onDragStartHero = vi.fn()
     render(
       <I18nProvider>
-        <HeroPicker champions={champions} value="" onChange={() => {}} draggable onDragStartHero={onDragStartHero} />
+        <HeroPicker champions={champions} value="" onChange={() => {}} draggable />
       </I18nProvider>,
     )
 
     await user.click(screen.getByTestId('hero-picker-trigger'))
     const jimCard = screen.getByText('吉姆').closest('button')!
 
-    // jsdom 不实现 DataTransfer，只验证 onDragStartHero 回调；dataTransfer 写入由浏览器保证。
-    fireEvent.dragStart(jimCard)
+    // jsdom 不实现 DataTransfer，无法验证 dataTransfer 写入；仅校验 draggable 标记落到 DOM。
+    expect(jimCard).toHaveAttribute('draggable', 'true')
+  })
 
-    expect(onDragStartHero).toHaveBeenCalledWith('jim')
+  it('trigger 的 aria-expanded 随面板开关切换', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <HeroPicker champions={champions} value="" onChange={() => {}} />
+      </I18nProvider>,
+    )
+
+    const trigger = screen.getByTestId('hero-picker-trigger')
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    await user.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+  })
+
+  it('按 Esc 关闭面板', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <HeroPicker champions={champions} value="" onChange={() => {}} />
+      </I18nProvider>,
+    )
+
+    await user.click(screen.getByTestId('hero-picker-trigger'))
+    expect(screen.getByTestId('hero-picker-panel')).toBeInTheDocument()
+
+    await user.keyboard('{Escape}')
+
+    expect(screen.queryByTestId('hero-picker-panel')).toBeNull()
+  })
+
+  it('点击面板外部关闭', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <HeroPicker champions={champions} value="" onChange={() => {}} />
+      </I18nProvider>,
+    )
+
+    await user.click(screen.getByTestId('hero-picker-trigger'))
+    expect(screen.getByTestId('hero-picker-panel')).toBeInTheDocument()
+
+    // 模拟在面板外部触发 pointerdown（复用 ChampionRosterFlyout 的外击模式）。
+    fireEvent.pointerDown(document.body)
+
+    expect(screen.queryByTestId('hero-picker-panel')).toBeNull()
   })
 })

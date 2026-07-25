@@ -67,11 +67,15 @@ export function FormationBoardCanvas({
                 .filter(Boolean)
                 .join(' ')}
               style={{ gridColumn: slot.column, gridRow: slot.row }}
-              onDragOver={(event) => event.preventDefault()}
-              onDrop={(event) => {
-                event.preventDefault()
-                onSlotDrop?.(slot.id, event)
-              }}
+              {...(onSlotDrop
+                ? {
+                    onDragOver: (event: DragEvent<HTMLDivElement>) => event.preventDefault(),
+                    onDrop: (event: DragEvent<HTMLDivElement>) => {
+                      event.preventDefault()
+                      onSlotDrop(slot.id, event)
+                    },
+                  }
+                : null)}
             >
               <span className="formation-slot__label">{slotLabel}</span>
               <div className="formation-slot__summary" aria-hidden="true">

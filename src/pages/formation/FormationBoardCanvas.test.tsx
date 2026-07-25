@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { createEvent, fireEvent, render } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
 import type { Champion, FormationSlot } from '../../domain/types'
@@ -85,5 +85,27 @@ describe('FormationBoardCanvas', () => {
     })
 
     expect(container.querySelector('[data-slot-id="slot-b"].formation-slot--active')).not.toBeNull()
+  })
+
+  it('传入 onSlotDrop 时 drop 被 preventDefault 且触发回调', () => {
+    const onSlotDrop = vi.fn()
+    const { container } = renderCanvas({ onSlotDrop })
+    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const event = createEvent.drop(slot)
+
+    fireEvent(slot, event)
+
+    expect(event.defaultPrevented).toBe(true)
+    expect(onSlotDrop).toHaveBeenCalledWith('slot-a', expect.anything())
+  })
+
+  it('未传 onSlotDrop 时只读棋盘不拦截 drop（planner 结果卡片不应成为 drop 目标）', () => {
+    const { container } = renderCanvas()
+    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const event = createEvent.drop(slot)
+
+    fireEvent(slot, event)
+
+    expect(event.defaultPrevented).toBe(false)
   })
 })
