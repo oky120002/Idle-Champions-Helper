@@ -47,6 +47,8 @@
 - Barrel 只允许局部、稳定、低扇出的聚合；禁止跨 feature 全量出口。
 - Effect 只用于外部同步；能在 render 或纯函数阶段完成的计算，不放进 Effect。
 - 共享渲染组件（Canvas 等纯渲染壳）的副作用回调（drop/scroll/拖放等）必须条件挂载：回调未传则不挂 handler，避免只读消费方误接 `preventDefault` 等副作用而成为错误的事件目标。
+- 同页可能多实例的组件，DOM `id` 用 `useId()` 实例唯一化：模块常量 id 在 `display:none` 共存或多实例渲染时重复（违反 HTML 唯一性 + `aria-controls` 指向错误目标 + 测试被迫用多匹配 scoping 适配）；`data-testid` 多实例重复同理，能合并实例或加后缀就先合并，别让测试靠 scoping 兜底。
+- 交互元素语义必须与实际行为一致：可点击元素用 `<button>` 且必须接 `onClick`；纯拖拽源（无点击动作）用 `<div draggable>`，不渲染 `<button onClick={undefined}>`（button 不可激活却消耗 tab 顺序 + 误导用户可点击）。
 
 ## 6. 例外与迁移
 
