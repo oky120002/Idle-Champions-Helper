@@ -5,12 +5,14 @@ import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold
 import { useI18n } from '../app/i18n'
 import { PlannerProfileState } from './planner/PlannerProfileState'
 import { PlannerResultCard } from './planner/PlannerResultCard'
-import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
+import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerTopLineups } from './planner/PlannerTopLineups'
 import { PlannerCarryRanking } from './planner/PlannerCarryRanking'
+import { PlannerCarryLock } from './planner/PlannerCarryLock'
+import { PlannerSlotLock } from './planner/PlannerSlotLock'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
 
 function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnType<typeof useI18n>['t']) {
@@ -57,16 +59,21 @@ export function PlannerPage() {
     candidateMode,
     championById,
     collections,
+    lockedCarryHeroId,
+    lockedSlots,
     loadError,
     loadState,
     plannerRecommendation,
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
+    clearSlotLock,
     selectCandidateMode,
+    selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
+    toggleSlotLock,
   } = usePlannerPageModel()
 
   const safeResultIndex = plannerRecommendation.results.length > 0
@@ -163,11 +170,24 @@ export function PlannerPage() {
                       championById={championById}
                       onSelect={selectResultIndex}
                     />
+                    <PlannerCarryLock
+                      championById={championById}
+                      value={lockedCarryHeroId}
+                      onChange={selectLockedCarryHeroId}
+                    />
                     <PlannerResultCard
                       {...selectedResult}
                       scoringMode={scoringMode}
                       slots={plannerRecommendation.slots}
                       championById={championById}
+                    />
+                    <PlannerSlotLock
+                      slots={plannerRecommendation.slots}
+                      placements={selectedResult.placements}
+                      championById={championById}
+                      lockedSlots={lockedSlots}
+                      onToggleLock={toggleSlotLock}
+                      onClearLock={clearSlotLock}
                     />
                     <PlannerCarryRanking
                       results={plannerRecommendation.results}

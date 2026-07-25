@@ -142,6 +142,10 @@ export interface PlannerRecommendationOptions {
    * manual-override = 所有英雄 + 调用方 overrides。hypothetical 候选的装备精确化由 equipmentAdjustmentByHero（13.4）负责。
    */
   candidateMode?: CandidateMode
+  /** 阶段 15.4：强制指定核心输出位英雄（结果 carryHeroId 与之一致）。 */
+  lockedCarryHeroId?: string | null
+  /** 阶段 15.4：用户锁定槽位（slotId→heroId，预填且不被搜索替换）。 */
+  lockedSlots?: Record<string, string>
   /**
    * 全局 buff pool 乘数（阶段 11.4：patron-perk）。
    * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入；
@@ -201,7 +205,13 @@ export function buildPlannerRecommendation(
   const allowedHeroSet = new Set(scenario.allowedHeroes)
   const allowedTagSet = new Set(scenario.allowedTags)
   const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
-  const forcedHeroSet = new Set(scenario.forcedHeroes)
+  const userLockedSlots = options.lockedSlots ?? {}
+  const userLockedSlotSet = new Set(Object.keys(userLockedSlots))
+  const forcedHeroSet = new Set([
+    ...scenario.forcedHeroes,
+    ...(options.lockedCarryHeroId ? [options.lockedCarryHeroId] : []),
+    ...Object.values(userLockedSlots),
+  ])
   const heroes = collections.plannerHeroes
     .filter((hero) => {
       const isForceIncluded = forcedHeroSet.has(hero.heroId)
@@ -226,10 +236,10 @@ export function buildPlannerRecommendation(
   // 取 sortSlots 前 availableCapacity 个近似——英雄数量正确，避免多填被占格高估 carryDps。
   const availableCapacity = Math.max(
     0,
-    scenario.slotTopology.length - Math.max(scenario.occupiedSlotCount, scenario.lockedSlots.length),
+    scenario.slotTopology.length - Math.max(scenario.occupiedSlotCount, scenario.lockedSlots.length) - userLockedSlotSet.size,
   )
   const slots = sortSlots(scenario)
-    .filter((slotId) => !lockedSlotSet.has(slotId))
+    .filter((slotId) => !lockedSlotSet.has(slotId) && !userLockedSlotSet.has(slotId))
     .slice(0, availableCapacity)
   if (heroes.length < slots.length) {
     return {
@@ -261,6 +271,7 @@ export function buildPlannerRecommendation(
     heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     slots,
     beamWidth: 8,
+    lockedPlacements: userLockedSlots,
     scoreFormation: (placements) => {
       const legality = checkFormationLegality({
         placements,
@@ -286,6 +297,7 @@ export function buildPlannerRecommendation(
         scenario,
         heroLevels,
         scoringMode,
+        lockedCarryHeroId: options.lockedCarryHeroId ?? undefined,
         // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
         globalBuffMultiplier: options.globalBuffMultiplier,
         equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
@@ -320,8 +332,18 @@ export function buildPlannerRecommendation(
   }
 
   const scenarioWarnings = buildPlannerWarnings(scenario, profileSnapshot)
+  const lockedPlacementEntries = Object.entries(userLockedSlots).map(([slotId, heroId]) => {
+    const hero = heroById.get(heroId)
+    return {
+      slotId,
+      slotLabel: slotId,
+      heroId,
+      heroName: hero?.name.display ?? heroId,
+      seat: hero?.seat ?? null,
+    }
+  })
   const plannerResults: PlannerResult[] = topResults.map((top) => {
-    const placementEntries = buildPlacementEntries(slots, top.placements, heroById)
+    const placementEntries = [...buildPlacementEntries(slots, top.placements, heroById), ...lockedPlacementEntries]
     return {
       score: formatGameNumber(top.score),
       carryHeroId: top.carryHeroId,

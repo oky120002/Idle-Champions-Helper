@@ -42,6 +42,8 @@ export interface ScoringInput {
    * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustment 解析后传入。
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
+  /** 阶段 15.4：强制指定 carry（只评该英雄作核心输出位）。 */
+  lockedCarryHeroId?: string | undefined
 }
 
 export interface ScoringResult {
@@ -254,6 +256,9 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
 
   for (const carryEntry of placedEntries) {
+    if (input.lockedCarryHeroId && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
+      continue
+    }
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
     const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
     const explanations: string[] = []

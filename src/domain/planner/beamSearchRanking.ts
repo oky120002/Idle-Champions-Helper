@@ -9,6 +9,8 @@ export interface BeamSearchInput {
   slots: string[]
   beamWidth: number
   scoreFormation: (placements: Record<string, string>) => ScoringResult
+  /** 阶段 15.4：用户锁定的预填槽位（slotId→heroId），初始 candidate 已占用且不被搜索替换。 */
+  lockedPlacements?: Record<string, string>
 }
 
 export interface BeamSearchResult {
@@ -30,16 +32,25 @@ interface BeamCandidate {
 export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
   const { heroes, slots, beamWidth, scoreFormation } = input
 
+  const lockedPlacements = input.lockedPlacements ?? {}
+  const lockedHeroIds = Object.values(lockedPlacements)
+  const lockedSeats = new Set<number>()
+  for (const heroId of lockedHeroIds) {
+    const seat = heroes.find((hero) => hero.heroId === heroId)?.seat
+    if (typeof seat === 'number') {
+      lockedSeats.add(seat)
+    }
+  }
   const initialCandidate: BeamCandidate = {
-    placements: {},
-    usedHeroes: new Set(),
-    usedSeats: new Set(),
+    placements: { ...lockedPlacements },
+    usedHeroes: new Set(lockedHeroIds),
+    usedSeats: lockedSeats,
   }
   let candidates: BeamCandidate[] = [initialCandidate]
   // scored 持有最近一轮评分结果；循环结束即最终候选的评分，收口直接复用，
   // 不再对最后一轮已评分的候选重复跑 scoreFormation（每次全阵型 O(N²×signals)）。
   let scored: Array<{ candidate: BeamCandidate; result: ScoringResult }> = [
-    { candidate: initialCandidate, result: scoreFormation({}) },
+    { candidate: initialCandidate, result: scoreFormation(initialCandidate.placements) },
   ]
 
   for (const slot of slots) {

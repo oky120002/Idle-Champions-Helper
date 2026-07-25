@@ -28,7 +28,7 @@
 - **验证**：`npm run test:run` + 浏览器。
 - **commit**：`feat(planner): 15.3 候选模式控件`。
 
-### 15.4 C 位指定 + 锁槽控件
+### 15.4 C 位指定 + 锁槽控件 [x]
 - **改动**：`usePlannerPageModel` 加 lockedCarryHeroId/lockedSlots；`buildPlannerRecommendation` 加 options；新建 `PlannerCarryLock.tsx`/`PlannerSlotLock.tsx`；所有英雄候选（不限 dps）。
 - **测试**：指定 carry 时结果 carryHeroId 一致；锁槽不被替换。
 - **验证**：`npm run test:run` + 浏览器。

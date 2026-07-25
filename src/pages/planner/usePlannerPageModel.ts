@@ -19,11 +19,12 @@ export function usePlannerPageModel() {
     plannerScenarios: [],
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
-  // 阶段 15.1：棋盘头像字典。planner hero 能力模型不带 portrait，单独加载 Champion 集合。
   const [championById, setChampionById] = useState<Map<string, Champion>>(() => new Map())
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
+  const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
+  const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -68,18 +69,29 @@ export function usePlannerPageModel() {
     }
   }, [])
 
-  // 阶段 15.2/15.3：切换场景/模式/候选范围时 Top K 重新计算，选中索引回到 top1。
+  // 切换场景时锁槽/指定 carry 失效（slotId 随场景变）；模式/候选变化只 reset Top K 选中。
   useEffect(() => {
     setSelectedResultIndex(0)
-  }, [selectedVariantId, scoringMode, candidateMode])
+    setLockedSlots({})
+    setLockedCarryHeroId(null)
+  }, [selectedVariantId])
+
+  useEffect(() => {
+    setSelectedResultIndex(0)
+  }, [scoringMode, candidateMode])
 
   const selectedVariant = useMemo(
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
     [collections.variants, selectedVariantId],
   )
   const plannerRecommendation = useMemo(
-    () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, { scoringMode, candidateMode }),
-    [collections, profileSnapshot, scoringMode, candidateMode, selectedVariant],
+    () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, {
+      scoringMode,
+      candidateMode,
+      lockedCarryHeroId,
+      lockedSlots,
+    }),
+    [collections, profileSnapshot, scoringMode, candidateMode, lockedCarryHeroId, lockedSlots, selectedVariant],
   )
   const selectVariantId = useCallback((variantId: string | null) => {
     setSelectedVariantId(variantId)
@@ -90,6 +102,19 @@ export function usePlannerPageModel() {
   const selectCandidateMode = useCallback((mode: CandidateMode) => {
     setCandidateMode(mode)
   }, [])
+  const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
+    setLockedCarryHeroId(heroId)
+  }, [])
+  const toggleSlotLock = useCallback((slotId: string, heroId: string) => {
+    setLockedSlots((current) => ({ ...current, [slotId]: heroId }))
+  }, [])
+  const clearSlotLock = useCallback((slotId: string) => {
+    setLockedSlots((current) => {
+      const next = { ...current }
+      delete next[slotId]
+      return next
+    })
+  }, [])
   const selectResultIndex = useCallback((index: number) => {
     setSelectedResultIndex(index)
   }, [])
@@ -98,15 +123,20 @@ export function usePlannerPageModel() {
     candidateMode,
     championById,
     collections,
+    lockedCarryHeroId,
+    lockedSlots,
     loadError,
     loadState,
     plannerRecommendation,
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
+    clearSlotLock,
     selectCandidateMode,
+    selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
+    toggleSlotLock,
   }
 }
