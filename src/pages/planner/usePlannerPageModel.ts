@@ -70,16 +70,7 @@ export function usePlannerPageModel() {
   }, [])
 
   // 切换场景时锁槽/指定 carry 失效（slotId 随场景变）；模式/候选变化只 reset Top K 选中。
-  useEffect(() => {
-    setSelectedResultIndex(0)
-    setLockedSlots({})
-    setLockedCarryHeroId(null)
-  }, [selectedVariantId])
-
-  useEffect(() => {
-    setSelectedResultIndex(0)
-  }, [scoringMode, candidateMode])
-
+  // reset 放事件回调（非 effect），避免 setState-in-effect 级联渲染。
   const selectedVariant = useMemo(
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
     [collections.variants, selectedVariantId],
@@ -95,12 +86,17 @@ export function usePlannerPageModel() {
   )
   const selectVariantId = useCallback((variantId: string | null) => {
     setSelectedVariantId(variantId)
+    setSelectedResultIndex(0)
+    setLockedSlots({})
+    setLockedCarryHeroId(null)
   }, [])
   const selectScoringMode = useCallback((mode: ScoringMode) => {
     setScoringMode(mode)
+    setSelectedResultIndex(0)
   }, [])
   const selectCandidateMode = useCallback((mode: CandidateMode) => {
     setCandidateMode(mode)
+    setSelectedResultIndex(0)
   }, [])
   const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
     setLockedCarryHeroId(heroId)
