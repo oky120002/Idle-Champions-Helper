@@ -39,6 +39,8 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
     { key: 'globalBuff', label: t({ zh: '全局', en: 'Global' }), value: breakdown.factors.globalBuff },
     { key: 'equipment', label: t({ zh: '装备', en: 'Equipment' }), value: breakdown.factors.equipmentAdjustment },
   ]
+  // 值显示为 ×1.00 的因子无贡献，渲染纯噪声（典型场景 crit/globalBuff/equipment 常为默认 1）——隐藏。
+  const visibleFactors = factors.filter((factor) => formatFactor(factor.value) !== '1.00')
 
   return (
     <section data-section="breakdown" className="planner-breakdown">
@@ -51,55 +53,61 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
           en: `${breakdown.baseDps} × buffs = ${breakdown.carryDps}`,
         })}
       </p>
-      <ul className="planner-breakdown__factors">
-        {factors.map((factor) => (
-          <li key={factor.key} className="planner-breakdown__factor">
-            <span className="planner-breakdown__factor-label">{factor.label}</span>
-            <strong className="planner-breakdown__factor-value">×{formatFactor(factor.value)}</strong>
-          </li>
-        ))}
-      </ul>
-
-      <p className="planner-breakdown__sources-title">
-        {t({ zh: '加成来源（按英雄）', en: 'Buff sources (by hero)' })}
-      </p>
-      <ul className="planner-breakdown__contributions">
-        {breakdown.contributions.map((contribution) => {
-          const name = heroNameById.get(contribution.supportHeroId) ?? contribution.supportHeroId
-          const ranked = [...contribution.signals].sort((left, right) => right.multiplier - left.multiplier)
-          const top = ranked.slice(0, SIGNAL_SHOW_LIMIT)
-          const remaining = ranked.length - top.length
-          return (
-            <li
-              key={`${contribution.supportHeroId}:${contribution.supportSlotId}`}
-              className="planner-breakdown__contribution"
-            >
-              <p className="planner-breakdown__contribution-head">
-                <strong>{name}</strong>
-                <span>
-                  {t({
-                    zh: `槽位 ${contribution.supportSlotId} · ${contribution.signals.length} 个生效加成`,
-                    en: `slot ${contribution.supportSlotId} · ${contribution.signals.length} active`,
-                  })}
-                </span>
-              </p>
-              <ul className="planner-breakdown__signals">
-                {top.map((signal, index) => (
-                  <li key={`${signal.signalKind}:${index}`}>
-                    <span>{signal.signalKind}</span>
-                    <strong>×{formatFactor(signal.multiplier)}</strong>
-                  </li>
-                ))}
-                {remaining > 0 ? (
-                  <li className="planner-breakdown__more">
-                    {t({ zh: `+${remaining} 个`, en: `+${remaining} more` })}
-                  </li>
-                ) : null}
-              </ul>
+      {visibleFactors.length > 0 ? (
+        <ul className="planner-breakdown__factors">
+          {visibleFactors.map((factor) => (
+            <li key={factor.key} className="planner-breakdown__factor">
+              <span className="planner-breakdown__factor-label">{factor.label}</span>
+              <strong className="planner-breakdown__factor-value">×{formatFactor(factor.value)}</strong>
             </li>
-          )
-        })}
-      </ul>
+          ))}
+        </ul>
+      ) : null}
+
+      {breakdown.contributions.length > 0 ? (
+        <>
+          <p className="planner-breakdown__sources-title">
+            {t({ zh: '加成来源（按英雄）', en: 'Buff sources (by hero)' })}
+          </p>
+          <ul className="planner-breakdown__contributions">
+            {breakdown.contributions.map((contribution) => {
+              const name = heroNameById.get(contribution.supportHeroId) ?? contribution.supportHeroId
+              const ranked = [...contribution.signals].sort((left, right) => right.multiplier - left.multiplier)
+              const top = ranked.slice(0, SIGNAL_SHOW_LIMIT)
+              const remaining = ranked.length - top.length
+              return (
+                <li
+                  key={`${contribution.supportHeroId}:${contribution.supportSlotId}`}
+                  className="planner-breakdown__contribution"
+                >
+                  <p className="planner-breakdown__contribution-head">
+                    <strong>{name}</strong>
+                    <span>
+                      {t({
+                        zh: `槽位 ${contribution.supportSlotId} · ${contribution.signals.length} 个生效加成`,
+                        en: `slot ${contribution.supportSlotId} · ${contribution.signals.length} active`,
+                      })}
+                    </span>
+                  </p>
+                  <ul className="planner-breakdown__signals">
+                    {top.map((signal, index) => (
+                      <li key={`${signal.signalKind}:${index}`}>
+                        <span>{signal.signalKind}</span>
+                        <strong>×{formatFactor(signal.multiplier)}</strong>
+                      </li>
+                    ))}
+                    {remaining > 0 ? (
+                      <li className="planner-breakdown__more">
+                        {t({ zh: `+${remaining} 个`, en: `+${remaining} more` })}
+                      </li>
+                    ) : null}
+                  </ul>
+                </li>
+              )
+            })}
+          </ul>
+        </>
+      ) : null}
     </section>
   )
 }

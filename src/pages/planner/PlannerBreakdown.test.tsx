@@ -12,7 +12,7 @@ function buildBreakdown(overrides: Partial<SimulationBreakdown> = {}): Simulatio
     carrySlotId: 's1',
     carryLevel: 1,
     baseDps: '1.06e1',
-    levelCurve: 1.06,
+    levelCurve: '1.06e0',
     carryDps: '6.36e1',
     factors: {
       damagePool: 6,
@@ -97,5 +97,28 @@ describe('PlannerBreakdown', () => {
       </I18nProvider>,
     )
     expect(screen.getByText('+2 个')).toBeInTheDocument()
+  })
+
+  it('值为 1 的因子不渲染（避免 ×1.00 噪声）', () => {
+    // 典型场景 crit/globalBuff/equipment 常为默认 1；显示 ×1.00 是噪声，挤掉真正有贡献的因子注意力。
+    render(
+      <I18nProvider>
+        <PlannerBreakdown breakdown={buildBreakdown()} heroNameById={new Map()} />
+      </I18nProvider>,
+    )
+    // damagePool=6 显示
+    expect(screen.getByText('×6.00')).toBeInTheDocument()
+    // crit/vulnerability/globalBuff/equipment=1 → 不渲染 ×1.00
+    expect(screen.queryByText('×1.00')).toBeNull()
+  })
+
+  it('contributions 为空时不渲染加成来源区块', () => {
+    const { container } = render(
+      <I18nProvider>
+        <PlannerBreakdown breakdown={buildBreakdown({ contributions: [] })} heroNameById={new Map()} />
+      </I18nProvider>,
+    )
+    expect(container.querySelector('.planner-breakdown__contributions')).toBeNull()
+    expect(container.querySelector('.planner-breakdown__sources-title')).toBeNull()
   })
 })

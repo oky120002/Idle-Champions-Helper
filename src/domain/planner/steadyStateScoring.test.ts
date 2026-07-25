@@ -412,7 +412,8 @@ describe('steady state scoring', () => {
       expect(breakdown!.carryLevel).toBe(1)
       // baseDps = baseDamage(10) × levelCurve(1.06) = 10.6；加成前基线
       expect(Number(breakdown!.baseDps)).toBeCloseTo(10.6, 4)
-      expect(breakdown!.levelCurve).toBeCloseTo(1.06, 4)
+      // levelCurve 是游戏记数法字符串（与 baseDps/carryDps 同契约），Number 解析后 ≈ rate
+      expect(Number(breakdown!.levelCurve)).toBeCloseTo(1.06, 4)
       // carryDps = baseDps × damagePool(2×3) = 10.6 × 6 = 63.6；与 score 一致
       expect(Number(breakdown!.carryDps)).toBeCloseTo(63.6, 4)
       expect(breakdown!.factors.damagePool).toBeCloseTo(6, 4)
@@ -479,6 +480,25 @@ describe('steady state scoring', () => {
       expect(result.breakdown!.factors.crit).toBeGreaterThan(1)
       // monsterTags 空 → 视为无条件匹配（与 computeVulnerabilityFactor 一致）
       expect(result.breakdown!.factors.vulnerability).toBeGreaterThan(1)
+    })
+
+    it('levelCurve 为字符串，高 level 也不溢出为 null（JSON 契约）', () => {
+      // 契约：development-design-simulator.md 声明 levelCurve 为「游戏记数法字符串，可超 MAX_VALUE」。
+      // 原 .toNumber() 在 1.06^20000（≈10^506）溢出为 Infinity，JSON.stringify 静默变 null，破坏契约。
+      const carry = createHero('carry', { seat: 1, baseDamage: 1 })
+      const heroesById = new Map([['carry', carry]])
+      const result = scoreFormation({
+        placements: { s1: 'carry' },
+        heroesById,
+        scenario,
+        heroLevels: new Map([['carry', 20000]]),
+      })
+      const breakdown = result.breakdown!
+      expect(typeof breakdown.levelCurve).toBe('string')
+      // JSON 序列化往返不丢值（原 bug：Infinity → null）
+      const roundTrip = JSON.parse(JSON.stringify({ levelCurve: breakdown.levelCurve })) as { levelCurve: unknown }
+      expect(roundTrip.levelCurve).not.toBeNull()
+      expect(typeof roundTrip.levelCurve).toBe('string')
     })
   })
 

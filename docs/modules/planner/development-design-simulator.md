@@ -87,7 +87,7 @@ baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
 两个纯函数入口（共享 `resolvePlannerScenario` 做 variant→scenario 与 blocker 解析）：
 
 - `buildPlannerRecommendation(variant, collections, profile, options)`：beam search 找 Top K 最佳阵型。
-- `evaluateFormation(variant, collections, profile, placements, options)`：评估用户指定的单一阵型（不搜索），输出该阵型的完整拆解。UI 调整英雄后重算、CLI 指定阵型均走这里；合法性违规作为 warning 附加，仍出拆解。
+- `evaluateFormation(variant, collections, profile, placements, options)`：评估用户指定的单一阵型（不搜索），输出该阵型的完整拆解。UI 调整英雄后重算、CLI 指定阵型均走这里；合法性违规（seat 冲突 / banned / locked / `only_allow_crusaders` 白名单外）与未拥有英雄的 level 1 回退作为 warning 附加，仍出拆解（强制英雄豁免未拥有/白名单检查）。
 
 `PlannerResult.breakdown`（`SimulationBreakdown`，JSON 可序列化）承载每位英雄加成拆解：
 

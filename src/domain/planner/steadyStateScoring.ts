@@ -72,8 +72,8 @@ export interface SimulationContribution {
 /**
  * 单次模拟的结构化加成拆解（JSON 可序列化）：把 scoreFormation 内部已计算但原先压成字符串丢弃的
  * pool/signal/factor 中间量透出，供 UI 渲染每位英雄加成与 CLI JSON 输出。
- * baseDps/carryDps 用游戏记数法字符串（可超 Number.MAX_VALUE）；levelCurve = costCurve rate^level，
- * 常规 level 下为有限数，极端高 level 可能溢出为 Infinity（权威值看 carryDps 字符串）。
+ * baseDps/levelCurve/carryDps 均为游戏记数法字符串（可超 Number.MAX_VALUE，JSON 可序列化）：
+ * levelCurve 原 .toNumber() 在高 level（如 1.06^20000）溢出 Infinity，JSON.stringify 静默变 null 破坏契约。
  */
 export interface SimulationBreakdown {
   carryHeroId: string
@@ -81,7 +81,8 @@ export interface SimulationBreakdown {
   carryLevel: number
   /** baseDamage × levelCurve（加成前基线）*/
   baseDps: string
-  levelCurve: number
+  /** costCurve rate^level 的游戏记数法字符串（与 baseDps/carryDps 同契约）*/
+  levelCurve: string
   /** 最终 carryDps = baseDps × factors 各项之积 */
   carryDps: string
   factors: SimulationFactor
@@ -474,7 +475,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       carrySlotId: carryEntry.slotId,
       carryLevel,
       baseDps: formatGameNumber(baseDps),
-      levelCurve: levelCurve.toNumber(),
+      levelCurve: formatGameNumber(levelCurve),
       carryDps: formatGameNumber(bestScore),
       factors: {
         damagePool,

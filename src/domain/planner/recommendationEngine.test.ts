@@ -424,4 +424,71 @@ describe('evaluateFormation 指定阵型评估', () => {
     expect(evaluation.result?.breakdown).not.toBeNull()
     expect(evaluation.result?.placements).toEqual(placements)
   })
+
+  it('only_allow_crusaders 白名单外的英雄附加 warning（与 build 候选过滤对称）', () => {
+    // build 在候选阶段过滤非白名单英雄；evaluate 不改用户阵型，但须把白名单违规标为 warning。
+    const allowedVariant = createVariant('variant-allowed-eval', {
+      campaign,
+      name: text('Allowed Eval', '评估白名单'),
+      adventureId: 'adventure-allowed-eval',
+      adventure: text('Allowed', '白名单'),
+      objectiveArea: 100,
+    })
+    const allowedScenario: OfficialPlannerScenarioModel = {
+      variantId: allowedVariant.id,
+      scenarioRef: { kind: 'variant', id: allowedVariant.id },
+      name: allowedVariant.name,
+      formationLayoutId: 'layout-allowed-eval',
+      objectiveArea: 100,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1'] },
+      ],
+      forcedHeroes: [],
+      bannedHeroes: [],
+      lockedSlots: [],
+      enemyTypes: [],
+      allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
+      allowedTags: [],
+      occupiedSlotCount: 0,
+      scenarioWarnings: [],
+    }
+    const allowedCollections: PlannerCollections = {
+      variants: [allowedVariant],
+      plannerHeroes,
+      plannerScenarios: [allowedScenario],
+    }
+    // asharra 不在白名单
+    const evaluation = evaluateFormation(allowedVariant, allowedCollections, snapshot, { s1: 'asharra' })
+
+    expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('允许'))).toBe(true)
+    // 白名单内的 bruenor 不触发
+    const bruenorEval = evaluateFormation(allowedVariant, allowedCollections, snapshot, { s1: 'bruenor' })
+    expect(bruenorEval.result?.warnings.some((warning) => warning.includes('bruenor') && warning.includes('允许'))).toBe(false)
+  })
+
+  it('owned-only 下放置未拥有英雄附加 level 估算 warning', () => {
+    const smallSnapshot = createUserProfileSnapshot({
+      ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
+    })
+    // asharra 未在快照中（snapshot 只拥有 bruenor）→ 按 level 1 估算
+    const evaluation = evaluateFormation(selectedVariant, collections, smallSnapshot, { s1: 'asharra' })
+
+    expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(true)
+  })
+
+  it('all-hypothetical 下未拥有英雄不触发 level 警告（候选覆盖全部）', () => {
+    const smallSnapshot = createUserProfileSnapshot({
+      ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
+    })
+    const evaluation = evaluateFormation(
+      selectedVariant,
+      collections,
+      smallSnapshot,
+      { s1: 'asharra' },
+      { candidateMode: 'all-hypothetical' },
+    )
+
+    expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(false)
+  })
 })

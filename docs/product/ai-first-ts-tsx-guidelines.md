@@ -53,6 +53,8 @@
 - 同一数据 + 同一动作不建两个展示组件：两个组件消费同一 props 集合、触发同一回调、渲染同源数据时合并为一个；"换皮再展示一遍"是冗余，不是新增价值。
 - 简化数据生产者时同步删无人消费的字段，测试不得断言死字段：删一条生产分支后留下无人读取的字段即死代码；若仅测试在断言该字段（如 `buildCandidatePool` 产的 `isHypothetical` 无生产消费方），测试反而掩盖死代码——简化后回归一遍字段消费方。
 - 引擎/纯函数算出的结构化中间量（pool/signal/factor 拆解等）在输出契约原样透出，不压成展示字符串丢弃：`scoreFormation` 曾把 pool 拆解压成 `"hero: kind x1.5 -> carry"` 字符串塞进 explanations 又被上层忽略，导致「每位英雄加成」数据存在却拿不到。展示叙事由消费层从结构化数据生成，引擎只产结构化数据（+ 可选附带叙事）。
+- JSON 输出契约里声明"可超 `Number.MAX_VALUE` / JSON 可序列化"的字段统一走游戏记数法字符串，不得用 `.toNumber()` 回退 number：break_eternity Decimal 一经 `.toNumber()` 就可能溢出为 `Infinity`，`JSON.stringify` 静默变 `null`，契约无报错崩坏（`SimulationBreakdown.levelCurve` 曾声明字符串却赋 number，高 level carry 直接丢值）。这类字段必须配 `JSON.parse(JSON.stringify(...))` 往返断言——`typeof === 'string'` 与"往返后不为 null"双保险，否则类型声明与序列化现实漂移无人察觉。
+- 新增引擎入口与既有入口的限制语义必须对称：`evaluateFormation`（评估指定阵型）不像 `buildPlannerRecommendation`（搜索）那样在候选阶段过滤 `only_allow_crusaders` 白名单与未拥有英雄，就必须把这两类违规以 warning 体现——否则用户指定的非法/低质阵型被静默按 level 1 评分，两入口结果不可比。新入口的合法性/数据质量检查清单对照既有入口逐条核对，别让"不搜索"变成"不校验"。
 
 ## 6. 例外与迁移
 

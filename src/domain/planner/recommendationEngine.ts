@@ -230,10 +230,11 @@ export function evaluateFormation(
       allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
     }),
   )
+  // heroLevels 覆盖所有已拥有英雄；放置但未拥有的英雄由下方 restrictionWarnings 标记（按 level 1 估算）。
+  // 原 .filter(owned => candidateIds.has) 是死代码——owned-only 与 all-hypothetical 两模式下 candidateIds
+  // 均包含全部 ownedHeroIds，filter 永不剔项。
   const heroLevels = new Map(
-    profileSnapshot.ownedHeroes
-      .filter((owned) => candidateIds.has(owned.heroId))
-      .map((owned) => [owned.heroId, owned.level]),
+    profileSnapshot.ownedHeroes.map((owned) => [owned.heroId, owned.level]),
   )
 
   const variantRules: VariantRuleResult = {
@@ -250,6 +251,31 @@ export function evaluateFormation(
     lockedSlots: scenario.lockedSlots,
   })
   const legalityWarnings = legality.legal ? [] : legality.violations.map(formatLegalityViolation)
+
+  // evaluateFormation 不做候选过滤（用户显式指定阵型），但须把 build 候选阶段的限制语义以 warning 体现，
+  // 否则两入口语义不对称：build 过滤掉非白名单/未拥有英雄，evaluate 却静默接受并按 level 1 估算。
+  // 强制英雄（forcedHeroes）豁免——其未拥有/不在白名单是 force_use_heroes 的设计预期。
+  const forcedHeroSet = new Set(scenario.forcedHeroes)
+  const allowedHeroSet = new Set(scenario.allowedHeroes)
+  const allowedTagSet = new Set(scenario.allowedTags)
+  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
+  const restrictionWarnings: string[] = []
+  for (const heroId of Object.values(placements)) {
+    if (forcedHeroSet.has(heroId)) {
+      continue
+    }
+    if (!candidateIds.has(heroId)) {
+      restrictionWarnings.push(`${heroId} 不在账号快照中，按 level 1 估算`)
+    }
+    if (hasAllowedRestriction) {
+      const hero = heroById.get(heroId)
+      const allowed = allowedHeroSet.has(heroId)
+        || (hero?.tags.some((tag) => allowedTagSet.has(tag)) ?? false)
+      if (!allowed) {
+        restrictionWarnings.push(`${heroId} 不在当前变体的允许名单（only_allow_crusaders）内`)
+      }
+    }
+  }
 
   const scoring = scoreFormation({
     placements,
@@ -277,7 +303,7 @@ export function evaluateFormation(
       scoring.score,
       scoring.activeSignalKinds,
     ),
-    warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...scenario.scenarioWarnings])],
+    warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
     areaEstimate: scoring.areaEstimate ?? null,
     breakdown: scoring.breakdown,
   }
@@ -365,10 +391,9 @@ export function buildPlannerRecommendation(
 
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
+  // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(
-    profileSnapshot.ownedHeroes
-      .filter((owned) => candidateIds.has(owned.heroId))
-      .map((owned) => [owned.heroId, owned.level]),
+    profileSnapshot.ownedHeroes.map((owned) => [owned.heroId, owned.level]),
   )
   const scenarioVariantRules: VariantRuleResult = {
     constraints: [
