@@ -85,4 +85,14 @@ repair: rebuild
     - 语义疑点：slot_escort hero_id 是「force-include（玩家须含该英雄）」还是「slot-occupied-by-hero（预占特定槽位）」？forcedHeroes 是 slot 无关的，不捕捉 slot_id=4 的槽位锁定。
     - 处置：影响面极小（1 variant 干净 + 1 variant 需 name 解析），语义需确认；不优先。若修，hero_id 路径在 collectHeroRestrictions 加 slot_escort.hero_id → forcedHeroIds（NPC 天然排除）。
 
+- filter-layout-stability E2E 抽屉折叠动画并行下 flaky <!-- auto-todo:id=atd_928b2bd127 -->
+  - 记录时间: `2026-07-25T14:53:20+08:00`
+  - 类型: bug
+  - 位置: `tests/e2e/filter-layout-stability.spec.ts:250`
+  - 备注: 抽屉折叠/展开动画 E2E 在 fullyParallel 下偶发失败，失败行每次不同（250/303/304）：collapseTravel/expandTravel 偶发为 0，或 rightGaps 超阈（186 > 18）。
+    - 影响：CI 可靠性——并行负载下浏览器节流动画导致计时断言失败；单独跑该文件通过（10/10）。
+    - 证据：全量 E2E 29/30，唯一失败即此；失败点漂移说明是动画计时而非逻辑错。
+    - 与 formation 无关：测试针对 champions 筛选页抽屉，M4 未触及。
+    - 后续：串行化该测试 / 放宽动画阈值容差 / 用 expect.toPass 重试。
+
 <!-- auto-todo:end -->
