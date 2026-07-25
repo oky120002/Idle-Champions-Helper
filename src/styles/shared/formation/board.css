@@ -130,3 +130,86 @@
   background: rgba(8, 13, 19, 0.8);
   color: #fff8ec;
 }
+
+/* 阶段 16.1/16.4：HeroPicker 选择器与移动端 tap-target 弹层。 */
+.hero-picker {
+  position: relative;
+}
+
+.hero-picker__trigger {
+  width: 100%;
+  padding: 0.66rem 0.76rem;
+  border: 1px solid rgba(227, 214, 193, 0.14);
+  border-radius: var(--radius-sm);
+  background: rgba(8, 13, 19, 0.8);
+  color: #fff8ec;
+  text-align: left;
+}
+
+.hero-picker__panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  right: 0;
+  max-height: 22rem;
+  overflow-y: auto;
+  padding: 0.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(200, 167, 127, 0.24);
+  background: rgba(7, 12, 18, 0.96);
+  box-shadow: var(--shadow-interactive);
+}
+
+.hero-picker__search {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(227, 214, 193, 0.14);
+  background: rgba(8, 13, 19, 0.8);
+  color: #fff8ec;
+}
+
+.hero-picker__list,
+.hero-picker__list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-picker__group-label {
+  display: block;
+  margin: 0.4rem 0 0.25rem;
+  font-size: 0.76rem;
+  color: rgba(242, 239, 230, 0.52);
+}
+
+.hero-picker__option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(242, 239, 230, 0.82);
+  text-align: left;
+  cursor: grab;
+}
+
+.hero-picker__option.is-selected {
+  border-color: rgba(220, 170, 90, 0.6);
+  background: rgba(220, 170, 90, 0.12);
+}
+
+.hero-picker__option[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.hero-picker__empty {
+  padding: 0.6rem;
+  color: rgba(242, 239, 230, 0.52);
+}

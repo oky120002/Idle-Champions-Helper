@@ -40,7 +40,7 @@
 - **验证**：`npm run test:e2e`。
 - **commit**：`feat(planner): 15.5 推荐结果导入编辑器`。
 
-### 15.6 浏览器手验闭环
+### 15.6 浏览器手验闭环 [x]
 - **验证**：`npm run dev`，/planner 跑通全链路；`npm run test:regression`。
 - **commit**：无。
 
@@ -69,12 +69,12 @@
 - **验证**：`npm run test:e2e` + 浏览器。
 - **commit**：`feat(formation): 16.3 拖拽交互`。
 
-### 16.4 移动端 tap-target + HeroPicker 弹层
+### 16.4 移动端 tap-target + HeroPicker 弹层 [x]
 - **改动**：FormationMobileEditor 接 HeroPicker；responsive.css ≤720px。
 - **测试**：移动端 tap → 弹出 → 选择。
 - **验证**：Playwright mobile viewport。
 - **commit**：`feat(formation): 16.4 移动端适配`。
 
-### 16.5 浏览器手验
+### 16.5 浏览器手验 [x]
 - **验证**：桌面 + 移动端手验拖拽主链路；`npm run test:regression`。
 - **commit**：无。
