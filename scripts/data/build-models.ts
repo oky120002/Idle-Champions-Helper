@@ -7,7 +7,8 @@ import {
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
 } from './effect-helpers.ts'
-import { readJson, writeJson } from './io-utils.ts'
+import { readJson, readJsonIfExists, writeJson } from './io-utils.ts'
+import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './resource-sync-policy.ts'
 import { parsePatronPerkSignals } from './patron-perk-signals.ts'
 import { parseRestrictions } from './restrictions-parser.ts'
 import type {
@@ -29,6 +30,10 @@ interface BuildModelsResult {
   updatedAt: string
   heroCount: number
   scenarioCount: number
+  /** 数据管线源码指纹（CLAUDE.md §1.2 增量跳过用）。 */
+  pipelineHash: string
+  /** 增量跳过时为 true。 */
+  skipped?: boolean
 }
 
 interface SlotTopologyEntry {
@@ -321,6 +326,36 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   const updatedAtRaw = championsRecord.updatedAt ?? variantsRecord.updatedAt ?? formationsRecord.updatedAt
   const updatedAt = typeof updatedAtRaw === 'string' ? updatedAtRaw : ''
 
+  // 数据管线增量跳过（CLAUDE.md §1.2）：输入（champion-details 等，由 normalize 产）未变 +
+  // build 逻辑指纹未变 → skip。normalize skip 时输入不变，build 也 skip；FORCE_DATA_REBUILD=1 强制。
+  const nextPipelineHash = await computePipelineHash()
+  if (!isForceDataRebuild()) {
+    const existingHeroAbilities = await readJsonIfExists(path.join(versionDir, 'hero-abilities.json')) as
+      | { updatedAt?: unknown; pipelineHash?: unknown; items?: unknown[] }
+      | null
+    if (
+      shouldSkipDataPipeline({
+        existingUpdatedAt: existingHeroAbilities?.updatedAt,
+        existingHash: existingHeroAbilities?.pipelineHash,
+        nextUpdatedAt: updatedAt,
+        nextHash: nextPipelineHash,
+      })
+    ) {
+      const existingScenarios = await readJsonIfExists(path.join(versionDir, 'scenarios.json')) as
+        | { items?: unknown[] }
+        | null
+      console.log(`build-models skipped: pipelineHash=${nextPipelineHash}（FORCE_DATA_REBUILD=1 可强制重跑）`)
+      return {
+        versionDir,
+        updatedAt,
+        pipelineHash: nextPipelineHash,
+        heroCount: Array.isArray(existingHeroAbilities?.items) ? existingHeroAbilities.items.length : 0,
+        scenarioCount: Array.isArray(existingScenarios?.items) ? existingScenarios.items.length : 0,
+        skipped: true,
+      }
+    }
+  }
+
   const heroAbilities: HeroAbilityProfile[] = []
   for (const championRaw of asArray(championsRecord.items)) {
     const champion = asRecord(championRaw)
@@ -342,6 +377,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   await writeJson(path.join(versionDir, 'hero-abilities.json'), {
     items: heroAbilities,
     updatedAt,
+    pipelineHash: nextPipelineHash,
   })
   await writeJson(path.join(versionDir, 'scenarios.json'), {
     items: scenarioModels,
@@ -376,6 +412,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     updatedAt,
     heroCount: heroAbilities.length,
     scenarioCount: scenarioModels.length,
+    pipelineHash: nextPipelineHash,
   }
 }
 

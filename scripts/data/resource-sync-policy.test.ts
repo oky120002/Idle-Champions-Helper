@@ -4,7 +4,10 @@ import path from 'node:path'
 import { mkdtemp, readFile } from 'node:fs/promises'
 import {
   compareUpdatedAt,
+  computePipelineHash,
   getUpdatedAtFromDefinitions,
+  isForceDataRebuild,
+  shouldSkipDataPipeline,
   shouldSkipResourceSync,
   writeUpdatedAtJsonFile,
 } from './resource-sync-policy.ts'
@@ -58,4 +61,82 @@ it('writeUpdatedAtJsonFile 会创建父目录并写出 JSON', async () => {
     updatedAt: '2026-02-03',
     resources: ['portraits'],
   })
+})
+
+// 数据管线（normalize/build）增量跳过 —— CLAUDE.md §1.2「未变整批跳过重生成」。
+// pipelineHash 自动检测归一化/build 逻辑改动（不依赖开发者 force）；FORCE_DATA_REBUILD=1 手动强制。
+
+it('computePipelineHash 返回 16 字符 hex 且稳定', async () => {
+  const first = await computePipelineHash()
+  const second = await computePipelineHash()
+  expect(first).toMatch(/^[0-9a-f]{16}$/)
+  expect(second).toBe(first)
+})
+
+it('shouldSkipDataPipeline: 无 existingHash（首次/旧 version.json）→ 不 skip', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-25',
+      existingHash: undefined,
+      nextUpdatedAt: '2026-07-25',
+      nextHash: 'abc123',
+    }),
+  ).toBe(false)
+})
+
+it('shouldSkipDataPipeline: pipelineHash 变（逻辑改了）→ 不 skip（核心：自动重跑）', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-25',
+      existingHash: 'old',
+      nextUpdatedAt: '2026-07-25',
+      nextHash: 'new',
+    }),
+  ).toBe(false)
+})
+
+it('shouldSkipDataPipeline: raw updatedAt 前进（数据更新）→ 不 skip', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-24',
+      existingHash: 'abc',
+      nextUpdatedAt: '2026-07-25',
+      nextHash: 'abc',
+    }),
+  ).toBe(false)
+})
+
+it('shouldSkipDataPipeline: raw + 逻辑都没变 → skip', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-25',
+      existingHash: 'abc',
+      nextUpdatedAt: '2026-07-25',
+      nextHash: 'abc',
+    }),
+  ).toBe(true)
+})
+
+it('shouldSkipDataPipeline: existingHash 非字符串（脏数据）→ 不 skip', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-25',
+      existingHash: 12345,
+      nextUpdatedAt: '2026-07-25',
+      nextHash: 'abc',
+    }),
+  ).toBe(false)
+})
+
+it('isForceDataRebuild: FORCE_DATA_REBUILD=1 → true，否则 false', () => {
+  const prev = process.env.FORCE_DATA_REBUILD
+  delete process.env.FORCE_DATA_REBUILD
+  expect(isForceDataRebuild()).toBe(false)
+  process.env.FORCE_DATA_REBUILD = '1'
+  try {
+    expect(isForceDataRebuild()).toBe(true)
+  } finally {
+    if (prev === undefined) delete process.env.FORCE_DATA_REBUILD
+    else process.env.FORCE_DATA_REBUILD = prev
+  }
 })

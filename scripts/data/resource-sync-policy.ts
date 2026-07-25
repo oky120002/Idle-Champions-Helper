@@ -1,4 +1,5 @@
-import { access, readdir, rm } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { access, readdir, readFile, rm } from 'node:fs/promises'
 import type { Dirent } from 'node:fs'
 import path from 'node:path'
 import { readJsonIfExists, writeJson } from './io-utils.ts'
@@ -167,3 +168,85 @@ export async function removeUnexpectedFiles(
       .map((entry) => rm(path.join(directory, entry.name), { force: true })),
   )
 }
+
+// ---------------------------------------------------------------------------
+// 数据管线（normalize / build）增量跳过 —— CLAUDE.md §1.2「未变整批跳过重生成」
+// ---------------------------------------------------------------------------
+
+/**
+ * 数据管线源码指纹：scripts/data 下所有非 test 的 .ts + normalize/fetch/build 三个入口脚本。
+ * 用于增量跳过：归一化/build 逻辑改动 → 指纹变 → 自动重跑，不依赖开发者记得 force。
+ * ponytail: 粗粒度（整个 scripts/data），任何数据脚本改动都触发重跑——保守不漏优于精确但漏检。
+ */
+const PIPELINE_HASH_DIRS = ['scripts/data']
+const PIPELINE_HASH_FILES = [
+  'scripts/normalize-idle-champions-definitions.ts',
+  'scripts/fetch-idle-champions-definitions.ts',
+  'scripts/build-idle-champions-data.ts',
+]
+
+async function collectTsFiles(dir: string): Promise<string[]> {
+  const result: string[] = []
+  let entries: Dirent[]
+  try {
+    entries = await readdir(dir, { withFileTypes: true })
+  } catch {
+    return []
+  }
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) {
+      result.push(...await collectTsFiles(full))
+    } else if (entry.isFile() && entry.name.endsWith('.ts') && !entry.name.endsWith('.test.ts')) {
+      result.push(full)
+    }
+  }
+  return result
+}
+
+export async function computePipelineHash(): Promise<string> {
+  const files = new Set<string>(PIPELINE_HASH_FILES)
+  for (const dir of PIPELINE_HASH_DIRS) {
+    for (const file of await collectTsFiles(dir)) {
+      files.add(file)
+    }
+  }
+  const hash = createHash('sha256')
+  for (const file of [...files].sort()) {
+    hash.update(file)
+    try {
+      hash.update(await readFile(file))
+    } catch {
+      // 文件不存在（开发中删除）→ hash 已含 file 路径，删除本身会改变 hash → 触发重跑
+    }
+  }
+  return hash.digest('hex').slice(0, 16)
+}
+
+/** 手动强制重跑逃生口：`FORCE_DATA_REBUILD=1` 跳过所有增量判定。 */
+export function isForceDataRebuild(): boolean {
+  return process.env.FORCE_DATA_REBUILD === '1' || process.env.FORCE_DATA_REBUILD === 'true'
+}
+
+/**
+ * normalize/build 增量跳过判定。skip 当且仅当：
+ * ① 有既有逻辑指纹记录；② 指纹未变（归一化/build 逻辑没改）；③ raw updatedAt 未前进。
+ * 任一变化（逻辑改 / raw 更新）或 force → 不 skip → 重跑。
+ */
+export function shouldSkipDataPipeline({
+  existingUpdatedAt,
+  existingHash,
+  nextUpdatedAt,
+  nextHash,
+}: {
+  existingUpdatedAt: unknown
+  existingHash: unknown
+  nextUpdatedAt: unknown
+  nextHash: string
+}): boolean {
+  if (typeof existingHash !== 'string' || existingHash === '') return false
+  if (existingHash !== nextHash) return false
+  if (compareUpdatedAt(existingUpdatedAt, nextUpdatedAt) < 0) return false
+  return true
+}
+

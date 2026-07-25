@@ -3,6 +3,7 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { readJson, readJsonIfExists, writeJson } from './data/io-utils.ts'
+import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './data/resource-sync-policy.ts'
 import { compareLocalizedText, uniqueLocalizedTexts, uniqueStrings } from './data/normalize-text-utils.ts'
 import {
   normalizeChampion,
@@ -131,7 +132,11 @@ export interface NormalizeDefinitionsResult {
   outputDir: string
   versionFile: string
   updatedAt: string
-  counts: {
+  /** 数据管线源码指纹（CLAUDE.md §1.2 增量跳过用）。 */
+  pipelineHash: string
+  /** 增量跳过（raw 未变 + 逻辑未变）时为 true，此时 counts 不重算。 */
+  skipped?: boolean
+  counts?: {
     champions: number
     championVisuals: number
     championDetails: number
@@ -140,7 +145,7 @@ export interface NormalizeDefinitionsResult {
     variants: number
     formations: number
     enums: number
-  }
+  } | undefined
 }
 
 /**
@@ -291,6 +296,37 @@ export async function normalizeDefinitionsSnapshot(
   const masterApiUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
+
+  // 数据管线增量跳过（CLAUDE.md §1.2「未变整批跳过重生成」）：raw updatedAt 没变 + 归一化逻辑
+  // 指纹没变 → skip。开发者改 normalize 逻辑 → pipelineHash 变 → 自动重跑；FORCE_DATA_REBUILD=1
+  // → 强制重跑（不对比时间，覆盖「调整归一化逻辑必须强制」场景，不依赖开发者记得 force）。
+  const nextPipelineHash = await computePipelineHash()
+  if (!isForceDataRebuild()) {
+    const existingVersion = await readJsonIfExists(versionFile) as
+      | { updatedAt?: unknown; pipelineHash?: unknown; counts?: NormalizeDefinitionsResult['counts'] }
+      | null
+    if (
+      shouldSkipDataPipeline({
+        existingUpdatedAt: existingVersion?.updatedAt,
+        existingHash: existingVersion?.pipelineHash,
+        nextUpdatedAt: updatedAt,
+        nextHash: nextPipelineHash,
+      })
+    ) {
+      console.log(
+        `normalize skipped: raw updatedAt=${updatedAt}, pipelineHash=${nextPipelineHash}（FORCE_DATA_REBUILD=1 可强制重跑）`,
+      )
+      return {
+        outputDir,
+        versionFile,
+        updatedAt,
+        pipelineHash: nextPipelineHash,
+        skipped: true,
+        counts: existingVersion?.counts,
+      }
+    }
+  }
+
   const affiliationMap = buildAffiliationMap(
     asRawArray(rawDefinitions.affiliation_defines),
     asRawArray(localizedDefinitions.affiliation_defines),
@@ -610,6 +646,17 @@ export async function normalizeDefinitionsSnapshot(
   await writeJson(versionFile, {
     current: currentVersion,
     updatedAt,
+    pipelineHash: nextPipelineHash,
+    counts: {
+      champions: champions.length,
+      championVisuals: championVisuals.length,
+      championDetails: championDetails.length,
+      adventures: adventures.length,
+      patrons: patrons.length,
+      variants: variants.length,
+      formations: formations.length,
+      enums: enums.length,
+    },
     notes: [
       '公共数据来源：Idle Champions 官方客户端 definitions 接口。',
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
@@ -628,6 +675,7 @@ export async function normalizeDefinitionsSnapshot(
     outputDir,
     versionFile,
     updatedAt,
+    pipelineHash: nextPipelineHash,
     counts: {
       champions: champions.length,
       championVisuals: championVisuals.length,
@@ -683,7 +731,9 @@ async function main(): Promise<void> {
   console.log(`- version.json: ${result.versionFile}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
   console.log(
-    `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, adventures=${result.counts.adventures}, patrons=${result.counts.patrons}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
+    result.counts
+      ? `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, adventures=${result.counts.adventures}, patrons=${result.counts.patrons}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`
+      : '- counts: (skipped: raw + pipelineHash 未变；FORCE_DATA_REBUILD=1 强制重跑)',
   )
 }
 
