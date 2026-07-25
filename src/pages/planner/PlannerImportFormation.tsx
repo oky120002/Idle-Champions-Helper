@@ -42,7 +42,7 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
         placements: result!.placements,
         updatedAt: new Date().toISOString(),
       })
-      navigate('/formation')
+      await navigate('/formation')
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : String(caught))
       setImporting(false)
