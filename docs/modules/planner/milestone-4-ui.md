@@ -34,7 +34,7 @@
 - **验证**：`npm run test:run` + 浏览器。
 - **commit**：`feat(planner): 15.4 C 位指定与锁槽控件`。
 
-### 15.5 推荐结果导入阵型编辑器
+### 15.5 推荐结果导入阵型编辑器 [x]
 - **改动**：`PlannerSavePreset.tsx` 旁加导入动作；写 formationDraft（复用 formationDraftStore）；跳转 /formation。
 - **测试**：E2E planner → formation 导入。
 - **验证**：`npm run test:e2e`。

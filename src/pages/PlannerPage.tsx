@@ -8,6 +8,7 @@ import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
+import { PlannerImportFormation } from './planner/PlannerImportFormation'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerTopLineups } from './planner/PlannerTopLineups'
 import { PlannerCarryRanking } from './planner/PlannerCarryRanking'
@@ -196,6 +197,11 @@ export function PlannerPage() {
                       onSelect={selectResultIndex}
                     />
                     <PlannerSavePreset
+                      result={selectedResult}
+                      layoutId={plannerRecommendation.layoutId}
+                      scenarioRef={plannerRecommendation.scenarioRef}
+                    />
+                    <PlannerImportFormation
                       result={selectedResult}
                       layoutId={plannerRecommendation.layoutId}
                       scenarioRef={plannerRecommendation.scenarioRef}
