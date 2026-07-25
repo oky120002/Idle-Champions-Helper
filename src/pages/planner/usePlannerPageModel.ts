@@ -6,7 +6,7 @@ import { buildPlannerRecommendation } from '../../domain/planner/recommendationE
 import type { PlannerCollections } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
-import type { Variant } from '../../domain/types'
+import type { Champion, Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 
 type PlannerLoadState = 'loading' | 'ready' | 'error'
@@ -18,6 +18,8 @@ export function usePlannerPageModel() {
     plannerScenarios: [],
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
+  // 阶段 15.1：棋盘头像字典。planner hero 能力模型不带 portrait，单独加载 Champion 集合。
+  const [championById, setChampionById] = useState<Map<string, Champion>>(() => new Map())
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
@@ -31,10 +33,11 @@ export function usePlannerPageModel() {
       setLoadError(null)
 
       try {
-        const [variants, plannerModel, resolution] = await Promise.all([
+        const [variants, plannerModel, resolution, champions] = await Promise.all([
           loadCollection<Variant>('variants'),
           loadResolvedPlannerModel(),
           resolveUserProfileSnapshot(),
+          loadCollection<Champion>('champions'),
         ])
 
         if (!active) return
@@ -45,6 +48,7 @@ export function usePlannerPageModel() {
           plannerScenarios: plannerModel.scenarios,
         })
         setProfileSnapshot(resolution.snapshot)
+        setChampionById(new Map(champions.items.map((champion) => [champion.id, champion])))
         setSelectedVariantId((current) => current ?? variants.items[0]?.id ?? null)
         setLoadState('ready')
       } catch (caught) {
@@ -77,6 +81,7 @@ export function usePlannerPageModel() {
   }, [])
 
   return {
+    championById,
     collections,
     loadError,
     loadState,

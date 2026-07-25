@@ -28,6 +28,7 @@ function renderSavePreset() {
         <PlannerSavePreset
           result={{
             score: '4.08e167',
+            carryHeroId: '1',
             placements: { s1: '1', s2: '5' },
             explanations: [{ zh: '当前结果优先保证基线输出。', en: 'This result prioritizes the baseline output.' }],
             warnings: [],

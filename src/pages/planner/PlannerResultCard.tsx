@@ -1,18 +1,25 @@
+import type { Champion, FormationSlot } from '../../domain/types'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { useI18n } from '../../app/i18n'
+import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 
 export type PlannerResultCardProps = PlannerResult & {
   scoringMode?: ScoringMode
+  slots: FormationSlot[]
+  championById: Map<string, Champion>
 }
 
 export function PlannerResultCard({
   score,
+  carryHeroId,
   placements,
   placementEntries,
   explanations,
   warnings,
   scoringMode = 'carry-dps',
+  slots,
+  championById,
 }: PlannerResultCardProps) {
   const { t } = useI18n()
   const scoreLabel = scoringMode === 'team-gold'
@@ -28,11 +35,14 @@ export function PlannerResultCard({
   const displayPlacementEntries = placementEntries && placementEntries.length > 0
     ? placementEntries
     : fallbackPlacementEntries
+  const carrySlotId = carryHeroId
+    ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
+    : null
 
   return (
     <article
       className="surface-card planner-result-card"
-      aria-label={t({ zh: '推荐结果', en: 'Recommended result' })}
+      aria-label={t({ zh: '推荐结果', en: 'Recommended Result' })}
     >
       <div className="surface-card__header">
         <div className="surface-card__header-copy">
@@ -58,6 +68,21 @@ export function PlannerResultCard({
       </div>
 
       <div className="surface-card__body">
+        {slots.length > 0 ? (
+          <section className="planner-result-card__board-panel" data-section="board">
+            <h4 className="planner-result-card__section-title">
+              {t({ zh: '阵型棋盘', en: 'Formation board' })}
+            </h4>
+            <FormationBoardCanvas
+              slots={slots}
+              placements={placements}
+              championById={championById}
+              carrySlotId={carrySlotId}
+              testId="planner-result-board"
+            />
+          </section>
+        ) : null}
+
         <div className="planner-result-card__body-grid">
           <section className="planner-result-card__placements-panel">
             <h4 className="planner-result-card__section-title">

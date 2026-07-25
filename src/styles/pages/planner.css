@@ -297,6 +297,25 @@
     gap: 0.8rem;
   }
 
+  .planner-result-card__board-panel {
+    display: grid;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .planner-result-card__board-panel .formation-board {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* formation 棋盘桌面默认隐藏 summary（只移动端显示头像）；planner 结果棋盘桌面也要显示。 */
+  .planner-result-card__board-panel .formation-slot__summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
   .planner-result-card__placements {
     display: grid;
     gap: 0.75rem;

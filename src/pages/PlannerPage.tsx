@@ -51,6 +51,7 @@ export function PlannerPage() {
   const { t } = useI18n()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
   const {
+    championById,
     collections,
     loadError,
     loadState,
@@ -143,7 +144,12 @@ export function PlannerPage() {
 
                 {plannerRecommendation.result ? (
                   <>
-                    <PlannerResultCard {...plannerRecommendation.result} scoringMode={scoringMode} />
+                    <PlannerResultCard
+                      {...plannerRecommendation.result}
+                      scoringMode={scoringMode}
+                      slots={plannerRecommendation.slots}
+                      championById={championById}
+                    />
                     <PlannerSavePreset
                       result={plannerRecommendation.result}
                       layoutId={plannerRecommendation.layoutId}

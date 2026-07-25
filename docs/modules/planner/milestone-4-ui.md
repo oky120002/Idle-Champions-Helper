@@ -10,7 +10,7 @@
 **目标**：objective 引擎 + 所有数据补全完成后，UI 接通让能力可见。
 **风险**：复用 FormationBoardGrid 不能破坏 formation 编辑器（15.1 最复杂）。
 
-### 15.1 抽 FormationBoardCanvas + 棋盘渲染
+### 15.1 抽 FormationBoardCanvas + 棋盘渲染 [x]
 - **改动**：抽 `src/pages/formation/FormationBoardCanvas.tsx`（纯渲染：slots + placements + championById + carrySlotId）；`FormationBoardGrid.tsx` 改组装 Canvas + formation 专属控件；`PlannerResultCard.tsx` 用 Canvas 渲染 top1 + carryDps + carry 标记。
 - **测试（先写）**：Canvas 组件测试；PlannerResultCard 渲染棋盘；formation 全量回归。
 - **验证**：`npm run test:run` + `test:e2e`（formation 不破）+ 浏览器。

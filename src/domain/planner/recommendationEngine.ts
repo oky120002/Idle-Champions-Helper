@@ -3,7 +3,7 @@ import Decimal from 'break_eternity.js'
 import { formatGameNumber } from '../simulator/gameNumber'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
-import type { Variant } from '../types'
+import type { FormationSlot, Variant } from '../types'
 import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool } from './candidatePool'
@@ -26,6 +26,15 @@ function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
   return [...scenario.slotTopology]
     .sort((left, right) => left.row - right.row || left.column - right.column || left.slotId.localeCompare(right.slotId))
     .map((slot) => slot.slotId)
+}
+
+/** scenario.slotTopology → FormationSlot[]（阶段 15.1 棋盘渲染需要的 id/row/column）。 */
+function toFormationSlots(scenario: ResolvedPlannerScenarioModel): FormationSlot[] {
+  return scenario.slotTopology.map((slot) => ({
+    id: slot.slotId,
+    row: slot.row,
+    column: slot.column,
+  }))
 }
 
 function formatLegalityViolation(violation: LegalityViolation): string {
@@ -149,13 +158,14 @@ export function buildPlannerRecommendation(
   const scoringMode = options.scoringMode ?? 'carry-dps'
 
   if (!selectedVariant || collections.plannerHeroes.length === 0) {
-    return { result: null, layoutId: null, scenarioRef: null, blocker: null }
+    return { result: null, layoutId: null, slots: [], scenarioRef: null, blocker: null }
   }
 
   if (!profileSnapshot) {
     return {
       result: null,
       layoutId: null,
+      slots: [],
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
       blocker: 'missing-profile',
     }
@@ -166,6 +176,7 @@ export function buildPlannerRecommendation(
     return {
       result: null,
       layoutId: null,
+      slots: [],
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
       blocker: 'missing-formation',
     }
@@ -215,6 +226,7 @@ export function buildPlannerRecommendation(
     return {
       result: null,
       layoutId: scenario.formationLayoutId,
+      slots: toFormationSlots(scenario),
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
       blocker: 'insufficient-owned-heroes',
     }
@@ -281,6 +293,7 @@ export function buildPlannerRecommendation(
     return {
       result: null,
       layoutId: scenario.formationLayoutId,
+      slots: toFormationSlots(scenario),
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
       blocker: 'no-legal-recommendation',
     }
@@ -291,6 +304,7 @@ export function buildPlannerRecommendation(
   return {
     result: {
       score: formatGameNumber(top.score),
+      carryHeroId: top.carryHeroId,
       placements: top.placements,
       placementEntries,
       explanations: buildPlannerExplanations(
@@ -304,6 +318,7 @@ export function buildPlannerRecommendation(
       warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(scenario, profileSnapshot)])],
     },
     layoutId: scenario.formationLayoutId,
+    slots: toFormationSlots(scenario),
     scenarioRef: { kind: 'variant', id: selectedVariant.id },
     blocker: null,
   }
