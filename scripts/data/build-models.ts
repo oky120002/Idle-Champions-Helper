@@ -212,7 +212,7 @@ function projectMechanicsToScenario(
     if (frontSlot) {
       lockedSlots.push(frontSlot.slotId)
     }
-    mechanicWarnings.push('当前场景含护送任务，前排一个槽位预留给护送目标，不参与英雄占位。')
+    mechanicWarnings.push('当前场景含护送任务，护送目标占据前排一个槽位且不参与英雄占位；其能力贡献未计入阵型评分，若护送目标是英雄（如 v80 Drizzt），推荐评分可能偏低。')
   }
 
   if (mechanics.has('time_out') || mechanics.has('click_damage_area_limit')) {
