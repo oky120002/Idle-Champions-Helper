@@ -20,7 +20,7 @@ export function PlannerCandidateMode({ value, onChange }: PlannerCandidateModePr
   const { t } = useI18n()
 
   return (
-    <fieldset className="planner-scoring-mode" data-testid="planner-candidate-mode">
+    <fieldset className="planner-scoring-mode" role="radiogroup" data-testid="planner-candidate-mode">
       <legend className="planner-scoring-mode__legend">
         {t({ zh: '候选范围', en: 'Candidate pool' })}
       </legend>

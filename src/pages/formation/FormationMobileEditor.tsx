@@ -30,9 +30,7 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
         <div>
           <p className="formation-mobile-editor__eyebrow">{t({ zh: '当前编辑槽位', en: 'Editing slot' })}</p>
           <h3 className="formation-mobile-editor__title" data-testid="formation-mobile-editor-slot">
-            {locale === 'zh-CN'
-              ? `槽位 ${activeMobileSlot.id}`
-              : `Slot ${activeMobileSlot.id}`}
+            {t({ zh: `槽位 ${activeMobileSlot.id}`, en: `Slot ${activeMobileSlot.id}` })}
           </h3>
           <p className="formation-mobile-editor__description">
             {activeMobileChampion

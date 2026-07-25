@@ -16,7 +16,7 @@ export function PlannerScoringMode({ value, onChange }: PlannerScoringModeProps)
   const { t } = useI18n()
 
   return (
-    <fieldset className="planner-scoring-mode">
+    <fieldset className="planner-scoring-mode" role="radiogroup">
       <legend className="planner-scoring-mode__legend">
         {t({ zh: '推荐模式', en: 'Recommendation mode' })}
       </legend>

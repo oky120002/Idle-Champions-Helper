@@ -11,7 +11,6 @@ import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerImportFormation } from './planner/PlannerImportFormation'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerTopLineups } from './planner/PlannerTopLineups'
-import { PlannerCarryRanking } from './planner/PlannerCarryRanking'
 import { PlannerCarryLock } from './planner/PlannerCarryLock'
 import { PlannerSlotLock } from './planner/PlannerSlotLock'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
@@ -189,12 +188,6 @@ export function PlannerPage() {
                       lockedSlots={lockedSlots}
                       onLock={lockSlot}
                       onClearLock={clearSlotLock}
-                    />
-                    <PlannerCarryRanking
-                      results={plannerRecommendation.results}
-                      selectedIndex={safeResultIndex}
-                      championById={championById}
-                      onSelect={selectResultIndex}
                     />
                     <PlannerSavePreset
                       result={selectedResult}

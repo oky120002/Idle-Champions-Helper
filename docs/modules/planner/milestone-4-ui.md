@@ -17,7 +17,7 @@
 - **commit**：`feat(planner): 15.1 棋盘 Canvas 抽取与结果卡片复用`。
 
 ### 15.2 Top K + carryRanking + 推图预估展示 [x]
-- **改动**：新建 `PlannerTopLineups.tsx`/`PlannerCarryRanking.tsx`；消费 PlannerRecommendationSet；展示推图层数预估（10）+ survival 约束（5）。
+- **改动**：新建 `PlannerTopLineups.tsx`；消费 PlannerRecommendation；展示推图层数预估（10）+ survival 约束（5）。
 - **测试**：组件测试覆盖 Top K 切换/carry 列表/预估展示。
 - **验证**：`npm run test:run` + 浏览器。
 - **commit**：`feat(planner): 15.2 Top K + carryRanking + 推图预估展示`。

@@ -345,45 +345,6 @@
     color: rgba(242, 239, 230, 0.58);
   }
 
-  .planner-carry-ranking__list {
-    display: grid;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .planner-carry-ranking__item > button {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
-    align-items: center;
-    gap: 0.6rem;
-    width: 100%;
-    padding: 0.55rem 0.7rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(200, 167, 127, 0.18);
-    background: rgba(255, 255, 255, 0.025);
-    color: rgba(242, 239, 230, 0.82);
-    text-align: left;
-  }
-
-  .planner-carry-ranking__item > button.is-selected,
-  .planner-carry-ranking__item.is-selected > button {
-    border-color: rgba(220, 170, 90, 0.6);
-    background: rgba(220, 170, 90, 0.12);
-  }
-
-  .planner-carry-ranking__rank {
-    font-weight: 700;
-    color: rgba(220, 170, 90, 0.9);
-  }
-
-  .planner-carry-ranking__seat,
-  .planner-carry-ranking__score {
-    font-size: 0.8rem;
-    color: rgba(242, 239, 230, 0.58);
-  }
-
   .planner-result-card__area-estimate p[data-testid="planner-area-estimate"] {
     font-weight: 700;
     color: #fff5e5;

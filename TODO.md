@@ -104,4 +104,13 @@ repair: rebuild
     - 修复方向：`onDragEnter`/`onDragLeave` 设 `data-drag-over` 属性 + CSS `.formation-slot[data-drag-over]` 高亮（Canvas 需加 per-slot drag state）。
     - 暂不修：UX 增强，非功能缺陷；Canvas 是纯渲染组件，加 drag state 增复杂度，等实测用户反馈再权衡。
 
+- StatusMessage 单语 string，英文 locale 下状态条全中文（系统性 i18n 缺口） <!-- auto-todo:id=atd_ad52385c59 -->
+  - 记录时间: `2026-07-25T16:37:17+08:00`
+  - 类型: bug
+  - 位置: `src/components/statusMessage.ts`
+  - 备注: StatusMessage.title/detail 是单语 string，create*StatusMessage 全部调用方传中文硬编码；StatusMessageBanner 直接渲染不经 i18n，英文 locale 下状态条全中文。
+    - 影响面：formation（formation-board-actions/formation-draft-prompt-actions/formation-preset-actions/formation-bootstrap-operations/useFormationDraftPersistence）+ presets（usePresetsPageModel），约 10 文件 30 调用点
+    - M1-M3 既有，非 M4 引入；M4 第3轮审计发现
+    - 处置：StatusMessage 改持 zh/en 双语字段，create*StatusMessage 改传 {zh,en}，StatusMessageBanner 经 t() 渲染；跨模块重构
+
 <!-- auto-todo:end -->

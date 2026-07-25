@@ -195,12 +195,13 @@ export function buildPlannerRecommendation(
     }
   }
 
-  const candidatePool = buildCandidatePool({
-    mode: options.candidateMode ?? 'owned-only',
-    ownedHeroes: profileSnapshot.ownedHeroes,
-    allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
-  })
-  const candidateIds = new Set(candidatePool.candidates.map((candidate) => candidate.heroId))
+  const candidateIds = new Set(
+    buildCandidatePool({
+      mode: options.candidateMode ?? 'owned-only',
+      ownedHeroes: profileSnapshot.ownedHeroes,
+      allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
+    }),
+  )
   // 阶段 9.2：only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
   const allowedHeroSet = new Set(scenario.allowedHeroes)
   const allowedTagSet = new Set(scenario.allowedTags)

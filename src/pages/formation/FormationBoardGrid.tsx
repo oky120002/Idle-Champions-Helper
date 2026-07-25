@@ -91,6 +91,7 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
             <div className="formation-slot__controls">
               <select
                 className="slot-select"
+                aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
                 value={selectedChampionId}
                 onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
               >
