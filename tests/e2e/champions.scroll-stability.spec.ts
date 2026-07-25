@@ -66,12 +66,17 @@ test('英雄筛选页在右侧面板深处改筛选时，应把右面板带回�
   await expect(page.locator('.workbench-page__toolbar-title')).toHaveText('英雄筛选')
   await setPaneScrollTop(page, 720)
 
-  expect(await getPaneScrollTop(page)).toBeGreaterThanOrEqual(680)
+  // 并行负载下 setPaneScrollTop 后浏览器主线程未必立即稳定，用 poll 轮询确认滚到深处
+  // （与下方"下拉后出现返回顶部按钮"测试同款写法），固定一次性读在 6 workers 下 flaky。
+  await expect
+    .poll(async () => await getPaneScrollTop(page))
+    .toBeGreaterThanOrEqual(680)
 
   await page.getByRole('button', { name: '1 号位', exact: true }).click()
-  await page.waitForTimeout(420)
 
-  expect(await getPaneScrollTop(page)).toBeLessThanOrEqual(24)
+  await expect
+    .poll(async () => await getPaneScrollTop(page))
+    .toBeLessThanOrEqual(24)
 })
 
 test('英雄筛选页下拉后应出现悬浮返回顶部按钮，并只滚动右侧面板', async ({ page }) => {
