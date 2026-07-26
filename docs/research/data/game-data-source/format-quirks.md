@@ -23,7 +23,7 @@
   - `per_hero_expr` 与 `filter_targets[].hero_expr`（functional）：运算符 / 函数 `||` / `&&` / `HasTag` / `GetStat` / `age` / `hero_id` / `HasAttackDamageType` / `has_base_attack_dmg_type_*` / `has_tag_*`。
 - `filter_targets` 的 `type:"hero_expr"` 与 `per_hero_expr` 同方言、同求值域（单个英雄），语义是「限定 effect 的目标英雄」（如 Diana `GetStat(\`dex\`)>=15`、Sheila `HasTag(\`good\`)`、Baldric `HasTag(\`dwarf\`)`）；真实数据 41 处（被引用 effect_keys）。
 - 统一处理：`parseHeroPredicate(expr, dialect)`（`src/domain/abilities/heroPredicate.ts`）解析到同一 `HeroPredicateAST`，由 `evalHeroPredicate` 求值。三处载体在 `normalizeTargetQualifier`（tags/hero_expr）与 `parsePerHeroExpr`（per_hero_expr）汇入同一 `HeroQualifier.predicate`。
-- 数值表达式（`min` / `max` / `floor` / `GetUpgradeAmount` 等）不是布尔谓词，解析返回 `null`，交由 planner stack 数量计算（见 `docs/modules/planner/expression-evaluator.md`）。
+- 数值表达式（`min` / `max` / `floor` / `GetUpgradeAmount` 等）不是布尔谓词，解析返回 `null`，交由 planner stack 数量计算（见 `docs/specs/modules/planner/expression-evaluator.md`）。
 - 实现权威：解析器语法以 `src/domain/abilities/heroPredicate.ts` 为准；别名谓词或新载体扩展时同步更新本节。
 
 ### `filter_targets[].type` 全量覆盖审计
@@ -31,7 +31,7 @@
 `effect_defines[].effect_keys[].filter_targets[].type` 全量分布（377 处）与处理状态：
 
 - 已处理（`normalizeTargetQualifier` → `HeroQualifier.predicate`）：`by_tags` / `tags` / `hero_expr` / `stat` / `stat_score` / `attack_type`；`hero_ids` / `exclude_heroes`（已接入，复用 `heroId` AST 节点，与 `per_hero_expr` 的 `hero_id==N` 同节点）。
-- 未处理（阵型聚合，归 `docs/modules/planner/expression-evaluator.md` formationAggregate / step simulation）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag`。
+- 未处理（阵型聚合，归 `docs/specs/modules/planner/expression-evaluator.md` formationAggregate / step simulation）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag`。
 - 未处理（存档依赖，归 conditionEvaluator）：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12)。
 - 未处理（叠加上限，归 buff_upgrade 精细 / step simulation）：`limit_effect_def_per_hero_attack` / `limit_per_effect`。
 

@@ -2,7 +2,7 @@
  * restrictions 文本模板匹配解析器。
  *
  * 数据源：`variants.json.items[].restrictions: Array<{original, display}>`（双语自由文本）。
- * 评估结论：`docs/modules/planner/data-source-confirmations.md` §12.1。
+ * 评估结论：`docs/specs/modules/planner/data-source-confirmations.md` §12.1。
  *
  * 不用 NLP，纯关键词模板。只解析高价值 slot-occupying 模式（→ lockedSlotCount）；
  * flavor 文本 / 完成前置 / 变量递增版不匹配 → warning（12.3 手工补 semantic-overrides.json）。

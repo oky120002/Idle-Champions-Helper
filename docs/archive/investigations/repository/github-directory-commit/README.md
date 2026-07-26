@@ -4,5 +4,5 @@
 
 ## 先读哪篇
 
-- 当次问题的根因、本地依据和为什么会误判：`docs/investigations/repository/github-directory-commit/root-cause.md`
-- 修复方式、什么时候才需要去 GitHub 配置以及当前建议：`docs/investigations/repository/github-directory-commit/fixes-and-github-boundary.md`
+- 当次问题的根因、本地依据和为什么会误判：`docs/archive/investigations/repository/github-directory-commit/root-cause.md`
+- 修复方式、什么时候才需要去 GitHub 配置以及当前建议：`docs/archive/investigations/repository/github-directory-commit/fixes-and-github-boundary.md`

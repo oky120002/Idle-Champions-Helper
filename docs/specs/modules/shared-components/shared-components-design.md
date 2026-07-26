@@ -1,7 +1,7 @@
 # 共享组件模块设计稿
 
 - 目标：治理跨页面高度重复、语义稳定的 UI 与国际化实现，减少页面层散落逻辑，同时避免为了“去重”而过度抽象。
-- 当前结论：已沉淀双语展示组件、`StatusBanner` / `FieldGroup` 共享组件、全站 `PageWorkbenchShell` 壳层与 `WorkbenchScaffold` 工作台骨架。当前工作台结构与视觉规范见 `docs/modules/shared-components/page-workbench-design.md`。
+- 当前结论：已沉淀双语展示组件、`StatusBanner` / `FieldGroup` 共享组件、全站 `PageWorkbenchShell` 壳层与 `WorkbenchScaffold` 工作台骨架。当前工作台结构与视觉规范见 `docs/specs/modules/shared-components/page-workbench-design.md`。
 
 ## 模块定位
 
@@ -35,8 +35,8 @@
 
 ## 开发流程
 
-1. 先查 `docs/modules/shared-components/component-list.md`
-2. 如果命中页面壳层或页面级布局，再查 `docs/modules/shared-components/page-workbench-design.md`
+1. 先查 `docs/specs/modules/shared-components/component-list.md`
+2. 如果命中页面壳层或页面级布局，再查 `docs/specs/modules/shared-components/page-workbench-design.md`
 3. 盘点重复点、语义一致性和故意不抽的部分
 4. 先写测试，再实现共享组件
 5. 组件只承接稳定能力，不塞页面私有布局和临时文案

@@ -6,4 +6,4 @@
 - 根因：浏览器二进制本身可启动，但 Playwright 控制链路受会话权限 / 沙箱限制影响，安装不是主因。
 - 处理：受限会话先跑 `npm run build` + `npm run lint`；需要真实页面回归时切到 `danger-full-access` 会话。
 - 验证：切到完全访问权限后，`firefox / chromium / webkit` 均可启动，页面验收通过。
-- 入口：`docs/investigations/runtime/playwright-browser-launch/README.md`
+- 入口：`docs/archive/investigations/runtime/playwright-browser-launch/README.md`

@@ -40,6 +40,6 @@
 
 ## 后续继续时优先看什么
 
-- 若要继续补“独立子模块”，先看 `docs/modules/planner/recommendation-and-placement-design.md`。
+- 若要继续补“独立子模块”，先看 `docs/specs/modules/planner/recommendation-and-placement-design.md`。
 - 若要补 carry-centric 推荐，优先改 `recommendationEngine.ts` 和 `steadyStateScoring.ts`，不要先改页面。
 - 若要继续补 planner model / merge 层，先看 `src/domain/planner/plannerModel.ts`、`src/data/plannerModel.ts` 和 `src/data/plannerOverridesStore.ts`。

@@ -50,4 +50,4 @@ type ChampionFilterContext =
 - `src/rules/championFilter.ts`：纯筛选逻辑
 - `src/features/champion-filters/`：枚举分组、筛选项、交互组件
 
-页面当前已切到统一工作台结构：桌面端使用“上方紧凑小导航 + 下方页面工作台壳层”，左侧是筛选抽屉与状态头，右侧是结果 metrics + 结果卡网格（卡片内嵌立绘背景）+ 空态；移动端继续退化为单列网页滚动。共性壳层细节见 `docs/modules/shared-components/page-workbench-design.md`。
+页面当前已切到统一工作台结构：桌面端使用“上方紧凑小导航 + 下方页面工作台壳层”，左侧是筛选抽屉与状态头，右侧是结果 metrics + 结果卡网格（卡片内嵌立绘背景）+ 空态；移动端继续退化为单列网页滚动。共性壳层细节见 `docs/specs/modules/shared-components/page-workbench-design.md`。

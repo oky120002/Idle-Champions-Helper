@@ -4,5 +4,5 @@
 
 ## 先读哪篇
 
-- 受限会话下为什么启动失败：`docs/investigations/runtime/playwright-browser-launch/restricted-session-findings.md`
-- `danger-full-access` 会话里怎样完成完整验收：`docs/investigations/runtime/playwright-browser-launch/full-access-verification.md`
+- 受限会话下为什么启动失败：`docs/archive/investigations/runtime/playwright-browser-launch/restricted-session-findings.md`
+- `danger-full-access` 会话里怎样完成完整验收：`docs/archive/investigations/runtime/playwright-browser-launch/full-access-verification.md`

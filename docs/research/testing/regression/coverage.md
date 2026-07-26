@@ -30,5 +30,5 @@
 
 ## 依据
 
-- 本地仓库：`package.json`、`.github/workflows/deploy.yml`、`src/app/App.tsx`、`src/data/client.ts`、`src/data/userImport.ts`、`src/rules/seat.ts`、`docs/investigations/runtime/local-run/README.md`
+- 本地仓库：`package.json`、`.github/workflows/deploy.yml`、`src/app/App.tsx`、`src/data/client.ts`、`src/data/userImport.ts`、`src/rules/seat.ts`、`docs/archive/investigations/runtime/local-run/README.md`
 - 官方资料：GitHub protected branches、GitHub Pages custom workflows / publishing source、Playwright CI / retries / configuration、Testing Library、Vitest projects

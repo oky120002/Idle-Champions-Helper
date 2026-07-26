@@ -1,11 +1,11 @@
 # design 文档入口
 
-- 作用：只在要改页面级视觉规范、标题区块、导航密度或语言切换体验时读取；其他产品约束仍优先看 `docs/product/README.md` 指向的主题。
+- 作用：只在要改页面级视觉规范、标题区块、导航密度或语言切换体验时读取；其他产品约束仍优先看 `docs/specs/product/README.md` 指向的主题。
 
 ## 先读哪篇
 
-- 页面标题、说明文案与统计条的一致布局：`docs/product/design/page-header-metrics-guidelines.md`
-- 全局导航、语言切换和壳层密度约束：`docs/product/design/navigation-and-locale-guidelines.md`
+- 页面标题、说明文案与统计条的一致布局：`docs/specs/guidelines/design/page-header-metrics.md`
+- 全局导航、语言切换和壳层密度约束：`docs/specs/guidelines/design/navigation-and-locale.md`
 - 整站低浮雕视觉系统现状与约束：`../../../.impeccable.md`
 
 ## 何时补文档

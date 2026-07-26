@@ -11,7 +11,7 @@ export interface DataCollection<T> {
   updatedAt: string
 }
 
-// 外部游戏数据契约（passthrough，见 docs/product/testing-conventions.md §8）。
+// 外部游戏数据契约（passthrough，见 docs/specs/guidelines/testing.md §8）。
 // schema 即类型单一来源：LocalizedText 经 z.infer 派生，scripts/ 归一化校验复用同一 schema。
 export const localizedTextSchema = z
   .object({ original: z.string(), display: z.string() })

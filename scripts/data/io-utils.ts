@@ -7,7 +7,7 @@ import path from 'node:path'
  */
 
 // 读出的 JSON 是不可信外来数据，返回 unknown；由调用方在边界处 zod 校验或显式收窄（见
-// docs/product/testing-conventions.md §8）。
+// docs/specs/guidelines/testing.md §8）。
 export async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }

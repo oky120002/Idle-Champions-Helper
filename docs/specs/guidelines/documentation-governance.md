@@ -53,4 +53,4 @@
 - 某目录重新膨胀，导致为一个问题被迫吞下多个无关问题。
 - 文档出现过期命令、错误路径、绝对路径或与代码冲突的描述。
 - 改名记录（A→B）的 B 侧随后续重构漂移（再改名 / 扩展名 `.mjs→.ts` 迁移 / 文件合并 / B 侧名字从未存在）：每轮文档审计必须对照代码重新核对 B 侧真实存在，不只确认 A→B 改名曾发生；同时区分 JSON collection 名（`loadCollection` fetch `public/data`）与 IndexedDB store key（`localDatabase.ts APP_STORE_NAMES`），不混称。
-- `AGENTS.md` 不得复制细则已展开的读取顺序、结构命名、拆分规则、体量预算、样式规则；此类内容只进对应 `docs/product/*` 细则，AGENTS.md 至多留一行指针。
+- `AGENTS.md` 不得复制细则已展开的读取顺序、结构命名、拆分规则、体量预算、样式规则；此类内容只进对应 `docs/specs/guidelines/*` 细则，AGENTS.md 至多留一行指针。

@@ -6,7 +6,7 @@ import type { GameNumberValue } from './gameNumber'
  * 怪物随层数缩放的全局 stats。
  *
  * 来源：`game_rule_defines.monster_base_stats.rule`（全局 game rule，非 per-monster）。
- * 数据源确认：`docs/modules/planner/data-source-confirmations.md` §10.1。
+ * 数据源确认：`docs/specs/modules/planner/data-source-confirmations.md` §10.1。
  *
  * ponytail: 这些是稳定的全局游戏常量（base_health=10 / health_growth_rate=2.031 等），
  * 直接内联而非把 game-rules.json 发布到 runtime（与 steadyStateScoring 硬编码 crit 默认值同模式）。

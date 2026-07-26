@@ -13,7 +13,7 @@
 - 入口：从 `src/pages/ChampionsPage.tsx` 结果卡进入
 - 返回：返回“英雄筛选”的入口现在固定放在页面工具条，而不是站点导航
 - 原则：详情页是筛选页的深入层，不新增主导航一级入口
-- 外层壳层：桌面端沿用全站页面工作台规范；当前小导航、工具条和右区滚动细节见 `docs/modules/shared-components/page-workbench-design.md`
+- 外层壳层：桌面端沿用全站页面工作台规范；当前小导航、工具条和右区滚动细节见 `docs/specs/modules/shared-components/page-workbench-design.md`
 
 ## 信息架构
 

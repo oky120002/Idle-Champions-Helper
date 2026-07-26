@@ -28,6 +28,6 @@
 
 - Ralph 任务包：`.ralph/tasks/planner/README.md`
 - Ralph 验收用例：`.ralph/tasks/planner/acceptance-cases.md`
-- 个人数据导入现状：`docs/modules/user-data/user-data-import-design.md`
-- 阵型编辑现状：`docs/modules/formation/README.md`
-- 方案存档现状：`docs/modules/presets/README.md`
+- 个人数据导入现状：`docs/specs/modules/user-data/user-data-import-design.md`
+- 阵型编辑现状：`docs/specs/modules/formation/README.md`
+- 方案存档现状：`docs/specs/modules/presets/README.md`

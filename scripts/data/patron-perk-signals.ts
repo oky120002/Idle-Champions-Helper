@@ -4,7 +4,7 @@ import type { HeroAbilitySignal } from '../../src/domain/abilities/abilityModel'
  * Patron-perk 全局加成解析。
  *
  * 数据源：`patron-perks.json`（由 normalize-idle-champions-definitions 产出）。
- * 结构确认：`docs/modules/planner/data-source-confirmations.md` §11.2。
+ * 结构确认：`docs/specs/modules/planner/data-source-confirmations.md` §11.2。
  *
  * patron-perks 是阵型无关的全局 buff（per-patron，玩家选择 patron 后生效），
  * 不走 champion-details effect 管线（`$replace` + `per_level` 语义独立）。

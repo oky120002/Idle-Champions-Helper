@@ -2,7 +2,7 @@
  * 装备 multiplier 计算。
  *
  * 数据源：`loot-catalog.json`（normalize 从 raw loot_defines 提取，保留 slot_id）。
- * 数据源确认：`docs/modules/planner/data-source-confirmations.md` §13.1。
+ * 数据源确认：`docs/specs/modules/planner/data-source-confirmations.md` §13.1。
  *
  * IC 装备无独立 ilvl/rarity 曲线——效果按 (hero, slot, rarity) 直接编码在 loot_defines。
  * 理论基线把全 rarity 全 slot 累加（理论上界高估）；本模块按玩家 owned rarity 选取，

@@ -6,29 +6,29 @@
 
 ## 高频直达
 
-- 文档治理：`docs/product/documentation-governance.md`
-- TS / TSX 规范：`docs/product/ai-first-ts-tsx-guidelines.md`
-- CSS 规范：`docs/product/ai-first-css-guidelines.md`
-- 移动端硬约束：`docs/product/mobile-compatibility-guidelines.md`
-- 数据归一化管线：`docs/product/data-normalization-guidelines.md`
+- 文档治理：`docs/specs/guidelines/documentation-governance.md`
+- TS / TSX 规范：`docs/specs/guidelines/ai-first-ts-tsx.md`
+- CSS 规范：`docs/specs/guidelines/ai-first-css.md`
+- 移动端硬约束：`docs/specs/guidelines/mobile-compatibility.md`
+- 数据归一化管线：`docs/specs/guidelines/data-normalization.md`
 - 项目级顺手发现项：根 `TODO.md`（`auto-todo` 技能维护）
 
 ## 低频主题再走索引
 
 - 项目边界、路线图或不确定该看哪份产品文档时：`docs/product/README.md`
 - 数据、部署、测试与外部事实：`docs/research/README.md`
-- 模块设计稿与局部交互方案：`docs/modules/README.md`
-- 运行、仓库、环境排查与验证：`docs/investigations/README.md`
-- 常见故障与可复用修复路径：`docs/troubleshooting/README.md`
-- 通用问题摘要台账：`docs/troubleshooting/README.md`
+- 模块设计稿与局部交互方案：`docs/specs/modules/README.md`
+- 运行、仓库、环境排查与验证：`docs/archive/investigations/README.md`
+- 常见故障与可复用修复路径：`docs/archive/troubleshooting/README.md`
+- 通用问题摘要台账：`docs/archive/troubleshooting/README.md`
 
 ## 放置规则
 
 - `docs/product/`：项目定位、阶段目标、全局规则、PRD
 - `docs/research/`：数据来源、技术选型、部署、测试、外部核实
-- `docs/modules/`：模块设计稿、模块补充研究、模块级验证
-- `docs/investigations/`：排查、复现、环境确认、历史验证
-- `docs/troubleshooting/`：常见故障、工具链异常、可复用处理路径
+- `docs/specs/modules/`：模块设计稿、模块补充研究、模块级验证
+- `docs/archive/investigations/`：排查、复现、环境确认、历史验证
+- `docs/archive/troubleshooting/`：常见故障、工具链异常、可复用处理路径
 - `docs/` 根目录：只放跨主题入口和台账
 
 ## 渐进式要求

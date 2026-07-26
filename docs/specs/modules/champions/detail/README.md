@@ -4,5 +4,5 @@
 
 ## 先读哪篇
 
-- 页面定位、路由、信息架构、视觉方向：`docs/modules/champions/detail/page-structure.md`
-- 交互要求、数据合同与验收标准：`docs/modules/champions/detail/interaction-and-data.md`
+- 页面定位、路由、信息架构、视觉方向：`docs/specs/modules/champions/detail/page-structure.md`
+- 交互要求、数据合同与验收标准：`docs/specs/modules/champions/detail/interaction-and-data.md`

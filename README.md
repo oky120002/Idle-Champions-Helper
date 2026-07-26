@@ -6,7 +6,7 @@
 
 - 正式地址：[https://oky120002.github.io/Idle-Champions-Helper/](https://oky120002.github.io/Idle-Champions-Helper/)
 - 部署链路：`GitHub Pages + GitHub Actions`
-- 常见排查入口：`docs/troubleshooting/README.md`
+- 常见排查入口：`docs/archive/troubleshooting/README.md`
 
 ## 当前范围
 
@@ -85,5 +85,5 @@ npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedIn
 
 - 文档总索引：`docs/README.md`
 - 项目路线与范围：`docs/product/roadmap/README.md`
-- 文档职责与精简策略：`docs/product/documentation-governance.md`
-- 问题排查台账：`docs/troubleshooting/README.md`
+- 文档职责与精简策略：`docs/specs/guidelines/documentation-governance.md`
+- 问题排查台账：`docs/archive/troubleshooting/README.md`

@@ -1,6 +1,6 @@
 # Champions 工作台壳层重构设计稿
 
-- 作用：记录 `Champions` 工作台的局部状态约束；全站通用结构与页面归位映射见 `docs/modules/shared-components/page-workbench-design.md`。
+- 作用：记录 `Champions` 工作台的局部状态约束；全站通用结构与页面归位映射见 `docs/specs/modules/shared-components/page-workbench-design.md`。
 
 ## 目标与非目标
 

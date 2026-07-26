@@ -7,7 +7,7 @@
 
 - 这是仓库外路径：`/Users/rain/.codex/AGENTS.md`
 - `AGENTS.md`
-- `docs/product/documentation-governance.md`
+- `docs/specs/guidelines/documentation-governance.md`
 
 ## 当前判断
 
@@ -19,4 +19,4 @@
 
 - 收敛了 `AGENTS.md`，明确不再重复全局通用规则。
 - 收敛了 `docs/README.md`，只保留读取顺序、专题入口、放置规则和命名约定。
-- 新增 `docs/product/README.md`、`docs/research/README.md`、`docs/modules/README.md`、`docs/investigations/README.md` 作为渐进式加载入口。
+- 新增 `docs/product/README.md`、`docs/research/README.md`、`docs/specs/modules/README.md`、`docs/archive/investigations/README.md` 作为渐进式加载入口。

@@ -1,7 +1,7 @@
 # 本地优先的个人数据导入方案
 
 - 目标：在不要求用户把真实 `User ID / hash` 发给第三方的前提下，为辅助站建立个人数据导入能力。
-- 页面壳层：个人数据页纳入全站页面工作台规范；小导航、工具条、无左栏模式、右区滚动与页面归位映射见 `docs/modules/shared-components/page-workbench-design.md`。
+- 页面壳层：个人数据页纳入全站页面工作台规范；小导航、工具条、无左栏模式、右区滚动与页面归位映射见 `docs/specs/modules/shared-components/page-workbench-design.md`。
 
 ## 1. 设计原则
 
@@ -161,4 +161,4 @@ Vite serve 仅开发态暴露本地 dev endpoint
 - `src/data/user-profile-store/`（userProfileSourceResolver.ts(+.prod.ts)、userProfileStore.ts）
 - `scripts/private-user-data/`（fetch-user-profile-payloads.ts、private-user-profile-payloads.ts、production-boundary-scanner.ts 等）
 - `docs/research/data/game-data-source/README.md`
-- 当前设计稿路径：`docs/modules/user-data/user-data-import-design.md`
+- 当前设计稿路径：`docs/specs/modules/user-data/user-data-import-design.md`

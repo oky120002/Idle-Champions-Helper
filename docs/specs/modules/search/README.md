@@ -19,8 +19,8 @@
 
 ## 先读哪篇
 
-- 构建期数据契约、信封识别、三桶分类、占位符剥离、排噪规则：`docs/modules/search/build-and-data.md`
-- 运行期引擎、分词、高亮、顶栏框与 /search 页交互：`docs/modules/search/runtime-and-ui.md`
+- 构建期数据契约、信封识别、三桶分类、占位符剥离、排噪规则：`docs/specs/modules/search/build-and-data.md`
+- 运行期引擎、分词、高亮、顶栏框与 /search 页交互：`docs/specs/modules/search/runtime-and-ui.md`
 
 ## 关键文件
 

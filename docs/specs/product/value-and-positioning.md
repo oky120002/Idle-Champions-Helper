@@ -30,5 +30,5 @@
 
 ## Planner 更新
 
-- 2026-05-03 更新：自动计划模块已建成，详见 `docs/modules/planner/README.md`。
+- 2026-05-03 更新：自动计划模块已建成，详见 `docs/specs/modules/planner/README.md`。
 - 边界是“不做黑盒最优解”，planner 提供本地优先、可解释、可验证的稳态推墙伤害推荐与自配评估。

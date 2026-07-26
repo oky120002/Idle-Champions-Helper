@@ -4,7 +4,7 @@
 
 ## 先读哪篇
 
-- 模块定位、数据合同、当前代码落点和页面结构：`docs/modules/champions/filter/scope-and-data.md`
-- 当前筛选规则、MVP 缺口、架构边界、扩展顺序与验收：`docs/modules/champions/filter/rules-and-acceptance.md`
-- Champions 页悬浮工作台壳层、工具栏合并态与滚动模型：`docs/modules/champions/filter/workbench-shell-redesign-design.md`
-- 当前全站页面工作台结构基线与页面归位映射：`docs/modules/shared-components/page-workbench-design.md`
+- 模块定位、数据合同、当前代码落点和页面结构：`docs/specs/modules/champions/filter/scope-and-data.md`
+- 当前筛选规则、MVP 缺口、架构边界、扩展顺序与验收：`docs/specs/modules/champions/filter/rules-and-acceptance.md`
+- Champions 页悬浮工作台壳层、工具栏合并态与滚动模型：`docs/specs/modules/champions/filter/workbench-shell-redesign-design.md`
+- 当前全站页面工作台结构基线与页面归位映射：`docs/specs/modules/shared-components/page-workbench-design.md`

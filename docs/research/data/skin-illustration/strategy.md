@@ -65,5 +65,5 @@
 
 ## 依据
 
-- 仓库内：`docs/research/deployment/static-hosting/README.md`、`docs/modules/champions/illustration/README.md`、`scripts/sync-idle-champions-illustrations.ts`、`public/data/v1/champion-illustrations.json`
+- 仓库内：`docs/research/deployment/static-hosting/README.md`、`docs/specs/modules/champions/illustration/README.md`、`scripts/sync-idle-champions-illustrations.ts`、`public/data/v1/champion-illustrations.json`
 - 浏览器兼容性：MDN `CanvasRenderingContext2D.drawImage()`、`HTMLImageElement.decode()`、`HTMLCanvasElement.toBlob()`、`Window.createImageBitmap()`、`OffscreenCanvas`、`Compression Streams API / DecompressionStream`
