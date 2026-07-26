@@ -93,7 +93,8 @@ export interface SimulationBreakdown {
 }
 
 export interface ScoringResult {
-  score: GameNumberValue
+  /** 当前模式优化目标量：carry-dps=carryDps，team-gold=teamGoldFind。取代旧"评分"概念。 */
+  objectiveValue: GameNumberValue
   warnings: string[]
   carryHeroId: string | null
   /** best carry 的 active signal kind 集合，供叙事层结构化消费（避免字符串匹配）。 */
@@ -258,7 +259,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
   const teamGold = computeTeamGoldFind(aggregate)
 
   return {
-    score: teamGold,
+    objectiveValue: teamGold,
     warnings: [...new Set(warnings)],
     carryHeroId: null,
     activeSignalKinds: activeKinds,
@@ -276,7 +277,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
   if (placedEntries.length === 0) {
     return {
-      score: ZERO,
+      objectiveValue: ZERO,
       warnings: [],
       carryHeroId: null,
       activeSignalKinds: new Set(),
@@ -288,7 +289,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     return scoreTeamGold(placedEntries, input)
   }
 
-  let bestScore: GameNumberValue = ZERO
+  let bestCarryDps: GameNumberValue = ZERO
   let bestWarnings: string[] = []
   let bestCarryHeroId: string | null = null
   let bestActiveKinds: Set<HeroAbilityKind> = new Set()
@@ -407,8 +408,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       damagePool * critFactor * vulnFactor * globalBuff * equipmentAdjustment,
     )
 
-    if (compareGameNumbers(carryDps, bestScore) > 0) {
-      bestScore = carryDps
+    if (compareGameNumbers(carryDps, bestCarryDps) > 0) {
+      bestCarryDps = carryDps
       bestWarnings = [...new Set(warnings)]
       bestCarryHeroId = carryEntry.hero.heroId
       bestActiveKinds = activeKinds
@@ -452,7 +453,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       )
       // ponytail: BUD 用 carry 单次伤害近似（carryDps × attackCooldown）；carry 通常设 BUD，
       // 绝对值偏差归 7.5 BUD 实测校准。相对比较保序。
-      const bud = computeSingleHitDamage(bestScore, bestCarryEntry.hero.baseAttackCooldown)
+      const bud = computeSingleHitDamage(bestCarryDps, bestCarryEntry.hero.baseAttackCooldown)
       areaEstimate = estimateMaxArea({ bud, effectiveHealth })
     }
   }
@@ -479,7 +480,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       carryLevel,
       baseDps: formatGameNumber(baseDps),
       levelCurve: formatGameNumber(levelCurve),
-      carryDps: formatGameNumber(bestScore),
+      carryDps: formatGameNumber(bestCarryDps),
       factors: {
         damagePool,
         crit: critFactor,
@@ -493,7 +494,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   }
 
   return {
-    score: bestScore,
+    objectiveValue: bestCarryDps,
     warnings: bestWarnings,
     carryHeroId: bestCarryHeroId,
     activeSignalKinds: bestActiveKinds,

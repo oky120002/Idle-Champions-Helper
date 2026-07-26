@@ -82,8 +82,9 @@ function buildPlannerExplanations(
   placementEntries: PlannerPlacementEntry[],
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   carryHeroId: string | null,
-  carryDps: GameNumberValue,
+  objectiveValue: GameNumberValue,
   activeSignalKinds: Set<HeroAbilityKind>,
+  scoringMode: ScoringMode,
 ): PlannerNarrativeLine[] {
   const leadChampion = carryHeroId
     ? heroById.get(carryHeroId) ?? null
@@ -105,13 +106,21 @@ function buildPlannerExplanations(
     },
   ]
 
+  if (scoringMode === 'team-gold') {
+    explanations.push({
+      zh: '当前结果按全队金币收益（team_gold_find）排序，由 gold pool 聚合每位英雄的金币加成。',
+      en: `This result ranks by team gold find, aggregating each champion's gold bonuses into the gold pool.`,
+    })
+    return explanations
+  }
+
   if (leadChampion) {
     const supportSummaryZh = supportChampions.length > 0 ? supportChampions.join('、') : '其余已拥有英雄'
     const supportSummaryEn = supportChampions.length > 0 ? supportChampions.join(', ') : 'the remaining owned champions'
 
     explanations.push({
-      zh: `核心输出位 ${leadChampion.name.display}（Seat ${leadChampion.seat}）的 carryDps 约 ${formatGameNumber(carryDps)}，再用 ${supportSummaryZh} 提供加成。`,
-      en: `Carry ${leadChampion.name.display} (Seat ${leadChampion.seat}) reaches ~${formatGameNumber(carryDps)} carryDps, with ${supportSummaryEn} providing buffs.`,
+      zh: `核心输出位 ${leadChampion.name.display}（Seat ${leadChampion.seat}）的 carryDps 约 ${formatGameNumber(objectiveValue)}，再用 ${supportSummaryZh} 提供加成。`,
+      en: `Carry ${leadChampion.name.display} (Seat ${leadChampion.seat}) reaches ~${formatGameNumber(objectiveValue)} carryDps, with ${supportSummaryEn} providing buffs.`,
     })
   }
 
@@ -293,7 +302,7 @@ export function evaluateFormation(
 
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
   const result: PlannerResult = {
-    score: formatGameNumber(scoring.score),
+    objectiveValue: formatGameNumber(scoring.objectiveValue),
     carryHeroId: scoring.carryHeroId,
     placements,
     placementEntries,
@@ -302,8 +311,9 @@ export function evaluateFormation(
       placementEntries,
       heroById,
       scoring.carryHeroId,
-      scoring.score,
+      scoring.objectiveValue,
       scoring.activeSignalKinds,
+      scoringMode,
     ),
     warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
     areaEstimate: scoring.areaEstimate ?? null,
@@ -420,7 +430,7 @@ export function buildPlannerRecommendation(
 
       if (!legality.legal) {
         return {
-          score: SCORE_ZERO,
+          objectiveValue: SCORE_ZERO,
           warnings: legality.violations.map(formatLegalityViolation),
           carryHeroId: null,
           activeSignalKinds: new Set<HeroAbilityKind>(),
@@ -444,17 +454,17 @@ export function buildPlannerRecommendation(
 
   // 阶段 15.2：distinct-carry Top K。beamSearch 已按 carryDps 降序；先过滤非法（score≤0），
   // 再按 carryHeroId 去重（每个 carry 取最高分阵型），取前 PLANNER_TOP_K 作为多阵型输出。
-  const legal = results.filter((result) => compareGameNumbers(result.score, SCORE_ZERO) > 0)
+  const legal = results.filter((result) => compareGameNumbers(result.objectiveValue, SCORE_ZERO) > 0)
   const bestByCarry = new Map<string, (typeof legal)[number]>()
   for (const result of legal) {
     const key = result.carryHeroId ?? '__none__'
     const existing = bestByCarry.get(key)
-    if (!existing || compareGameNumbers(result.score, existing.score) > 0) {
+    if (!existing || compareGameNumbers(result.objectiveValue, existing.objectiveValue) > 0) {
       bestByCarry.set(key, result)
     }
   }
   const topResults = [...bestByCarry.values()]
-    .sort((left, right) => compareGameNumbers(right.score, left.score))
+    .sort((left, right) => compareGameNumbers(right.objectiveValue, left.objectiveValue))
     .slice(0, PLANNER_TOP_K)
 
   if (topResults.length === 0) {
@@ -486,7 +496,7 @@ export function buildPlannerRecommendation(
     const placementEntries = [...buildPlacementEntries(slots, top.placements, heroById), ...lockedPlacementEntries]
       .sort((left, right) => (slotOrder.get(left.slotId) ?? Infinity) - (slotOrder.get(right.slotId) ?? Infinity))
     return {
-      score: formatGameNumber(top.score),
+      objectiveValue: formatGameNumber(top.objectiveValue),
       carryHeroId: top.carryHeroId,
       placements: top.placements,
       placementEntries,
@@ -495,8 +505,9 @@ export function buildPlannerRecommendation(
         placementEntries,
         heroById,
         top.carryHeroId,
-        top.score,
+        top.objectiveValue,
         top.activeSignalKinds,
+        scoringMode,
       ),
       warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
       areaEstimate: top.areaEstimate ?? null,

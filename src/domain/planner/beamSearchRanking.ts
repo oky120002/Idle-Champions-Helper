@@ -14,7 +14,7 @@ export interface BeamSearchInput {
 }
 
 export interface BeamSearchResult {
-  score: GameNumberValue
+  objectiveValue: GameNumberValue
   placements: Record<string, string>
   warnings: string[]
   carryHeroId: string | null
@@ -77,7 +77,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
         candidate: c,
         result: scoreFormation(c.placements),
       }))
-      .sort((a, b) => compareGameNumbers(b.result.score, a.result.score))
+      .sort((a, b) => compareGameNumbers(b.result.objectiveValue, a.result.objectiveValue))
       .slice(0, beamWidth)
 
     candidates = scored.map((s) => s.candidate)
@@ -85,7 +85,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
 
   return scored
     .map((s) => ({
-      score: s.result.score,
+      objectiveValue: s.result.objectiveValue,
       placements: s.candidate.placements,
       warnings: s.result.warnings,
       carryHeroId: s.result.carryHeroId,
@@ -93,5 +93,5 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
       areaEstimate: s.result.areaEstimate ?? null,
       breakdown: s.result.breakdown ?? null,
     }))
-    .sort((a, b) => compareGameNumbers(b.score, a.score))
+    .sort((a, b) => compareGameNumbers(b.objectiveValue, a.objectiveValue))
 }

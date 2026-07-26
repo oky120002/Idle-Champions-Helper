@@ -26,7 +26,7 @@ describe('PlannerResultCard', () => {
   ])
 
   const baseProps = {
-    score: '4.08e167',
+    objectiveValue: '4.08e167',
     carryHeroId: null as string | null,
     placements: { '1': 'bruenor', '3': 'nayeli', '7': 'jim' } as Record<string, string>,
     explanations: [

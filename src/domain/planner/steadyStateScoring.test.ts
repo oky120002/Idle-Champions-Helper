@@ -81,7 +81,7 @@ describe('steady state scoring', () => {
       scenario,
     })
 
-    expect(compareGameNumbers(adjacentSupportScore.score, nonAdjacentScore.score)).toBeGreaterThan(0)
+    expect(compareGameNumbers(adjacentSupportScore.objectiveValue, nonAdjacentScore.objectiveValue)).toBeGreaterThan(0)
   })
 
   it('global support 不受 adjacency 影响', () => {
@@ -113,7 +113,7 @@ describe('steady state scoring', () => {
       scenario,
     })
 
-    expect(compareGameNumbers(nearScore.score, farScore.score)).toBe(0)
+    expect(compareGameNumbers(nearScore.objectiveValue, farScore.objectiveValue)).toBe(0)
     expect(nearScore.carryHeroId).toBe('carry')
   })
 
@@ -147,7 +147,7 @@ describe('steady state scoring', () => {
     })
 
     // global pool addPercent = 200 → poolMultiplier = 3；carryDps = baseDamage(1) × levelCurve(1, 1.06) × 3 = 3.18
-    expect(result.score.toNumber()).toBeCloseTo(1.06 * 3, 5)
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(1.06 * 3, 5)
   })
 
   it('缺少 tagged target qualifier 时只进入 warning，不计分', () => {
@@ -176,7 +176,7 @@ describe('steady state scoring', () => {
     expect(result.warnings.length).toBeGreaterThan(0)
     expect(result.warnings[0]).toContain('缺少 carry 目标标签')
     // carryDps = baseDamage(1) × levelCurve(1, 1.06) × aggregate(1，tagged buff 未计分)
-    expect(result.score.toNumber()).toBeCloseTo(1.06, 5)
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(1.06, 5)
   })
 
   it('gold 维度 signal 不泄漏进 carryDps（dimension 过滤）', () => {
@@ -202,7 +202,7 @@ describe('steady state scoring', () => {
 
     // gold signal 被过滤，aggregate=1；carryDps = baseDamage(1) × levelCurve(1, 1.06) = 1.06
     // 若 dimension 过滤失效，gold pool(=3) 会乘进 → 3.18，断言会失败。
-    expect(result.score.toNumber()).toBeCloseTo(1.06, 5)
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(1.06, 5)
     expect(result.activeSignalKinds.has('globalGoldMultiplier')).toBe(false)
   })
 
@@ -229,7 +229,7 @@ describe('steady state scoring', () => {
     })
 
     // gold pool: 1 + 200/100 = 3；team_gold_find = base_gold(1) × 3 = 3
-    expect(result.score.toNumber()).toBeCloseTo(3, 5)
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(3, 5)
     expect(result.carryHeroId).toBeNull()
     expect(result.activeSignalKinds.has('globalGoldMultiplier')).toBe(true)
     expect(result.activeSignalKinds.has('globalDpsMultiplier')).toBe(false)
@@ -259,9 +259,9 @@ describe('steady state scoring', () => {
     const goldMode = scoreFormation({ placements, heroesById, scenario, scoringMode: 'team-gold' })
 
     // carry-dps: hero self-buff pool=2 → carryDps = 10 × 1.06 × 2 = 21.2
-    expect(dpsMode.score.toNumber()).toBeCloseTo(21.2, 4)
+    expect(dpsMode.objectiveValue.toNumber()).toBeCloseTo(21.2, 4)
     // team-gold: gold pool=3 → team_gold_find = 3
-    expect(goldMode.score.toNumber()).toBeCloseTo(3, 5)
+    expect(goldMode.objectiveValue.toNumber()).toBeCloseTo(3, 5)
   })
 
   it('crit signal 进 crit_factor 提升 carryDps（4.3/4.4）', () => {
@@ -286,8 +286,8 @@ describe('steady state scoring', () => {
     // crit damage +100% → damage stat 200, total_damage_mult=1+200/100=3; chance base 2.5%
     // raw_crit_factor = 1 + 0.025×(3-1) = 1.05；基线 1+0.025×(2-1)=1.025；归一 = 1.05/1.025
     // withCrit carryDps = 10 × 1.06 × (1.05/1.025)；withoutCrit = 10 × 1.06 × 1.0
-    expect(withCrit.score.toNumber()).toBeGreaterThan(withoutCrit.score.toNumber())
-    expect(withCrit.score.toNumber()).toBeCloseTo(10 * 1.06 * (1.05 / 1.025), 4)
+    expect(withCrit.objectiveValue.toNumber()).toBeGreaterThan(withoutCrit.objectiveValue.toNumber())
+    expect(withCrit.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * (1.05 / 1.025), 4)
     // crit signal kind 进 activeSignalKinds
     expect(withCrit.activeSignalKinds.has('globalCritDamage')).toBe(true)
   })
@@ -321,10 +321,10 @@ describe('steady state scoring', () => {
     })
 
     // 匹配 undead：vuln mult 2 → carryDps = 10 × 1.06 × 2 = 21.2
-    expect(withMatch.score.toNumber()).toBeCloseTo(10 * 1.06 * 2, 3)
+    expect(withMatch.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 2, 3)
     expect(withMatch.activeSignalKinds.has('enemyVulnerability')).toBe(true)
     // fiend 不在场景 → vuln 跳过 → carryDps = 10 × 1.06
-    expect(withoutMatch.score.toNumber()).toBeCloseTo(10 * 1.06, 3)
+    expect(withoutMatch.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06, 3)
     expect(withoutMatch.activeSignalKinds.has('enemyVulnerability')).toBe(false)
   })
 
@@ -355,7 +355,7 @@ describe('steady state scoring', () => {
 
     // add pool: 1 + (100+100)/100 = 3；carryDps = 10 × 1.06 × 3 = 31.8
     // 累乘 bug 会得 10 × 1.06 × 4 = 42.4
-    expect(result.score.toNumber()).toBeCloseTo(10 * 1.06 * 3, 4)
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 3, 4)
   })
 
   it('global buff pool（patron-perk）乘进 carryDps（11.4）', () => {
@@ -376,10 +376,10 @@ describe('steady state scoring', () => {
     })
 
     // 无全局加成：carryDps = 10 × 1.06 × 1（无 pool）= 10.6
-    expect(withoutGlobalBuff.score.toNumber()).toBeCloseTo(10.6, 4)
+    expect(withoutGlobalBuff.objectiveValue.toNumber()).toBeCloseTo(10.6, 4)
     // 含 ×2 全局加成：10.6 × 2 = 21.2
-    expect(withGlobalBuff.score.toNumber()).toBeCloseTo(21.2, 4)
-    expect(compareGameNumbers(withGlobalBuff.score, withoutGlobalBuff.score)).toBeGreaterThan(0)
+    expect(withGlobalBuff.objectiveValue.toNumber()).toBeCloseTo(21.2, 4)
+    expect(compareGameNumbers(withGlobalBuff.objectiveValue, withoutGlobalBuff.objectiveValue)).toBeGreaterThan(0)
   })
 
   describe('breakdown 结构化拆解', () => {
@@ -519,8 +519,8 @@ describe('steady state scoring', () => {
     })
 
     // 理论 10.6；调整比 0.5 → 5.3（owned 装备弱于理论最大）
-    expect(theoretical.score.toNumber()).toBeCloseTo(10.6, 4)
-    expect(adjusted.score.toNumber()).toBeCloseTo(5.3, 4)
-    expect(compareGameNumbers(adjusted.score, theoretical.score)).toBeLessThan(0)
+    expect(theoretical.objectiveValue.toNumber()).toBeCloseTo(10.6, 4)
+    expect(adjusted.objectiveValue.toNumber()).toBeCloseTo(5.3, 4)
+    expect(compareGameNumbers(adjusted.objectiveValue, theoretical.objectiveValue)).toBeLessThan(0)
   })
 })

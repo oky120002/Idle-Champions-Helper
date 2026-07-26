@@ -298,7 +298,7 @@ export function PlannerEvaluatePage() {
                       <div className="surface-card__header-copy">
                         <p className="surface-card__eyebrow">{scoreLabel}</p>
                         <p className="planner-result-card__score">
-                          <strong>{evaluation.result.score}</strong>
+                          <strong>{evaluation.result.objectiveValue}</strong>
                         </p>
                         {evaluation.result.carryHeroId ? (
                           <p className="surface-card__description">

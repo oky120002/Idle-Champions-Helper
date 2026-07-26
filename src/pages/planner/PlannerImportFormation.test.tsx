@@ -17,7 +17,7 @@ import { saveRecentFormationDraft } from '../../data/formationDraftStore'
 import { PlannerImportFormation } from './PlannerImportFormation'
 
 const result = {
-  score: '1e10',
+  objectiveValue: '1e10',
   carryHeroId: 'bruenor',
   placements: { s1: 'bruenor' },
   explanations: [],

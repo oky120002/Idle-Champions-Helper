@@ -8,7 +8,7 @@ import type { HeroAbilityKind } from '../abilities/abilityModel'
 function makeResult(score: number, carryHeroId: string | null = null): ScoringResult {
   const value = new Decimal(score)
   return {
-    score: value,
+    objectiveValue: value,
     warnings: [],
     carryHeroId,
     activeSignalKinds: new Set<HeroAbilityKind>(),
@@ -42,7 +42,7 @@ describe('beam search ranking', () => {
     })
 
     expect(results.length).toBeGreaterThan(0)
-    expect(results[0]!.score.toNumber()).toBeGreaterThan(0)
+    expect(results[0]!.objectiveValue.toNumber()).toBeGreaterThan(0)
   })
 
   it('beam width 限制候选扩展', () => {
@@ -63,7 +63,7 @@ describe('beam search ranking', () => {
       slots,
       beamWidth: 2,
       scoreFormation: () => ({
-        score: value,
+        objectiveValue: value,
         warnings: ['test warning'],
         carryHeroId: 'jarlaxle',
         activeSignalKinds: new Set<HeroAbilityKind>(),
@@ -72,7 +72,7 @@ describe('beam search ranking', () => {
     })
 
     const top = results[0]!
-    expect(top).toHaveProperty('score')
+    expect(top).toHaveProperty('objectiveValue')
     expect(top).toHaveProperty('placements')
     expect(top).toHaveProperty('breakdown')
     expect(top).toHaveProperty('warnings')
@@ -119,7 +119,7 @@ describe('beam search ranking', () => {
 
     expect(results.length).toBeLessThanOrEqual(2)
     for (let i = 1; i < results.length; i++) {
-      expect(compareGameNumbers(results[i - 1]!.score, results[i]!.score)).toBeGreaterThanOrEqual(0)
+      expect(compareGameNumbers(results[i - 1]!.objectiveValue, results[i]!.objectiveValue)).toBeGreaterThanOrEqual(0)
     }
   })
 })

@@ -13,8 +13,8 @@ const championById = new Map<string, Champion>([
 ])
 
 const results = [
-  { score: '1e10', carryHeroId: 'bruenor', placements: {}, explanations: [], warnings: [] },
-  { score: '5e9', carryHeroId: 'jim', placements: {}, explanations: [], warnings: [] },
+  { objectiveValue: '1e10', carryHeroId: 'bruenor', placements: {}, explanations: [], warnings: [] },
+  { objectiveValue: '5e9', carryHeroId: 'jim', placements: {}, explanations: [], warnings: [] },
 ] as unknown as PlannerResult[]
 
 describe('PlannerTopLineups', () => {

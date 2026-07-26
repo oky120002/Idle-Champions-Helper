@@ -12,7 +12,7 @@ export type PlannerResultCardProps = PlannerResult & {
 }
 
 export function PlannerResultCard({
-  score,
+  objectiveValue,
   carryHeroId,
   placements,
   placementEntries,
@@ -66,7 +66,7 @@ export function PlannerResultCard({
           <div className="planner-result-card__header-meta">
             <p className="planner-result-card__score">
               <span>{scoreLabel}</span>
-              <strong>{score}</strong>
+              <strong>{objectiveValue}</strong>
             </p>
             <p className="planner-result-card__slot-count">
               {t({

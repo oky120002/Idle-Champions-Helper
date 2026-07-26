@@ -222,6 +222,31 @@ describe('planner recommendation engine', () => {
     expect(recommendation.result?.explanations[1]?.zh).toContain('贾拉索')
   })
 
+  it('team-gold 模式叙述按金币收益，不误用 carryDps 文案', () => {
+    const snapshot = createUserProfileSnapshot({
+      ownedHeroes: [
+        createOwnedHero({ heroId: 'bruenor', level: 500 }),
+        createOwnedHero({ heroId: 'asharra', level: 500 }),
+        createOwnedHero({ heroId: 'celeste', level: 500 }),
+        createOwnedHero({ heroId: 'nayeli', level: 500 }),
+        createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+      ],
+    })
+
+    const evaluation = evaluateFormation(
+      selectedVariant,
+      collections,
+      snapshot,
+      { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
+      { scoringMode: 'team-gold' },
+    )
+
+    expect(evaluation.result).not.toBeNull()
+    const zh = evaluation.result?.explanations.map((line) => line.zh).join('') ?? ''
+    expect(zh).toContain('金币收益')
+    expect(zh).not.toContain('carryDps')
+  })
+
   it('lockedSlots 被过滤，推荐不占用锁槽且减少可用槽位（9.1 escort）', () => {
     const snapshot = createUserProfileSnapshot({
       ownedHeroes: [
