@@ -117,7 +117,12 @@ beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评�
 
 **选项**：`PlannerRecommendationOptions.computationMode`（默认 `p50`）；UI `PlannerComputationMode` 选择器三档切换。
 
-**实测**（`npm run simulate:benchmark`，全英雄 worst case / ~50 英雄）：`full` 8.2s / 2.2s，`p90` 7.6s / 2.2s（只快 ~7%，砍 10% 杯水车薪），`p50` 4.4s / 1.1s（约减半）。默认 `p50` 把真实体感压到 1 秒级；要精度一键切 `full`。结构性加速（beamWidth、`scoreFormation` 三重 `evaluatePlacementFit` 合并）正交，见 TODO。
+**实测**（`npm run simulate:benchmark`，全英雄 worst case / ~50 英雄）：`full` 8.2s / 2.2s，`p90` 7.6s / 2.2s（只快 ~7%，砍 10% 杯水车薪），`p50` 4.4s / 1.1s（约减半）。默认 `p50` 把真实体感压到 1 秒级；要精度一键切 `full`。
+
+**结构性加速调研结论**（阶段 18 同期）：
+- `scoreFormation` 三维 `evaluatePlacementFit` 合并为单次（`dimension` 数组）：行为等价、代码更干净，但性能边际——贵的 qualifier 匹配本就在维度过滤 `continue` 之后、每信号仅一次，3× 冗余仅在便宜的迭代开销。
+- beam search 宽度（`beamWidth`，默认 8，可经 `PlannerRecommendationOptions.beamWidth` 覆盖）：benchmark 扫描实测 `width=4` 多数 variant 无损但偶发 objectiveValue 塌方、`width≤3` 候选多的 variant 直接崩溃（log10 比 -4）。**降搜索宽度不是可靠加速**——降的是搜索质量，不是单次成本。默认保守留 8。
+- 真正可靠的加速是 computationMode 候选裁剪（少评分次数）。剩余算法级杠杆（增量评分：beam search 现每步重评全阵型 O(N²)，改增量 O(N)）是更大重构，未做。
 
 ## UI 和测试
 
