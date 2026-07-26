@@ -1,6 +1,6 @@
 # 动画 / 立绘实现：方案调研与仓库实现
 
-- 目标：说明 `idle.kleho.ru` 为什么能播放皮肤动画、本仓库之前为什么只能做静态立绘，以及在 GitHub Pages 容量约束下的实现方案与当前实现。
+- 目标：说明 `idle.kleho.ru` 为什么能播放皮肤动画、本仓库静态立绘的技术约束，以及在 GitHub Pages 容量约束下的实现方案与当前实现。
 
 ## 外站为什么能动
 
@@ -16,7 +16,7 @@
 
 它的资源明显是旧快照：对老皮肤能返回数据，对较新资源直接 `404`，patch 时间也显示不是跟着当前官方 definitions 实时更新。价值是“证明技术上可行”，但不适合作为长期依赖源。
 
-## 我们之前为什么不行
+## 静态立绘的技术约束
 
 仓库已有 `scripts/data/skelanim-codec.ts`、`scripts/data/skelanim-renderer.ts`、`scripts/sync-idle-champions-illustrations.ts` 能解官方动画，但产物合同只允许静态图：构建期读取 `SkelAnim` -> 选 sequence / frame -> 渲染单张 PNG -> 丢掉其余动画数据，页面只能 `<img>` 展示。限制在数据合同，不在前端绘制能力。
 

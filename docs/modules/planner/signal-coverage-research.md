@@ -9,7 +9,7 @@
 - 当前共有 `164` 个英雄详情，扫描到 `29316` 条 effect entry。
 - 其中 `12253` 条已被 planner 识别成可消费 signal（buff_upgrade 完全重复去重后；去重前 15409），`4138` 条属 unsupported（多为金币/治疗/crit/ultimate 等 effect，非 bug）。
 - per_hero_expr：`291` 条，已解析 `219`（`75.3%`），未解析 `72`（几乎全为数值表达式，见 `expression-evaluator.md`，或 `HasEffect`/`GetUpgradeUnlocked` 等运行时状态）。
-- filter 限定：`hero_expr` filter（functional 谓词，第三种英雄谓词载体，见 `format-quirks.md`）已接入 `normalizeTargetQualifier`，目标英雄限定不丢失。
+- filter 限定：`hero_expr` filter（functional 谓词，第三种英雄谓词载体，见 `docs/research/data/game-data-source/format-quirks.md`）已接入 `normalizeTargetQualifier`，目标英雄限定不丢失。
 - signal 来源：`upgrade` 14266 / `upgrade-buffed-signal` 4919（buff_upgrade 派生）/ `loot` 4044 / `feat` 2554 / `upgrade-effect-key` 2549 / `legendary` 984。
 
 ## 统计口径

@@ -44,5 +44,5 @@ node scripts/build-idle-champions-data.ts   --animationChampionIds 124   --anima
 
 ## 当前结论
 
-- 旧的皮肤 pose override、alpha 碎裂和 delta 人工复核流程已不再是生产主线。
+- 皮肤 pose override、alpha 碎裂和 delta 人工复核流程已废弃，不作为生产主线。
 - 当前最稳妥的维护方式是：先同步本地动画 `.bin`，再从同一份 manifest 生成静态 PNG，并让前端只消费站内发布的资源。
