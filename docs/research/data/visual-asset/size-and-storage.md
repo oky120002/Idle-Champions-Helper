@@ -25,7 +25,7 @@
 
 不建议回退成“直接使用官方原 PNG”。
 
-## 当前仓库落地策略
+## 当前仓库实现策略
 
 - 已落本地：`public/data/v1/champion-portraits/`；原因是体积小、单尺寸稳定、当前页面已直接消费
 - 暂不把二进制拉进仓库：英雄本体立绘、皮肤 `base / large / xl / portrait`

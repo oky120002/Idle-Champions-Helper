@@ -2,7 +2,7 @@
 
 - 目标：记录切到 `danger-full-access` 后的最小启动验证和完整页面验收结论。
 
-## 第二轮验证
+## 补充验证
 
 在切换到完全访问权限会话后，重新执行了：最小浏览器启动验证 `firefox.launch(headless=True)`、`chromium.launch(headless=True)`、`webkit.launch(headless=True)`；以及完整页面验收脚本：启动本地 Vite 服务，依次覆盖放置英雄并制造 / 消除 `seat` 冲突、等待最近草稿自动保存、刷新后恢复最近草稿、保存为命名方案、在方案页编辑名称 / 备注 / 优先级、从方案恢复回阵型页、删除方案并验证空态。
 

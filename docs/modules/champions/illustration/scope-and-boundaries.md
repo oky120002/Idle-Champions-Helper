@@ -6,7 +6,7 @@
 
 - 页面要展示的单元是 `163` 个英雄本体立绘 + `688` 个皮肤立绘，共 `851` 个展示单元。
 - 不需要把 `portrait / base / large / xl` 等全部技术槽位原样公开；按技术槽位全量算会到 `3010` 个资源单元，超出页面真实需求。
-- 当前仓库首版产物已简化为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；`thumbs / display / webp` 只是后续可演进的资源设计，不代表 2026-04-16 的唯一实现。
+- 当前仓库产物已简化为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；`thumbs / display / webp` 只是后续可扩展的资源设计，不代表唯一实现。
 
 ## 为什么必须走构建期衍生图
 

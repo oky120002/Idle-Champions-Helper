@@ -6,7 +6,7 @@
 
 - `push main` 后的工作流能保证“不坏发布”，但不能阻止坏提交已经进入 `main` 历史。
 - 如果目标升级为“尽量不坏进入 `main`”，还要补分支保护、PR 审核和必过检查。
-- 本主题同时记录两件事：当前已落地的部署门禁；后续仍需补的测试分层与治理增强。
+- 本主题同时记录两件事：当前已实现的部署门禁；后续仍需补的测试分层与治理增强。
 
 ## 推荐分层
 
@@ -29,6 +29,6 @@
 
 ## `main` 完整回归定义
 
-- 当前已落地口径：`lint -> typecheck -> test:run -> test:e2e -> build -> deploy`
+- 当前已实现口径：`lint -> typecheck -> test:run -> test:e2e -> build -> deploy`
 - 建议长期口径：`lint -> typecheck -> test:unit -> test:data -> test:component -> test:e2e:regression -> build -> deploy`
 - PR 快速门禁可轻量一些：`lint + typecheck + unit + data + component + e2e:smoke`

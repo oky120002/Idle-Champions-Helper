@@ -1,6 +1,6 @@
 # 皮肤立绘路线：硬约束、方案对比与推荐
 
-- 目标：收纳路线比较前不能绕开的项目边界、A/B 两条路线的代价、最终推荐与落地顺序。
+- 目标：收纳路线比较前不能绕开的项目边界、A/B 两条路线的代价、最终推荐与实现顺序。
 
 ## 硬约束
 
@@ -51,7 +51,7 @@
 - B 的定位：二阶段增强，不替代 A；最合理的用法是详情弹窗里的高清模式、姿态切换或简单动态效果。
 - 更准确的策略不是“A 或 B 二选一”，而是“A 默认交付，B 局部增强”。
 
-## 落地顺序
+## 实现顺序
 
 1. 先把正确的静态图做出来：扩展 `scripts/sync-idle-champions-illustrations.ts`，输出 `thumb`、`display` 与 `renderSequence / renderFrame / renderBounds / sourceGraphic`。
 2. 再保留前端增强入口：必要时额外产出 `runtime/<id>.json` 与 `runtime/<id>-atlas-0.png`，但页面默认仍显示预合成图。

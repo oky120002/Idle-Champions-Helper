@@ -20,7 +20,7 @@
 - 方案存档页的英雄摘要标签显示头像。
 - 因官方当前只提供单一 `256x256` portrait，前端统一按容器尺寸缩放即可，不需要为多尺寸资源额外做 `srcset`。
 
-## 落地记录
+## 实现记录
 
 - 最后确认时间：2026-04-13 18:20（Asia/Shanghai）
-- 对应仓库落地：英雄数据已补 `portrait` 元数据；官方头像已同步到 `public/data/v1/champion-portraits/`；英雄相关页面已接入头像展示。
+- 对应仓库实现：英雄数据已补 `portrait` 元数据；官方头像已同步到 `public/data/v1/champion-portraits/`；英雄相关页面已接入头像展示。

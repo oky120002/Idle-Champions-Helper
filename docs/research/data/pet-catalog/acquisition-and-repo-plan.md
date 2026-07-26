@@ -24,5 +24,5 @@
 1. 新增独立脚本把宠物目录和图像一起写入 `public/data/<version>/pets.json` 与 `public/data/<version>/pets/`
 2. 脚本内直接复用 `SkelAnim` 渲染链路，把宠物图标与 4x 立绘都离线合成为单张 PNG
 3. 页面运行时只读本地 PNG，继续满足 GitHub Pages 静态站约束
-4. 首版只上宠物本体，不把 `familiar_skin_defines` 混入主目录
+4. 只上宠物本体，不把 `familiar_skin_defines` 混入主目录
 5. 页面卡片显示“获取方式摘要 + 细节”，不直接暴露原始 JSON 结构给用户
