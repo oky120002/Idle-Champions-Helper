@@ -1,6 +1,6 @@
 # 阵型模拟器演进规划（总纲）
 
-> 架构决策、进度追踪与全局约束。16 阶段详细执行步骤按里程碑拆分到 `milestone-2-data-completeness.md` / `milestone-3-enhancement.md` / `milestone-4-ui.md`（M1 已完成）；M1 审计衍生的 M2 关注点见 `milestone-2-data-completeness.md` 末尾。
+> 架构决策、进度追踪与全局约束。17 阶段（M1-M4 + 阶段 17 自配评估页）全部完成；里程碑执行步骤见 `milestone-2-data-completeness.md` / `milestone-3-enhancement.md` / `milestone-4-ui.md`。
 
 ## Context
 
@@ -44,7 +44,7 @@
 搜索层（beamSearch）                  按 objective 优化
 ```
 
-**核心变化**：placementFit 降级为 pool 聚合器（不产出“评分”）；每种模式用真实目标量（GameNumber）；“score/heuristicRoleMultiplier”淘汰；baseDamage 接入（champion-details 有）。
+**核心变化**：placementFit 降级为 pool 聚合器（不产出“评分”）；每种模式用真实目标量（GameNumber，输出层字段 `objectiveValue`：carry-dps 模式=carryDps，team-gold 模式=teamGoldFind）；旧"score（启发式评分）/heuristicRoleMultiplier"淘汰；baseDamage 接入（champion-details 有）。
 
 ## BUD 对阵型模拟的价值
 
@@ -67,9 +67,9 @@ BUD = 阵型近期最高单次伤害。
 按依赖分 4 个里程碑，每个可独立验证、独立交付价值；里程碑之间可插入新阶段（如发现遗漏），不把 16 阶段限制死。
 
 - **里程碑 1·核心引擎**（阶段 1 + 9.1 + 2）：**已完成**，产出真实 carryDps / BUD 计算能力（进度见上方追踪）。
-- **里程碑 2·数据补全**（阶段 3-8 + 9.2/9.3）：`milestone-2-data-completeness.md`。产出所有 effect 类型进 pool。
-- **里程碑 3·补强**（阶段 10-14）：`milestone-3-enhancement.md`。产出推荐准确 + 推图预估 + 辅助信息。
-- **里程碑 4·UI**（阶段 15-16）：`milestone-4-ui.md`。产出用户可见可用。
+- **里程碑 2·数据补全**（阶段 3-8 + 9.2/9.3）：**已完成**，`milestone-2-data-completeness.md`。产出所有 effect 类型进 pool。
+- **里程碑 3·补强**（阶段 10-14）：**已完成**，`milestone-3-enhancement.md`。产出推荐准确 + 推图预估 + 辅助信息。
+- **里程碑 4·UI**（阶段 15-16 + 阶段 17 自配评估页）：**已完成**，`milestone-4-ui.md`。产出用户可见可用。
 
 ## 文档同步硬约束（每个里程碑收口必须执行）
 
@@ -112,7 +112,7 @@ BUD = 阵型近期最高单次伤害。
    - **JSON 产物按通用性改名**：`planner-heroes.json`→`hero-abilities.json`、`planner-scenarios.json`→`scenarios.json`、`planner-semantic-overrides.json`→`semantic-overrides.json`；IndexedDB key（`plannerHeroOverrides`/`planner-heroes`/`planner-scenarios`）同步改名，旧 key 清理（用户本地数据因 schema 变化重建，可接受）。
    - **planner 推荐引擎模块保留**（`src/domain/planner/`：recommendationEngine/beamSearch/steadyStateScoring/candidatePool/placementFit 是“阵型推荐引擎”职责，`planner` 命名在此准确）；内部引用通用数据时用新名。
    - 执行时全面搜索 `Planner`/`planner` 残留，逐个评估：通用符号去前缀，专属模块保留。阶段 1 的 1.4-1.8/1.11 涵盖函数/文件/JSON 改名。
-9. **模拟/UI 分离 + JSON 输出契约（第4轮审计）**：引擎纯 domain 零 UI 依赖（本就就绪）；补输出契约——`ScoringResult`/`PlannerResult` 增结构化 `breakdown`（`SimulationBreakdown`：baseDps/factors/pools/contributions），删死字段 `explanations`/`objective` 与死文件 `objectiveModel.ts`；新增 `evaluateFormation` 纯入口（评估指定阵型，与 `buildPlannerRecommendation` 共用 `resolvePlannerScenario`）；`scripts/simulator/simulate.ts` + `npm run simulate` CLI 证明"丢 UI 输出 JSON"。详见 `development-design-simulator.md`「模拟/UI 分离与 JSON 输出契约」。
+9. **模拟/UI 分离 + JSON 输出契约（第4轮审计）**：引擎纯 domain 零 UI 依赖（本就就绪）；补输出契约——`ScoringResult`/`PlannerResult` 增结构化 `breakdown`（`SimulationBreakdown`：baseDps/factors/pools/contributions），删死字段 `objective` 与死文件 `objectiveModel.ts`（注：`explanations` 演进为结构化叙述行 `PlannerNarrativeLine[]`，是活字段而非死字段）；新增 `evaluateFormation` 纯入口（评估指定阵型，与 `buildPlannerRecommendation` 共用 `resolvePlannerScenario`）；`scripts/simulator/simulate.ts` + `npm run simulate` CLI 证明"丢 UI 输出 JSON"。详见 `development-design-simulator.md`「模拟/UI 分离与 JSON 输出契约」。
 
 ## 设计修正要点
 

@@ -42,29 +42,24 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 - `formationSaves[]`：layout id、slot placements、specializations、feats、familiars、scenario relation
 - `warnings[]`：缺字段、未知字段、无法映射的阵型或效果
 
-`SimulationChampionProfile`：
+`ResolvedHeroAbilityProfile`（`src/domain/abilities/abilityModel.ts`）：
 
-- public champion summary、localized name、seat、tags、roles、ability scores
-- upgrades、specialization unlock levels、feats、loot、legendary effects
-- raw effect strings 和 `unsupportedEffects`
-- 可解释文本来源，用于 result explanation
+- `heroId`、`name`、`seat`、`roles`、`tags`、`abilityScores`、`baseAttackDamageTypes`、`baseAttackCooldown`、`age`
+- `baseDamage`、`costCurves`、`baseHealth`、`healthCurves`（DPS/生存计算输入）
+- `carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`（能力信号与来源）
 
-`PlannerScenario`：
+`ResolvedPlannerScenarioModel`（`src/domain/planner/plannerModel.ts`）：
 
-- campaign/adventure/variant id
-- formation layout id、objective area、area set/location hints
-- restrictions、forced champions、banned champions、locked slots、escort slots
-- favor/blessing context、gold budget input
+- `variantId`、`scenarioRef`、`name`、`formationLayoutId`、`objectiveArea`
+- `slotTopology`（槽位 id/row/column/adjacentSlotIds）、`forcedHeroes`、`bannedHeroes`、`lockedSlots`、`occupiedSlotCount`
+- `allowedHeroes`/`allowedTags`（白名单）、`enemyTypes`（vulnerability 条件匹配）、`scenarioWarnings`
 
-`PlanResult`：
+`PlannerResult`（`src/domain/planner/recommendationTypes.ts`）：
 
-- `score: GameNumber`
-- `mainDpsChampionId`
-- `placements[]`
-- `assumptions[]`
-- `explanations[]`
-- `warnings[]`
-- `savePresetPayload`
+- `objectiveValue`（游戏记数法字符串；模式目标量：carry-dps=carryDps / team-gold=teamGoldFind）
+- `carryHeroId`、`placements`、`placementEntries`
+- `explanations`（`PlannerNarrativeLine[]` 叙述行）、`warnings`
+- `areaEstimate`（推图预估）、`breakdown`（`SimulationBreakdown` 结构化加成拆解）
 
 ## 官方只读 client
 
@@ -82,10 +77,11 @@ fetch 参数必须固定：
 
 数据库版本升级时新增：
 
-- `userProfileSnapshots`：key 使用 snapshot id 或固定 current key，保留最近一份当前快照。
+- `userProfileSnapshots`：固定 key `'current'`，保留最近一份同步快照（单快照覆盖写）。
 - `credentialVault`：仅在显式 opt-in 时保存；默认为空。
+- `heroAbilityOverrides`：浏览器本地能力语义覆盖（按英雄全局存储）。
 
-删除私人数据必须同时清理 snapshot、vault、sync status cache 和 planner 派生状态。页面应显示“当前私人数据存在 X 天”，不自动刷新。
+下游读用户画像须经显式数据源选择层（`userProfileSourceResolver`）：生产只走 `browser-sync`（读 IndexedDB `'current'` 快照）；本地开发可切 `local-dev-snapshot`（从 `tmp/private-user-data/` 实时构建，`persisted: false`，不写 IndexedDB、不覆盖生产 current key）。删除私人数据必须同时清理 snapshot、vault、sync status cache 和 planner 派生状态。页面应显示“当前私人数据存在 X 天”，不自动刷新。
 
 ## 隐私测试
 

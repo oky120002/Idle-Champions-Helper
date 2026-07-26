@@ -3,7 +3,7 @@
 - 当前状态：仓库已有 `planner` 页面、候选池、合法性、beam search 与基础评分雏形，但当前推荐仍偏向角色权重拼队，不等于真正的 C 位驱动站位推荐。
 - 边界：本文只定义纯算法与数据模型，不展开视觉稿、交互稿或逐帧战斗模拟。
 
-> 推荐与站位设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准（pool 聚合 + carryDps，无 score / heuristicRoleMultiplier / isCarryViable）；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
+> 推荐与站位设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准（pool 聚合 + carryDps；输出层字段 `objectiveValue` 取代旧 `score`，无 `heuristicRoleMultiplier` / `isCarryViable`）；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
 
 ## 1. 核心结论
 - 推荐目标不是整队总 DPS，而是**单一 C 位英雄的最终输出代理值**。

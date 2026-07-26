@@ -107,7 +107,7 @@ Planner 页面是工作台，不是 landing page。
 - scenario 区：variant 搜索、formation layout、限制摘要。
 - candidate 区：owned-only、all-hypothetical。
 - baseline 区：金币预算、最后专精状态、below-baseline warning。
-- result 区：Top 3-5，显示游戏记数法 score、slot assignments、核心解释和 unsupported warnings。
+- result 区：Top 3-5，显示游戏记数法目标值（`objectiveValue`）、slot assignments、核心解释和 unsupported warnings。
 - save 区：把有效结果保存到现有 formation preset。
 
 测试覆盖：

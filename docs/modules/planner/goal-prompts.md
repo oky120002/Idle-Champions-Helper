@@ -1,8 +1,8 @@
 # 阵型模拟器演进 goal 提示词（按里程碑）
 
-按 `evolution-plan.md` 的 16 阶段拆成 4 个里程碑 goal。每个 goal 设置后 Claude 从该里程碑的第一个未完成阶段开始推进，40 turns 后未完成则 stop，用 `claude --resume <session>` 或 `--continue` 恢复继续（goal 会恢复，回合数重置）。`evolution-plan.md` 的 `[ ]`/`[x]` 进度追踪是跨 session 衔接的唯一事实源。
+按 `evolution-plan.md` 的 17 阶段拆成 4 个里程碑 goal。每个 goal 设置后 Claude 从该里程碑的第一个未完成阶段开始推进，40 turns 后未完成则 stop，用 `claude --resume <session>` 或 `--continue` 恢复继续（goal 会恢复，回合数重置）。`evolution-plan.md` 的 `[ ]`/`[x]` 进度追踪是跨 session 衔接的唯一事实源。
 
-**执行顺序**：M2 → M3 → M4（M1 已完成；依赖链，不可跳）。每个 goal 复制对应代码块（含 `/goal`）粘贴到 Claude Code 即可。
+**状态**：M1-M4 + 阶段 17 自配评估页已全部完成；本文为按里程碑驱动的 /goal 提示词历史模板（依赖链 M2 → M3 → M4），供后续类似分阶段建设复用。
 
 **文档同步硬约束**：每个里程碑收口必须按 `evolution-plan.md` 的『文档同步硬约束』执行——改动全链路同步到所有引用受影响概念的架构文档与说明文档（步骤级 `[x]` 勾选 + 全文档 grep 修正陈旧引用 + 测试覆盖 + 收口验证），不只勾 evolution-plan 的 `[x]`。
 
