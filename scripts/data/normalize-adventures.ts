@@ -210,7 +210,7 @@ export interface NormalizedManualFormation {
 // hits_based/armor_based/static/flying 是伤害/移动机制，均不在 vulnerability 词表内。
 // 'boss' 不在此列——vulnerability 效果（increase_damage_against_monster_tag）以 'boss'
 // 为目标（hero-abilities 3 信号），enemyTypes 词表必须与 vulnerability 词表对齐，否则
-// boss vulnerability 信号在 steadyStateScoring 条件性匹配时永远命中不了（第十二轮审计修复）。
+// boss vulnerability 信号在 steadyStateScoring 条件性匹配时永远命中不了。
 const GENERIC_MONSTER_TAGS = new Set<string>([
   'melee',
   'ranged',

@@ -186,7 +186,7 @@ describe('normalizeTargetQualifier', () => {
   })
 
   it('exclude_heroes filter → NOT 英雄黑名单', () => {
-    // exclude_heroes 排除特定英雄（NOT 语义）。当前关联多为减益（M1 不处理），
+    // exclude_heroes 排除特定英雄（NOT 语义）。当前关联多为减益（不处理），
     // 修复保证语义正确，防未来减益处理时再丢失限定（与 hero_ids 对称）。
     const qualifier = normalizeTargetQualifier({
       filter_targets: [{ type: 'exclude_heroes', hero_ids: [27] }],

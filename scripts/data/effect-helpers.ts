@@ -211,7 +211,7 @@ const BUFF_UPGRADE_WRAPPER_KINDS = new Set<string>([
   'buff_upgrade_per_any_crusader_where_mult',
   'buff_upgrade_mult_by_distance_from_source',
   'buff_upgrade_mult_by_distance_from_source_mult',
-  // 阶段 8.2 top N 变体（复用既有 seed 模式）：
+  // top N 变体（复用既有 seed 模式）：
   'buff_upgrade_add_flat_amount',
   'buff_upgrade_add_then_mult',
   'buff_upgrade_per_any_tagged_crusader',
@@ -230,7 +230,7 @@ function isBuffUpgradeKind(kind: unknown): kind is string {
 }
 
 /**
- * crit effect 名 → (kind, amountFunc) 映射。阶段 4.2。
+ * crit effect 名 → (kind, amountFunc) 映射。
  * 默认暴击 chance/damage 由 crit_factor 公式（steadyStateScoring）应用，不在此处。
  */
 const CRIT_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
@@ -244,7 +244,7 @@ const CRIT_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: H
 }
 
 /**
- * survival effect 名 → (kind, amountFunc) 映射。阶段 5.1。
+ * survival effect 名 → (kind, amountFunc) 映射。
  * health/healing 折入 health multiplier（MVP：healing 近似为生命加成，survival 软约束）；
  * damage_reduction 单独 kind（玩家侧减伤，作用于 incoming damage）。
  */
@@ -261,7 +261,7 @@ const SURVIVAL_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFun
 }
 
 /**
- * vulnerability effect 名 → monsterTags 映射。阶段 6.2。
+ * vulnerability effect 名 → monsterTags 映射。
  * null = 无条件（对任意怪物生效）；数组 = 仅当场景 enemyTypes 含其中任一 tag 时生效。
  * increase_damage_against_monster_tag 的 tag 动态取自 args[1]，单独处理（| 为 OR，词表与 enemyTypes 一致）。
  */
@@ -273,7 +273,7 @@ const VULNERABILITY_MONSTER_TAGS_BY_EFFECT: Record<string, string[] | null> = {
 }
 
 /**
- * speed/cooldown effect 名 → (kind, amountFunc) 映射。阶段 7.1。
+ * speed/cooldown effect 名 → (kind, amountFunc) 映射。
  * attack_speed_mult/time_scale → attackSpeedMult（mult）；reduce_attack_cooldown → attackSpeedMult（add，
  * 减少攻击冷却=提速）；reduce_ultimate_cooldown/ability_cooldown_reduction_mult → cooldownReduction。
  */
@@ -368,7 +368,7 @@ function resolveBuffUpgradeSeed(entry: EffectEntry): BuffUpgradeSeed | null {
     return {}
   }
 
-  // 阶段 8.2：flat/add_then_mult 变体按 buff_upgrade 同构（magnitude 直接作用于 base）。
+  // flat/add_then_mult 变体按 buff_upgrade 同构（magnitude 直接作用于 base）。
   if (
     payload.kind === 'buff_upgrade_add_flat_amount'
     || payload.kind === 'buff_upgrade_add_then_mult'
@@ -616,8 +616,8 @@ function collectRawEffectEntries(detail: unknown): {
   }
 
   // feat effects（英雄专属固定能力）：与 loot/legendary 同结构（detail.feats[].effects[]），
-  // 同属 M1 理论最大 carryDps 基线；含 filter_targets/stack_func/per_hero_expr，由消费层
-  // attachSignalSemantics 统一处理。阶段 13「feat 精细乘数」指按玩家实际选择精算，
+  // 同属理论最大 carryDps 基线；含 filter_targets/stack_func/per_hero_expr，由消费层
+  // attachSignalSemantics 统一处理。「feat 精细乘数」指按玩家实际选择精算，
   // 不影响此处「全 feat 进理论基线」。
   for (const featRaw of asUnknownArray(detailRecord?.feats)) {
     const feat = asRecord(featRaw)
@@ -636,7 +636,7 @@ function collectRawEffectEntries(detail: unknown): {
     }
   }
 
-  // ability 源（阶段 14.4）：detail.ability.effects 已在 normalize 层完成 uptime 折算
+  // ability 源：detail.ability.effects 已在 normalize 层完成 uptime 折算
   // （value × min(1, duration/baseCooldown)，modron 满级 steady-state），此处按 effect_string 收集，
   // 消费层正常进对应 pool（global_dps/hero_dps/attack_speed/buff_upgrades）。
   const ability = asRecord(detailRecord?.ability)
@@ -863,7 +863,7 @@ function resolveHeroDpsPerTagged(ctx: EffectResolveContext): EffectSignalResult 
   }
 }
 
-// 阶段 2：DPS 池。global_dps_multiplier_mult → 全队；hero_dps_* → 英雄侧（carry/support 按 targeting）。
+// DPS 池。global_dps_multiplier_mult → 全队；hero_dps_* → 英雄侧（carry/support 按 targeting）。
 function resolveDpsSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
 
@@ -970,7 +970,7 @@ function resolveAdjacentSignal(ctx: Pick<EffectResolveContext, 'effectName' | 'n
   }
 }
 
-// 阶段 3.2：金币池（gold find 全队聚合 stat → globalGoldMultiplier）。
+// 金币池（gold find 全队聚合 stat → globalGoldMultiplier）。
 function resolveGoldSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
 
@@ -1011,19 +1011,19 @@ function resolveGoldSignal(ctx: EffectResolveContext): EffectSignalResult | null
   return null
 }
 
-// 阶段 4.2：暴击池（chance/damage 各 global/hero；默认值来自 default_crit_info，在 crit_factor 公式应用，不在解析层）。
+// 暴击池（chance/damage 各 global/hero；默认值来自 default_crit_info，在 crit_factor 公式应用，不在解析层）。
 function resolveCritSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = CRIT_KIND_BY_EFFECT[ctx.effectName]
   return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
 }
 
-// 阶段 5.1：survival 池（health/healing/damage_reduction）。
+// survival 池（health/healing/damage_reduction）。
 function resolveSurvivalSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = SURVIVAL_KIND_BY_EFFECT[ctx.effectName]
   return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
 }
 
-// 阶段 6.2：vulnerability 池（敌人侧受伤倍率，条件性按怪物 tag）。
+// vulnerability 池（敌人侧受伤倍率，条件性按怪物 tag）。
 function resolveVulnerabilitySignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, source, numericValue, rawEffect, effectMetadata } = ctx
 
@@ -1063,7 +1063,7 @@ function resolveVulnerabilitySignal(ctx: EffectResolveContext): EffectSignalResu
   return null
 }
 
-// 阶段 7.1：speed/cooldown 池（进 pool 供覆盖率与未来 ult/step-simulation 消费；7.2 决定不进 carryDps——
+// speed/cooldown 池（进 pool 供覆盖率与未来 ult/step-simulation 消费；7.2 决定不进 carryDps——
 // hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
 function resolveSpeedSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = SPEED_KIND_BY_EFFECT[ctx.effectName]
@@ -1189,7 +1189,7 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
 
         const targetSignal = targetSignalResult.signal
         // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
-        // 合并到 base 的 targetQualifier（AND），避免 wrapper 层 targeting 丢失（第四轮审计）。
+        // 合并到 base 的 targetQualifier（AND），避免 wrapper 层 targeting 丢失。
         const wrapperQualifier = normalizeTargetQualifier(entry.effect)
         const preset: HeroAbilitySignal = {
           ...targetSignal,

@@ -14,7 +14,7 @@ interface PlannerImportFormationProps {
 }
 
 /**
- * 推荐结果导入阵型编辑器（阶段 15.5）：写 recent formationDraft（复用 formationDraftStore），
+ * 推荐结果导入阵型编辑器：写 recent formationDraft（复用 formationDraftStore），
  * 跳转 /formation；编辑器启动时读 recent draft 提示恢复，落地为可继续编辑的阵型。
  */
 export function PlannerImportFormation({ result, layoutId, scenarioRef }: PlannerImportFormationProps) {

@@ -112,8 +112,8 @@ export interface HeroAbilitySignal {
   excludeSelf?: boolean
   unit?: HeroAbilityUnit
   /**
-   * vulnerability 信号的怪物类型条件（阶段 6）：`|` OR 拆分后的怪物 tag 列表。
-   * null = 无条件（对任意怪物生效）；非空 = 仅当场景 enemyTypes 含其中任一 tag 时生效（批判③ 条件性匹配）。
+   * vulnerability 信号的怪物类型条件：`|` OR 拆分后的怪物 tag 列表。
+   * null = 无条件（对任意怪物生效）；非空 = 仅当场景 enemyTypes 含其中任一 tag 时生效。
    */
   monsterTags?: string[] | null
 }
@@ -144,14 +144,14 @@ export interface HeroAbilityProfile {
   baseDamage: number
   /**
    * 升级 cost 曲线（来自 champion-details.costCurves，key 统一为 "1"）。
-   * levelCurve(level) = rate^level 近似 DPS 增长上界（ponytail，阶段 7 BUD 精确化）。
+   * levelCurve(level) = rate^level 近似 DPS 增长上界（ponytail，BUD 精确化）。
    */
   costCurves?: Record<string, number> | null
-  /** 基础生命值（来自 champion-details.baseHealth）。effectiveHealth 计算用（阶段 5 survival）。 */
+  /** 基础生命值（来自 champion-details.baseHealth）。effectiveHealth 计算用。 */
   baseHealth: number
   /**
    * 生命值成长曲线（来自 champion-details.healthCurves，key 统一为 "1"）。
-   * healthLevelCurve(level) = rate^level 近似生命增长（阶段 5 survival，与 costCurves 同构）。
+   * healthLevelCurve(level) = rate^level 近似生命增长。
    */
   healthCurves?: Record<string, number> | null
   carrySignals: HeroAbilitySignal[]

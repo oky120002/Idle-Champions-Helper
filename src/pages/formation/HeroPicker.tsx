@@ -14,7 +14,7 @@ export interface HeroPickerProps {
 }
 
 /**
- * 英雄选择器（阶段 16.1）：搜索 + 按 seat 分组 + 头像。
+ * 英雄选择器：搜索 + 按 seat 分组 + 头像。
  * - picker 模式（传 onChange）：英雄卡为 button，点击选择 + 未放置 + 选中态，供移动端 MobileEditor 使用。
  * - 拖拽源模式（省略 onChange）：英雄卡为 div + draggable 写 dataTransfer，供桌面槽位 drop 消费。
  * seat 标签复用 formatSeatLabel，与 FormationMobileEditor 等消费方一致。

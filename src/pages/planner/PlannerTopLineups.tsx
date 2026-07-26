@@ -11,7 +11,7 @@ interface PlannerTopLineupsProps {
 }
 
 /**
- * 候选阵型切换（阶段 15.2）：distinct-carry Top K 标签，点击切换结果卡片展示的阵型。
+ * 候选阵型切换：distinct-carry Top K 标签，点击切换结果卡片展示的阵型。
  * results ≤ 1 时不渲染（只有 top1 无需切换）。
  */
 export function PlannerTopLineups({ results, selectedIndex, championById, onSelect }: PlannerTopLineupsProps) {

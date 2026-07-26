@@ -13,7 +13,7 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
 // （npm run data:official）会刷新 game-rules.json；若上游改了这些规则，硬编码常量必须同步，
 // 否则 areaEstimation / modronInfo 用旧值。
 //
-// 守护策略（第十三轮审计补强：原仅采样 area 50 + 第一段 health，漏 spike 序列/分段边界）：
+// 守护策略：
 // 不采样，而是逐 area 验证「局部增长率」monsterStat(A)/monsterStat(A-1) 与 raw curve 一致。
 // 用 Decimal 比值避免大 area 量级溢出 number（比值是分段 rate，恒为小数）。
 // cwd-relative path：vitest 默认从仓库根运行。

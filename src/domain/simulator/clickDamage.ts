@@ -1,7 +1,7 @@
 import type { GameNumberValue } from './gameNumber'
 
 /**
- * Click damage 计算（阶段 14.1）。
+ * Click damage 计算。
  *
  * `click_damage = BUD × click_seconds`（派生自 BUD，MVP 近似）。
  *
@@ -9,7 +9,7 @@ import type { GameNumberValue } from './gameNumber'
  * power_curve:2.031}`（click 按层缩放，与怪物生命同构）；click 与 DPS/BUD 的秒数换算关系
  * （click_seconds）在当前 definitions 快照未找到对应字段，DEFAULT_CLICK_SECONDS=1 是 MVP 占位。
  *
- * 边界（用户明确）：click damage **不参与阵型评分/排序**，仅作辅助参考值展示（阶段 15 UI）。
+ * 边界（用户明确）：click damage **不参与阵型评分/排序**，仅作辅助参考值展示。
  * 绝对值依赖 BUD 实测校准（7.5）。
  */
 

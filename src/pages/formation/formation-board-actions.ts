@@ -46,7 +46,7 @@ export function buildFormationBoardActions({
         return next
       }
 
-      // 阶段 16.3：槽位间拖动原子清原 slot——hero 已在别处则清原位，避免同英雄重复占 seat。
+      // 槽位间拖动原子清原 slot——hero 已在别处则清原位，避免同英雄重复占 seat。
       const next = { ...current }
       for (const [existingSlotId, existingHeroId] of Object.entries(next)) {
         if (existingHeroId === championId && existingSlotId !== slotId) {

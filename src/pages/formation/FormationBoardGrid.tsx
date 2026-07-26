@@ -9,7 +9,7 @@ interface FormationBoardGridProps {
 }
 
 /**
- * 阵型编辑器棋盘（阶段 15.1 改组装）：复用 FormationBoardCanvas 做格子/头像渲染，
+ * 阵型编辑器棋盘：复用 FormationBoardCanvas 做格子/头像渲染，
  * 经 slotExtras 注入 formation 专属交互（移动端 tap-target + select 下拉 + 当前英雄卡）。
  */
 export function FormationBoardGrid({ model }: FormationBoardGridProps) {

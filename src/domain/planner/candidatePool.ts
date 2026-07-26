@@ -9,7 +9,7 @@ export interface CandidatePoolInput {
 }
 
 /**
- * 候选 hero id 列表（阶段 15.3）。
+ * 候选 hero id 列表。
  * - owned-only：仅本地已拥有英雄。
  * - all-hypothetical：全部英雄；未拥有者的 level/equipment 基线由 steadyStateScoring 的
  *   DEFAULT_CARRY_LEVEL 与默认装备兜底（= level 1 / 无装备），不在此重复表达。

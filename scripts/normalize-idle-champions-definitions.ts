@@ -67,7 +67,7 @@ function asRawArray(value: unknown): RawDefinition[] {
 }
 
 /**
- * 阶段 13：构建 loot-catalog（heroId, slotId, rarity → effectString）。
+ * 构建 loot-catalog（heroId, slotId, rarity → effectString）。
  * 从 raw loot_defines 提取 flat 跨 hero 索引——hero-abilities.json 的 loot signal 不携带
  * (slotId, rarity)，而 equipmentMult 需按 owned (slot, rarity) 选取；planner 运行时只载
  * hero-abilities，故另出单文件 catalog 供消费。champion-details.loot 同样保留 slotId/rarity，
@@ -168,7 +168,7 @@ function getUpdatedAt(rawDefinitions: RawDefinition): string {
 }
 
 /**
- * 从 game_changes 提取英雄限制（阶段 9.2）：
+ * 从 game_changes 提取英雄限制：
  * - force_use_heroes（{hero_ids:[N]}）→ forcedHeroIds
  * - only_allow_crusaders（{by_ids:{ids:[...]}, by_tags:{tags:"a|b"}}）→ allowedHeroIds + allowedTags（| 为 OR）
  * allowedHeroIds/allowedTags 仅在该变体含 only_allow_crusaders 时非空（hasAllowed 语义）。
@@ -362,7 +362,7 @@ export async function normalizeDefinitionsSnapshot(
   const localizedUpgradesById = buildIdMap(asRawArray(localizedDefinitions.upgrade_defines))
   const effectDefinitionsById = buildIdMap(asRawArray(rawDefinitions.effect_defines))
   const localizedEffectDefinitionsById = buildIdMap(asRawArray(localizedDefinitions.effect_defines))
-  // 阶段 14.4：ability_defines（ult/主动技能，id===hero_id 对齐）。
+  // ability_defines（ult/主动技能，id===hero_id 对齐）。
   const abilityDefinesById = buildIdMap(asRawArray(rawDefinitions.ability_defines))
   const featsByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.hero_feat_defines))
   const localizedFeatsById = buildIdMap(asRawArray(localizedDefinitions.hero_feat_defines))
@@ -632,7 +632,7 @@ export async function normalizeDefinitionsSnapshot(
     items: formations,
     updatedAt,
   })
-  // 阶段 13：loot-catalog（heroId, slotId, rarity → effect），供 equipmentMult 按玩家 owned rarity 选取装备效果。
+  // loot-catalog（heroId, slotId, rarity → effect），供 equipmentMult 按玩家 owned rarity 选取装备效果。
   // hero-abilities signal 不带 (slotId, rarity)，此处从 raw loot_defines 建 flat 跨 hero 索引（见 buildLootCatalog 注释）。
   const lootCatalog = buildLootCatalog(asRawArray(rawDefinitions.loot_defines))
   await writeJson(path.join(outputDir, 'loot-catalog.json'), {

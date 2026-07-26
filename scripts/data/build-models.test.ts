@@ -555,7 +555,7 @@ it('buildModels 产出 hero abilities / scenarios / semantic overrides', async (
   // all_slots / all 计数目标 = 全阵位计数（relation 'any'）；消费层 countQualifiedHeroes
   // 已支持 'any'（不计位置，只按 formationCountQualifier 计数）。
   // resolveCountRelation 曾因 relation==='any' 返回 null，导致全阵位 per_target_crusader
-  // effect 被静默丢弃——第六轮审计修复。
+  // effect 曾被静默丢弃（已修复）。
   expect(perTargetAllSlotsCarry?.kind).toBe('heroDpsMultiplier')
   expect(perTargetAllSlotsCarry?.stackFunc).toBe('per_target_crusader')
   expect(perTargetAllSlotsCarry?.formationCountPositionQualifier).toEqual({
@@ -871,9 +871,9 @@ it('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI �
   expect(normalizeEffectReference(null)).toBe(null)
 })
 
-it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 理论最大基线）', () => {
+it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，理论最大基线）', () => {
   // feat 是英雄专属固定能力（per-hero），其 global/hero_dps 加成应与 loot/legendary
-  // 一样进入 M1 理论最大 carryDps 基线；此前 collectRawEffectEntries 漏遍历 detail.feats，
+  // 一样进入理论最大 carryDps 基线；此前 collectRawEffectEntries 漏遍历 detail.feats，
   // 全库 568 个 supported DPS signal 被整体漏算。
   const detail = {
     upgrades: [],
@@ -901,9 +901,9 @@ it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 �
   expect(heroDpsEntry?.effect.filter_targets).toEqual([{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
 })
 
-it('collectEffectEntries 收集 ability effects（阶段 14.4 ult/主动技能，uptime 已在 normalize 折算）', () => {
+it('collectEffectEntries 收集 ability effects', () => {
   // detail.ability.effects 是 normalize 层折算后的 effect_string 列表（value × uptime）。
-  // collectRawEffectEntries 加第六源 'ability' 收集，与 loot/legendary/feat 同结构进 M1 基线。
+  // collectRawEffectEntries 加第六源 'ability' 收集，与 loot/legendary/feat 同结构进理论基线。
   const detail = {
     upgrades: [],
     loot: [],
@@ -920,7 +920,7 @@ it('collectEffectEntries 收集 ability effects（阶段 14.4 ult/主动技能�
   const abilityEntries = entries.filter((entry) => entry.sourceBucket === 'ability')
   const effectStrings = abilityEntries.map((entry) => entry.effectString).sort()
   expect(effectStrings).toEqual(['do_nothing', 'global_dps_multiplier_mult,0.8333333333333333'])
-  // duration/baseCooldown 随 entry.effect 流入（供消费层 modron gating，阶段 15 按玩家状态）。
+  // duration/baseCooldown 随 entry.effect 流入（供消费层 modron gating 按玩家状态）。
   const dpsEntry = abilityEntries.find((entry) => entry.effectString.startsWith('global_dps_multiplier_mult,'))
   expect(dpsEntry?.effect.duration).toBe(30)
   expect(dpsEntry?.effect.baseCooldown).toBe(3600)
@@ -1065,7 +1065,7 @@ it('collectEffectEntries static_dps_mult 不与可解析 effect 重复（防双�
 it('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
   // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
   // 此前 preset 只继承 base 的 targetQualifier，wrapper 自身 filter_targets 丢失。
-  // 真实样本：hero 82 的 buff_upgrades + hero_ids:[82]（第四轮审计）。
+  // 真实样本：hero 82 的 buff_upgrades + hero_ids:[82]。
   const detail = {
     upgrades: [
       { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
@@ -1098,7 +1098,7 @@ it('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 fi
   })
 })
 
-it('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () => {
+it('normalizeEffectSignal 解析 gold multiplier effect', () => {
   // gold_multiplier_mult → globalGoldMultiplier（全队金币池，supportSignals）
   const plain = normalizeEffectSignal('gold_multiplier_mult', '200', 'official-parsed', {}) as EffectSignalResultLike
   expect(plain.ok).toBe(true)
@@ -1128,7 +1128,7 @@ it('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () => 
   expect(bad.ok).toBe(false)
 })
 
-it('normalizeEffectSignal 解析 crit effect（阶段 4.2）', () => {
+it('normalizeEffectSignal 解析 crit effect', () => {
   // chance add → heroCritChance
   const chanceAdd = normalizeEffectSignal('buff_base_crit_chance_add', '35', 'official-parsed', {}) as EffectSignalResultLike
   expect(chanceAdd.ok).toBe(true)
@@ -1166,7 +1166,7 @@ it('normalizeEffectSignal 解析 crit effect（阶段 4.2）', () => {
   expect(bad.ok).toBe(false)
 })
 
-it('normalizeEffectSignal 解析 health/healing/damage_reduction effect（阶段 5.1）', () => {
+it('normalizeEffectSignal 解析 health/healing/damage_reduction effect', () => {
   const healthMult = normalizeEffectSignal('health_mult', '100', 'official-parsed', {}) as EffectSignalResultLike
   expect(healthMult.ok).toBe(true)
   expect(healthMult.signal.kind).toBe('heroHealthMultiplier')
@@ -1193,7 +1193,7 @@ it('normalizeEffectSignal 解析 health/healing/damage_reduction effect（阶段
   expect((normalizeEffectSignal('health_mult', 'bad', 'official-parsed', {}) as EffectSignalResultLike).ok).toBe(false)
 })
 
-it('normalizeEffectSignal 解析 vulnerability effect（阶段 6.2）', () => {
+it('normalizeEffectSignal 解析 vulnerability effect', () => {
   // 无条件 vulnerability
   const di = normalizeEffectSignal('damage_increase', '50', 'official-parsed', {}) as EffectSignalResultLike
   expect(di.ok).toBe(true)
@@ -1224,7 +1224,7 @@ it('normalizeEffectSignal 解析 vulnerability effect（阶段 6.2）', () => {
   expect((normalizeEffectSignal('damage_increase', 'bad', 'official-parsed', {}) as EffectSignalResultLike).ok).toBe(false)
 })
 
-it('normalizeEffectSignal 解析 speed/cooldown effect（阶段 7.1）', () => {
+it('normalizeEffectSignal 解析 speed/cooldown effect', () => {
   const atkSpeed = normalizeEffectSignal('base_attack_speed_mult', '20', 'official-parsed', {}) as EffectSignalResultLike
   expect(atkSpeed.signal.kind).toBe('attackSpeedMult')
   expect(atkSpeed.signal.amountFunc).toBe('mult')

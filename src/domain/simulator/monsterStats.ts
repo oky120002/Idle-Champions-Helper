@@ -73,7 +73,7 @@ function healthGrowthRateAt(area: number): number {
  * 怪物生命（按层数缩放）：`base_health × Π_{a=2..area} growth_rate(a)`。
  * 按分段常数增长率解析累积（避免逐层循环 2500 次）。
  *
- * 绝对值未与真实游戏实测对照（阶段 7.5 BUD 校准边界）；相对比较保序。
+ * 绝对值未与真实游戏实测对照；相对比较保序。
  */
 export function monsterHealthAt(area: number): GameNumberValue {
   const a = Math.max(1, Math.floor(area))
@@ -104,7 +104,7 @@ export function monsterHealthAt(area: number): GameNumberValue {
  * 怪物伤害（按层数缩放）：`base_dps × Π_{boss area ≤ area} spike`。
  * 非 boss 层增长率为 1（不贡献），仅 boss 层累乘 spike。
  *
- * 量纲缺口（第八轮审计）：raw 字段名为 `base_dps`/`dps_growth_rate_curve`，但 `base_speed`(=50)
+ * 量纲缺口：raw 字段名为 `base_dps`/`dps_growth_rate_curve`，但 `base_speed`(=50)
  * 语义未确认（per-second vs per-hit）。areaEstimation 的 survival 约束以此作为「怪物伤害随层数缩放」
  * 近似；精确单次伤害判据需 base_speed 语义确认后派生 monsterDamagePerHitAt。
  */

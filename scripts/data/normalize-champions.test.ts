@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest'
 
 import { normalizeChampionAbility } from './normalize-champions'
 
-// 阶段 14.4：ability_defines（ult/主动技能）提取 + uptime 折算。
+// ability_defines（ult/主动技能）提取 + uptime 折算。
 // ability_defines 的 id === hero_id 对齐；effect 三形态（裸 string / JSON 串 / effect_def,N 引用）。
 // uptime = duration/baseCooldown（modron 满级 steady-state），value × uptime 预折算进 effect_string。
 
-describe('normalizeChampionAbility（阶段 14.4 ult/主动技能）', () => {
+describe('normalizeChampionAbility', () => {
   it('裸 string effect 按 uptime 折算 value（Wild Shape）', () => {
     const ability = normalizeChampionAbility(
       { id: 10, duration: 30, base_cooldown: 3600, effect: 'hero_dps_multiplier_mult,1' },

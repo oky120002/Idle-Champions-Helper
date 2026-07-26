@@ -12,7 +12,7 @@ const validDetail = {
   upgrades: [],
 }
 
-it('championDetailsSchema 接受合法核心字段（阶段 9.3）', () => {
+it('championDetailsSchema 接受合法核心字段', () => {
   expect(championDetailsSchema.safeParse(validDetail).success).toBe(true)
 })
 

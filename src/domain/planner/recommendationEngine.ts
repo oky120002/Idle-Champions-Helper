@@ -39,7 +39,7 @@ function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
     .map((slot) => slot.slotId)
 }
 
-/** scenario.slotTopology → FormationSlot[]（阶段 15.1 棋盘渲染需要的 id/row/column）。 */
+/** scenario.slotTopology → FormationSlot[]。 */
 function toFormationSlots(scenario: ResolvedPlannerScenarioModel): FormationSlot[] {
   return scenario.slotTopology.map((slot) => ({
     id: slot.slotId,
@@ -156,7 +156,7 @@ function buildPlannerExplanations(
 export interface PlannerRecommendationOptions {
   scoringMode?: ScoringMode
   /**
-   * 候选范围（阶段 15.3）；默认 owned-only。
+   * 候选范围；默认 owned-only。
    * owned-only = 仅本地已拥有英雄；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）。
    * hypothetical 候选的装备精确化由 equipmentAdjustmentByHero（13.4）负责。
    */
@@ -172,20 +172,20 @@ export interface PlannerRecommendationOptions {
    * 越大越精确越慢；UI 不暴露，供 CLI/测试/调优覆盖。
    */
   beamWidth?: number
-  /** 阶段 15.4：强制指定核心输出位英雄（结果 carryHeroId 与之一致）。 */
+  /** 强制指定核心输出位英雄（结果 carryHeroId 与之一致）。 */
   lockedCarryHeroId?: string | null
-  /** 阶段 15.4：用户锁定槽位（slotId→heroId，预填且不被搜索替换）。 */
+  /** 用户锁定槽位（slotId→heroId，预填且不被搜索替换）。 */
   lockedSlots?: Record<string, string>
   /**
-   * 全局 buff pool 乘数（阶段 11.4：patron-perk）。
+   * 全局 buff pool 乘数。
    * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入；
-   * 默认 1（无全局加成）。UI 接入（patron 选择）在阶段 15。
+   * 默认 1（无全局加成）。patron 选择由 UI 接入。
    */
   globalBuffMultiplier?: number
   /**
-   * 装备调整比（阶段 13.4）：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
+   * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
    * 由调用方从 `loot-catalog.json` + owned loot 经 computeEquipmentAdjustment 解析后传入；
-   * 默认无（=1，保持 M1 理论 loot 基线）。UI 接入（owned 装备读取）在阶段 15。
+   * 默认无（=1，保持 理论 loot 基线）。UI 接入（owned 装备读取）在
    */
   equipmentAdjustmentByHero?: Map<string, number>
 }
@@ -373,7 +373,7 @@ export function buildPlannerRecommendation(
       allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
     }),
   )
-  // 阶段 9.2：only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
+  // only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
   const allowedHeroSet = new Set(scenario.allowedHeroes)
   const allowedTagSet = new Set(scenario.allowedTags)
   const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
@@ -477,7 +477,7 @@ export function buildPlannerRecommendation(
     },
   })
 
-  // 阶段 15.2：distinct-carry Top K。beamSearch 已按 carryDps 降序；先过滤非法（score≤0），
+  // distinct-carry Top K。beamSearch 已按 carryDps 降序；先过滤非法（score≤0），
   // 再按 carryHeroId 去重（每个 carry 取最高分阵型），取前 PLANNER_TOP_K 作为多阵型输出。
   const legal = results.filter((result) => compareGameNumbers(result.objectiveValue, SCORE_ZERO) > 0)
   const bestByCarry = new Map<string, (typeof legal)[number]>()

@@ -60,7 +60,7 @@ interface ScenarioModel {
   allowedHeroes: unknown[]
   allowedTags: unknown[]
   scenarioWarnings: string[]
-  /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析，阶段 12）。 */
+  /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析）。 */
   occupiedSlotCount: number
 }
 
@@ -249,7 +249,7 @@ function buildOfficialScenarioModel(
   const allowedHeroIds = asArray(variant.allowedHeroIds)
   const allowedTags = asArray(variant.allowedTags)
 
-  // 阶段 12：restrictions 文本模板匹配 → slot-occupying 格数 + 未解析 warning。
+  // restrictions 文本模板匹配 → slot-occupying 格数 + 未解析 warning。
   const restrictionTexts = restrictions.map((raw) => {
     const item = asRecord(raw) ?? {}
     const original = typeof item.original === 'string' ? item.original : ''
@@ -387,7 +387,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     updatedAt,
   })
 
-  // 阶段 11.3：patron-perk 全局加成 → global-buffs.json（per-patron patronPerkMult signals）
+  // patron-perk 全局加成 → global-buffs.json（per-patron patronPerkMult signals）
   const patronPerksRaw = await readJson(path.join(versionDir, 'patron-perks.json')).catch(() => ({ perks: [] }))
   const patronPerksRecord = asRecord(patronPerksRaw) ?? {}
   const patronPerkItems = asArray(patronPerksRecord.perks) as Array<Record<string, unknown>>

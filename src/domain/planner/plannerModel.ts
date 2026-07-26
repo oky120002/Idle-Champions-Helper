@@ -31,14 +31,14 @@ export interface OfficialPlannerScenarioModel {
   bannedHeroes: string[]
   lockedSlots: string[]
   scenarioWarnings: string[]
-  /** 场景怪物类型（来自 variant.enemyTypes），供 vulnerability 条件性匹配（阶段 6）。 */
+  /** 场景怪物类型（来自 variant.enemyTypes），供 vulnerability 条件性匹配。 */
   enemyTypes: string[]
-  /** 白名单英雄 id（game_change only_allow_crusaders.by_ids；空=不限，阶段 9.2）。 */
+  /** 白名单英雄 id（game_change only_allow_crusaders.by_ids；空=不限）。 */
   allowedHeroes: string[]
-  /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=不限，阶段 9.2）。 */
+  /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=不限）。 */
   allowedTags: string[]
   /**
-   * 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 文本解析，阶段 12）。
+   * 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 文本解析）。
    * 与 mechanics lockedSlots 是两个来源描述同一批被占格子；formation 搜索可用容量 =
    * slotTopology.length − max(occupiedSlotCount, lockedSlots.length)（见 recommendationEngine）。
    */

@@ -1,5 +1,5 @@
 /**
- * Ult/主动技能 buff 的 modron uptime 折算（阶段 14.4）。
+ * Ult/主动技能 buff 的 modron uptime 折算。
  *
  * ability_defines（10 条，id===hero_id 对齐）含 carryDps signal（Commander 全队 DPS ×2、
  * Pact Weapon hero_dps、Cunning Action attack_speed、Channel Divinity buff_upgrades 等）。

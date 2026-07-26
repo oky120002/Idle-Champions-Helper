@@ -57,7 +57,7 @@ describe('computeEquipmentMult', () => {
 })
 
 describe('computeTheoreticalLootMult', () => {
-  it('全 rarity 累加 = M1 理论上界（所有 slot 所有 rarity 求和）', () => {
+  it('全 rarity 累加 = 理论上界（所有 slot 所有 rarity 求和）', () => {
     // HERO1_CATALOG: slot1 (10+65+120+230) + slot2 (10+230) = 425 + 240 = 665 → 1 + 6.65 = 7.65
     const theoretical = computeTheoreticalLootMult('1', HERO1_CATALOG)
     expect(theoretical).toBeCloseTo(1 + 665 / 100, 5)

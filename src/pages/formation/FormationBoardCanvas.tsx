@@ -5,7 +5,7 @@ import { useI18n } from '../../app/i18n'
 import type { Champion, FormationSlot } from '../../domain/types'
 
 /**
- * 阵型棋盘纯渲染（阶段 15.1 抽取）。
+ * 阵型棋盘纯渲染。
  *
  * 只负责格子布局 + 已放置英雄头像/seat/carry 标记；交互控件（select/tap-target/拖放）
  * 由调用方经 `slotExtras` 注入，使 formation 编辑器与 planner 结果卡片共用同一棋盘。
@@ -25,7 +25,7 @@ export interface FormationBoardCanvasProps {
   slotExtras?: (slot: FormationSlot, champion: Champion | null) => ReactNode
   /** 每槽位追加的 className（conflict/active 等状态修饰）。 */
   slotClassName?: (slot: FormationSlot, champion: Champion | null) => string | undefined
-  /** 阶段 16.2：槽位 drop 回调（HTML5 DnD）；planner 只读棋盘不传。 */
+  /** 槽位 drop 回调（HTML5 DnD）；planner 只读棋盘不传。 */
   onSlotDrop?: (slotId: string, event: DragEvent<HTMLDivElement>) => void
 }
 
@@ -42,7 +42,7 @@ export function FormationBoardCanvas({
   onSlotDrop,
 }: FormationBoardCanvasProps) {
   const { t, locale } = useI18n()
-  // 阶段 16.5：桌面 DnD 时高亮当前 dragover 槽位，给用户「可放在这里」的视觉反馈。
+  // 桌面 DnD 时高亮当前 dragover 槽位，给用户「可放在这里」的视觉反馈。
   // dragOver 持续触发，只在 slot 变化时 setState 避免高频渲染；dragEnd（拖出/松开）兜底清除。
   const [dragOverSlotId, setDragOverSlotId] = useState<string | null>(null)
 

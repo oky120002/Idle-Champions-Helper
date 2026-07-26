@@ -9,7 +9,7 @@ interface PlannerCarryLockProps {
 }
 
 /**
- * 指定核心输出位（阶段 15.4）：列出所有英雄（不限 dps 角色），选中后 engine 强制该英雄作 carry。
+ * 指定核心输出位：列出所有英雄（不限 dps 角色），选中后 engine 强制该英雄作 carry。
  */
 export function PlannerCarryLock({ championById, value, onChange }: PlannerCarryLockProps) {
   const { t, locale } = useI18n()

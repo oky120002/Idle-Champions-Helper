@@ -644,7 +644,7 @@ describe('normalize-idle-champions-definitions', () => {
       },
     ])
     expect(variants.items[0]?.enemyCount).toBe(3)
-    // 'boss' 保留在 enemyTypes：vulnerability 效果以 boss 为目标，词表须对齐（第十二轮审计）。
+    // 'boss' 保留在 enemyTypes：vulnerability 效果以 boss 为目标，词表须对齐。
     expect(variants.items[0]?.enemyTypes).toEqual(['humanoid', 'bandit', 'boss', 'undead'])
     expect(variants.items[0]?.enemyTypeCounts).toEqual({
       humanoid: 2,

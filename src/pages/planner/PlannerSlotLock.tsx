@@ -12,7 +12,7 @@ interface PlannerSlotLockProps {
 }
 
 /**
- * 锁槽（阶段 15.4）：对当前结果已填充的槽位逐个锁定/解锁，锁定的 slot→heroId 预填且不被搜索替换。
+ * 锁槽：对当前结果已填充的槽位逐个锁定/解锁，锁定的 slot→heroId 预填且不被搜索替换。
  */
 export function PlannerSlotLock({
   slots,

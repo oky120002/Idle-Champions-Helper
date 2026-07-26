@@ -598,7 +598,7 @@ export function normalizeChampionVisual(
 }
 
 /**
- * 阶段 14.4：英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。
+ * 英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。
  * effect 三形态：裸 string、JSON 串（'{"effect_string":"..."}'）、effect_def,N 引用（展开 effect_defines[N].effect_keys）。
  */
 export interface ChampionAbility {
@@ -651,10 +651,10 @@ function foldEffectValueByUptime(effectString: string, uptime: number): string {
 }
 
 /**
- * 提取 ability_defines → champion-details.ability（阶段 14.4）。
+ * 提取 ability_defines → champion-details.ability。
  * uptime = duration/baseCooldown（modron 满级自动施放 steady-state）；value × uptime 预折算进 effect_string，
  * 消费层（collectRawEffectEntries 'ability' 源）直接收折算后串进 pool（global_dps/hero_dps/attack_speed/buff_upgrades）。
- * 无 modron 降级留消费层（阶段 13/15 按玩家状态）。
+ * 无 modron 降级留消费层。
  */
 export function normalizeChampionAbility(
   abilityDefine: RawDefinition | undefined,
@@ -706,7 +706,7 @@ export interface ChampionDetail {
   skins: ChampionSkin[]
   loot: ChampionLoot[]
   legendaryEffects: LegendaryEffect[]
-  /** 阶段 14.4 英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。 */
+  /** 英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。 */
   ability: ChampionAbility | null
   raw: {
     hero: RawSnapshotPair

@@ -9,7 +9,7 @@ export interface BeamSearchInput {
   slots: string[]
   beamWidth: number
   scoreFormation: (placements: Record<string, string>) => ScoringResult
-  /** 阶段 15.4：用户锁定的预填槽位（slotId→heroId），初始 candidate 已占用且不被搜索替换。 */
+  /** 用户锁定的预填槽位（slotId→heroId），初始 candidate 已占用且不被搜索替换。 */
   lockedPlacements?: Record<string, string>
 }
 

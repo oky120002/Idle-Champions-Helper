@@ -3,7 +3,7 @@ import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 import { MAX_AREA, monsterDpsAt, monsterHealthAt } from '../simulator/monsterStats'
 
 /**
- * 推图层数预估（阶段 10.2）。
+ * 推图层数预估。
  *
  * 估算「能推到第几层」：在 IC 中，击杀怪物需要 BUD ≥ 怪物生命（单次最高伤害 ≥ 血量）；
  * 存活需要英雄有效生命能覆盖怪物伤害。两者取交集：
@@ -16,14 +16,14 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from '../simulator/monsterSta
  *
  * 怪物 stats 缩放见 `src/domain/simulator/monsterStats.ts`（数据源 §10.1）。
  *
- * 量纲缺口（第八轮审计）：`monsterDamageAt` 当前由 `monsterDpsAt` 担任（raw `base_dps` +
+ * 量纲缺口：`monsterDamageAt` 当前由 `monsterDpsAt` 担任（raw `base_dps` +
  * `dps_growth_rate_curve`）。raw 字段名为 dps，但 `base_speed`(=50) 语义未确认
  * （per-second vs per-hit），survival 的精确判据是单次伤害
  * （incomingDamagePerHit）。故 survival 当前以「怪物伤害随层数缩放」近似——绝对值未校准
- * （继承 7.5 边界），精确的单次伤害判据需 base_speed 语义确认后补 monsterDamagePerHitAt。
+ * （继承 BUD 校准边界），精确的单次伤害判据需 base_speed 语义确认后补 monsterDamagePerHitAt。
  *
- * 绝对值边界（第六轮审计）：carryDps/BUD 绝对值未与真实游戏实测对照，预估的「第 X 层」
- * 依赖阶段 7.5 BUD 实测校准才闭环；调用方须向用户标注「未校准」。相对比较（高 BUD → 高层数）保序。
+ * 绝对值边界：carryDps/BUD 绝对值未与真实游戏实测对照，预估的「第 X 层」
+ * 依赖 BUD 实测校准才闭环；调用方须向用户标注「未校准」。相对比较（高 BUD → 高层数）保序。
  */
 
 export type AreaBound = 'bud' | 'survival' | 'max-area'

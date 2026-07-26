@@ -181,7 +181,7 @@ describe('steady state scoring', () => {
 
   it('gold 维度 signal 不泄漏进 carryDps（dimension 过滤）', () => {
     // 3.0 前置：scoreFormation 对 carryDps 聚合必须显式传 dimension:'damage'，
-    // 否则阶段 3 引入的 gold pool 会乘进 carryDps。global gold 是全队池，不作用于伤害。
+    // 否则引入的 gold pool 会乘进 carryDps。global gold 是全队池，不作用于伤害。
     const carry = createHero('carry', { seat: 1, baseDamage: 1 })
     const goldSupport = createHero('gold-finder', {
       seat: 2,
@@ -329,7 +329,7 @@ describe('steady state scoring', () => {
   })
 
   it('多个 add 类 vulnerability 同 pool 相加而非累乘（6.4 pool 语义）', () => {
-    // 回归（第八轮审计）：vulnerability 的 add 类信号（amountFunc 缺省=add）必须同 pool
+    // 回归：vulnerability 的 add 类信号（amountFunc 缺省=add）必须同 pool
     // 相加 (1+Σadd/100)，与 damage/gold/health pool 聚合一致。原 computeVulnerabilityFactor
     // 一律 Π 累乘，把两个 +100% 易伤算成 2×2=4（正确 1+(100+100)/100=3），高估 carryDps。
     const carry = createHero('carry', { seat: 1, baseDamage: 10 })

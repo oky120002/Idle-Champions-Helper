@@ -12,7 +12,7 @@ const MODES: Array<{ id: CandidateMode; zh: string; en: string }> = [
 ]
 
 /**
- * 候选范围选择器（阶段 15.3）。
+ * 候选范围选择器。
  * owned-only = 仅本地已拥有；all-hypothetical = 所有英雄（未拥有走 hypotheticalBaseline 假设）。
  * 复用 planner-scoring-mode 样式保持视觉一致。
  */

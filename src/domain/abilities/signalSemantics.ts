@@ -84,7 +84,7 @@ function heroIdsToPredicate(heroIds: unknown, negate: boolean): HeroPredicateAST
 
 // 合并两个 HeroQualifier（AND 语义）：null 取另一个，同结构去重。
 // buff_upgrade wrapper 派生时合并 base 的 targetQualifier 与 wrapper 自身 filter_targets，
-// 避免 wrapper 层 targeting 丢失（第四轮审计：hero 82 buff_upgrades + hero_ids）。
+// 避免 wrapper 层 targeting 丢失。
 export function mergeHeroQualifiers(
   left: HeroQualifier | null,
   right: HeroQualifier | null,

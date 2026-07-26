@@ -4,14 +4,14 @@ import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { GameNumberValue } from './gameNumber'
 
 /**
- * 生存（survival）计算。阶段 5.2。
+ * 生存（survival）计算。
  *
  * effectiveHealth = baseHealth × healthLevelCurve(level) × healthPoolMultiplier。
  * - healthPoolMultiplier 由 placementFit 按 dimension:'survival' 聚合 health/healing signal
  *   （不含 damage_reduction；damage_reduction 是玩家侧减伤，单独作用于 incoming damage）。
  * - healthLevelCurve 用 healthCurves["1"]^level 近似（与 costCurves 同构，ponytail MVP 近似）。
  *
- * survival 作为推图约束（阶段 5.3 / 10）：推图层数预估（areaEstimation）拿 effectiveHealth
+ * survival 作为推图约束：推图层数预估（areaEstimation）拿 effectiveHealth
  * 与怪物伤害二分求 survivableArea。绝对值未校准（怪物伤害用 dps 近似单次伤害，见 areaEstimation）。
  */
 const DEFAULT_HEALTH_CURVE_RATE = 1.06

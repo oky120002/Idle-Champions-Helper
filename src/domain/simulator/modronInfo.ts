@@ -1,9 +1,9 @@
 /**
- * Modron 辅助信息（阶段 14.3）。
+ * Modron 辅助信息。
  *
  * 来源：`game_rule_defines.max_modron_auto_reset_area`（area: 2500）。
  *
- * 边界：modron 信息仅作辅助参考值展示（阶段 15 UI）。
+ * 边界：modron 信息仅作辅助参考值展示。
  * `max_modron_auto_reset_area` = modron 自动重置层数上限；建议 reset 设在
  * min(阵型预估最大层数, modron cap)——超过阵型上限会卡层，低于则浪费推图能力。
  */
@@ -24,7 +24,7 @@ export interface ModronResetSuggestion {
 
 /**
  * 计算 modron 重置建议。
- * `estimatedMaxArea` 来自 areaEstimation（阶段 10）。
+ * `estimatedMaxArea` 来自 areaEstimation。
  */
 export function computeModronResetSuggestion(estimatedMaxArea: number): ModronResetSuggestion {
   const area = Math.max(1, Math.floor(estimatedMaxArea))

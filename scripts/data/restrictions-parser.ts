@@ -4,7 +4,7 @@
  * 数据源：`variants.json.items[].restrictions: Array<{original, display}>`（双语自由文本）。
  * 评估结论：`docs/modules/planner/data-source-confirmations.md` §12.1。
  *
- * 不用 NLP（批判③），纯关键词模板。只解析高价值 slot-occupying 模式（→ lockedSlotCount）；
+ * 不用 NLP，纯关键词模板。只解析高价值 slot-occupying 模式（→ lockedSlotCount）；
  * flavor 文本 / 完成前置 / 变量递增版不匹配 → warning（12.3 手工补 semantic-overrides.json）。
  * champion-tag 限制（"Only Evil Champions"）已被 mechanics 结构化捕获，不在此重复解析。
  */
@@ -79,7 +79,7 @@ function tokenToNumber(token: string): number | null {
 
 /**
  * 手工补：模板漏匹配但格数确定的 restriction（具名列表 / "of the" 间隔 / "additional" 等）。
- * 阶段 12.3——低频变体手工校验后补录；新增条目时核对 in-game 占格数。
+ * 低频变体手工校验后补录；新增条目时核对 in-game 占格数。
  * key = original 文本的唯一子串（大小写不敏感）；value = 占格数。
  *
  * 排序约定：更具体的 match 排前——matchOverride 取首个命中，泛化子串须排在特化子串之后，
@@ -91,7 +91,7 @@ const RESTRICTION_OVERRIDES: ReadonlyArray<{ match: string; count: number }> = [
   { match: 'two frightened villagers', count: 2 }, // 文本 "take up additional slots"，非 "up slots" 紧邻，回退不触发
   { match: 'two of the slots in your formation are cursed', count: 2 },
   { match: 'a monodrone and a duodrone', count: 2 }, // variant 430：具名实体无显式数词，回退无匹配
-  // 第十轮审计：模板漏匹配的非英雄占格（措辞超出模板：动词变位 takes/taking up、
+  // 模板漏匹配的非英雄占格（措辞超出模板：动词变位 takes/taking up、
   // number 与 slots 间插 formation、"take up space" 无 slots、具名实体无数词）。
   // 注意区分 NPC 占格（本块）vs 英雄 forcedHeroes（不在此计）：
   //   - v682 Rudolph + Ireena 是 NPC（forcedHeroes 空）→ 2；v1977/78/79 Rudolph 是英雄（forcedHeroes=[177]）→ 不匹配。
@@ -142,7 +142,7 @@ function zhSlotOccupyCount(text: string): number | null {
   }
   // 变量递增版（随区域重复占据新格，计数增长）不产生确定格数（保守交手工补）。
   // 须先排除位置轮换（固定 N 格换位置，计数不变）——否则 v241「两格...每经过 N 区域改变位置」
-  // 会被「每经过」误判为递增（第十轮审计：初版仅匹配每经过致 v241/v419/v137 固定计数被误清零）。
+  // 会被「每经过」误判为递增。
   if (ZH_AREA_INCREMENT_RE.test(text) && !ZH_POSITION_ROTATION_RE.test(text)) {
     return null
   }

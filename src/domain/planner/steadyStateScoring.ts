@@ -31,18 +31,18 @@ export interface ScoringInput {
   heroLevels?: Map<string, number>
   scoringMode?: ScoringMode
   /**
-   * 全局 buff pool 乘数（阶段 11.4：patron-perk 等）。
+   * 全局 buff pool 乘数。
    * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入。
    * 默认 1（无全局加成）；乘进 carryDps：baseDps × levelCurve × damagePool × crit × vuln × globalBuff。
    */
   globalBuffMultiplier?: number | undefined
   /**
-   * 装备调整比（阶段 13.4）：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
-   * 把 M1 理论 loot 基线缩放到玩家实际装备；默认无（=1，保持理论基线）。
+   * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
+   * 把理论 loot 基线缩放到玩家实际装备；默认无（=1，保持理论基线）。
    * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustment 解析后传入。
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
-  /** 阶段 15.4：强制指定 carry（只评该英雄作核心输出位）。 */
+  /** 强制指定 carry（只评该英雄作核心输出位）。 */
   lockedCarryHeroId?: string | undefined
 }
 
@@ -97,7 +97,7 @@ export interface ScoringResult {
   /** best carry 的 active signal kind 集合，供叙事层结构化消费（避免字符串匹配）。 */
   activeSignalKinds: Set<HeroAbilityKind>
   /**
-   * 推图层数预估（阶段 15.2）：best carry 的 BUD（carry 单次伤害近似）+ effectiveHealth（survival pool）
+   * 推图层数预估：best carry 的 BUD（carry 单次伤害近似）+ effectiveHealth（survival pool）
    * 经 estimateMaxArea 得出。team-gold 模式或缺 carry 时为 null。
    */
   areaEstimate?: AreaEstimationResult | null
@@ -150,10 +150,10 @@ const CRIT_CHANCE_KINDS: ReadonlySet<HeroAbilityKind> = new Set<HeroAbilityKind>
 ])
 
 /**
- * crit_factor（阶段 4.3/4.4）：1 + total_chance × (total_damage_mult − 1)，基线归一化。
+ * crit_factor：1 + total_chance × (total_damage_mult − 1)，基线归一化。
  * - 无 crit signal → 1.0（base crit 在归一中抵消，保持非 crit 阵型 carryDps 不变）。
  * - base chance(2.5%) 始终参与，使「纯 damage buff」类 crit signal 有效（否则 chance=0 无暴击）。
- * - ponytail/BUD 局限：crit 期望值在 BUD 机制下低估（批判③），MVP 可接受；绝对值偏差由归一基线吸收。
+ * - ponytail/BUD 局限：crit 期望值在 BUD 机制下低估，MVP 可接受；绝对值偏差由归一基线吸收。
  */
 function computeCritFactor(parts: PlacementFitScorePart[]): number {
   let chanceAddPercent = 0
@@ -196,8 +196,8 @@ function computeCritFactor(parts: PlacementFitScorePart[]): number {
 }
 
 /**
- * vulnerability factor（阶段 6.3/6.4）：已按场景怪物类型匹配的 vulnerability 进 DPS。
- * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成（批判③ 条件性匹配，保守跳过不匹配）。
+ * vulnerability factor：已按场景怪物类型匹配的 vulnerability 进 DPS。
+ * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成。
  * 聚合与 damage/gold pool 一致：add 类（amountFunc 缺省）同 pool 百分比相加 (1+Σadd/100)，
  * mult 类独立累乘；pool 内 (1+Σadd/100)×Πmult。原一律 Π 累乘把两个 +100% 易伤算成 4（正确 3）。
  */
@@ -353,7 +353,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           if (!part.active) {
             continue
           }
-          // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入（批判③ 保守跳过不匹配）。
+          // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入。
           const tags = part.monsterTags
           if (tags && tags.length > 0 && !tags.some((tag) => enemyTypeSet.has(tag))) {
             continue
