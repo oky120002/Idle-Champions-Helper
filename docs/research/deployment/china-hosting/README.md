@@ -5,4 +5,4 @@
 ## 先读哪篇
 
 - 当前决策、候选方案和备案判断：`docs/research/deployment/china-hosting/decision-and-options.md`
-- 国内访问优化与决策记录：`docs/research/deployment/china-hosting/phased-rollout.md`
+- 国内访问优化与决策记录：`docs/research/deployment/china-hosting/access-optimization.md`

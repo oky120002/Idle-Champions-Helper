@@ -5,4 +5,4 @@
 ## 先读哪篇
 
 - 主表 / 皮肤表 / 图像字段与 SkelAnim 资源边界：`docs/research/data/pet-catalog/source-fields-and-assets.md`
-- 获取方式归类和仓库实现建议：`docs/research/data/pet-catalog/acquisition-and-repo-plan.md`
+- 获取方式归类和仓库实现建议：`docs/research/data/pet-catalog/acquisition-and-implementation.md`
