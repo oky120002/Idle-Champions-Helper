@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import type { PlannerRecommendationBlocker } from '../domain/planner/recommendationTypes'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
@@ -54,6 +55,8 @@ function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnT
 
 export function PlannerPage() {
   const { t } = useI18n()
+  const navigate = useNavigate()
+  const location = useLocation()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
   const {
     candidateMode,
@@ -107,6 +110,28 @@ export function PlannerPage() {
                 zh: '基于本地用户数据推荐最优阵型',
                 en: 'Recommend optimal formations based on local user data',
               }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: [
+                {
+                  id: 'open-evaluate',
+                  kind: 'button',
+                  label: t({ zh: '自配评估', en: 'Evaluate' }),
+                  title: t({ zh: '自摆阵型看核心英雄 DPS', en: 'Place champions and see carry DPS' }),
+                  tone: 'share',
+                  onClick: () =>
+                    navigate('/planner/evaluate', {
+                      state: {
+                        returnTo: { pathname: '/planner', search: location.search },
+                        returnLabel: { zh: '返回自动计划', en: 'Back to auto plan' },
+                      },
+                    }),
+                },
+              ],
             },
           },
         ],

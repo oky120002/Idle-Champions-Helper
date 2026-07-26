@@ -14,6 +14,7 @@ export function isWorkbenchRoute(pathname: string): boolean {
   return (
     WORKBENCH_ROUTE_PATHS.has(pathname) ||
     pathname.startsWith('/champions/') ||
-    pathname.startsWith('/illustrations/')
+    pathname.startsWith('/illustrations/') ||
+    pathname.startsWith('/planner/')
   )
 }
