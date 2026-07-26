@@ -69,6 +69,8 @@ export function PlannerPage() {
     loadError,
     loadState,
     plannerRecommendation,
+    recommendError,
+    recommendLoading,
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
@@ -193,6 +195,33 @@ export function PlannerPage() {
               </section>
 
               <div className="planner-page__result-column">
+                {recommendError ? (
+                  <section className="surface-card page-shell" role="alert">
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <p className="surface-card__description">
+                          {t({ zh: `计算失败：${recommendError}`, en: `Compute failed: ${recommendError}` })}
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
+                {recommendLoading ? (
+                  <section
+                    className="surface-card page-shell planner-page__compute-loading"
+                    role="status"
+                    aria-busy="true"
+                    data-testid="planner-recommend-loading"
+                  >
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <p className="surface-card__description">
+                          {t({ zh: '正在计算推荐阵型…', en: 'Computing recommendation…' })}
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
                 {plannerRecommendation.blocker ? (
                   <section className="surface-card page-shell planner-page__status-panel" role="status">
                     <div className="surface-card__header">

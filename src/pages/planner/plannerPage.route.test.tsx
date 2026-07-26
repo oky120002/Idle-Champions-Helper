@@ -194,7 +194,7 @@ describe('planner route and navigation', () => {
     expect(await screen.findByRole('region', { name: '个人数据状态' })).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: '搜索场景' })).toBeInTheDocument()
     expect(await screen.findByRole('button', { name: /弓兵压制/ })).toBeInTheDocument()
-    expect(screen.getByText('导入个人数据后才会生成推荐。')).toBeInTheDocument()
+    expect(await screen.findByText('导入个人数据后才会生成推荐。')).toBeInTheDocument()
     expect(screen.queryByRole('article', { name: /推荐结果/ })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /保存/ })).not.toBeInTheDocument()
   })

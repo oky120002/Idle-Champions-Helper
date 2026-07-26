@@ -30,6 +30,7 @@
 - [x] 16 拖拽（16.1-16.5·最后）
 - [x] 17 自配评估页（M4 后·`evaluateFormation` 的 UI 接通，4 阶段；详见 `milestone-4-ui.md` 末尾）
 - [x] 18 计算模式（性能优化：build 期预算 `gainProfile` + 运行时按席位裁剪候选；`full`/`p90`/`p50`，默认 `p50`；实测 worst case ~8.2s→~4.4s，真实 50 英雄 ~2.2s→~1.1s；benchmark `npm run simulate:benchmark`）
+- [ ] 19 Web Worker 计算卸载（性能优化：beam search 移出主线程，UI 不冻 + loading；算法零改动；详见 `development-design-simulator.md`「Web Worker 计算卸载」）
 
 > 步骤级 `[ ]`/`[x]` 见各里程碑文件；`goal-prompts.md` 按里程碑组织 `/goal` 提示词。
 
@@ -115,6 +116,8 @@ BUD = 阵型近期最高单次伤害。
    - 执行时全面搜索 `Planner`/`planner` 残留，逐个评估：通用符号去前缀，专属模块保留。阶段 1 的 1.4-1.8/1.11 涵盖函数/文件/JSON 改名。
 9. **模拟/UI 分离 + JSON 输出契约（第4轮审计）**：引擎纯 domain 零 UI 依赖（本就就绪）；补输出契约——`ScoringResult`/`PlannerResult` 增结构化 `breakdown`（`SimulationBreakdown`：baseDps/factors/pools/contributions），删死字段 `objective` 与死文件 `objectiveModel.ts`（注：`explanations` 演进为结构化叙述行 `PlannerNarrativeLine[]`，是活字段而非死字段）；新增 `evaluateFormation` 纯入口（评估指定阵型，与 `buildPlannerRecommendation` 共用 `resolvePlannerScenario`）；`scripts/simulator/simulate.ts` + `npm run simulate` CLI 证明"丢 UI 输出 JSON"。详见 `development-design-simulator.md`「模拟/UI 分离与 JSON 输出契约」。
 10. **计算模式（阶段 18·性能优化）**：beam search 对每槽位×每候选都跑全阵型评分，全英雄 worst case ~8s。加「按收益裁剪候选」——build 期 `computeHeroGainProfile` 把每英雄 carrySignals/supportSignals 按 `DIMENSION_BY_KIND` 聚合成 `gainProfile`（self/support 分层 × 各维度 poolMultiplier 上界，数学同 `placementFit` 的 pool 聚合），写进 `hero-abilities.json`；`applyHeroAbilityPatch` 应用 override 后重算。运行时 `applyComputationMode` 按席位分组、按 `compositeGain=max(self,support)`（`OBJECTIVE_DIMENSIONS` 按 scoringMode 取维度）降序取前 `MODE_FRACTION` 比例（full/p90/p50=1.0/0.9/0.5），forced 必留、每席位 ≥1。`PlannerRecommendationOptions.computationMode` 默认 `p50`；`evaluateFormation` 不裁剪。UI `PlannerComputationMode` 选择器。详见 `development-design-simulator.md`「计算模式（性能优化）」。
+
+11. **Web Worker 计算卸载（阶段 19·性能优化）**：beam search 同步跑主线程致 UI 冻结（连 loading 都画不出）。改「卸载」——`buildPlannerRecommendation`/`evaluateFormation` 原封 import 进 worker（算法零改动）；worker init 缓存 `plannerHeroes+plannerScenarios`（~17.5M 一次），之后只传 `variant+profileSnapshot+options`；UI 端 debounce+requestId 丢弃旧结果；结果区加 loading。增量评分同期深入调研确认**严格等价下不可行**（632 个 count-dependent signal 的 Ω(N²)/步 下界），故未走算法级增量。详见 `development-design-simulator.md`「Web Worker 计算卸载」。
 
 ## 设计修正要点
 

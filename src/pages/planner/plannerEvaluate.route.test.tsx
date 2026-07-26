@@ -270,7 +270,8 @@ describe('planner evaluate route', () => {
     await user.click(lockBtn)
     expect(lockBtn).toHaveAttribute('aria-pressed', 'true')
 
-    const fillBtn = screen.getByTestId('planner-evaluate-fill-remaining')
+    const fillBtn = await screen.findByTestId('planner-evaluate-fill-remaining')
+    await waitFor(() => expect(fillBtn).not.toBeDisabled())
     await user.click(fillBtn)
 
     const board = screen.getByTestId('planner-evaluate-board')

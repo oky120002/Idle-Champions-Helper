@@ -122,7 +122,52 @@ beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评�
 **结构性加速调研结论**（阶段 18 同期）：
 - `scoreFormation` 三维 `evaluatePlacementFit` 合并为单次（`dimension` 数组）：行为等价、代码更干净，但性能边际——贵的 qualifier 匹配本就在维度过滤 `continue` 之后、每信号仅一次，3× 冗余仅在便宜的迭代开销。
 - beam search 宽度（`beamWidth`，默认 8，可经 `PlannerRecommendationOptions.beamWidth` 覆盖）：benchmark 扫描实测 `width=4` 多数 variant 无损但偶发 objectiveValue 塌方、`width≤3` 候选多的 variant 直接崩溃（log10 比 -4）。**降搜索宽度不是可靠加速**——降的是搜索质量，不是单次成本。默认保守留 8。
-- 真正可靠的加速是 computationMode 候选裁剪（少评分次数）。剩余算法级杠杆（增量评分：beam search 现每步重评全阵型 O(N²)，改增量 O(N)）是更大重构，未做。
+- 真正可靠的加速是 computationMode 候选裁剪（少评分次数）。**增量评分经深入调研确认严格等价下不可行**（详见下节「Web Worker 计算卸载」动机）：632 个 count-dependent signal（`per_crusader`/`per_hero_attribute`/`per_tagged_crusader_mult`/`per_target_crusader`/`per_upgrade_targets`，分布在 157/164=96% 英雄）的 multiplier 依赖整队计数（`countQualifiedHeroes`/`countUpgradeTargets` 对 `input.placements` 整体遍历），加入英雄会改变已有 `(carry,support)` 对结果——简单增量（只 merge 新对）数学不等价；严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)（与全量同级），~N 倍达不到。改走「计算卸载到 Web Worker」。
+
+## Web Worker 计算卸载（阶段 19·性能优化）
+
+### 动机
+
+beam search 同步跑在 React 渲染主线程（`usePlannerPageModel` 的 `useMemo` 直接调 `buildPlannerRecommendation`），p50 ~1s / full ~8s 期间 UI 完全冻结——连 loading 都画不出（主线程被占，React 来不及渲染）。增量评分不可行（见上），改走「卸载」：不改算法、不改结果，只改在哪跑。
+
+### 架构
+
+- **数据加载留主线程**（`usePlannerCollections` 不变）：UI 需要 `variants`（场景列表）+ `championById`（英雄名）渲染选择器。
+- **计算移 worker**：`buildPlannerRecommendation` / `evaluateFormation` 原封 import 进 worker，算法代码零改动。
+- **缓存边界**：worker init 时缓存 `plannerHeroes + plannerScenarios`（~17.5M，一次性 postMessage），之后通信只传 `selectedVariant + profileSnapshot + options/placements`（小）。`variants` 不进 worker——engine 只用 UI 已解析的 `selectedVariant`（见 `resolvePlannerScenario`）。
+
+### 通信协议
+
+```
+UI → worker:
+  init     { collections:{plannerHeroes,plannerScenarios}, collectionsVersion }   # collections ready 后一次
+  recommend{ collectionsVersion, variant, profileSnapshot, options, requestId }
+  evaluate { collectionsVersion, variant, profileSnapshot, placements, options, requestId }
+worker → UI:
+  ready    # worker import 完成（收到即可发 init）
+  result   { requestId, ok:true, result } | { requestId, ok:false, error }
+```
+
+### 取消与防抖
+
+worker 单线程无法中断同步 JS 计算。UI 端 debounce（~150ms）合并连续输入 + `requestId` 递增，只接受最新 requestId 的结果（旧的丢弃）。连续改选项时 worker 消息队列堆积、旧任务跑完自然丢弃，CPU 浪费换实现简单；实测若卡顿再升级为 terminate/recreate。
+
+### loading
+
+worker 天然异步，计算中结果区显示 loading 占位（转圈）。这是体感核心——之前同步阻塞连「算中」反馈都给不了。
+
+### 测试策略
+
+- 抽象 `PlannerComputeRunner` 接口（`init`/`recommend`/`evaluate`）：`SyncPlannerComputeRunner`（测试，直接调 engine 函数）+ `WorkerPlannerComputeRunner`（生产，postMessage）。
+- hook 注入 runner：单测用 Sync（不真起 worker），覆盖 loading 翻转 / requestId 丢弃 / debounce。
+- client 单测 mock `Worker`，验证协议、缓存命中、requestId 丢弃。
+- 现有 src + data 测试全绿（算法零改动，结果不变）。
+
+### 边界
+
+- worker 启动 + 首次 collections 传输一次性开销（~50-100ms structuredClone），相比 1-8s 计算可忽略。
+- GitHub Pages 静态站原生支持 module worker（`new Worker(new URL('./plannerCompute.worker.ts', import.meta.url), { type: 'module' })`，`import.meta.env.BASE_URL` 兼容）。
+- 内存：主线程 + worker 各持一份 collections（~17.5M×2），静态站可接受。
 
 ## UI 和测试
 

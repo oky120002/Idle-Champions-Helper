@@ -1,11 +1,12 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Eraser, Lock, Plus, Send, Sparkles, Unlock } from 'lucide-react'
 import { BackNavigationIcon } from '../app/AppIcons'
 import { useI18n } from '../app/i18n'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
-import { buildPlannerRecommendation, evaluateFormation } from '../domain/planner/recommendationEngine'
+import { createPlannerComputeRunner } from '../domain/planner/compute/plannerCompute'
+import type { FormationEvaluation } from '../domain/planner/recommendationEngine'
 import type { CandidateMode } from '../domain/planner/candidatePool'
 import type { ScoringMode } from '../domain/planner/steadyStateScoring'
 import { formatSeatLabel, getLocalizedTextPair } from '../domain/localizedText'
@@ -22,6 +23,15 @@ import {
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
 import { usePlannerCollections } from './planner/usePlannerCollections'
+import { usePlannerEvaluation } from './planner/usePlannerCompute'
+
+const EMPTY_EVALUATION: FormationEvaluation = {
+  result: null,
+  layoutId: null,
+  slots: [],
+  scenarioRef: null,
+  blocker: null,
+}
 
 export function PlannerEvaluatePage() {
   const { t, locale } = useI18n()
@@ -63,13 +73,22 @@ export function PlannerEvaluatePage() {
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
     [collections.variants, selectedVariantId],
   )
-  const evaluation = useMemo(
-    () => evaluateFormation(selectedVariant, collections, profileSnapshot, placements, {
-      candidateMode,
-      scoringMode,
-    }),
-    [selectedVariant, collections, profileSnapshot, placements, candidateMode, scoringMode],
+  // runner 单例：浏览器用 worker 卸载评分（拖拽重算不冻 UI）；jsdom（测试无 Worker）降级 Sync。
+  const runner = useMemo(() => createPlannerComputeRunner(), [])
+  useEffect(() => () => runner.dispose(), [runner])
+  const evaluateOptions = useMemo(
+    () => ({ candidateMode, scoringMode }),
+    [candidateMode, scoringMode],
   )
+  const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
+    runner,
+    collections,
+    selectedVariant,
+    profileSnapshot,
+    placements,
+    evaluateOptions,
+  )
+  const evaluation: FormationEvaluation = evaluationResult ?? EMPTY_EVALUATION
   const championOptions = useMemo(
     () =>
       Array.from(championById.values()).sort(
@@ -90,20 +109,26 @@ export function PlannerEvaluatePage() {
     [evaluation.result],
   )
 
-  // 半自动：锁定的槽位 + 系统搜出的剩余 = 完整阵型。owned-only + 无快照时 buildPlannerRecommendation
-  // 会返回 missing-profile blocker（rec.result 为 null），按钮此时禁用，文案提示切到全部英雄。
-  function handleFillRemaining() {
-    const recommendation = buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, {
-      scoringMode,
-      candidateMode,
-      lockedSlots,
-    })
-    if (recommendation.result) {
-      setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })
+  // 半自动：锁定的槽位 + 系统搜出的剩余 = 完整阵型。owned-only + 无快照时 recommend
+  // 返回 missing-profile blocker（rec.result 为 null），按钮此时禁用，文案提示切到全部英雄。
+  const [filling, setFilling] = useState(false)
+  async function handleFillRemaining() {
+    setFilling(true)
+    try {
+      const recommendation = await runner.recommend(selectedVariant, profileSnapshot, {
+        scoringMode,
+        candidateMode,
+        lockedSlots,
+      })
+      if (recommendation.result) {
+        setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })
+      }
+    } finally {
+      setFilling(false)
     }
   }
 
-  const canFillRemaining = Object.keys(lockedSlots).length > 0 && !evaluation.blocker
+  const canFillRemaining = Object.keys(lockedSlots).length > 0 && !evaluation.blocker && !evaluateLoading
 
   const blockerCopy = evaluation.blocker === 'missing-profile'
     ? t({
@@ -292,6 +317,33 @@ export function PlannerEvaluatePage() {
                   }}
                 />
 
+                {evaluateError ? (
+                  <section className="surface-card planner-result-card" role="alert" data-testid="planner-evaluate-error">
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <p className="surface-card__description">
+                          {t({ zh: `计算失败：${evaluateError}`, en: `Compute failed: ${evaluateError}` })}
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
+                {evaluateLoading ? (
+                  <section
+                    className="surface-card planner-result-card"
+                    role="status"
+                    aria-busy="true"
+                    data-testid="planner-evaluate-loading"
+                  >
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <p className="surface-card__description">
+                          {t({ zh: '正在重新计算…', en: 'Recomputing…' })}
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
                 {evaluation.result ? (
                   <section className="surface-card planner-result-card" data-testid="planner-evaluate-score">
                     <div className="surface-card__header">
@@ -337,14 +389,16 @@ export function PlannerEvaluatePage() {
                     type="button"
                     className="action-button action-button--secondary action-button--with-icon"
                     data-testid="planner-evaluate-fill-remaining"
-                    disabled={!canFillRemaining}
+                    disabled={!canFillRemaining || filling}
                     onClick={handleFillRemaining}
                   >
                     <span className="action-button__icon" aria-hidden="true">
                       <Sparkles strokeWidth={1.9} />
                     </span>
                     <span className="action-button__label">
-                      {t({ zh: `算剩余最优（已锁 ${Object.keys(lockedSlots).length} 格）`, en: `Fill remaining (${Object.keys(lockedSlots).length} locked)` })}
+                      {filling
+                        ? t({ zh: '计算中…', en: 'Computing…' })
+                        : t({ zh: `算剩余最优（已锁 ${Object.keys(lockedSlots).length} 格）`, en: `Fill remaining (${Object.keys(lockedSlots).length} locked)` })}
                     </span>
                   </button>
                   <button
