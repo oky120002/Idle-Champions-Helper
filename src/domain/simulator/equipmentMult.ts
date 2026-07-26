@@ -1,8 +1,8 @@
 /**
- * 装备 multiplier 计算（阶段 13.3）。
+ * 装备 multiplier 计算。
  *
  * 数据源：`loot-catalog.json`（normalize 从 raw loot_defines 提取，保留 slot_id）。
- * 确认报告：`docs/modules/planner/m3-data-source-confirmations.md` §13.1。
+ * 数据源确认：`docs/modules/planner/data-source-confirmations.md` §13.1。
  *
  * IC 装备无独立 ilvl/rarity 曲线——效果按 (hero, slot, rarity) 直接编码在 loot_defines。
  * M1 理论基线把全 rarity 全 slot 累加（理论上界高估）；本模块按玩家 owned rarity 选取，
@@ -17,7 +17,7 @@
  * 而非只替换 globalDpsPool 中的 loot 部分。当 globalDpsPool 含非 loot 加成时，比率会连带缩放
  * support buff（方向上低估 carryDps）；且只调 carry 自身 loot，support 英雄 loot 的 over-count 未触及。
  * 精确修复需 loot 按 owned 进 damage pool（重构 collect/evaluatePlacementFit 区分 loot 与非 loot 源），
- * 风险高且依赖 UI 传入 owned 数据 → 留阶段 15 UI 接入时一并评估（见 milestone-3-enhancement §13.4）。
+ * 风险高且依赖 UI 传入 owned 数据 → 留 UI 接入时一并评估（见 data-source-confirmations.md §13.1）。
  */
 
 export interface LootCatalogEntry {

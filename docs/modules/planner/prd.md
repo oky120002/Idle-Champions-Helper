@@ -2,9 +2,9 @@
 
 ## 背景
 
-当前站点主要是公共游戏资料查询：英雄、变体、阵型、方案存档、宠物和个人数据凭证解析。用户真正想要的是“在不同关卡、不同阵型、不同拥有英雄和不同可激活假设下，自动计算较优上场英雄和阵型”。
+站点核心是公共游戏资料查询：英雄、变体、阵型、方案存档、宠物和个人数据凭证解析。用户真正想要的是「在不同关卡、不同阵型、不同拥有英雄和不同可激活假设下，自动计算较优上场英雄和阵型」。
 
-第一阶段目标不是做全玩法完整模拟器，而是建立一个可解释、可验证、可逐步增强的本地 planner。
+planner 不做全玩法完整模拟器，而是一个可解释、可验证、本地优先的推荐引擎。
 
 ## 用户目标
 
@@ -30,7 +30,7 @@
 
 ### 本地玩家
 
-玩家打开静态站，进入个人数据页，粘贴 support URL、手动填写 User ID/Hash 或粘贴日志片段。页面解析出凭证后，用户点击“手动同步”，浏览器请求官方只读接口，归一化结果写入 IndexedDB。
+玩家打开静态站，进入个人数据页，粘贴 support URL、手动填写 User ID/Hash 或粘贴日志片段。页面解析出凭证后，用户点击「手动同步」，浏览器请求官方只读接口，归一化结果写入 IndexedDB。
 
 ### Planner 使用者
 
@@ -94,7 +94,7 @@
 
 ### 公共基座数据
 
-现有 `npm run data:official` 已抓取并生成：
+现有 `npm run data:official` 抓取并生成：
 
 - `champions.json`
 - `champion-details/<id>.json`
@@ -103,7 +103,7 @@
 - `enums.json`
 - 头像、立绘、动画、宠物等资源
 
-planner 需要审计 definitions 中对模拟器有用但尚未归一化的字段，生成覆盖报告，不要一开始假设数据已经齐全。
+planner 需要审计 definitions 中对模拟器有用但尚未归一化的字段，生成覆盖报告（`signal-coverage-research.md`），不假设数据已经齐全。
 
 ### 私人用户快照
 
@@ -123,7 +123,7 @@ planner 需要审计 definitions 中对模拟器有用但尚未归一化的字�
 
 ### GameNumber
 
-底层使用大数库，业务只接触 `GameNumber` wrapper。必须支持 parse、format、multiply、divide、pow、log10、compare、sort，以及带阈值的 add。显示默认游戏记数法。
+底层使用大数库，业务只接触 `GameNumber` wrapper。支持 parse、format、multiply、divide、pow、log10、compare、sort，以及带阈值的 add。显示默认游戏记数法。
 
 ### 等级基线
 
@@ -131,19 +131,13 @@ planner 需要审计 definitions 中对模拟器有用但尚未归一化的字�
 
 - 从英雄 upgrades 中提取最高专精所需等级。
 - 根据 cost curve 和目标金币预算估算可负担等级。
-- 如果可负担等级低于最后专精，标记 `below-baseline`。
+- 可负担等级低于最后专精时标记 `below-baseline`。
 - 固定 1 级只作为调试模式。
 - 不提供默认 100 级模式。
 
 ### 评分
 
-第一阶段只计算可预计算的稳态 DPS 类加成：
-
-- global DPS
-- hero DPS
-- adjacent support
-- tagged champion multiplier
-- 可识别的 positional hints
+只计算可预计算的稳态 DPS 类加成：global DPS、hero DPS、adjacent support、tagged champion multiplier、可识别的 positional hints。各维度公式与聚合方式见 `development-design-simulator.md`。
 
 未知 effect、事件变量、随机触发和复杂条件进入 warnings。
 
@@ -158,8 +152,7 @@ planner 需要审计 definitions 中对模拟器有用但尚未归一化的字�
 
 ## 验收总则
 
-- 每个 Ralph story 必须先测试后实现。
-- 每个完成 story 必须单独 commit。
-- story 不能修改允许范围外的文件，除非写入 decision log。
 - 任何无法计算的模拟变量必须有 warning。
+- unsupported 规则不静默计入目标量（`objectiveValue`）。
+- UI 验收用 DOM、文本和状态断言，不用截图或图片识别。
 - 最终通过 `npm run lint && npm run typecheck && npm run test:run && npm run build && npm run privacy:scan`。

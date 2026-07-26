@@ -8,7 +8,7 @@ import type { GameNumberValue } from '../simulator/gameNumber'
  * team_gold_find = base_gold × gold_pool。
  * - gold_pool 由 placementFit 按 dimension:'gold' 聚合全队 gold signal（global/hero pool）。
  * - base_gold：MVP 取 1（相对比较保序）；绝对值依赖 idle_gold_rate × monster_gold_by_area，
- *   阶段 10 推图预估接入（evolution-plan A3 baseGold 决策）。
+ *   绝对值校准需接入 health_gold_ratio（见 data-source-confirmations.md §10.1）。
  *
  * 金币模式与 C 位模式结构不同：金币是全队聚合 stat（非单一 carry），故 objective 不依赖
  * 单英雄 baseDamage，仅由 gold pool 决定。

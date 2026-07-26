@@ -213,7 +213,7 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
  * 加成归属 pool：global 影响全局池（所有英雄），hero 仅作用于 carry 自身。
  * 加成聚合时同一 pool 内 additive 百分比相加、multiplicative 因子相乘；global 与 hero pool 间相乘。
  * pool 聚合实现见 src/domain/planner/placementFit.ts evaluatePlacementFit；
- * 加成调研结论见 docs/modules/planner/evolution-plan.md「加成聚合层调研结论」。
+ * 加成聚合与 DPS 公式见 docs/modules/planner/development-design-simulator.md「加成聚合与 DPS 公式」。
  */
 export type HeroAbilityPoolScope = 'global' | 'hero'
 

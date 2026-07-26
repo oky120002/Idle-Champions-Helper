@@ -32,7 +32,7 @@
 `effect_defines[].effect_keys[].filter_targets[].type` 全量分布（377 处）与处理状态：
 
 - 已处理（`normalizeTargetQualifier` → `HeroQualifier.predicate`）：`by_tags` / `tags` / `hero_expr` / `stat` / `stat_score` / `attack_type`；`hero_ids` / `exclude_heroes`（本轮接入，复用 `heroId` AST 节点，与 `per_hero_expr` 的 `hero_id==N` 同节点）。
-- 未处理（阵型聚合，归 `expression-evaluator-plan.md` formationAggregate / step simulation）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag`。
+- 未处理（阵型聚合，归 `docs/modules/planner/expression-evaluator.md` formationAggregate / step simulation）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag`。
 - 未处理（存档依赖，归 conditionEvaluator）：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12)。
 - 未处理（叠加上限，归 buff_upgrade 精细 / step simulation）：`limit_effect_def_per_hero_attack` / `limit_per_effect`。
 
@@ -54,7 +54,7 @@
 
 `effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7 effect_defines + 54 legendary) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（M1/M2 不处理）；`other` 精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来。`active_campaign` 语义 = 当前活跃 campaign 场景条件（steady-state 默认满足），位置上 = 全队；legendary 54 处全是 `global_dps_multiplier_mult`（该分支不检查 targets，未被阻塞），effect_defines 7 处中仅 1 个 `hero_dps_multiplier_mult` 被阻塞。
 
-**`self_and_behind_and_ahead` 已支持（阶段 18 真实性补强）**：Jim（hero 48）的 `hero_dps_multiplier_mult,0 + targets=self_and_behind_and_ahead`，映射为新关系 `selfAndAheadAndBehindColumns`（自身列 + 立即相邻两列 = 3 列宽带，`|Δcolumn|<=1`）。值经 `amount_expr=upgrade_amount(12128,0)` 解析、叠层走 `stack_func=per_upgrade_targets`（均已有基础设施）——只是 targets 关系此前不在 STRING_RELATION_MAP 被阻塞。判定为 3 列带（而非全阵型）的依据：per-champion mult 若按全阵型算会得 3^N 失真；待 IC 源码确认。
+**`self_and_behind_and_ahead` 已支持（真实性补强）**：Jim（hero 48）的 `hero_dps_multiplier_mult,0 + targets=self_and_behind_and_ahead`，映射为新关系 `selfAndAheadAndBehindColumns`（自身列 + 立即相邻两列 = 3 列宽带，`|Δcolumn|<=1`）。值经 `amount_expr=upgrade_amount(12128,0)` 解析、叠层走 `stack_func=per_upgrade_targets`（均已有基础设施）——只是 targets 关系此前不在 STRING_RELATION_MAP 被阻塞。判定为 3 列带（而非全阵型）的依据：per-champion mult 若按全阵型算会得 3^N 失真；待 IC 源码确认。
 
 **`pre_stack_amount` 是显示用干扰项，不是 value source（关键防误诊）**：effect_define 里常成对出现 `pre_stack_amount,N` + 主效果（`hero_dps_multiplier_mult,0` 等），但主效果的真实值来自 `amount_expr`（如 `upgrade_amount(id,0)` 跨 upgrade 引用）、叠层来自显式 `stack_func`（如 `per_upgrade_targets`），**pre_stack_amount 的 N 只用于 description 展示**（`$(amount)`）。不要把 pre_stack_amount 当作 value source 实现「注入」——会破坏 amount_expr/per_upgrade_targets 路径（build-models.test「amount_expr 跨 upgrade 引用」用例即验证 pre_stack_amount 是干扰项）。pre_stack_amount 自身无 parser、进 unsupported 是正确的（它是 display）。全库 64 条 pre_stack_amount 都是这种 display 角色。
 

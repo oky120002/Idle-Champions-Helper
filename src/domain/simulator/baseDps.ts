@@ -7,8 +7,8 @@ import type { GameNumberValue } from './gameNumber'
  * 单英雄 carry DPS：baseDamage × levelCurve(level) × aggregate。
  *
  * ponytail: levelCurve 用 costCurves["1"]^level 近似（cost 曲线 ≈ DPS 增长上界）。
- * 绝对值偏高但相对比较保序；阶段 7 BUD 建模时接入官方 DPS 增长曲线精确化。
- * BUD 对阵型模拟的价值与近似取舍见 docs/modules/planner/evolution-plan.md「BUD 对阵型模拟的价值」。
+ * 绝对值偏高但相对比较保序；BUD 建模时接入官方 DPS 增长曲线精确化。
+ * BUD 对阵型模拟的价值与近似取舍见 docs/modules/planner/bud-verification.md。
  */
 
 const DEFAULT_COST_CURVE_RATE = 1.06

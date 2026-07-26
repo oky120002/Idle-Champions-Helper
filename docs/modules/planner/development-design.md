@@ -1,22 +1,35 @@
-# 自动阵型计划器开发设计
+# 自动阵型计划器架构
 
-## 当前事实
+## 系统定位
 
-- 站点是 `Vite + React + TypeScript` 静态站，生产部署在 GitHub Pages，必须继续兼容 `HashRouter` 与 `import.meta.env.BASE_URL`。
-- 公共数据入口是 `npm run data:official`，会抓取中英文 definitions，归一化 `champions.json`、`champion-details/<id>.json`、`adventures.json`、`patrons.json`、`variants.json`、`game-rules.json`、`effect-reference.json`、`patron-perks.json`、`global-buffs.json`、`loot-catalog.json`、`trials.json`、`formations.json`、`enums.json`，并同步立绘、动画、专精图和宠物数据。
-- 当前私人数据页支持 Support URL、手填凭证和日志文本的本地解析预览；用户点击手动同步后，浏览器请求官方只读接口并把归一化快照写入 IndexedDB。
-- IndexedDB 已包含 `formationDrafts`、`formationPresets`、`userProfileSnapshots`、`heroAbilityOverrides` 和可选 `credentialVault` store；默认同步流程不保存凭证。
-- 当前仓库已经落下 planner 的首批领域实现与测试；后续继续扩能力时，应优先沿 `src/domain/planner/*` 与 `public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json` 的确定性合同推进，而不是把规则继续堆回页面或一次性脚本。
-- 当前 planner 已能稳定消费一批直接影响自动化阵型质量的官方目标语义：全阵型过滤、列方向关系、绝对前后两列、倒数列、邻接图距离，以及 `attack_type` 这类可静态落地的 carry 过滤条件。
-- 当前 planner 还新增了一层确定性合同：`formationCountPositionQualifier`。它把“这个效果按谁来计数”的站位语义从受益目标语义里拆出来，供 parser、评分和测试复用。
-- 当前 planner 还新增了一层确定性合同：`bonusScaleOfSignal`。当官方效果属于 `buff_upgrade*` 家族时，构建阶段会先解析被加成的基础升级信号，再生成一条派生 planner signal，把“增强已有 buff”的语义稳定保留下来，供评分与测试复用。
-- 当前 `buff_upgrade*` 已优先打通高价值静态子集：`buff_upgrade`、`buff_upgrades`、`buff_upgrade_per_any_tagged_crusader_mult`、`buff_upgrade_per_any_crusader_where_mult`、`buff_upgrade_per_target_crusader`，以及按槽位距离增强基础 buff 的 `buff_upgrade_mult_by_distance_from_source_mult`。这些子集都走同一条 derived-signal 链路，不再各自维护第二套黑盒解析。
+planner 是个人成长导向阵型决策台的核心模块：在用户当前拥有英雄、装备、feat、传奇、专精与场景限制下，自动推荐较优的上场英雄与站位。不做黑盒全自动最优解，按本地优先、可解释、可验证原则，输出可追溯的推荐结果与加成拆解。
 
-## 目标架构
+## 三层架构
+
+能力表达、加成聚合、优化目标分层是 planner 的核心设计原则：
+
+```text
+能力表达层（HeroAbility）    统一英雄能力模型，hero-agnostic；把官方散落 effect 解析为结构化 signal
+  ↓
+加成聚合层（placementFit）    pool 结构聚合：pool 内 add 相加 / mult 相乘，pool 间乘法
+  ↓
+优化目标层（objective）       每种推荐模式用真实目标量（GameNumber），输出层字段 objectiveValue
+  ↓
+搜索层（beamSearch）          按 objective 最大化做 deterministic beam search
+```
+
+关键约束：
+
+- placementFit 是 pool 聚合器，不产出启发式「评分」；旧 `score` / `heuristicRoleMultiplier` / `isCarryViable` 已淘汰。
+- 每种模式用真实目标量：carry-dps 模式 = `carryDps`；team-gold 模式 = `teamGoldFind`。
+- 算法与英雄的握手点唯一：`HeroAbilityProfile`。
+- 任何无法静态计算的变量进入 `warnings`，不静默计入 `objectiveValue`。
+
+## 目标架构与目录
 
 ```text
 public/data/v1/*              公共游戏基座数据
-public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json 推荐专用归一化模型
+public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json  推荐专用归一化模型
 browser credential input       用户手动输入的凭证，只在前端内存中使用
 IndexedDB user snapshot        归一化私人账号快照
 IndexedDB planner overrides    浏览器本地 planner 语义覆盖
@@ -26,29 +39,59 @@ src/pages/planner/*            自动计划工作台 UI
 scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 ```
 
-页面层只编排状态和展示。凭证解析、官方只读 client、用户快照、模拟器和 planner 搜索都要放在邻近领域模块中，避免把长规则写进 JSX。
+页面层只编排状态和展示。凭证解析、官方只读 client、用户快照、模拟器和 planner 搜索都放在邻近领域模块，避免把长规则写进 JSX。
 
-## 分篇阅读
-
-- 数据、隐私、目录与存储：`docs/modules/planner/development-design-data.md`
-- 推荐英雄、站位、planner model 与 merge 策略：`docs/modules/planner/recommendation-and-placement-design.md`
-- 数字层、基线、模拟器、搜索、UI 与测试：`docs/modules/planner/development-design-simulator.md`
-
-## 目录设计
+目录职责：
 
 - `src/data/user-sync/`：官方只读 client、allowlist、同步状态、payload normalizer。
 - `src/data/user-profile-store/`：IndexedDB snapshot store 与可选 credential vault。
-- `public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json`：供推荐引擎直接消费的归一化模型。
+- `public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json`：推荐引擎直接消费的归一化模型。
 - `scripts/data/semantic-overrides.json`：仓库跟踪的推荐语义补丁。
 - `src/domain/user-profile/`：`UserProfileSnapshot`、`OwnedChampionState`、`ImportedFormationSave`、装备、feat、传奇和 warning 类型。
+- `src/domain/abilities/`：能力表达层——`HeroAbilitySignal`、`ResolvedHeroAbilityProfile`、build→JSON→runtime 边界类型。
 - `src/domain/simulator/`：`GameNumber`、最后专精基线、金币预算基线、`baseDps`/`BUD`/`survival` 计算、稳态 DPS 模拟。
 - `src/domain/planner/`：变体限制投影（`variantConstraints`）、候选池、假设英雄公平基线、阵型合法性、beam search 和结果模型。
 - `src/pages/planner/`：profile 状态面板、场景选择、候选模式、基线输入、结果卡和保存 preset 操作。
-- `scripts/private-user-data/`：敏感扫描、私有 env loader、私有快照 manifest、后续只读抓取脚本。
+- `scripts/private-user-data/`：敏感扫描、私有 env loader、私有快照 manifest。
 
-## 执行约束
+## 命名约定
 
-- Ralph 必须按 `.ralph/tasks/planner/acceptance-cases.md` 先写测试，再实现。
-- 每个 story 只做指定范围，完成后单独 commit。
-- UI 验收用 DOM、文本和状态断言，不用截图或图片识别。
-- 任何无法静态计算的变量进入 warnings，不静默计入目标量（`objectiveValue`）。
+通用符号（英雄能力、数据产物）去除 `Planner` 前缀，专属推荐引擎模块保留：
+
+- 能力层类型与函数去前缀：`HeroAbilitySignal`、`matchesHeroQualifier`、`attachSignalSemantics`、`normalizeEffectSignal`、`buildOfficialHeroModel`、`resolveHeroAbilityProfiles`。
+- JSON 产物与 IndexedDB key 按通用性命名：`hero-abilities.json`、`scenarios.json`、`semantic-overrides.json`；IndexedDB store `heroAbilityOverrides`。
+- 推荐引擎模块保留 `planner` 命名（`src/domain/planner/`：recommendationEngine / beamSearch / steadyStateScoring / candidatePool / placementFit），「阵型推荐引擎」职责在此命名准确。
+
+## BUD 与 DPS 的取舍
+
+BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。
+
+- 阵型推荐（相对比较）：DPS 足够，planner 用 `carryDps` 近似优化。
+- 推图层数预估（绝对值）：IC 怪物血量按 BUD 缩放；用 DPS 近似会偏差，BUD 更准。
+
+两者都计算、都展示。BUD 公式与绝对值校准边界见 `bud-verification.md`；推图层数预估算法见 `development-design-simulator.md`。
+
+## 模拟/UI 分离
+
+模拟引擎全部在 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/`，零 React/UI 依赖。两个纯函数入口共享 `resolvePlannerScenario` 做 variant→scenario 与 blocker 解析：
+
+- `buildPlannerRecommendation(variant, collections, profile, options)`：beam search 找 Top K 最佳阵型。
+- `evaluateFormation(variant, collections, profile, placements, options)`：评估用户指定的单一阵型（不搜索），输出完整拆解。
+
+CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（`scripts/simulator/simulate.ts`）读 `public/data/v1/*.json` → 引擎 → stdout JSON。无 `--profile` 时合成「全英雄已拥有（level 1）」快照演示完整链路。
+
+## 深入阅读
+
+- 数据、隐私、目录与存储：`development-design-data.md`
+- 推荐英雄、站位、模型字段与 merge 策略：`recommendation-and-placement-design.md`
+- 数字层、基线、加成聚合、搜索、计算模式、Web Worker 与 UI：`development-design-simulator.md`
+
+## 未来可能补充
+
+以下方向超出当前稳态推荐能力，属产品级长期愿景：
+
+- **balanced scoring**：混合伤害/存活/速度/可获得性/解释复杂度的综合评分模式。
+- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）；含 ult/主动技能 buff 的精确时间窗口建模（当前用 modron uptime 近似）。
+- **多队伍 / Trials / Time Gate**：多队伍编排与长期成长路线。
+- **event / season / temporary buff 投影**：时效性 buff 的数据投影（modron/patron 已支持，此处指 event/season/temporary）。
+- **manual parameter panel**：用户手动覆盖金币预算/装备/feat/传奇/专精的控件。

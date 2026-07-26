@@ -21,7 +21,7 @@ repair: rebuild
   - 位置: `src/domain/abilities/heroPredicate.ts:114`
   - 备注: parseHeroPredicate 对 HasEffect/GetUpgradeUnlocked/GetFeatEquipped/GetUpgradePurchased/NumEffectKey/EligibleForPatron/is_alive/DefHasTag 等存档依赖布尔谓词返回 null，含它们的 per_hero_expr 整体保守丢弃。
     - 影响：这些 signal 的 formationCountQualifier 退化为 null/filterQualifier，stack 数量可能高估；raw 164 个去重 per_hero_expr 中 17 个（10.4%）受影响
-    - 关联：expression-evaluator-plan.md，需 profile context（装备/专长/effect 状态），属后续 milestone
+    - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
 - targets.type:heroes 英雄 ID 白名单未映射（filter_targets hero_ids/exclude_heroes 已处理） <!-- auto-todo:id=atd_3f8b5d17e2 -->
@@ -49,7 +49,7 @@ repair: rebuild
     - 影响①：carryDps 的 sharedPools 聚合所有英雄 global_dps loot，支持位装备贡献从不缩放
     - 影响②：theoreticalLootMult/ownedEquipMult 只收 global_dps_multiplier_mult（692 条），不收 hero_dps（160）和 buff_upgrade（2088）loot，而 M1 collectRawEffectEntries 全部进 damage pool → carry 自己的 hero_dps loot 停在 M1 理论上界
     - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
-    - 当前死码（?? 1 默认）无运行时影响；关联 milestone-3-enhancement.md §13.1/§13.4（hero_dps 缺口已部分文档化，支持位未调整后果未显式记录）
+    - 当前死码（?? 1 默认）无运行时影响；关联 data-source-confirmations.md §13.1（hero_dps 缺口已文档化，支持位未调整后果未显式记录）
 
 - scoreFormation 三重 evaluatePlacementFit 调用（实际冗余小，非 3× position 检查） <!-- auto-todo:id=atd_d71dd2a7d8 -->
   - 记录时间: `2026-07-25T00:05:30+08:00`

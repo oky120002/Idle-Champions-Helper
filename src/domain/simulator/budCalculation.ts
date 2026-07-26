@@ -10,7 +10,7 @@ const DEFAULT_ATTACK_COOLDOWN = 1
  * 绝对值偏差归 bud-verification.md 实测校准；相对比较（谁设 BUD）保序。
  *
  * 阵型级 BUD（max 各英雄单次伤害）未在此计算——steadyStateScoring 直接用 carry 单次伤害
- * 近似阵型 BUD（carry 通常设 BUD）；formation-max 精确化随 evolution-plan 的 BUD 实测校准立项再做。
+ * 近似阵型 BUD（carry 通常设 BUD）；formation-max 精确化随 BUD 实测校准（bud-verification.md）按需再做。
  */
 export function computeSingleHitDamage(
   heroDps: GameNumberValue,

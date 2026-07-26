@@ -1,17 +1,14 @@
 # 阵型推荐英雄与站位设计
-- 目标：把“推荐英雄 + 推荐站位”沉成长期稳定的 planner 设计事实源，避免后续继续在页面、脚本或测试夹具里临时拼规则。
-- 当前状态：仓库已落地 abilities 能力层 + 三层架构（能力表达 / 加成聚合 / 优化目标）+ 推荐引擎与 UI；推荐以 C 位 `carryDps`（team-gold 模式为 `teamGoldFind`）为真实优化目标量（输出层字段 `objectiveValue`）。
-- 边界：本文只定义纯算法与数据模型，不展开视觉稿、交互稿或逐帧战斗模拟。
 
-> 推荐与站位设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准（pool 聚合 + carryDps；输出层字段 `objectiveValue` 取代旧 `score`，无 `heuristicRoleMultiplier` / `isCarryViable`）；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
+推荐引擎的纯算法与数据模型设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准——pool 聚合 + carryDps，输出层字段 `objectiveValue`（carry-dps 模式 = carryDps，team-gold 模式 = teamGoldFind）。本文不展开视觉稿、交互稿或逐帧战斗模拟。
 
 ## 1. 核心结论
 - 推荐目标不是整队总 DPS，而是**单一 C 位英雄的最终输出代理值**。
 - 一个阵型必须先确定 C 位，再围绕这个 C 位选择 support、站位和激活条件。
 - 非 C 位英雄的价值，只通过“是否提高当前 C 位输出”来计分；其自身输出不进入主评分。
-- 后期推关语境下，默认关键技能都已解锁；首期不考虑技能等级门槛。
+- 后期推关语境下，默认关键技能都已解锁；不考虑技能等级门槛。
 - 不同关卡 / 变体的阵型布局不同，推荐必须绑定具体 `scenario + formation layout`。
-- 官方不会提供可靠的敌对单位血量模型；planner 首期也**不需要**考虑敌方血量，只疯狂堆高 C 位输出代理值。
+- 官方不会提供可靠的敌对单位血量模型；planner 也**不需要**考虑敌方血量，只疯狂堆高 C 位输出代理值。
 
 ## 2. 数据分层与 merge
 - 推荐引擎不直接读取零散的 `champion-details`、`variants`、`formations` 和原始 effect string 做现场聚合，而是统一消费 merge 后的 planner model。
@@ -30,14 +27,14 @@
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。
 - `sourceBreakdown`：记录每条语义来自官方解析、仓库补丁还是本地 override。
 - `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`bannedHeroes`、`lockedSlots`、`scenarioWarnings`。
-- 首期不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
+- 不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
 - `PoolAggregateResult` 表示“某 support 站在某槽位时，对当前 C 位的加成贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`carrySlotId`、`pools`（按 `dimension:scope` 分池）、`totalMultiplier`、`scoreBreakdown`、`warnings`。
 
 ### 3.1 PoolAggregateResult 最小合同
 - 推荐问题先拆成最小确定性单元：`evaluatePlacementFit(carryHero, carrySlot, supportHero, supportSlot, scenario)`。
 - 这个函数只回答一件事：当前 support 站在当前槽位时，是否真正提高了当前 C 位；若提高，具体提高多少；若没提高，原因是什么。
 - `totalMultiplier` 只表示这一个 support 对这一个 carry 的加成贡献（按 pool 聚合后），不负责整队搜索，不负责 UI 文案。
-- 当前首期固定把 effect 数值按百分比解释：`100 => +100% => x2.0`，`50 => +50% => x1.5`。
+- effect 数值默认按百分比解释：`100 => +100% => x2.0`，`50 => +50% => x1.5`。
 - 但 effect 的**组合方式**不能一刀切：同一类 signal 可能是加法叠层，也可能是乘法叠层；必须显式保留 `amountFunc + stackFunc`，不能只看 `value`。
 - `scoreBreakdown` 的每一条都必须带 `signalKind`、`rawEffect`、`multiplier`、`active`、`reasonCode`、`source`。
 
@@ -50,7 +47,7 @@
 6. 未命中只记录原因，不计分。
 7. 语义缺失、需要手动触发、或组合方式还不稳定的规则，只进入 `warnings`，不偷偷加分。
 
-### 3.3 当前代码首期已支持的条件
+### 3.3 已支持的条件
 - `globalDpsMultiplier`：默认对 carry 生效。
 - `heroDpsMultiplier`：默认只对 carry 自身生效。
 - `adjacentBuff`：默认要求 support 与 carry 相邻。
@@ -64,12 +61,12 @@
 - 简单布尔组合当前支持受控子集：单纯由静态 tag / stat / age 子句组成的 `&&` 组合可以合并成同一个 qualifier。
 - 简单布尔包装当前支持受控子集：`as_int(<已支持静态谓词>)` 会退化回内部谓词本身；只要内部仍依赖动态变量、公式或运行时状态，就继续保持 unsupported。
 - 年龄比较当前保留原始比较方向，`<` / `<=` / `>` / `>=` 不再被粗暴折叠成同一个上下界。
-- 英雄画像当前已额外保留 `baseAttackCooldown` 静态事实，可供 `base_attack_cooldown<=N` 这类比较表达式消费；裸 cooldown 数值表达式仍不进首期计分。
-- `EligibleForPatron(...)` 当前仍不进首期计分：它需要公共 `patronEligibility` 事实源和当前 patron 目标上下文，而这两者还没进入 planner 的稳定数据合同。
+- 英雄画像当前已额外保留 `baseAttackCooldown` 静态事实，可供 `base_attack_cooldown<=N` 这类比较表达式消费；裸 cooldown 数值表达式仍不计分。
+- `EligibleForPatron(...)` 仍不计分：它需要公共 `patronEligibility` 事实源和当前 patron 目标上下文，而这两者还没进入 planner 的稳定数据合同。
 - 组合语义已支持：`amountFunc=add` 走线性累加，`amountFunc=mult` 走乘方法；拿不准的组合直接降级 warning。
 - `applyManually=true` 的效果当前不计分，只保留 warning。
 
-### 3.4 当前明确还没进代码的条件
+### 3.4 尚不支持的条件
 - `top / bottom`、跨行扇区、动态连锁、运行时状态驱动这类仍缺稳定事实源或稳定确定性语义的布局规则，当前不硬算。
 - `male / female / race / alignment / role` 之外更复杂的布尔表达式，仍应通过结构化 parser 或语义补丁进入 qualifier，不能靠页面或评分代码现场猜。
 - `HasEffect(...)` 这类运行时状态表达式当前不进入静态 planner model；缺少稳定事实源时只记 warning，不硬算。
@@ -90,11 +87,11 @@
 - 若同时带 `filter_targets` / `target_filters`，则这些过滤条件继续作为 carry 命中限定保留；不会因为目标是全阵型就丢失标签、属性、伤害类型等约束。
 - 这类规则当前最常见于传奇效果里的“所有女性 / 所有矮人 / 所有满足某属性阈值的英雄造成更多伤害”，对自动化阵型有直接价值。
 - `attack_type` 过滤当前也已统一进入 `targetQualifier.requiredAttackDamageTypes`，因此像“所有 Magic Champions 增伤”这类规则不会再被 planner 静默丢弃。
-- `hero_dps_mult_per_target_crusader` 当前已按“两层语义”稳定落地：`targets` 决定受益 carry 的站位关系，effect string 里的第三参数决定 formation 计数的站位子集。
-- `hero_dps_mult_per_tagged_crusader_mult` 当前已稳定落地为“按 tag 计数、对 carry 乘算增伤”。
-- `hero_dps_mult_per_crusader_mult` 当前已稳定落地为“按 carry 限定条件计数，并只对同限定 carry 生效”；首期已覆盖 `attack_type` 这种高价值静态限定。
-- `hero_dps_mult_per_col_behind` 当前已稳定落地为“按 carry 相对 source hero 落后多少列来乘算叠层”。
-- `buff_upgrade*` 当前已稳定落地为“派生 signal over base signal”：若被增强的基础升级本身已可见于 planner，则 wrapper 会产出和基础 signal 同受益目标、同站位语义的派生 signal，并通过 `bonusScaleOfSignal` 把加法/乘法增量继续带入评分。
+- `hero_dps_mult_per_target_crusader` 按“两层语义”稳定支持：`targets` 决定受益 carry 的站位关系，effect string 里的第三参数决定 formation 计数的站位子集。
+- `hero_dps_mult_per_tagged_crusader_mult` 稳定支持“按 tag 计数、对 carry 乘算增伤”。
+- `hero_dps_mult_per_crusader_mult` 稳定支持“按 carry 限定条件计数，并只对同限定 carry 生效”；已覆盖 `attack_type` 这种高价值静态限定。
+- `hero_dps_mult_per_col_behind` 稳定支持“按 carry 相对 source hero 落后多少列来乘算叠层”。
+- `buff_upgrade*` 稳定支持“派生 signal over base signal”：若被增强的基础升级本身已可见于 planner，则 wrapper 会产出和基础 signal 同受益目标、同站位语义的派生 signal，并通过 `bonusScaleOfSignal` 把加法/乘法增量继续带入评分。
 - `buff_upgrade_per_any_crusader_where_mult` 当前已并入这条链路；只要 `compare / comparison / check` 能归一化成静态 qualifier，例如属性阈值、年龄阈值、基础攻击冷却阈值，就会按 `per_crusader + mult` 进入自动化阵型评分。
 - `buff_upgrade_mult_by_distance_from_source_mult` 当前也已并入这条链路；只要基础升级已可见，planner 会按 support 到 carry 的邻接图槽位距离做乘算堆叠，再把结果作为基础 buff 的增量计入评分。
 
@@ -120,7 +117,7 @@ scenario + layout
 - 手动模式：用户先锁定一个 C 位，系统只围绕它推荐。
 - 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位，完整阵型搜索结果按 distinct-carry Top K 返回（见 §7 输出合同）。
 - 无论手动还是自动，完整阵型搜索时都必须有且仅有一个主 C 位。
-- 引擎结构支持 `owned-only / all-hypothetical` 两种候选模式，默认落地 `owned-only`。
+- 引擎支持 `owned-only / all-hypothetical` 两种候选模式，默认 `owned-only`。
 - 同 seat 冲突属于硬约束，在搜索前就生效。
 - 搜索单位是**完整阵型**，不是逐槽位贪心挑人。
 - 继续采用 deterministic beam search。
@@ -162,7 +159,7 @@ scenario + layout
 - 仓库语义补丁和浏览器本地 override 都能改变推荐解释来源。
 - unsupported 规则只进入 warning，不进入主评分。
 
-## 9. 当前明确不做
+## 9. 不做的范围
 - 敌对单位血量模型
 - “是否能击杀当前敌人”的门槛判定
 - 逐帧战斗模拟

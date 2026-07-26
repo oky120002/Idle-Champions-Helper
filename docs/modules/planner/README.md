@@ -1,24 +1,28 @@
 # planner 模块文档入口
 
-- 作用：收纳自动阵型计划器的产品需求、技术设计、Ralph 任务拆分和验收契约。
-- 边界：本目录是设计和任务契约来源；实际开发由 `.ralph/tasks/planner/` 中的 story 驱动。
+- 作用：自动阵型计划器的产品需求、架构设计与功能说明。
+- 边界：本目录是功能与设计事实源；Ralph 任务契约与验收用例见 `.ralph/tasks/planner/`。
 
-## 当前演进规划
+## 文档导览
 
-- **[`evolution-plan.md`](./evolution-plan.md)**：阵型模拟器演进规划总纲（三层架构 + 18 阶段进度追踪 + TDD 硬约束 + 里程碑分组 + 命名修正 A1 + 加成聚合调研）。新 session 读总纲了解全貌；M1-M4 + 阶段 17 自配评估页 + 阶段 18 计算模式已全部完成，里程碑执行步骤见对应 `milestone-{2..4}-*.md`。命名以通用符号去 Planner 为准。
-- **[`goal-prompts.md`](./goal-prompts.md)**：4 个里程碑 `/goal` 提示词（M1 核心引擎 / M2 数据补全 / M3 补强 / M4 UI），copy 到 Claude Code 即可按里程碑驱动执行（配合 evolution-plan.md 的 `[ ]`/`[x]` 进度追踪跨 session 衔接）。
+### 产品与架构
 
-## 先读哪篇
+- `prd.md`：产品目标、用户流程、隐私与基线要求。
+- `development-design.md`：三层架构、目录设计、命名约定、BUD 与 DPS 取舍、模拟/UI 分离。
+- `development-design-data.md`：数据流、核心数据契约、官方只读 client、IndexedDB 与隐私测试。
 
-- 产品目标、用户流程、隐私与基线要求：`docs/modules/planner/prd.md`
-- 架构总览和实现入口：`docs/modules/planner/development-design.md`
-- 推荐英雄、站位、planner model 与 merge 规则：`docs/modules/planner/recommendation-and-placement-design.md`
-- planner signal 真实覆盖率盘点：`docs/modules/planner/signal-coverage-research.md`
-- 表达式求值器（数值 per_hero_expr 统一 + requirements/condition/effect_string args 审计）规划：`docs/modules/planner/expression-evaluator-plan.md`
-- 数据、隐私、存储和官方只读 client：`docs/modules/planner/development-design-data.md`
-- 数字层、基线、模拟器、搜索和 UI：`docs/modules/planner/development-design-simulator.md`
-- 主线外顺手发现项统一落库：根 `TODO.md`（`auto-todo` 技能维护）
-- 单例验收设计：`.ralph/tasks/planner/acceptance-cases.md`
+### 推荐与评分
+
+- `recommendation-and-placement-design.md`：推荐英雄、站位规则、模型字段、条件匹配语义与 merge 策略。
+- `development-design-simulator.md`：GameNumber、基线、加成聚合、评分维度、搜索、计算模式、Web Worker、推图预估与 UI 工作台。
+- `signal-coverage-research.md`：planner signal 真实覆盖率盘点。
+
+### 专题
+
+- `expression-evaluator.md`：`per_hero_expr` 两类表达式的解析与求值（布尔谓词现状 + 数值表达式扩展）。
+- `bud-verification.md`：BUD 计算公式与游戏内校准。
+- `buff-upgrade-priority.md`：buff_upgrade wrapper 变体覆盖与稀有度去重。
+- `data-source-confirmations.md`：推图预估、全局加成、restrictions、装备等数据源的字段确认事实。
 
 ## 关联入口
 
