@@ -21,9 +21,12 @@ export interface UsePlannerCollectionsResult {
 
 /**
  * planner 公共数据加载（场景/英雄/profile/champion 映射 + 当前选中场景）。
- * 自动计划页与自配评估页共用，避免重复加载；不做推荐搜索与评分。
+ *
+ * 注意：这是数据加载 hook，不是跨路由共享 store——每个页面实例各自维护选中场景与
+ * 已加载数据。跨页携带选中场景由调用方经路由 state 传递（自配评估页 initialVariantId
+ * 与回填 variantIdFromEvaluate）。不做推荐搜索与评分。
  */
-export function usePlannerCollections(): UsePlannerCollectionsResult {
+export function usePlannerCollections(initialVariantId?: string | null): UsePlannerCollectionsResult {
   const [collections, setCollections] = useState<PlannerCollections>({
     variants: [],
     plannerHeroes: [],
@@ -59,7 +62,7 @@ export function usePlannerCollections(): UsePlannerCollectionsResult {
         })
         setProfileSnapshot(resolution.snapshot)
         setChampionById(new Map(champions.items.map((champion) => [champion.id, champion])))
-        setSelectedVariantId((current) => current ?? variants.items[0]?.id ?? null)
+        setSelectedVariantId((current) => current ?? initialVariantId ?? variants.items[0]?.id ?? null)
         setLoadState('ready')
       } catch (caught) {
         if (!active) return

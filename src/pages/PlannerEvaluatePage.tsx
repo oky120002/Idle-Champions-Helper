@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Eraser, Lock, Plus, Send, Sparkles, Unlock } from 'lucide-react'
 import { BackNavigationIcon } from '../app/AppIcons'
@@ -19,7 +19,6 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import {
   patchEvaluatePlacements,
   removeEvaluatePlacement,
-  setEvaluatePlacements,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
 import { usePlannerCollections } from './planner/usePlannerCollections'
@@ -29,23 +28,34 @@ export function PlannerEvaluatePage() {
   const location = useLocation()
   const navigate = useNavigate()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
+  const locationState = location.state as
+    | {
+        returnTo?: { pathname: string; search: string }
+        returnLabel?: { zh: string; en: string }
+        initialVariantId?: string | null
+      }
+    | null
   const {
     collections,
     profileSnapshot,
     championById,
     selectedVariantId,
-    selectVariantId,
+    selectVariantId: selectVariantIdBase,
     loadState,
     loadError,
-  } = usePlannerCollections()
-  const [placements] = useEvaluatePlacements()
+  } = usePlannerCollections(locationState?.initialVariantId ?? null)
+  const [placements, setEvaluatePlacements] = useEvaluatePlacements()
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
 
-  const locationState = location.state as
-    | { returnTo?: { pathname: string; search: string }; returnLabel?: { zh: string; en: string } }
-    | null
+  // 切场景 = 换阵型拓扑，旧 slotId 失效；清锁与已摆阵型，避免 stale slotId 复活（fill-remaining 会回填 lockedSlots）。
+  const selectVariantId = useCallback((variantId: string | null) => {
+    selectVariantIdBase(variantId)
+    setLockedSlots({})
+    setEvaluatePlacements({})
+  }, [selectVariantIdBase, setEvaluatePlacements])
+
   const backTarget = locationState?.returnTo ?? { pathname: '/planner', search: '' }
   const backLabel = locationState?.returnLabel ?? { zh: '返回自动计划', en: 'Back to auto plan' }
 
@@ -158,6 +168,16 @@ export function PlannerEvaluatePage() {
               </div>
             </div>
           </section>
+        ) : loadState === 'loading' ? (
+          <section className="surface-card page-shell" role="status" aria-busy="true">
+            <div className="surface-card__header">
+              <div className="surface-card__header-copy">
+                <p className="surface-card__description">
+                  {t({ zh: '正在加载场景与英雄数据…', en: 'Loading scenarios and champions…' })}
+                </p>
+              </div>
+            </div>
+          </section>
         ) : (
           <>
             <section className="surface-card page-shell planner-evaluate-page__scenario-panel">
@@ -198,9 +218,7 @@ export function PlannerEvaluatePage() {
                   slots={evaluation.slots}
                   placements={placements}
                   championById={championById}
-                  carrySlotId={evaluation.result?.carryHeroId
-                    ? Object.entries(placements).find(([, id]) => id === evaluation.result?.carryHeroId)?.[0] ?? null
-                    : null}
+                  carrySlotId={evaluation.result?.breakdown?.carrySlotId ?? null}
                   testId="planner-evaluate-board"
                   emptyIndicator={
                     <span className="formation-slot__summary-empty">
@@ -208,6 +226,10 @@ export function PlannerEvaluatePage() {
                     </span>
                   }
                   onSlotDrop={(slotId, event) => {
+                    // 锁定槽位不可变（拖拽覆盖会破坏锁契约，且让锁按钮消失无法解锁）。
+                    if (lockedSlots[slotId]) {
+                      return
+                    }
                     const heroId = event.dataTransfer?.getData('text/plain')
                     if (heroId) {
                       patchEvaluatePlacements(slotId, heroId)
@@ -331,7 +353,7 @@ export function PlannerEvaluatePage() {
                     disabled={Object.keys(lockedSlots).length === 0}
                     onClick={() =>
                       navigate('/planner', {
-                        state: { lockedSlotsFromEvaluate: lockedSlots },
+                        state: { lockedSlotsFromEvaluate: lockedSlots, variantIdFromEvaluate: selectedVariantId },
                       })
                     }
                   >
@@ -353,7 +375,7 @@ export function PlannerEvaluatePage() {
                     const heroId = event.dataTransfer?.getData('text/plain')
                     if (!heroId) return
                     const entry = Object.entries(placements).find(([, id]) => id === heroId)
-                    if (entry) {
+                    if (entry && !lockedSlots[entry[0]]) {
                       removeEvaluatePlacement(entry[0])
                     }
                   }}

@@ -93,4 +93,17 @@
 
 **测试**：`steadyStateScoring.test.ts` breakdown 断言；`recommendationEngine.test.ts` evaluateFormation（不搜索/原样返回/seat 冲突 warning）；`PlannerBreakdown.test.tsx`（null 不渲染/因子/按英雄/折叠）；`beamSearchRanking.test.ts` mock 同步。验证 `test:run` + `build` + CLI 实跑双模式。
 
-**编辑→重算闭环**：planner 已有锁槽/指定 carry（15.4）→ `buildPlannerRecommendation` 重搜 → 新 breakdown 渲染；`evaluateFormation` 为未来"可编辑阵型棋盘按 exact 阵型评估"备好引擎入口（CLI 已证明）。
+**编辑→重算闭环**：planner 已有锁槽/指定 carry（15.4）→ `buildPlannerRecommendation` 重搜 → 新 breakdown 渲染；自配评估页（`/planner/evaluate`）是基于 `evaluateFormation` 建的「可编辑阵型棋盘按 exact 阵型评估」UI——用户摆阵型 → `evaluateFormation` 重算 → breakdown 渲染，半自动「算剩余最优」复用 `buildPlannerRecommendation`。
+
+---
+
+## 自配评估页阶段 1-4（M4 后·引擎能力的 UI 接通）
+
+`evaluateFormation` 引擎入口（第4轮审计）在 M4 收口时只有 CLI 消费；这套阶段把它接通成用户可见的「自摆阵型 → 看核心英雄 DPS」工作台。
+
+- **阶段 1 骨架**：`PlannerEvaluatePage.tsx` + `/planner/evaluate` 路由；复用 `usePlannerCollections`（数据加载）与 `evaluatePlacementsStore`（跨路由保留玩家自摆阵型）。
+- **阶段 2 可编辑棋盘**：复用 `FormationBoardCanvas` + `HeroPicker`（拖拽源）+ 槽位 `<select>`；`evaluateFormation` 经 `useMemo` 消费 placements → 重算 → 渲染。
+- **阶段 3 锁/算剩余/回填**：槽位锁（`lockedSlots` 局部态）+「算剩余最优」（`buildPlannerRecommendation` 半自动补全）+「回填到自动计划」（路由 state 带 `lockedSlotsFromEvaluate` + `variantIdFromEvaluate`）。
+- **阶段 4 评估渲染**：`PlannerBreakdown`（baseDps → carryDps 因子构成 + 按英雄加成来源）接入评估卡片。
+
+**锁契约**：锁定槽位不可变——`<select>` 禁用、拖拽覆盖与拖出移除均被拒（避免锁残留导致「算剩余」复活已移除英雄）。切场景清锁与已摆阵型（slotId 随场景失效）。

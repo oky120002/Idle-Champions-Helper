@@ -28,6 +28,7 @@
 - [x] 14 click 辅助 + modron + ult buff（14.1/14.3/14.4-uptime 核心；14.2 UI + 14.4 pipeline 集成留后续）
 - [x] 15 UI 接通（15.1-15.6·最后）
 - [x] 16 拖拽（16.1-16.5·最后）
+- [x] 17 自配评估页（M4 后·`evaluateFormation` 的 UI 接通，4 阶段；详见 `milestone-4-ui.md` 末尾）
 
 > 步骤级 `[ ]`/`[x]` 见各里程碑文件；`goal-prompts.md` 按里程碑组织 `/goal` 提示词。
 
@@ -58,7 +59,7 @@ BUD = 阵型近期最高单次伤害。
   → 数据补全系列：3 金币 → 4 crit → 5 health → 6 vulnerability → 7 speed → 8 buff_upgrade
   → 9 scenario+schema
   → 补强：10 推图预估 → 11 全局加成 → 12 restrictions → 13 装备精细 → 14 click+modron+ult buff
-  → 15 UI 接通（最后）→ 16 拖拽（最后）
+  → 15 UI 接通（最后）→ 16 拖拽（最后）→ 17 自配评估页（evaluateFormation 的 UI 接通）
 ```
 
 ## 里程碑分组（大计划拆小计划·不限制 16 阶段死）

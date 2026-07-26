@@ -79,17 +79,24 @@ export function PlannerPage() {
     lockSlot,
   } = usePlannerPageModel()
 
-  // 自配评估面板「回填到自动计划」带过来的锁定槽位，按槽位逐个写入。
-  // location.key 随导航变化触发；lockSlot 是 useCallback 稳定引用。
+  // 自配评估面板「回填到自动计划」带过来的场景与锁定槽位。
+  // 必须先切到来源场景（slotId 随场景变），再按槽位逐个写入——否则旧场景的 slotId
+  // 落到新场景上要么对不上被忽略，要么撞上同 id 的不同位置。
+  // location.key 随导航变化触发；selectVariantId/lockSlot 是 useCallback 稳定引用。
   useEffect(() => {
-    const navigateState = location.state as { lockedSlotsFromEvaluate?: Record<string, string> } | null
+    const navigateState = location.state as
+      | { lockedSlotsFromEvaluate?: Record<string, string>; variantIdFromEvaluate?: string | null }
+      | null
     const locked = navigateState?.lockedSlotsFromEvaluate
-    if (locked) {
-      Object.entries(locked).forEach(([slotId, heroId]) => {
-        lockSlot(slotId, heroId)
-      })
+    const variantId = navigateState?.variantIdFromEvaluate
+    if (!locked) return
+    if (variantId) {
+      selectVariantId(variantId)
     }
-  }, [location.key, lockSlot])
+    Object.entries(locked).forEach(([slotId, heroId]) => {
+      lockSlot(slotId, heroId)
+    })
+  }, [location.key, selectVariantId, lockSlot])
 
   const safeResultIndex = plannerRecommendation.results.length > 0
     ? Math.min(selectedResultIndex, plannerRecommendation.results.length - 1)
@@ -140,6 +147,7 @@ export function PlannerPage() {
                       state: {
                         returnTo: { pathname: '/planner', search: location.search },
                         returnLabel: { zh: '返回自动计划', en: 'Back to auto plan' },
+                        initialVariantId: selectedVariantId,
                       },
                     }),
                 },

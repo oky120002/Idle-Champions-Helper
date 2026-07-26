@@ -15,7 +15,7 @@ export interface ActionButtonItem {
   type?: 'button' | 'submit' | 'reset'
   ariaPressed?: boolean
   ariaLabel?: string
-  disabledReason?: string
+  disabledReason?: string | undefined
 }
 
 interface ActionButtonsProps {
