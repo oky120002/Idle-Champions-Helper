@@ -163,6 +163,18 @@ export function useFormationPageDerived({
   const canSavePreset =
     selectedChampions.length > 0 && presetForm.name.trim().length > 0 && !isSavingPreset
 
+  function getAvailableChampionsForSlot(slotId: string): Champion[] {
+    const currentHeroId = selectedChampions.find((p) => p.slotId === slotId)?.champion.id
+    const occupiedOtherSeats = new Set(
+      selectedChampions
+        .filter((p) => p.slotId !== slotId)
+        .map((p) => p.champion.seat),
+    )
+    return championOptions.filter(
+      (champion) => champion.id === currentHeroId || !occupiedOtherSeats.has(champion.seat),
+    )
+  }
+
   function getChampionOptionLabel(champion: Champion): string {
     return `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`
   }
@@ -211,6 +223,7 @@ export function useFormationPageDerived({
     conflictingSeats,
     draftPromptChampions,
     canSavePreset,
+    getAvailableChampionsForSlot,
     getChampionOptionLabel,
     getPresetPriorityLabel,
     getLayoutFilterLabel,

@@ -17,7 +17,7 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
     selectedLayout,
     selectedChampions,
     championById,
-    championOptions,
+    getAvailableChampionsForSlot,
     activeMobileSlot,
     conflictingSeats,
     formationBoardStyle,
@@ -96,7 +96,7 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
                 onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
               >
                 <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
-                {championOptions.map((item) => (
+                {getAvailableChampionsForSlot(slot.id).map((item) => (
                   <option key={item.id} value={item.id}>
                     {getChampionOptionLabel(item)}
                   </option>

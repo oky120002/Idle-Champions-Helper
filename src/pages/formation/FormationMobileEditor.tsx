@@ -14,7 +14,7 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
     activeMobileSlot,
     activeMobileChampion,
     activeMobileChampionId,
-    championOptions,
+    getAvailableChampionsForSlot,
     locale,
     t,
     handleAssignChampion,
@@ -56,7 +56,7 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
       </div>
 
       <HeroPicker
-        champions={championOptions}
+        champions={getAvailableChampionsForSlot(activeMobileSlot.id)}
         value={activeMobileChampionId}
         onChange={(heroId) => handleAssignChampion(activeMobileSlot.id, heroId)}
       />

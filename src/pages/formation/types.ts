@@ -82,6 +82,7 @@ export interface FormationPageModel {
   isSelectedLayoutVisible: boolean
   formationBoardStyle: CSSProperties | undefined
   championOptions: Champion[]
+  getAvailableChampionsForSlot: (slotId: string) => Champion[]
   championById: Map<string, Champion>
   selectedChampions: SelectedChampionPlacement[]
   activeMobileSlot: FormationSlot | null

@@ -109,6 +109,7 @@ export function useFormationPageModel(): FormationPageModel {
     isSelectedLayoutVisible: derived.isSelectedLayoutVisible,
     formationBoardStyle: derived.formationBoardStyle,
     championOptions: derived.championOptions,
+    getAvailableChampionsForSlot: derived.getAvailableChampionsForSlot,
     championById: derived.championById,
     selectedChampions: derived.selectedChampions,
     activeMobileSlot: derived.activeMobileSlot,
