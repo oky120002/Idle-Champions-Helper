@@ -2,7 +2,7 @@
 
 - 方案日期：2026-04-13
 - 目标：在不要求用户把真实 `User ID / hash` 发给第三方的前提下，为辅助站建立个人数据导入能力。
-- 页面壳层：个人数据页现已纳入全站页面工作台规范；当前小导航、工具条、无左栏模式与右区滚动见 `docs/modules/shared-components/page-workbench-design.md`，统一推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
+- 页面壳层：个人数据页纳入全站页面工作台规范；小导航、工具条、无左栏模式、右区滚动与页面归位映射见 `docs/modules/shared-components/page-workbench-design.md`。
 
 ## 1. 设计原则
 

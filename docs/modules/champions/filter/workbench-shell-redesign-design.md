@@ -1,8 +1,6 @@
 # Champions 工作台壳层重构设计稿
 
-- 日期：2026-04-21
-- 作用：沉淀 `Champions` 页从“左筛选右列表”升级到“悬浮工作台”的结构方案、交互状态和实施边界。
-- 作用：记录 `Champions` 工作台的局部状态约束；当前全站通用结构细节见 `docs/modules/shared-components/page-workbench-design.md`，推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
+- 作用：记录 `Champions` 工作台的局部状态约束；全站通用结构与页面归位映射见 `docs/modules/shared-components/page-workbench-design.md`。
 
 ## 目标与非目标
 

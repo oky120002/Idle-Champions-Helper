@@ -1,8 +1,6 @@
 # 全站页面工作台设计规范
 
-- 日期：2026-04-22
-- 作用：固定当前已落地的 `PageWorkbenchShell` 视觉签名、结构语义、滚动模型和关键动效，作为后续细节迭代与跨页复核的设计基线。
-- 范围：这里只展开“现在已经实现成什么样”；页面归位、推广范围和旧实现清退口径继续以 `docs/modules/shared-components/filter-workbench-rollout-plan.md` 为准。
+- 作用：固定 `PageWorkbenchShell` 视觉签名、结构语义、滚动模型、关键动效与页面归位映射，作为细节迭代与跨页复核的设计基线。
 
 ## 结构签名
 
@@ -87,3 +85,21 @@
 - 页面只负责把内容映射到 `toolbarLead / toolbarPrimary / toolbarActions / sidebarHeader / sidebar / contentHeader / children`。
 - 壳层本身统一负责：桌面锁滚、抽屉持久化、左右内滚容器、悬浮回顶覆盖层和 sidebarless 行为。
 - 若后续页面暂时没有左侧内容，也只能走“隐藏左栏”模式，不能重新发明另一套页面外壳。
+
+## 页面归位映射
+
+工作台壳层覆盖全站桌面端页面；有左栏页面左右内滚，无左栏页面只保留右区主滚动。
+
+| 页面 | 左顶部区 | 左主体区 | 右顶部区 | 右主体区 |
+| --- | --- | --- | --- | --- |
+| Champions | 条件 badge、清空、提示 | champions 筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 视觉档案、结果卡、空态 |
+| Illustrations | 条件 badge、清空、提示 | 立绘筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 立绘结果网格、空态 |
+| Pets | 条件 badge、清空、提示 | 宠物筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 宠物结果网格、空态 |
+| Variants | 条件 badge、清空、提示 | 变体筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | campaign / adventure 分组结果、空态 |
+| Formation | 布局状态、提示 | 布局搜索、场景类型、当前布局摘要、布局库 | 标题、当前布局、已放置英雄数、复制链接 | 草稿提示、画板编辑、阵型摘要、保存方案 |
+| Presets | 隐藏 | 隐藏 | 标题、总数、可恢复数、复制链接 | 范围说明、方案列表、空态 / 编辑 / 删除 / 恢复 |
+| User Data | 隐藏 | 隐藏 | 标题、当前导入方式、解析状态、复制链接 | 导入边界、导入工作台 |
+| Champion Detail | 隐藏 | 隐藏 | 返回入口、标题、当前章节、复制链接 | 卷宗头部、章节内容、详情侧栏 |
+
+- `Illustrations Audit`（`/illustrations/audit`）是 `/illustrations` 前缀下的子路由条目，`Champion Detail`（`/champions/:championId`）是 `/champions` 下的详情子路由条目，均为独立页级 Route。
+- `isWorkbenchRoute`（`src/app/workbenchRoutes.ts`）统一覆盖全部工作台页面与 `/champions/:championId`；桌面锁滚、头部紧凑与主内容高度锁定挂在这条路由判定上。
