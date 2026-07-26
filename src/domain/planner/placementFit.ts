@@ -212,14 +212,18 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
   // pool 聚合：key = `${dimension}:${scope}`；同一 pool 内 additive 累加百分比、multiplicative 累乘因子；pool 间乘法。
   const poolsByKey = new Map<string, AggregatedPool>()
 
-  const dimensionFilter = input.dimension ?? null
+  // dimension 支持单值或数组（多维度一次跑）；归一化成 Set 做 O(1) 过滤。
+  const dimensionFilterRaw = input.dimension
+  const dimensionFilterSet = dimensionFilterRaw
+    ? new Set(Array.isArray(dimensionFilterRaw) ? dimensionFilterRaw : [dimensionFilterRaw])
+    : null
   // aggregatePools=false 时跳过 pool 构建，只产 scoreBreakdown（crit/vulnerability 维度省去死代码计算）。
   const aggregatePools = input.aggregatePools ?? true
 
   for (const signal of collectSignals(input)) {
-    if (dimensionFilter) {
+    if (dimensionFilterSet) {
       const signalDimension = DIMENSION_BY_KIND[signal.kind]
-      if (signalDimension !== dimensionFilter) {
+      if (!dimensionFilterSet.has(signalDimension)) {
         continue
       }
     }

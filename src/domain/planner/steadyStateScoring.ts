@@ -1,11 +1,8 @@
 import Decimal from 'break_eternity.js'
 
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
-import type {
-  HeroAbilityDimension,
-  HeroAbilityKind,
-  ResolvedHeroAbilityProfile,
-} from '../abilities/abilityModel'
+import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeTeamGoldFind } from './goldObjective'
@@ -308,29 +305,6 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
 
-  // 维度评分闭包：damage/crit/vulnerability 三维度共用同一组位置/目标参数，仅 dimension 不同，
-  // 抽出来避免三段重复（原三段 evaluatePlacementFit 仅 dimension 字段不同）。
-  const scoreSupportDimension = (
-    carry: PlacedEntry,
-    support: PlacedEntry,
-    dimension: HeroAbilityDimension,
-  ) =>
-    evaluatePlacementFit({
-      carryHero: carry.hero,
-      carrySlotId: carry.slotId,
-      supportHero: support.hero,
-      supportSlotId: support.slotId,
-      scenario: input.scenario,
-      placements: input.placements,
-      heroesById: input.heroesById,
-      // carryDps 只聚合 damage 维度；gold/crit/survival 等非伤害 pool 必须显式过滤，
-      // 否则阶段 3+ 引入新维度后会泄漏进 carryDps（同 typecheck masking 教训）。
-      dimension,
-      // crit/vulnerability 只消费 scoreBreakdown（喂 computeCritFactor/computeVulnerabilityFactor），
-      // 不读 pools——跳过聚合避免死代码计算。damage 维度的 pools 才喂 productOfPoolMultipliers。
-      aggregatePools: dimension === 'damage',
-    })
-
   for (const carryEntry of placedEntries) {
     if (input.lockedCarryHeroId && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
       continue
@@ -347,45 +321,50 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const contributions: SimulationContribution[] = []
 
     for (const supportEntry of placedEntries) {
-      const damageFit = scoreSupportDimension(carryEntry, supportEntry, 'damage')
-      warnings.push(...damageFit.warnings)
-      mergePools(sharedPools, damageFit.pools)
+      // 一次跑 damage/crit/vulnerability 三维度（dimension 数组），signal 只迭代一遍 + 一次 qualifier 匹配，
+      // 避免原 3 次 evaluatePlacementFit 对同一批 signal 重复匹配（结构性加速 ~3x 内层）。
+      const fit = evaluatePlacementFit({
+        carryHero: carryEntry.hero,
+        carrySlotId: carryEntry.slotId,
+        supportHero: supportEntry.hero,
+        supportSlotId: supportEntry.slotId,
+        scenario: input.scenario,
+        placements: input.placements,
+        heroesById: input.heroesById,
+        dimension: ['damage', 'crit', 'vulnerability'],
+        aggregatePools: true,
+      })
+      warnings.push(...fit.warnings)
+      // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
+      mergePools(sharedPools, fit.pools.filter((pool) => pool.dimension === 'damage'))
 
-      // crit 维度单独聚合（chance/damage 不能混入 damage pool），供 crit_factor 使用。
-      const critFit = scoreSupportDimension(carryEntry, supportEntry, 'crit')
-      critParts.push(...critFit.scoreBreakdown)
-
-      // vulnerability 维度按场景怪物类型条件性匹配（阶段 6），进 vulnFactor。
-      const vulnFit = scoreSupportDimension(carryEntry, supportEntry, 'vulnerability')
-
-      // 该支持位对 carry 的 active signal（三维度合并）→ 结构化 contributions。
+      // 按 dimension 拆 scoreBreakdown：crit 全量进 critParts；vuln 经 monsterTags 条件匹配进 vulnParts；
+      // damage/crit active + vuln(active 且匹配) 合并进 contributions。
       const supportActiveParts: PlacementFitScorePart[] = []
-      for (const part of damageFit.scoreBreakdown) {
-        if (!part.active) {
-          continue
+      for (const part of fit.scoreBreakdown) {
+        const dim = DIMENSION_BY_KIND[part.signalKind]
+        if (dim === 'crit') {
+          critParts.push(part)
+          if (part.active) {
+            activeKinds.add(part.signalKind)
+            supportActiveParts.push(part)
+          }
+        } else if (dim === 'vulnerability') {
+          if (!part.active) {
+            continue
+          }
+          // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入（批判③ 保守跳过不匹配）。
+          const tags = part.monsterTags
+          if (tags && tags.length > 0 && !tags.some((tag) => enemyTypeSet.has(tag))) {
+            continue
+          }
+          activeKinds.add(part.signalKind)
+          vulnParts.push(part)
+          supportActiveParts.push(part)
+        } else if (dim === 'damage' && part.active) {
+          activeKinds.add(part.signalKind)
+          supportActiveParts.push(part)
         }
-        activeKinds.add(part.signalKind)
-        supportActiveParts.push(part)
-      }
-      for (const part of critFit.scoreBreakdown) {
-        if (!part.active) {
-          continue
-        }
-        activeKinds.add(part.signalKind)
-        supportActiveParts.push(part)
-      }
-      for (const part of vulnFit.scoreBreakdown) {
-        if (!part.active) {
-          continue
-        }
-        // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入（批判③ 保守跳过不匹配）。
-        const tags = part.monsterTags
-        if (tags && tags.length > 0 && !tags.some((tag) => enemyTypeSet.has(tag))) {
-          continue
-        }
-        activeKinds.add(part.signalKind)
-        vulnParts.push(part)
-        supportActiveParts.push(part)
       }
 
       if (supportActiveParts.length > 0) {

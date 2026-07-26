@@ -88,8 +88,11 @@ export interface EvaluatePlacementFitInput {
   scenario: ResolvedPlannerScenarioModel
   placements?: Record<string, string>
   heroesById?: Map<string, ResolvedHeroAbilityProfile>
-  /** 按 dimension 过滤；不传时聚合全部 damage 维度 signal。 */
-  dimension?: HeroAbilityDimension
+  /**
+   * 按 dimension 过滤；不传时聚合全部维度 signal。可传数组（如 `['damage','crit','vulnerability']`）
+   * 一次跑多维度——signal 只迭代一遍，避免对同一批 signal 重复 qualifier 匹配（结构性加速）。
+   */
+  dimension?: HeroAbilityDimension | readonly HeroAbilityDimension[]
   /**
    * 是否聚合 pools/totalMultiplier；默认 true。
    * false 时跳过 pool 聚合（pools 返回空、totalMultiplier 返回 1），只产 scoreBreakdown——
