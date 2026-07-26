@@ -69,3 +69,5 @@ CLAUDE.md §1.2「未变整批跳过重生成」在 normalize/build 的实现：
 - **`FORCE_DATA_REBUILD=1`**：手动强制逃生口，覆盖「调试 / 嫌疑产物脏」等需要无条件重跑的场景。
 
 `pipelineHash` 粗粒度覆盖整个 `scripts/data/`：任何数据脚本（effect-helpers / build-models / normalize-champions / patron-perk-signals / ...）改动都触发重跑，保守不漏优于精确但漏检。fetch 无法下载前跳过（discovery 只返回 play_server，`current_time` 在 getDefinitions 响应里），故 fetch 仍每次下载；normalize/build 的 skip 在 fetch 之后生效——raw 没变时省 normalize/build 的几秒重生成，但不省 fetch 带宽。
+
+**只改 build 产物时单独跑 build-models，避免上游 timestamp 漂移污染 diff**：feature 只动 `build-models.ts`（新增派生字段，如 `gainProfile`）时，跑全量 `data:official` 会顺带 fetch 上游——CNE definitions `current_time` 每日 ticking（即使内容没变）→ normalize 全刷 → ~180 个 champion-details/*.json + 各 collection 纯 `updatedAt` 时间戳 churn 混进 feature commit。此时用 `FORCE_DATA_REBUILD=1 npx tsx scripts/data/build-models.ts` 单独跑，从已提交的 champion-details 只重生成 hero-abilities.json/scenarios.json，diff 干净（仅 feature 真实改动）。
