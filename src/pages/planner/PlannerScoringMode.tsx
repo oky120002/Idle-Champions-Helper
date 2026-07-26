@@ -7,8 +7,8 @@ export interface PlannerScoringModeProps {
 }
 
 const MODES = [
-  { id: 'carry-dps' as const, zh: '输出（carryDps）', en: 'Damage (carryDps)' },
-  { id: 'team-gold' as const, zh: '金币（team_gold_find）', en: 'Gold (team_gold_find)' },
+  { id: 'carry-dps' as const, zh: '输出（DPS）', en: 'Damage (DPS)' },
+  { id: 'team-gold' as const, zh: '金币收益', en: 'Team gold' },
 ]
 
 /** 推荐模式选择器：carry-dps 最大化单英雄输出；team-gold 最大化全队金币收益。 */

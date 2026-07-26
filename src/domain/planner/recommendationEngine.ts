@@ -52,8 +52,8 @@ function formatLegalityViolation(violation: LegalityViolation): string {
   }
 }
 
-function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: UserProfileSnapshot): string[] {
-  return [...new Set([...snapshot.warnings, ...scenario.scenarioWarnings])]
+function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: UserProfileSnapshot | null): string[] {
+  return [...new Set([...(snapshot?.warnings ?? []), ...scenario.scenarioWarnings])]
 }
 
 function buildPlacementEntries(
@@ -164,7 +164,8 @@ export interface PlannerRecommendationOptions {
 /**
  * 解析 variant → scenario + blocker（搜索 buildPlannerRecommendation 与评估 evaluateFormation 共用）。
  * - 无 variant/英雄数据：scenarioRef=null、blocker=null（调用方按"无输入"处理）。
- * - 缺 profileSnapshot：blocker='missing-profile'。
+ * - owned-only 模式缺 profileSnapshot：blocker='missing-profile'（仅已拥有模式需要真实快照提供候选与等级）。
+ * - all-hypothetical 模式缺 profileSnapshot：放行（未拥有英雄走 level 1 假设基线，DPS 模拟不依赖个人数据）。
  * - scenario/阵型缺失：blocker='missing-formation'。
  * - 否则 scenario 就绪、blocker=null。
  */
@@ -172,6 +173,7 @@ function resolvePlannerScenario(
   selectedVariant: Variant | null,
   collections: PlannerCollections,
   profileSnapshot: UserProfileSnapshot | null,
+  candidateMode: CandidateMode,
 ): { scenario: ResolvedPlannerScenarioModel | null; scenarioRef: ScenarioRef | null; blocker: PlannerRecommendationBlocker | null } {
   if (!selectedVariant || collections.plannerHeroes.length === 0) {
     return { scenario: null, scenarioRef: null, blocker: null }
@@ -179,7 +181,7 @@ function resolvePlannerScenario(
 
   const scenarioRef: ScenarioRef = { kind: 'variant', id: selectedVariant.id }
 
-  if (!profileSnapshot) {
+  if (!profileSnapshot && candidateMode === 'owned-only') {
     return { scenario: null, scenarioRef, blocker: 'missing-profile' }
   }
 
@@ -213,29 +215,29 @@ export function evaluateFormation(
   options: PlannerRecommendationOptions = {},
 ): FormationEvaluation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
-  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot)
+  const candidateMode = options.candidateMode ?? 'owned-only'
+  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
 
-  // resolvePlannerScenario 返回 scenario 非空即保证 profileSnapshot 非空（函数内已检查 missing-profile）。
-  if (!scenario || !scenarioRef || blocker || !profileSnapshot) {
+  // owned-only 模式下 resolvePlannerScenario 保证 profileSnapshot 非空；all-hypothetical 模式 profileSnapshot 可为 null。
+  if (!scenario || !scenarioRef || blocker) {
     return { result: null, layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
   }
 
   // evaluateFormation 不做候选过滤——用户已显式指定阵型，heroById 用全量英雄保证放置的英雄都能解析。
   const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
+  const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
   const candidateIds = new Set(
     buildCandidatePool({
-      mode: options.candidateMode ?? 'owned-only',
-      ownedHeroes: profileSnapshot.ownedHeroes,
+      mode: candidateMode,
+      ownedHeroes,
       allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
     }),
   )
   // heroLevels 覆盖所有已拥有英雄；放置但未拥有的英雄由下方 restrictionWarnings 标记（按 level 1 估算）。
   // 原 .filter(owned => candidateIds.has) 是死代码——owned-only 与 all-hypothetical 两模式下 candidateIds
   // 均包含全部 ownedHeroIds，filter 永不剔项。
-  const heroLevels = new Map(
-    profileSnapshot.ownedHeroes.map((owned) => [owned.heroId, owned.level]),
-  )
+  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
 
   const variantRules: VariantRuleResult = {
     constraints: [
@@ -324,17 +326,19 @@ export function buildPlannerRecommendation(
   options: PlannerRecommendationOptions = {},
 ): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
-  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot)
+  const candidateMode = options.candidateMode ?? 'owned-only'
+  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
 
-  // resolvePlannerScenario 返回 scenario 非空即保证 profileSnapshot 非空（函数内已检查 missing-profile）。
-  if (!scenario || !scenarioRef || blocker || !profileSnapshot) {
+  // owned-only 模式下 resolvePlannerScenario 保证 profileSnapshot 非空；all-hypothetical 模式 profileSnapshot 可为 null。
+  if (!scenario || !scenarioRef || blocker) {
     return { result: null, results: [], layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
   }
 
+  const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
   const candidateIds = new Set(
     buildCandidatePool({
-      mode: options.candidateMode ?? 'owned-only',
-      ownedHeroes: profileSnapshot.ownedHeroes,
+      mode: candidateMode,
+      ownedHeroes,
       allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
     }),
   )
@@ -392,9 +396,7 @@ export function buildPlannerRecommendation(
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
-  const heroLevels = new Map(
-    profileSnapshot.ownedHeroes.map((owned) => [owned.heroId, owned.level]),
-  )
+  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {
     constraints: [
       ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),

@@ -27,7 +27,7 @@ export function PlannerResultCard({
   const { t } = useI18n()
   const scoreLabel = scoringMode === 'team-gold'
     ? t({ zh: '金币收益', en: 'Team gold find' })
-    : t({ zh: 'carryDps', en: 'carryDps' })
+    : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
   const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
     slotId,
     slotLabel: slotId,

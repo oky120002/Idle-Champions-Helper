@@ -168,6 +168,35 @@ describe('planner recommendation engine', () => {
     expect(recommendation.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
   })
 
+  it('all-hypothetical 模式无个人快照也能生成推荐（DPS 模拟不依赖个人数据）', () => {
+    const recommendation = buildPlannerRecommendation(selectedVariant, collections, null, {
+      candidateMode: 'all-hypothetical',
+    })
+
+    expect(recommendation.blocker).not.toBe('missing-profile')
+    expect(recommendation.results.length).toBeGreaterThan(0)
+    expect(recommendation.layoutId).toBe('layout-catacombs')
+  })
+
+  it('evaluateFormation 在 all-hypothetical 模式无个人快照也能评估指定阵型', () => {
+    const evaluation = evaluateFormation(
+      selectedVariant,
+      collections,
+      null,
+      { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
+      { candidateMode: 'all-hypothetical' },
+    )
+
+    expect(evaluation.blocker).not.toBe('missing-profile')
+    expect(evaluation.result).not.toBeNull()
+    expect(evaluation.result?.placements).toEqual({
+      s1: 'bruenor',
+      s2: 'celeste',
+      s3: 'nayeli',
+      s4: 'jarlaxle',
+    })
+  })
+
   it('推荐结果停留在领域层契约，不依赖页面组件类型', () => {
     const snapshot = createUserProfileSnapshot({
       ownedHeroes: [

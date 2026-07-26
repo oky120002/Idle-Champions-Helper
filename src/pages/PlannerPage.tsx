@@ -21,8 +21,8 @@ function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnT
       return {
         title: t({ zh: '导入个人数据后才会生成推荐。', en: 'Import local profile data before generating recommendations.' }),
         description: t({
-          zh: '当前 planner 只会基于本地已拥有英雄计算阵型，并阻止无快照时的假推荐。',
-          en: 'The planner now only computes formations from locally imported owned heroes and blocks mock recommendations without a profile snapshot.',
+          zh: '默认仅基于本地已拥有英雄计算，导入个人数据后最准；也可将「候选范围」切到「全部英雄（假设基线）」直接预览 DPS。',
+          en: 'By default the planner uses only your owned heroes; import your profile for best accuracy, or switch Candidate pool to "All hypothetical" to preview DPS without a profile.',
         }),
       }
     case 'missing-formation':
