@@ -188,6 +188,29 @@ describe('planner evaluate route', () => {
     })
   })
 
+  it('摆英雄后显示核心英雄 DPS', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/planner/evaluate']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+
+    await screen.findByRole('searchbox', { name: '搜索场景' })
+    await user.click(screen.getByRole('radio', { name: /全部英雄/ }))
+
+    const select = await screen.findByRole('combobox', { name: /槽位 s1 英雄选择/ })
+    await user.selectOptions(select, 'bruenor')
+
+    const scoreCard = await screen.findByTestId('planner-evaluate-score')
+    expect(scoreCard).toHaveTextContent('核心英雄 DPS')
+    const scoreValue = scoreCard.querySelector('strong')
+    expect(scoreValue).not.toBeNull()
+    expect(scoreValue?.textContent).toBeTruthy()
+  })
+
   it('锁槽位后点算剩余，系统补全剩余槽位', async () => {
     const user = userEvent.setup()
     render(

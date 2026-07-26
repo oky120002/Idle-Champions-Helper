@@ -12,6 +12,7 @@ import { formatSeatLabel, getLocalizedTextPair } from '../domain/localizedText'
 import type { Champion } from '../domain/types'
 import { FormationBoardCanvas } from './formation/FormationBoardCanvas'
 import { HeroPicker } from './formation/HeroPicker'
+import { PlannerBreakdown } from './planner/PlannerBreakdown'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
@@ -70,6 +71,14 @@ export function PlannerEvaluatePage() {
   function getOptionLabel(champion: Champion): string {
     return `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`
   }
+
+  const scoreLabel = scoringMode === 'team-gold'
+    ? t({ zh: '金币收益', en: 'Team gold find' })
+    : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
+  const heroNameById = useMemo(
+    () => new Map((evaluation.result?.placementEntries ?? []).map((entry) => [entry.heroId, entry.heroName])),
+    [evaluation.result],
+  )
 
   // 半自动：锁定的槽位 + 系统搜出的剩余 = 完整阵型。owned-only + 无快照时 buildPlannerRecommendation
   // 会返回 missing-profile blocker（rec.result 为 null），按钮此时禁用，文案提示切到全部英雄。
@@ -260,6 +269,46 @@ export function PlannerEvaluatePage() {
                     )
                   }}
                 />
+
+                {evaluation.result ? (
+                  <section className="surface-card planner-result-card" data-testid="planner-evaluate-score">
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <p className="surface-card__eyebrow">{scoreLabel}</p>
+                        <p className="planner-result-card__score">
+                          <strong>{evaluation.result.score}</strong>
+                        </p>
+                        {evaluation.result.carryHeroId ? (
+                          <p className="surface-card__description">
+                            {t({
+                              zh: `核心：${heroNameById.get(evaluation.result.carryHeroId) ?? evaluation.result.carryHeroId}`,
+                              en: `Carry: ${heroNameById.get(evaluation.result.carryHeroId) ?? evaluation.result.carryHeroId}`,
+                            })}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
+
+                {evaluation.result?.breakdown ? (
+                  <PlannerBreakdown breakdown={evaluation.result.breakdown} heroNameById={heroNameById} />
+                ) : null}
+
+                {evaluation.result && evaluation.result.warnings.length > 0 ? (
+                  <section className="surface-card page-shell" data-testid="planner-evaluate-warnings">
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <h3 className="surface-card__title">{t({ zh: '当前警告', en: 'Warnings' })}</h3>
+                        <ul>
+                          {evaluation.result.warnings.map((text, index) => (
+                            <li key={index}>{text}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
 
                 <div className="button-row planner-evaluate-page__actions">
                   <button
