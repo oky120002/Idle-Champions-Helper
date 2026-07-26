@@ -32,6 +32,7 @@ interface HeroAbilityItem {
   carrySignals: HeroSignal[]
   supportSignals: HeroSignal[]
   unsupportedSignals: HeroSignal[]
+  gainProfile?: { self: Record<string, number>; support: Record<string, number> }
 }
 
 interface HeroAbilities {
@@ -475,6 +476,9 @@ it('buildModels 产出 hero abilities / scenarios / semantic overrides', async (
   expect(first?.age).toBe(40)
   expect(first?.abilityScores.str).toBe(15)
   expect(first?.carrySignals[0]?.kind).toBe('heroDpsMultiplier')
+  // build 期预算收益：有 DPS carry 信号 → self.damage > 1；self/support 分层都在。
+  expect(first?.gainProfile?.self?.damage).toBeGreaterThan(1)
+  expect(first?.gainProfile?.support).toBeDefined()
   const perTargetCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader,100,adj')
   const perTaggedCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult,200,companion')
   const perTaggedBeforeCarry = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult_amount_before,150,wafflecrew')

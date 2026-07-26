@@ -16,6 +16,7 @@ import type {
   HeroAbilitySignal,
   HeroUnsupportedSignal,
 } from '../../src/domain/abilities/abilityModel'
+import { computeHeroGainProfile } from '../../src/domain/abilities/abilityModel'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'
@@ -145,6 +146,8 @@ function buildOfficialHeroModel(
     carrySignals,
     supportSignals,
     unsupportedSignals,
+    // build 期预算各维度收益，供 computationMode 按收益排序裁剪候选（见 src/domain/planner/computationMode.ts）。
+    gainProfile: computeHeroGainProfile(carrySignals, supportSignals),
     sourceBreakdown: {
       carrySignals: carrySignals.map((): 'official-parsed' => 'official-parsed'),
       supportSignals: supportSignals.map((): 'official-parsed' => 'official-parsed'),

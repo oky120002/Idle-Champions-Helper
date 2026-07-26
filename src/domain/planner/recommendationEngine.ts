@@ -8,6 +8,7 @@ import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
+import { applyComputationMode, type ComputationMode } from './computationMode'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import {
@@ -152,6 +153,12 @@ export interface PlannerRecommendationOptions {
    * hypothetical 候选的装备精确化由 equipmentAdjustmentByHero（13.4）负责。
    */
   candidateMode?: CandidateMode
+  /**
+   * 计算模式（性能 vs 精度）；默认 p50。
+   * full = 全量候选；p90/p50 = 每席位按复合收益取前 90%/50%（见 computationMode.ts）。
+   * 收益由 build 期预算进 hero-abilities.json 的 gainProfile，运行时零重算。
+   */
+  computationMode?: ComputationMode
   /** 阶段 15.4：强制指定核心输出位英雄（结果 carryHeroId 与之一致）。 */
   lockedCarryHeroId?: string | null
   /** 阶段 15.4：用户锁定槽位（slotId→heroId，预填且不被搜索替换）。 */
@@ -337,6 +344,7 @@ export function buildPlannerRecommendation(
 ): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
   const candidateMode = options.candidateMode ?? 'owned-only'
+  const computationMode = options.computationMode ?? 'p50'
   const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
 
   // owned-only 模式下 resolvePlannerScenario 保证 profileSnapshot 非空；all-hypothetical 模式 profileSnapshot 可为 null。
@@ -363,7 +371,7 @@ export function buildPlannerRecommendation(
     ...(options.lockedCarryHeroId ? [options.lockedCarryHeroId] : []),
     ...Object.values(userLockedSlots),
   ])
-  const heroes = collections.plannerHeroes
+  let heroes = collections.plannerHeroes
     .filter((hero) => {
       const isForceIncluded = forcedHeroSet.has(hero.heroId)
       if (isForceIncluded) {
@@ -402,6 +410,10 @@ export function buildPlannerRecommendation(
       blocker: 'insufficient-owned-heroes',
     }
   }
+
+  // 计算模式裁剪候选（默认 p50）：按席位复合收益取前比例，减少 beam search 评分次数。
+  // 在 insufficient 检查之后，确保裁剪不干扰「英雄够不够组队」判断；forced 英雄无条件保留。
+  heroes = applyComputationMode(heroes, computationMode, scoringMode, forcedHeroSet)
 
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))

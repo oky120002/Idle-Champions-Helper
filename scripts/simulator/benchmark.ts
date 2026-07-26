@@ -1,13 +1,9 @@
 /**
  * 阵型模拟器性能基准
- * 用法：npm run tsx scripts/simulator/benchmark.ts [样本数]
+ * 用法：npm run simulate:benchmark [样本数]    # OWNED=N 控制持有英雄数（跨 seat 均匀采样）
  *
- * 测量：
- *   ① 全量推荐 (buildPlannerRecommendation) 单次耗时——用户在 UI 点一次"推荐"的体感
- *   ② 单次评分 (evaluateFormation ≈ scoreFormation + 轻量收口) 耗时
- *   ③ 据此估算「换人表」(对 top1 每槽位逐个换人重算) 的额外开销
- *
- * 合成"全英雄已拥有 level 1"快照，候选池=全英雄，是 worst case。
+ * 测量三档计算模式（full / p90 / p50）下 buildPlannerRecommendation 单次耗时，
+ * 以及单次评分（evaluateFormation）耗时。合成快照默认全英雄已拥有（worst case）。
  */
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -47,7 +43,7 @@ function synthesizeAllOwnedProfile(collections: PlannerCollections): UserProfile
   const bySeat = [...collections.plannerHeroes].sort((a, b) => a.seat - b.seat)
   const heroes: typeof bySeat = []
   const step = Math.max(1, Math.floor(bySeat.length / ownedCount))
-  for (let i = 0; i < bySeat.length && heroes.length < ownedCount; i += step) heroes.push(bySeat[i])
+  for (let i = 0; i < bySeat.length && heroes.length < ownedCount; i += step) heroes.push(bySeat[i]!)
   return createUserProfileSnapshot({
     ownedHeroes: heroes.map((hero) => createOwnedHero({ heroId: hero.heroId, level: 1 })),
     warnings: [],
@@ -56,7 +52,7 @@ function synthesizeAllOwnedProfile(collections: PlannerCollections): UserProfile
 
 function median(xs: number[]): number {
   const s = [...xs].sort((a, b) => a - b)
-  return s[Math.floor(s.length / 2)]
+  return s[Math.floor(s.length / 2)] ?? 0
 }
 
 function fmt(ms: number): string {
@@ -70,76 +66,55 @@ async function main() {
   const variants = collections.variants
   const step = Math.max(1, Math.floor(variants.length / sampleCount))
   const picked: Variant[] = []
-  for (let i = 0; i < variants.length && picked.length < sampleCount; i += step) picked.push(variants[i])
+  for (let i = 0; i < variants.length && picked.length < sampleCount; i += step) picked.push(variants[i]!)
 
   process.stdout.write(
     `[benchmark] variants=${variants.length} sampled=${picked.length} heroes=${collections.plannerHeroes.length}\n`,
   )
 
   // 预热（JIT / cache），不计入
-  buildPlannerRecommendation(picked[0], collections, profile, {})
+  buildPlannerRecommendation(picked[0]!, collections, profile, {})
 
-  const recommendTimes: number[] = []
+  // 三档计算模式对比：full（全量）/ p90 / p50（每席位按收益取前比例）
+  const MODES = ['full', 'p90', 'p50'] as const
+  type Mode = (typeof MODES)[number]
+  const byMode: Record<Mode, number[]> = { full: [], p90: [], p50: [] }
   let blocked = 0
   for (const variant of picked) {
-    const t0 = performance.now()
-    const rec = buildPlannerRecommendation(variant, collections, profile, {})
-    const dt = performance.now() - t0
-    if (rec.result) recommendTimes.push(dt)
-    else blocked += 1
+    for (const mode of MODES) {
+      const t0 = performance.now()
+      const rec = buildPlannerRecommendation(variant, collections, profile, { computationMode: mode })
+      const dt = performance.now() - t0
+      if (rec.result) byMode[mode].push(dt)
+      else if (mode === 'full') blocked += 1
+    }
   }
 
-  // 单次评分耗时（evaluateFormation ≈ 一次 scoreFormation + 合法性/解释收口，是 swap 代价的上界）
-  const sampleVariant = picked[0]
+  process.stdout.write(`\n=== 计算模式对比（buildPlannerRecommendation 单次耗时）===\n`)
+  process.stdout.write(`  样本 ${picked.length} 个 variant（全英雄已拥有 worst case）；blocked=${blocked}\n`)
+  for (const mode of MODES) {
+    const times = byMode[mode]
+    if (times.length === 0) {
+      process.stdout.write(`  ${mode}: (无合法结果)\n`)
+      continue
+    }
+    process.stdout.write(
+      `  ${mode.padEnd(5)} median=${fmt(median(times))}  min=${fmt(Math.min(...times))}  max=${fmt(Math.max(...times))}\n`,
+    )
+  }
+
+  // 单次评分耗时（evaluateFormation ≈ 一次 scoreFormation + 合法性/解释收口）
+  const sampleVariant = picked[0]!
   const sampleRec = buildPlannerRecommendation(sampleVariant, collections, profile, {})
   const evalTimes: number[] = []
-  let swapCallEstimate = 0
-  let top1Slots = 0
   if (sampleRec.result) {
     const placements = sampleRec.result.placements
-    top1Slots = Object.keys(placements).length
     for (let i = 0; i < 30; i++) {
       const t0 = performance.now()
       evaluateFormation(sampleVariant, collections, profile, placements, {})
       evalTimes.push(performance.now() - t0)
     }
-    // 估算「换人表」需要多少次评分：每槽位换人时，可换候选 = seat 未被其它槽位占用的英雄
-    const heroById = new Map(collections.plannerHeroes.map((h) => [h.heroId, h]))
-    const placedSeats = new Set<number>()
-    for (const heroId of Object.values(placements)) {
-      const h = heroById.get(heroId)
-      if (h) placedSeats.add(h.seat)
-    }
-    const placedHeroIds = new Set(Object.values(placements))
-    for (const slotId of Object.keys(placements)) {
-      const currentHero = heroById.get(placements[slotId])
-      // 换掉本槽位后，本槽位英雄的 seat 也释放
-      const freedSeats = new Set(placedSeats)
-      if (currentHero) freedSeats.delete(currentHero.seat)
-      for (const h of collections.plannerHeroes) {
-        if (placedHeroIds.has(h.heroId)) continue
-        if (freedSeats.has(h.seat)) swapCallEstimate += 1
-      }
-    }
-  }
-
-  process.stdout.write(`\n=== ① 全量推荐 (buildPlannerRecommendation) 单次耗时 ===\n`)
-  process.stdout.write(
-    `  样本 ${recommendTimes.length} 个 variant（全英雄已拥有，worst case）；blocked=${blocked}\n`,
-  )
-  process.stdout.write(
-    `  min=${fmt(Math.min(...recommendTimes))}  median=${fmt(median(recommendTimes))}  max=${fmt(Math.max(...recommendTimes))}\n`,
-  )
-  process.stdout.write(`  逐个：${recommendTimes.map((t, i) => `#${i + 1}=${fmt(t)}`).join('  ')}\n`)
-
-  if (evalTimes.length) {
-    const perCall = median(evalTimes)
-    process.stdout.write(`\n=== ② 单次评分 (evaluateFormation) ===\n`)
-    process.stdout.write(`  median=${fmt(perCall)}（30 次）\n`)
-    process.stdout.write(`\n=== ③ 「换人表」估算开销 ===\n`)
-    process.stdout.write(`  top1 槽位数=${top1Slots}，需评分次数≈${swapCallEstimate}（每槽位所有合法换人）\n`)
-    process.stdout.write(`  估算 ≈ ${swapCallEstimate} × ${fmt(perCall)} = ${fmt(swapCallEstimate * perCall)}\n`)
-    process.stdout.write(`  注：显示 top 3 也必须全评分才能排序；上界估算（含合法性/解释收口）\n`)
+    process.stdout.write(`\n=== 单次评分 (evaluateFormation) median=${fmt(median(evalTimes))}（30 次）===\n`)
   }
 }
 

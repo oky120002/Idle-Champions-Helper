@@ -208,7 +208,9 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(selectedVariant, collections, snapshot)
+    const recommendation = buildPlannerRecommendation(selectedVariant, collections, snapshot, {
+      computationMode: 'full',
+    })
 
     expect(recommendation.blocker).toBeNull()
     expect(recommendation.layoutId).toBe('layout-catacombs')
@@ -258,7 +260,9 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(lockedSlotVariant, collections, snapshot)
+    const recommendation = buildPlannerRecommendation(lockedSlotVariant, collections, snapshot, {
+      computationMode: 'full',
+    })
 
     expect(recommendation.blocker).toBeNull()
     expect(recommendation.result?.placementEntries).toHaveLength(3)
@@ -310,7 +314,9 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(occupiedVariant, occupiedCollections, snapshot)
+    const recommendation = buildPlannerRecommendation(occupiedVariant, occupiedCollections, snapshot, {
+      computationMode: 'full',
+    })
 
     expect(recommendation.blocker).toBeNull()
     expect(recommendation.result?.placementEntries).toHaveLength(2)
@@ -361,7 +367,9 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(allowedVariant, allowedCollections, snapshot)
+    const recommendation = buildPlannerRecommendation(allowedVariant, allowedCollections, snapshot, {
+      computationMode: 'full',
+    })
 
     expect(recommendation.blocker).toBeNull()
     expect(recommendation.result).not.toBeNull()
@@ -415,7 +423,9 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(forcedVariant, forcedCollections, snapshot)
+    const recommendation = buildPlannerRecommendation(forcedVariant, forcedCollections, snapshot, {
+      computationMode: 'full',
+    })
 
     expect(recommendation.blocker).toBeNull()
     expect(recommendation.result).not.toBeNull()

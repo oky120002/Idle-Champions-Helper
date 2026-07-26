@@ -5,7 +5,7 @@
 
 ## 当前演进规划
 
-- **[`evolution-plan.md`](./evolution-plan.md)**：阵型模拟器演进规划总纲（三层架构 + 17 阶段进度追踪 + TDD 硬约束 + 里程碑分组 + 命名修正 A1 + 加成聚合调研）。新 session 读总纲了解全貌；M1-M4 + 阶段 17 自配评估页已全部完成，里程碑执行步骤见对应 `milestone-{2..4}-*.md`。命名以通用符号去 Planner 为准。
+- **[`evolution-plan.md`](./evolution-plan.md)**：阵型模拟器演进规划总纲（三层架构 + 18 阶段进度追踪 + TDD 硬约束 + 里程碑分组 + 命名修正 A1 + 加成聚合调研）。新 session 读总纲了解全貌；M1-M4 + 阶段 17 自配评估页 + 阶段 18 计算模式已全部完成，里程碑执行步骤见对应 `milestone-{2..4}-*.md`。命名以通用符号去 Planner 为准。
 - **[`goal-prompts.md`](./goal-prompts.md)**：4 个里程碑 `/goal` 提示词（M1 核心引擎 / M2 数据补全 / M3 补强 / M4 UI），copy 到 Claude Code 即可按里程碑驱动执行（配合 evolution-plan.md 的 `[ ]`/`[x]` 进度追踪跨 session 衔接）。
 
 ## 先读哪篇

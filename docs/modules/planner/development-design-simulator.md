@@ -99,6 +99,26 @@ baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
 
 CLI 证明（"丢 UI 输出 JSON"）：`npm run simulate -- recommend|evaluate`（`scripts/simulator/simulate.ts`）读 `public/data/v1/*.json` → `resolvePlannerModel` → 引擎 → stdout JSON。无 `--profile` 时合成"全英雄已拥有（level 1）"快照演示完整链路；真实使用传账号快照路径。
 
+## 计算模式（性能优化·阶段 18）
+
+beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评分，全英雄 worst case 一次推荐 ~8s。计算模式通过「预计算收益 + 按席位裁剪候选」减少评分次数。
+
+**预计算收益**（build 期，`computeHeroGainProfile`，写进 `hero-abilities.json` 的 `gainProfile`）：
+
+- 每英雄各维度收益 = `(1+ΣaddPercent/100)×ΠmultFactor`，self 从 `carrySignals`、support 从 `supportSignals` 聚合（数学同 `placementFit` 的 pool 聚合，`DIMENSION_BY_KIND` 分维度）。
+- 上界近似：假设所有 signal 命中、stack count=1、忽略 qualifier——只用于排序裁剪，精确限制匹配仍在 `scoreFormation` 做。裁剪决定「试不试谁」，不决定「算成多少」。
+- `applyHeroAbilityPatch` 应用 override 后重算 `gainProfile`（不 stale）。
+
+**运行时裁剪**（`applyComputationMode`，pure function）：
+
+- 按席位分组，每组按 `compositeGain = max(self 复合, support 复合)` 降序（`OBJECTIVE_DIMENSIONS`：carry-dps 取 damage/crit/vulnerability/global-buff，team-gold 取 gold；英雄可当 carry 或 support，取两侧最大保住任一角色强的）。
+- 取前 `MODE_FRACTION` 比例（`full`/`p90`/`p50` = 1.0/0.9/0.5），每席位至少 1 个；forced 英雄（场景强制 + 用户锁 carry + 用户锁槽）无条件保留；保留原始顺序保证确定性。
+- 挂在 `buildPlannerRecommendation` 候选过滤后、`beamSearch` 前；`evaluateFormation` 不裁剪（用户已显式指定阵型）。
+
+**选项**：`PlannerRecommendationOptions.computationMode`（默认 `p50`）；UI `PlannerComputationMode` 选择器三档切换。
+
+**实测**（`npm run simulate:benchmark`，全英雄 worst case / ~50 英雄）：`full` 8.2s / 2.2s，`p90` 7.6s / 2.2s（只快 ~7%，砍 10% 杯水车薪），`p50` 4.4s / 1.1s（约减半）。默认 `p50` 把真实体感压到 1 秒级；要精度一键切 `full`。结构性加速（beamWidth、`scoreFormation` 三重 `evaluatePlacementFit` 合并）正交，见 TODO。
+
 ## UI 和测试
 
 Planner 页面是工作台，不是 landing page。

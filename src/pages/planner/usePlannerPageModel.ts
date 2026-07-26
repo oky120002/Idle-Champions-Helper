@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 
 import { buildPlannerRecommendation } from '../../domain/planner/recommendationEngine'
 import type { CandidateMode } from '../../domain/planner/candidatePool'
+import type { ComputationMode } from '../../domain/planner/computationMode'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { usePlannerCollections } from './usePlannerCollections'
 
@@ -17,6 +18,7 @@ export function usePlannerPageModel() {
   } = usePlannerCollections()
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
+  const [computationMode, setComputationMode] = useState<ComputationMode>('p50')
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
@@ -31,10 +33,11 @@ export function usePlannerPageModel() {
     () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, {
       scoringMode,
       candidateMode,
+      computationMode,
       lockedCarryHeroId,
       lockedSlots,
     }),
-    [collections, profileSnapshot, scoringMode, candidateMode, lockedCarryHeroId, lockedSlots, selectedVariant],
+    [collections, profileSnapshot, scoringMode, candidateMode, computationMode, lockedCarryHeroId, lockedSlots, selectedVariant],
   )
   const selectVariantId = useCallback((variantId: string | null) => {
     selectVariantIdBase(variantId)
@@ -48,6 +51,10 @@ export function usePlannerPageModel() {
   }, [])
   const selectCandidateMode = useCallback((mode: CandidateMode) => {
     setCandidateMode(mode)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectComputationMode = useCallback((mode: ComputationMode) => {
+    setComputationMode(mode)
     setSelectedResultIndex(0)
   }, [])
   const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
@@ -71,6 +78,7 @@ export function usePlannerPageModel() {
     candidateMode,
     championById,
     collections,
+    computationMode,
     lockedCarryHeroId,
     lockedSlots,
     loadError,
@@ -81,6 +89,7 @@ export function usePlannerPageModel() {
     selectedVariantId,
     clearSlotLock,
     selectCandidateMode,
+    selectComputationMode,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,

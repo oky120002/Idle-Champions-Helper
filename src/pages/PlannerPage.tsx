@@ -8,6 +8,7 @@ import { PlannerProfileState } from './planner/PlannerProfileState'
 import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
+import { PlannerComputationMode } from './planner/PlannerComputationMode'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerImportFormation } from './planner/PlannerImportFormation'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
@@ -62,6 +63,7 @@ export function PlannerPage() {
     candidateMode,
     championById,
     collections,
+    computationMode,
     lockedCarryHeroId,
     lockedSlots,
     loadError,
@@ -72,6 +74,7 @@ export function PlannerPage() {
     selectedVariantId,
     clearSlotLock,
     selectCandidateMode,
+    selectComputationMode,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
@@ -185,6 +188,7 @@ export function PlannerPage() {
                   />
                   <PlannerScoringMode value={scoringMode} onChange={selectScoringMode} />
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
+                  <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
                 </div>
               </section>
 
