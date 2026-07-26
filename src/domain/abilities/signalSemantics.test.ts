@@ -259,6 +259,8 @@ describe('normalizeExplicitTargeting', () => {
     expect(normalizeExplicitTargeting({ targets: ['self_and_adj'] })).toEqual({ status: 'supported', relation: 'adjacentOrSelf' })
     expect(normalizeExplicitTargeting({ targets: ['front_2_columns'] })).toEqual({ status: 'supported', relation: 'frontTwoColumns' })
     expect(normalizeExplicitTargeting({ targets: ['back_2_columns'] })).toEqual({ status: 'supported', relation: 'backTwoColumns' })
+    // Jim 自身列 + 前后各一列（3 列宽带）：值走 amount_expr + per_upgrade_targets，关系靠这里解锁
+    expect(normalizeExplicitTargeting({ targets: ['self_and_behind_and_ahead'] })).toEqual({ status: 'supported', relation: 'selfAndAheadAndBehindColumns' })
     expect(normalizeExplicitTargeting({ targets: [{ type: 'exactly_x_behind', num_columns: 2 }] })).toEqual({ status: 'supported', relation: 'exactlyBehindTwoColumns' })
     expect(normalizeExplicitTargeting({ targets: [{ type: 'col_num', start_from_back: true, column: 0 }] })).toEqual({ status: 'supported', relation: 'rearMostColumn' })
     expect(normalizeExplicitTargeting({ targets: ['front'] }).status).toBe('unsupported')

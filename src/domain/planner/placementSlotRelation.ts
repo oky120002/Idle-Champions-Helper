@@ -149,6 +149,9 @@ export function matchesSlotRelation(
       return frontColumns.includes(targetColumn)
     case 'backTwoColumns':
       return backColumns.includes(targetColumn)
+    case 'selfAndAheadAndBehindColumns':
+      // 自身列 + 立即相邻两列（3 列宽带）
+      return Math.abs(delta) <= 1
     case 'rearMostColumn':
       return targetColumn === columns[0]
     case 'secondRearMostColumn':

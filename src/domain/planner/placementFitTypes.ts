@@ -40,6 +40,7 @@ export interface PlacementFitScorePart {
     | 'exactly-behind-three-columns-match'
     | 'front-two-columns-match'
     | 'back-two-columns-match'
+    | 'self-and-ahead-and-behind-columns-match'
     | 'rear-most-column-match'
     | 'second-rear-most-column-match'
     | 'third-rear-most-column-match'

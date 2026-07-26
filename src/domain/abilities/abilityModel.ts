@@ -57,6 +57,7 @@ export type HeroPositionRelation =
   | 'exactlyBehindThreeColumns'
   | 'frontTwoColumns'
   | 'backTwoColumns'
+  | 'selfAndAheadAndBehindColumns'
   | 'rearMostColumn'
   | 'secondRearMostColumn'
   | 'thirdRearMostColumn'

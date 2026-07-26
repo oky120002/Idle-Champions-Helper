@@ -58,6 +58,8 @@ export function resolveActiveReasonCode(signal: HeroAbilitySignal, relation: Her
       return 'front-two-columns-match'
     case 'backTwoColumns':
       return 'back-two-columns-match'
+    case 'selfAndAheadAndBehindColumns':
+      return 'self-and-ahead-and-behind-columns-match'
     case 'rearMostColumn':
       return 'rear-most-column-match'
     case 'secondRearMostColumn':

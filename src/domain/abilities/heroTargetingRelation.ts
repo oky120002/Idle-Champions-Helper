@@ -57,6 +57,9 @@ const STRING_RELATION_MAP: Record<string, HeroPositionRelation> = {
   self_and_prev_two_col: 'selfAndBehindTwoColumns',
   self_and_adj: 'adjacentOrSelf',
   self_and_ahead: 'sameOrAheadColumns',
+  // Jim 自身列 + 前一列 + 后一列（3 列宽带）。语义判读：IC "columns in front of and behind"，
+  // 按立即相邻列解释（|delta|<=1）；若按"全阵型"算 per-champion mult 会得 3^N 失真。待 IC 源码确认。
+  self_and_behind_and_ahead: 'selfAndAheadAndBehindColumns',
   front_2_columns: 'frontTwoColumns',
   back_2_columns: 'backTwoColumns',
 }
