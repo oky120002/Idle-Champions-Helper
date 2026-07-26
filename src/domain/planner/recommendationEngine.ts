@@ -155,7 +155,7 @@ export interface PlannerRecommendationOptions {
   candidateMode?: CandidateMode
   /**
    * 计算模式（性能 vs 精度）；默认 p50。
-   * full = 全量候选；p90/p50 = 每席位按复合收益取前 90%/50%（见 computationMode.ts）。
+   * full = 全量候选；p90/p80/p70/p60/p50 = 每席位按复合收益取前对应比例（见 computationMode.ts）。
    * 收益由 build 期预算进 hero-abilities.json 的 gainProfile，运行时零重算。
    */
   computationMode?: ComputationMode

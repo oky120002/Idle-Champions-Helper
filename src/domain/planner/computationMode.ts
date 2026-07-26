@@ -4,14 +4,17 @@ import type { ScoringMode } from './steadyStateScoring'
 /**
  * 计算模式（computationMode）：控制 beam search 候选裁剪粒度，平衡速度与精度。
  * - full：全量候选（精度最高，最慢）。
- * - p90 / p50：每个席位内按复合收益取前 90% / 50%（快，砍掉收益低的候选）。
+ * - p90 / p80 / p70 / p60 / p50：每个席位内按复合收益取前 90% / 80% / 70% / 60% / 50%。
  * 可扩展：新增模式只需在 MODE_FRACTION 登记比例 + ComputationMode 联合类型加项。
  */
-export type ComputationMode = 'full' | 'p90' | 'p50'
+export type ComputationMode = 'full' | 'p90' | 'p80' | 'p70' | 'p60' | 'p50'
 
 export const MODE_FRACTION: Record<ComputationMode, number> = {
   full: 1.0,
   p90: 0.9,
+  p80: 0.8,
+  p70: 0.7,
+  p60: 0.6,
   p50: 0.5,
 }
 

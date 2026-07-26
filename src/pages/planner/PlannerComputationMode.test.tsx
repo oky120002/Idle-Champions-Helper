@@ -6,7 +6,7 @@ import { I18nProvider } from '../../app/i18n'
 import { PlannerComputationMode } from './PlannerComputationMode'
 
 describe('PlannerComputationMode', () => {
-  it('渲染三档计算模式并标记当前值', () => {
+  it('渲染六档计算模式并标记当前值', () => {
     const { container } = render(
       <I18nProvider>
         <PlannerComputationMode value="p50" onChange={() => {}} />
@@ -14,8 +14,9 @@ describe('PlannerComputationMode', () => {
     )
 
     expect(container.querySelector('[data-computation-mode="p50"]')).toHaveAttribute('aria-checked', 'true')
-    expect(container.querySelector('[data-computation-mode="p90"]')).toHaveAttribute('aria-checked', 'false')
-    expect(container.querySelector('[data-computation-mode="full"]')).toHaveAttribute('aria-checked', 'false')
+    for (const mode of ['full', 'p90', 'p80', 'p70', 'p60'] as const) {
+      expect(container.querySelector(`[data-computation-mode="${mode}"]`)).toHaveAttribute('aria-checked', 'false')
+    }
   })
 
   it('点击切换触发 onChange', async () => {

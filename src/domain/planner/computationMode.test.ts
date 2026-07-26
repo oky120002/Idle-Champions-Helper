@@ -29,9 +29,12 @@ function makeHero(
 }
 
 describe('computationMode 常量', () => {
-  it('MODE_FRACTION：full=1.0 / p90=0.9 / p50=0.5', () => {
+  it('MODE_FRACTION：full=1.0 / p90=0.9 / p80=0.8 / p70=0.7 / p60=0.6 / p50=0.5', () => {
     expect(MODE_FRACTION.full).toBe(1.0)
     expect(MODE_FRACTION.p90).toBe(0.9)
+    expect(MODE_FRACTION.p80).toBe(0.8)
+    expect(MODE_FRACTION.p70).toBe(0.7)
+    expect(MODE_FRACTION.p60).toBe(0.6)
     expect(MODE_FRACTION.p50).toBe(0.5)
   })
 
