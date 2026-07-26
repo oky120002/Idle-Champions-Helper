@@ -1,6 +1,5 @@
 # 共享组件模块设计稿
 
-- 日期：2026-04-13
 - 目标：治理跨页面高度重复、语义稳定的 UI 与国际化实现，减少页面层散落逻辑，同时避免为了“去重”而过度抽象。
 - 当前结论：已沉淀双语展示组件、`StatusBanner` / `FieldGroup` 共享组件、全站 `PageWorkbenchShell` 壳层与 `WorkbenchScaffold` 工作台骨架。当前工作台结构与视觉规范见 `docs/modules/shared-components/page-workbench-design.md`。
 

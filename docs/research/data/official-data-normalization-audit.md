@@ -99,7 +99,7 @@ node scripts/normalize-idle-champions-definitions.ts \
 
 ## 建议的下一步
 
-1. 继续提升“稳定、可复用、非运行时”的规则事实，下一刀不再是补顶层 stat / buff / effect-key 字典，而是补更贴近 effect 实体与 planner 输入层的共享合同。
+1. 继续提升“稳定、可复用、非运行时”的规则事实，下一步不再是补顶层 stat / buff / effect-key 字典，而是补更贴近 effect 实体与 planner 输入层的共享合同。
 2. 当前更值得继续审计和提升的方向：从已消费的 `effect_defines` 提升一层薄共享 effect 合同；从 `champion-details/<id>.json` / `raw.upgrades` 提升 planner 反复用到的稳定条件投影；继续补 `modeEligibilityTags` 这类静态限制事实。
 3. 信息分两类：静态稳定事实归一化进共享数据；运行时上下文事实放进 planner scenario / evaluation context。
 4. 已稳定存在于 `champion-details/<id>.json` 或原始 definitions 的信息，优先“提升成薄共享合同”，而不是继续把解析复杂度压进 planner parser。

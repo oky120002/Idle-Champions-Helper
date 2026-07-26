@@ -1,6 +1,5 @@
 # 回归测试：CI 设计与门禁
 
-- 日期：2026-04-13
 - 目标：回答“workflow 应怎么拆”“部署门禁怎样保持依赖链”“Playwright CI 应怎样配置”。
 
 ## GitHub Actions 设计

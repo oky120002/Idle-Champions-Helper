@@ -1,7 +1,6 @@
-# 阵型编辑：范围、输入与第一阶段闭环
+# 阵型编辑：范围、输入与闭环
 
-- 日期：2026-04-13
-- 目标：回答“阵型编辑模块负责什么”“依赖哪些输入”“第一阶段要闭哪些环”。
+- 目标：回答“阵型编辑模块负责什么”“依赖哪些输入”“要闭哪些环”。
 
 ## 模块定位与边界
 
@@ -17,7 +16,7 @@
 - `src/rules/seat.ts`：`findSeatConflicts`
 - `src/data/formationDraftStore.ts`、`src/data/formationPersistence.ts`、`src/data/localDatabase.ts`：最近草稿与命名方案的本地持久化
 
-## 第一阶段闭环
+## 闭环
 
 - 按战役 / 冒险 / 变体筛选布局。
 - 按上下文名称中英混搜布局。

@@ -1,6 +1,5 @@
 # 导航与语言切换规范
 
-- 日期：2026-04-18
 - 作用：约束站点主导航、壳层密度和中英切换入口，避免顶部区域重新长回“说明过多、控件过碎、还要点开第二层”的状态。
 
 ## 主导航
@@ -22,7 +21,7 @@
 - 非首页收紧态下，导航、语言切换和品牌条需要同步缩小，但仍保持可读可点。
 - 如果某次改动会让顶部区域重新出现明显的高度跳增或横向溢出，应视为回归。
 
-## 当前项目落地
+## 当前实现
 
 - 主导航实现：`src/app/PrimaryNavigation.tsx` + `src/styles/app/navigation.css`
 - 顶部状态与收紧逻辑：`src/app/SiteHeader.tsx`、`src/app/useSiteHeaderState.ts`、`src/styles/app/site-header.css`

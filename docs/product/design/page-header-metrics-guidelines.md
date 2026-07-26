@@ -1,6 +1,5 @@
 # 页面标题与统计条规范
 
-- 日期：2026-04-18
 - 作用：约束各顶层页面的标题区块、简介文案和小型统计条，避免每页各做一套，且保证后续 AI 修改时只需读取这一篇叶子文档。
 
 ## 适用范围
@@ -29,11 +28,11 @@
 - 卡片内若需要双语同时出现，优先只给“主名称”做双语并排展示，其它辅助字段只跟随当前语言。
 - 统计条标签保持短词，不写完整句。
 
-## 当前项目落地
+## 当前实现
 
 - `src/components/SurfaceCard.tsx` 提供 `headerAside`，用于承载复用统计条。
 - 复用统计条组件放在 `src/components/PageHeaderMetrics.tsx`。
-- 经工作台 metrics header 间接落地于以下页面：`src/pages/ChampionsPage.tsx`、`src/pages/IllustrationsPage.tsx`、`src/pages/PetsPage.tsx`、`src/pages/VariantsPage.tsx`、`src/pages/PresetsPage.tsx`。直接使用方为 `src/components/workbench/` 下的 `ConfiguredWorkbenchMetricsHeader.tsx`、`WorkbenchFilterMetricsHeader.tsx`、`workbenchMetricItemBuilders.ts`；`rg "PageHeaderMetrics" src/pages/` 无命中。
+- 经工作台 metrics header 间接实现于以下页面：`src/pages/ChampionsPage.tsx`、`src/pages/IllustrationsPage.tsx`、`src/pages/PetsPage.tsx`、`src/pages/VariantsPage.tsx`、`src/pages/PresetsPage.tsx`。直接使用方为 `src/components/workbench/` 下的 `ConfiguredWorkbenchMetricsHeader.tsx`、`WorkbenchFilterMetricsHeader.tsx`、`workbenchMetricItemBuilders.ts`；`rg "PageHeaderMetrics" src/pages/` 无命中。
 
 ## 修改顺序
 

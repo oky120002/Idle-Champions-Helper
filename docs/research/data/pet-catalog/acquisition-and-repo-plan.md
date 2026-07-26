@@ -1,7 +1,6 @@
-# 宠物目录：获取方式与仓库落地
+# 宠物目录：获取方式与仓库实现
 
-- 日期：2026-04-16
-- 目标：沉淀“获取方式”应该怎么解释，以及本仓库首版怎样落这个目录。
+- 目标：沉淀“获取方式”应该怎么解释，以及本仓库如何实现这个目录。
 
 ## 获取方式字段
 
@@ -20,7 +19,7 @@
 
 补充说明：`flash_sale` 更接近”限时付费来源”，不应直接解释成抽奖；`patron` 还可以从 `patron_shop_item_defines` 里补出成本和影响力门槛；`sourceType=null` 的条目仍可通过 `cost.premium_item` 和 `premium_item_defines.effect` 命中实际礼包，因此归入 `premium` 而非”来源待确认”。
 
-## 对本仓库的直接落地建议
+## 仓库实现
 
 1. 新增独立脚本把宠物目录和图像一起写入 `public/data/<version>/pets.json` 与 `public/data/<version>/pets/`
 2. 脚本内直接复用 `SkelAnim` 渲染链路，把宠物图标与 4x 立绘都离线合成为单张 PNG

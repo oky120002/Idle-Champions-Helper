@@ -1,6 +1,5 @@
 # 视觉资源：transport 与浏览器边界
 
-- 日期：2026-04-13
 - 目标：回答 `mobile_assets` 如何返回这些资源，以及浏览器直连的边界。
 
 ## `mobile_assets` transport
