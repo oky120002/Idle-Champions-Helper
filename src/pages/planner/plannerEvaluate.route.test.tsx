@@ -1,6 +1,7 @@
 import 'fake-indexeddb/auto'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -152,7 +153,7 @@ afterEach(async () => {
 })
 
 describe('planner evaluate route', () => {
-  it('/planner/evaluate 渲染自配评估面板骨架', async () => {
+  it('/planner/evaluate 渲染场景选择与候选范围', async () => {
     render(
       <I18nProvider>
         <MemoryRouter initialEntries={['/planner/evaluate']}>
@@ -161,8 +162,30 @@ describe('planner evaluate route', () => {
       </I18nProvider>,
     )
 
-    expect(await screen.findByRole('heading', { name: '自配评估面板' })).toBeInTheDocument()
-    expect(await screen.findByText(/已加载 1 个场景/)).toBeInTheDocument()
+    expect(await screen.findByRole('searchbox', { name: '搜索场景' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: /全部英雄/ })).toBeInTheDocument()
+  })
+
+  it('切到全部英雄后，槽位选择英雄更新棋盘', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/planner/evaluate']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+
+    await screen.findByRole('searchbox', { name: '搜索场景' })
+    await user.click(screen.getByRole('radio', { name: /全部英雄/ }))
+
+    const select = await screen.findByRole('combobox', { name: /槽位 s1 英雄选择/ })
+    await user.selectOptions(select, 'bruenor')
+
+    const board = screen.getByTestId('planner-evaluate-board')
+    await waitFor(() => {
+      expect(board.querySelector('[data-slot-id="s1"]')).toHaveAttribute('data-hero-id', 'bruenor')
+    })
   })
 
   it('toolbar 含返回自动计划按钮', async () => {
