@@ -23,6 +23,14 @@ import { scoreFormation, type ScoringMode } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
 
 const PLANNER_TOP_K = 3
+/**
+ * beam search 默认宽度（每轮保留的候选阵型数）。越大越精确越慢；越小越快越可能漏最优。
+ * 实测（benchmark beamWidth 扫描）：width=8 安全；width=4 多数 variant 无损但偶发质量塌方；
+ * width≤3 在候选多的 variant 上 objectiveValue 崩溃（log10 比 -4）。故默认保守留 8——
+ * 真正可靠的加速走 computationMode 候选裁剪（少评分次数，非降搜索质量）。
+ * 调用方可经 PlannerRecommendationOptions.beamWidth 覆盖（CLI/测试/调优）。
+ */
+const PLANNER_BEAM_WIDTH = 8
 const SCORE_ZERO: GameNumberValue = new Decimal(0)
 
 function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
@@ -159,6 +167,11 @@ export interface PlannerRecommendationOptions {
    * 收益由 build 期预算进 hero-abilities.json 的 gainProfile，运行时零重算。
    */
   computationMode?: ComputationMode
+  /**
+   * beam search 宽度（每轮保留候选阵型数）；默认 PLANNER_BEAM_WIDTH（4）。
+   * 越大越精确越慢；UI 不暴露，供 CLI/测试/调优覆盖。
+   */
+  beamWidth?: number
   /** 阶段 15.4：强制指定核心输出位英雄（结果 carryHeroId 与之一致）。 */
   lockedCarryHeroId?: string | null
   /** 阶段 15.4：用户锁定槽位（slotId→heroId，预填且不被搜索替换）。 */
@@ -430,7 +443,7 @@ export function buildPlannerRecommendation(
   const results = beamSearch({
     heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     slots,
-    beamWidth: 8,
+    beamWidth: options.beamWidth ?? PLANNER_BEAM_WIDTH,
     lockedPlacements: userLockedSlots,
     scoreFormation: (placements) => {
       const legality = checkFormationLegality({
