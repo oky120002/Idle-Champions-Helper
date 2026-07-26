@@ -188,6 +188,36 @@ describe('planner evaluate route', () => {
     })
   })
 
+  it('锁槽位后点算剩余，系统补全剩余槽位', async () => {
+    const user = userEvent.setup()
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/planner/evaluate']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+
+    await screen.findByRole('searchbox', { name: '搜索场景' })
+    await user.click(screen.getByRole('radio', { name: /全部英雄/ }))
+
+    const s1Select = await screen.findByRole('combobox', { name: /槽位 s1 英雄选择/ })
+    await user.selectOptions(s1Select, 'bruenor')
+
+    const lockBtn = screen.getByTestId('planner-evaluate-lock-s1')
+    await user.click(lockBtn)
+    expect(lockBtn).toHaveAttribute('aria-pressed', 'true')
+
+    const fillBtn = screen.getByTestId('planner-evaluate-fill-remaining')
+    await user.click(fillBtn)
+
+    const board = screen.getByTestId('planner-evaluate-board')
+    await waitFor(() => {
+      const s2 = board.querySelector('[data-slot-id="s2"]')
+      expect(s2?.getAttribute('data-hero-id')).toBeTruthy()
+    })
+  })
+
   it('toolbar 含返回自动计划按钮', async () => {
     render(
       <I18nProvider>

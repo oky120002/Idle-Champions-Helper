@@ -1,11 +1,11 @@
 import { useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Eraser, Plus } from 'lucide-react'
+import { Eraser, Lock, Plus, Send, Sparkles, Unlock } from 'lucide-react'
 import { BackNavigationIcon } from '../app/AppIcons'
 import { useI18n } from '../app/i18n'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
-import { evaluateFormation } from '../domain/planner/recommendationEngine'
+import { buildPlannerRecommendation, evaluateFormation } from '../domain/planner/recommendationEngine'
 import type { CandidateMode } from '../domain/planner/candidatePool'
 import type { ScoringMode } from '../domain/planner/steadyStateScoring'
 import { formatSeatLabel, getLocalizedTextPair } from '../domain/localizedText'
@@ -18,6 +18,7 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import {
   patchEvaluatePlacements,
   removeEvaluatePlacement,
+  setEvaluatePlacements,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
 import { usePlannerCollections } from './planner/usePlannerCollections'
@@ -37,6 +38,7 @@ export function PlannerEvaluatePage() {
     loadError,
   } = usePlannerCollections()
   const [placements] = useEvaluatePlacements()
+  const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
 
@@ -68,6 +70,21 @@ export function PlannerEvaluatePage() {
   function getOptionLabel(champion: Champion): string {
     return `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`
   }
+
+  // 半自动：锁定的槽位 + 系统搜出的剩余 = 完整阵型。owned-only + 无快照时 buildPlannerRecommendation
+  // 会返回 missing-profile blocker（rec.result 为 null），按钮此时禁用，文案提示切到全部英雄。
+  function handleFillRemaining() {
+    const recommendation = buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, {
+      scoringMode,
+      candidateMode,
+      lockedSlots,
+    })
+    if (recommendation.result) {
+      setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })
+    }
+  }
+
+  const canFillRemaining = Object.keys(lockedSlots).length > 0 && !evaluation.blocker
 
   const blockerCopy = evaluation.blocker === 'missing-profile'
     ? t({
@@ -187,31 +204,96 @@ export function PlannerEvaluatePage() {
                       patchEvaluatePlacements(slotId, heroId)
                     }
                   }}
-                  slotExtras={(slot, champion) => (
-                    <div className="formation-slot__controls">
-                      <select
-                        className="slot-select"
-                        aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
-                        value={champion?.id ?? ''}
-                        onChange={(event) => {
-                          const heroId = event.target.value
-                          if (heroId) {
-                            patchEvaluatePlacements(slot.id, heroId)
-                          } else {
-                            removeEvaluatePlacement(slot.id)
-                          }
-                        }}
-                      >
-                        <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
-                        {championOptions.map((champion) => (
-                          <option key={champion.id} value={champion.id}>
-                            {getOptionLabel(champion)}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                  slotExtras={(slot, champion) => {
+                    const lockedHero = lockedSlots[slot.id]
+                    const isLocked = Boolean(lockedHero)
+                    return (
+                      <div className="formation-slot__controls">
+                        <select
+                          className="slot-select"
+                          aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
+                          value={champion?.id ?? ''}
+                          disabled={isLocked}
+                          onChange={(event) => {
+                            const heroId = event.target.value
+                            if (heroId) {
+                              patchEvaluatePlacements(slot.id, heroId)
+                            } else {
+                              removeEvaluatePlacement(slot.id)
+                            }
+                          }}
+                        >
+                          <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
+                          {championOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {getOptionLabel(option)}
+                            </option>
+                          ))}
+                        </select>
+                        {champion ? (
+                          <button
+                            type="button"
+                            className={['slot-lock-toggle', isLocked ? 'is-locked' : ''].filter(Boolean).join(' ')}
+                            aria-pressed={isLocked}
+                            aria-label={
+                              isLocked
+                                ? t({ zh: `解锁槽位 ${slot.id}`, en: `Unlock slot ${slot.id}` })
+                                : t({ zh: `锁定槽位 ${slot.id}`, en: `Lock slot ${slot.id}` })
+                            }
+                            data-testid={`planner-evaluate-lock-${slot.id}`}
+                            onClick={() => {
+                              if (isLocked) {
+                                setLockedSlots((current) => {
+                                  const next = { ...current }
+                                  delete next[slot.id]
+                                  return next
+                                })
+                              } else {
+                                setLockedSlots((current) => ({ ...current, [slot.id]: champion.id }))
+                              }
+                            }}
+                          >
+                            {isLocked ? <Unlock aria-hidden="true" strokeWidth={1.9} /> : <Lock aria-hidden="true" strokeWidth={1.9} />}
+                          </button>
+                        ) : null}
+                      </div>
+                    )
+                  }}
                 />
+
+                <div className="button-row planner-evaluate-page__actions">
+                  <button
+                    type="button"
+                    className="action-button action-button--secondary action-button--with-icon"
+                    data-testid="planner-evaluate-fill-remaining"
+                    disabled={!canFillRemaining}
+                    onClick={handleFillRemaining}
+                  >
+                    <span className="action-button__icon" aria-hidden="true">
+                      <Sparkles strokeWidth={1.9} />
+                    </span>
+                    <span className="action-button__label">
+                      {t({ zh: `算剩余最优（已锁 ${Object.keys(lockedSlots).length} 格）`, en: `Fill remaining (${Object.keys(lockedSlots).length} locked)` })}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className="action-button action-button--ghost action-button--with-icon"
+                    disabled={Object.keys(lockedSlots).length === 0}
+                    onClick={() =>
+                      navigate('/planner', {
+                        state: { lockedSlotsFromEvaluate: lockedSlots },
+                      })
+                    }
+                  >
+                    <span className="action-button__icon" aria-hidden="true">
+                      <Send strokeWidth={1.9} />
+                    </span>
+                    <span className="action-button__label">
+                      {t({ zh: '回填到自动计划', en: 'Send to auto plan' })}
+                    </span>
+                  </button>
+                </div>
 
                 <div
                   className="formation-remove-zone"

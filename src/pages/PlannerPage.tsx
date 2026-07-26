@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import type { PlannerRecommendationBlocker } from '../domain/planner/recommendationTypes'
@@ -78,6 +78,18 @@ export function PlannerPage() {
     selectScoringMode,
     lockSlot,
   } = usePlannerPageModel()
+
+  // 自配评估面板「回填到自动计划」带过来的锁定槽位，按槽位逐个写入。
+  // location.key 随导航变化触发；lockSlot 是 useCallback 稳定引用。
+  useEffect(() => {
+    const navigateState = location.state as { lockedSlotsFromEvaluate?: Record<string, string> } | null
+    const locked = navigateState?.lockedSlotsFromEvaluate
+    if (locked) {
+      Object.entries(locked).forEach(([slotId, heroId]) => {
+        lockSlot(slotId, heroId)
+      })
+    }
+  }, [location.key, lockSlot])
 
   const safeResultIndex = plannerRecommendation.results.length > 0
     ? Math.min(selectedResultIndex, plannerRecommendation.results.length - 1)
