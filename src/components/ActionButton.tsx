@@ -17,6 +17,7 @@ interface ActionButtonProps {
   ariaControls?: string | undefined
   ariaLabel?: string | undefined
   title?: string | undefined
+  disabledReason?: string | undefined
 }
 
 export function ActionButton({
@@ -34,8 +35,9 @@ export function ActionButton({
   ariaControls,
   ariaLabel,
   title,
+  disabledReason,
 }: ActionButtonProps) {
-  return (
+  const button = (
     <button
       type={type}
       className={buildActionButtonClassName({
@@ -62,4 +64,19 @@ export function ActionButton({
       <span className="action-button__label">{children}</span>
     </button>
   )
+
+  // disabled 按钮不响应 hover/focus、原生 title 也无法触发；
+  // 用外层 wrapper 承接 hover/focus-within 显示 disabledReason 气泡。
+  if (disabled && disabledReason) {
+    return (
+      <span className="action-button--with-tooltip">
+        {button}
+        <span className="action-button__tooltip" role="tooltip">
+          {disabledReason}
+        </span>
+      </span>
+    )
+  }
+
+  return button
 }

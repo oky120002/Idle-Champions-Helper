@@ -30,6 +30,11 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     handleOpenPresetsPage,
     getPresetPriorityLabel,
   } = model
+  const saveDisabledReason = !canSavePreset && !isSavingPreset
+    ? (selectedChampions.length === 0
+        ? t({ zh: '先放置至少 1 名英雄', en: 'Place at least one champion first' })
+        : t({ zh: '先填写方案名称', en: 'Enter a preset name first' }))
+    : undefined
   const previewItems = [
     {
       id: 'selected-layout',
@@ -102,6 +107,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
                 icon: <Save aria-hidden="true" strokeWidth={1.9} />,
                 tone: 'secondary',
                 disabled: !canSavePreset,
+                disabledReason: saveDisabledReason,
                 onClick: handleSavePreset,
               },
               {

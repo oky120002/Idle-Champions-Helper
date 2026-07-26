@@ -185,4 +185,27 @@ describe('FormationPage persistence flow', () => {
 
     expect(screen.getByText('方案“推图常用队”已保存')).toBeInTheDocument()
   })
+
+  it('未放置英雄时保存按钮禁用，气泡提示先放置英雄', async () => {
+    renderFormationPage()
+    await screen.findByLabelText('方案名称')
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: '保存为方案' })).toBeDisabled()
+    })
+    expect(screen.getByRole('tooltip')).toHaveTextContent('先放置至少 1 名英雄')
+  })
+
+  it('已放置英雄但未填名称时，气泡提示先填名称', async () => {
+    const user = userEvent.setup()
+    renderFormationPage()
+
+    const [select] = await screen.findAllByRole('combobox')
+    await user.selectOptions(select!, 'bruenor')
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: '保存为方案' })).toBeDisabled()
+    })
+    expect(screen.getByRole('tooltip')).toHaveTextContent('先填写方案名称')
+  })
 })

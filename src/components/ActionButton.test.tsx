@@ -49,4 +49,33 @@ describe('ActionButton', () => {
     expect(handleClick).toHaveBeenCalledTimes(1)
     expect(screen.getByText('已复制链接')).toBeInTheDocument()
   })
+
+  it('disabled 且传入 disabledReason 时渲染气泡提示', () => {
+    render(
+      <ActionButton disabled disabledReason="先放置至少 1 名英雄" onClick={() => {}}>
+        保存为方案
+      </ActionButton>,
+    )
+
+    const button = screen.getByRole('button', { name: '保存为方案' })
+    expect(button).toBeDisabled()
+    const tooltip = screen.getByRole('tooltip')
+    expect(tooltip).toHaveTextContent('先放置至少 1 名英雄')
+  })
+
+  it('未 disabled 或无 disabledReason 时不渲染气泡', () => {
+    const { rerender } = render(
+      <ActionButton disabledReason="先放置至少 1 名英雄" onClick={() => {}}>
+        保存为方案
+      </ActionButton>,
+    )
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+    rerender(
+      <ActionButton disabled onClick={() => {}}>
+        保存为方案
+      </ActionButton>,
+    )
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+  })
 })

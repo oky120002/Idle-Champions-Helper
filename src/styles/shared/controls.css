@@ -1,3 +1,34 @@
+/* ActionButton 禁用气泡：disabled 按钮自身不响应 hover/focus，由外层 wrapper 承接显示原因。 */
+.action-button--with-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.action-button__tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  max-width: 16rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(200, 167, 127, 0.32);
+  background: rgba(20, 14, 6, 0.96);
+  color: #fff5e5;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.action-button--with-tooltip:hover .action-button__tooltip,
+.action-button--with-tooltip:focus-within .action-button__tooltip {
+  opacity: 1;
+}
+
 .segmented-control {
   display: flex;
   flex-wrap: wrap;
