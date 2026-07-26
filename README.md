@@ -84,6 +84,6 @@ npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedIn
 ## 进一步阅读
 
 - 文档总索引：`docs/README.md`
-- 项目路线与范围：`docs/product/roadmap/README.md`
+- 产品定义（价值 / 形态 / 技术模型 / 风险）：`docs/specs/product/README.md`
 - 文档职责与精简策略：`docs/specs/guidelines/documentation-governance.md`
 - 问题排查台账：`docs/archive/troubleshooting/README.md`

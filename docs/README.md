@@ -1,49 +1,37 @@
-# docs 文档入口
+# docs/ 文档导航
 
-- 作用：`docs/` 总索引，只回答“下一步去哪读”；专题细节必须下沉到目录 `README.md` 或更小叶子文档。
-- 默认读取顺序：`README.md` -> `docs/README.md` -> 主题目录 `README.md` -> 子主题 `README.md` -> 单篇叶子文档。
-- 原则：入口文档只保留导航、边界和触发条件；实现细节、证据、操作步骤和审计结果全部下沉。
+文档按性质分五类，就近放置。改代码前看 `specs/`，查决策看 `decisions/`，做计划看 `changes/`。
 
-## 高频直达
+## 五类文档
 
-- 文档治理：`docs/specs/guidelines/documentation-governance.md`
-- TS / TSX 规范：`docs/specs/guidelines/ai-first-ts-tsx.md`
-- CSS 规范：`docs/specs/guidelines/ai-first-css.md`
-- 移动端硬约束：`docs/specs/guidelines/mobile-compatibility.md`
-- 数据归一化管线：`docs/specs/guidelines/data-normalization.md`
-- 项目级顺手发现项：根 `TODO.md`（`auto-todo` 技能维护）
+| 类型 | 目录 | 何时进入 |
+|---|---|---|
+| Spec 活跃规范 | [`specs/`](./specs/) | 改代码 / 改规范前（描述「现在是什么」） |
+| Reference 调研 | [`research/`](./research/) | 确认外部数据源 / 部署 / 测试事实 |
+| Decision 决策 | [`decisions/`](./decisions/) | 查「为什么这样决策」（ADR） |
+| Change 变更 | [`changes/`](./changes/) | 做计划 / 里程碑 / 超 long plan |
+| Archive 归档 | [`archive/`](./archive/) | 考古（默认不进入） |
 
-## 低频主题再走索引
+## 任务→目录速查
 
-- 项目边界、路线图或不确定该看哪份产品文档时：`docs/product/README.md`
-- 数据、部署、测试与外部事实：`docs/research/README.md`
-- 模块设计稿与局部交互方案：`docs/specs/modules/README.md`
-- 运行、仓库、环境排查与验证：`docs/archive/investigations/README.md`
-- 常见故障与可复用修复路径：`docs/archive/troubleshooting/README.md`
-- 通用问题摘要台账：`docs/archive/troubleshooting/README.md`
+- 改模块功能 → `specs/modules/<name>/`
+- 查开发规范 → `specs/guidelines/`
+- 查产品定义 → `specs/product/`
+- 查决策依据 → `decisions/`
+- 做新计划 / 里程碑 → `changes/`
+- 确认外部事实 → `research/`
 
-## 放置规则
+## 怎么写 / 怎么加
 
-- `docs/product/`：项目定位、阶段目标、全局规则、PRD
-- `docs/research/`：数据来源、技术选型、部署、测试、外部核实
-- `docs/specs/modules/`：模块设计稿、模块补充研究、模块级验证
-- `docs/archive/investigations/`：排查、复现、环境确认、历史验证
-- `docs/archive/troubleshooting/`：常见故障、工具链异常、可复用处理路径
-- `docs/` 根目录：只放跨主题入口和台账
+各类文档的命名、生命周期与模板见对应目录 README：
 
-## 渐进式要求
+- [怎么写 ADR](./decisions/README.md)
+- [怎么做变更 / 里程碑 / 超 long plan](./changes/README.md)
+- [怎么写小模块](./specs/modules/README.md)（待补）
+- [怎么写调研](./research/README.md)（待补）
 
-- 目录和文件统一 `kebab-case`。
-- 调研统一 `*-research.md`；排查统一 `*-investigation.md` 或 `*-verification.md`；模块设计优先 `*-design.md`。
-- 同一主题只允许一个短入口；概要、决策、实现、验证、审计应继续拆成更小文件。
-- 同一事实只在一处展开，其他入口只保留一句摘要和链接。
-- 仓库内引用统一项目相对路径；历史结论要标明当前是否仍有效。
-- 某目录文档增长到不适合平铺时，先补该目录 `README.md`，再继续加专题文档。
-- 默认不跨主题预加载；只有当前问题真的涉及交叉边界时才继续展开下一层。
+完整治理规则（文档类型、生命周期、操作规则、体量预算、拆分维度）见 [`specs/guidelines/documentation-governance.md`](./specs/guidelines/documentation-governance.md)。
 
-## 需要更新本目录的情况
+## 默认读取顺序
 
-- 新增或删除目录级文档、局部 `README.md`。
-- 项目范围、路由、部署链路、数据目录、文档治理规则发生变化。
-- 新增跨项目或跨模块的长期规范，例如 AI-first TS / TSX 开发规则。
-- 发现根索引重新膨胀、重复列举专题细节、写入绝对路径或过期命令。
+`AGENTS.md` → 根 `README.md` → `docs/README.md`（本页）→ 目录 README → 叶子文档。

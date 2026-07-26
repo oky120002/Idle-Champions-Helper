@@ -1,15 +1,22 @@
-# research 文档入口
+# research/ —— 外部事实调研
 
-- 作用：收纳外部事实、数据来源、部署和测试结论；默认只进目标主题，不通读整目录。
+记录外部事实（数据源、部署、测试），**不含决策**。默认只进目标主题。
+
+## 规则
+
+- 只记事实（字段、格式、链路、数据、约束）
+- 调研含决策 / 推荐时拆分：事实留本目录，决策抽到 `decisions/`，后续建议抽到 `changes/`
+- 文档可带数据快照日期（事实的时间标识，如「数据快照日期：2026-07-21」）
+- 引用 raw 源头（`tmp/idle-champions-api/...`）作为证据
 
 ## 主题入口
 
-- `docs/research/data/README.md`：definitions、静态数据、中文链路、资源链路与皮肤立绘研究
-- `docs/research/deployment/README.md`：GitHub Pages 主路线与国内托管备选
-- `docs/research/testing/README.md`：主分支回归门禁与测试分层
+- [`data/`](./data/)：definitions、静态数据、中文链路、资源链路、皮肤立绘
+- [`deployment/`](./deployment/)：GitHub Pages 主路线与国内托管备选
+- [`testing/`](./testing/)：主分支回归门禁与测试分层
 
-## 读取建议
+## 怎么写
 
-- 判定数据上游、账号导入、资源链路：先读 `docs/research/data/README.md`
-- 判定部署或路由：先读 `docs/research/deployment/README.md`
-- 判定测试、CI、回归门禁：先读 `docs/research/testing/README.md`
+- 标题 + 数据快照日期
+- 事实为主，结论紧随
+- 不写「下一步建议」（进 `changes/`）、「为什么这样选」（进 `decisions/`）

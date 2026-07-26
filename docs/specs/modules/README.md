@@ -1,20 +1,35 @@
-# modules 文档入口
+# specs/modules/ —— 模块规范
 
-- 作用：存放模块设计稿与模块级补充资料；开发时优先加载目标模块目录，不通读全部设计稿。
+每个模块一个子目录，自治。描述「这个模块现在是什么、怎么工作」。
 
-## 模块入口
+## 标准结构
 
-- `docs/specs/modules/champions/README.md`：英雄筛选、用户英雄、详情、立绘页
-- `docs/specs/modules/formation/README.md`：阵型编辑与最近草稿
-- `docs/specs/modules/presets/README.md`：方案存档与恢复
-- `docs/specs/modules/pets/pets-page-design.md`：宠物图鉴页
-- `docs/specs/modules/planner/README.md`：自动阵型计划器产品需求与架构设计
-- `docs/specs/modules/shared-components/README.md`：共享组件治理与可复用资产
-- `docs/specs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入
-- `docs/specs/modules/search/README.md`：全站全文检索（构建期抽取 + 运行期引擎 + 顶栏 / 页面 UI）
+每个 `<name>/` 目录：
 
-## 读取建议
+- `README.md`：入口（≤60 行）——模块是什么 + 文件索引
+- `design.md`：设计——架构、数据流、关键决策指针
+- `rules.md`：硬规则——必须满足的约束
+- `acceptance.md`：验收标准（DoD）
+- `contract.md`（可选）：数据合同 / 接口契约
 
-- 做英雄页：先进 `docs/specs/modules/champions/README.md`
-- 做阵型、方案、个人数据：直接打开对应模块目录 README 或单篇文档
-- 新模块增长到多文档时，先在模块目录补 `README.md`
+## 规则
+
+- 模块自治：设计 / 规则 / 验收在模块目录；跨模块决策进 `decisions/`
+- 只描述「现在是什么」，不写里程碑 / 变更叙事（进 `changes/`）
+- 决策依据指向 `decisions/`，外部事实指向 `research/`
+- 单模块的里程碑 / 计划进 `changes/`（scope = 模块名）
+
+## 现有模块
+
+- [`champions/`](./champions/)（detail / filter / illustration）
+- [`formation/`](./formation/)
+- [`pets/`](./pets/)
+- [`planner/`](./planner/)
+- [`presets/`](./presets/)
+- [`search/`](./search/)
+- [`shared-components/`](./shared-components/)
+- [`user-data/`](./user-data/)
+
+## 何时新增模块
+
+新功能域（独立的一组页面 / 数据 / 规则）→ 新建 `specs/modules/<name>/` + 标准文件。
