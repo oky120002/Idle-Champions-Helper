@@ -57,6 +57,8 @@
 - 新增引擎入口与既有入口的限制语义必须对称：`evaluateFormation`（评估指定阵型）不像 `buildPlannerRecommendation`（搜索）那样在候选阶段过滤 `only_allow_crusaders` 白名单与未拥有英雄，就必须把这两类违规以 warning 体现——否则用户指定的非法/低质阵型被静默按 level 1 评分，两入口结果不可比。新入口的合法性/数据质量检查清单对照既有入口逐条核对，别让"不搜索"变成"不校验"。
 - `exactOptionalPropertyTypes: true` 下，可选属性 `prop?: T` 接受 `T` 但**不接受显式 `undefined`**：值来源是 `T | undefined`（如三元 `cond ? str : undefined`）时，类型必须写 `prop?: T | undefined`，否则赋 `undefined` 报 TS2375。透传链上每跳都要带 `| undefined`——`ActionButtonItem.disabledReason` 曾写成 `string` 而底层 `ActionButtonProps` 是 `string | undefined`，中间层漏写让 `string | undefined` 传不下去，typecheck 红、vitest 靠 esbuild 转译照常绿（见 testing-conventions §7），回归混进 main。
 
+- 多模式共用字段命名取超集概念，不用单模式量名或遗留泛名：被 carry-dps（carryDps）与 team-gold（teamGoldFind）共用的输出字段叫 `score` 会与已淘汰的启发式评分混淆、叫 `carryDps` 在 team-gold 模式名实不符——改 `objectiveValue`（优化目标量）模式中性、见名知意。内部管道（`ScoringResult`）同理：跨模式字段要么改中性别名，要么注释点明"当前模式目标量，非单模式量"。
+
 ## 6. 例外与迁移
 
 - 长字符串、大型映射、生成代码、测试夹具可以适度豁免，但必须保持职责单一。
