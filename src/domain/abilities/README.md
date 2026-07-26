@@ -7,7 +7,7 @@
 
 - 类型与 resolver 先读 `abilityModel.ts`。
 - signal qualifier / per_hero_expr 受控解析读 `signalSemantics.ts`。
-- 表达式拆分辅助读 `qualifierParsing.js`（配 `qualifierParsing.d.ts`）。
+- 英雄布尔谓词（`parseHeroPredicate` / `evalHeroPredicate`）读 `heroPredicate.ts`。
 
 ## 不变量
 

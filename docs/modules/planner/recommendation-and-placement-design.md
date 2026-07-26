@@ -1,6 +1,6 @@
 # 阵型推荐英雄与站位设计
 - 目标：把“推荐英雄 + 推荐站位”沉成长期稳定的 planner 设计事实源，避免后续继续在页面、脚本或测试夹具里临时拼规则。
-- 当前状态：仓库已有 `planner` 页面、候选池、合法性、beam search 与基础评分雏形，但当前推荐仍偏向角色权重拼队，不等于真正的 C 位驱动站位推荐。
+- 当前状态：仓库已落地 abilities 能力层 + 三层架构（能力表达 / 加成聚合 / 优化目标）+ 推荐引擎与 UI；推荐以 C 位 `carryDps`（team-gold 模式为 `teamGoldFind`）为真实优化目标量（输出层字段 `objectiveValue`）。
 - 边界：本文只定义纯算法与数据模型，不展开视觉稿、交互稿或逐帧战斗模拟。
 
 > 推荐与站位设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准（pool 聚合 + carryDps；输出层字段 `objectiveValue` 取代旧 `score`，无 `heuristicRoleMultiplier` / `isCarryViable`）；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
@@ -31,7 +31,7 @@
 - `sourceBreakdown`：记录每条语义来自官方解析、仓库补丁还是本地 override。
 - `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`bannedHeroes`、`lockedSlots`、`scenarioWarnings`。
 - 首期不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
-- `PoolAggregateResult`（原 `PlacementFit`）表示“某 support 站在某槽位时，对当前 C 位的加成贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`carrySlotId`、`pools`（按 `dimension:scope` 分池）、`totalMultiplier`、`scoreBreakdown`、`warnings`。
+- `PoolAggregateResult` 表示“某 support 站在某槽位时，对当前 C 位的加成贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`carrySlotId`、`pools`（按 `dimension:scope` 分池）、`totalMultiplier`、`scoreBreakdown`、`warnings`。
 
 ### 3.1 PoolAggregateResult 最小合同
 - 推荐问题先拆成最小确定性单元：`evaluatePlacementFit(carryHero, carrySlot, supportHero, supportSlot, scenario)`。
@@ -117,7 +117,7 @@ scenario + layout
   -> 从 Top K 派生槽位替补和 seat 竞争
 ```
 - 手动模式：用户先锁定一个 C 位，系统只围绕它推荐。
-- 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位并产出 `carryRanking`（无 `isCarryViable` 角色门控）。
+- 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位，完整阵型搜索结果按 distinct-carry Top K 返回（见 §7 输出合同）。
 - 无论手动还是自动，完整阵型搜索时都必须有且仅有一个主 C 位。
 - 引擎结构支持 `owned-only / all-hypothetical` 两种候选模式，默认落地 `owned-only`。
 - 同 seat 冲突属于硬约束，在搜索前就生效。
@@ -146,10 +146,10 @@ scenario + layout
 - 启发式命中必须标记 `heuristic-fallback`。
 
 ## 7. 输出合同
-> 本节为目标合同；当前实现仍是第一条纵切，输出结构与上述目标态有差距，见 `src/domain/planner/README.md`。
-- 主结果为 `PlannerRecommendationSet`：`carryRanking`、`topLineups`、`slotAlternatives`、`seatCompetition`、`globalWarnings`。
-- `topLineups` 的每项 `PlannerLineupCandidate` 至少包含：`carryHeroId`、`placements`、`carryDps`、`scoreBreakdown`、`reasonCodes`、`warnings`、`assumptions`、`fallbackSources`。
-- `slotAlternatives` 与 `seatCompetition` 都必须来自完整阵型结果派生，不能单独再排一套榜。
+> 当前输出合同以 `src/domain/planner/recommendationTypes.ts` 代码为准；下面是字段概要。
+- 主结果为 `PlannerRecommendation`：`result`（top1，= `results[0]`）、`results`（distinct-carry Top K 完整阵型）、`slots`（棋盘槽位拓扑，供结果卡片复用渲染）、`layoutId`、`scenarioRef`、`blocker`（缺画像 / 缺阵型 / 拥有英雄不足 / 无合法推荐）。
+- `PlannerResult` 至少包含：`objectiveValue`（当前模式目标量游戏记数法字符串；carry-dps=carryDps / team-gold=teamGoldFind）、`carryHeroId`、`placements`、`placementEntries`、`explanations`（结构化叙述行 `PlannerNarrativeLine[]`）、`warnings`、`areaEstimate`（推图层数预估）、`breakdown`（`SimulationBreakdown` 加成拆解）。
+- 逐槽位替补与同 seat 竞争从 Top K 完整阵型结果派生，不单独再排一套榜；`slotAlternatives` / `seatCompetition` 作为独立输出字段尚未实现，归后续扩展。
 
 ## 8. 验收场景
 - 相邻增益英雄与 C 位相邻时，完整阵型分数高于不相邻摆法。

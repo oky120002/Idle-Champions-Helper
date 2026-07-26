@@ -13,7 +13,7 @@
 ```
 /goal 按 docs/modules/planner/evolution-plan.md 执行里程碑 2·数据补全（阶段 3 金币 + 4 crit + 5 health/survival + 6 vulnerability + 7 speed+BUD + 8 buff_upgrade + 9.2/9.3 scenario/schema）。先展示 evolution-plan.md 进度追踪（确认 M1 已 [x]）+ 第一个未完成阶段。
 需要展示的证据：
-- 每阶段完成：evolution-plan.md 勾选 [x] + npm run data:planner-coverage 显示该 effect 覆盖率提升 + test/typecheck/build 输出。
+- 每阶段完成：evolution-plan.md 勾选 [x] + npm run data:signal-coverage 显示该 effect 覆盖率提升 + test/typecheck/build 输出。
 - 阶段 7 完成：src/domain/simulator/budCalculation.ts（BUD=max 单次伤害）+ docs/modules/planner/bud-verification.md 实测对照游戏。
 - 最终：M2 阶段全 [x] + coverage 报告（gold/crit/health/vulnerability/speed 覆盖）+ npm run test:run && typecheck && build。
 完成条件：

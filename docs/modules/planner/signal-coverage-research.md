@@ -1,7 +1,7 @@
 # planner signal 覆盖率盘点
 
 - 作用：基于真实 `public/data/v1/champion-details/*.json` 统计 planner 当前已识别 signal、叠层组合、filter 与 `per_hero_expr` 的覆盖情况，用来决定下一刀该补什么。
-- 命令：`npm run data:planner-coverage`
+- 命令：`npm run data:signal-coverage`
 - 结论日期：`2026-07-21`
 
 ## 核心结论

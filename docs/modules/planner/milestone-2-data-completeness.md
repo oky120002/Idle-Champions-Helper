@@ -28,7 +28,7 @@
 ### 3.2 解析 gold effect [x]
 - **改动**：`effect-helpers.ts:463 normalizeEffectSignal` 加 gold 分支（`gold_multiplier_mult`→globalGoldMultiplier；`gold_mult_per_tagged_crusader_mult`→+stackFunc；`gold_mult_per_target_crusader`→参照 :524 模式）。
 - **测试（先写）**：`gold_multiplier_mult` 解析为 globalGoldMultiplier；带 stackFunc；非法仍 unsupported。
-- **验证**：`npm run test:run`；`npm run data:planner-coverage` 显示 gold 覆盖。
+- **验证**：`npm run test:run`；`npm run data:signal-coverage` 显示 gold 覆盖。
 - **commit**：`feat(data): 3.2 解析 gold multiplier effect`。
 
 ### 3.3 重跑 build + coverage 验证 [x]
@@ -194,7 +194,7 @@
 - **commit**：`docs(data): 8.1 buff_upgrade 变体优先级评估`。
 
 ### 8.2 实现 top N 变体解析 [x]
-- **改动**：扩展 `isPlannerBuffUpgradeKind`（:108）+ `resolvePlannerBuffUpgradeSeed`（:187）支持 top N 变体（覆盖率 >80%）；低频私有 stack（per_mithral_hall_stacks 等）记录但降级进 warning。
+- **改动**：扩展 `isBuffUpgradeKind`（:108）+ `resolveBuffUpgradeSeed`（:187）支持 top N 变体（覆盖率 >80%）；低频私有 stack（per_mithral_hall_stacks 等）记录但降级进 warning。
 - **测试（先写）**：top N 变体解析为正确 bonusScaleOfSignal；低频的进 warning。
 - **验证**：`npm run test:run`；coverage 显示 wrapper 解析率 >80%。
 - **commit**：`feat(data): 8.2 实现 buff_upgrade top N 变体解析`。

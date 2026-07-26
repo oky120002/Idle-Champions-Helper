@@ -10,7 +10,7 @@
 - 候选池模式读 `src/domain/planner/candidatePool.ts`。
 - 阵型合法性读 `src/domain/planner/formationLegality.ts`。
 - 搜索与评分分别读 `src/domain/planner/beamSearchRanking.ts`、`src/domain/planner/steadyStateScoring.ts`。
-- 变体限制投影与未拥有英雄假设分别读 `src/domain/planner/variantRuleProjection.ts`、`src/domain/planner/hypotheticalBaseline.ts`。
+- 变体限制投影与未拥有英雄假设分别读 `src/domain/planner/variantConstraints.ts`、`src/domain/planner/hypotheticalBaseline.ts`。
 
 ## 当前职责
 
@@ -19,8 +19,6 @@
   - 输出页面可直接消费的 `PlannerRecommendation`，但不依赖任何页面组件类型。
 - `plannerModel.ts`
   - 定义 merge 后推荐输入模型；统一承接 `hero-abilities.json`、`scenarios.json`、仓库语义补丁和浏览器本地 override。
-- `plannerSignalSemantics.js`
-  - 统一承接 signal qualifier、`per_hero_expr` 受控解析和共享语义挂接，供数据构建脚本与评分链路共同消费。
 - `recommendationTypes.ts`
   - 定义推荐结果、解释文本、阵位条目和 blocker 契约。
 - `candidatePool.ts`
@@ -38,8 +36,7 @@
 - 页面组件不能作为领域结果的类型来源；共享契约必须放回 `src/domain/planner/`。
 - 评分和搜索只消费结构化输入，不在 JSX 里现场拼规则。
 - unsupported 规则只能进入 warning，不能静默计分。
-- 当前实现仍是第一条纵切，离文档里的 carry-centric planner 还有距离；后续继续沿这个目录推进，不再把计算逻辑塞回页面层。
-- 推荐引擎现在只消费 merge 后 planner model，不再在页面或测试夹具里现场拼 `champions + formations + champion-details`。
+- 推荐引擎只消费 merge 后 planner model；计算逻辑留在本目录，不塞回页面层或测试夹具里现场拼 `champions + formations + champion-details`。
 
 ## 后续继续时优先看什么
 
