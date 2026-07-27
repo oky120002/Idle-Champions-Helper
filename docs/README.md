@@ -7,7 +7,7 @@
 | 类型 | 目录 | 何时进入 |
 |---|---|---|
 | Spec 活跃规范 | [`specs/`](./specs/) | 改代码 / 改规范前（描述「现在是什么」） |
-| Reference 调研 | [`research/`](./research/) | 确认外部数据源 / 部署 / 测试事实 |
+| Research 调研 | [`research/`](./research/) | 确认外部数据源 / 部署 / 测试事实 |
 | Decision 决策 | [`decisions/`](./decisions/) | 查「为什么这样决策」（ADR） |
 | Change 变更 | [`changes/`](./changes/) | 做计划 / 里程碑 / 超 long plan |
 | Archive 归档 | [`archive/`](./archive/) | 考古（默认不进入） |

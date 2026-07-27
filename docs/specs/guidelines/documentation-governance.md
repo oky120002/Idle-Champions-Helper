@@ -62,7 +62,7 @@
 | 类型 | 目录 | 生命周期 | 核心规则 |
 |---|---|---|---|
 | Spec 活跃规范 | `specs/` | 随实现重写 | 禁迁移叙事；只描述「现在是什么」；**永不引用 changes/milestone** |
-| Reference 参考 | `research/` | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
+| Research 调研 | `research/` | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
 | Decision 决策 | `decisions/` | append-only | `**Status**: Draft/Accepted/Superseded`；superseded 不删，新 ADR 取代 |
 | Change 变更 | `changes/` | `Draft→Accepted→Landed→Archived` | 落地后 `specs/` 更新，change 移 `archive/changes/` |
 | Archive 归档 | `archive/` | 冷存储 | 仅考古读取；默认不进入 |
