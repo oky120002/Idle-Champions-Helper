@@ -17,6 +17,10 @@
 - `simulator.md`：GameNumber、等级基线、加成聚合、评分维度、搜索、计算模式、Web Worker、推图预估。
 - `signal-coverage.md`：planner signal 真实覆盖率盘点。
 
+### 数据合同
+
+- `data-source-confirmations.md`：planner 从游戏数据取哪些字段、怎么消费、字段缺口确认（怪物 stats、patron-perks、restrictions、equipment、ability）。
+
 ### 验收
 
 - `acceptance.md`：整体 DoD 与关键验收指针。
@@ -26,7 +30,6 @@
 - `expression-evaluator.md`：`per_hero_expr` 两类表达式的解析与求值（布尔谓词现状 + 数值表达式扩展）。
 - `bud-verification.md`：BUD 计算公式与游戏内校准。
 - `buff-upgrade-priority.md`：buff_upgrade wrapper 变体覆盖与稀有度去重。
-- `data-source-confirmations.md`：关键数据源（怪物 stats、patron-perks、restrictions、equipment、ability）字段结构、公式与缺口确认。
 
 ## 关联入口
 
