@@ -32,6 +32,6 @@
 
 ## 关联
 
-- 依据：`research/data/static-data-storage-research.md`、`research/data/game-data-source/source-decision.md`
+- 依据：`research/data/static-data-storage-research.md`、`research/data/game-data-source/source-facts.md`
 - 落地：`src/data/client.ts`（加载入口）、`src/data/localDatabase.ts`（IndexedDB）、`specs/guidelines/data-normalization.md`
 - 上游决策：`decisions/0002-data-source-strategy.md`

@@ -6,7 +6,7 @@
 
 - 页面标题、说明文案与统计条的一致布局：`docs/specs/guidelines/design/page-header-metrics.md`
 - 全局导航、语言切换和壳层密度约束：`docs/specs/guidelines/design/navigation-and-locale.md`
-- 整站低浮雕视觉系统现状与约束：`../../../.impeccable.md`
+- 整站低浮雕视觉系统现状与约束：`../../../../.impeccable.md`
 
 ## 何时补文档
 

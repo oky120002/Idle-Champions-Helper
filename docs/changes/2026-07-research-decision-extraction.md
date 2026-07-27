@@ -16,7 +16,7 @@
 ## 待拆清单（13 篇）
 
 - `research/data/champion-detail-fields/advanced-fields.md`（R+F，原 advanced-fields-and-contract，合同进 specs）
-- `research/data/champion-detail-fields/contract-and-page-shape.md`（R+F，已删除：合同已在 specs，无独立事实）
+- champion-detail-fields/contract-and-page-shape（R+F，已删除：合同已在 specs，无独立事实）
 - `research/data/formation-layout/dedupe-and-repo-impact.md`（R+P）
 - `research/data/game-data-source/implementation-and-risks.md`（R+P）
 - `research/data/game-data-source/source-facts.md`（R+P，原 source-decision）

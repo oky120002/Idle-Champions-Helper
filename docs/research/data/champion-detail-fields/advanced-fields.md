@@ -1,7 +1,7 @@
 # 英雄详情：进阶字段事实
 
 - 作用：沉淀官方 definitions 里升级 / 天赋 / 皮肤字段的实际落点，供详情页核对。
-- 详情数据合同（结构化层 + 原始快照层）与页面信息架构已落定，见 `specs/modules/champions/detail/interaction-and-data.md`、`page-structure.md`；本文件只保留字段事实。
+- 详情数据合同（结构化层 + 原始快照层）与页面信息架构已落定，见 `specs/modules/champions/detail/interaction-and-data.md` 与 `specs/modules/champions/detail/page-structure.md`；本文件只保留字段事实。
 
 ## 进阶字段
 

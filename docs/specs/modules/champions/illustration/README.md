@@ -6,4 +6,5 @@
 
 - 页面口径、为何必须走构建期衍生图、页面范围与非目标：`docs/specs/modules/champions/illustration/scope-and-boundaries.md`
 - 数据目录设计、构建期流水线与体积守门：`docs/specs/modules/champions/illustration/data-and-build.md`
-- 运行时策略、明确不选方案、实施拆分与验收标准：`docs/specs/modules/champions/illustration/runtime-and-acceptance.md`
+- 运行时策略与明确不选方案：`docs/specs/modules/champions/illustration/runtime.md`
+- 实施拆分与验收标准：`docs/specs/modules/champions/illustration/acceptance.md`

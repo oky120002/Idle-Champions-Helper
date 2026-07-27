@@ -27,5 +27,5 @@
 
 ## 关联
 
-- 依据：`research/data/game-data-source/source-decision.md`、`research/data/game-data-source/implementation-and-risks.md`
+- 依据：`research/data/game-data-source/source-facts.md`、`research/data/game-data-source/implementation-and-risks.md`
 - 落地：`specs/guidelines/data-normalization.md`（归一化管线）、存储分层见 `decisions/0003-static-data-storage.md`
