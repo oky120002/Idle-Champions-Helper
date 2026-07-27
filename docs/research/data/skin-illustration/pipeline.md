@@ -18,11 +18,11 @@
 
 ## hero-base 动画结论
 
-- 2026-04-17 的 definitions 审计结果表明，当前 `161 / 161` 个英雄本体都能映射到 `graphic_defines.type = 3` 的 `Characters/...` 动画资源。
+- 当前 `champion-animations.json`（`updatedAt: 2026-07-25`）包含 `164` 个英雄本体动画，均已映射到本地 `.bin`。
 - 因此 hero-base 与 skin 现在走同一套动画资源主线：
   - 动态展示读取本地 `.bin`
   - 静态立绘截取同一动画包的默认帧
-- 若未来某个 hero-base / skin 缺少动画包，构建期会直接报错，避免站内重新混入官方静态立绘。
+- hero-base / skin 缺少动画包时，构建期直接报错，避免站内混入其他资源合同。
 
 ## 关键文件
 
@@ -39,9 +39,9 @@
 
 - hero-base / skin 复用同一套官方 `SkelAnim` 基座数据，不再拆成两套资源合同。
 - 当前全量发布结果：
-  - `public/data/v1/champion-animations.json`：833 项（161 hero-base + 672 skin）
-  - `public/data/v1/champion-animations/`：约 155 MB
-  - `public/data/v1/champion-illustrations/`：约 24 MB
+  - `public/data/v1/champion-animations.json`：877 项（164 hero-base + 713 skin）
+  - `public/data/v1/champion-animations/`：约 166 MB
+  - `public/data/v1/champion-illustrations/`：约 49 MB
 - 这比预渲染 GIF / APNG / WebM 更稳，也避免再存一份完整逐帧 JSON。
 
 ## 资源识别

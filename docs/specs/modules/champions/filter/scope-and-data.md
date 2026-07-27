@@ -17,12 +17,6 @@
 - `public/data/v1/adventures.json` / `public/data/v1/variants.json`：场景身份、`ruleContextId`、`modeTags`、Patron 目标层级
 - `public/data/version.json`：当前数据版本
 
-### MVP 必补字段
-
-- 已补第一批：`patronEligibility`、`patrons`、`modes`、基础 `ruleContextId`
-- 仍待补的英雄公共字段：`modeEligibilityTags`
-- 仍待补的规则来源：跨场景复用的结构化规则集合，例如 `public/data/<version>/rules.json`
-
 ### 明确不接受的做法
 
 - 从 `variants` 原文限制文本做页面侧字符串匹配
@@ -30,7 +24,7 @@
 - 在没有公共数据合同的前提下先做临时 UI 开关
 - 只保留展示用 `mode` 文本，不保留场景身份
 
-### 建议的筛选上下文
+### 筛选上下文
 
 ```ts
 type ChampionFilterContext =

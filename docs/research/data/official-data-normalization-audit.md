@@ -75,7 +75,7 @@ node scripts/normalize-idle-champions-definitions.ts \
 
 其中 `music_*` / `sound_defines` / `social_link_defines` 等当前不该优先做。
 
-其余和阵型计算相关的顶层稳定字典已基本补上。下一步主战场不再是顶层效果字典，而是"已消费但尚未共享提升"的 effect / detail 事实。
+其余和阵型计算相关的顶层稳定字典已基本补上。当前主要缺口不是顶层效果字典，而是“已消费但尚未共享提升”的 effect / detail 事实。
 
 ## “未涉及就不归一化”体现在哪里
 
@@ -95,11 +95,4 @@ node scripts/normalize-idle-champions-definitions.ts \
 
 ## 对自动化阵型模拟的实际影响
 
-如果继续只在“某个表达式缺了就临时补一点”的模式下推进：解析器会越来越懂局部表达式，但共享事实层仍稀薄，每次扩展都要回到明细 JSON 或原始语义；稳态模拟、候选筛选、Patron / 模式限制、场景规则判断会长期缺少统一、薄、稳定的事实输入层。更有价值的下一步不是继续盲目扩表达式，而是先把“稳定、可复用、非运行时”的规则事实提升出来。
-
-## 建议的下一步
-
-1. 继续提升“稳定、可复用、非运行时”的规则事实，下一步不再是补顶层 stat / buff / effect-key 字典，而是补更贴近 effect 实体与 planner 输入层的共享合同。
-2. 当前更值得继续审计和提升的方向：从已消费的 `effect_defines` 提升一层薄共享 effect 合同；从 `champion-details/<id>.json` / `raw.upgrades` 提升 planner 反复用到的稳定条件投影；继续补 `modeEligibilityTags` 这类静态限制事实。
-3. 信息分两类：静态稳定事实归一化进共享数据；运行时上下文事实放进 planner scenario / evaluation context。
-4. 已稳定存在于 `champion-details/<id>.json` 或原始 definitions 的信息，优先“提升成薄共享合同”，而不是继续把解析复杂度压进 planner parser。
+当前共享事实层仍未覆盖完整的 effect 实体、planner 稳定条件投影与 `modeEligibilityTags`。这会让稳态模拟、候选筛选、Patron / 模式限制和场景规则判断继续读取明细 JSON 或原始语义。静态稳定事实与运行时上下文事实必须保持分离；本审计只记录该边界，不规定实施顺序。

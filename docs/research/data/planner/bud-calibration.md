@@ -1,6 +1,6 @@
-# BUD 计算与校准
+# BUD 计算与校准证据
 
-BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。IC 怪物血量按阵型 BUD 缩放，是推图层数预估的核心绝对量。BUD 对阵型推荐与推图预估的价值取舍见 `architecture.md`；单英雄单次伤害计算见 `src/domain/simulator/budCalculation.ts`。
+BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。IC 怪物血量按阵型 BUD 缩放，是推图层数预估的核心绝对量。BUD 对阵型推荐与推图预估的价值取舍见 `docs/specs/modules/planner/architecture.md`；单英雄单次伤害计算见 `src/domain/simulator/budCalculation.ts`。
 
 ## 公式
 
@@ -18,7 +18,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 
 - `budCalculation.ts` 只导出 `computeSingleHitDamage(heroDps, attackCooldown)`——单英雄单次伤害；缺 cooldown 时回退默认 1 秒。
 - 阵型级 BUD（`max` 各英雄单次伤害）**不在此计算**——`steadyStateScoring` 直接用 carry 的单次伤害近似阵型 BUD（carry 通常设 BUD）。formation-max 精确化（考虑非 carry 高 cooldown 英雄）留待 BUD 实测校准后按需立项。
-- ult_damage 派生（`ultimate_damage_params.dps_based:true`）由 ult uptime 折算路径处理，见 `simulator.md`。
+- ult_damage 派生（`ultimate_damage_params.dps_based:true`）由 ult uptime 折算路径处理，见 `docs/specs/modules/planner/simulator.md`。
 
 ## MVP 近似与局限
 
@@ -45,4 +45,4 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 ## 核实结论
 
 - 公式已实现并单测覆盖（`budCalculation.test.ts`：单次伤害、慢攻击 BUD 更高、cooldown 回退、空阵型）。
-- 绝对值实测校准 pending 用户游戏内数据；阵型推荐以 carryDps 优化，BUD 为辅助指标。
+- 绝对值实测校准仍缺用户游戏内数据；阵型推荐以 carryDps 优化，BUD 为辅助指标。

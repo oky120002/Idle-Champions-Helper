@@ -10,21 +10,20 @@
 
 - 静态衍生图来源：`docs/decisions/0001-illustration-static-over-remote.md`
 - 动画播放方案：`docs/decisions/0004-animation-bin-canvas-playback.md`
-- 暂未实现的后续项：`docs/changes/2026-07-skin-illustration-followups.md`
 
 ## 叶子文档
 
 - 为什么会碎、definitions 字段边界：`problem.md`
 - 客户端缓存与 SkelAnim 二进制结构、运行时证据：`runtime-format.md`
-- 路线硬约束、A/B 对比、推荐与实现：`strategy.md`
+- 构建期合成与浏览器合成的技术代价：`rendering-tradeoffs.md`
 - 当前生产主链路、关键文件与渲染规则：`pipeline.md`
-- 复跑命令、全量重建入口与剩余风险：`pipeline-validation.md`
+- 动画与立绘链路风险证据：`pipeline-validation.md`
 - 外站动画机制、静态立绘技术约束与当前主线事实：`implementation.md`
-- 剩余技术点与核对来源：`open-questions.md`
 
 ## 按问题加载
 
 - “为什么会碎”或“definitions 字段够不够”：`problem.md` -> `runtime-format.md`
 - “仓库里为什么现在能做动态动画”：`implementation.md`
 - “现在的构建 / 发布 / 回退逻辑”：`pipeline.md`
-- “要复跑、验收或评估风险”：`pipeline-validation.md`
+- “要评估风险”：`pipeline-validation.md`
+- “要复跑或验收资源”：`docs/runbooks/public-data.md`

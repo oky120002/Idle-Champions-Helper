@@ -7,4 +7,3 @@
 - definitions 如何定位英雄 / 皮肤资源：`docs/research/data/visual-asset/field-links-and-examples.md`
 - `mobile_assets` transport 与浏览器直连边界：`docs/research/data/visual-asset/transport-and-browser-boundary.md`
 - 样例尺寸 / 体积、头像特殊处理与仓库存储边界事实（资源定位合同见 `specs/modules/champions/illustration/data-and-build.md`）：`docs/research/data/visual-asset/size-and-storage.md`
-- 全量审计暂未展开项：`docs/changes/2026-07-visual-asset-audit.md`

@@ -25,16 +25,15 @@
 
 - 主线形态：构建期发布官方原始 `SkelAnim` `.bin` + 小 manifest（`public/data/v1/champion-animations.json`），运行时按需解码 + `canvas` 播放，失败回退静态 PNG。
 - 静态图与动画共用同一 manifest 的默认 `sequence / frame`，不再为 skin 单独维护 pose 决策。
-- 全量发布结果（数据快照）：`champion-animations.json` 833 项（161 hero-base + 672 skin）；`champion-animations/` 约 155 MB（其中 skins 原始二进制约 127 MB）；`champion-illustrations/` 约 24 MB；合计远低于 GitHub Pages `1 GB` 站点上限。
-- 完整构建 / 运行时合同与脚本职责见 `specs/modules/champions/illustration/data-and-build.md` 与 `specs/modules/champions/illustration/runtime.md`；复跑命令与剩余风险见 `pipeline-validation.md`。
+- 当前发布结果（`updatedAt: 2026-07-25`）：`champion-animations.json` 877 项（164 hero-base + 713 skin）；工作树中 `champion-animations/` 约 166 MB，`champion-illustrations/` 约 49 MB；合计远低于 GitHub Pages `1 GB` 站点上限。
+- 完整构建 / 运行时合同与脚本职责见 `specs/modules/champions/illustration/data-and-build.md` 与 `specs/modules/champions/illustration/runtime.md`；风险证据见 `pipeline-validation.md`，复跑命令见 `docs/runbooks/public-data.md`。
 
 ## 主线边界
 
 - 静态 PNG 继续保留，不能被动画链路替代。
-- 只有当某个 hero-base 将来不存在动画包时，才回退现有静态渲染路径。
+- hero-base 或 skin 缺少动画包时，构建期报错，不静默混入其他资源合同。
 - 不在列表页默认自动播放；不把完整逐帧 JSON 存站内。
 
-## 相关决策与后续
+## 相关决策
 
 - 动画交付决策：`decisions/0004-animation-bin-canvas-playback.md`
-- 暂未实现的观测 / 性能后续项（体积预算阈值、弹层关闭释放播放器状态、扩展插画页评估）：`changes/2026-07-skin-illustration-followups.md`

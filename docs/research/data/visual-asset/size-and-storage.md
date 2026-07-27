@@ -5,8 +5,8 @@
 
 ## 已确认的数量
 
-- 截至 2026-04-15 的快照：可上阵英雄 `161` 名；`161 / 161` 都有 `graphic_id` 与 `portrait_graphic_id`（当前数据已增长至 163，结论不变，需重跑覆盖统计）。
-- 截至 2026-04-15 的快照：皮肤 `672` 条；`672 / 672` 都有 `base / large / xl / portrait` 四类 graphic 引用（当前数据已增长至 688，结论不变，需重跑覆盖统计）。
+- 当前 `champion-illustrations.json`（`updatedAt: 2026-07-25`）包含 `164` 个英雄本体与 `713` 个皮肤展示单元。
+- 清单中的 `877` 个展示单元都已生成本地静态图；字段链路仍来自英雄与皮肤 definitions 对视觉资源的引用。
 
 ## 样例尺寸与体积
 
@@ -33,7 +33,3 @@
 ## 当前部署边界
 
 2026-04-14 已确认 `master.idlechampions.com/~idledragons/mobile_assets/...` 当前未见 `Access-Control-Allow-Origin`。因此当前更稳妥的做法仍是：头像走本地同步；立绘走离线渲染或只保留远端元数据；页面不要把浏览器直连官方资源当成硬依赖。
-
-## 相关后续
-
-全量尺寸审计、全量体积统计等暂未展开项见 `changes/2026-07-visual-asset-audit.md`。

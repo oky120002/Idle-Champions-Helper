@@ -4,7 +4,7 @@
 
 ## 先读哪篇
 
-- 模块定位、范围与 MVP 数据模型：`docs/specs/modules/presets/scope-and-model.md`
+- 模块定位、当前范围与数据模型：`docs/specs/modules/presets/scope-and-model.md`
 - 存储方向、恢复校验和兼容回退：`docs/specs/modules/presets/storage-and-recovery.md`
 - 页面结构、模块衔接与核心交互：`docs/specs/modules/presets/ui.md`
 - 验收标准与当前实现：`docs/specs/modules/presets/acceptance.md`

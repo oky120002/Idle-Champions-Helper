@@ -69,7 +69,7 @@ BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。
 - 阵型推荐（相对比较）：DPS 足够，planner 用 `carryDps` 近似优化。
 - 推图层数预估（绝对值）：IC 怪物血量按 BUD 缩放；用 DPS 近似会偏差，BUD 更准。
 
-两者都计算、都展示。BUD 公式与绝对值校准边界见 `bud-verification.md`；推图层数预估算法见 `simulator.md`。
+两者都计算、都展示。BUD 公式与绝对值校准证据见 `docs/research/data/planner/bud-calibration.md`；推图层数预估算法见 `computation-runtime.md`。
 
 ## 模拟/UI 分离
 
@@ -84,14 +84,5 @@ CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（
 
 - 数据、隐私、目录与存储：`data-and-privacy.md`
 - 推荐英雄、站位、模型字段与 merge 策略：`recommendation.md`
-- 数字层、基线、加成聚合、搜索、计算模式、Web Worker 与 UI：`simulator.md`
-
-## 未来可能补充
-
-以下方向超出当前稳态推荐能力，属产品级长期愿景：
-
-- **balanced scoring**：混合伤害/存活/速度/可获得性/解释复杂度的综合评分模式。
-- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）；含 ult/主动技能 buff 的精确时间窗口建模（当前用 modron uptime 近似）。
-- **多队伍 / Trials / Time Gate**：多队伍编排与长期成长路线。
-- **event / season / temporary buff 投影**：时效性 buff 的数据投影（modron/patron 已支持，此处指 event/season/temporary）。
-- **manual parameter panel**：用户手动覆盖金币预算/装备/feat/传奇/专精的控件。
+- 数字层、基线、加成聚合与计算模式：`simulator.md`
+- Web Worker、推图预估、输出合同与 UI：`computation-runtime.md`

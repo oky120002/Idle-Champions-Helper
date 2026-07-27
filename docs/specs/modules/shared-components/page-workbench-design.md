@@ -84,7 +84,7 @@
 
 - 页面只负责把内容映射到 `toolbarLead / toolbarPrimary / toolbarActions / sidebarHeader / sidebar / contentHeader / children`。
 - 壳层本身统一负责：桌面锁滚、抽屉持久化、左右内滚容器、悬浮回顶覆盖层和 sidebarless 行为。
-- 若后续页面暂时没有左侧内容，也只能走“隐藏左栏”模式，不能重新发明另一套页面外壳。
+- 没有左侧内容的页面使用“隐藏左栏”模式，不另建页面外壳。
 
 ## 页面归位映射
 

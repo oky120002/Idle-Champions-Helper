@@ -4,9 +4,9 @@
 
 ## 页面口径
 
-- 页面要展示的单元是 `163` 个英雄本体立绘 + `688` 个皮肤立绘，共 `851` 个展示单元。
-- 不需要把 `portrait / base / large / xl` 等全部技术槽位原样公开；按技术槽位全量算会到 `3010` 个资源单元，超出页面真实需求。
-- 当前仓库产物已简化为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；`thumbs / display / webp` 只是后续可扩展的资源设计，不代表唯一实现。
+- 页面消费 `champion-illustrations.json` 的全部展示单元；当前产物是 `164` 个英雄本体立绘 + `713` 个皮肤立绘，共 `877` 个展示单元。
+- 不需要把 `portrait / base / large / xl` 等全部技术槽位原样公开；页面按英雄本体和皮肤展示单元消费清单，不按技术槽位展示。
+- 当前仓库产物为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；`thumbs / display / webp` 不属于当前页面合同。
 
 ## 为什么必须走构建期衍生图
 

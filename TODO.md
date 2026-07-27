@@ -49,7 +49,7 @@ repair: rebuild
     - 影响①：carryDps 的 sharedPools 聚合所有英雄 global_dps loot，支持位装备贡献从不缩放
     - 影响②：theoreticalLootMult/ownedEquipMult 只收 global_dps_multiplier_mult（692 条），不收 hero_dps（160）和 buff_upgrade（2088）loot，而 M1 collectRawEffectEntries 全部进 damage pool → carry 自己的 hero_dps loot 停在 M1 理论上界
     - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
-    - 当前死码（?? 1 默认）无运行时影响；关联 data-source-confirmations.md §13.1（hero_dps 缺口已文档化，支持位未调整后果未显式记录）
+    - 当前死码（?? 1 默认）无运行时影响；关联 `docs/research/data/planner/equipment-and-abilities.md`（hero_dps 缺口已文档化，支持位未调整后果未显式记录）
 
 - scoreFormation 三重 evaluatePlacementFit 调用（实际冗余小，非 3× position 检查） <!-- auto-todo:id=atd_d71dd2a7d8 -->
   - 记录时间: `2026-07-25T00:05:30+08:00`

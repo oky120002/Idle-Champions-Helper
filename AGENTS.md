@@ -7,6 +7,7 @@
 - 文档：`docs/specs/guidelines/documentation-governance.md`
 - 测试：`docs/specs/guidelines/testing.md`
 - 数据归一化管线：`docs/specs/guidelines/data-normalization.md`
+- 当前操作手册：`docs/runbooks/README.md`
 - 整站视觉（深色战术台方向、克制原则、移动端与 Pages 适配）：`.impeccable.md`
 
 ## 1. 项目边界

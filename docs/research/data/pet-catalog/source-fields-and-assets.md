@@ -6,13 +6,13 @@
 
 宠物相关字段集中在：`familiar_defines`、`familiar_skin_defines`、`premium_item_defines`、`patron_shop_item_defines`、`patron_defines`、`graphic_defines`。
 
-其中：`familiar_defines` 截至 2026-04-16 的快照共有 `323` 条（当前数据已增长至 331，结论不变，需重跑覆盖统计）；`familiar_skin_defines` 当前共有 `14` 条。
+当前 `pets.json`（`updatedAt: 2026-07-25`）包含 `341` 个宠物；2026-04-16 raw 快照另确认 `familiar_skin_defines` 有 `14` 条。
 
 ## 图像字段
 
 `familiar_defines` 已确认可用字段：`graphic_id`（宠物图标 / 基础图）、`properties.xl_graphic_id`（4x 立绘槽位）。
 
-2026-04-16 当天快照中：有效 `graphic_id` `319` 条；有效 `xl_graphic_id` `319` 条；缺图像槽位 `4` 条（当前 `public/data/v1/pets/icons/` 已增长至 327 个，需重跑覆盖统计）。资源路径位于 `graphic_defines[*].graphic`，实际前缀主要是 `Familiars/...`，少量落在 `Escorts/...`。
+当前 `pets.json` 有 `337` 个本地图标和立绘，另有 `4` 个宠物没有本地图像。资源路径位于 `graphic_defines[*].graphic`，实际前缀主要是 `Familiars/...`，少量落在 `Escorts/...`。
 
 样本抓取确认：`Familiars/*` / `Escorts/*` 资源都可从官方 `mobile_assets` 获取；这批有图宠物的 `graphic_id` 与 `xl_graphic_id` 在快照里全部都是 `graphic_defines.type = 3`；它们不是“直接可用的一张 PNG”，而是 zlib 容器里的 `SkelAnim` 分件动画数据。
 

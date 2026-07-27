@@ -6,4 +6,3 @@
 
 - 覆盖情况、缺口与验证方法：`docs/research/data/language-id-7/coverage.md`
 - 本地化字段合同（`{original, display}`）与实现记录：`docs/research/data/language-id-7/data-contract.md`
-- 暂未展开的次级字段核对：`docs/changes/2026-07-language-id-7-followups.md`

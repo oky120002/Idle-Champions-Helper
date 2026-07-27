@@ -51,7 +51,7 @@
 
 ### 未支持的 string target（`normalizeExplicitTargeting`）
 
-`effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7 effect_defines + 54 legendary) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（不处理）；`other` 精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来。`active_campaign` 语义 = 当前活跃 campaign 场景条件（steady-state 默认满足），位置上 = 全队；legendary 54 处全是 `global_dps_multiplier_mult`（该分支不检查 targets，未被阻塞），effect_defines 7 处中仅 1 个 `hero_dps_multiplier_mult` 被阻塞。
+`effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7 effect_defines + 54 legendary) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（不处理）；当前 `positionQualifier` 没有 excludeSelf 语义，不能精确支持 `other`。`active_campaign` 语义 = 当前活跃 campaign 场景条件（steady-state 默认满足），位置上 = 全队；legendary 54 处全是 `global_dps_multiplier_mult`（该分支不检查 targets，未被阻塞），effect_defines 7 处中仅 1 个 `hero_dps_multiplier_mult` 被阻塞。
 
 **`self_and_behind_and_ahead` 已支持（真实性补强）**：Jim（hero 48）的 `hero_dps_multiplier_mult,0 + targets=self_and_behind_and_ahead`，映射为新关系 `selfAndAheadAndBehindColumns`（自身列 + 立即相邻两列 = 3 列宽带，`|Δcolumn|<=1`）。值经 `amount_expr=upgrade_amount(12128,0)` 解析、叠层走 `stack_func=per_upgrade_targets`（均已有基础设施）——只是 targets 关系此前不在 STRING_RELATION_MAP 被阻塞。判定为 3 列带（而非全阵型）的依据：per-champion mult 若按全阵型算会得 3^N 失真；待 IC 源码确认。
 

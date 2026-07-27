@@ -63,7 +63,7 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 
 ## 官方只读 client
 
-allowlist 只允许用户数据读取接口，例如 `getuserdetails`、`getcampaigndetails`、`getallformationsaves`。任何名字包含 claim、purchase、save、redeem、consume、set、update 语义的调用默认拒绝，除非后续 PRD 单独放开。
+allowlist 只允许用户数据读取接口，例如 `getuserdetails`、`getcampaigndetails`、`getallformationsaves`。任何名字包含 claim、purchase、save、redeem、consume、set、update 语义的调用默认拒绝；放开写操作必须另作产品与安全决策。
 
 fetch 参数必须固定：
 

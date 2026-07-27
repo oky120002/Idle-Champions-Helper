@@ -18,7 +18,7 @@
 
 ### champions
 
-截至 2026-04-13 的快照：前端实际消费的可上阵英雄为 161。`name` 的中文覆盖为 `160 / 161`，`english_name` 为 `0 / 161`，`character_sheet_details.class / race / alignment / backstory` 基本可直接用，`event_name` 只在事件英雄上有值且多数已翻译。当时确认的缺口：`id=125` `BBEG`。当前数据已增长至 163 且 `BBEG` 已补齐，需重跑覆盖统计。
+当前 `champions.json`（`updatedAt: 2026-07-25`）包含 `164` 名可上阵英雄，`name.display` 与英文原名不同的有 `161` 名；`K'thriss`、`BBEG`、`Lazaapz` 当前使用英文回退。2026-04-13 raw 快照还证明 `character_sheet_details.class / race / alignment / backstory` 基本可直接用，`event_name` 只在事件英雄上有值且多数已翻译。
 
 ### affiliations
 
@@ -26,8 +26,8 @@
 
 ### campaigns
 
-`name` 与 `short_name` 的中文覆盖都是 `28 / 28`；`description` 为 `25 / 28`，说明新战役描述仍有缺口，不能只保留中文。截至 2026-04-13 的快照中未翻译描述的战役：`29`、`31`、`32`。当前数据已变化（29/32 已有中文 display，31 已不在 adventures.json），需重跑覆盖统计。
+2026-04-13 raw 快照中，`name` 与 `short_name` 的中文覆盖都是 `28 / 28`，`description` 为 `25 / 28`。当前发布产物没有独立 campaign 集合，因此不能从仓库产物重算完整 campaign 字段覆盖；消费层必须继续保留英文回退。
 
 ### variants / adventures
 
-`adventure_defines` 总数 `1865`。`name` 覆盖 `1851 / 1865`，`description` 覆盖 `1852 / 1865`，`objectives_text` 覆盖 `1715 / 1865`，`requirements_text` 覆盖 `1655 / 1865`，`restrictions_text` 覆盖 `1859 / 1865`。结论是：可作为主来源，但必须允许英文回退。
+2026-04-13 raw 快照的 `adventure_defines` 总数为 `1865`：`name` 覆盖 `1851`，`description` 覆盖 `1852`，`objectives_text` 覆盖 `1715`，`requirements_text` 覆盖 `1655`，`restrictions_text` 覆盖 `1859`。当前 `adventures.json`（`updatedAt: 2026-07-25`）包含 `521` 个普通冒险，名称与描述均有不同于英文原文的 display 值；`variants.json` 包含 `1413` 个变体，其中 `1412` 个名称有不同于英文原文的 display 值。中文可作为主来源，但所有字段仍必须允许英文回退。

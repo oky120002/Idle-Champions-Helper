@@ -52,12 +52,12 @@
 - 新增 / 删除文档，或发现多个入口重复维护同一事实。
 - 某目录重新膨胀，导致为一个问题被迫吞下多个无关问题。
 - 文档出现过期命令、错误路径、绝对路径或与代码冲突的描述。
-- 改名记录（A→B）的 B 侧随后续重构漂移（再改名 / 扩展名 `.mjs→.ts` 迁移 / 文件合并 / B 侧名字从未存在）：每轮文档审计必须对照代码重新核对 B 侧真实存在，不只确认 A→B 改名曾发生；同时区分 JSON collection 名（`loadCollection` fetch `public/data`）与 IndexedDB store key（`localDatabase.ts APP_STORE_NAMES`），不混称。
+- 改名记录（A→B）的 B 侧可能因再次改名、扩展名变化、文件合并或错误记录而漂移：每轮文档审计必须对照代码重新核对 B 侧真实存在，不只确认 A→B 改名曾发生；同时区分 JSON collection 名（`loadCollection` fetch `public/data`）与 IndexedDB store key（`localDatabase.ts APP_STORE_NAMES`），不混称。
 - `AGENTS.md` 不得复制细则已展开的读取顺序、结构命名、拆分规则、体量预算、样式规则；此类内容只进对应 `docs/specs/guidelines/*` 细则，AGENTS.md 至多留一行指针。
 
 ## 7. 文档类型与生命周期
 
-`docs/` 下分五类文档，各有独立目录与生命周期。各类的「怎么写/怎么加」细则在该类目录的 README（就近原则），本节只给跨类型总则。
+`docs/` 下有六类活跃资产与历史归档，各有独立目录与生命周期。各类的「怎么写/怎么加」细则在该类目录的 README，本节只给跨类型总则。
 
 | 类型 | 目录 | 生命周期 | 核心规则 |
 |---|---|---|---|
@@ -65,22 +65,24 @@
 | Research 调研 | `research/` | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
 | Decision 决策 | `decisions/` | append-only | `**Status**: Draft/Accepted/Superseded`；superseded 不删，新 ADR 取代 |
 | Change 变更 | `changes/` | `Draft→Accepted→Landed→Archived` | 落地后 `specs/` 更新，change 移 `archive/changes/` |
+| Runbook 操作手册 | `runbooks/` | 随操作更新 | 写当前可执行步骤；不写事故经过或方案讨论 |
 | Archive 归档 | `archive/` | 冷存储 | 仅考古读取；默认不进入 |
 
-**铁律**：活跃规范（`specs/`）永不引用 `changes/`/milestone/`decisions/` 的历史叙事。规范描述当前现实，不描述「里程碑交付了什么」——这是避免重演 planner milestone 灾难（计划文件污染当前态被全量删除）的核心规则。
+**铁律**：活跃规范不引用 `changes/` 或里程碑，不描述「某次交付了什么」。Spec 可以链接 ADR 作为当前选择的依据，但不得复述决策历史。
 
 ## 8. 操作规则
 
 ### 怎么组织
 
-六类目录（见 §7）。新增文档时按性质判断：描述现状 → `specs/`；记录决策 → `decisions/`；规划变更/里程碑 → `changes/`；外部事实 → `research/`；历史归档 → `archive/`。命名约定见各目录 README（`decisions/` 用 `NNNN-slug`，`changes/` 用 `YYYY-MM-scope-slug`，`specs/` 用语义命名）。
+新增文档按它回答的问题分类：当前是什么 → `specs/`；事实是什么 → `research/`；为什么选择 → `decisions/`；准备改什么 → `changes/`；现在怎样操作 → `runbooks/`；过去发生什么 → `archive/`。命名约定见各目录 README。
 
 ### 怎么使用
 
 - 改代码 → `specs/modules/<name>/` 或 `specs/guidelines/`
 - 查「为什么这样决策」→ `decisions/`
 - 做计划 / 里程碑 / 超 long plan → `changes/`
-- 确认外部数据源 / 部署 / 测试事实 → `research/`
+- 确认外部事实或数据证据 → `research/`
+- 执行开发、测试、部署、维护或排障 → `runbooks/`
 - 反例：写代码时不读 `changes/`（避免被计划叙事污染当前理解）
 
 ### 怎么更新
@@ -88,6 +90,7 @@
 - 代码改了 → 更新 `specs/` 描述新现状（不写迁移叙事）
 - 决策变了 → 新 ADR（`decisions/`，旧的不删，标 `Status: Superseded by NNNN`）
 - change 落地 → 更新 `specs/` + change 标 `Status: Landed` → 移 `archive/changes/`
+- 操作变化 → 原地更新 `runbooks/`；一次性事故证据另存 `archive/investigations/`
 
 ### 怎么添加（模板见各目录 `_template.md`）
 

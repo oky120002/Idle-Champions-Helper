@@ -11,7 +11,5 @@ planner 的整体完成判据（DoD）与关键验收指针。
 
 ## 关键验收指针
 
-- 数据源字段确认与已知缺口：`data-source-confirmations.md`
-- BUD 实测校准（绝对值待用户游戏内数据）：`bud-verification.md`
-- signal 覆盖率（已识别 / unsupported 统计）：`signal-coverage.md`
+- 数据源字段、BUD 校准和推荐信号覆盖证据：`docs/research/data/planner/README.md`
 - 隐私边界与 `npm run privacy:scan`：`data-and-privacy.md`

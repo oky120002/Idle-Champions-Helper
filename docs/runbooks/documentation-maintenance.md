@@ -1,0 +1,11 @@
+# 文档维护
+
+治理规则见 `docs/specs/guidelines/documentation-governance.md`。新增或改名文档时执行：
+
+1. 先判断它是规范、研究、决策、变更、操作手册还是历史证据。
+2. 更新最近一级 README，不在多个入口重复平铺同一清单。
+3. 修复所有本地链接，不保留旧路径跳转页。
+4. 运行 `npm run test:unit -- scripts/docs-governance.test.ts`。
+5. 搜索旧名称、旧路径、变更叙事和失效术语残留。
+
+代码、命令、页面入口或数据合同变化时，同一提交更新对应规范或 Runbook。一次性审计台账进入 `archive/audits/`；活跃规范只描述当前事实。

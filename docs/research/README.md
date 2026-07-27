@@ -1,6 +1,6 @@
 # research/ —— 外部事实调研
 
-记录外部事实（数据源、部署、测试），**不含决策**。默认只进目标主题。
+记录外部事实、数据核实与审计证据，**不含决策**。默认只进目标主题。
 
 ## 规则
 
@@ -13,7 +13,7 @@
 
 - [`data/`](./data/)：definitions、静态数据、中文链路、资源链路、皮肤立绘
 - [`deployment/`](./deployment/)：GitHub Pages 主路线与国内托管备选
-- [`testing/`](./testing/)：主分支回归门禁与测试分层
+- [`documentation/`](./documentation/)：文档驱动开发框架与行业实践
 
 ## 怎么写
 

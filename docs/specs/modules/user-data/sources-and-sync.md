@@ -1,59 +1,4 @@
-# 本地优先的个人数据导入方案
-
-- 目标：在不要求用户把真实 `User ID / hash` 发给第三方的前提下，为辅助站建立个人数据导入能力。
-- 页面壳层：个人数据页纳入全站页面工作台规范；小导航、工具条、无左栏模式、右区滚动与页面归位映射见 `docs/specs/modules/shared-components/page-workbench-design.md`。
-
-## 1. 设计原则
-
-- **本地优先**：凭证解析、导入校验和数据存储都优先在浏览器内完成
-- **最小暴露**：不把 `user_id`、`hash`、`instance_id` 上传到你的服务端
-- **无后端代理**：生产站不保存、不转发、不代理凭证；真实同步只能由浏览器前端在用户手动触发时请求官方只读接口
-- **双模式隔离**：生产模式只允许浏览器内真实同步；本地开发模式才允许读取开发者自备的私有 mock / token 抓取结果
-- **先解析、后接导入源**：先把导入方式和格式校验打通，再扩展离线文件、日志片段或其他本地输入
-- **先脱敏样本、后真实输入**：开发阶段优先使用脱敏示例和本地文本片段调试
-
-## 2. 推荐导入方式
-
-### Support URL
-
-优先级最高，原因：
-
-- 用户最容易理解
-- 最贴近游戏内已有操作
-- 解析逻辑最简单
-
-当前需要提取的核心字段：
-
-- `user_id`
-- `device_hash` / `hash`
-- 可选：`network`
-
-### 手动填写 User ID + Hash
-
-适用场景：
-
-- 用户已经知道这两个字段
-- 不想直接粘贴完整 Support URL
-
-这一路径应该只做：
-
-- 基本格式校验
-- 脱敏显示
-- 明确风险提示
-
-### 日志文本 / `webRequestLog.txt`
-
-适用场景：
-
-- Steam / Epic 等桌面端
-- 后续要做文件拖放导入
-
-当前阶段建议：
-
-- 先支持“粘贴日志文本片段”
-- 后续再接文件拖放
-
-这样可以先验证正则提取和异常处理，不急着把文件系统导入复杂度带进来。
+# 个人数据来源、同步与隔离
 
 ## 3. 双模式边界
 
@@ -92,11 +37,10 @@
 
 官方请求只在浏览器前端、用户点击手动同步后发生。项目仍不引入后端、不代理、不自动刷新。
 
-补充说明：2026-06-01 复核 Byteglow `/user` bundle 后，确认其 `MuiIconButton-edgeEnd` 是 `User ID / Hash` 可见性切换，不是取数触发；实际抓取由 Support URL 粘贴链路或 `Save and fetch` 按钮完成。本仓库出于更严格的生产隐私边界，仍保留“先解析，再手动同步”的显式按钮链路。
 
 同步地址发现补充：官方 play server 不是稳定写死在某个 `ps21/ps28/...` host 上。当前浏览器同步与本地开发抓取都应先调用 `getPlayServerForDefinitions` 发现初始 host；如果 `getuserdetails` / `getcampaigndetails` / `getallformationsaves` 返回 `switch_play_server` 且当前 payload 仍缺目标数据，再切到返回的官方 host 重试。出于隐私边界，代码只能跟随 `https://ps*.idlechampions.com/~idledragons/` 这类官方地址，不能信任任意返回 URL。
 
-## 5. 后续真实同步推荐链路
+## 生产同步链路
 
 ```text
 用户在浏览器里导入 Support URL / 日志文本 / 手动填写
@@ -112,7 +56,7 @@
 页面消费本地画像
 ```
 
-## 6. 本地开发 mock 链路
+## 本地开发快照链路
 
 ```text
 开发者本地 token / .local 凭证
@@ -152,7 +96,7 @@ Vite serve 仅开发态暴露本地 dev endpoint
 - 开发调试优先使用脱敏样本
 - 真机调试优先让用户在本地页面自行输入，而不是通过聊天传递
 
-## 9. 当前仓库对应文件
+## 代码落点
 
 - `src/pages/UserDataPage.tsx`
 - `src/pages/user-data/` 下 9 个组件（UserSyncPanel、LocalDevSnapshotSection、useUserSyncModel(.prod)、userSyncLocalDevAction(.prod)、UserDataWorkbench、UserImportFields、UserImportResultPanel、useUserDataPageModel、user-import-model 等）
@@ -161,4 +105,3 @@ Vite serve 仅开发态暴露本地 dev endpoint
 - `src/data/user-profile-store/`（userProfileSourceResolver.ts(+.prod.ts)、userProfileStore.ts）
 - `scripts/private-user-data/`（fetch-user-profile-payloads.ts、private-user-profile-payloads.ts、production-boundary-scanner.ts 等）
 - `docs/research/data/game-data-source/README.md`
-- 当前设计稿路径：`docs/specs/modules/user-data/user-data-import-design.md`

@@ -25,6 +25,7 @@ append-only。每个决策一个文件，编号 NNNN。**决策变了新开 ADR�
 ## 何时不写
 
 - 显而易见的实现细节 → 直接写 `specs/`
+- 当前操作、维护或排障步骤 → `runbooks/`
 - 临时调试/问题排查 → `archive/investigations/`
 - 单纯的事实调研（无决策）→ `research/`
 

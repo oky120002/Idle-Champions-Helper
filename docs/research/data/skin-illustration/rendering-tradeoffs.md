@@ -1,7 +1,6 @@
-# 皮肤立绘路线：硬约束、方案对比与主线
+# 皮肤立绘：渲染路线技术代价
 
-- 目标：收纳路线比较前不能绕开的项目边界、A/B 两条路线的代价与当前主线。
-- 主线决策见 `decisions/0001-illustration-static-over-remote.md`（构建期衍生图）与 `decisions/0004-animation-bin-canvas-playback.md`（动画播放）。
+- 作用：核实构建期预合成与浏览器实时合成的技术前提、成本和风险。
 
 ## 硬约束
 
@@ -23,7 +22,7 @@
 
 - 已有调研已证明 SkelAnim 可解析，piece / frame / pivot / depth 数据真实存在。
 - 仓库本来就依赖构建期脚本同步官方数据；把 `scripts/sync-idle-champions-illustrations.ts` 从“下载 -> 解包 atlas”升级为“下载 -> 解析 -> 合成 -> 输出最终图”即可成立。
-- 当前展示单元是 `833` 张：`161` 个英雄本体 + `672` 个皮肤；构建成本发生在离线阶段，不在每个终端重复支付。
+- 当前展示清单是 `877` 项：`164` 个英雄本体 + `713` 个皮肤；构建成本发生在离线阶段，不在每个终端重复支付。
 - 已核到的复杂度样例：`Hero_Evandra_Plushie_2xup` 单序列 `28` 个 piece，`Hero_BBEG_Modron_2xup` `56` 个，`Hero_Evelyn_Spelljammer` 某些序列 `173` 个；这说明重活更该放构建侧。
 
 ### B：前端实时合成的前提与风险
@@ -44,27 +43,8 @@
 | 列表页 / 缩略图墙 | 更优 | 明显吃亏 |
 | 扩展到动态 pose / 动画 | 需再补元数据链路 | 更灵活 |
 | 调试与回归稳定性 | 更好 | 更差 |
-| 当前项目推荐度 | 高 | 中 |
-
-## 主线（决策见 `decisions/0001`）
-
-- 生产主线为 A（构建期预合成）：把复杂度放构建机，不放用户浏览器；已由 `decisions/0001-illustration-static-over-remote.md` 落地。
-- B（前端实时合成）定位为延后增强，不替代 A；最合理的用法是详情弹窗里的高清模式、姿态切换或简单动态效果，当前动画播放主线另见 `decisions/0004-animation-bin-canvas-playback.md`。
-- 当前形态不是“A 或 B 二选一”，而是“A 默认交付，B 局部增强”。
-
-## 实现顺序
-
-1. 先把正确的静态图做出来：扩展 `scripts/sync-idle-champions-illustrations.ts`，输出 `thumb`、`display` 与 `renderSequence / renderFrame / renderBounds / sourceGraphic`。
-2. 再保留前端增强入口：必要时额外产出 `runtime/<id>.json` 与 `runtime/<id>-atlas-0.png`，但页面默认仍显示预合成图。
-3. 如果一定要做前端合成，至少遵守这些底线：只依赖 `HTMLCanvasElement + CanvasRenderingContext2D`；`OffscreenCanvas`、`createImageBitmap()` 仅做可选优化；不在浏览器里解析原始 SkelAnim 二进制；一次只合成当前打开的一张图；缩略图仍用构建期产物；移动端按 DPR 或容器尺寸降档；失败时随时回退静态图。
-
-## 直接回答
-
-- “后端能否合并这些骨骼 / 分件资源？”：能；在当前项目里，这个“后端”就是构建期 Node 管线，也是最合理的主方案。
-- “能否保持后端分片资源，让前端拿到后再合成？”：能，但后端不能只给分片图片，还必须给 piece / frame metadata；否则前端无法可靠组装。
-- “哪条路线更好？”：当前项目下，生产主路线选构建期预合成；前端实时合成只做增强。
 
 ## 依据
 
-- 仓库内：`docs/research/deployment/static-hosting/README.md`、`docs/specs/modules/champions/illustration/README.md`、`scripts/sync-idle-champions-illustrations.ts`、`public/data/v1/champion-illustrations.json`
-- 浏览器兼容性：MDN `CanvasRenderingContext2D.drawImage()`、`HTMLImageElement.decode()`、`HTMLCanvasElement.toBlob()`、`Window.createImageBitmap()`、`OffscreenCanvas`、`Compression Streams API / DecompressionStream`
+- 仓库内：`scripts/sync-idle-champions-illustrations.ts`、`public/data/v1/champion-illustrations.json`
+- 浏览器能力：MDN Canvas 2D、Image decode、toBlob、ImageBitmap、OffscreenCanvas 与 Compression Streams 文档

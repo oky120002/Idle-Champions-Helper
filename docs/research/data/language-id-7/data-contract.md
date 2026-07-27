@@ -26,7 +26,3 @@
 - 归一化输出优先覆盖 `champions`、`affiliations`、`campaigns`、`variants`。
 - 变体页已消费的限制文本已改成 `original + display`。
 - 仍未翻译的项目先走英文回退，不在当前阶段手工强补。
-
-## 相关后续
-
-次级字段核对、缺口人工覆盖评估、变体说明文本双字段化等暂未展开项见 `changes/2026-07-language-id-7-followups.md`。
