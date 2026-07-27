@@ -13,4 +13,4 @@
 
 - 2026-04-14 对 `master.idlechampions.com/~idledragons/mobile_assets/...` 做响应头核查时，未见 `Access-Control-Allow-Origin`。
 - 这意味着：Node 脚本、命令行或代理链路仍可请求并解包；但 GitHub Pages 这类纯静态站点里的浏览器侧 `fetch(remoteUrl)` 有较高概率被跨域阻断。
-- 因此页面层要有失败兜底，不应把浏览器直连解包当成硬前提。
+- 因此浏览器直连解包存在网络与格式双重失败面。当前页面资源策略见 `decisions/0001-illustration-static-over-remote.md`。

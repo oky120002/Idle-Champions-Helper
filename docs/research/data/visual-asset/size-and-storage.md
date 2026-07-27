@@ -22,7 +22,7 @@
 
 ## 头像线的特殊处理
 
-官方头像虽然是 `256x256`，但有效内容常偏在左上角，大面积透明。头像同步链路必须保留：拉原始 portrait -> 剥包装头 -> 裁透明边 -> 把有效内容居中回填到方形 PNG。不建议回退成“直接使用官方原 PNG”。（包装头与链路细节见 `docs/research/data/portrait-asset/resource-chain-and-format.md`。）
+官方头像虽然是 `256x256`，但有效内容常偏在左上角，大面积透明。当前头像同步链路会拉取原始 portrait、剥包装头、裁透明边，再把有效内容居中回填到方形 PNG；直接使用原 PNG 时会保留大面积透明区。包装头与链路细节见 `docs/research/data/portrait-asset/resource-chain-and-format.md`，当前页面资源合同见 `specs/modules/champions/illustration/data-and-build.md`。
 
 ## 当前仓库存储策略
 

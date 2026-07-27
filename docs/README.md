@@ -1,6 +1,6 @@
 # docs/ 文档导航
 
-文档按职责分为六类活跃资产与历史归档。改代码前看 `specs/`，查事实看 `research/`，照步骤操作看 `runbooks/`。
+文档按职责分为五类活跃资产与一类历史归档。改代码前看 `specs/`，查事实看 `research/`，照步骤操作看 `runbooks/`。
 
 ## 文档类型
 
@@ -25,7 +25,7 @@
 
 ## 怎么写 / 怎么加
 
-各类文档的命名、生命周期与模板见对应目录 README：
+各类文档的命名与生命周期见对应目录 README；ADR 和 Change 另有目录内模板：
 
 - [怎么写 ADR](./decisions/README.md)
 - [怎么做变更 / 里程碑 / 超 long plan](./changes/README.md)

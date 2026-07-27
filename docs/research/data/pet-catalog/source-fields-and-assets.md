@@ -16,4 +16,4 @@
 
 样本抓取确认：`Familiars/*` / `Escorts/*` 资源都可从官方 `mobile_assets` 获取；这批有图宠物的 `graphic_id` 与 `xl_graphic_id` 在快照里全部都是 `graphic_defines.type = 3`；它们不是“直接可用的一张 PNG”，而是 zlib 容器里的 `SkelAnim` 分件动画数据。
 
-结论：宠物图标与宠物立绘都不能只做 deflate 解包；构建期必须继续做 `SkelAnim` pose 合成，输出站内最终 PNG。
+结论：宠物图标与宠物立绘都不能只做 deflate 解包；现有构建链路通过 `SkelAnim` pose 合成输出站内最终 PNG。页面数据与构建合同见 `specs/modules/pets/pets-page-design.md`。

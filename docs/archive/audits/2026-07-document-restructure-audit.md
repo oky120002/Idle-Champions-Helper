@@ -18,7 +18,7 @@
 
 ## 架构复核
 
-最终采用六类活跃资产加历史归档：`specs/`、`research/`、`decisions/`、`changes/`、`runbooks/`、`archive/`。该结构修正了原计划“声称六类但实际只有五类”的缺口。
+最终采用五类活跃资产与一类历史归档：`specs/`、`research/`、`decisions/`、`changes/`、`runbooks/` 为活跃资产，`archive/` 只保存历史证据。该结构补齐了原计划缺少当前操作手册的位置。
 
 - 吸收 Spec Kit 的原则、需求、方案、任务分离及跨产物一致性检查，但不复制 feature 编号目录和完整工具链。
 - 吸收 Superpowers 的探索、设计、计划、执行分离，以及 TDD、小步验证和提交纪律，但不建立第二套计划目录。

@@ -7,7 +7,7 @@
 
 - 技术栈：`Vite + React + TypeScript`
 - 部署：`GitHub Pages + GitHub Actions`，默认域名
-- 国内访问优化优先级：`Cloudflare Pages` / CDN 加速 高于国内云托管
+- 国内访问优化顺序由 `decisions/0005-deployment-github-pages.md` 定义。
 
 ## 优化触发信号
 
@@ -16,5 +16,3 @@
 - 中国大陆打开速度明显拖慢使用
 - 静态 JSON 数据加载成为瓶颈
 - 高频反馈“打不开”或“加载太慢”
-
-国内云厂商方案保留为后续备选，当前不进入实现范围。

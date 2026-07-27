@@ -5,7 +5,7 @@
 
 ## 头像处理约束
 
-由于官方原始 portrait 的有效内容都挤在左上角（大面积透明），仓库同步链路必须保留：拉原始 portrait -> 剥包装头（见 `docs/research/data/portrait-asset/resource-chain-and-format.md`）-> 裁透明边 -> 把有效内容居中回填到方形 PNG。不能回退成“直接使用官方原 PNG”，否则页面会出现“左上角一小块 + 大面积透明”的观感问题。
+由于官方原始 portrait 的有效内容都挤在左上角（大面积透明），当前仓库同步链路会拉原始 portrait、剥包装头（见 `docs/research/data/portrait-asset/resource-chain-and-format.md`）、裁透明边，再把有效内容居中回填到方形 PNG。直接使用官方原 PNG 会出现“左上角一小块 + 大面积透明”的观感问题；页面资源合同见 `specs/modules/champions/illustration/data-and-build.md`。
 
 官方当前只提供单一 `256x256` portrait，前端统一按容器尺寸缩放即可，不需要为多尺寸资源额外做 `srcset`。
 

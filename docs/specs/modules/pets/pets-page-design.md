@@ -1,4 +1,4 @@
-# 宠物图鉴页设计稿
+# 宠物图鉴页规范
 
 - 当前状态：已实现，页面入口为 `src/pages/PetsPage.tsx`，导航页签为 `宠物图鉴`。
 - 页面壳层：宠物页当前桌面端已纳入全站页面工作台规范；小导航、左右结构、滚动与动效细节见 `docs/specs/modules/shared-components/page-workbench-design.md`。

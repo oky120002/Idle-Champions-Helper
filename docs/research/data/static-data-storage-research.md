@@ -50,5 +50,5 @@ public/
 
 ## 缓存边界
 
-- 当前不把 Service Worker 当默认前提；先把目录、版本和缓存语义做稳。
+- 当前仓库未配置 Service Worker；目录、版本和缓存语义的项目约束见 `decisions/0003-static-data-storage.md`。
 - 旧版本二进制不永久堆在仓库里；新版本上线时允许清理旧版本资源目录。

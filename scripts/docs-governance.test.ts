@@ -5,6 +5,8 @@ import { describe, expect, it } from 'vitest'
 
 const repositoryRoot = resolve(import.meta.dirname, '..')
 const docsRoot = resolve(repositoryRoot, 'docs')
+const activeDocumentDirectories = ['specs', 'research', 'decisions', 'changes', 'runbooks']
+const documentDirectories = [...activeDocumentDirectories, 'archive']
 
 function markdownFiles(root: string): string[] {
   if (!existsSync(root)) return []
@@ -21,13 +23,30 @@ function relativeToRepository(path: string): string {
 }
 
 describe('documentation governance', () => {
-  it('keeps the six active document types and archive as explicit top-level destinations', () => {
-    for (const directory of ['specs', 'research', 'decisions', 'changes', 'runbooks', 'archive']) {
+  it('keeps five active document types and archive as explicit top-level destinations', () => {
+    for (const directory of documentDirectories) {
       expect(existsSync(resolve(docsRoot, directory)), `missing docs/${directory}/`).toBe(true)
     }
 
     for (const legacyDirectory of ['product', 'modules', 'investigations', 'troubleshooting']) {
       expect(existsSync(resolve(docsRoot, legacyDirectory)), `legacy docs/${legacyDirectory}/ remains`).toBe(false)
+    }
+  })
+
+  it('keeps taxonomy wording aligned with the five active directories and archive', () => {
+    const taxonomySources = [
+      'docs/README.md',
+      'docs/specs/guidelines/documentation-governance.md',
+      'docs/decisions/0006-document-taxonomy.md',
+      'docs/archive/audits/2026-07-document-restructure-audit.md',
+    ]
+
+    for (const source of taxonomySources) {
+      const markdown = readFileSync(resolve(repositoryRoot, source), 'utf8')
+      expect(markdown, `${source} must distinguish active documents from archive`).toContain(
+        '五类活跃资产与一类历史归档',
+      )
+      expect(markdown, `${source} counts archive as an active document type`).not.toContain('六类活跃资产')
     }
   })
 
@@ -136,8 +155,101 @@ describe('documentation governance', () => {
     expect(missingStatus).toEqual([])
   })
 
+  it('keeps Change lifecycle statuses unambiguous before and after archival', () => {
+    const invalidActiveChanges: string[] = []
+    const invalidArchivedChanges: string[] = []
+
+    for (const file of markdownFiles(resolve(docsRoot, 'changes')).filter((path) => !path.endsWith('/README.md') && !path.endsWith('/_template.md'))) {
+      const markdown = readFileSync(file, 'utf8')
+      if (!/^\*\*Status\*\*: (?:Draft|Accepted)$/m.test(markdown)) invalidActiveChanges.push(relativeToRepository(file))
+    }
+
+    for (const file of markdownFiles(resolve(docsRoot, 'archive/changes')).filter((path) => !path.endsWith('/README.md'))) {
+      const markdown = readFileSync(file, 'utf8')
+      if (!/^\*\*Status\*\*: Landed$/m.test(markdown)) invalidArchivedChanges.push(relativeToRepository(file))
+    }
+
+    expect(invalidActiveChanges).toEqual([])
+    expect(invalidArchivedChanges).toEqual([])
+  })
+
+  it('does not promise a template for document types that use directory guidance instead', () => {
+    const governance = readFileSync(resolve(docsRoot, 'specs/guidelines/documentation-governance.md'), 'utf8')
+
+    expect(governance).not.toContain('模板见各目录')
+    expect(governance).toContain('Decision 和 Change 使用各自目录的 `_template.md`')
+  })
+
+  it('keeps active navigation free of unfinished phase narration', () => {
+    const unfinishedNavigation: string[] = []
+
+    for (const file of markdownFiles(docsRoot).filter((path) => path.endsWith('/README.md') && !path.includes('/archive/'))) {
+      const markdown = readFileSync(file, 'utf8')
+      if (/(?:阶段 \d+|待补|将(?:在)?阶段.*补全)/.test(markdown)) unfinishedNavigation.push(relativeToRepository(file))
+    }
+
+    expect(unfinishedNavigation).toEqual([])
+  })
+
+  it('keeps Research free of explicit implementation to-dos', () => {
+    const researchToDos = markdownFiles(resolve(docsRoot, 'research'))
+      .filter((file) => /^- 待办：/m.test(readFileSync(file, 'utf8')))
+      .map(relativeToRepository)
+
+    expect(researchToDos).toEqual([])
+  })
+
+  it('keeps project decisions out of Research evidence documents', () => {
+    const evidenceDocuments = [
+      'docs/research/deployment/china-hosting/access-optimization.md',
+      'docs/research/deployment/china-hosting/options-and-filing.md',
+      'docs/research/data/visual-asset/size-and-storage.md',
+      'docs/research/data/game-data-source/implementation-and-risks.md',
+    ]
+    const decisionNarrative = /(?:当前不进入实现范围|不是默认方案|不建议回退成|必须自做 schema 校验|不应成为正式上游)/
+
+    for (const source of evidenceDocuments) {
+      const markdown = readFileSync(resolve(repositoryRoot, source), 'utf8')
+      expect(markdown, `${source} must not restate a project decision`).not.toMatch(decisionNarrative)
+    }
+
+    expect(
+      readFileSync(resolve(repositoryRoot, evidenceDocuments[0]!), 'utf8'),
+    ).toContain('decisions/0005-deployment-github-pages.md')
+    expect(
+      readFileSync(resolve(repositoryRoot, evidenceDocuments[3]!), 'utf8'),
+    ).toContain('decisions/0002-data-source-strategy.md')
+  })
+
+  it('keeps illustration research aligned with the published static and animated asset contract', () => {
+    const implementation = readFileSync(
+      resolve(docsRoot, 'research/data/skin-illustration/implementation.md'),
+      'utf8',
+    )
+    const pipeline = readFileSync(
+      resolve(docsRoot, 'research/data/skin-illustration/pipeline.md'),
+      'utf8',
+    )
+
+    expect(implementation).toContain('`.bin` + manifest')
+    expect(implementation).toContain('静态 PNG')
+    expect(implementation).not.toContain('丢掉其余动画数据')
+    expect(pipeline).toContain('浏览器不会直连官方资源')
+  })
+
+  it('keeps active Spec titles as current contracts instead of implementation plans', () => {
+    const plannedTitles: string[] = []
+
+    for (const file of markdownFiles(resolve(docsRoot, 'specs'))) {
+      const title = readFileSync(file, 'utf8').match(/^# (.+)$/m)?.[1] ?? ''
+      if (/(?:目标架构|设计稿|实施边界)/.test(title)) plannedTitles.push(relativeToRepository(file))
+    }
+
+    expect(plannedTitles).toEqual([])
+  })
+
   it('keeps every top-level document directory navigable', () => {
-    for (const directory of ['specs', 'research', 'decisions', 'changes', 'runbooks', 'archive']) {
+    for (const directory of documentDirectories) {
       const readme = resolve(docsRoot, directory, 'README.md')
       expect(existsSync(readme), `missing docs/${directory}/README.md`).toBe(true)
     }

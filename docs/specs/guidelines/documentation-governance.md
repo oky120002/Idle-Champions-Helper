@@ -57,14 +57,14 @@
 
 ## 7. 文档类型与生命周期
 
-`docs/` 下有六类活跃资产与历史归档，各有独立目录与生命周期。各类的「怎么写/怎么加」细则在该类目录的 README，本节只给跨类型总则。
+`docs/` 下有五类活跃资产与一类历史归档，各有独立目录与生命周期。各类的「怎么写/怎么加」细则在对应目录 README，本节只给跨类型总则。
 
 | 类型 | 目录 | 生命周期 | 核心规则 |
 |---|---|---|---|
 | Spec 活跃规范 | `specs/` | 随实现重写 | 禁迁移叙事；只描述「现在是什么」；**永不引用 changes/milestone** |
 | Research 调研 | `research/` | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
 | Decision 决策 | `decisions/` | append-only | `**Status**: Draft/Accepted/Superseded`；superseded 不删，新 ADR 取代 |
-| Change 变更 | `changes/` | `Draft→Accepted→Landed→Archived` | 落地后 `specs/` 更新，change 移 `archive/changes/` |
+| Change 变更 | `changes/` | `Draft→Accepted→Landed` | 落地后 `specs/` 更新，保留 `Landed` 状态并移入 `archive/changes/` |
 | Runbook 操作手册 | `runbooks/` | 随操作更新 | 写当前可执行步骤；不写事故经过或方案讨论 |
 | Archive 归档 | `archive/` | 冷存储 | 仅考古读取；默认不进入 |
 
@@ -89,11 +89,16 @@
 
 - 代码改了 → 更新 `specs/` 描述新现状（不写迁移叙事）
 - 决策变了 → 新 ADR（`decisions/`，旧的不删，标 `Status: Superseded by NNNN`）
-- change 落地 → 更新 `specs/` + change 标 `Status: Landed` → 移 `archive/changes/`
+- change 落地 → 更新 `specs/` + change 标 `Status: Landed` → 移 `archive/changes/`；归档位置不新增状态
 - 操作变化 → 原地更新 `runbooks/`；一次性事故证据另存 `archive/investigations/`
 
-### 怎么添加（模板见各目录 `_template.md`）
+### 怎么添加
 
 - 新模块 → `specs/modules/<name>/{README,design,rules,acceptance}.md`（+ 可选 `contract.md`）
-- 新决策 → `decisions/NNNN-<slug>.md`（Status 行 + Decided 日期 + 背景/决策/后果/替代方案）
-- 新变更/里程碑 → `changes/YYYY-MM-<scope>-<slug>.md`（Status 行 + 目标/范围/checklist）
+- 新调研 → 在 `research/` 的现有主题入口下新增按事实命名的叶子文档；新主题先建 README 分流
+- 新决策 → `decisions/NNNN-<slug>.md`，使用该目录的 `_template.md`
+- 新变更/里程碑 → `changes/YYYY-MM-<scope>-<slug>.md`，使用该目录的 `_template.md`
+- 新操作手册 → `runbooks/<task>.md`，写前提、命令、判断和验证
+- 新历史记录 → 仅从已完成的 Change 或 Investigation 移入 `archive/`，不为当前工作新建归档文档
+
+Decision 和 Change 使用各自目录的 `_template.md`；Spec、Research、Runbook 与 Archive 以相邻 README 的职责约定为准。

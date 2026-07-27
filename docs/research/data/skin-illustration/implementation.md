@@ -1,6 +1,6 @@
-# 动画 / 立绘实现：外站机制与技术约束
+# 动画 / 立绘：外站机制与当前资源形态
 
-- 作用：沉淀「外站为什么能播放动画」「本仓库静态立绘的技术约束」，以及当前动画主线的事实概要。
+- 作用：沉淀「外站为什么能播放动画」与本仓库已发布资源的技术事实。
 - 动画交付方案（构建期 `.bin` + 运行时 `canvas`）见 `decisions/0004-animation-bin-canvas-playback.md`；静态衍生图来源见 `decisions/0001-illustration-static-over-remote.md`；构建 / 运行时合同见 `specs/modules/champions/illustration/`。
 
 ## 外站为什么能动
@@ -17,9 +17,9 @@
 
 它的资源明显是旧快照：对老皮肤能返回数据，对较新资源直接 `404`，patch 时间也显示不是跟着当前官方 definitions 实时更新。价值是“证明技术上可行”，但不适合作为长期依赖源。
 
-## 静态立绘的技术约束
+## 当前资源形态
 
-仓库已有 `scripts/data/skelanim-codec.ts`、`scripts/data/skelanim-renderer.ts`、`scripts/sync-idle-champions-illustrations.ts` 能解官方动画，但产物合同只允许静态图：构建期读取 `SkelAnim` -> 选 sequence / frame -> 渲染单张 PNG -> 丢掉其余动画数据，页面只能 `<img>` 展示。限制在数据合同，不在前端绘制能力。
+仓库已有 `scripts/data/skelanim-codec.ts`、`scripts/data/skelanim-renderer.ts`、`scripts/sync-idle-champions-animations.ts` 与 `scripts/sync-idle-champions-illustrations.ts`。构建期发布站内 `.bin` + manifest，并从同一份默认 `sequence / frame` 渲染静态 PNG；页面可按需解码本地 `.bin` 用 canvas 播放，也可退回静态 PNG。浏览器不依赖官方资源直连。
 
 ## 当前动画主线事实
 

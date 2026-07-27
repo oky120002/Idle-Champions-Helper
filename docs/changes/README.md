@@ -1,6 +1,6 @@
 # changes/ —— 变更、里程碑与计划
 
-有生命周期的文档：`Draft → Accepted → Landed → archive`。承载「要做什么」与「按什么顺序」，**不描述系统现状**（现状在 `specs/`）。
+有生命周期的文档：`Draft → Accepted → Landed`；达到 `Landed` 后移动到 `archive/changes/`，状态保持为 `Landed`。承载「要做什么」与「按什么顺序」，**不描述系统现状**（现状在 `specs/`）。
 
 ## 命名
 
@@ -15,8 +15,7 @@
 
 - `Draft`：规划中
 - `Accepted`：确认要做
-- `Landed`：已实现（`specs/` 已更新为最终态）→ 移 `archive/changes/`
-- `Archived`：已归档（冷存储）
+- `Landed`：已实现（`specs/` 已更新为最终态）→ 移 `archive/changes/`，状态保持不变
 
 ## 里程碑怎么写
 

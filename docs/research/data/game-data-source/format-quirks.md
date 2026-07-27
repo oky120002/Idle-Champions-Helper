@@ -37,12 +37,12 @@
 
 未识别 type 经 `.filter(node => node !== null)` 静默丢弃（不进 unsupported、无统计）。新增 type 必须显式处理并登记本节。`hero_ids`/`exclude_heroes` 已接入：`hero_ids` 在 buff_upgrade wrapper 派生路径合并生效（`collectEffectEntries` 派生时 AND 合并 wrapper 自身 filter_targets，见下文）；`exclude_heroes` 的 base effect 多因 `targets:"other"` 未支持而进 unsupported，待 `positionQualifier` excludeSelf 增强后生效。
 
-### `target_filters_or`：数组内 OR 语义（待游戏源码确认）
+### `target_filters_or`：数组内 OR 语义尚未证实
 
 - `getRawFilters` 收集 `filter_targets` / `target_filters` / `target_filters_or` / `targets`(filter-like) 四个数组，`normalizeTargetQualifier` 统一按 **AND** 合并所有 filter。
 - 疑点：`target_filters_or` 字段名后缀 `_or` 暗示数组内 filter 间是 **OR**（任一匹配），区别于 `target_filters`（AND，全部匹配）。佐证：effect_def 1390（Solaak）同英雄同 effect 一处用 `target_filters_or`、一处用 `target_filters`，同为 `attack_type:ranged` 单 filter（单 filter 下 OR=AND，不构成判别）；真正能判别的多 filter 样本仅 effect_def 225（`hero_dps_mult_per_target_crusader_mult,100,all_slots` + `target_filters_or:[{str>=16},{tags:evil}]`，孤立无 upgrade 引用）。
 - 当前影响：零——已引用 effect_keys 中 `target_filters_or` 全为单 filter（hero 118/120/171），AND=OR；唯一多 filter 样本（225）孤立。故现状保守保留 AND 合并（AND 比 OR 更严格 → 低估，安全方向）。
-- 待办：拿到 IC 源码或社区文档确认 `target_filters_or` 语义后，若确为 OR，在 `normalizeTargetQualifier` 中将 `target_filters_or` 单独按 OR 聚合，再与其它 AND 组合并。确认前不改（避免 OR→高估风险）。
+- 证据缺口：尚无 IC 源码或一手文档能确认数组内的组合语义；在新增证据前不把它作为 OR 实现，避免 OR→高估风险。
 
 ### effect_def 级 effect_key 与 upgrade.effectReference
 

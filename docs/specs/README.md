@@ -27,4 +27,4 @@
 - 实现了新功能/改了行为 → 更新对应 specs
 - change 落地（`changes/` Status: Landed）→ 按其「落地后」清单更新 specs
 
-（详细的「怎么写模块/规范」见各子目录 README，将在阶段 7 补全。）
+详细的模块结构见 [`modules/README.md`](./modules/README.md)；跨类型写作与生命周期规则见 [`guidelines/documentation-governance.md`](./guidelines/documentation-governance.md)。

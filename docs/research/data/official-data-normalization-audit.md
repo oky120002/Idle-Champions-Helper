@@ -73,7 +73,7 @@ node scripts/normalize-idle-champions-definitions.ts \
 
 `ability_defines / achievement_defines / card_sleeve_defines / changelog_defines / chest_type_defines / click_skin_defines / collection_quest_defines / collection_quest_set_defines / corrupted_gem_shop_item_defines / external_achievement_defines / familiar_skin_defines / language_defines / mastery_shop_item_defines / modron_core_defines / modron_tile_defines / music_album_defines / music_track_defines / news_defines / pigment_effect_defines / shop_category_defines / shop_display_defines / social_link_defines / sound_defines / text_defines / tutorial_state_defines / twitch_benefit_defines`
 
-其中 `music_*` / `sound_defines` / `social_link_defines` 等当前不该优先做。
+其中 `music_*` / `sound_defines` / `social_link_defines` 等尚未进入当前站内产物或消费链路。
 
 其余和阵型计算相关的顶层稳定字典已基本补上。当前主要缺口不是顶层效果字典，而是“已消费但尚未共享提升”的 effect / detail 事实。
 

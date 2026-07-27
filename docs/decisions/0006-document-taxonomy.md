@@ -1,4 +1,4 @@
-# ADR-0006：文档采用六类活跃资产与历史归档
+# ADR-0006：文档采用五类活跃资产与一类历史归档
 
 **Status**: Accepted
 **Decided**: 2026-07-27
@@ -9,7 +9,7 @@
 
 ## 决策
 
-`docs/` 使用 `specs/`、`research/`、`decisions/`、`changes/`、`runbooks/` 与 `archive/`：分别回答当前是什么、事实是什么、为什么选择、准备改什么、现在怎样操作、过去发生什么。
+`docs/` 使用五类活跃资产 `specs/`、`research/`、`decisions/`、`changes/`、`runbooks/`，以及一类历史归档 `archive/`：分别回答当前是什么、事实是什么、为什么选择、准备改什么、现在怎样操作、过去发生什么。
 
 Spec 可以链接 ADR 作为依据，但不得复述决策历史；Spec 不链接 Change。Research 不承载本项目的选择或实施顺序。Runbook 随代码与环境变化原地更新，不作为事故日志。
 
