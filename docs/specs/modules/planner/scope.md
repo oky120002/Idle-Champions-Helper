@@ -1,4 +1,4 @@
-# 自动阵型计划器 PRD
+# planner：产品范围
 
 ## 背景
 
@@ -103,7 +103,7 @@ planner 不做全玩法完整模拟器，而是一个可解释、可验证、本
 - `enums.json`
 - 头像、立绘、动画、宠物等资源
 
-planner 需要审计 definitions 中对模拟器有用但尚未归一化的字段，生成覆盖报告（`signal-coverage-research.md`），不假设数据已经齐全。
+planner 需要审计 definitions 中对模拟器有用但尚未归一化的字段，生成覆盖报告（`signal-coverage.md`），不假设数据已经齐全。
 
 ### 私人用户快照
 
@@ -137,7 +137,7 @@ planner 需要审计 definitions 中对模拟器有用但尚未归一化的字�
 
 ### 评分
 
-只计算可预计算的稳态 DPS 类加成：global DPS、hero DPS、adjacent support、tagged champion multiplier、可识别的 positional hints。各维度公式与聚合方式见 `development-design-simulator.md`。
+只计算可预计算的稳态 DPS 类加成：global DPS、hero DPS、adjacent support、tagged champion multiplier、可识别的 positional hints。各维度公式与聚合方式见 `simulator.md`。
 
 未知 effect、事件变量、随机触发和复杂条件进入 warnings。
 
@@ -150,9 +150,4 @@ planner 需要审计 definitions 中对模拟器有用但尚未归一化的字�
 - 开发私有快照只写 `tmp/private-user-data/`。
 - 必须提供 `npm run privacy:scan`，阻止真实凭证和私人路径进入提交或构建。
 
-## 验收总则
-
-- 任何无法计算的模拟变量必须有 warning。
-- unsupported 规则不静默计入目标量（`objectiveValue`）。
-- UI 验收用 DOM、文本和状态断言，不用截图或图片识别。
-- 最终通过 `npm run lint && npm run typecheck && npm run test:run && npm run build && npm run privacy:scan`。
+验收标准见 `acceptance.md`。

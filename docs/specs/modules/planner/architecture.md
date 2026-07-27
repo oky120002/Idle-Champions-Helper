@@ -69,7 +69,7 @@ BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。
 - 阵型推荐（相对比较）：DPS 足够，planner 用 `carryDps` 近似优化。
 - 推图层数预估（绝对值）：IC 怪物血量按 BUD 缩放；用 DPS 近似会偏差，BUD 更准。
 
-两者都计算、都展示。BUD 公式与绝对值校准边界见 `bud-verification.md`；推图层数预估算法见 `development-design-simulator.md`。
+两者都计算、都展示。BUD 公式与绝对值校准边界见 `bud-verification.md`；推图层数预估算法见 `simulator.md`。
 
 ## 模拟/UI 分离
 
@@ -82,9 +82,9 @@ CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（
 
 ## 深入阅读
 
-- 数据、隐私、目录与存储：`development-design-data.md`
-- 推荐英雄、站位、模型字段与 merge 策略：`recommendation-and-placement-design.md`
-- 数字层、基线、加成聚合、搜索、计算模式、Web Worker 与 UI：`development-design-simulator.md`
+- 数据、隐私、目录与存储：`data-and-privacy.md`
+- 推荐英雄、站位、模型字段与 merge 策略：`recommendation.md`
+- 数字层、基线、加成聚合、搜索、计算模式、Web Worker 与 UI：`simulator.md`
 
 ## 未来可能补充
 

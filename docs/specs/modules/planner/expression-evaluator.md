@@ -47,7 +47,7 @@ IC 的 `per_hero_expr` 字段承载两类语义，求值域不同，分别处理
 
 - `get_num_most_common_*` / `has_tag_*` / `is_most_common_race` 是**阵型聚合查询**（依赖整个 formation 的英雄构成），不是简单数值；求值要先算聚合（formation context），再代入数值表达式。复杂度最高，分步实现（先纯英雄/存档/常量节点，再阵型聚合）。
 - **filter_targets 的阵型聚合 type**：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag` 共 ~13 处（raw effect_defines），当前 `normalizeTargetQualifier` 静默丢弃；求值依赖 formation context（邻居 / 主导 tag·affiliation·alignment·gender / seat / 发布日期等阵型聚合）。
-- **filter_targets 的存档依赖 type**：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12) 共 39 处，effect 只在玩家拥有 / 未拥有某 upgrade 时生效；与 `GetUpgradeUnlocked` 同类（检查 owned upgrades）。无 profile 时降级——未拥有英雄用同 seat 中位假设（见 `development-design-simulator.md`）。
+- **filter_targets 的存档依赖 type**：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12) 共 39 处，effect 只在玩家拥有 / 未拥有某 upgrade 时生效；与 `GetUpgradeUnlocked` 同类（检查 owned upgrades）。无 profile 时降级——未拥有英雄用同 seat 中位假设（见 `simulator.md`）。
 - 数值表达式 per_hero_expr 的 dialect 与布尔谓词共享 functional 语法基础（`||`/`&&` 嵌套场景），但顶层是数值函数；parser 区分「数值顶层」vs「布尔顶层」（布尔由 parseHeroPredicate 处理，数值由 parseNumericExpr 处理，二者互斥）。
 
 ## requirements / condition / effect_string args 审计
