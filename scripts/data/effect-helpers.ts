@@ -502,8 +502,8 @@ function collectRawEffectEntries(detail: unknown): {
   const detailRecord = asRecord(detail)
   const effectEntries: EffectEntry[] = []
   const upgradeEffectEntriesById = new Map<string, EffectEntry[]>()
-  // upgrade id → static_dps_mult（CNE 静态 dps 乘数近似 1.25–5）；其 effect 多为复杂机制
-  // （target_attacking_monsters_hero_dps_mult 等）进 unsupported，static_dps_mult 作 fallback。
+  // 机制: static-dps-mult-fallback（upgrade id → static_dps_mult，CNE 静态 dps 乘数近似 1.25–5）；
+  // 其 effect 多为复杂机制（target_attacking_monsters_hero_dps_mult 等）进 unsupported，static_dps_mult 作 fallback。
   const staticDpsMults = new Map<string, number>()
   // upgrade id → 该 upgrade 的 effect_keys payloads；供 amount_expr='upgrade_amount(id,index)'
   // 跨 upgrade 解析目标 effect 的 amount（真实数据有少量跨 upgrade 引用）。

@@ -11,6 +11,8 @@
 - 同步公共数据、局部重建动画或验证资源：`public-data.md`
 - GitHub 远端连接异常：`github-connectivity.md`
 - 维护文档导航、链接和类型边界：`documentation-maintenance.md`
+- 校验阵型模拟器（引擎改动后必跑 `test:simulator`）：`verify-formation-simulator.md`
+- 新增/修正英雄 DPS 机制参照（智能体维护工作流）：`add-champion-reference.md`
 
 ## 写作规则
 

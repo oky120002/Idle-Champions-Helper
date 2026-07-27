@@ -30,6 +30,9 @@
 ### 专题
 
 - `expression-evaluator.md`：当前布尔表达式求值边界，以及其他表达式域的职责分界。
+- `dps-mechanics.md`：DPS 机制注册表（id / 识别字段 / 代码处理点 / 使用英雄），机制 id 三处一致的锚点。
+- `dps-mechanic-abstraction.md`：机制抽象四条阈值（≥2 抽象 / 孤儿特化+预警 / 孤儿→≥2 立刻抽象 / >10 升级策略注册表）。
+- `champion-reference-verification.md`：英雄参照数据结构、校准口径（偏差 < 30%）与测试三组。
 
 ## 关联入口
 

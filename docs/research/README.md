@@ -12,6 +12,7 @@
 ## 主题入口
 
 - [`data/`](./data/)：definitions、静态数据、中文链路、资源链路、皮肤立绘
+- [`gameplay/`](./gameplay/)：英雄机制、战斗表现等游戏内实测（配合 planner 英雄参照校准）
 - [`deployment/`](./deployment/)：GitHub Pages 主路线与国内托管备选
 - [`documentation/`](./documentation/)：文档驱动开发框架与行业实践
 

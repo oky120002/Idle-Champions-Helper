@@ -113,13 +113,14 @@ export const STACK_COUNT_RESOLVERS: Record<string, {
   count: (input: EvaluatePlacementFitInput, signal: HeroAbilitySignal) => number | null
   contextLabel: string
 }> = {
+  // 机制: formation-count-mult-stack / formation-count-add-stack（per_hero 是 per_crusader 同义词）
   per_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
-  // 机制: formation-count-mult-stack（per_hero 是 per_crusader 同义词，raw 自带 stack_func:per_hero）
   per_hero: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
   per_tagged_crusader_mult: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
   per_target_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队目标计数' },
   per_hero_attribute: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队属性计数' },
   per_upgrade_targets: { count: (input, signal) => countUpgradeTargets(input, signal), contextLabel: '整队目标' },
+  // 机制: topology-count-stack（列/槽位距离拓扑计数）
   per_col_behind: { count: (input) => countColumnsCarryBehindSupport(input), contextLabel: '阵型列拓扑' },
   per_slot_distance_from_source: { count: (input) => countSlotDistanceFromSource(input), contextLabel: '阵型槽位距离' },
 }
@@ -155,6 +156,7 @@ function resolveSignalMultiplier(
 
   const stackFunc = signal.stackFunc ?? null
 
+  // 机制: buff-upgrade-modifier（折算基础 buff 幅度）+ bonus-scale-linkage（bonusScaleOfSignal 联动）
   const applySignalPercent = (
     resolvedPercent: number,
   ): { ok: true; multiplier: number } | { ok: false; warning: string } => {

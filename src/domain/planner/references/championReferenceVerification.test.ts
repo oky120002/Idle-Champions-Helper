@@ -1,6 +1,9 @@
 // 英雄 DPS 机制参照对照测试。
 // 详见 docs/specs/modules/planner/champion-reference-verification.md。
-// 三组：对照测试（multiplierChecks）+ 孤儿机制预警 + 关联一致性。
+// 三组：对照测试（multiplierChecks）+ 抽象阈值守护（注册表规模 / stackFunc 通用化）+ 关联一致性。
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
+
 import { describe, expect, it } from 'vitest'
 
 import type { HeroAbilityProfile, HeroAbilitySignal } from '../../abilities/abilityModel'
@@ -147,10 +150,35 @@ describe('champion reference verification - 蔚(95)', () => {
   })
 })
 
-describe.todo('孤儿机制预警（扫 hero-abilities.json 统计每机制实际使用英雄数）', () => {
-  // commit 2 完善：扫 public/data/v1/hero-abilities.json，按 dps-mechanics.md 识别规则归类。
+describe('抽象阈值守护（dps-mechanic-abstraction.md）', () => {
+  // 注册表 id：解析 dps-mechanics.md 注册表首列。
+  const registryPath = path.resolve(__dirname, '../../../../docs/specs/modules/planner/dps-mechanics.md')
+  const registry = readFileSync(registryPath, 'utf8')
+  const registryIds = new Set(
+    [...registry.matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => m[1]!),
+  )
+
+  it('注册表机制数 ≤ 10（>10 触发策略注册表升级，见 dps-mechanic-abstraction.md）', () => {
+    expect(registryIds.size).toBeLessThanOrEqual(10)
+  })
 })
 
-describe.todo('关联一致性（mechanicId 三处一致：代码注释 / reference / 注册表）', () => {
-  // commit 2 完善：reference.mechanicIds 必须在 dps-mechanics.md + scoring 注释存在。
+describe('关联一致性（mechanicId 三处一致）', () => {
+  const registryPath = path.resolve(__dirname, '../../../../docs/specs/modules/planner/dps-mechanics.md')
+  const registryIds = new Set(
+    [...readFileSync(registryPath, 'utf8').matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => m[1]!),
+  )
+
+  it('reference 的 mechanicIds 必须在注册表', () => {
+    const refs = [vi95ReferenceData]
+    const unknown: string[] = []
+    for (const ref of refs) {
+      for (const ability of ref.abilities) {
+        for (const id of ability.mechanicIds) {
+          if (!registryIds.has(id)) unknown.push(`${ref.heroId}/${ability.nameZh}: ${id}`)
+        }
+      }
+    }
+    expect(unknown, `reference 出现未注册的 mechanicId：${unknown.join(', ')}`).toEqual([])
+  })
 })

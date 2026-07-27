@@ -25,7 +25,7 @@ baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
 
 ## 加成聚合与 DPS 公式
 
-加成按 pool 结构聚合——顶级 pool = `kind`（能力维度），pool 内 `amountFunc=add` 走线性累加（`Σ percent`）、`amountFunc=mult` 走乘方（`Π multiplier`），pool 间乘法。`mult` 仅占 2.8%，`add` 是主体。
+加成按 pool 结构聚合——顶级 pool = `kind`（能力维度），pool 内 `amountFunc=add` 走线性累加（`Σ percent`）、`amountFunc=mult` 或 `stacksMultiply=true` 走乘方（`Π multiplier`），pool 间乘法。`mult` 仅占 2.8%，`add` 是主体。
 
 carry-dps 模式的真实 DPS 公式：
 
@@ -64,7 +64,9 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
-未进评分、只标记的效果：随机触发、击杀过程、逐区时间线、敌人实时状态、临时 buff、动态堆叠、同时期互斥或无法静态判断的效果。未知 effect 必须进入 `warnings` 和 `unsupportedSignals`，不静默忽略。
+`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` 的 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。仅影响动态层数类 signal；formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
+
+未进评分、只标记的效果：随机触发、击杀过程、逐区时间线、敌人实时状态、临时 buff、同时期互斥或无法静态判断的效果。未知 effect 必须进入 `warnings` 和 `unsupportedSignals`，不静默忽略。
 
 ## 候选池和公平假设
 

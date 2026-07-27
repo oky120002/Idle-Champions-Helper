@@ -1,0 +1,39 @@
+# DPS 机制注册表
+
+planner 评分层消费的 DPS 机制清单。每个机制一个 `id`，三处一致使用同一 id：
+
+- **代码**：`src/domain/planner/placementFit.ts` 的 `resolveSignalMultiplier` / `STACK_COUNT_RESOLVERS` / pool 聚合分支注释标 `// 机制: <id>`
+- **英雄参照**：`src/domain/planner/references/*ReferenceData.ts` 的 ability `mechanicIds`
+- **本文档**：下表注册表
+
+新增机制走 `runbooks/add-champion-reference.md`；抽象阈值见 `dps-mechanic-abstraction.md`。
+
+## 注册表
+
+| id | 中文名 | 识别字段 | 代码处理点 | 使用英雄（样例） |
+|----|--------|----------|------------|------------------|
+| `formation-count-mult-stack` | 整队计数乘算堆叠 | `stackFunc ∈ {per_crusader, per_hero, per_tagged_crusader_mult, per_target_crusader, per_hero_attribute}` + `amountFunc: mult` | `STACK_COUNT_RESOLVERS` + mult 分支（`placementFit.ts:209`） | 蔚「善良榜样」、多数阵营计数 buff |
+| `formation-count-add-stack` | 整队计数线性堆叠 | 同上 + `amountFunc: add` | `STACK_COUNT_RESOLVERS` + add 分支（`placementFit.ts:205`） | Bruenor 等 per_crusader add |
+| `dynamic-stack-multiply` | 动态层数乘算堆叠 | `stacksMultiply: true`（+ 无 stackFunc） | `resolveSignalMultiplier` 短路（`placementFit.ts:140`）；pool 按 multFactor（`placementFit.ts:334`） | 蔚「出言不逊永不够」 |
+| `topology-count-stack` | 拓扑计数堆叠 | `stackFunc ∈ {per_col_behind, per_slot_distance_from_source}` | `STACK_COUNT_RESOLVERS` | 列/槽位距离类 support |
+| `bonus-scale-linkage` | 技能联动（A 系数来源于 B） | `bonusScaleOfSignal` 非空 | `applySignalPercent` / dynamic-stack-multiply 依赖检查（`placementFit.ts:147,161`） | 蔚「出言不逊」挂「善良榜样」 |
+| `buff-upgrade-modifier` | 装备/专长/feat 修饰 | effect kind `buff_upgrade`/`buff_upgrades` | `applySignalPercent` 折算基础 buff 幅度 | 蔚「时髦披肩」「道德规范」 |
+| `static-dps-mult-fallback` | 静态 DPS 乘数兜底 | upgrade 无可解析 signal + 有 `static_dps_mult` | `collectRawEffectEntries` fallback | 复杂机制 upgrade 兜底 |
+
+## 计数限定来源（formation-count-* 机制）
+
+整队计数读 `formationCountQualifier`，来源优先级（`signalSemantics.ts:attachSignalSemantics`）：
+
+1. `per_hero_expr`（functional 布尔谓词，如 `GetStat('dex')>=15`）
+2. `stack_func_data.tag`（count 限定，多 tag `a|b|c` → OR；与 `filter_targets` 的 target 限定语义不同）
+3. `filter_targets` 等 filter-like 结构（向后兼容：无 stack_func_data 时作 count 限定）
+
+buff 目标读 `targetQualifier`（来自 `filter_targets`）。count 与 target 不可混用。
+
+## 动态层数假设（dynamic-stack-multiply）
+
+`stacksMultiply=true` 的 signal 层数来自数值表达式（`stacks_max_stack_expr` 等，当前 unsupported），由 `manualStackCount` 提供假设值：
+
+- 默认 `DEFAULT_MANUAL_STACK_COUNT = 1000`（`placementFit.ts`）
+- UI（评估页/计划页「动态层数假设」输入）透传 `ScoringInput.manualStackCount` → `evaluatePlacementFit`
+- 校准口径见 `champion-reference-verification.md`
