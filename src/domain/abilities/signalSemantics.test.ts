@@ -376,6 +376,56 @@ describe('attachSignalSemantics', () => {
     )
     expect(signal.targetQualifier).toEqual({ predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 15 } })
   })
+
+  it('stack_func_data.tag 为 count 限定，filter_targets 回归 target 限定（蔚 ed=1644 善良榜样）', () => {
+    // 真实样本：蔚"善良榜样" effect_def 1644。raw effect_key 同时携带：
+    //   stack_func_data:{tag:"good|acqinc|cteam"}（count：数这些英雄叠层）
+    //   filter_targets:[{by_tags:geneutral}]（target：buff geneutral 英雄）
+    // 修复前 filter_targets 被误用为 formationCountQualifier、targetQualifier 丢失 →
+    // 既数错（geneutral 当 count）又 buff 错目标（任意英雄都吃）。
+    const signal = attachSignalSemantics(
+      { kind: 'heroDpsMultiplier', value: 300, rawEffect: 'hero_dps_multiplier_mult,300', source: 'official-parsed' },
+      {
+        targets: ['all'],
+        filter_targets: [{ type: 'by_tags', tags: 'geneutral' }],
+        amount_func: 'mult',
+        stack_func: 'per_hero',
+        stack_func_data: { tag: 'good|acqinc|cteam' },
+      },
+    )
+    // count 限定来自 stack_func_data.tag（多 tag → OR，与 IC tags 同方言）
+    expect(signal.formationCountQualifier).toEqual({
+      predicate: {
+        op: 'or',
+        children: [
+          { op: 'tag', tag: 'good' },
+          { op: 'tag', tag: 'acqinc' },
+          { op: 'tag', tag: 'cteam' },
+        ],
+      },
+    })
+    // target 限定回归 filter_targets（geneutral）
+    expect(signal.targetQualifier).toEqual({ predicate: { op: 'tag', tag: 'geneutral' } })
+    expect(signal.stackFunc).toBe('per_hero')
+    expect(signal.amountFunc).toBe('mult')
+  })
+
+  it('stack_func_data.tag 单独存在（无 filter_targets）→ count 限定不再丢失', () => {
+    // 真实样本：effect_def 1161 hero_dps_multiplier_mult,100 +
+    // stack_func_data:{tag:"blackdicesociety|evil"}（无 filter_targets）。
+    // 修复前 stack_func_data 从未被读取 → formationCountQualifier=null → 误数全英雄。
+    const signal = attachSignalSemantics(
+      { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      { stack_func: 'per_crusader', amount_func: 'add', stack_func_data: { tag: 'blackdicesociety|evil' } },
+    )
+    expect(signal.formationCountQualifier).toEqual({
+      predicate: {
+        op: 'or',
+        children: [{ op: 'tag', tag: 'blackdicesociety' }, { op: 'tag', tag: 'evil' }],
+      },
+    })
+    expect(signal.targetQualifier).toBeNull()
+  })
 })
 
 describe('mergeHeroQualifiers', () => {

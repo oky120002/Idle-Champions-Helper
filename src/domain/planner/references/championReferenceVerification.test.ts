@@ -56,19 +56,37 @@ const scenario: OfficialPlannerScenarioModel = {
 // mock formationCountQualifier tag；归一化修复后蔚 count 限定 = good|acqinc|cteam，测试用 good 代表。
 const COUNT_TAG = 'good'
 
-// 蔚 signal（模拟归一化修复后的正确状态：count 限定 good / target 限定 geneutral）。
-const viCarrySignals: HeroAbilitySignal[] = [
-  {
-    kind: 'heroDpsMultiplier',
-    value: 300,
-    rawEffect: 'hero_dps_multiplier_mult,300',
-    source: 'official-parsed',
-    amountFunc: 'mult',
-    stackFunc: 'per_hero',
-    formationCountQualifier: { predicate: { op: 'tag', tag: COUNT_TAG } },
-    targetQualifier: { predicate: { op: 'tag', tag: 'geneutral' } },
-  },
-]
+// 蔚"善良榜样"signal（归一化修复后正确状态：count 限定 good / target 限定 geneutral）。
+const viGoodExampleSignal: HeroAbilitySignal = {
+  kind: 'heroDpsMultiplier',
+  value: 300,
+  rawEffect: 'hero_dps_multiplier_mult,300',
+  source: 'official-parsed',
+  amountFunc: 'mult',
+  stackFunc: 'per_hero',
+  formationCountQualifier: { predicate: { op: 'tag', tag: COUNT_TAG } },
+  targetQualifier: { predicate: { op: 'tag', tag: 'geneutral' } },
+}
+
+// 蔚"出言不逊永不够"signal：dynamic-stack-multiply，bonus-scale-linkage 挂在善良榜样上。
+// 层数来自 stackMaxExpr（highest_available_area*10），归一化降 unsupported，测试用 manualStackCount 提供。
+const viSassSignal: HeroAbilitySignal = {
+  kind: 'heroDpsMultiplier',
+  value: 0.33,
+  rawEffect: 'buff_upgrade,0.33,12312',
+  source: 'official-parsed',
+  stacksMultiply: true,
+  bonusScaleOfSignal: viGoodExampleSignal,
+}
+
+const viCarrySignals: HeroAbilitySignal[] = [viGoodExampleSignal, viSassSignal]
+
+// 机制对照容差：游戏显示值（如 0.33%/层）为取整近似，逐项对照用 30% 相对偏差（与校准口径一致）。
+const TOLERANCE = 0.30
+function expectWithinTolerance(actual: number, expected: number, tolerance: number): void {
+  const deviation = Math.abs(actual - expected) / expected
+  expect(deviation).toBeLessThanOrEqual(tolerance)
+}
 
 function buildViFormation() {
   const heroes = [
@@ -104,6 +122,28 @@ describe('champion reference verification - 蔚(95)', () => {
     const entry = fit.scoreBreakdown.find(r => r.rawEffect === check.rawEffect && r.active)
     expect(entry).toBeDefined()
     expect(entry?.multiplier ?? 0).toBeCloseTo(check.expectedMultiplier, 0)
+  })
+
+  it('出言不逊 dynamic-stack-multiply: 1.0033^1930 ≈ 576（bonus-scale-linkage 依赖善良榜样可计分）', () => {
+    const { heroes, heroesById, placements } = buildViFormation()
+    const ref = vi95ReferenceData
+    const check = ref.expected.multiplierChecks.find(c => c.rawEffect === 'buff_upgrade,0.33,12312')!
+
+    const fit = evaluatePlacementFit({
+      carryHero: heroes[0]!,
+      carrySlotId: 's1',
+      supportHero: heroes[0]!,
+      supportSlotId: 's1',
+      scenario,
+      placements,
+      heroesById,
+      manualStackCount: ref.expected.manualStackCount,
+    })
+
+    const entry = fit.scoreBreakdown.find(r => r.rawEffect === check.rawEffect && r.active)
+    expect(entry).toBeDefined()
+    // 1.0033^1930 ≈ 577（0.33%/层 是游戏取整显示，实际略低；30% 容差内对照）
+    expectWithinTolerance(entry?.multiplier ?? 0, check.expectedMultiplier, TOLERANCE)
   })
 })
 

@@ -99,6 +99,12 @@ function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number |
 }
 
 /**
+ * 动态层数假设默认值（manualStackCount 缺省时用）。1000 ≈ area=100 冒险的出言不逊上限。
+ * UI 可手动覆盖（评估页/计划页）；见 champion-reference-verification.md。
+ */
+export const DEFAULT_MANUAL_STACK_COUNT = 1000
+
+/**
  * 每种 stackFunc 对应的计数来源 + warning 用的上下文标签。
  * keys 即 scorer 支持的 stackFunc 集合——signal-coverage 的覆盖率报告必须与此同步，
  * 否则统计失真（见 tests/unit/planner/scoringSupportSync.test.ts 守护）。
@@ -108,6 +114,8 @@ export const STACK_COUNT_RESOLVERS: Record<string, {
   contextLabel: string
 }> = {
   per_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
+  // 机制: formation-count-mult-stack（per_hero 是 per_crusader 同义词，raw 自带 stack_func:per_hero）
+  per_hero: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
   per_tagged_crusader_mult: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
   per_target_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队目标计数' },
   per_hero_attribute: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队属性计数' },
@@ -125,6 +133,24 @@ function resolveSignalMultiplier(
       ok: false,
       warning: `${signal.rawEffect} 依赖手动触发或专精选择，当前不计分。`,
     }
+  }
+
+  // 机制: dynamic-stack-multiply（stacksMultiply=true + 无 stackFunc；如蔚出言不逊）
+  // 层数来自数值表达式（当前 unsupported），用 manualStackCount 提供假设值（默认 1000）。
+  if (signal.stacksMultiply === true) {
+    const stackCount = input.manualStackCount ?? DEFAULT_MANUAL_STACK_COUNT
+    const mult = percentToMultiplier(signal.value) ** stackCount
+    if (!Number.isFinite(mult)) {
+      return { ok: false, warning: `${signal.rawEffect} 乘算堆叠溢出，当前不计分。` }
+    }
+    // bonus-scale-linkage：联动 signal 只在基础 signal 可计分时生效（依赖检查，不卷入数值）
+    if (signal.bonusScaleOfSignal) {
+      const dep = resolveSignalMultiplier(input, signal.bonusScaleOfSignal)
+      if (!dep.ok) {
+        return { ok: false, warning: `${signal.rawEffect} 依赖的基础增益尚未稳定计分，当前不计分。` }
+      }
+    }
+    return { ok: true, multiplier: mult }
   }
 
   const stackFunc = signal.stackFunc ?? null
@@ -304,7 +330,8 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
         multFactor: 1,
         poolMultiplier: 1,
       }
-      if (signal.amountFunc === 'mult') {
+      // 机制: pool 按 amountFunc 分流；stacksMultiply（如出言不逊 amountFunc=null）按乘算进 multFactor
+      if (signal.amountFunc === 'mult' || signal.stacksMultiply === true) {
         pool.multFactor *= multiplier
       } else {
         // add / unknown / 默认：把已折算倍率还原为百分比，同一 pool 内 additive 相加。

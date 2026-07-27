@@ -117,6 +117,7 @@ function describeFilter(filter: unknown): string {
  */
 export const SCORING_SUPPORTED_STACK_FUNCS = new Set<string>([
   'per_crusader',
+  'per_hero',
   'per_tagged_crusader_mult',
   'per_target_crusader',
   'per_hero_attribute',

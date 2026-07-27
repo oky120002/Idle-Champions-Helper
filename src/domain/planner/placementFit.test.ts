@@ -1191,4 +1191,110 @@ describe('placement fit', () => {
     expect(fit.totalMultiplier).toBe(4)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('non-adjacent-match')
   })
+
+  it('per_hero 是 per_crusader 同义词，按 formationCountQualifier 多 tag OR 计数乘算（蔚善良榜样形态）', () => {
+    // 蔚"善良榜样"effect_def 1644：heroDpsMultiplier（self 位）+ per_hero + mult +
+    // formationCountQualifier:OR(good|acqinc|cteam)（count）+ targetQualifier:geneutral（target）。
+    // heroDpsMultiplier 默认 self 位 → 蔚作为 carry 自 buff；count 数阵型内 good|acqinc|cteam 英雄。
+    const vi = createHero('vi', {
+      tags: ['geneutral', 'good'],
+      supportSignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 100,
+          rawEffect: 'hero_dps_multiplier_mult,100',
+          source: 'official-parsed',
+          amountFunc: 'mult',
+          stackFunc: 'per_hero',
+          formationCountQualifier: {
+            predicate: {
+              op: 'or',
+              children: [
+                { op: 'tag', tag: 'good' },
+                { op: 'tag', tag: 'acqinc' },
+                { op: 'tag', tag: 'cteam' },
+              ],
+            },
+          },
+          targetQualifier: { predicate: { op: 'tag', tag: 'geneutral' } },
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['vi', vi],
+      ['acqinc-ally', createHero('acqinc-ally', { tags: ['acqinc'] })],
+      ['cteam-ally', createHero('cteam-ally', { tags: ['cteam'] })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero: vi,
+      carrySlotId: 's2',
+      supportHero: vi,
+      supportSlotId: 's2',
+      scenario: extendedScenario,
+      placements: { s1: 'acqinc-ally', s2: 'vi', s3: 'cteam-ally' },
+      heroesById,
+    })
+
+    // count=3（vi/good + acqinc-ally + cteam-ally）→ percentToMultiplier(100)=2 → 2^3 = 8
+    expect(fit.totalMultiplier).toBe(8)
+    expect(fit.scoreBreakdown[0]?.active).toBe(true)
+  })
+
+  it('dynamic-stack-multiply 按 manualStackCount 乘算堆叠（蔚出言不逊形态）', () => {
+    // 对应蔚"出言不逊永不够"：stacksMultiply=true + amountFunc=null + 动态层数。
+    // 层数来自数值表达式（unsupported），由 manualStackCount 提供假设值。
+    const supportHero = createHero('support', {
+      carrySignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 100,
+          rawEffect: 'buff_upgrade,100,12312',
+          source: 'official-parsed',
+          stacksMultiply: true,
+        },
+      ],
+    })
+
+    const fit = evaluatePlacementFit({
+      carryHero: supportHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's2',
+      scenario,
+      manualStackCount: 10,
+    })
+
+    // percentToMultiplier(100)=2 → 2^10 = 1024（乘算堆叠，非线性累加）
+    expect(fit.totalMultiplier).toBe(1024)
+    expect(fit.scoreBreakdown[0]?.active).toBe(true)
+  })
+
+  it('manualStackCount 缺省时用 DEFAULT_MANUAL_STACK_COUNT(1000)', () => {
+    const supportHero = createHero('support', {
+      carrySignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 0.1,
+          rawEffect: 'buff_upgrade,0.1,12312',
+          source: 'official-parsed',
+          stacksMultiply: true,
+        },
+      ],
+    })
+    const baseInput = {
+      carryHero: supportHero,
+      carrySlotId: 's2' as const,
+      supportHero,
+      supportSlotId: 's2' as const,
+      scenario,
+    }
+
+    // 缺省 manualStackCount 与显式 1000 结果一致 → 证明默认值生效
+    const fitDefault = evaluatePlacementFit(baseInput)
+    const fitExplicit = evaluatePlacementFit({ ...baseInput, manualStackCount: 1000 })
+
+    expect(fitDefault.totalMultiplier).toBeCloseTo(1.001 ** 1000, 6)
+    expect(fitDefault.totalMultiplier).toBe(fitExplicit.totalMultiplier)
+  })
 })

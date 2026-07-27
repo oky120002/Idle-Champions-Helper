@@ -214,6 +214,19 @@ export function parsePerHeroExpr(expr: unknown): HeroPredicateAST | null {
   return parseHeroPredicate(expr, 'functional')
 }
 
+// stack_func_data.tag = 堆叠计数限定（count 哪些英雄叠层），与 filter_targets（buff 目标限定）语义不同。
+// 真实样本：蔚 ed=1644 善良榜样 stack_func_data:{tag:"good|acqinc|cteam"}（count）+
+// filter_targets:[{by_tags:geneutral}]（target），二者并存且不同。
+// 仅处理 tag 形态（formation-count-mult-stack 机制）；非 tag 形态（upgrade_id/unique_alignment 等）
+// 属其它机制，保持原状不动，避免回归。
+function readStackFuncDataTag(stackFuncData: unknown): string | null {
+  if (stackFuncData && typeof stackFuncData === 'object') {
+    const tag = (stackFuncData as Record<string, unknown>).tag
+    if (typeof tag === 'string') return tag
+  }
+  return null
+}
+
 export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown): HeroAbilitySignal {
   const e: Record<string, unknown> = (effect && typeof effect === 'object') ? effect as Record<string, unknown> : {}
   // tag/stat/attack filter 统一经 normalizeTargetQualifier 解析为 { predicate }。
@@ -225,18 +238,30 @@ export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown
   const useFormationCountQualifier = typeof stackFuncRaw === 'string' && stackFuncRaw !== 'per_upgrade_targets'
   const keepTargetQualifier = stackFuncRaw === 'per_upgrade_targets'
 
+  // stack_func_data.tag 解析为 count 限定（多 tag "a|b|c" → OR，与 IC tags 同 shorthand 方言）。
+  const stackFuncDataTag = readStackFuncDataTag(e.stack_func_data)
+  const stackFuncDataPredicate = stackFuncDataTag ? parseHeroPredicate(stackFuncDataTag, 'shorthand') : null
+  const stackFuncDataQualifier = stackFuncDataPredicate ? { predicate: stackFuncDataPredicate } : null
+
+  // 有显式 count 限定来源（per_hero_expr 或 stack_func_data.tag）时，filter_targets 回归 target 语义；
+  // 否则保留旧行为（stack_func 场景 filter_targets 当 count，per_upgrade_targets 当 target）。
+  const hasExplicitCountQualifier = stackFuncDataQualifier !== null || perHeroQualifier !== null
+
   return {
     ...signal,
     targetQualifier:
       signal.targetQualifier
-      ?? (keepTargetQualifier
+      ?? (hasExplicitCountQualifier
         ? filterQualifier
-        : useFormationCountQualifier
-          ? null
-          : filterQualifier),
+        : keepTargetQualifier
+          ? filterQualifier
+          : useFormationCountQualifier
+            ? null
+            : filterQualifier),
     formationCountQualifier:
       signal.formationCountQualifier
       ?? perHeroQualifier
+      ?? stackFuncDataQualifier
       ?? (useFormationCountQualifier || keepTargetQualifier ? filterQualifier : null),
     positionQualifier:
       signal.positionQualifier
