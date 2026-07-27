@@ -1,6 +1,6 @@
 # research 决策抽取
 
-**Status**: Draft
+**Status**: Landed
 **Type**: change
 **Scope**: system
 **Created**: 2026-07-27
@@ -58,4 +58,10 @@
 ## 落地后
 
 - `research/README.md` 拆分规则已就位
-- 本 change Status → Landed → `archive/changes/`
+- 落地结果：
+  - 新增 ADR：`decisions/0002`（数据来源策略）、`decisions/0003`（静态站存储与分层）、`decisions/0004`（动画播放）
+  - 新增后续 change：`2026-07-language-id-7-followups`、`2026-07-skin-illustration-followups`、`2026-07-visual-asset-audit`
+  - 13 篇 research/data 文档裁为纯事实 + 指针；改名 `source-decision.md → source-facts.md`、`advanced-fields-and-contract.md → advanced-fields.md`；删除 `contract-and-page-shape.md`（合同已在 specs）
+  - 顺手修阶段 4 模块 README 拆分残留（formation / filter / illustration / presets）与 `design/README` 的 `.impeccable.md` 相对路径
+- 验证：`docs/research/` 无多方案推荐 header（剩余 `## 结论` 均为事实性结论，属验收豁免）；断链检查真实导航链接为 0；`npm run typecheck` 通过
+- 本 change Status → Landed → 移 `archive/changes/`
