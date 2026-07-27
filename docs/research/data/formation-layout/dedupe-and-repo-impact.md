@@ -1,6 +1,7 @@
-# 官方布局：去重结果与仓库影响
+# 官方布局：去重结果与边界事实
 
-- 目标：沉淀唯一布局数量、仓库应怎样消费这些布局，以及当前边界。
+- 作用：沉淀唯一布局数量、布局 ID 生成方式与当前链路边界。
+- 阵型布局来源决策（官方 definitions 自动提取为主、人工覆写为辅、手工 MVP 不作主链路）已落地，见 `specs/modules/formation/scope-and-inputs.md`（`formations.json` = 自动提取的唯一布局库）；本文件只留去重与边界事实。
 
 ## 去重结果
 
@@ -17,16 +18,8 @@
 
 仓库实现使用“归一化槽位串 + `sha1` 截断”生成稳定布局 ID；签名至少应包含 `column / row / x / y / adjacentSlotIds`。
 
-## 对仓库实现的影响
+## 当前边界
 
-- `public/data/v1/formations.json` 应承载唯一官方布局集合，并保留：`name.original / name.display`、`notes.original / notes.display`、`slots`、`applicableContexts`、`sourceContexts`
-- `scripts/data/manual-overrides.json` 从“布局主来源”降级为必要覆写、中文补充说明和未来缺口补丁
-- 阵型页文案应从“手工 MVP 布局”切换到“官方 definitions 自动提取的布局库”
-
-## 当前边界与最终判断
-
-- `language_id=7` 对部分新冒险或时空门条目仍可能回退英文
-- 官方中文个别文本可能有翻译质量问题；当前策略应是优先保留官方返回，再为必要缺口补人工覆写
-- 本次接入的是“布局数据自动提取”，还不是“按战役 / 冒险 / 变体筛选布局”的完整交互方案
-
-最终判断：阵型布局数据已在官方 definitions 中，可直接自动提取；手工示例布局不作为主链路来源；人工补充层仍需保留，定位为必要覆写层。
+- `language_id=7` 对部分新冒险或时空门条目仍可能回退英文。
+- 官方中文个别文本可能有翻译质量问题；当前策略是优先保留官方返回，再为必要缺口补人工覆写。
+- 本次接入的是“布局数据自动提取”，还不是“按战役 / 冒险 / 变体筛选布局”的完整交互方案（交互方案见 `specs/modules/formation/scope-and-inputs.md`）。

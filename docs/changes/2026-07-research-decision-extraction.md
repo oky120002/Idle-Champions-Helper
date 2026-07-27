@@ -42,11 +42,11 @@
 ## 阶段 Checklist
 
 - [x] champion-detail-fields（2 篇）—— 验证：字段事实留 research，详情合同进 specs/modules（advanced-fields.md 仅留字段事实，contract-and-page-shape 删除）
-- [ ] formation-layout/dedupe-and-repo-impact —— 验证：去重事实留 research，消费建议进 changes
+- [x] formation-layout/dedupe-and-repo-impact —— 验证：去重事实留 research，消费建议进 changes（布局来源已落地 specs/formation，仅留去重与边界事实）
 - [x] game-data-source（2 篇）—— 验证：source-decision 的决策抽 ADR（0002 + 0003，原文件改名 source-facts.md，仅留事实与口径）
 - [x] language-id-7/data-contract —— 验证：链路事实留 research，合同进 specs（{original,display} 权威定义在 common.ts，后续待办进 changes）
-- [ ] pet-catalog/acquisition-and-implementation —— 验证：获取字段留 research，实现进 changes
-- [ ] portrait-asset/repo-integration —— 验证：链路事实留 research，接入进 changes
+- [x] pet-catalog/acquisition-and-implementation —— 验证：获取字段留 research，实现进 changes（页面实现已落地 specs/pets，仅留字段与归类事实）
+- [x] portrait-asset/repo-integration —— 验证：链路事实留 research，接入进 changes（接入已落地 specs/detail，仅留处理约束与实现记录）
 - [x] skin-illustration（3 篇）—— 验证：implementation 已部分拆（decisions/0001），剩余补（动画交付决策补 decisions/0004，后续项进 changes）
 - [x] static-data-storage-research —— 验证：存储事实留 research，分层决策抽 ADR（0003）
 - [x] visual-asset/size-and-storage —— 验证：尺寸事实留 research，存储边界进 specs（资源合同已在 data-and-build，全量审计进 changes）
