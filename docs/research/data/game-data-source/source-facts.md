@@ -1,12 +1,11 @@
-# 数据来源：决策、事实与分层
+# 数据来源：已核实事实与导入口径
 
-- 目标：确认基础游戏数据、个人数据读取方式、第三方站点链路，以及推荐的数据分层。
+- 数据快照：2026-04 ~ 2026-06 复核。
+- 作用：沉淀「公共 / 个人 / 第三方」三类来源的已核实事实与文案口径，供决策与实现核对。
 
-## 核心决策
+## 相关决策
 
-- 公共基础数据：官方 definitions 接口 -> 原始快照 -> 归一化 JSON -> `public/data/version.json + public/data/v1/*.json`。
-- 个人数据：`Support URL` / `webRequestLog.txt` / `User ID + Hash` 导入 -> 浏览器本地解析 -> 浏览器直接请求官方接口 -> 写入 `IndexedDB`。
-- 第三方站点：可用于页面结构参考、字段推断、规则校验和版本更新观察；不应作为正式依赖。
+来源与分层决策见 `decisions/0002-data-source-strategy.md`（来源策略）与 `decisions/0003-static-data-storage.md`（存储与四层分层）。本文件只保留支撑决策的核实事实。
 
 ## 已核实事实
 
@@ -26,10 +25,3 @@
 - 正确说法：导入 `Support URL`、上传 `webRequestLog.txt`、手动填写 `User ID + Hash`。
 - 不准确说法：输入游戏 ID 读取账号。
 - 原因：个人数据读取至少需要 `user_id + device_hash/hash`，部分接口还要结合 `instance_id`；它们更接近客户端凭证，而不是普通公开编号。
-
-## 推荐的数据分层
-
-- 第一层：官方原始 definitions 快照；建议保存在 `tmp/idle-champions-api/*.json`，用于 diff、回溯和 schema 变更排查。
-- 第二层：归一化公共数据；输出到 `public/data/version.json` 与 `public/data/v1/*.json`，字段少而稳，供前端直接消费。
-- 第三层：人工补充 / 覆写层；用于阵型布局补丁、中文缺口、筛选标签、推荐规则等仓库内维护数据；与抓取脚本分离。
-- 第四层：个人数据本地导入；凭证只在浏览器本地解析和使用，不经过服务端。

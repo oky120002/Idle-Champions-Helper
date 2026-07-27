@@ -5,7 +5,7 @@
 ## 先读哪组
 
 - 数据来源与个人数据边界：`docs/research/data/game-data-source/README.md`
-- 静态数据目录与缓存合同：`docs/research/data/static-data-storage-research.md`
+- 静态数据目录、加载与工作流事实（存储决策见 `decisions/0003-static-data-storage.md`）：`docs/research/data/static-data-storage-research.md`
 - 官方基座数据归一化审计：`docs/research/data/official-data-normalization-audit.md`
 - 官方中文链路：`docs/research/data/language-id-7/README.md`
 - 阵型布局字段与唯一布局提取：`docs/research/data/formation-layout/README.md`

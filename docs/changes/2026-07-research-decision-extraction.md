@@ -19,7 +19,7 @@
 - `research/data/champion-detail-fields/contract-and-page-shape.md`（R+F）
 - `research/data/formation-layout/dedupe-and-repo-impact.md`（R+P）
 - `research/data/game-data-source/implementation-and-risks.md`（R+P）
-- `research/data/game-data-source/source-decision.md`（R+P）
+- `research/data/game-data-source/source-facts.md`（R+P，原 source-decision）
 - `research/data/language-id-7/data-contract.md`（R+F）
 - `research/data/pet-catalog/acquisition-and-implementation.md`（R+P）
 - `research/data/portrait-asset/repo-integration.md`（R+P）
@@ -43,12 +43,12 @@
 
 - [ ] champion-detail-fields（2 篇）—— 验证：字段事实留 research，详情合同进 specs/modules
 - [ ] formation-layout/dedupe-and-repo-impact —— 验证：去重事实留 research，消费建议进 changes
-- [ ] game-data-source（2 篇）—— 验证：source-decision 的决策抽 ADR
+- [x] game-data-source（2 篇）—— 验证：source-decision 的决策抽 ADR（0002 + 0003，原文件改名 source-facts.md，仅留事实与口径）
 - [ ] language-id-7/data-contract —— 验证：链路事实留 research，合同进 specs
 - [ ] pet-catalog/acquisition-and-implementation —— 验证：获取字段留 research，实现进 changes
 - [ ] portrait-asset/repo-integration —— 验证：链路事实留 research，接入进 changes
 - [ ] skin-illustration（3 篇）—— 验证：implementation 已部分拆（decisions/0001），剩余补
-- [ ] static-data-storage-research —— 验证：存储事实留 research，分层决策抽 ADR
+- [x] static-data-storage-research —— 验证：存储事实留 research，分层决策抽 ADR（0003）
 - [ ] visual-asset/size-and-storage —— 验证：尺寸事实留 research，存储边界进 specs
 
 ## 验收
