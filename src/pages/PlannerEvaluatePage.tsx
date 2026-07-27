@@ -8,6 +8,7 @@ import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold
 import { createPlannerComputeRunner } from '../domain/planner/compute/plannerCompute'
 import type { FormationEvaluation } from '../domain/planner/recommendationEngine'
 import type { CandidateMode } from '../domain/planner/candidatePool'
+import { DEFAULT_MANUAL_STACK_COUNT } from '../domain/planner/placementFit'
 import type { ScoringMode } from '../domain/planner/steadyStateScoring'
 import { formatSeatLabel, getLocalizedTextPair } from '../domain/localizedText'
 import type { Champion } from '../domain/types'
@@ -16,6 +17,7 @@ import { HeroPicker } from './formation/HeroPicker'
 import { PlannerBreakdown } from './planner/PlannerBreakdown'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
+import { PlannerStackCount } from './planner/PlannerStackCount'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import {
   patchEvaluatePlacements,
@@ -58,6 +60,7 @@ export function PlannerEvaluatePage() {
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
+  const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
 
   // 切场景 = 换阵型拓扑，旧 slotId 失效；清锁与已摆阵型，避免 stale slotId 复活（fill-remaining 会回填 lockedSlots）。
   const selectVariantId = useCallback((variantId: string | null) => {
@@ -77,8 +80,8 @@ export function PlannerEvaluatePage() {
   const runner = useMemo(() => createPlannerComputeRunner(), [])
   useEffect(() => () => runner.dispose(), [runner])
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode }),
-    [candidateMode, scoringMode],
+    () => ({ candidateMode, scoringMode, manualStackCount }),
+    [candidateMode, scoringMode, manualStackCount],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -214,6 +217,7 @@ export function PlannerEvaluatePage() {
                 />
                 <PlannerScoringMode value={scoringMode} onChange={setScoringMode} />
                 <PlannerCandidateMode value={candidateMode} onChange={setCandidateMode} />
+                <PlannerStackCount value={manualStackCount} onChange={setManualStackCount} />
               </div>
             </section>
 

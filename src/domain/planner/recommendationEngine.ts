@@ -188,6 +188,8 @@ export interface PlannerRecommendationOptions {
    * 默认无（=1，保持 理论 loot 基线）。UI 接入（owned 装备读取）在
    */
   equipmentAdjustmentByHero?: Map<string, number>
+  /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
+  manualStackCount?: number
 }
 
 /**
@@ -318,6 +320,7 @@ export function evaluateFormation(
     // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
     globalBuffMultiplier: options.globalBuffMultiplier,
     equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+    manualStackCount: options.manualStackCount,
   })
 
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
@@ -473,6 +476,7 @@ export function buildPlannerRecommendation(
         // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
         globalBuffMultiplier: options.globalBuffMultiplier,
         equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+        manualStackCount: options.manualStackCount,
       })
     },
   })

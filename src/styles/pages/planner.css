@@ -490,6 +490,27 @@
       rgba(255, 255, 255, 0.03);
   }
 
+  .planner-stack-count__input {
+    width: 8rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(200, 167, 127, 0.18);
+    background: rgba(255, 255, 255, 0.02);
+    color: inherit;
+    font: inherit;
+    transition: border-color 160ms ease, background-color 160ms ease;
+  }
+
+  .planner-stack-count__input:hover {
+    border-color: rgba(200, 167, 127, 0.28);
+    background: rgba(255, 255, 255, 0.032);
+  }
+
+  .planner-stack-count__input:focus {
+    outline: none;
+    border-color: rgba(200, 167, 127, 0.42);
+  }
+
   .planner-breakdown {
     display: grid;
     gap: 0.6rem;

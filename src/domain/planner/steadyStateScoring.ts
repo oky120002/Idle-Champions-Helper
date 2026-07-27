@@ -44,6 +44,12 @@ export interface ScoringInput {
   equipmentAdjustmentByHero?: Map<string, number> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */
   lockedCarryHeroId?: string | undefined
+  /**
+   * 动态层数假设（dynamic-stack-multiply 机制用，如蔚出言不逊）。
+   * stacksMultiply=true 的 signal 按此值乘算；缺省走 placementFit 的 DEFAULT_MANUAL_STACK_COUNT(1000)。
+   * 由 UI 让用户按当前冒险最高区域手动设定（如 area×10）。
+   */
+  manualStackCount?: number | undefined
 }
 
 export interface SimulationFactor {
@@ -241,6 +247,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
       placements: input.placements,
       heroesById: input.heroesById,
       dimension: 'gold',
+      manualStackCount: input.manualStackCount,
     })
 
     warnings.push(...fit.warnings)
@@ -333,6 +340,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         heroesById: input.heroesById,
         dimension: ['damage', 'crit', 'vulnerability'],
         aggregatePools: true,
+        manualStackCount: input.manualStackCount,
       })
       warnings.push(...fit.warnings)
       // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
@@ -421,6 +429,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           placements: input.placements,
           heroesById: input.heroesById,
           dimension: 'survival',
+          manualStackCount: input.manualStackCount,
         })
         mergePools(survivalPools, fit.pools)
       }

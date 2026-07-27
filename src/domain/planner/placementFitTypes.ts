@@ -104,5 +104,5 @@ export interface EvaluatePlacementFitInput {
    * 动态层数假设（dynamic-stack-multiply 机制用，如蔚出言不逊）；默认 DEFAULT_MANUAL_STACK_COUNT=1000。
    * 仅影响 stacksMultiply=true 且无 stackFunc 的 signal；formation-count 等实时数英雄不受影响。
    */
-  manualStackCount?: number
+  manualStackCount?: number | undefined
 }

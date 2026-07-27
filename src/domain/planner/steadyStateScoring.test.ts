@@ -523,4 +523,24 @@ describe('steady state scoring', () => {
     expect(adjusted.objectiveValue.toNumber()).toBeCloseTo(5.3, 4)
     expect(compareGameNumbers(adjusted.objectiveValue, theoretical.objectiveValue)).toBeLessThan(0)
   })
+
+  it('manualStackCount 透传到 dynamic-stack-multiply signal', () => {
+    // stacksMultiply signal 按 manualStackCount 乘算；不同假设值 → carryDps 倍率 = 2^Δ。
+    // 验证透传链 ScoringInput.manualStackCount → evaluatePlacementFit → scoreBreakdown。
+    const carry = createHero('carry', {
+      seat: 1,
+      roles: ['dps'],
+      carrySignals: [
+        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'buff_upgrade,100,1', source: 'official-parsed', stacksMultiply: true },
+      ],
+    })
+    const heroesById = new Map([['carry', carry]])
+    const placements = { s2: 'carry' }
+
+    const low = scoreFormation({ placements, heroesById, scenario, manualStackCount: 5 })
+    const high = scoreFormation({ placements, heroesById, scenario, manualStackCount: 10 })
+
+    // baseDps×levelCurve 不变 → objectiveValue 比值 = damagePool 比值 = 2^10 / 2^5 = 32
+    expect(high.objectiveValue.toNumber() / low.objectiveValue.toNumber()).toBeCloseTo(32, 0)
+  })
 })

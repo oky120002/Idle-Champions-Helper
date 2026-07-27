@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPlannerComputeRunner } from '../../domain/planner/compute/plannerCompute'
 import type { CandidateMode } from '../../domain/planner/candidatePool'
 import type { ComputationMode } from '../../domain/planner/computationMode'
+import { DEFAULT_MANUAL_STACK_COUNT } from '../../domain/planner/placementFit'
 import type { PlannerRecommendationOptions } from '../../domain/planner/recommendationEngine'
 import type { PlannerRecommendation } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
@@ -32,6 +33,8 @@ export function usePlannerPageModel() {
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [computationMode, setComputationMode] = useState<ComputationMode>('p50')
+  // 动态层数假设（dynamic-stack-multiply，如蔚出言不逊）；默认与引擎 DEFAULT_MANUAL_STACK_COUNT 同源。
+  const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
@@ -48,8 +51,8 @@ export function usePlannerPageModel() {
   )
   // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(
-    () => ({ scoringMode, candidateMode, computationMode, lockedCarryHeroId, lockedSlots }),
-    [scoringMode, candidateMode, computationMode, lockedCarryHeroId, lockedSlots],
+    () => ({ scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots }),
+    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots],
   )
   const { result, loading: recommendLoading, error: recommendError } = usePlannerRecommendation(
     runner,
@@ -74,6 +77,10 @@ export function usePlannerPageModel() {
   }, [])
   const selectComputationMode = useCallback((mode: ComputationMode) => {
     setComputationMode(mode)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectManualStackCount = useCallback((count: number) => {
+    setManualStackCount(count)
     setSelectedResultIndex(0)
   }, [])
   const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
@@ -102,6 +109,7 @@ export function usePlannerPageModel() {
     lockedSlots,
     loadError,
     loadState,
+    manualStackCount,
     plannerRecommendation: result ?? EMPTY_RECOMMENDATION,
     recommendLoading,
     recommendError,
@@ -111,6 +119,7 @@ export function usePlannerPageModel() {
     clearSlotLock,
     selectCandidateMode,
     selectComputationMode,
+    selectManualStackCount,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,

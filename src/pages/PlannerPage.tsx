@@ -9,6 +9,7 @@ import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerComputationMode } from './planner/PlannerComputationMode'
+import { PlannerStackCount } from './planner/PlannerStackCount'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerImportFormation } from './planner/PlannerImportFormation'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
@@ -68,6 +69,7 @@ export function PlannerPage() {
     lockedSlots,
     loadError,
     loadState,
+    manualStackCount,
     plannerRecommendation,
     recommendError,
     recommendLoading,
@@ -77,6 +79,7 @@ export function PlannerPage() {
     clearSlotLock,
     selectCandidateMode,
     selectComputationMode,
+    selectManualStackCount,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
@@ -191,6 +194,7 @@ export function PlannerPage() {
                   <PlannerScoringMode value={scoringMode} onChange={selectScoringMode} />
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                   <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
+                  <PlannerStackCount value={manualStackCount} onChange={selectManualStackCount} />
                 </div>
               </section>
 
