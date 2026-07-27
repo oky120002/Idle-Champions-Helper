@@ -1,6 +1,7 @@
 # 当前动画 / 立绘流水线：验证命令与剩余风险
 
 - 目标：收纳现行动画主链路的复跑命令、全量重建入口与仍需留意的风险。
+- 动画交付决策见 `decisions/0004-animation-bin-canvas-playback.md`；构建 / 运行时合同见 `specs/modules/champions/illustration/`。
 
 ## 验证命令
 
