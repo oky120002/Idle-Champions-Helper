@@ -42,7 +42,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 |------|-----------------|----------|----------|--------------|------|
 | _待填_ | _待填_ | _待填_ | _待填_ | _待填_ | _待填_ |
 
-## 结论
+## 核实结论
 
 - 公式已实现并单测覆盖（`budCalculation.test.ts`：单次伤害、慢攻击 BUD 更高、cooldown 回退、空阵型）。
 - 绝对值实测校准 pending 用户游戏内数据；阵型推荐以 carryDps 优化，BUD 为辅助指标。

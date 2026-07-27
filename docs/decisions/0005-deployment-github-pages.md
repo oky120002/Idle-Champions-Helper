@@ -28,6 +28,6 @@
 
 ## 关联
 
-- 依据：`research/deployment/static-hosting/constraints-and-flow.md`、`research/deployment/china-hosting/decision-and-options.md`
+- 依据：`research/deployment/static-hosting/constraints-and-flow.md`、`research/deployment/china-hosting/options-and-filing.md`
 - 落地：`vite.config.ts`（`base`）、`src/main.tsx`（`HashRouter`）、`.github/workflows/deploy.yml`
 - 硬约束：`AGENTS.md` §1（GitHub Pages 兼容）

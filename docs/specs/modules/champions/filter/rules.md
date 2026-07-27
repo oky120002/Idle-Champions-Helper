@@ -16,5 +16,3 @@
 - 页面状态保留三态：`loading`、`ready`、`error`。
 - 枚举读取、枚举校验和纯筛选逻辑不下沉到 `ChampionsPage` 页面层。
 - 规则强化走 `src/rules/championFilter.ts` 与 `src/features/champion-filters/`，不在 JSX 里硬塞规则。
-
-（MVP 补全与扩展顺序见 `changes/2026-07-champions-filter-mvp.md`）

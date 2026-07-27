@@ -18,5 +18,3 @@
 - 拖拽或动画优先的交互重构
 - 技能覆盖、DPS 或 BUD 计算
 - 自动站位优化
-
-（规则扩展方向见 `changes/2026-07-formation-rule-expansion.md`）
