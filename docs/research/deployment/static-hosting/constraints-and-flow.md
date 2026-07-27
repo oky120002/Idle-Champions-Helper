@@ -1,17 +1,7 @@
 # 静态部署：约束与发布链路
 
-- 目标：沉淀当前部署真相来源、必守约束和正式发布链路。
-
-## 当前决策
-
-- 前端：`React`
-- 构建：`Vite`
-- 语言：`TypeScript`
-- 托管：`GitHub Pages`
-- 发布：`GitHub Actions`
-- 路由：MVP 默认 `HashRouter`
-
-选择 `GitHub Pages` 的原因：静态站足够、与仓库天然一致、无后端成本、可直接接 GitHub Actions。默认选 `HashRouter` 的原因：更重视少踩坑、少处理刷新 404、少写平台特定回退脚本。
+- 作用：沉淀 GitHub Pages 部署的必守约束与正式发布链路。
+- 部署主方案与路由策略决策见 `decisions/0005-deployment-github-pages.md`；本文件只保留约束与链路事实。
 
 ## 必守约束
 
