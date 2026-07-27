@@ -2,7 +2,7 @@
 
 - 目标：确认布局数据在 definitions 的哪里，以及归一化时应注意什么。
 
-## 结论
+## 核实结论
 
 - 官方 definitions 已包含阵型布局数据，不需要继续手工维护 MVP 示例布局作为主来源。
 - 布局字段不在独立 `formation_defines` 集合里，而是挂在：`campaign_defines[].game_changes[].formation` 与 `adventure_defines[].game_changes[].formation`。

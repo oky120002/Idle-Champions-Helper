@@ -2,7 +2,7 @@
 
 - 目标：确认 definitions 是否暴露头像字段、头像资源如何下载，以及当前格式 / 尺寸结论是什么。
 
-## 结论先行
+## 核实结论
 
 - 官方 definitions 会返回英雄头像线索，但不是完整图片 URL。
 - 可用链路是：`hero_defines[].portrait_graphic_id` -> `graphic_defines[]` 的 `graphic / v` -> `https://master.idlechampions.com/~idledragons/mobile_assets/<graphic>`。
