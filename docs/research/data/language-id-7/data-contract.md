@@ -1,10 +1,15 @@
-# `language_id=7`：数据合同与实现建议
+# `language_id=7`：本地化字段合同与实现事实
 
-- 目标：说明这条中文链路对归一化结构和页面消费的直接影响。
+- 作用：说明官方中文链路对归一化输出结构的影响，以及当前实现事实。
+- 本地化字段合同（`{original, display}`）的权威定义在 `src/domain/types/common.ts`，多模块消费（检索、详情、阵型、方案）；本文件只保留中文覆盖事实与实现记录。
 
-## 对数据结构的直接影响
+## 中文覆盖事实
 
-推荐统一输出：
+`getDefinitions` 接受 `language_id=7`，返回结构与默认英文 definitions 一致，但会把部分字符串字段替换为官方中文。中文覆盖已足够支撑 MVP 的主要名称字段，但不是 100%；页面搜索、筛选和详情展示都需要同时支持中文展示、英文原文检索和中文缺失时的自动回退（见 `docs/research/data/language-id-7/coverage.md`）。
+
+## 归一化输出形态
+
+名称、限制等本地化字段统一输出为：
 
 ```json
 {
@@ -13,17 +18,15 @@
 }
 ```
 
-原因：中文覆盖已足够支撑 MVP 的主要名称字段，但不是 100%；页面搜索、筛选和详情展示都需要同时支持中文展示、英文原文检索和中文缺失时的自动回退。
+`original` 保留英文原文供检索与回退，`display` 给中文展示；中文缺失时前端回退 `original`。Zod 定义见 `src/domain/types/common.ts`（`LocalizedText` / `LocalizedLabeled`）。
 
-## 实现建议
+## 当前实现记录
 
-1. 抓取流程默认同时保留两份快照：`language_id=1` 与 `language_id=7`
-2. 归一化输出优先覆盖 `champions`、`affiliations`、`campaigns`、`variants`
-3. 变体页已消费的限制文本也同步改成 `original + display`
-4. 仍未翻译的项目先走英文回退，不在这一阶段手工强补
+- 抓取流程默认同时保留两份快照：`language_id=1` 与 `language_id=7`。
+- 归一化输出优先覆盖 `champions`、`affiliations`、`campaigns`、`variants`。
+- 变体页已消费的限制文本已改成 `original + display`。
+- 仍未翻译的项目先走英文回退，不在当前阶段手工强补。
 
-## 后续待办
+## 相关后续
 
-- 继续核对 `event_name`、`game_changes`、escort 名称等次级字段的页面价值
-- 评估 `BBEG`、`Vecna: Eve of Ruin`、`Tales of the Champions` 等缺口是否需要人工覆盖
-- 若后续页面展示更多变体说明，再把 `description / objectives_text / requirements_text` 系统化成双字段结构
+次级字段核对、缺口人工覆盖评估、变体说明文本双字段化等暂未展开项见 `changes/2026-07-language-id-7-followups.md`。

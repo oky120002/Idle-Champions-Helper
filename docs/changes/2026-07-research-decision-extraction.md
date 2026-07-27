@@ -15,8 +15,8 @@
 
 ## 待拆清单（13 篇）
 
-- `research/data/champion-detail-fields/advanced-fields-and-contract.md`（R+F）
-- `research/data/champion-detail-fields/contract-and-page-shape.md`（R+F）
+- `research/data/champion-detail-fields/advanced-fields.md`（R+F，原 advanced-fields-and-contract，合同进 specs）
+- `research/data/champion-detail-fields/contract-and-page-shape.md`（R+F，已删除：合同已在 specs，无独立事实）
 - `research/data/formation-layout/dedupe-and-repo-impact.md`（R+P）
 - `research/data/game-data-source/implementation-and-risks.md`（R+P）
 - `research/data/game-data-source/source-facts.md`（R+P，原 source-decision）
@@ -41,15 +41,15 @@
 
 ## 阶段 Checklist
 
-- [ ] champion-detail-fields（2 篇）—— 验证：字段事实留 research，详情合同进 specs/modules
+- [x] champion-detail-fields（2 篇）—— 验证：字段事实留 research，详情合同进 specs/modules（advanced-fields.md 仅留字段事实，contract-and-page-shape 删除）
 - [ ] formation-layout/dedupe-and-repo-impact —— 验证：去重事实留 research，消费建议进 changes
 - [x] game-data-source（2 篇）—— 验证：source-decision 的决策抽 ADR（0002 + 0003，原文件改名 source-facts.md，仅留事实与口径）
-- [ ] language-id-7/data-contract —— 验证：链路事实留 research，合同进 specs
+- [x] language-id-7/data-contract —— 验证：链路事实留 research，合同进 specs（{original,display} 权威定义在 common.ts，后续待办进 changes）
 - [ ] pet-catalog/acquisition-and-implementation —— 验证：获取字段留 research，实现进 changes
 - [ ] portrait-asset/repo-integration —— 验证：链路事实留 research，接入进 changes
 - [x] skin-illustration（3 篇）—— 验证：implementation 已部分拆（decisions/0001），剩余补（动画交付决策补 decisions/0004，后续项进 changes）
 - [x] static-data-storage-research —— 验证：存储事实留 research，分层决策抽 ADR（0003）
-- [ ] visual-asset/size-and-storage —— 验证：尺寸事实留 research，存储边界进 specs
+- [x] visual-asset/size-and-storage —— 验证：尺寸事实留 research，存储边界进 specs（资源合同已在 data-and-build，全量审计进 changes）
 
 ## 验收
 
