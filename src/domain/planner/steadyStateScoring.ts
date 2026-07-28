@@ -264,6 +264,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
       heroesById: input.heroesById,
       dimension: 'gold',
       manualStackCount: input.manualStackCount,
+      supportLevel: input.heroLevels?.get(entry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
     })
 
     warnings.push(...fit.warnings)
@@ -358,6 +359,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         dimension: ['damage', 'crit', 'vulnerability'],
         aggregatePools: true,
         manualStackCount: input.manualStackCount,
+        supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
       })
       warnings.push(...fit.warnings)
       // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
@@ -448,6 +450,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           heroesById: input.heroesById,
           dimension: 'survival',
           manualStackCount: input.manualStackCount,
+          supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
         })
         mergePools(survivalPools, fit.pools)
       }

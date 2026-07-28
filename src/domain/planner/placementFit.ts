@@ -251,12 +251,28 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
   // aggregatePools=false 时跳过 pool 构建，只产 scoreBreakdown（crit/vulnerability 维度省去死代码计算）。
   const aggregatePools = input.aggregatePools ?? true
 
+  // 等级解锁门控：supportLevel 不传（MAX_SAFE_INTEGER）= 无等级限制（向后兼容）。
+  const supportLevel = input.supportLevel ?? Number.MAX_SAFE_INTEGER
+
   for (const signal of collectSignals(input)) {
     if (dimensionFilterSet) {
       const signalDimension = DIMENSION_BY_KIND[signal.kind]
       if (!dimensionFilterSet.has(signalDimension)) {
         continue
       }
+    }
+
+    // 等级解锁门控：signal 所需等级 > support 当前等级 → 未解锁，不计分。
+    if (typeof signal.requiredLevel === 'number' && signal.requiredLevel > supportLevel) {
+      scoreBreakdown.push({
+        signalKind: signal.kind,
+        rawEffect: signal.rawEffect,
+        multiplier: 1,
+        active: false,
+        reasonCode: 'level-locked',
+        source: signal.source,
+      })
+      continue
     }
 
     if (!matchesPositionQualifier(input, signal)) {
