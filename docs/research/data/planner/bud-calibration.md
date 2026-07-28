@@ -39,6 +39,22 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 - levelCurve 用 costCurves['1']=1.12 高估（实测伤害增长率 ~1.058），**恰好部分抵消**全局放大缺失——这是 l722 偏差（-13.5）比 l1（-32.7）小的原因。若修正 levelCurve（1.058）但不建模全局放大，偏差暴露至 ~-31.5。
 - **结论**：absolute-dps 偏差收敛依赖**全局放大建模**（favor/modron/blessing，即 architecture.md 后续目标的「外部加成生产侧 + modron 接入」），不是 baseDamage/levelCurve 微调。BUD 校准（baseDamage/官方曲线精确化）是次要项（相对比较保序，绝对值靠全局放大）。
 
+## 全局放大源调研（2026-07-28 raw 分析）
+
+偏差主因 ~10^33 全局放大的来源（`tmp/idle-champions-api/definitions-*-lang-1-source.json` 深挖）：
+
+- **favor 不是乘数源**：`patron_defines` 的 currency（Ruby Coin / Symbol of Vajra 等）是购买 blessing 的货币；`game_rule_defines` 68 条无 favor→伤害公式。favor 本身不给全局乘数。
+- **Global Blessing 系统（钥匙）**：`effect_defines:2718`「Increases the damage of all Champions by $amount% **for each Global Blessing** you have」。玩家拥有的 global blessing（克兰沃/托姆/扎瑞尔等"恩赐祝福"，跨 patron）聚合 → 全局乘数。明斯克 incomingBuffs ×500（关注核心/普通种族/以身作则/铁胃）是其拥有的部分 blessing；玩家通常拥有更多，累积放大（10^30 量级）。
+- **modron**：`modron_tile_defines`（326 条）是阵型布局组件（无 effect）；`modron_core_defines` 只有 grid 配置。modron 的乘数经触发 buff（`effect-reference` 的 `modron_*`）实现，建模需解析核心配置 → buff 链（复杂，单独工程）。
+- **buff_defines** damage 相关仅 10 条（药水/Ad/MixPlay，临时 buff，非持久全局放大）。
+
+### 建模路径（按依赖）
+
+1. **blessing 接入（大头）**：`UserProfileSnapshot` 加 `blessings` 字段（`userProfileNormalizer:254-255` 已保留 `normalizeNumberRecord(c.blessings)`，但未进最终 snapshot）+ 归一化 global blessing 乘数定义（raw `effect_defines` / `patron_perk_defines` 的 global_dps blessing）+ 适配层聚合进 `globalBuffMultiplier`。
+2. **modron 接入**：核心配置 → buff 链解析（复杂，单独工程）。
+
+结论：absolute-dps 偏差收敛 = blessing + modron 建模。两者均是大工程（数据接入 + 定义归一化 + 适配层），单 session 无法全完，需多轮推进。
+
 ## 实测对照方法（需用户配合游戏）
 
 目标：计算 BUD 与游戏内显示 BUD 偏差 **< 30%**。
