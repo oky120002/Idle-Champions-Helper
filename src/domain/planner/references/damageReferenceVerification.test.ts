@@ -100,6 +100,20 @@ function scoreSingleSnapshot(heroId: string, snapshot: ChampionReferenceSnapshot
   })
 }
 
+// 聚合快照的「外部加成」为全局伤害乘数（约束③：计算器只看 globalBuffMultiplier 入参，不读祝福/赞助者源）。
+// 只取 source:blessing|patron 的 damageBonusPercent（hero/self 是阵型内 buff，由 signal 建模，不进 globalBuff）。
+// 乘数 = Π(1 + damageBonusPercent/100)；非伤害类 buff（冷却缩减等）无 damageBonusPercent，自动跳过。
+// 把 oracle 的实测外部加成转成计算器入参，用于度量「外部加成建模」对绝对偏差的收敛贡献。
+function aggregateGlobalBuffMultiplier(snapshot: ChampionReferenceSnapshot): number {
+  let mult = 1
+  for (const b of snapshot.incomingBuffs ?? []) {
+    if ((b.source === 'blessing' || b.source === 'patron') && typeof b.damageBonusPercent === 'number') {
+      mult *= 1 + b.damageBonusPercent / 100
+    }
+  }
+  return mult
+}
+
 describe('伤害参照自动发现与数据完整性', () => {
   it('自动发现蔚/明斯克/瓦罗三份参照（glob 真自动，零注册）', () => {
     expect(referencesByHeroId.get('95')).toBeDefined()
@@ -187,9 +201,21 @@ describe('formation-buff 模式（结构正确性，CI 门控）', () => {
 describe('absolute-dps 模式（校准基线，记录不门控）', () => {
   // baseDamage/BUD 未校准 → 计算器绝对量与实测差几十个数量级（见 architecture.md「投影模式」）。
   // 这里度量偏差作 BUD 校准回归基线，驱动收敛；不门控 CI。
-  it('明斯克 level 1/722 绝对伤害偏差被度量（驱动未来 BUD 校准）', () => {
+  it('明斯克外部加成聚合为全局乘数（恩赐祝福+赞助者，约束③入参）', () => {
+    const minscRef = referencesByHeroId.get('7')!
+    // 关注核心×5(+400%) · 普通种族×16(+1500%) · 以身作则×2.5(+150%) · 铁胃×2.5(+150%) = 500
+    for (const snap of minscRef.snapshots) {
+      const mult = aggregateGlobalBuffMultiplier(snap)
+      expect(mult, `${snap.id}`).toBeGreaterThan(400)
+      expect(mult, `${snap.id}`).toBeLessThan(600)
+    }
+  })
+
+  it('明斯克 level 1/722 绝对伤害偏差被度量（对比无/含外部加成，驱动 BUD 校准）', () => {
     const minsc = loadBuiltHero('7')
     const scenario = singleSlotScenario()
+    const minscRef = referencesByHeroId.get('7')!
+    const snapById = new Map(minscRef.snapshots.map((s) => [s.id, s]))
     const observed: Record<string, string> = {
       'minsc-l1': '1.25e45',
       'minsc-l722': '5.02e62',
@@ -197,22 +223,29 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
     const levels: Record<string, number> = { 'minsc-l1': 1, 'minsc-l722': 722 }
 
     for (const [snapId, obsStr] of Object.entries(observed)) {
-      const result = scoreFormation({
+      const snap = snapById.get(snapId)!
+      const globalBuff = aggregateGlobalBuffMultiplier(snap)
+      const level = levels[snapId]!
+      const baseInput = {
         placements: { s1: '7' },
         heroesById: new Map([['7', minsc]]),
         scenario,
-        heroLevels: new Map([['7', levels[snapId]!]]),
-        aggregateProjection: 'absolute-dps',
-      })
-      const calc = result.objectiveValue
+        heroLevels: new Map([['7', level]]),
+        aggregateProjection: 'absolute-dps' as const,
+      }
+      const calcNoBuff = scoreFormation(baseInput).objectiveValue
+      const calcWithBuff = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff }).objectiveValue
       const obs = new Decimal(obsStr)
-      // log10 偏差（数量级差距）；当前预期巨大（外部加成未建模）。
-      const logDeviation = calc.dividedBy(obs).abs().log10().toNumber()
+      // log10(calc/obs)：calc<obs 为负，绝对值 = 数量级差距。含外部加成 calc 变大 → 值往 0 靠（收敛）。
+      const devNoBuff = calcNoBuff.dividedBy(obs).abs().log10().toNumber()
+      const devWithBuff = calcWithBuff.dividedBy(obs).abs().log10().toNumber()
       // 用 process.stdout 绕过 vitest console 拦截，让偏差基线在正常跑测时可见。
       process.stdout.write(
-        `\n[BUD-gap] 明斯克 ${snapId}: calc=${calc.toString()} observed=${obsStr} log10偏差=${logDeviation.toFixed(1)}\n`,
+        `\n[BUD-gap] 明斯克 ${snapId}: 外部加成×${globalBuff.toFixed(0)} | 无加成 log10=${devNoBuff.toFixed(1)} → 含加成 log10=${devWithBuff.toFixed(1)}\n`,
       )
-      expect(Number.isFinite(logDeviation)).toBe(true)
+      // 含外部加成后偏差必收敛（calc 乘 globalBuff → calc/obs 升 → log10 升）。
+      expect(devWithBuff, `${snapId} 含外部加成应收敛`).toBeGreaterThan(devNoBuff)
+      expect(Number.isFinite(devWithBuff)).toBe(true)
     }
   })
 })

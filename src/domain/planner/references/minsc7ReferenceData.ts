@@ -41,10 +41,10 @@ export const minsc7ReferenceData = {
         },
       },
       incomingBuffs: [
-        { nameZh: '关注核心', fromZh: '克兰沃的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升400%' },
-        { nameZh: '普通种族', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升1,500%' },
-        { nameZh: '以身作则', fromZh: '扎瑞尔', source: 'blessing', effect: '使明斯克的伤害提升150%', note: '怀疑也是赐福' },
-        { nameZh: '铁胃', fromZh: '跋折罗·萨法尔', source: 'patron', effect: '使明斯克的伤害提升150%', note: '怀疑也是赐福' },
+        { nameZh: '关注核心', fromZh: '克兰沃的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升400%', damageBonusPercent: 400 },
+        { nameZh: '普通种族', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升1,500%', damageBonusPercent: 1500 },
+        { nameZh: '以身作则', fromZh: '扎瑞尔', source: 'blessing', effect: '使明斯克的伤害提升150%', damageBonusPercent: 150, note: '怀疑也是赐福' },
+        { nameZh: '铁胃', fromZh: '跋折罗·萨法尔', source: 'patron', effect: '使明斯克的伤害提升150%', damageBonusPercent: 150, note: '怀疑也是赐福' },
         { nameZh: '领导冲锋', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的基本攻击冷却时间缩短0.5秒' },
       ],
       // 1 级无提供效果（技能未解锁）。
@@ -75,10 +75,10 @@ export const minsc7ReferenceData = {
         },
       },
       incomingBuffs: [
-        { nameZh: '关注核心', fromZh: '克兰沃的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升400%' },
-        { nameZh: '普通种族', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升1,500%' },
-        { nameZh: '以身作则', fromZh: '扎瑞尔', source: 'blessing', effect: '使明斯克的伤害提升150%', note: '怀疑也是赐福' },
-        { nameZh: '铁胃', fromZh: '跋折罗·萨法尔', source: 'patron', effect: '使明斯克的伤害提升150%', note: '怀疑也是赐福' },
+        { nameZh: '关注核心', fromZh: '克兰沃的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升400%', damageBonusPercent: 400 },
+        { nameZh: '普通种族', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升1,500%', damageBonusPercent: 1500 },
+        { nameZh: '以身作则', fromZh: '扎瑞尔', source: 'blessing', effect: '使明斯克的伤害提升150%', damageBonusPercent: 150, note: '怀疑也是赐福' },
+        { nameZh: '铁胃', fromZh: '跋折罗·萨法尔', source: 'patron', effect: '使明斯克的伤害提升150%', damageBonusPercent: 150, note: '怀疑也是赐福' },
         { nameZh: '领导冲锋', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的基本攻击冷却时间缩短0.5秒' },
       ],
       providedBuffs: [
@@ -130,11 +130,11 @@ export const minsc7ReferenceData = {
         },
       },
       incomingBuffs: [
-        { nameZh: '关注核心', fromZh: '克兰沃的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升400%' },
+        { nameZh: '关注核心', fromZh: '克兰沃的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升400%', damageBonusPercent: 400 },
         { nameZh: '领导冲锋', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的基本攻击冷却时间缩短0.5秒' },
-        { nameZh: '铁胃', fromZh: '跋折罗·萨法尔', source: 'patron', effect: '使明斯克的伤害提升150%', note: '怀疑也是赐福' },
-        { nameZh: '以身作则', fromZh: '扎瑞尔', source: 'blessing', effect: '使明斯克的伤害提升150%', note: '怀疑也是赐福' },
-        { nameZh: '普通种族', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升1,500%' },
+        { nameZh: '铁胃', fromZh: '跋折罗·萨法尔', source: 'patron', effect: '使明斯克的伤害提升150%', damageBonusPercent: 150, note: '怀疑也是赐福' },
+        { nameZh: '以身作则', fromZh: '扎瑞尔', source: 'blessing', effect: '使明斯克的伤害提升150%', damageBonusPercent: 150, note: '怀疑也是赐福' },
+        { nameZh: '普通种族', fromZh: '托姆的恩赐祝福', source: 'blessing', effect: '使明斯克的伤害提升1,500%', damageBonusPercent: 1500 },
         // 交叉位置 buff：瓦罗的战斗指南（瓦罗在其前面两列 → 明斯克在其作用范围）。
         { nameZh: '瓦罗的战斗指南', fromZh: '瓦罗', source: 'hero', effect: '使明斯克的伤害提升2.03e15%' },
       ],

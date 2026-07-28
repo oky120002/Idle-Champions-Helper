@@ -19,7 +19,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 
 ### 外部加成入参契约（约束③）
 
-计算器不管调用方登没登录，只看入参 `globalBuffMultiplier` 是否非 undefined：传了算、没传默认 1（`steadyStateScoring.ts` scoreFormation 内 `?? 1`）。是否传由调用方决定（UI 开关 / 测试 mock）。计算器**永不读取登录态、永不读取 user profile 的 blessing/favor**——后者在 `userProfileNormalizer` 被丢弃属预期行为，不是 bug。
+计算器不管调用方登没登录，只看入参 `globalBuffMultiplier` 是否非 undefined：传了算、没传默认 1（`steadyStateScoring.ts` scoreFormation 内 `?? 1`）。是否传由调用方决定（UI 开关 / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile 的 blessing/favor**——blessing/favor 已由 `userProfileNormalizer` 保留进 profile（`blessings` / `favor` 字段），按约束③计算器不直接读，由适配层聚合成 `globalBuffMultiplier` 传入（生产侧接入 phased；oracle 度量回路已建，见 `damageReferenceVerification`）。
 
 ### Hermetic 边界（审计结论）
 
@@ -62,9 +62,10 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 | `manualStackCount`（当前层数假设） | consumed |
 | `globalBuffMultiplier`（外部加成）/ `equipmentAdjustmentByHero` | domain consumed、**phased** UI 接入 |
 | `aggregateProjection`（模式开关） | consumed（本轮新增） |
-| patron 选择 / `perHeroSpecialization` / feat·familiar 选择 / blessing·favor 量 / modron 状态 | **phased**（动态入参，待接入评分） |
+| patron 选择 / blessing·favor 量 | **phased**（适配层聚合成 `globalBuffMultiplier` 传入，非直接入参） |
+| `perHeroSpecialization` / feat·familiar / modron 状态 | **phased**（待接入评分） |
 
-**后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；等级解锁门控（基础数据侧 build 烘 unlock + 消费侧过滤）；绝对伤害 BUD 校准；`globalBuffMultiplier` / `equipmentAdjustmentByHero` UI 接入；blessing/favor 入 snapshot（基础数据侧）；patron 选择 / perHeroSpecialization / feat / familiar / modron 动态入参接入评分。
+**后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；等级解锁门控（基础数据侧 build 烘 unlock + 消费侧过滤）；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
 
 ## 三层架构
 

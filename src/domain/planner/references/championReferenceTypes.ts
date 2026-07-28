@@ -79,6 +79,12 @@ export interface ObservedBuff {
   source: ObservedBuffSource
   /** 效果原话，如「使明斯克的伤害提升400%」。 */
   effect: string
+  /**
+   * 伤害加成百分比（游戏显示「伤害提升 X%」的 X），用于聚合成外部加成全局乘数（约束③）。
+   * 仅对 source:blessing|patron 有意义；hero/self 是阵型内 buff，由 signal 建模，不进此字段。
+   * 乘数 = 1 + damageBonusPercent/100（如 400 → ×5）。非伤害类（如冷却缩减）不填。
+   */
+  damageBonusPercent?: number
   note?: string
 }
 
