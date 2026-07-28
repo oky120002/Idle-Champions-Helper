@@ -23,7 +23,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 
 ### Hermetic 边界（审计结论）
 
-`src/domain/planner/` + `src/domain/simulator/` 是 hermetic 模块：
+`src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
 
 - **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`（域不向外层依赖）。
 - **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `break_eternity.js`。

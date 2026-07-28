@@ -1,4 +1,4 @@
-// Hermetic 边界守护：planner + simulator 域永不向外层依赖、永不主动获取数据。
+// Hermetic 边界守护：planner + simulator + abilities 域永不向外层依赖、永不主动获取数据。
 // 详见 docs/specs/modules/planner/architecture.md「Hermetic 边界」。
 // 计算器是 hermetic 模块——所有数据经适配层（usePlannerCollections）→ PlannerCollections 喂入。
 // 本测试防回归：谁在域里加 `import { loadCollection }` 或读文件，CI 即 fail。
@@ -10,6 +10,7 @@ const DOMAIN_ROOT = path.resolve(__dirname, '..') // src/domain
 const SCANNED_DIRS = [
   __dirname, // src/domain/planner
   path.resolve(DOMAIN_ROOT, 'simulator'),
+  path.resolve(DOMAIN_ROOT, 'abilities'),
 ]
 
 // 非测试代码不得直接获取数据。token 取调用形避免误伤注释里的单词。
@@ -30,7 +31,7 @@ function listDomainTsFiles(dir: string): string[] {
 
 const files = SCANNED_DIRS.flatMap(listDomainTsFiles)
 
-describe('planner/simulator 域 Hermetic 边界', () => {
+describe('planner/simulator/abilities 域 Hermetic 边界', () => {
   it('相对 import 必须解析到 src/domain 内（不依赖 src/data|app|components|pages）', () => {
     const violations: string[] = []
     const importRe = /\bfrom\s+['"](\.[^'"]+)['"]/g
