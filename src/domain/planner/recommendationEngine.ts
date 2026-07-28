@@ -19,7 +19,7 @@ import {
   type PlannerRecommendationBlocker,
   type PlannerResult,
 } from './recommendationTypes'
-import { scoreFormation, type ScoringMode } from './steadyStateScoring'
+import { scoreFormation, type AggregateProjection, type ScoringMode } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
 
 const PLANNER_TOP_K = 3
@@ -190,6 +190,11 @@ export interface PlannerRecommendationOptions {
   equipmentAdjustmentByHero?: Map<string, number>
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
+  /**
+   * 投影模式（约束②）；默认 'absolute-dps'。透传 scoreFormation。
+   * 'formation-buff' = 只阵型内聚合，不乘 baseDamage/levelCurve/外部加成（见 architecture.md「投影模式」）。
+   */
+  aggregateProjection?: AggregateProjection
 }
 
 /**
@@ -321,6 +326,7 @@ export function evaluateFormation(
     globalBuffMultiplier: options.globalBuffMultiplier,
     equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
     manualStackCount: options.manualStackCount,
+    aggregateProjection: options.aggregateProjection,
   })
 
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
@@ -477,6 +483,7 @@ export function buildPlannerRecommendation(
         globalBuffMultiplier: options.globalBuffMultiplier,
         equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
         manualStackCount: options.manualStackCount,
+        aggregateProjection: options.aggregateProjection,
       })
     },
   })
