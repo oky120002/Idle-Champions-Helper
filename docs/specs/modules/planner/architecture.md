@@ -49,7 +49,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 | 字段 | 状态 |
 |---|---|
 | `variants` / `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
-| signal 解锁等级 `required_level` | **phased**（raw + champion-details 有，`HeroAbilitySignal` 未带，待 build 烘进） |
+| signal 解锁等级 `required_level` | consumed（已烘进 `HeroAbilitySignal.requiredLevel`，消费侧 evaluatePlacementFit 按 supportLevel 过滤） |
 | `global-buffs.json`（patron perk 定义） | consumed（已落盘） |
 | loot-catalog / 专长定义 / 怪物·BUD 曲线 | consumed（组件在） |
 
@@ -65,7 +65,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 | patron 选择 / blessing·favor 量 | **phased**（适配层聚合成 `globalBuffMultiplier` 传入，非直接入参） |
 | `perHeroSpecialization` / feat·familiar / modron 状态 | **phased**（待接入评分） |
 
-**后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；等级解锁门控（基础数据侧 build 烘 unlock + 消费侧过滤）；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
+**后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
 
 ## 三层架构
 
