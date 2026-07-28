@@ -113,7 +113,7 @@ function describeFilter(filter: unknown): string {
  * 覆盖率报告判定为 supported 的 stackFunc 集合。
  * 必须与 placementFit.ts 的 STACK_COUNT_RESOLVERS keys 保持同步——
  * scorer 新增 stackFunc 支持时，此处不同步会让覆盖率误报 unsupported-composition。
- * 见 tests/unit/planner/scoringSupportSync.test.ts 守护测试。
+ * 见 src/domain/planner/scoringSupportSync.test.ts 守护测试。
  */
 export const SCORING_SUPPORTED_STACK_FUNCS = new Set<string>([
   'per_crusader',
@@ -126,13 +126,21 @@ export const SCORING_SUPPORTED_STACK_FUNCS = new Set<string>([
   'per_slot_distance_from_source',
 ])
 
-function classifyScoringSupport(signal: {
+export function classifyScoringSupport(signal: {
   applyManually?: boolean
+  stacksMultiply?: boolean | null
   stackFunc?: string | null
   amountFunc?: string | null
 }): ScoringSupportClassification {
   if (signal.applyManually) {
     return 'manual'
+  }
+
+  // stacksMultiply 短路：placementFit.resolveSignalMultiplier 对 stacksMultiply===true 先短路计分
+  // （manualStackCount 提供层数假设），忽略 stackFunc——此处须对称分类，否则 stacksMultiply
+  // 叠加未在白名单的 stackFunc（如 per_mithral_hall_stacks）会被误报 unsupported-composition（实际已计分）。
+  if (signal.stacksMultiply === true) {
+    return 'supported'
   }
 
   if (!signal.stackFunc) {

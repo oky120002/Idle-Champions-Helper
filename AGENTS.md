@@ -24,7 +24,7 @@
 ### 1.2 资源更新与仓库体积
 
 - 两层跳过：先比全局资源更新时间，再比单资源 `sourceGraphic`/`sourceVersion`/`path`/本地存在性；`data:official` 等全量流水线先比 definitions `updatedAt`，未变整批跳过下载、覆盖、重生成。单资源脚本有可持久化 manifest/collection 就必须基于它增量复用，禁止无条件清空目录后全量重下。
-- normalize/build 数据管线增量跳过：`normalizeDefinitionsSnapshot` 与 `buildModels` 对比 raw `current_time` 与产物 `updatedAt`、以及数据管线源码指纹 `pipelineHash`（`scripts/data` 下非 test 的 .ts + normalize/fetch/build 三入口的 sha256）——raw 未变且逻辑未变则跳过重生成；归一化/build 逻辑改动由 `pipelineHash` 自动检测（开发者改逻辑后无需手动 force，下次跑自动重跑）。`FORCE_DATA_REBUILD=1` 手动强制逃生口（覆盖「调整归一化逻辑必须强制」场景）。fetch 受限于「必须下载才知 current_time」，无法下载前跳过。
+- normalize/build 数据管线增量跳过：`normalizeDefinitionsSnapshot` 与 `buildModels` 对比 raw `current_time` 与产物 `updatedAt`、以及数据管线源码指纹 `pipelineHash`（`scripts/data` 下非 test 的 .ts + normalize/fetch/build 三入口的 sha256）——raw 未变且逻辑未变则跳过重生成。`pipelineHash` 自动检测 `scripts/data` + 三入口的源码改动（无需手动 force）；**但 `src/domain/abilities` 下的归一化逻辑**（`signalSemantics` 等，被 `effect-helpers` 导入为 build 依赖）**不在覆盖内**——改后须 `FORCE_DATA_REBUILD=1` 强制重建 hero-abilities.json，否则产物保持旧逻辑（见 `docs/runbooks/verify-formation-simulator.md`「归一化改动注意」）。`FORCE_DATA_REBUILD=1` 亦作通用逃生口。fetch 受限于「必须下载才知 current_time」，无法下载前跳过。
 - 控制进 git 的大体积/二进制/高频更新文件的数量、体积与改写频率；新增资源流程显式评估总体积、单文件大小、历史膨胀风险；非必要不新增资源副本、缓存镜像、重复格式导出。
 
 ### 1.3 数据源格式追溯

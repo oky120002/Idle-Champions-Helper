@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { evaluatePlacementFit } from './placementFit'
-import type { HeroAbilityProfile } from '../abilities/abilityModel'
+import type { HeroAbilityProfile, HeroAbilitySignal } from '../abilities/abilityModel'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
@@ -1241,6 +1241,45 @@ describe('placement fit', () => {
     expect(fit.scoreBreakdown[0]?.active).toBe(true)
   })
 
+  it('formationCountQualifier（count）与 targetQualifier（target）消费层不混用：carry 仅匹配 count 不匹配 target 时不计分', () => {
+    // 蔚善良榜样形态：count=good（formationCountQualifier），target=geneutral（targetQualifier）。
+    // 反例：carry 是 good 但非 geneutral → 会被数进 count（如作 support），但作 carry 不匹配 target → 不吃 buff。
+    // 验证消费层 countQualifiedHeroes 用 formationCountQualifier、carry 匹配用 targetQualifier，二者不混用
+    // （若混用，carry 匹配 count=good 就会误计分）。
+    // self-carry 隔离 position：heroDpsMultiplier 无 positionQualifier 默认 relation='self'
+    // （须 supportSlot===carrySlot），否则 position-mismatch 抢先致 inactive，测不到 target 门控。
+    const vi = createHero('vi', {
+      tags: ['good'],
+      carrySignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 100,
+          rawEffect: 'hero_dps_multiplier_mult,100',
+          source: 'official-parsed',
+          amountFunc: 'mult',
+          stackFunc: 'per_hero',
+          formationCountQualifier: { predicate: { op: 'tag', tag: 'good' } },
+          targetQualifier: { predicate: { op: 'tag', tag: 'geneutral' } },
+        },
+      ],
+    })
+
+    const fit = evaluatePlacementFit({
+      carryHero: vi,
+      carrySlotId: 's2',
+      supportHero: vi,
+      supportSlotId: 's2',
+      scenario,
+      placements: { s2: 'vi' },
+      heroesById: new Map([['vi', vi]]),
+    })
+
+    // vi 非 geneutral → targetQualifier 不匹配 → 不计分（即使匹配 formationCountQualifier=good）
+    expect(fit.totalMultiplier).toBe(1)
+    const entry = fit.scoreBreakdown.find((r) => r.rawEffect === 'hero_dps_multiplier_mult,100')
+    expect(entry?.active).toBe(false)
+  })
+
   it('dynamic-stack-multiply 按 manualStackCount 乘算堆叠（蔚出言不逊形态）', () => {
     // 对应蔚"出言不逊永不够"：stacksMultiply=true + amountFunc=null + 动态层数。
     // 层数来自数值表达式（unsupported），由 manualStackCount 提供假设值。
@@ -1268,6 +1307,119 @@ describe('placement fit', () => {
     // percentToMultiplier(100)=2 → 2^10 = 1024（乘算堆叠，非线性累加）
     expect(fit.totalMultiplier).toBe(1024)
     expect(fit.scoreBreakdown[0]?.active).toBe(true)
+  })
+
+  it('buff_upgrade 修饰叠层基数时按 base.value 折算（非聚合倍率，蔚善良榜样形态）', () => {
+    // 回归：bonusScaleOfSignal 指向叠层基数（per_hero mult, value=300）时，
+    // applySignalPercent 须按 base.value（per-stack 300）折算，而非 invertEffectMultiplier(聚合 4^N)。
+    // 真实数据：蔚 ed=12312 善良榜样 per_hero mult,300 + 多条 buff_upgrade,100/200,12312 修饰。
+    // 旧 bug：basePercent=(4^3-1)*100=6300 → modifier mult=64 → addPercent=6300 → total=(1+63)*64=4096（灾难高估）。
+    // 修复后：basePercent=base.value=300 → modifier mult=4 → addPercent=300 → total=(1+3)*64=256。
+    const goodExampleBase: HeroAbilitySignal = {
+      kind: 'heroDpsMultiplier',
+      value: 300,
+      rawEffect: 'hero_dps_multiplier_mult,300',
+      source: 'official-parsed',
+      amountFunc: 'mult',
+      stackFunc: 'per_hero',
+      formationCountQualifier: { predicate: { op: 'tag', tag: 'good' } },
+    }
+    const vi = createHero('vi', {
+      tags: ['good', 'geneutral'],
+      carrySignals: [
+        goodExampleBase,
+        {
+          kind: 'heroDpsMultiplier',
+          value: 100,
+          rawEffect: 'buff_upgrade,100,12312',
+          source: 'official-parsed',
+          bonusScaleOfSignal: goodExampleBase,
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['vi', vi],
+      ['g1', createHero('g1', { tags: ['good'] })],
+      ['g2', createHero('g2', { tags: ['good'] })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero: vi,
+      carrySlotId: 's2',
+      supportHero: vi,
+      supportSlotId: 's2',
+      scenario,
+      placements: { s1: 'g1', s2: 'vi', s3: 'g2' },
+      heroesById,
+    })
+
+    // 基数 4^3=64（3 名 good，multFactor）；修饰 addPercent=300 → (1+3)*64 = 256
+    expect(fit.totalMultiplier).toBeCloseTo(256, 6)
+  })
+
+  it('stacksMultiply 高 value + 大 manualStackCount 溢出时降级 warning 不计分（不崩溃）', () => {
+    // 默认 manualStackCount=1000 + value=200 → 3^1000 = Infinity → 溢出 warning，信号不计分。
+    // 真实数据 52 个 stacksMultiply signal value>103%（默认 1000 下溢出），须优雅降级非崩溃/非 NaN。
+    const supportHero = createHero('support', {
+      carrySignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 200,
+          rawEffect: 'buff_upgrade,200,1',
+          source: 'official-parsed',
+          stacksMultiply: true,
+        },
+      ],
+    })
+    const fit = evaluatePlacementFit({
+      carryHero: supportHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's2',
+      scenario,
+      manualStackCount: 1000,
+    })
+    expect(fit.totalMultiplier).toBe(1)
+    expect(fit.warnings.some((w) => w.includes('溢出'))).toBe(true)
+  })
+
+  it('stacksMultiply 信号依赖的基础 0 层（multiplier≤1）时不计分（与 applySignalPercent 对称守护）', () => {
+    // RV-A02-2：stacksMultiply 分支 bonusScaleOfSignal 依赖加 multiplier>1 守护——基础 0 层（如善良榜样
+    // 无 good 英雄 → 4^0=1）时出言不逊类 stacksMultiply 信号不应生效（基础无效应不放大）。
+    const dwarfBase: HeroAbilitySignal = {
+      kind: 'heroDpsMultiplier',
+      value: 100,
+      rawEffect: 'hero_dps_mult_per_hero,100',
+      source: 'official-parsed',
+      amountFunc: 'mult',
+      stackFunc: 'per_hero',
+      formationCountQualifier: { predicate: { op: 'tag', tag: 'dwarf' } },
+    }
+    const supportHero = createHero('support', {
+      carrySignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 10,
+          rawEffect: 'buff_upgrade,10,1',
+          source: 'official-parsed',
+          stacksMultiply: true,
+          bonusScaleOfSignal: dwarfBase,
+        },
+      ],
+    })
+    // 阵型无 dwarf → 基础 count=0 → multiplier=4^0=1 → stacksMultiply 信号不生效
+    const fit = evaluatePlacementFit({
+      carryHero: supportHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's2',
+      scenario,
+      placements: { s2: 'support' },
+      heroesById: new Map([['support', supportHero]]),
+      manualStackCount: 5,
+    })
+    expect(fit.totalMultiplier).toBe(1)
+    expect(fit.scoreBreakdown.find((r) => r.rawEffect === 'buff_upgrade,10,1')?.active).toBe(false)
   })
 
   it('manualStackCount 缺省时用 DEFAULT_MANUAL_STACK_COUNT(1000)', () => {

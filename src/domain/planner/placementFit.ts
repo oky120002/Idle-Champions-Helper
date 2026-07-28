@@ -99,7 +99,10 @@ function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number |
 }
 
 /**
- * 动态层数假设默认值（manualStackCount 缺省时用）。1000 ≈ area=100 冒险的出言不逊上限。
+ * 动态层数假设默认值（manualStackCount 缺省时用）。1000 ≈ area=100 冒险的出言不逊上限（0.33%/层）。
+ * 仅贴合低 value/层的 dynamic-stack-multiply signal（如出言不逊）；高 value（>103%）signal 在 1000 层下
+ * 溢出 → 降级 warning 不计分（见 resolveSignalMultiplier 溢出分支）。中 value（10–103%）signal 会得大但有限的乘数，
+ * 属全局单值假设的已知近似（不同 signal 层数源差异大，精确化依赖 per-signal 层数表达式解析，见 vi-95.md）。
  * UI 可手动覆盖（评估页/计划页）；见 champion-reference-verification.md。
  */
 export const DEFAULT_MANUAL_STACK_COUNT = 1000
@@ -107,7 +110,7 @@ export const DEFAULT_MANUAL_STACK_COUNT = 1000
 /**
  * 每种 stackFunc 对应的计数来源 + warning 用的上下文标签。
  * keys 即 scorer 支持的 stackFunc 集合——signal-coverage 的覆盖率报告必须与此同步，
- * 否则统计失真（见 tests/unit/planner/scoringSupportSync.test.ts 守护）。
+ * 否则统计失真（见 src/domain/planner/scoringSupportSync.test.ts 守护）。
  */
 export const STACK_COUNT_RESOLVERS: Record<string, {
   count: (input: EvaluatePlacementFitInput, signal: HeroAbilitySignal) => number | null
@@ -144,11 +147,13 @@ function resolveSignalMultiplier(
     if (!Number.isFinite(mult)) {
       return { ok: false, warning: `${signal.rawEffect} 乘算堆叠溢出，当前不计分。` }
     }
-    // bonus-scale-linkage：联动 signal 只在基础 signal 可计分时生效（依赖检查，不卷入数值）
+    // bonus-scale-linkage：联动 signal 只在基础 signal 可计分时生效（依赖检查，不卷入数值）。
+    // multiplier>1 守护与 applySignalPercent 对称——基础 0 层（value^0=1，如善良榜样无 good 英雄）
+    // 时联动 signal 不生效（基础无效应不放大），防 future 英雄 stacksMultiply+bonusScaleOfSignal 触发。
     if (signal.bonusScaleOfSignal) {
       const dep = resolveSignalMultiplier(input, signal.bonusScaleOfSignal)
-      if (!dep.ok) {
-        return { ok: false, warning: `${signal.rawEffect} 依赖的基础增益尚未稳定计分，当前不计分。` }
+      if (!dep.ok || dep.multiplier <= 1) {
+        return { ok: false, warning: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计分。` }
       }
     }
     return { ok: true, multiplier: mult }
@@ -165,21 +170,19 @@ function resolveSignalMultiplier(
     }
 
     const baseMultiplierResult = resolveSignalMultiplier(input, signal.bonusScaleOfSignal)
-    if (!baseMultiplierResult.ok) {
+    // 依赖基础须可解析且当前生效（multiplier>1）。multiplier<=1 覆盖叠层基数 0 层（value^0=1）
+    // 与 value<=0 基础——此时修饰不应贡献（避免无层数时修饰仍加成）。
+    if (!baseMultiplierResult.ok || baseMultiplierResult.multiplier <= 1) {
       return {
         ok: false,
-        warning: `${signal.rawEffect} 依赖的基础增益尚未稳定计分，当前不计分。`,
+        warning: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计分。`,
       }
     }
 
-    const basePercent = invertEffectMultiplier(baseMultiplierResult.multiplier)
-    if (basePercent === null) {
-      return {
-        ok: false,
-        warning: `${signal.rawEffect} 依赖的基础增益倍率非法，当前不计分。`,
-      }
-    }
-
+    // buff_upgrade 修饰按基础 effect 的 per-stack 百分比（base.value）折算，非聚合倍率——
+    // 叠层基数（如蔚善良榜样 4^N）若用 invertEffectMultiplier(聚合倍率) 会得到 (4^N-1)*100 巨数，
+    // 使 +100% 修饰被算成 ×4^N（灾难高估）。非叠层基数下 base.value 与旧 invertEffectMultiplier(resolved) 等价。
+    const basePercent = signal.bonusScaleOfSignal.value
     return { ok: true, multiplier: percentToMultiplier((basePercent * resolvedPercent) / 100) }
   }
 

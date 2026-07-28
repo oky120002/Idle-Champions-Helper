@@ -148,6 +148,53 @@ describe('champion reference verification - 蔚(95)', () => {
     // 1.0033^1930 ≈ 577（0.33%/层 是游戏取整显示，实际略低；30% 容差内对照）
     expectWithinTolerance(entry?.multiplier ?? 0, check.expectedMultiplier, TOLERANCE)
   })
+
+  it('hero_dps pool 聚合：善良榜样 × 出言不逊 同 pool multFactor 累乘', () => {
+    // pool 聚合正确性：两条 signal 均 heroDpsMultiplier（damage:hero 同 pool），
+    // amountFunc=mult / stacksMultiply → 均进 multFactor 累乘（非 addPercent 相加）。
+    // totalMultiplier = 16384 × ~576 ≈ 9.44e6；容差由出言不逊层数近似决定（善良榜样 4^7 精确）。
+    const { heroes, heroesById, placements } = buildViFormation()
+    const fit = evaluatePlacementFit({
+      carryHero: heroes[0]!,
+      carrySlotId: 's1',
+      supportHero: heroes[0]!,
+      supportSlotId: 's1',
+      scenario,
+      placements,
+      heroesById,
+      manualStackCount: vi95ReferenceData.expected.manualStackCount,
+    })
+    expectWithinTolerance(fit.totalMultiplier, 16384 * 576, TOLERANCE)
+  })
+})
+
+describe('参照校准 expected 值真实性（非凑数）', () => {
+  it('蔚 expectedMultiplier 由机制字段算术推导（perStackPercent / formationSize / manualStackCount）', () => {
+    // 反向验证：expectedMultiplier 不是任意值，而是 mechanics 字段经公式推导。
+    // 与游戏显示交叉（vi-95.md）：善良榜样叠层加成 1.64e06%≈16384；出言不逊 57,639%≈576。
+    const ref = vi95ReferenceData
+
+    // 善良榜样：perStackPercent=300 + amountFunc=mult + formationSize=7 → (1+300/100)^7 = 4^7 = 16384
+    const goodExample = ref.abilities.find((a) => a.rawEffect === 'hero_dps_multiplier_mult,300')!
+    const goodCheck = ref.expected.multiplierChecks.find((c) => c.rawEffect === goodExample.rawEffect)!
+    expect(goodExample.mechanics.perStackPercent).toBe(300)
+    expect(goodExample.mechanics.amountFunc).toBe('mult')
+    expect(goodCheck.expectedMultiplier).toBeCloseTo(
+      (1 + (goodExample.mechanics.perStackPercent ?? 0) / 100) ** ref.scenario.formationSize,
+      0,
+    )
+
+    // 出言不逊：perStackPercent=0.33 + stacksMultiply + manualStackCount=1930 → 1.0033^1930
+    const sass = ref.abilities.find((a) => a.rawEffect === 'buff_upgrade,0.33,12312')!
+    const sassCheck = ref.expected.multiplierChecks.find((c) => c.rawEffect === sass.rawEffect)!
+    expect(sass.mechanics.perStackPercent).toBe(0.33)
+    expect(sass.mechanics.stacksMultiply).toBe(true)
+    expectWithinTolerance(
+      sassCheck.expectedMultiplier,
+      (1 + (sass.mechanics.perStackPercent ?? 0) / 100) ** ref.expected.manualStackCount,
+      TOLERANCE,
+    )
+  })
 })
 
 describe('抽象阈值守护（dps-mechanic-abstraction.md）', () => {
@@ -180,5 +227,21 @@ describe('关联一致性（mechanicId 三处一致）', () => {
       }
     }
     expect(unknown, `reference 出现未注册的 mechanicId：${unknown.join(', ')}`).toEqual([])
+  })
+
+  it('注册表每个机制 id 在代码中以 `// 机制: <id>` 注释存在（三处一致·代码注释 leg）', () => {
+    // 三处一致第三 leg：注册表 id 必须在 placementFit.ts / effect-helpers.ts 的机制注释中出现。
+    // 补齐 reference→注册表（上一测试）之外的代码注释 leg；新增机制漏注释即 fail。
+    const codeSource = [
+      readFileSync(path.resolve(__dirname, '../placementFit.ts'), 'utf8'),
+      readFileSync(path.resolve(__dirname, '../../../../scripts/data/effect-helpers.ts'), 'utf8'),
+    ].join('\n')
+    const mechanismCommentLines = codeSource
+      .split('\n')
+      .filter((line) => line.includes('机制:'))
+    const missing = [...registryIds].filter(
+      (id) => !mechanismCommentLines.some((line) => line.includes(id)),
+    )
+    expect(missing, `注册表机制 id 在代码中缺少 // 机制: 注释：${missing.join(', ')}`).toEqual([])
   })
 })

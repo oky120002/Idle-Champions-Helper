@@ -98,4 +98,30 @@ repair: rebuild
     - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
     - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
 
+- userDataPage.syncFlow 「本地开发快照读取失败」测试偶发超时（5016ms > 5000ms 默认） <!-- auto-todo:id=atd_a4f1c2e7b8 -->
+  - 记录时间: `2026-07-28T02:02:00+08:00`
+  - 类型: flaky
+  - 位置: `src/pages/user-data/userDataPage.syncFlow.test.tsx`
+  - 备注: planner DPS 审计（A04）质量门验证时发现：`npm run test:run` 偶发 1 failed，失败用例为该 sync flow 测试（5016ms 超 vitest 默认 5000ms），与 planner/DPS 改动无关（user-data 同步流）。系统负载高时（typecheck+vitest 串行，duration 66s+）触发；轻载（62s）通过。
+    - 非本次审计引入（审计未触 user-data 模块）。
+    - 处置：低优先级；该测试本身是异步同步流偏慢，可考虑单独调高 timeout 或拆分；不影响 planner 评分正确性。
+
+- pipelineHash 不覆盖 src/domain/abilities build 依赖（改归一化须手动 FORCE_DATA_REBUILD） <!-- auto-todo:id=atd_b7e2d9f1c4 -->
+  - 记录时间: `2026-07-28T02:32:00+08:00`
+  - 类型: enhancement
+  - 位置: `scripts/data/resource-sync-policy.ts:181`（PIPELINE_HASH_DIRS = ['scripts/data']）
+  - 备注: planner DPS 审计（A11 runbooks 可执行性）发现：pipelineHash 仅哈希 scripts/data + normalize/fetch/build 三入口；effect-helpers（scripts/data）导入 src/domain/abilities（signalSemantics/heroPredicate/abilityModel）与 src/domain/effects（effect-string）为 build 依赖，但这些文件不在哈希覆盖内。改这些文件后若不 FORCE_DATA_REBUILD=1，hero-abilities.json 保持旧逻辑（静默 stale build）。
+    - runbook（verify-formation-simulator.md「归一化改动注意」）+ AGENTS.md §1.2 + resource-sync-policy.test.ts 注释均已诚实标注此局限与 workaround（A11 修正了原过宽自述）。
+    - 根因修复选项：PIPELINE_HASH_DIRS 加 `src/domain/abilities` + `src/domain/effects`（粗粒度，保守不漏，但 abilities 运行时改动也触发数据重建 ~10-30s，over-trigger）；或精确列 build 依赖文件（脆弱，transitive deps 易漏）。权衡未定，暂不做。
+    - 处置：低优先级；当前 workaround（FORCE_DATA_REBUILD）已文档化且可执行；扩展覆盖待 over-trigger 代价 vs stale-build 风险的产品权衡。
+
+- heroDpsMultiplier legacy filter→count 潜在 target 丢失（119 signal target=null） <!-- auto-todo:id=atd_c8f3a2b1d9 -->
+  - 记录时间: `2026-07-28T08:28:00+08:00`
+  - 类型: investigation
+  - 位置: `src/domain/abilities/signalSemantics.ts:246`（attachSignalSemantics useFormationCountQualifier 分支）
+  - 备注: planner DPS 审计 RV-A01-1 切入点 2 发现：FQ=true TQ=false（filter→count，无显式 count 源）的 signal 中，329 globalDpsMultiplier（全局 buff，target=null 正确）+ 7 globalGoldMultiplier，但 **119 heroDpsMultiplier + 3 heroHealthMultiplier** target=null。hero 作用域 buff target=null 意味着 buff 任意 carry（按 filter 计数）；若游戏语义是「filter 英雄吃 buff」（如 Bruenor Rally 仅 buff dwarf），则 filter 被误作 count、target 丢失 → 过度 buff。
+    - 蔚善良榜样（有 stack_func_data.tag）已由 937e68c4 hasExplicitCountQualifier 正确分离；此 119 是**无 stack_func_data** 的 legacy 路径（filter→count，signalSemantics.ts:246 注释明确记载为设计近似）。
+    - 确认需 per-effect 游戏语义核查（filter 是 count 源还是 target）——当前审计未逐一确认，不视为已确认缺陷。
+    - 处置：低优先级；需对 119 heroDpsMultiplier 抽样核对 raw effect_string + 游戏描述；若确认反例，扩 hasExplicitCountQualifier 逻辑或补 target 推断。
+
 <!-- auto-todo:end -->
