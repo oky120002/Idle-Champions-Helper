@@ -1,39 +1,36 @@
-# 英雄 DPS 机制参照校准规范
+# 英雄实测参照：统一数据口径
 
-英雄参照测试框架：用游戏表现层机制反推、校准模拟器评分。一英雄一份参照，自动进测试流，不手写注册。
+用户游戏内观察到的英雄数据是计算器的 **oracle**——用真实英雄/阵型/等级跑计算器，对得上才算对，对不上就是计算器缺口（须修或在 architecture.md「后续目标」登记）。一英雄一份 `<heroId>ReferenceData.ts`（`satisfies ChampionReference`），含一份或多份观测快照。无论「机制倍率参照」（蔚式）还是「伤害快照参照」（明斯克/瓦罗式），都进**同一 schema**，杜绝每批入库造新口径。
 
 ## 数据结构（`references/championReferenceTypes.ts`）
 
-`ChampionReference` 关键字段：
+`ChampionReference`（hero 级）：`heroId / name / source:'game-observation' / researchDoc / rawDescription / snapshots[]`。
 
-- `heroId` / `name` / `capturedAt` / `source: 'game-observation'`
-- `researchDoc`：指向 `docs/research/gameplay/champion-mechanics/<heroId>.md` 完整调研（双向关联）
-- `scenario.formationHeroIds`：对照测试构造阵型用；数据缺口用 `mock` 字段标注，用户补实测后移除
-- `abilities[].mechanicIds`：关联键，必须三处一致（见 `dps-mechanic-abstraction.md`）
-- `abilities[].mechanics`：机制参数（通用字段 `perStackPercent` / `amountFunc` / `stackFunc` / `stacksMultiply` / `formationCountQualifier` / `stackMaxExpr`，非英雄特化）
-- `expected.manualStackCount`：对照游戏实测的层数（dynamic-stack-multiply 用）
-- `expected.multiplierChecks[]`：逐项对照——`rawEffect` 匹配 `evaluatePlacementFit.scoreBreakdown`，`expectedMultiplier` 对照计算值
-- `expected.calibrationTarget`：游戏观察的 pool 级参考值（人工核对用，当前不作为自动化断言，见校准口径）
-- `mock`：字段路径 → mock 说明
+`ChampionReferenceSnapshot`（一份观测，字段按数据实际填，除 id/capturedAt/context 全可选）：
 
-## 校准口径
+- `id` / `capturedAt`（ISO date，入库时间；同英雄多快照取最接近当前）
+- `context`：`level? / area? / highestAvailableArea? / map? / patron? / formationSize / formationHeroIds / positions? / formationId? / note?`
+- `attacks?`：`{ base?: ObservedAttack, ultimate?: ObservedAttack }`——游戏显示伤害原值（伤害快照用）
+- `incomingBuffs?` / `providedBuffs?`：`ObservedBuff { nameZh, fromZh, source: 'blessing'|'patron'|'hero'|'self', effect, note? }`——source 分类决定单英雄隔离测试剔除交叉 buff（source:'hero'）
+- `abilities?` / `modifiers?`：蔚式机制分析（`mechanicIds` / `mechanics` / `gameDisplay`）
+- `expected?`：`{ manualStackCount?, multiplierChecks?, calibrationTarget? }`——机制倍率断言
+- `abilityScores?` / `equipment?`：hero-static，记于最完整快照供核查
+- `mock?`：数据缺口标注（字段路径 → 说明），用户补实测后移除
 
-- **逐项对照**（`multiplierChecks`，**自动化**）：`scoreBreakdown` 按 `rawEffect` 匹配出每条 signal 的 multiplier，偏差 < 30% 相对容差（游戏显示值如 `0.33%/层` 为取整近似，严格相等不现实）。由 `championReferenceVerification.test.ts` 守护。
-- **pool 对照**（`calibrationTarget`，**人工参考值，未自动化**）：记录用户游戏观察的 `hero_dps poolMultiplier`（如蔚「叠层系数」2.92e09%）与推导公式（`16384×576×1.2×2.578≈2.92e7`）。**当前不作为断言**——pool 级自动化对照受阻于：(a) 参照阵型 mock 不含专长/装备修饰信号；(b) `buff_upgrade` 修饰组合语义（代码按 `base.value` 折算进 addPercent vs 游戏可能独立乘）尚为近似（见 `vi-95.md`「推导与偏差」）。待修饰组合语义明确 + mock 补全后落地为断言。
-- **不对照绝对 DPS**：`baseDamage` 未校准，绝对 DPS 与游戏完全一致需 BUD 校准联动（`bud-verification` 范围）。对照止于加成系数倍率。
-- **偏差 ≥ 30% fail**（仅逐项对照）：测试 fail 并输出偏差报告（英雄/机制/公式/计算值/实测值/偏差%），不静默 warning。智能体须修正 scoring/归一化，或在 research 调研 md 标注合理根因后放宽断言。
+多英雄阵型：各英雄快照共享 `context.formationId` + 各自 `positions`，测试按 formationId 跨文件聚合。单英雄快照 `formationSize=1`。
 
-## 测试四组（`references/championReferenceVerification.test.ts`）
+## 校准口径（与 architecture.md「投影模式」一致）
 
-1. **真实数据端到端对照**：加载 built `hero-abilities.json` 的真实英雄 signal（归一化产物），构造对照阵型，按 `multiplierChecks` 逐项对照 `evaluatePlacementFit.scoreBreakdown`。手搓 signal 会绕过归一化；真实数据端到端验证 归一化→评分 全链路，防 `amountFunc`/`stackFunc`/`targetQualifier`/`positionQualifier`/`bonusScaleOfSignal` 等字段回归（`smoke.test.ts` 只验 signal 形状不验 multiplier）。
-2. **expected 值自洽**：`expectedMultiplier` 由 `mechanics` 字段经公式推导（非任意值），与游戏显示交叉。
-3. **抽象阈值规模守护**：`dps-mechanics.md` 注册表机制数 ≤ 10（>10 触发策略注册表升级，见 `dps-mechanic-abstraction.md`）。
-4. **关联一致性（mechanicId 三处一致）**：reference 出现的 `mechanicId` 必须在注册表（reference leg）；注册表每个 id 必须在代码 `// 机制: <id>` 注释存在（代码注释 leg）。
+- **formation-buff 模式（自动化，CI 门控）**：`objectiveValue` = 阵型内 signal 聚合（damagePool×crit×vuln）。断言交叉位置 buff 命中、计数、乘算堆叠、signal 齐全——确定性结构正确性，不依赖绝对校准。机制倍率逐项对照（`multiplierChecks`）偏差 < 30% 相对容差（游戏显示取整近似）。
+- **absolute-dps 模式（记录不门控）**：`objectiveValue` = baseDamage×levelCurve×全因子。绝对量未校准（外部加成未建模 + 技能无等级门控 + cost 曲线 ≠ 伤害曲线），当前与实测差几十个数量级；`damageReferenceVerification.test.ts` 度量并打印 log10 偏差作 BUD 校准回归基线，驱动收敛，不阻塞 CI。绝对量对照待 architecture.md「后续目标」补全后落地为断言。
 
-> 对照阵型的 carry/support 须按游戏语义构造：若英雄是 buff 提供者（support）非接受者（如蔚善良榜样 target=geneutral，蔚自身非 geneutral），carry 须另选匹配 targetQualifier 的英雄，不能让提供者自己当 carry。
+## 测试两组（`references/*.test.ts`，`import.meta.glob` 真自动发现）
 
-> 孤儿机制预警（扫 `hero-abilities.json` 全量 signal 统计每机制实际使用英雄数）为 `dps-mechanic-abstraction.md` 阈值 2/3 的设计准则，尚未自动化；reference 当前仅蔚(95)一英雄，新增 reference 时人工确认机制通用性。
+1. `championReferenceVerification.test.ts`：机制倍率端到端（蔚，built hero-abilities.json → evaluatePlacementFit → `multiplierChecks`）+ expected 自洽 + 抽象阈值 + mechanicId 三处一致。
+2. `damageReferenceVerification.test.ts`：伤害快照端到端（明斯克/瓦罗 + 阵型），formation-buff 断言（位置 buff 命中、跨英雄加成生效）+ absolute-dps 偏差度量。
+
+新增 `*ReferenceData.ts` 文件零注册进流（glob 自动）；每英雄配套 `docs/research/gameplay/champion-mechanics/<heroId>.md`（双向关联）。
 
 ## 维护
 
-新增/修正英雄参照走 `runbooks/add-champion-reference.md`（智能体维护工作流）。
+入库工作流见 `docs/runbooks/add-champion-reference.md`（冻结主入口）；机制注册表见 `dps-mechanics.md`；绝对值校准见 `docs/research/data/planner/bud-calibration.md`。

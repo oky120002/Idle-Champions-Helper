@@ -102,7 +102,7 @@ function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number |
  * 动态层数假设默认值（manualStackCount 缺省时用）。1000 ≈ area=100 冒险的出言不逊上限（0.33%/层）。
  * 仅贴合低 value/层的 dynamic-stack-multiply signal（如出言不逊）；高 value（>103%）signal 在 1000 层下
  * 溢出 → 降级 warning 不计分（见 resolveSignalMultiplier 溢出分支）。中 value（10–103%）signal 会得大但有限的乘数，
- * 属全局单值假设的已知近似（不同 signal 层数源差异大，精确化依赖 per-signal 层数表达式解析，见 vi-95.md）。
+ * 属全局单值假设的已知近似（不同 signal 层数源差异大，精确化依赖 per-signal 层数表达式解析，见 095-vi.md）。
  * UI 可手动覆盖（评估页/计划页）；见 champion-reference-verification.md。
  */
 export const DEFAULT_MANUAL_STACK_COUNT = 1000
