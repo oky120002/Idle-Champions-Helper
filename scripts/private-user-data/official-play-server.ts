@@ -1,4 +1,5 @@
-const OFFICIAL_PLAY_SERVER_HOSTNAME_PATTERN = /^ps\d+\.idlechampions\.com$/i
+// 主机名曾为 psNN（纯数字），现演进为 ps<字母数字>（如 pslt4）。仍限定 idlechampions.com 域 + ps 前缀。
+const OFFICIAL_PLAY_SERVER_HOSTNAME_PATTERN = /^ps[a-z0-9]+\.idlechampions\.com$/i
 const OFFICIAL_PLAY_SERVER_PATHNAME = '/~idledragons/'
 
 const OFFICIAL_PLAY_SERVER_NUMBERS: readonly number[] = [28, 29, 30, 27]
