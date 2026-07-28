@@ -300,6 +300,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
     schemaVersion: 1,
     ownedHeroes: userDetails.ownedHeroes,
     importedFormationSaves: formationSaves.formations,
+    campaigns: campaignDetails.campaigns,
     updatedAt: input.updatedAt ?? new Date().toISOString(),
     legendaryLevelCap: toNumberValue(userDetailsPayload.details?.legendary_level_cap, 20),
     warnings: [
