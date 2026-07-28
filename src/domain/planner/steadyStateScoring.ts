@@ -30,7 +30,7 @@ export type AggregateProjection = 'absolute-dps' | 'formation-buff'
 
 // 无 profile（用户未导入存档）或英雄不在 ownedHeroes 时 carryLevel 回退 1。
 // 此处 levelCurve = rate^1 = 英雄自身 costCurve rate（约 1.05–1.1），carryDps 仍含英雄间
-// 增长率差异但无法反映高等级 scale；属 MVP 近似（见 bud-verification.md），
+// 增长率差异但无法反映高等级 scale；属 MVP 近似（见 docs/research/data/planner/bud-calibration.md），
 // 精确化依赖 profile heroLevels + 官方 DPS 增长曲线。
 const DEFAULT_CARRY_LEVEL = 1
 
