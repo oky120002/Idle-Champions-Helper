@@ -41,6 +41,8 @@ interface EffectEntry {
   signalPreset: HeroAbilitySignal | null
   bucketOverride: SignalBucket | null
   upgradePayloadsById: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
+  /** upgrade 解锁等级；非 upgrade 源 = null。消费侧 evaluatePlacementFit 按 supportLevel 过滤。 */
+  requiredLevel: number | null
 }
 
 // normalizeEffectSignal 接收的 metadata：所有字段可选（默认 {}），
@@ -187,6 +189,8 @@ type EffectEntryInit = {
   signalPreset?: HeroAbilitySignal | null
   bucketOverride?: SignalBucket | null
   upgradePayloadsById?: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
+  /** upgrade 解锁等级（ChampionUpgrade.requiredLevel）；非 upgrade 源（loot/feat/legendary）= null。 */
+  requiredLevel?: number | null
 }
 
 function buildEffectEntry(init: EffectEntryInit): EffectEntry {
@@ -200,6 +204,7 @@ function buildEffectEntry(init: EffectEntryInit): EffectEntry {
     signalPreset: init.signalPreset ?? null,
     bucketOverride: init.bucketOverride ?? null,
     upgradePayloadsById: init.upgradePayloadsById ?? null,
+    requiredLevel: init.requiredLevel ?? null,
   }
 }
 
@@ -489,7 +494,7 @@ function resolveEntrySignal(entry: EffectEntry): EffectSignalResult | null {
 
   return {
     ok: true,
-    signal: attachSignalSemantics(parsed.signal, entry.effect),
+    signal: { ...attachSignalSemantics(parsed.signal, entry.effect), requiredLevel: entry.requiredLevel },
     bucket: parsed.bucket,
   }
 }
@@ -527,6 +532,14 @@ function collectRawEffectEntries(detail: unknown): {
       staticDpsMults.set(upgradeId, staticDpsMult)
     }
 
+    // 等级解锁门控：upgrade 的 required_level（normalize 已提取为 requiredLevel 驼峰）烘进 EffectEntry，
+    // 下游 resolveEntrySignal 写进 signal.requiredLevel，消费侧按 supportLevel 过滤。
+    const upgradeRequiredLevelRaw = upgrade.requiredLevel
+    const upgradeRequiredLevel = typeof upgradeRequiredLevelRaw === 'number'
+      && Number.isFinite(upgradeRequiredLevelRaw)
+      ? upgradeRequiredLevelRaw
+      : null
+
     if (typeof upgrade.effectReference === 'string') {
       const effectPayload = parseEffectPayload(upgrade.effectReference)
       const entry = buildEffectEntry({
@@ -538,6 +551,7 @@ function collectRawEffectEntries(detail: unknown): {
         effectPayloads: [],
         sourceBucket: 'upgrade',
         upgradeId,
+        requiredLevel: upgradeRequiredLevel,
       })
       effectEntries.push(entry)
       upgradeEntries.push(entry)
@@ -569,6 +583,7 @@ function collectRawEffectEntries(detail: unknown): {
             effectPayloads,
             sourceBucket: 'upgrade-effect-key',
             upgradeId,
+            requiredLevel: upgradeRequiredLevel,
           })
           effectEntries.push(entry)
           upgradeEntries.push(entry)
