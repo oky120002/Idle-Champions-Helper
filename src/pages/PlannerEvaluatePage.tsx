@@ -24,6 +24,7 @@ import {
   removeEvaluatePlacement,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
+import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -50,6 +51,7 @@ export function PlannerEvaluatePage() {
   const {
     collections,
     profileSnapshot,
+    lootCatalog,
     championById,
     selectedVariantId,
     selectVariantId: selectVariantIdBase,
@@ -79,9 +81,16 @@ export function PlannerEvaluatePage() {
   // runner 单例：浏览器用 worker 卸载评分（拖拽重算不冻 UI）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
   useEffect(() => () => runner.dispose(), [runner])
+  // 装备加成（per-hero map）：未导入存档 → 空 map → 无加成（向后兼容）。
+  const equipmentAdjustmentByHero = useMemo(
+    () => profileSnapshot && lootCatalog.length > 0
+      ? computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
+      : new Map<string, number>(),
+    [profileSnapshot, lootCatalog],
+  )
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount }),
-    [candidateMode, scoringMode, manualStackCount],
+    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero }),
+    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -126,6 +135,7 @@ export function PlannerEvaluatePage() {
           candidateMode,
           lockedSlots,
           manualStackCount,
+          equipmentAdjustmentByHero,
         },
       })
       if (recommendation.result) {

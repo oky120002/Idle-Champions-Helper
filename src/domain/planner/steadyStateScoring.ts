@@ -49,7 +49,7 @@ export interface ScoringInput {
   /**
    * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
    * 把理论 loot 基线缩放到玩家实际装备；默认无（=1，保持理论基线）。
-   * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustment 解析后传入。
+   * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustmentByHero 解析后传入。
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */

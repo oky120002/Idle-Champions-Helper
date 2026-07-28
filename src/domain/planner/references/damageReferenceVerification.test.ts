@@ -18,6 +18,7 @@ import type { ChampionReference, ChampionReferenceSnapshot } from './championRef
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
 import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
 import { scoreFormation } from '../steadyStateScoring'
+import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../simulator/equipmentMult'
 import { evaluatePlacementFit } from '../placementFit'
 
 // 真自动发现：新 *ReferenceData.ts 文件零注册进流。
@@ -247,5 +248,40 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
       expect(devWithBuff, `${snapId} 含外部加成应收敛`).toBeGreaterThan(devNoBuff)
       expect(Number.isFinite(devWithBuff)).toBe(true)
     }
+  })
+
+  it('明斯克 base attack 装备（slot1/2 hero_dps enchant 缩放）收敛 absolute-dps 偏差', () => {
+    const lootCatalog = JSON.parse(readFileSync(path.join(dataDir, 'loot-catalog.json'), 'utf8')).items as LootCatalogEntry[]
+    // 明斯克 owned loot（userdetails 实测 slot1/2 r4 enchant 734/709，对应参照 +1378%/+1343%）
+    const ownedHeroes = [{
+      heroId: '7',
+      lootBySlot: { '1': { rarity: 4, enchant: 734 }, '2': { rarity: 4, enchant: 709 } },
+    }]
+    const equipmentAdjustmentByHero = computeEquipmentAdjustmentByHero(ownedHeroes, lootCatalog)
+    const eqMult = equipmentAdjustmentByHero.get('7') ?? 1
+
+    const minsc = loadBuiltHero('7')
+    const scenario = singleSlotScenario()
+    const minscRef = referencesByHeroId.get('7')!
+    const snap = minscRef.snapshots.find((s) => s.id === 'minsc-l1')!
+    const globalBuff = aggregateGlobalBuffMultiplier(snap)
+    const baseInput = {
+      placements: { s1: '7' },
+      heroesById: new Map([['7', minsc]]),
+      scenario,
+      heroLevels: new Map([['7', 1]]),
+      aggregateProjection: 'absolute-dps' as const,
+    }
+    const calcWithBuff = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff }).objectiveValue
+    const calcWithEq = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff, equipmentAdjustmentByHero }).objectiveValue
+    const obs = new Decimal('1.25e45')
+    const devBuff = calcWithBuff.dividedBy(obs).abs().log10().toNumber()
+    const devEq = calcWithEq.dividedBy(obs).abs().log10().toNumber()
+    process.stdout.write(
+      `\n[BUD-gap] 明斯克装备: equipmentMult=${eqMult.toFixed(1)} (slot1+2 hero_dps enchant 缩放) | 含外部加成 log10=${devBuff.toFixed(1)} → +装备 log10=${devEq.toFixed(1)}\n`,
+    )
+    // slot1+2 hero_dps base350 enchant 缩放 → ×28.2；装备使 calc 变大 → 偏差往 0 收敛。
+    expect(eqMult).toBeGreaterThan(20)
+    expect(devEq).toBeGreaterThan(devBuff)
   })
 })

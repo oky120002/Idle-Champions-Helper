@@ -184,7 +184,7 @@ export interface PlannerRecommendationOptions {
   globalBuffMultiplier?: number
   /**
    * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
-   * 由调用方从 `loot-catalog.json` + owned loot 经 computeEquipmentAdjustment 解析后传入；
+   * 由调用方从 `loot-catalog.json` + profileSnapshot.ownedHeroes[].lootBySlot 经 computeEquipmentAdjustmentByHero 算后传入；
    * 默认无（=1，保持 理论 loot 基线）。UI 接入（owned 装备读取）在
    */
   equipmentAdjustmentByHero?: Map<string, number>
