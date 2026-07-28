@@ -44,7 +44,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 偏差主因 ~10^33 全局放大的来源（`tmp/idle-champions-api/definitions-*-lang-1-source.json` 深挖）：
 
 - **favor 不是乘数源**：`patron_defines` 的 currency（Ruby Coin / Symbol of Vajra 等）是购买 blessing 的货币；`game_rule_defines` 68 条无 favor→伤害公式。favor 本身不给全局乘数。
-- **Global Blessing 系统（钥匙）**：`effect_defines:2718`「Increases the damage of all Champions by $amount% **for each Global Blessing** you have」。玩家拥有的 global blessing（克兰沃/托姆/扎瑞尔等"恩赐祝福"，跨 patron）聚合 → 全局乘数。明斯克 incomingBuffs ×500（关注核心/普通种族/以身作则/铁胃）是其拥有的部分 blessing；玩家通常拥有更多，累积放大（10^30 量级）。
+- **Global Blessing 系统**：`effect_defines` **id=2718**（数组 index=2684）原文「Increases the damage of all Champions by $amount% for each Global Blessing you have unlocked (across all campaigns), **stacking additively**」，`post_process_expr: "num_global_blessings"`——这是某英雄 ability 消费 blessing 计数的 effect，**不定义单个 blessing 乘数**。blessing 是 per-campaign deity 系统（克兰沃=Kelemvor/Tomb of Annihilation、托姆=Torm/Sword Coast，用 Divine Favor 购买），与 patron perk 是两套系统。明斯克 incomingBuffs ×500 = 关注核心(Kelemvor)×5 · 普通种族(Torm)×16 · 以身作则(**Zariel patron perk** id=36)×2.5 · 铁胃(**Vajra patron perk** id=16)×2.5（乘法语义）。
 - **modron**：`modron_tile_defines`（326 条）是阵型布局组件（无 effect）；`modron_core_defines` 只有 grid 配置。modron 的乘数经触发 buff（`effect-reference` 的 `modron_*`）实现，建模需解析核心配置 → buff 链（复杂，单独工程）。
 - **buff_defines** damage 相关仅 10 条（药水/Ad/MixPlay，临时 buff，非持久全局放大）。
 
@@ -53,7 +53,11 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 1. **blessing 接入（大头）**：`UserProfileSnapshot` 加 `blessings` 字段（`userProfileNormalizer:254-255` 已保留 `normalizeNumberRecord(c.blessings)`，但未进最终 snapshot）+ 归一化 global blessing 乘数定义（raw `effect_defines` / `patron_perk_defines` 的 global_dps blessing）+ 适配层聚合进 `globalBuffMultiplier`。
 2. **modron 接入**：核心配置 → buff 链解析（复杂，单独工程）。
 
-结论：absolute-dps 偏差收敛 = blessing + modron 建模。两者均是大工程（数据接入 + 定义归一化 + 适配层），单 session 无法全完，需多轮推进。
+结论（2026-07-28 用户数据验证修正）：blessing 方向**数据死路**——定义（raw 无 blessing 树）+ 拥有数据（getcampaigndetails 无 blessings 字段、getuserdetails 仅 UI 字段 `main_ui_blessings_button_order`）3 端点确认缺失；b01f33a1 的 `campaigns[].blessings` 通道接的是空数据。blessing 量级（明斯克 2 条 ×80=10^1.9）+ patron perk actual（userdetails 44 perk，×55.7=10^1.75）都远不够 10^33 偏差。
+
+**10^33 真凶**：参照数据 incomingBuffs 严重不完整——明斯克 l1 单英雄 obs 10^45 需 10^38 放大，参照只记 4 条（×500=10^2.7），差 10^35.3 是账号未记录的全局放大（modron + hero-static 装备 ≈×68=10^1.8 + 更多 blessing/patron perk）。
+
+可行收敛路径：① 装备接入 calc（hero-static 装备 ×68，有数据确定）；② patron_perk actual level（替代满级理论值 ×127 → actual ×55.7，语义修正）；③ modron（buff 链，复杂）。
 
 ## 实测对照方法（需用户配合游戏）
 

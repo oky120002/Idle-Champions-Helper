@@ -14,6 +14,10 @@
 
 因此当前数据合同不足以计算 blessings；缺口是 blessing 树效果定义和进入 `UserProfileSnapshot` 的 campaign 数据。
 
+**2026-07-28 三端点验证（确认死路）**：blessing 是 per-campaign deity 系统（Kelemvor/Torm，用 Divine Favor 购买，web 确认，与 patron perk 两套系统）。3 端点全无 blessing 拥有数据：(1) getcampaigndetails 的 campaign 结构只有 campaign_id/adventure_ids/reset_currency(=favor) 等，**无 blessings 字段**；(2) getuserdetails 全文仅 UI 字段 `main_ui_blessings_button_order`；(3) getdefinitions 无 blessing 树。**b01f33a1 的 `campaigns[].blessings` 通道接的是空数据**（normalize 读 raw 不存在的字段）。另：明斯克 incomingBuffs「以身作则」「铁胃」经 patron-perks.json 核实是 Zariel/Vajra **patron perk**（id=36/16），非 blessing。
+
+**patron_perk actual level 可用**：userdetails.details.patron_perks（44 个 `{patron_perk_id, level}`），可替代当前满级理论值（actual Σ=5470 → ×55.7 vs 满级 ×127）。
+
 ---
 
 ## patron-perks effect 结构
