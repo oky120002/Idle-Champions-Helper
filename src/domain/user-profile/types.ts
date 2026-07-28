@@ -57,6 +57,8 @@ export interface UserProfileSnapshot {
   importedFormationSaves: ImportedFormationSave[]
   /** 各战役 favor/blessings（normalize 从 campaignDetails 保留；旧 snapshot 无此字段，消费侧 `?? []` 兼容）。 */
   campaigns?: CampaignFavorBlessings[]
+  /** patron perk 已购等级（perk_id → level，来自 userdetails.patron_perks）；旧 snapshot 无此字段，消费侧 `?? {}` 兼容。 */
+  patronPerks?: Record<string, number>
   updatedAt: string
   warnings: string[]
   legendaryLevelCap: number

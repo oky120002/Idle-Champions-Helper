@@ -11,7 +11,7 @@ export function resolveDataUrl(relativePath: string): string {
   return `${base}data/${relativePath}`
 }
 
-async function fetchJson<T>(relativePath: string, init?: RequestInit): Promise<T> {
+export async function fetchJson<T>(relativePath: string, init?: RequestInit): Promise<T> {
   const response = await fetch(resolveDataUrl(relativePath), init)
 
   if (!response.ok) {

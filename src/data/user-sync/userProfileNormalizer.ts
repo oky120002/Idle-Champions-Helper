@@ -26,6 +26,7 @@ interface UserDetailsPayload {
     instance_id?: string | number
     heroes?: unknown
     loot?: unknown
+    patron_perks?: unknown
     legendary_details?: {
       legendary_items?: unknown
     }
@@ -68,6 +69,7 @@ interface FormationSavesPayload {
 
 export interface NormalizedUserDetails {
   ownedHeroes: OwnedHero[]
+  patronPerks: Record<string, number>
   warnings: string[]
 }
 
@@ -90,6 +92,17 @@ export interface BuildUserProfileSnapshotInput {
   campaignDetails: unknown
   formationSaves: unknown
   updatedAt?: string
+}
+
+function normalizePatronPerks(value: unknown): Record<string, number> {
+  const result: Record<string, number> = {}
+  for (const perk of normalizeObjectArray(value)) {
+    const id = toStringValue(perk.patron_perk_id)
+    if (id) {
+      result[id] = toNumberValue(perk.level)
+    }
+  }
+  return result
 }
 
 function normalizeLootByHeroId(value: unknown): Map<string, Record<string, OwnedHeroLootSlot>> {
@@ -197,6 +210,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
   const heroesValue = payload.details?.heroes ?? payload.heroes
   const heroes = normalizeObjectArray(heroesValue)
   const lootByHeroId = normalizeLootByHeroId(payload.details?.loot)
+  const patronPerks = normalizePatronPerks(payload.details?.patron_perks)
   const legendaryByHeroId = normalizeLegendaryByHeroId(payload.details?.legendary_details?.legendary_items)
 
   if (!Array.isArray(heroesValue) && !isRecord(heroesValue)) {
@@ -233,7 +247,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
     })
     .filter((hero) => hero.isOwned)
 
-  return { ownedHeroes, warnings }
+  return { ownedHeroes, patronPerks, warnings }
 }
 
 export function normalizeCampaignDetails(
@@ -301,6 +315,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
     ownedHeroes: userDetails.ownedHeroes,
     importedFormationSaves: formationSaves.formations,
     campaigns: campaignDetails.campaigns,
+    patronPerks: userDetails.patronPerks,
     updatedAt: input.updatedAt ?? new Date().toISOString(),
     legendaryLevelCap: toNumberValue(userDetailsPayload.details?.legendary_level_cap, 20),
     warnings: [

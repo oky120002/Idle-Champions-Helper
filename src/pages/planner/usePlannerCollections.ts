@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { loadCollection } from '../../data/client'
+import { fetchJson, loadCollection, loadVersion } from '../../data/client'
 import { loadResolvedPlannerModel } from '../../data/plannerModel'
 import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
 import type { PlannerCollections } from '../../domain/planner/recommendationTypes'
 import type { LootCatalogEntry } from '../../domain/simulator/equipmentMult'
+import type { PatronPerkCatalogEntry } from '../../domain/simulator/patronPerkGlobalBuff'
 import type { Champion, Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 
@@ -14,6 +15,7 @@ export interface UsePlannerCollectionsResult {
   collections: PlannerCollections
   profileSnapshot: UserProfileSnapshot | null
   lootCatalog: LootCatalogEntry[]
+  patronPerkCatalog: PatronPerkCatalogEntry[]
   championById: Map<string, Champion>
   selectedVariantId: string | null
   loadState: PlannerLoadState
@@ -40,6 +42,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [lootCatalog, setLootCatalog] = useState<LootCatalogEntry[]>([])
+  const [patronPerkCatalog, setPatronPerkCatalog] = useState<PatronPerkCatalogEntry[]>([])
   const [championById, setChampionById] = useState<Map<string, Champion>>(() => new Map())
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
@@ -53,12 +56,14 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
       setLoadError(null)
 
       try {
-        const [variants, plannerModel, resolution, champions, lootCatalogCollection] = await Promise.all([
+        const version = await loadVersion()
+        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData] = await Promise.all([
           loadCollection<Variant>('variants'),
           loadResolvedPlannerModel(),
           resolveUserProfileSnapshot(),
           loadCollection<Champion>('champions'),
           loadCollection<LootCatalogEntry>('loot-catalog'),
+          fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
         ])
 
         if (!active) return
@@ -70,6 +75,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
         })
         setProfileSnapshot(resolution.snapshot)
         setLootCatalog(lootCatalogCollection.items)
+        setPatronPerkCatalog(patronPerksData.perks ?? [])
         setChampionById(new Map(champions.items.map((champion) => [champion.id, champion])))
         setSelectedVariantId((current) => current ?? initialVariantId ?? variants.items[0]?.id ?? null)
         setLoadState('ready')
@@ -95,6 +101,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
     collections,
     profileSnapshot,
     lootCatalog,
+    patronPerkCatalog,
     championById,
     selectedVariantId,
     loadState,

@@ -25,6 +25,7 @@ import {
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
 import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
+import { computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -52,6 +53,7 @@ export function PlannerEvaluatePage() {
     collections,
     profileSnapshot,
     lootCatalog,
+    patronPerkCatalog,
     championById,
     selectedVariantId,
     selectVariantId: selectVariantIdBase,
@@ -88,9 +90,16 @@ export function PlannerEvaluatePage() {
       : new Map<string, number>(),
     [profileSnapshot, lootCatalog],
   )
+  // patron perk actual 全局 buff：未导入存档 → 1（无加成，向后兼容）。
+  const globalBuffMultiplier = useMemo(
+    () => profileSnapshot?.patronPerks
+      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog)
+      : 1,
+    [profileSnapshot, patronPerkCatalog],
+  )
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero }),
-    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero],
+    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier }),
+    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -136,6 +145,7 @@ export function PlannerEvaluatePage() {
           lockedSlots,
           manualStackCount,
           equipmentAdjustmentByHero,
+          globalBuffMultiplier,
         },
       })
       if (recommendation.result) {
