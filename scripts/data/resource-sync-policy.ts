@@ -238,14 +238,26 @@ export function shouldSkipDataPipeline({
   existingHash,
   nextUpdatedAt,
   nextHash,
+  existingRawChecksum,
+  nextRawChecksum,
 }: {
   existingUpdatedAt: unknown
   existingHash: unknown
   nextUpdatedAt: unknown
   nextHash: string
+  /** raw 数据 checksum（稳定指纹）；提供时优先于 updatedAt 判断。 */
+  existingRawChecksum?: unknown
+  nextRawChecksum?: unknown
 }): boolean {
   if (typeof existingHash !== 'string' || existingHash === '') return false
   if (existingHash !== nextHash) return false
+  // 优先用 raw checksum（稳定数据指纹）：游戏数据没变（checksum 同）→ skip，即使
+  // current_time（updatedAt）因重新 fetch 单调前进。根因修复：旧逻辑仅用 current_time 判断，
+  // 而 current_time 每次 fetch 变，导致 191 产物纯时间戳被反复重写（内容未变）。
+  if (existingRawChecksum !== undefined && nextRawChecksum !== undefined) {
+    return existingRawChecksum === nextRawChecksum
+  }
+  // fallback（旧 version.json 无 rawChecksum）：updatedAt 没前进 → skip
   if (compareUpdatedAt(existingUpdatedAt, nextUpdatedAt) < 0) return false
   return true
 }
