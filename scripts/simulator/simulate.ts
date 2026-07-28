@@ -119,8 +119,8 @@ async function main() {
 
   const output =
     mode === 'evaluate'
-      ? evaluateFormation(variant, collections, profile, placements ?? {}, options)
-      : buildPlannerRecommendation(variant, collections, profile, options)
+      ? evaluateFormation({ variant, collections, profileSnapshot: profile, placements: placements ?? {}, options })
+      : buildPlannerRecommendation({ variant, collections, profileSnapshot: profile, options })
 
   process.stdout.write(`${JSON.stringify(output, null, 2)}\n`)
 }

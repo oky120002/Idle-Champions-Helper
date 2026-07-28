@@ -198,6 +198,36 @@ export interface PlannerRecommendationOptions {
 }
 
 /**
+ * 统一入参（约束③：所有数据外部传入，见 architecture.md「入参契约」）。
+ * engine 层全合并 variant + collections + profileSnapshot + placements + options 为单对象。
+ */
+export interface PlannerInput {
+  variant: Variant | null
+  collections: PlannerCollections
+  profileSnapshot: UserProfileSnapshot | null
+  /** 仅 evaluateFormation 用；buildPlannerRecommendation 搜索时不传。 */
+  placements?: Record<string, string>
+  options?: PlannerRecommendationOptions | undefined
+}
+
+/**
+ * Runner per-call 入参（collections 走 updateCollections 缓存通道，不在此——worker 性能：
+ * 避免每次 postMessage 重传全英雄+场景）。Runner 内部把它与缓存的 collections 合成 PlannerInput 调 engine。
+ */
+export interface PlannerEvaluateInput {
+  variant: Variant | null
+  profileSnapshot: UserProfileSnapshot | null
+  placements: Record<string, string>
+  options?: PlannerRecommendationOptions | undefined
+}
+
+export interface PlannerRecommendInput {
+  variant: Variant | null
+  profileSnapshot: UserProfileSnapshot | null
+  options?: PlannerRecommendationOptions | undefined
+}
+
+/**
  * 解析 variant → scenario + blocker（搜索 buildPlannerRecommendation 与评估 evaluateFormation 共用）。
  * - 无 variant/英雄数据：scenarioRef=null、blocker=null（调用方按"无输入"处理）。
  * - owned-only 模式缺 profileSnapshot：blocker='missing-profile'（仅已拥有模式需要真实快照提供候选与等级）。
@@ -243,13 +273,13 @@ export interface FormationEvaluation {
  * 与 buildPlannerRecommendation（beam search 找最佳）对应：本函数不搜索，直接对给定 placements 计算。
  * 用于 UI 调整英雄后重算当前阵型、CLI 指定阵型输出 JSON。合法性违规作为 warning 附加（仍出拆解）。
  */
-export function evaluateFormation(
-  selectedVariant: Variant | null,
-  collections: PlannerCollections,
-  profileSnapshot: UserProfileSnapshot | null,
-  placements: Record<string, string>,
-  options: PlannerRecommendationOptions = {},
-): FormationEvaluation {
+export function evaluateFormation({
+  variant: selectedVariant,
+  collections,
+  profileSnapshot,
+  placements = {},
+  options = {},
+}: PlannerInput): FormationEvaluation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
   const candidateMode = options.candidateMode ?? 'owned-only'
   const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
@@ -358,12 +388,12 @@ export function evaluateFormation(
   }
 }
 
-export function buildPlannerRecommendation(
-  selectedVariant: Variant | null,
-  collections: PlannerCollections,
-  profileSnapshot: UserProfileSnapshot | null,
-  options: PlannerRecommendationOptions = {},
-): PlannerRecommendation {
+export function buildPlannerRecommendation({
+  variant: selectedVariant,
+  collections,
+  profileSnapshot,
+  options = {},
+}: PlannerInput): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
   const candidateMode = options.candidateMode ?? 'owned-only'
   const computationMode = options.computationMode ?? 'p50'

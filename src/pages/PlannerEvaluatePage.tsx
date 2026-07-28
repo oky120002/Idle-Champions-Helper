@@ -118,11 +118,15 @@ export function PlannerEvaluatePage() {
   async function handleFillRemaining() {
     setFilling(true)
     try {
-      const recommendation = await runner.recommend(selectedVariant, profileSnapshot, {
-        scoringMode,
-        candidateMode,
-        lockedSlots,
-        manualStackCount,
+      const recommendation = await runner.recommend({
+        variant: selectedVariant,
+        profileSnapshot,
+        options: {
+          scoringMode,
+          candidateMode,
+          lockedSlots,
+          manualStackCount,
+        },
       })
       if (recommendation.result) {
         setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })

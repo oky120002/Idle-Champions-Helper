@@ -88,7 +88,7 @@ export function usePlannerRecommendation(
     runner,
     collections,
     enabled,
-    () => runner.recommend(variant, profileSnapshot, options),
+    () => runner.recommend({ variant, profileSnapshot, options }),
     [collections, variant, profileSnapshot, options],
   )
 }
@@ -107,7 +107,7 @@ export function usePlannerEvaluation(
     runner,
     collections,
     enabled,
-    () => runner.evaluate(variant, profileSnapshot, placements, options),
+    () => runner.evaluate({ variant, profileSnapshot, placements, options }),
     [collections, variant, profileSnapshot, placements, options],
   )
 }
