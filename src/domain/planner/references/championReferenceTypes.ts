@@ -33,7 +33,6 @@ export interface ChampionReferenceAbilityMechanics {
 export interface ChampionReferenceAbility {
   nameZh: string
   nameEn?: string
-  upgradeId?: number
   /** 对照键：匹配 evaluatePlacementFit 返回的 scoreBreakdown.rawEffect。 */
   rawEffect: string
   /** 关联键：这个技能用了哪些通用机制。 */

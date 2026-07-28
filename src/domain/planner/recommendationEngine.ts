@@ -168,7 +168,7 @@ export interface PlannerRecommendationOptions {
    */
   computationMode?: ComputationMode
   /**
-   * beam search 宽度（每轮保留候选阵型数）；默认 PLANNER_BEAM_WIDTH（4）。
+   * beam search 宽度（每轮保留候选阵型数）；默认 PLANNER_BEAM_WIDTH（8）。
    * 越大越精确越慢；UI 不暴露，供 CLI/测试/调优覆盖。
    */
   beamWidth?: number

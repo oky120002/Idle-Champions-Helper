@@ -1280,6 +1280,41 @@ describe('placement fit', () => {
     expect(entry?.active).toBe(false)
   })
 
+  it('heroDpsMultiplier positionQualifier=any 时 support 位跨槽位 buff carry（targets:all 阵型 buff）', () => {
+    // 回归：attachSignalSemantics 对 targets:['all'] 显式设 {relation:'any'}，使 support 位提供的阵型范围
+    // hero_dps 信号（如蔚善良榜样 targets:all + filter_targets:geneutral）能跨槽位 buff 匹配 targetQualifier 的 carry。
+    // 旧 bug：'all' 降 null → resolvePositionRelation heroDpsMultiplier 默认 'self' → support≠carry 槽位 position-mismatch，
+    // support 位的阵型 hero_dps buff 永不生效（蔚善良榜样对 geneutral carry、Diana hero_expr 对 DEX carry 等）。
+    const support = createHero('support', {
+      tags: ['good'],
+      supportSignals: [
+        {
+          kind: 'heroDpsMultiplier',
+          value: 100,
+          rawEffect: 'hero_dps_multiplier_mult,100',
+          source: 'official-parsed',
+          positionQualifier: { relation: 'any' },
+          targetQualifier: { predicate: { op: 'tag', tag: 'female' } },
+        },
+      ],
+    })
+    const carry = createHero('carry', { tags: ['female'] })
+
+    const fit = evaluatePlacementFit({
+      carryHero: carry,
+      carrySlotId: 's1',
+      supportHero: support,
+      supportSlotId: 's3',
+      scenario,
+      placements: { s1: 'carry', s3: 'support' },
+      heroesById: new Map([['carry', carry], ['support', support]]),
+    })
+
+    const activeEntry = fit.scoreBreakdown.find((r) => r.rawEffect === 'hero_dps_multiplier_mult,100' && r.active)
+    expect(activeEntry, 'targets:all 的 hero_dps 信号须跨槽位生效（relation=any 非 self）').toBeDefined()
+    expect(activeEntry?.multiplier).toBe(2)
+  })
+
   it('dynamic-stack-multiply 按 manualStackCount 乘算堆叠（蔚出言不逊形态）', () => {
     // 对应蔚"出言不逊永不够"：stacksMultiply=true + amountFunc=null + 动态层数。
     // 层数来自数值表达式（unsupported），由 manualStackCount 提供假设值。

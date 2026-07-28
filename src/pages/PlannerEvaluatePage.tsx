@@ -122,6 +122,7 @@ export function PlannerEvaluatePage() {
         scoringMode,
         candidateMode,
         lockedSlots,
+        manualStackCount,
       })
       if (recommendation.result) {
         setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })

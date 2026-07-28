@@ -1,6 +1,10 @@
 // 蔚（hero_id=95）DPS 机制参照基准。
 // 完整游戏实测调研见 docs/research/gameplay/champion-mechanics/vi-95.md（researchDoc 字段关联）。
 // 数据来源：用户 2026-07-27 游戏内观察（area=193，7 名善良/中立英雄，出言不逊堆叠 1930）。
+//
+// 角色定位：蔚是 support（提供善良榜样给出言不逊增强），**不是**自己的 carry。
+// 善良榜样 target=geneutral（伦理中立阵营：Neutral / Lawful Neutral / Chaotic Neutral）；
+// 蔚自身 Neutral Good（伦理 good）无 geneutral 标签 → 不可能是自己的目标。carry 须另选 geneutral 英雄。
 import type { ChampionReference } from './championReferenceTypes'
 
 export const vi95ReferenceData = {
@@ -11,7 +15,8 @@ export const vi95ReferenceData = {
   researchDoc: 'docs/research/gameplay/champion-mechanics/vi-95.md',
   rawDescription: {
     naturalLanguage:
-      '蔚的「善良榜样」：阵型中每有一名善良/艾奎兹玄/C小队勇士，善良与中立勇士伤害 +300%，乘算堆叠（当前 7 层）。'
+      '蔚的「善良榜样」：阵型中每有一名善良/艾奎兹玄/C小队勇士，伦理中立勇士（geneutral）伤害 +300%，乘算堆叠（当前 7 层）。'
+      + '蔚自身 Neutral Good 非 geneutral，是此 buff 的提供者（support）非接受者。'
       + '「出言不逊永不够」：每层「出言不逊」使善良榜样 +0.33%（乘算），层数上限=最高区域×10（当前 1930）。'
       + '专长「道德规范」对善良榜样 +20%；装备「时髦披肩」对善良榜样效果 +157.8%（基础 150% + 物品等级 5.2% + 每级 0.4%）。',
     optimizedAt: '2026-07-27',
@@ -20,14 +25,13 @@ export const vi95ReferenceData = {
     area: 193,
     highestAvailableArea: 193,
     formationSize: 7,
-    // mock：用户仅提供「7 名善良/中立」计数，未给完整 heroId。测试用 createHero 构造 mock 英雄。
-    formationHeroIds: ['95', 'mock-good-1', 'mock-good-2', 'mock-good-3', 'mock-good-4', 'mock-good-5', 'mock-good-6'],
-    note: '蔚(95) 作 carry + 6 名善良阵营 support',
+    // mock：用户仅提供「7 名善良/中立」计数，未给完整 heroId。测试用 geneutral mock carry + 5 名善良 mock + 蔚 support。
+    formationHeroIds: ['geneutral-carry', '95', 'mock-good-1', 'mock-good-2', 'mock-good-3', 'mock-good-4', 'mock-good-5'],
+    note: '蔚(95) 作 support（提供善良榜样），geneutral 英雄作 carry 吃 buff；7 名 good 英雄计 count',
   },
   abilities: [
     {
       nameZh: '善良榜样',
-      upgradeId: 12312,
       rawEffect: 'hero_dps_multiplier_mult,300',
       mechanicIds: ['formation-count-mult-stack', 'bonus-scale-linkage'],
       mechanics: {
@@ -46,7 +50,6 @@ export const vi95ReferenceData = {
     },
     {
       nameZh: '出言不逊永不够',
-      upgradeId: 12312,
       rawEffect: 'buff_upgrade,0.33,12312',
       mechanicIds: ['dynamic-stack-multiply', 'bonus-scale-linkage'],
       mechanics: {
@@ -97,12 +100,13 @@ export const vi95ReferenceData = {
       },
     ],
     calibrationTarget: {
+      // 游戏显示的善良榜样「叠层系数」是能力对 geneutral 目标的输出倍率（非蔚自身 DPS）。
       gamePoolMultiplier: '2.92e09%',
-      tolerance: '< 30%（16384×576×1.2×2.578≈2.92e7 倍）',
+      tolerance: '< 30%（16384×576×1.2×2.578≈2.92e7 倍，研究 flat-factor 分解非代码产出，见 vi-95.md）',
     },
   },
   mock: {
-    'scenario.formationHeroIds': '用户未提供完整阵型 heroId，测试用 createHero 构造 7 个善良阵营 mock 英雄；用户补实测后替换',
+    'scenario.formationHeroIds': '用户未提供完整阵型 heroId；测试用 geneutral mock carry + 5 名善良 mock + 蔚 support。用户补实测后替换',
   },
 } as const satisfies ChampionReference
 

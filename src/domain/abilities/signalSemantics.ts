@@ -263,9 +263,12 @@ export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown
       ?? perHeroQualifier
       ?? stackFuncDataQualifier
       ?? (useFormationCountQualifier || keepTargetQualifier ? filterQualifier : null),
+    // 显式 targets（含 'all'/'all_slots'）→ 记 {relation}；无 targets（自增益）→ null。
+    // 'all' 必须显式记 {relation:'any'}：resolvePositionRelation 对 null 走类型默认（heroDpsMultiplier→'self'），
+    // 若 'all' 降 null，阵型范围 hero_dps 信号（如蔚善良榜样 targets:all）会被误判自增益，support 位永不 buff carry。
     positionQualifier:
       signal.positionQualifier
-      ?? (explicitTargeting.status === 'supported' && explicitTargeting.relation !== 'any'
+      ?? (explicitTargeting.status === 'supported'
         ? { relation: explicitTargeting.relation }
         : null),
     formationCountPositionQualifier: signal.formationCountPositionQualifier ?? null,

@@ -362,9 +362,19 @@ describe('attachSignalSemantics', () => {
       { kind: 'heroDpsMultiplier', value: 125, rawEffect: 'hero_dps_multiplier_mult,125', source: 'official-parsed' },
       { targets: ['all_slots'], filter_targets: [{ type: 'by_tags', tags: 'female' }] },
     )
-    expect(signal.positionQualifier).toBeNull()
+    // targets:all_slots → relation 'any' 须显式记 {relation:'any'}：resolvePositionRelation 对 null
+    // 走 heroDpsMultiplier→'self' 默认，会让全阵型 hero_dps buff 误判自增益、support 位不 buff carry。
+    expect(signal.positionQualifier).toEqual({ relation: 'any' })
     expect(signal.targetQualifier).toEqual({ predicate: { op: 'tag', tag: 'female' } })
     expect(signal.formationCountQualifier).toBeNull()
+  })
+
+  it('无 targets 自增益 heroDpsMultiplier → positionQualifier=null（resolvePositionRelation 走 self 默认）', () => {
+    const signal = attachSignalSemantics(
+      { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      { amount_func: 'add' },
+    )
+    expect(signal.positionQualifier).toBeNull()
   })
 
   it('hero_expr filter 限定 hero_dps_multiplier_mult 的目标英雄', () => {
