@@ -124,4 +124,20 @@ repair: rebuild
     - 确认需 per-effect 游戏语义核查（filter 是 count 源还是 target）——当前审计未逐一确认，不视为已确认缺陷。
     - 处置：低优先级；需对 119 heroDpsMultiplier 抽样核对 raw effect_string + 游戏描述；若确认反例，扩 hasExplicitCountQualifier 逻辑或补 target 推断。
 
+- 专长/feat 修饰信号未进 built hero-abilities（蔚道德规范 +20% 缺失） <!-- auto-todo:id=atd_9a1b2c3d4e -->
+  - 记录时间: `2026-07-28T13:10:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/effect-helpers.ts:collectRawEffectEntries`（specialization 源未采集）
+  - 备注: buff_upgrade progression 审计修复后，蔚 damage:hero pool 从 6.4e8（22× 高估）降到 1.66e7（0.57× 游戏，欠估 1.75×）。欠估主因之一：专长修饰（蔚「道德规范」对善良榜样 +20%）未进 built signals——`collectRawEffectEntries` 采集 upgrades/loot/legendaryEffects/feats/ability 五源，但 specialization（专长选择）不在其中。修 progression 后此缺口暴露（原被 progression 噪声掩盖）。
+    - 影响所有有专长 buff_upgrade 的英雄（蔚等），carryDps 欠估专长修饰倍率。
+    - 处置：中优先级；需在 collectRawEffectEntries 加 specialization 源采集（专长互斥选择 → 仅取选中项，需 profile context 或理论最大假设）。关联 vi-95.md 修复记录 #3。
+
+- loot buff_upgrade rarity 选择取首条而非最高（蔚时髦披肩 rarity1 +25% 而非 +157.8%） <!-- auto-todo:id=atd_5f6e7d8c9b -->
+  - 记录时间: `2026-07-28T13:10:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/effect-helpers.ts:collectEffectEntries`（loot 多 rarity 同槽去重）
+  - 备注: buff_upgrade progression 审计发现：蔚「时髦披肩」（loot slot2）有 rarity1(+25%)/2(+?)/.../+4(+157.8%) 多 tier，代码 collectEffectEntries 对同信号位（rarityGroupKey@upgradeId，loot upgradeId=null→'?'）按首条保留 → 取 rarity1 +25% 而非最高 +157.8%。IC 装备每槽只装备一件（最高 rarity），应取最高。
+    - 影响所有有 multi-rarity loot buff_upgrade 的英雄；与 atd_9a1b2c3d4e 共同构成 pool 欠估来源。
+    - 处置：中优先级；collectEffectEntries 对 loot 源同信号位多 magnitude 应取最高（保守上界），而非首条。需区分 loot（rarity 互斥取最高）vs 其它来源语义。关联 vi-95.md「pool 对照现状」。
+
 <!-- auto-todo:end -->

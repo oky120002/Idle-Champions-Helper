@@ -1133,23 +1133,9 @@ export function splitEffectString(effectString: unknown): { effectName: string; 
   return { effectName: effectName ?? '', effectValue }
 }
 
-// IC upgrade_defines.required_level 的 sentinel：>= 此值表示非正常可购升级
-// （CNE 数据展开产物/模板，如 Jaheira 38 条 required_level=9999 的 buff_upgrades,100,... 完全相同）。
-// 真升级（required_level<9999）是各自可购的永久升级，对同一 base 的多条全部叠加生效。
-const SENTINEL_REQUIRED_LEVEL = 9999
-
-function readRequiredLevel(effect: unknown): number | null {
-  const value = asRecord(effect)?.requiredLevel
-  return typeof value === 'number' && Number.isFinite(value) ? value : null
-}
-
 // derived signal 身份 key：捕获影响 pool 聚合语义的字段（kind/amountFunc/stackFunc/base targeting），
-// 排除 magnitude（value）。用于识别「同一信号位」。
-// 去重策略（collectEffectEntries）：
-// - sentinel 产物（required_level>=9999）：CNE 把同一逻辑 buff 序列化成多条完全相同副本，只生效一次；
-//   按 rarityGroupKey 去重，同组不同 magnitude 取最高（保守，仅 3 个真实数据组，语义待 IC 源码确认）。
-// - 真升级（required_level<9999）：各自独立叠加，key 追加 upgradeId 防止互斥折叠
-//   （Bruenor Rally 15 条 magnitude 100~300 在不同 level，全叠加；同 magnitude 的多条也各自叠加）。
+// 排除 magnitude（value）。用于识别「同一信号位」——同 key 的 wrapper 视为同一信号位，首次出现保留
+// （去重 CNE 重复展开副本，不折叠不同 upgrade 的独立 wrapper）。详见 collectEffectEntries 去重策略。
 function rarityGroupKey(preset: HeroAbilitySignal): string {
   return JSON.stringify({
     kind: preset.kind,
@@ -1170,6 +1156,25 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
 
   for (const entry of effectEntries) {
     if (!isBuffUpgradeKind(entry.effectPayload?.kind)) {
+      continue
+    }
+
+    // 审计根因（2026-07-28）：buff-upgrade-progression-exclusion（归一化期排除，非评分机制）
+    // IC 的 effect_def effect_string 是满级 snapshot 计算值，已含该 ability 自身 upgrade 树的全部静态
+    // buff_upgrade 贡献（ranked effectReference 节点 + 同 ability 源 effect_keys 静态修饰，如蔚劝人向善）。
+    // 证据：蔚善良榜样 effect_string=300 含 20 条 ranked buff_upgrade,100,12312 + 劝人向善 buff_upgrade,200,12312，
+    // 游戏显示 per-stack 恰好 +300%（4^7=16384），叠层系数 2.92e7=4^7×576×1.2×2.578 只含 2 个外部修饰器
+    // （道德规范专长 / 时髦披肩装备）。若独立 ×3 则叠层系数应 8.76e7，实测 2.92e7 → 劝人向善贡献已在 300。
+    // 故 ability 源（upgrade effectReference / effect_keys）的静态 plain buff_upgrade 不再派生计分信号，
+    // 否则每条叠 base.value×X/100 进 addPercent → 蔚 damage:hero pool 6.4e8 vs 游戏 2.92e7（22× 高估），
+    // 影响 162/164 英雄、4727 条 ability 源静态 entry。
+    // 保留三类运行时修饰：(1) stacks_multiply 动态（area 依赖，如蔚出言不逊）；(2) 复杂 wrapper（per_tagged /
+    // distance 等，阵型依赖）；(3) 外部源 loot/feat/legendary（装备/feat/专长，不在 ability snapshot 内）。
+    const buffUpgradeKind = entry.effectPayload?.kind
+    const isPlainBuffUpgrade = buffUpgradeKind === 'buff_upgrade' || buffUpgradeKind === 'buff_upgrades'
+    const isAbilitySource = entry.sourceBucket === 'upgrade' || entry.sourceBucket === 'upgrade-effect-key'
+    const isDynamicStacks = asRecord(entry.effect)?.stacks_multiply === true
+    if (isPlainBuffUpgrade && isAbilitySource && !isDynamicStacks) {
       continue
     }
 
@@ -1208,18 +1213,10 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
           formationCountPositionQualifier: buffSeed.formationCountPositionQualifier ?? null,
         }
 
-        const requiredLevel = readRequiredLevel(entry.effect)
-        const isSentinel = requiredLevel !== null && requiredLevel >= SENTINEL_REQUIRED_LEVEL
-        // 真升级各自叠加：key 追加 upgradeId 防止同 base 多条被折叠。
-        // sentinel 产物按信号位去重（CNE 展开副本只生效一次），同组不同 magnitude 取最高。
-        const key = isSentinel
-          ? rarityGroupKey(preset)
-          : `${rarityGroupKey(preset)}@${entry.upgradeId ?? '?'}`
-        const existing = derivedByKey.get(key)
-        if (
-          !existing
-          || (isSentinel && Math.abs(preset.value ?? 0) > Math.abs(existing.signalPreset?.value ?? 0))
-        ) {
+        // 同信号位去重：key=rarityGroupKey@upgradeId。同 upgrade 内重复展开的 wrapper（同位同源）
+        // 只生效一次（首条保留）；不同 upgrade 的 wrapper upgradeId 不同，各自独立。
+        const key = `${rarityGroupKey(preset)}@${entry.upgradeId ?? '?'}`
+        if (!derivedByKey.has(key)) {
           derivedByKey.set(key, buildEffectEntry({
             effectString: entry.effectString,
             effect: entry.effect,

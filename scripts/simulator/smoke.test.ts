@@ -80,4 +80,32 @@ describe('全英雄评分 smoke', () => {
     })
     expect(goodExample!.targetQualifier?.predicate).toEqual({ op: 'tag', tag: 'geneutral' })
   })
+
+  it('ability 源静态 buff_upgrade 不进 built signals（贡献已在 effect_def snapshot）；动态/外部源保留', () => {
+    // 审计根因（2026-07-28）：IC effect_def effect_string 是满级 snapshot 计算值，已含 ability 自身 upgrade 树
+    // 的全部静态 buff_upgrade 贡献。蔚证：善良榜样 effect_string=300 含 20 条 ranked buff_upgrade,100,12312
+    //（upgrade effectReference 进阶节点）+ 劝人向善 buff_upgrade,200,12312（effect_keys 静态修饰）；
+    // 游戏显示 per-stack 恰好 +300%（4^7=16384），叠层系数 2.92e7=4^7×576×1.2×2.578 只含 2 个外部修饰器
+    // （道德规范专长 / 时髦披肩装备）。旧代码假设「真升级全部叠加」、每条独立 +base.value×X/100 addPercent
+    // → 蔚 damage:hero pool 6.4e8 vs 游戏 2.92e7（22× 高估），影响 162/164 英雄。
+    // 保留三类运行时修饰：动态 stacks_multiply（出言不逊）、复杂 wrapper（阵型依赖）、外部源 loot/feat。
+    const { heroes } = loadCollections()
+    const vi = heroes.find((h) => h.heroId === '95')
+    expect(vi).toBeDefined()
+    // ability 源静态 plain buff_upgrade 须消除：
+    expect(
+      vi!.supportSignals.filter((s) => s.rawEffect === 'buff_upgrade,100,12312'),
+      'upgrade effectReference ranked 进阶（20 条）不应进 built signals',
+    ).toHaveLength(0)
+    expect(
+      vi!.supportSignals.filter((s) => s.rawEffect === 'buff_upgrade,200,12312'),
+      'effect_keys 静态修饰（劝人向善 +200%，已烘进 300）不应进 built signals',
+    ).toHaveLength(0)
+    // 运行时修饰器须保留：
+    const sass = vi!.supportSignals.find((s) => s.rawEffect === 'buff_upgrade,0.33,12312')
+    expect(sass, '出言不逊（effect_keys stacks_multiply 动态）须保留').toBeDefined()
+    expect(sass?.stacksMultiply).toBe(true)
+    const shawl = vi!.supportSignals.find((s) => s.rawEffect === 'buff_upgrade,25,12312')
+    expect(shawl, '时髦披肩（loot 外部源装备，不在 ability snapshot 内）须保留').toBeDefined()
+  })
 })

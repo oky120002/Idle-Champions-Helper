@@ -59,12 +59,12 @@
 
 `all` / `all_slots` 在 `normalizeExplicitTargeting` 中映射为 `relation:'any'`（全阵位，status=supported）。`resolveCountRelation` 曾因 `relation==='any'` 返回 null，导致 `hero_dps_mult_per_target_crusader*` 的 `all_slots` 计数目标（effect_def 225/394/442/594 等）在解析阶段被静默丢弃，到不了消费层 `countQualifiedHeroes`（后者已显式支持 `'any'`：跳过 `matchesSlotRelation`，只按 `formationCountQualifier` 计数全阵位匹配英雄）。已修复：`resolveCountRelation` 放行 `'any'`。当前零行为影响（上述 all_slots per_target_crusader 均为孤立 effect_def，无 upgrade 引用；被引用的 all_slots effect_def 505/509/519/527 是 Krull `hero_dps_mult_reduced_by_tag` / Artemis `observance` / Dragonbait `scent_*` 等其它 unsupported kind），修复消除潜在静默丢弃陷阱。
 
-### buff_upgrade wrapper 派生：真升级叠加 vs sentinel 产物去重
+### buff_upgrade wrapper 派生：ability 源静态排除（progression in snapshot）
 
 `collectEffectEntries` 派生 buff_upgrade signal 时：
 
-- preset 继承 base 的 targetQualifier，并 AND 合并 `normalizeTargetQualifier(wrapper effect)`（经 `mergeHeroQualifiers`），避免 wrapper 层 filter_targets（如 `hero_ids` 白名单）丢失。真实样本：hero 82 的 `buff_upgrades` + `hero_ids:[82]`。
-- **去重按 `required_level` 区分**：
-  - 真升级（`required_level<9999`）：各自可购的永久升级，对同一 base 的多条**全部叠加**（如 Bruenor Rally 15 条 magnitude 100~300 分布在 level 150~3130）。去重 key 追加 `upgradeId`，同/异 magnitude 多条均各自保留。原「同 group 取最高 magnitude」是 bug——把 299 个真升级组的叠加链折叠成单条，严重低估。
-  - sentinel 产物（`required_level>=9999`）：CNE 把非可购逻辑 buff 展开成完全相同副本（如 Jaheira 38 条 `buff_upgrades,100,...`），只生效一次，按 `rarityGroupKey`（kind/amountFunc/stackFunc/base targeting，排除 magnitude）去重，同组不同 magnitude 取最高（保守，全库仅 3 组）。
-- 消费侧 `evaluatePlacementFit` 的 pool `addPercent` 累加同 pool 信号，修正后真升级 buff 正确叠加（base + Σ(basePercent × mag_i)/100）。
+- preset 继承 base 的 targetQualifier，并 AND 合并 `normalizeTargetQualifier(wrapper effect)`（经 `mergeHeroQualifiers`），避免 wrapper 层 filter_targets（如 `hero_ids` 白名单）丢失。真实样本：hero 82 的 loot `buff_upgrades` + `hero_ids:[82]`。
+- **ability 源静态 buff_upgrade 排除**：IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自身 upgrade 树的全部静态 buff_upgrade 贡献。故 ability 源（`sourceBucket ∈ {upgrade, upgrade-effect-key}`）+ plain kind（`buff_upgrade`/`buff_upgrades`）+ 非 `stacks_multiply` 的 wrapper **不派生计分信号**——否则每条叠 `base.value×X/100` 进 addPercent 产生 22× 级 pool 高估（蔚证：善良榜样 effect_string=300 含 20 条 ranked + 劝人向善 +200%，游戏显示 per-stack 恰好 +300%=4^7）。
+  - CNE 数据格式特性仍记：`required_level>=9999` 是 CNE 把非可购逻辑 buff 展开成完全相同副本（如 Jaheira 38 条 `buff_upgrades,100,...`）；`required_level<9999` 是各自可购的永久升级（如 Brueno Rally 15 条 magnitude 100~300）。**两者贡献均已在目标 effect_string snapshot value 内**，故按来源排除（不区分 required_level），而非旧代码的「真升级全部叠加 / sentinel 去重」分流（该假设错误，已移除）。
+- 保留三类运行时 wrapper（仍派生）：`stacks_multiply` 动态（area 依赖）、复杂 wrapper（per_tagged/distance 阵型依赖）、外部源 loot/feat/legendary（装备/专长/feat）。派生去重按 `rarityGroupKey@upgradeId`（首条保留）；loot rarity 选择（首条 vs 最高）是已知 follow-up。
+- 消费侧 `evaluatePlacementFit` 的 pool `addPercent` 累加同 pool 的派生信号（仅运行时修饰）。

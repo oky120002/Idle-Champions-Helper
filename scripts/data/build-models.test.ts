@@ -561,12 +561,12 @@ it('buildModels 产出 hero abilities / scenarios / semantic overrides', async (
   expect(perTargetAllSlotsCarry?.formationCountPositionQualifier).toEqual({
     relation: 'any',
   })
-  expect(plainBuffSupport?.kind).toBe('heroDpsMultiplier')
-  expect(plainBuffSupport?.value).toBe(50)
-  expect(plainBuffSupport?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
-  expect(plainBuffSupport?.positionQualifier).toEqual({
-    relation: 'adjacent',
-  })
+  // ability 源（effect_keys）plain 静态 buff_upgrade 不派生计分信号——其贡献已烘进目标 effect_def
+  // 的 effect_string snapshot value（见 collectEffectEntries buff-upgrade-progression-exclusion）。
+  expect(plainBuffSupport).toBeUndefined()
+  // base signal（hero_dps_multiplier_mult,80）仍正常派生：
+  const plainBaseSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,80')
+  expect(plainBaseSupport?.kind).toBe('heroDpsMultiplier')
   expect(taggedBuffSupport?.kind).toBe('heroDpsMultiplier')
   expect(taggedBuffSupport?.amountFunc).toBe('mult')
   expect(taggedBuffSupport?.stackFunc).toBe('per_tagged_crusader_mult')
@@ -674,19 +674,21 @@ it('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSigna
     unsupportedRawEffects.filter((rawEffect) => rawEffect === 'buff_upgrade'),
   ).toEqual([])
 
-  // 派生信号仍应存在：wrapper 以 base 80% 折算 100% 增量，bonusScaleOfSignal 指向 base。
+  // upgrade effectReference 的 plain buff_upgrade 不派生计分信号（ability 源静态，贡献已在 base snapshot）。
   const first = heroAbilities.items[0]
   const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
-  expect(derived?.kind).toBe('heroDpsMultiplier')
-  expect(derived?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
+  expect(derived).toBeUndefined()
+  // base signal 仍派生：
+  expect(allSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,80')?.kind).toBe('heroDpsMultiplier')
 })
 
-it('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号', async () => {
-  // normalize 层 normalizeEffectReference 已把 CNE effect 对象串提取为干净标准串（如
-  // hero 101/102 的 effectReference 已是 'buff_upgrade,...'）；build-models 读 normalized
-  // data，effectReference 永远是标准串。此处验证 wrapper 派生 target base 链路。
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-json-effectref-'))
+it('loot buff_upgrade 派生 target base 信号（外部装备源运行时修饰，不在 ability snapshot 内）', async () => {
+  // ability 源（upgrade effectReference / effect_keys）静态 buff_upgrade 已烘进 base snapshot，
+  // 不再派生（见 collectEffectEntries buff-upgrade-progression-exclusion）。外部源 loot（装备）/
+  // feat / legendary 是运行时修饰，不在 ability snapshot 内，仍须派生。
+  // 此处验证 loot buff_upgrade → target base 派生链路 + bonusScaleOfSignal 链接。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-loot-buff-upgrade-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
 
@@ -710,14 +712,15 @@ it('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号', a
     path.join(detailDir, '1.json'),
     JSON.stringify({
       upgrades: [
-        { id: '4', effectReference: 'hero_dps_multiplier_mult,80', effectDefinition: null },
         {
-          id: '7',
-          effectReference: 'buff_upgrade,100,4',
-          effectDefinition: null,
+          id: '4',
+          effectReference: 'effect_def,base-4',
+          effectDefinition: {
+            snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,80' }] } },
+          },
         },
       ],
-      loot: [],
+      loot: [{ id: '9001', slotId: 1, rarity: '1', effects: [{ effect_string: 'buff_upgrade,100,4' }] }],
       legendaryEffects: [],
     }),
   )
@@ -725,7 +728,7 @@ it('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号', a
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
   const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
-  // wrapper 派生信号仍由 effectPayload.kind 正确识别并生成。
+  // loot buff_upgrade 派生：bonusScaleOfSignal 指向 base ability signal。
   const first = heroAbilities.items[0]
   const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
@@ -806,11 +809,10 @@ it('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前
   expect(crossRefSignal?.value).toBe(200)
 })
 
-it('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号', async () => {
-  // normalize 层 normalizeEffectReference 已把 CNE effect 对象串（含伪 JSON）提取为干净
-  // 标准串（守护见 normalize 测试「提取 CNE effect 对象串的 effect_string」）；build-models
-  // 读 normalized data，effectReference 永远是标准串。此处验证 wrapper 派生 target base 链路。
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-cne-pseudo-json-'))
+it('loot buff_upgrades wrapper 派生多 target base 信号（外部装备源）', async () => {
+  // ability 源 buff_upgrades 不再派生（snapshot 已含）。外部源 loot 仍派生；此处验证
+  // buff_upgrades 多 target id（4,5）→ 派生 2 个信号，各指向对应 base。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-loot-buff-upgrades-multi-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
 
@@ -834,15 +836,10 @@ it('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号', 
     path.join(detailDir, '1.json'),
     JSON.stringify({
       upgrades: [
-        { id: '4', effectReference: 'hero_dps_multiplier_mult,80', effectDefinition: null },
-        { id: '5', effectReference: 'hero_dps_multiplier_mult,50', effectDefinition: null },
-        {
-          id: '7',
-          effectReference: 'buff_upgrades,100,4,5',
-          effectDefinition: null,
-        },
+        { id: '4', effectReference: 'effect_def,b4', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,80' }] } } } },
+        { id: '5', effectReference: 'effect_def,b5', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,50' }] } } } },
       ],
-      loot: [],
+      loot: [{ id: '9001', slotId: 1, rarity: '1', effects: [{ effect_string: 'buff_upgrades,100,4,5' }] }],
       legendaryEffects: [],
     }),
   )
@@ -850,7 +847,7 @@ it('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号', 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
   const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
-  // buff_upgrades wrapper（target ids 4,5）应派生 2 个信号，各指向对应 base。
+  // loot buff_upgrades wrapper（target ids 4,5）派生 2 个信号，各指向对应 base。
   const first = heroAbilities.items[0]
   const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.filter((signal) => signal.rawEffect === 'buff_upgrades,100,4,5')
@@ -926,59 +923,30 @@ it('collectEffectEntries 收集 ability effects', () => {
   expect(dpsEntry?.effect.baseCooldown).toBe(3600)
 })
 
-it('collectEffectEntries sentinel（required_level>=9999）完全相同副本去重（CNE 数据展开产物）', () => {
-  // CNE 把非可购（required_level=9999）的逻辑 buff 序列化成多条完全相同 upgrade（仅 id 不同，
-  // magnitude 相同）。如 Jaheira 38 条 buff_upgrades,100,9714,...，只生效一次。
-  // 这类 sentinel 产物按信号位去重；真升级（required_level<9999）不走此路径（见下述测试）。
+it('collectEffectEntries ability 源静态 buff_upgrade 不派生（贡献已在 base effect_def snapshot）', () => {
+  // IC effect_def effect_string 是满级 snapshot 计算值，已含该 ability 自身 upgrade 树的全部静态
+  // buff_upgrade 贡献——不论 ranked 进阶（不同 required_level 的「真升级」）还是 sentinel（required_level=9999
+  // 的 CNE 展开副本）。证据：蔚善良榜样 effect_string=300 含 20 条 ranked buff_upgrade,100,12312 +
+  // 劝人向善 buff_upgrade,200,12312，游戏显示 per-stack 恰好 +300%（4^7=16384），叠层系数 2.92e7 只含
+  // 2 个外部修饰器。旧代码按 required_level 区分（sentinel 去重 / 真升级全叠加），假设「真升级全部叠加」，
+  // 对同一 base 多条派生独立 +base.value×X/100 addPercent → 蔚 damage:hero pool 22× 高估。
+  // 修正：ability 源静态 plain buff_upgrade 不论 required_level 高低、magnitude 异同，均不派生。
+  // 仅 stacks_multiply 动态（area 依赖）、复杂 wrapper（阵型依赖）、外部源 loot/feat/legendary 派生。
   const detail = {
     upgrades: [
-      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
-      { id: '7', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-      { id: '8', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-      { id: '9', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-    ],
-    loot: [],
-    legendaryEffects: [],
-    feats: [],
-  }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
-  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  // 3 个相同 sentinel 副本指向同一 base 4 → 去重后只 1 个 derived signal。
-  expect(derived.length).toBe(1)
-  expect(derived[0]?.signalPreset.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,100')
-})
-
-it('collectEffectEntries sentinel 同 base 不同 magnitude 取最高（稀有度互斥保守策略）', () => {
-  // required_level=9999 的 sentinel 产物：若同信号位出现不同 magnitude，按现有保守策略取最高
-  // （IC 稀有度互斥语义；全库仅 3 个真实数据组为此形态，语义待 IC 源码最终确认）。
-  // 真升级（required_level<9999）不同 magnitude 全保留叠加，见专属测试。
-  const detail = {
-    upgrades: [
-      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
-      { id: '7', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-      { id: '8', requiredLevel: 9999, effectReference: 'buff_upgrades,200,4', effectDefinition: null },
-      { id: '9', requiredLevel: 9999, effectReference: 'buff_upgrades,150,4', effectDefinition: null },
-    ],
-    loot: [],
-    legendaryEffects: [],
-    feats: [],
-  }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
-  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  expect(derived.length).toBe(1)
-  expect(derived[0]?.signalPreset.value).toBe(200)
-})
-
-it('collectEffectEntries 真升级（required_level<9999）同 base 不同 magnitude 全保留叠加', () => {
-  // IC 装备/ILvl 升级链：同一 base 在不同 required_level（150/300/500…）有独立 buff_upgrade，
-  // 均为可购永久升级，游戏中全部叠加生效（如 Bruenor Rally 15 条 magnitude 100~300）。
-  // 8.5「取最高 magnitude」曾把这些折叠成 1 条，严重低估。修正：真升级各自独立，不去重。
-  const detail = {
-    upgrades: [
-      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      {
+        id: '4',
+        requiredLevel: 50,
+        effectReference: 'effect_def,b4',
+        effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,100' }] } } },
+      },
+      // 真升级（required_level<9999，不同 magnitude）：
       { id: '7', requiredLevel: 150, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
       { id: '12', requiredLevel: 300, effectReference: 'buff_upgrade,300,4', effectDefinition: null },
       { id: '15', requiredLevel: 500, effectReference: 'buff_upgrade,200,4', effectDefinition: null },
+      // sentinel（required_level=9999，相同与不同 magnitude）：
+      { id: '8', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '9', requiredLevel: 9999, effectReference: 'buff_upgrades,200,4', effectDefinition: null },
     ],
     loot: [],
     legendaryEffects: [],
@@ -986,30 +954,10 @@ it('collectEffectEntries 真升级（required_level<9999）同 base 不同 magni
   }
   const entries = collectEffectEntries(detail) as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  // 3 个真升级全保留（各自叠加），不取最高。
-  expect(derived.length).toBe(3)
-  const values = derived.map((entry) => entry.signalPreset.value ?? 0).sort((a, b) => a - b)
-  expect(values).toEqual([100, 200, 300])
-})
-
-it('collectEffectEntries 真升级同 base 同 magnitude 也全保留（独立升级不互斥）', () => {
-  // Bruenor 式：多个 level milestone 偶然 magnitude 相同（如 9 条 mag=100），仍各自叠加。
-  // 同 magnitude 不能当作重复去重——它们是不同 upgrade id 的独立可购升级。
-  const detail = {
-    upgrades: [
-      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
-      { id: '7', requiredLevel: 150, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
-      { id: '236', requiredLevel: 900, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
-      { id: '1284', requiredLevel: 1560, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
-    ],
-    loot: [],
-    legendaryEffects: [],
-    feats: [],
-  }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
-  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  // 3 条同 magnitude 真升级全保留（不同 upgrade id，各自叠加）。
-  expect(derived.length).toBe(3)
+  // ability 源静态 buff_upgrade 全部不派生（不论 required_level、magnitude、单复数）。
+  expect(derived).toHaveLength(0)
+  // base signal 仍正常派生：
+  expect(entries.some((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')).toBe(true)
 })
 
 it('collectEffectEntries static_dps_mult fallback：复杂 effect 进 unsupported 时用 CNE 静态近似', () => {
@@ -1062,30 +1010,20 @@ it('collectEffectEntries static_dps_mult 不与可解析 effect 重复（防双�
   expect(dps.length).toBe(1)
 })
 
-it('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
+it('collectEffectEntries loot buff_upgrade wrapper 合并 wrapper 自身 filter_targets', () => {
   // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
-  // 此前 preset 只继承 base 的 targetQualifier，wrapper 自身 filter_targets 丢失。
-  // 真实样本：hero 82 的 buff_upgrades + hero_ids:[82]。
+  // preset 须合并 wrapper filter_targets 到 targetQualifier，避免 wrapper 层 targeting 丢失。
+  // ability 源 buff_upgrade 不派生（snapshot 已含），故用 loot 外部源验证合并链路仍工作。
   const detail = {
     upgrades: [
-      { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
-      {
-        id: '7',
-        effectDefinition: {
-          snapshots: {
-            original: {
-              effect_keys: [
-                {
-                  effect_string: 'buff_upgrades,100,4',
-                  filter_targets: [{ type: 'hero_ids', hero_ids: [82] }],
-                },
-              ],
-            },
-          },
-        },
-      },
+      { id: '4', effectReference: 'effect_def,b4', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,100' }] } } } },
     ],
-    loot: [],
+    loot: [{
+      id: '9001',
+      slotId: 1,
+      rarity: '1',
+      effects: [{ effect_string: 'buff_upgrades,100,4', filter_targets: [{ type: 'hero_ids', hero_ids: [82] }] }],
+    }],
     legendaryEffects: [],
     feats: [],
   }
