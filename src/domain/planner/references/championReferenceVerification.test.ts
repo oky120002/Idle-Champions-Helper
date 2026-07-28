@@ -16,7 +16,7 @@ import { evaluatePlacementFit } from '../placementFit'
 import { vi95ReferenceData } from './vi95ReferenceData'
 
 // 蔚只有一份快照（area=193 机制参照）；统一 snapshots 口径下读 [0]。
-const viSnapshot = vi95ReferenceData.snapshots[0]!
+const viSnapshot = vi95ReferenceData.snapshots[0]
 
 function createHero(heroId: string, tags: string[]): HeroAbilityProfile {
   return {

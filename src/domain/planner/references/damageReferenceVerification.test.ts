@@ -22,10 +22,7 @@ import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../s
 import { evaluatePlacementFit } from '../placementFit'
 
 // 真自动发现：新 *ReferenceData.ts 文件零注册进流。
-const modules = import.meta.glob('./*ReferenceData.ts', { eager: true }) as Record<
-  string,
-  Record<string, ChampionReference>
->
+const modules = import.meta.glob('./*ReferenceData.ts', { eager: true })
 const allReferences: ChampionReference[] = Object.values(modules).flatMap((mod) => Object.values(mod))
 const referencesByHeroId = new Map(allReferences.map((ref) => [ref.heroId, ref]))
 
@@ -251,7 +248,7 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
   })
 
   it('明斯克 base attack 装备（slot1/2 hero_dps enchant 缩放）收敛 absolute-dps 偏差', () => {
-    const lootCatalog = JSON.parse(readFileSync(path.join(dataDir, 'loot-catalog.json'), 'utf8')).items as LootCatalogEntry[]
+    const lootCatalog = (JSON.parse(readFileSync(path.join(dataDir, 'loot-catalog.json'), 'utf8')) as { items: LootCatalogEntry[] }).items
     // 明斯克 owned loot（userdetails 实测 slot1/2 r4 enchant 734/709，对应参照 +1378%/+1343%）
     const ownedHeroes = [{
       heroId: '7',
