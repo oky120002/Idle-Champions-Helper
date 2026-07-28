@@ -119,6 +119,43 @@ it('shouldSkipDataPipeline: raw + 逻辑都没变 → skip', () => {
   ).toBe(true)
 })
 
+it('shouldSkipDataPipeline: raw checksum 同（数据未变）→ skip，即使 updatedAt 因重新 fetch 前进', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-25',
+      existingHash: 'abc',
+      nextUpdatedAt: '2026-07-28',
+      nextHash: 'abc',
+      existingRawChecksum: 3421668139,
+      nextRawChecksum: 3421668139,
+    }),
+  ).toBe(true)
+})
+
+it('shouldSkipDataPipeline: raw checksum 变（数据真更新）→ 不 skip', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-25',
+      existingHash: 'abc',
+      nextUpdatedAt: '2026-07-28',
+      nextHash: 'abc',
+      existingRawChecksum: 3421668139,
+      nextRawChecksum: 9999999999,
+    }),
+  ).toBe(false)
+})
+
+it('shouldSkipDataPipeline: 无 rawChecksum（旧 version.json）→ fallback updatedAt 判断', () => {
+  expect(
+    shouldSkipDataPipeline({
+      existingUpdatedAt: '2026-07-28',
+      existingHash: 'abc',
+      nextUpdatedAt: '2026-07-28',
+      nextHash: 'abc',
+    }),
+  ).toBe(true)
+})
+
 it('shouldSkipDataPipeline: existingHash 非字符串（脏数据）→ 不 skip', () => {
   expect(
     shouldSkipDataPipeline({

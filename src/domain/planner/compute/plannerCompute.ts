@@ -1,10 +1,12 @@
 import { buildPlannerRecommendation, evaluateFormation } from '../recommendationEngine'
-import type { FormationEvaluation, PlannerRecommendationOptions } from '../recommendationEngine'
+import type {
+  FormationEvaluation,
+  PlannerEvaluateInput,
+  PlannerRecommendInput,
+} from '../recommendationEngine'
 import type { ResolvedHeroAbilityProfile } from '../../abilities/abilityModel'
 import type { ResolvedPlannerScenarioModel } from '../plannerModel'
 import type { PlannerCollections, PlannerRecommendation } from '../recommendationTypes'
-import type { Variant } from '../../types'
-import type { UserProfileSnapshot } from '../../user-profile/types'
 
 // === Worker 通信协议（UI ↔ worker 消息） ===
 // init 一次性把大数据（plannerHeroes + plannerScenarios，~17.5M）发进 worker 缓存；
@@ -17,20 +19,13 @@ export interface PlannerComputeInitMessage {
   plannerScenarios: ResolvedPlannerScenarioModel[]
 }
 
-export interface PlannerComputeRecommendMessage {
+export interface PlannerComputeRecommendMessage extends PlannerRecommendInput {
   type: 'recommend'
-  variant: Variant | null
-  profileSnapshot: UserProfileSnapshot | null
-  options: PlannerRecommendationOptions
   requestId: number
 }
 
-export interface PlannerComputeEvaluateMessage {
+export interface PlannerComputeEvaluateMessage extends PlannerEvaluateInput {
   type: 'evaluate'
-  variant: Variant | null
-  profileSnapshot: UserProfileSnapshot | null
-  placements: Record<string, string>
-  options: PlannerRecommendationOptions
   requestId: number
 }
 
@@ -63,17 +58,8 @@ export interface PlannerComputeRunner {
    * sync 实现也缓存（主线程 engine 调用需要）。
    */
   updateCollections(collections: PlannerCollections): void
-  recommend(
-    variant: Variant | null,
-    profileSnapshot: UserProfileSnapshot | null,
-    options: PlannerRecommendationOptions,
-  ): Promise<PlannerRecommendation>
-  evaluate(
-    variant: Variant | null,
-    profileSnapshot: UserProfileSnapshot | null,
-    placements: Record<string, string>,
-    options: PlannerRecommendationOptions,
-  ): Promise<FormationEvaluation>
+  recommend(input: PlannerRecommendInput): Promise<PlannerRecommendation>
+  evaluate(input: PlannerEvaluateInput): Promise<FormationEvaluation>
   dispose(): void
 }
 
@@ -86,27 +72,18 @@ export class SyncPlannerComputeRunner implements PlannerComputeRunner {
     this.collections = collections
   }
 
-  recommend(
-    variant: Variant | null,
-    profileSnapshot: UserProfileSnapshot | null,
-    options: PlannerRecommendationOptions,
-  ): Promise<PlannerRecommendation> {
+  recommend(input: PlannerRecommendInput): Promise<PlannerRecommendation> {
     if (!this.collections) {
       return Promise.reject(new Error('SyncPlannerComputeRunner: updateCollections 未调用'))
     }
-    return Promise.resolve(buildPlannerRecommendation(variant, this.collections, profileSnapshot, options))
+    return Promise.resolve(buildPlannerRecommendation({ ...input, collections: this.collections }))
   }
 
-  evaluate(
-    variant: Variant | null,
-    profileSnapshot: UserProfileSnapshot | null,
-    placements: Record<string, string>,
-    options: PlannerRecommendationOptions,
-  ): Promise<FormationEvaluation> {
+  evaluate(input: PlannerEvaluateInput): Promise<FormationEvaluation> {
     if (!this.collections) {
       return Promise.reject(new Error('SyncPlannerComputeRunner: updateCollections 未调用'))
     }
-    return Promise.resolve(evaluateFormation(variant, this.collections, profileSnapshot, placements, options))
+    return Promise.resolve(evaluateFormation({ ...input, collections: this.collections }))
   }
 
   dispose(): void {
@@ -149,21 +126,12 @@ export class WorkerPlannerComputeRunner implements PlannerComputeRunner {
     } satisfies PlannerComputeInitMessage)
   }
 
-  recommend(
-    variant: Variant | null,
-    profileSnapshot: UserProfileSnapshot | null,
-    options: PlannerRecommendationOptions,
-  ): Promise<PlannerRecommendation> {
-    return this.dispatch<PlannerRecommendation>({ type: 'recommend', variant, profileSnapshot, options })
+  recommend(input: PlannerRecommendInput): Promise<PlannerRecommendation> {
+    return this.dispatch<PlannerRecommendation>({ type: 'recommend', ...input })
   }
 
-  evaluate(
-    variant: Variant | null,
-    profileSnapshot: UserProfileSnapshot | null,
-    placements: Record<string, string>,
-    options: PlannerRecommendationOptions,
-  ): Promise<FormationEvaluation> {
-    return this.dispatch<FormationEvaluation>({ type: 'evaluate', variant, profileSnapshot, placements, options })
+  evaluate(input: PlannerEvaluateInput): Promise<FormationEvaluation> {
+    return this.dispatch<FormationEvaluation>({ type: 'evaluate', ...input })
   }
 
   private dispatch<T extends PlannerRecommendation | FormationEvaluation>(
@@ -249,8 +217,19 @@ export function processPlannerComputeInbound(
   const requestId = message.requestId
   try {
     const result = message.type === 'recommend'
-      ? buildPlannerRecommendation(message.variant, collections, message.profileSnapshot, message.options)
-      : evaluateFormation(message.variant, collections, message.profileSnapshot, message.placements, message.options)
+      ? buildPlannerRecommendation({
+          variant: message.variant,
+          collections,
+          profileSnapshot: message.profileSnapshot,
+          options: message.options,
+        })
+      : evaluateFormation({
+          variant: message.variant,
+          collections,
+          profileSnapshot: message.profileSnapshot,
+          placements: message.placements,
+          options: message.options,
+        })
     return { type: 'result', requestId, ok: true, result }
   } catch (error) {
     return { type: 'result', requestId, ok: false, error: error instanceof Error ? error.message : String(error) }

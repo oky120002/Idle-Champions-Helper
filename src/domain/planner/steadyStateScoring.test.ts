@@ -382,6 +382,65 @@ describe('steady state scoring', () => {
     expect(compareGameNumbers(withGlobalBuff.objectiveValue, withoutGlobalBuff.objectiveValue)).toBeGreaterThan(0)
   })
 
+  describe('aggregateProjection 投影模式（约束②）', () => {
+    it('formation-buff 只取阵型内聚合，排除 baseDamage/levelCurve/globalBuff', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const support = createHero('buf', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 200, rawEffect: 'global_dps,200', source: 'official-parsed' },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['buf', support]])
+      const placements = { s1: 'carry', s2: 'buf' }
+
+      // absolute-dps（默认）：含 baseDamage/levelCurve/globalBuff → 10 × 1.06 × damagePool(3) × 5 = 159
+      const abs = scoreFormation({ placements, heroesById, scenario, globalBuffMultiplier: 5 })
+      expect(abs.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 3 * 5, 3)
+      expect(abs.areaEstimate).not.toBeNull()
+
+      // formation-buff：只 damagePool×crit×vuln = 3，与 baseDamage/levelCurve/globalBuff 无关
+      const fb = scoreFormation({ placements, heroesById, scenario, globalBuffMultiplier: 5, aggregateProjection: 'formation-buff' })
+      expect(fb.objectiveValue.toNumber()).toBeCloseTo(3, 6)
+      // formation-buff 模式 bestCarryDps 是聚合倍率（非真实 DPS），areaEstimate 无意义 → null
+      expect(fb.areaEstimate).toBeNull()
+    })
+
+    it('formation-buff 不受 globalBuff / baseDamage 影响（外部加成+绝对基线都排除）', () => {
+      const support = createHero('buf', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 200, rawEffect: 'global_dps,200', source: 'official-parsed' },
+        ],
+      })
+      const placements = { s1: 'carry', s2: 'buf' }
+
+      const base = scoreFormation({
+        placements,
+        heroesById: new Map([['carry', createHero('carry', { baseDamage: 10 })], ['buf', support]]),
+        scenario,
+        globalBuffMultiplier: 5,
+        aggregateProjection: 'formation-buff',
+      })
+      // 改 globalBuff（外部加成）→ formation-buff 不变
+      const noGlobal = scoreFormation({
+        placements,
+        heroesById: new Map([['carry', createHero('carry', { baseDamage: 10 })], ['buf', support]]),
+        scenario,
+        aggregateProjection: 'formation-buff',
+      })
+      expect(noGlobal.objectiveValue.toNumber()).toBeCloseTo(base.objectiveValue.toNumber(), 6)
+      // 改 baseDamage（绝对基线）→ formation-buff 不变
+      const bigBase = scoreFormation({
+        placements,
+        heroesById: new Map([['carry', createHero('carry', { baseDamage: 9999 })], ['buf', support]]),
+        scenario,
+        aggregateProjection: 'formation-buff',
+      })
+      expect(bigBase.objectiveValue.toNumber()).toBeCloseTo(base.objectiveValue.toNumber(), 6)
+    })
+  })
+
   describe('breakdown 结构化拆解', () => {
     it('carry-dps 输出 best carry 的完整加成拆解（baseDps/factors/pools/contributions）', () => {
       const carry = createHero('carry', {

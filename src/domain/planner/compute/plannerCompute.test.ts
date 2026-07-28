@@ -82,7 +82,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const promise = runner.recommend(null, null, {})
+    const promise = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     const last = fake.posted.at(-1)
     expect(last?.type).toBe('recommend')
     const requestId = requestIdOf(last)
@@ -96,7 +96,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const promise = runner.evaluate(null, null, {}, {})
+    const promise = runner.evaluate({ variant: null, profileSnapshot: null, placements: {}, options: {} })
     const requestId = requestIdOf(fake.posted.at(-1))
 
     const result = { result: null, layoutId: null, slots: [], scenarioRef: null, blocker: null } as FormationEvaluation
@@ -108,8 +108,8 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const p1 = runner.recommend(null, null, {})
-    const p2 = runner.recommend(null, null, {})
+    const p1 = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
+    const p2 = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     const id1 = requestIdOf(fake.posted[0])
     const id2 = requestIdOf(fake.posted[1])
     expect(id2).toBe(id1 + 1)
@@ -128,7 +128,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const promise = runner.recommend(null, null, {})
+    const promise = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     const requestId = requestIdOf(fake.posted.at(-1))
 
     fake.emit({ type: 'result', requestId, ok: false, error: 'boom' })
@@ -139,7 +139,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const promise = runner.recommend(null, null, {})
+    const promise = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     const requestId = requestIdOf(fake.posted.at(-1))
 
     // 过期 requestId（不在 pending 中）
@@ -154,7 +154,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const promise = runner.recommend(null, null, {})
+    const promise = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     runner.dispose()
 
     await expect(promise).rejects.toThrow('disposed')
@@ -165,8 +165,8 @@ describe('WorkerPlannerComputeRunner', () => {
     const fake = new FakeWorker()
     const runner = new WorkerPlannerComputeRunner(fake as unknown as Worker)
 
-    const p1 = runner.recommend(null, null, {})
-    const p2 = runner.evaluate(null, null, {}, {})
+    const p1 = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
+    const p2 = runner.evaluate({ variant: null, profileSnapshot: null, placements: {}, options: {} })
 
     fake.onerror?.({ message: 'import failed' } as ErrorEvent)
 
@@ -180,13 +180,13 @@ describe('SyncPlannerComputeRunner', () => {
     const runner = new SyncPlannerComputeRunner()
     runner.updateCollections(emptyCollections)
 
-    const result = await runner.recommend(null, null, {})
+    const result = await runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     expect(result).toMatchObject({ result: null, results: [], blocker: null })
   })
 
   it('未 updateCollections 直接 recommend 抛错', async () => {
     const runner = new SyncPlannerComputeRunner()
-    await expect(runner.recommend(null, null, {})).rejects.toThrow('updateCollections')
+    await expect(runner.recommend({ variant: null, profileSnapshot: null, options: {} })).rejects.toThrow('updateCollections')
   })
 })
 

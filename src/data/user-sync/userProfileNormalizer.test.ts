@@ -281,6 +281,11 @@ describe('user payload normalizer', () => {
       expect(snapshot.warnings).toEqual(expect.arrayContaining([
         'campaign details imported: 1',
       ]))
+      // blessing 数据通道：campaignDetails.campaigns（favor/blessings）带进 snapshot，供适配层聚合进 globalBuffMultiplier。
+      const campaigns = snapshot.campaigns ?? []
+      expect(campaigns).toHaveLength(1)
+      expect(campaigns[0]?.campaignId).toBe('1')
+      expect(campaigns[0]?.favor).toBe('1.50e92')
     })
   })
 })

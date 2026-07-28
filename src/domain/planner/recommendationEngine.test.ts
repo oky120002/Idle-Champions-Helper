@@ -160,7 +160,7 @@ const collections: PlannerCollections = {
 
 describe('planner recommendation engine', () => {
   it('无用户快照时返回 missing-profile blocker', () => {
-    const recommendation = buildPlannerRecommendation(selectedVariant, collections, null)
+    const recommendation = buildPlannerRecommendation({ variant: selectedVariant, collections, profileSnapshot: null })
 
     expect(recommendation.blocker).toBe('missing-profile')
     expect(recommendation.result).toBeNull()
@@ -169,8 +169,11 @@ describe('planner recommendation engine', () => {
   })
 
   it('all-hypothetical 模式无个人快照也能生成推荐（DPS 模拟不依赖个人数据）', () => {
-    const recommendation = buildPlannerRecommendation(selectedVariant, collections, null, {
-      candidateMode: 'all-hypothetical',
+    const recommendation = buildPlannerRecommendation({
+      variant: selectedVariant,
+      collections,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical' },
     })
 
     expect(recommendation.blocker).not.toBe('missing-profile')
@@ -179,13 +182,13 @@ describe('planner recommendation engine', () => {
   })
 
   it('evaluateFormation 在 all-hypothetical 模式无个人快照也能评估指定阵型', () => {
-    const evaluation = evaluateFormation(
-      selectedVariant,
+    const evaluation = evaluateFormation({
+      variant: selectedVariant,
       collections,
-      null,
-      { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
-      { candidateMode: 'all-hypothetical' },
-    )
+      profileSnapshot: null,
+      placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
+      options: { candidateMode: 'all-hypothetical' },
+    })
 
     expect(evaluation.blocker).not.toBe('missing-profile')
     expect(evaluation.result).not.toBeNull()
@@ -208,8 +211,11 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(selectedVariant, collections, snapshot, {
-      computationMode: 'full',
+    const recommendation = buildPlannerRecommendation({
+      variant: selectedVariant,
+      collections,
+      profileSnapshot: snapshot,
+      options: { computationMode: 'full' },
     })
 
     expect(recommendation.blocker).toBeNull()
@@ -235,13 +241,13 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const evaluation = evaluateFormation(
-      selectedVariant,
+    const evaluation = evaluateFormation({
+      variant: selectedVariant,
       collections,
-      snapshot,
-      { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
-      { scoringMode: 'team-gold' },
-    )
+      profileSnapshot: snapshot,
+      placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
+      options: { scoringMode: 'team-gold' },
+    })
 
     expect(evaluation.result).not.toBeNull()
     const zh = evaluation.result?.explanations.map((line) => line.zh).join('') ?? ''
@@ -260,8 +266,11 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(lockedSlotVariant, collections, snapshot, {
-      computationMode: 'full',
+    const recommendation = buildPlannerRecommendation({
+      variant: lockedSlotVariant,
+      collections,
+      profileSnapshot: snapshot,
+      options: { computationMode: 'full' },
     })
 
     expect(recommendation.blocker).toBeNull()
@@ -314,8 +323,11 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(occupiedVariant, occupiedCollections, snapshot, {
-      computationMode: 'full',
+    const recommendation = buildPlannerRecommendation({
+      variant: occupiedVariant,
+      collections: occupiedCollections,
+      profileSnapshot: snapshot,
+      options: { computationMode: 'full' },
     })
 
     expect(recommendation.blocker).toBeNull()
@@ -367,8 +379,11 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(allowedVariant, allowedCollections, snapshot, {
-      computationMode: 'full',
+    const recommendation = buildPlannerRecommendation({
+      variant: allowedVariant,
+      collections: allowedCollections,
+      profileSnapshot: snapshot,
+      options: { computationMode: 'full' },
     })
 
     expect(recommendation.blocker).toBeNull()
@@ -423,8 +438,11 @@ describe('planner recommendation engine', () => {
       ],
     })
 
-    const recommendation = buildPlannerRecommendation(forcedVariant, forcedCollections, snapshot, {
-      computationMode: 'full',
+    const recommendation = buildPlannerRecommendation({
+      variant: forcedVariant,
+      collections: forcedCollections,
+      profileSnapshot: snapshot,
+      options: { computationMode: 'full' },
     })
 
     expect(recommendation.blocker).toBeNull()
@@ -446,7 +464,7 @@ describe('evaluateFormation 指定阵型评估', () => {
   })
 
   it('无快照时返回 missing-profile blocker', () => {
-    const evaluation = evaluateFormation(selectedVariant, collections, null, { s1: 'bruenor' })
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: null, placements: { s1: 'bruenor' } })
     expect(evaluation.blocker).toBe('missing-profile')
     expect(evaluation.result).toBeNull()
     expect(evaluation.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
@@ -456,7 +474,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // 刻意放一个非最优阵型：验证 evaluateFormation 不改成搜索结果。
     const placements = { s1: 'bruenor', s2: 'asharra', s3: 'celeste', s4: 'nayeli' }
 
-    const evaluation = evaluateFormation(selectedVariant, collections, snapshot, placements)
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: snapshot, placements })
 
     expect(evaluation.blocker).toBeNull()
     expect(evaluation.layoutId).toBe('layout-catacombs')
@@ -481,7 +499,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // bruenor 与 asharra 同属 seat 1，放不同槽位 → seat 冲突（evaluate 不搜索、不丢弃用户阵型）。
     const placements = { s1: 'bruenor', s2: 'asharra' }
 
-    const evaluation = evaluateFormation(selectedVariant, collections, snapshot, placements)
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: snapshot, placements })
 
     expect(evaluation.blocker).toBeNull()
     expect(evaluation.result?.warnings.some((warning) => warning.includes('冲突'))).toBe(true)
@@ -523,11 +541,11 @@ describe('evaluateFormation 指定阵型评估', () => {
       plannerScenarios: [allowedScenario],
     }
     // asharra 不在白名单
-    const evaluation = evaluateFormation(allowedVariant, allowedCollections, snapshot, { s1: 'asharra' })
+    const evaluation = evaluateFormation({ variant: allowedVariant, collections: allowedCollections, profileSnapshot: snapshot, placements: { s1: 'asharra' } })
 
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('允许'))).toBe(true)
     // 白名单内的 bruenor 不触发
-    const bruenorEval = evaluateFormation(allowedVariant, allowedCollections, snapshot, { s1: 'bruenor' })
+    const bruenorEval = evaluateFormation({ variant: allowedVariant, collections: allowedCollections, profileSnapshot: snapshot, placements: { s1: 'bruenor' } })
     expect(bruenorEval.result?.warnings.some((warning) => warning.includes('bruenor') && warning.includes('允许'))).toBe(false)
   })
 
@@ -536,7 +554,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
     })
     // asharra 未在快照中（snapshot 只拥有 bruenor）→ 按 level 1 估算
-    const evaluation = evaluateFormation(selectedVariant, collections, smallSnapshot, { s1: 'asharra' })
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: smallSnapshot, placements: { s1: 'asharra' } })
 
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(true)
   })
@@ -545,13 +563,13 @@ describe('evaluateFormation 指定阵型评估', () => {
     const smallSnapshot = createUserProfileSnapshot({
       ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
     })
-    const evaluation = evaluateFormation(
-      selectedVariant,
+    const evaluation = evaluateFormation({
+      variant: selectedVariant,
       collections,
-      smallSnapshot,
-      { s1: 'asharra' },
-      { candidateMode: 'all-hypothetical' },
-    )
+      profileSnapshot: smallSnapshot,
+      placements: { s1: 'asharra' },
+      options: { candidateMode: 'all-hypothetical' },
+    })
 
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(false)
   })

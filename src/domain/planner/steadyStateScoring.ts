@@ -18,9 +18,19 @@ import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
  */
 export type ScoringMode = 'carry-dps' | 'team-gold'
 
+/**
+ * 投影模式（约束②，见 architecture.md「投影模式」）——把阵型加成聚合投影成 objectiveValue 的方式。
+ * - 'absolute-dps'（默认）：baseDamage × levelCurve × 全因子（damagePool×crit×vuln×globalBuff×equipmentAdj）。
+ *   绝对量未校准（baseDamage/BUD 未校准），作 BUD 校准回归基线。
+ * - 'formation-buff'：只阵型内聚合 damagePool×crit×vuln，**不含** baseDamage/levelCurve/外部加成。
+ *   阵型模拟器本质是阵型内 signal 聚合，外部全局加成不属于阵型（游戏只给全量数据故加开关）。
+ * 禁复用 ComputationMode（已用于 beam-search 候选裁剪 `computationMode.ts`，两者正交）。
+ */
+export type AggregateProjection = 'absolute-dps' | 'formation-buff'
+
 // 无 profile（用户未导入存档）或英雄不在 ownedHeroes 时 carryLevel 回退 1。
 // 此处 levelCurve = rate^1 = 英雄自身 costCurve rate（约 1.05–1.1），carryDps 仍含英雄间
-// 增长率差异但无法反映高等级 scale；属 MVP 近似（见 bud-verification.md），
+// 增长率差异但无法反映高等级 scale；属 MVP 近似（见 docs/research/data/planner/bud-calibration.md），
 // 精确化依赖 profile heroLevels + 官方 DPS 增长曲线。
 const DEFAULT_CARRY_LEVEL = 1
 
@@ -39,7 +49,7 @@ export interface ScoringInput {
   /**
    * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
    * 把理论 loot 基线缩放到玩家实际装备；默认无（=1，保持理论基线）。
-   * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustment 解析后传入。
+   * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustmentByHero 解析后传入。
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */
@@ -50,6 +60,12 @@ export interface ScoringInput {
    * 由 UI 让用户按当前冒险最高区域手动设定（如 area×10）。
    */
   manualStackCount?: number | undefined
+  /**
+   * 投影模式（约束②）；默认 'absolute-dps'。
+   * 'formation-buff' 时 objectiveValue = 阵型内聚合 damagePool×crit×vuln（不乘 baseDamage/levelCurve/globalBuff/equipmentAdj），
+   * 且跳过 areaEstimate（非真实 DPS，BUD 估算无意义）。
+   */
+  aggregateProjection?: AggregateProjection | undefined
 }
 
 export interface SimulationFactor {
@@ -248,6 +264,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
       heroesById: input.heroesById,
       dimension: 'gold',
       manualStackCount: input.manualStackCount,
+      supportLevel: input.heroLevels?.get(entry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
     })
 
     warnings.push(...fit.warnings)
@@ -293,6 +310,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     return scoreTeamGold(placedEntries, input)
   }
 
+  const aggregateProjection = input.aggregateProjection ?? 'absolute-dps'
   let bestCarryDps: GameNumberValue = ZERO
   let bestWarnings: string[] = []
   let bestCarryHeroId: string | null = null
@@ -341,6 +359,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         dimension: ['damage', 'crit', 'vulnerability'],
         aggregatePools: true,
         manualStackCount: input.manualStackCount,
+        supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
       })
       warnings.push(...fit.warnings)
       // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
@@ -389,11 +408,11 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const globalBuff = input.globalBuffMultiplier ?? 1
     const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1
     const damagePool = productOfPoolMultipliers(sharedPools)
-    const carryDps = computeCarryDps(
-      carryEntry.hero,
-      carryLevel,
-      damagePool * critFactor * vulnFactor * globalBuff * equipmentAdjustment,
-    )
+    const formationAggregate = damagePool * critFactor * vulnFactor
+    // 投影模式（约束②）：formation-buff 只取阵型内聚合，不乘 baseDamage/levelCurve/外部加成。
+    const carryDps = aggregateProjection === 'formation-buff'
+      ? new Decimal(formationAggregate)
+      : computeCarryDps(carryEntry.hero, carryLevel, formationAggregate * globalBuff * equipmentAdjustment)
 
     if (compareGameNumbers(carryDps, bestCarryDps) > 0) {
       bestCarryDps = carryDps
@@ -415,7 +434,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   }
 
   let areaEstimate: AreaEstimationResult | null = null
-  if (bestCarryHeroId) {
+  // formation-buff 模式 bestCarryDps 是阵型聚合倍率（非真实 DPS），BUD/推图层数估算无意义，跳过。
+  if (bestCarryHeroId && aggregateProjection === 'absolute-dps') {
     const bestCarryEntry = placedEntries.find((entry) => entry.hero.heroId === bestCarryHeroId)
     if (bestCarryEntry) {
       const survivalPools = new Map<string, AggregatedPool>()
@@ -430,6 +450,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           heroesById: input.heroesById,
           dimension: 'survival',
           manualStackCount: input.manualStackCount,
+          supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
         })
         mergePools(survivalPools, fit.pools)
       }

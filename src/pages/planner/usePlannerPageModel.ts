@@ -7,6 +7,8 @@ import { DEFAULT_MANUAL_STACK_COUNT } from '../../domain/planner/placementFit'
 import type { PlannerRecommendationOptions } from '../../domain/planner/recommendationEngine'
 import type { PlannerRecommendation } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
+import { computeEquipmentAdjustmentByHero } from '../../domain/simulator/equipmentMult'
+import { computeActualPatronPerkGlobalBuff } from '../../domain/simulator/patronPerkGlobalBuff'
 import { usePlannerCollections } from './usePlannerCollections'
 import { usePlannerRecommendation } from './usePlannerCompute'
 
@@ -24,6 +26,8 @@ export function usePlannerPageModel() {
   const {
     collections,
     profileSnapshot,
+    lootCatalog,
+    patronPerkCatalog,
     championById,
     selectedVariantId,
     loadState,
@@ -49,10 +53,35 @@ export function usePlannerPageModel() {
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
     [collections.variants, selectedVariantId],
   )
+  // 装备加成（per-hero map）：profileSnapshot.lootBySlot + loot-catalog → equipmentAdjustmentByHero。
+  // 未导入存档（profileSnapshot=null）→ 空 map → scoreFormation 缺省 ?? 1 → 无加成（向后兼容）。
+  const equipmentAdjustmentByHero = useMemo(
+    () => profileSnapshot && lootCatalog.length > 0
+      ? computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
+      : new Map<string, number>(),
+    [profileSnapshot, lootCatalog],
+  )
+  // patron perk actual 全局 buff（用户实际购买等级，非满级理论值）。
+  // 未导入存档（无 patronPerks）→ 1（无加成，向后兼容）。
+  const globalBuffMultiplier = useMemo(
+    () => profileSnapshot?.patronPerks
+      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog)
+      : 1,
+    [profileSnapshot, patronPerkCatalog],
+  )
   // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(
-    () => ({ scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots }),
-    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots],
+    () => ({
+      scoringMode,
+      candidateMode,
+      computationMode,
+      manualStackCount,
+      lockedCarryHeroId,
+      lockedSlots,
+      equipmentAdjustmentByHero,
+      globalBuffMultiplier,
+    }),
+    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, globalBuffMultiplier],
   )
   const { result, loading: recommendLoading, error: recommendError } = usePlannerRecommendation(
     runner,

@@ -44,10 +44,21 @@ export interface ImportedFormationSave {
   isFavorite: boolean
 }
 
+/** 每个战役的 favor 与 blessings（账号级累积；global blessing 聚合进 globalBuffMultiplier 用，消费侧 phased）。 */
+export interface CampaignFavorBlessings {
+  campaignId: string
+  favor: string
+  blessings: Record<string, number>
+}
+
 export interface UserProfileSnapshot {
   schemaVersion: 1
   ownedHeroes: OwnedHero[]
   importedFormationSaves: ImportedFormationSave[]
+  /** 各战役 favor/blessings（normalize 从 campaignDetails 保留；旧 snapshot 无此字段，消费侧 `?? []` 兼容）。 */
+  campaigns?: CampaignFavorBlessings[]
+  /** patron perk 已购等级（perk_id → level，来自 userdetails.patron_perks）；旧 snapshot 无此字段，消费侧 `?? {}` 兼容。 */
+  patronPerks?: Record<string, number>
   updatedAt: string
   warnings: string[]
   legendaryLevelCap: number

@@ -24,6 +24,8 @@ import {
   removeEvaluatePlacement,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
+import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
+import { computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -50,6 +52,8 @@ export function PlannerEvaluatePage() {
   const {
     collections,
     profileSnapshot,
+    lootCatalog,
+    patronPerkCatalog,
     championById,
     selectedVariantId,
     selectVariantId: selectVariantIdBase,
@@ -79,9 +83,23 @@ export function PlannerEvaluatePage() {
   // runner 单例：浏览器用 worker 卸载评分（拖拽重算不冻 UI）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
   useEffect(() => () => runner.dispose(), [runner])
+  // 装备加成（per-hero map）：未导入存档 → 空 map → 无加成（向后兼容）。
+  const equipmentAdjustmentByHero = useMemo(
+    () => profileSnapshot && lootCatalog.length > 0
+      ? computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
+      : new Map<string, number>(),
+    [profileSnapshot, lootCatalog],
+  )
+  // patron perk actual 全局 buff：未导入存档 → 1（无加成，向后兼容）。
+  const globalBuffMultiplier = useMemo(
+    () => profileSnapshot?.patronPerks
+      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog)
+      : 1,
+    [profileSnapshot, patronPerkCatalog],
+  )
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount }),
-    [candidateMode, scoringMode, manualStackCount],
+    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier }),
+    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -118,11 +136,17 @@ export function PlannerEvaluatePage() {
   async function handleFillRemaining() {
     setFilling(true)
     try {
-      const recommendation = await runner.recommend(selectedVariant, profileSnapshot, {
-        scoringMode,
-        candidateMode,
-        lockedSlots,
-        manualStackCount,
+      const recommendation = await runner.recommend({
+        variant: selectedVariant,
+        profileSnapshot,
+        options: {
+          scoringMode,
+          candidateMode,
+          lockedSlots,
+          manualStackCount,
+          equipmentAdjustmentByHero,
+          globalBuffMultiplier,
+        },
       })
       if (recommendation.result) {
         setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })

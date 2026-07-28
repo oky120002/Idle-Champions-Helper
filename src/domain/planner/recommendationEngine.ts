@@ -19,7 +19,7 @@ import {
   type PlannerRecommendationBlocker,
   type PlannerResult,
 } from './recommendationTypes'
-import { scoreFormation, type ScoringMode } from './steadyStateScoring'
+import { scoreFormation, type AggregateProjection, type ScoringMode } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
 
 const PLANNER_TOP_K = 3
@@ -184,12 +184,47 @@ export interface PlannerRecommendationOptions {
   globalBuffMultiplier?: number
   /**
    * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
-   * 由调用方从 `loot-catalog.json` + owned loot 经 computeEquipmentAdjustment 解析后传入；
+   * 由调用方从 `loot-catalog.json` + profileSnapshot.ownedHeroes[].lootBySlot 经 computeEquipmentAdjustmentByHero 算后传入；
    * 默认无（=1，保持 理论 loot 基线）。UI 接入（owned 装备读取）在
    */
   equipmentAdjustmentByHero?: Map<string, number>
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
+  /**
+   * 投影模式（约束②）；默认 'absolute-dps'。透传 scoreFormation。
+   * 'formation-buff' = 只阵型内聚合，不乘 baseDamage/levelCurve/外部加成（见 architecture.md「投影模式」）。
+   */
+  aggregateProjection?: AggregateProjection
+}
+
+/**
+ * 统一入参（约束③：所有数据外部传入，见 architecture.md「入参契约」）。
+ * engine 层全合并 variant + collections + profileSnapshot + placements + options 为单对象。
+ */
+export interface PlannerInput {
+  variant: Variant | null
+  collections: PlannerCollections
+  profileSnapshot: UserProfileSnapshot | null
+  /** 仅 evaluateFormation 用；buildPlannerRecommendation 搜索时不传。 */
+  placements?: Record<string, string>
+  options?: PlannerRecommendationOptions | undefined
+}
+
+/**
+ * Runner per-call 入参（collections 走 updateCollections 缓存通道，不在此——worker 性能：
+ * 避免每次 postMessage 重传全英雄+场景）。Runner 内部把它与缓存的 collections 合成 PlannerInput 调 engine。
+ */
+export interface PlannerEvaluateInput {
+  variant: Variant | null
+  profileSnapshot: UserProfileSnapshot | null
+  placements: Record<string, string>
+  options?: PlannerRecommendationOptions | undefined
+}
+
+export interface PlannerRecommendInput {
+  variant: Variant | null
+  profileSnapshot: UserProfileSnapshot | null
+  options?: PlannerRecommendationOptions | undefined
 }
 
 /**
@@ -238,13 +273,13 @@ export interface FormationEvaluation {
  * 与 buildPlannerRecommendation（beam search 找最佳）对应：本函数不搜索，直接对给定 placements 计算。
  * 用于 UI 调整英雄后重算当前阵型、CLI 指定阵型输出 JSON。合法性违规作为 warning 附加（仍出拆解）。
  */
-export function evaluateFormation(
-  selectedVariant: Variant | null,
-  collections: PlannerCollections,
-  profileSnapshot: UserProfileSnapshot | null,
-  placements: Record<string, string>,
-  options: PlannerRecommendationOptions = {},
-): FormationEvaluation {
+export function evaluateFormation({
+  variant: selectedVariant,
+  collections,
+  profileSnapshot,
+  placements = {},
+  options = {},
+}: PlannerInput): FormationEvaluation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
   const candidateMode = options.candidateMode ?? 'owned-only'
   const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
@@ -321,6 +356,7 @@ export function evaluateFormation(
     globalBuffMultiplier: options.globalBuffMultiplier,
     equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
     manualStackCount: options.manualStackCount,
+    aggregateProjection: options.aggregateProjection,
   })
 
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
@@ -352,12 +388,12 @@ export function evaluateFormation(
   }
 }
 
-export function buildPlannerRecommendation(
-  selectedVariant: Variant | null,
-  collections: PlannerCollections,
-  profileSnapshot: UserProfileSnapshot | null,
-  options: PlannerRecommendationOptions = {},
-): PlannerRecommendation {
+export function buildPlannerRecommendation({
+  variant: selectedVariant,
+  collections,
+  profileSnapshot,
+  options = {},
+}: PlannerInput): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
   const candidateMode = options.candidateMode ?? 'owned-only'
   const computationMode = options.computationMode ?? 'p50'
@@ -477,6 +513,7 @@ export function buildPlannerRecommendation(
         globalBuffMultiplier: options.globalBuffMultiplier,
         equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
         manualStackCount: options.manualStackCount,
+        aggregateProjection: options.aggregateProjection,
       })
     },
   })

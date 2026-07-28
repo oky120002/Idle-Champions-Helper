@@ -73,7 +73,7 @@ async function main() {
   )
 
   // 预热（JIT / cache），不计入
-  buildPlannerRecommendation(picked[0]!, collections, profile, {})
+  buildPlannerRecommendation({ variant: picked[0]!, collections, profileSnapshot: profile, options: {} })
 
   // 三档计算模式对比：full（全量）/ p90 / p50（每席位按收益取前比例）
   const MODES = ['full', 'p90', 'p50'] as const
@@ -83,7 +83,7 @@ async function main() {
   for (const variant of picked) {
     for (const mode of MODES) {
       const t0 = performance.now()
-      const rec = buildPlannerRecommendation(variant, collections, profile, { computationMode: mode })
+      const rec = buildPlannerRecommendation({ variant, collections, profileSnapshot: profile, options: { computationMode: mode } })
       const dt = performance.now() - t0
       if (rec.result) byMode[mode].push(dt)
       else if (mode === 'full') blocked += 1
@@ -105,13 +105,13 @@ async function main() {
 
   // 单次评分耗时（evaluateFormation ≈ 一次 scoreFormation + 合法性/解释收口）
   const sampleVariant = picked[0]!
-  const sampleRec = buildPlannerRecommendation(sampleVariant, collections, profile, {})
+  const sampleRec = buildPlannerRecommendation({ variant: sampleVariant, collections, profileSnapshot: profile, options: {} })
   const evalTimes: number[] = []
   if (sampleRec.result) {
     const placements = sampleRec.result.placements
     for (let i = 0; i < 30; i++) {
       const t0 = performance.now()
-      evaluateFormation(sampleVariant, collections, profile, placements, {})
+      evaluateFormation({ variant: sampleVariant, collections, profileSnapshot: profile, placements, options: {} })
       evalTimes.push(performance.now() - t0)
     }
     process.stdout.write(`\n=== 单次评分 (evaluateFormation) median=${fmt(median(evalTimes))}（30 次）===\n`)

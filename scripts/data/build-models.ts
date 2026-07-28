@@ -103,7 +103,10 @@ function buildOfficialHeroModel(
     const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
 
     if (parsed.ok) {
-      const signal = attachSignalSemantics(parsed.signal, entry.effect)
+      const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)
+      // 等级解锁门控：普通 entry 从 EffectEntry.requiredLevel 补；preset/derived signal 已带
+      // （preset spread targetSignal，target 的 requiredLevel 经 resolveEntrySignal 写入）。
+      const signal = { ...semanticSignal, requiredLevel: semanticSignal.requiredLevel ?? entry.requiredLevel }
       if (parsed.bucket === 'carrySignals') {
         carrySignals.push(signal)
       } else {

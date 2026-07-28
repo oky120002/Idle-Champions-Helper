@@ -4,6 +4,69 @@
 
 planner 是个人成长导向阵型决策台的核心模块：在用户当前拥有英雄、装备、feat、传奇、专精与场景限制下，自动推荐较优的上场英雄与站位。不做黑盒全自动最优解，按本地优先、可解释、可验证原则，输出可追溯的推荐结果与加成拆解。
 
+## 计算原则
+
+planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最优配置，最大化 DPS 队 / 金币队 / 速度队三种效益（见根 `README.md`「根本目标」）。以下原则是所有 planner 开发的硬约束，不准偏离。
+
+### 投影模式（约束②）
+
+阵型模拟器本质是「阵型内 signal 聚合器」，外部全局加成（恩赐祝福 / 赞助者）不属于阵型。因游戏只给全量数据、无纯阵型数据，加入参开关 `aggregateProjection`：
+
+- `'formation-buff'`（默认）：`objectiveValue` = 阵型内 signal 聚合因子（damagePool × crit × vuln），**不含** baseDamage / levelCurve / 外部加成。对照止于阵型倍率。
+- `'absolute-dps'`：`objectiveValue` = baseDamage × levelCurve × damagePool × crit × vuln × globalBuff × equipmentAdj。绝对量未校准（baseDamage / BUD 未校准），仅作 BUD 校准回归基线。
+
+命名锁：**禁止复用 `ComputationMode`**——该名已用于 beam-search 候选裁剪（`computationMode.ts`，`full|p90|…|p50`），两者正交。
+
+### 外部加成入参契约（约束③）
+
+计算器不管调用方登没登录，只看入参 `globalBuffMultiplier` 是否非 undefined：传了算、没传默认 1（`steadyStateScoring.ts` scoreFormation 内 `?? 1`）。是否传由调用方决定（UI 开关 / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile 的 blessing/favor**——blessing/favor 已由 `userProfileNormalizer` 保留进 profile（`blessings` / `favor` 字段），按约束③计算器不直接读，由适配层聚合成 `globalBuffMultiplier` 传入（生产侧接入 phased；oracle 度量回路已建，见 `damageReferenceVerification`）。
+
+### Hermetic 边界（审计结论）
+
+`src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
+
+- **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`（域不向外层依赖）。
+- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `break_eternity.js`。
+- 所有数据经适配层 `usePlannerCollections`（唯一调 `loadCollection` 处）→ 装入 `PlannerCollections` → 经 `runner.updateCollections()` 喂入。
+
+由 `src/domain/planner/hermeticBoundary.test.ts` 守护，违规即 CI fail。
+
+### 数据分类铁律
+
+计算器消费的数据严格分两类，决定「加载方式」vs「入参方式」：
+
+- **系统基础数据**（不可变游戏规则：技能解锁等级、buff 机制定义、英雄基础属性 / cost 曲线、patron perk 定义、专长定义、装备目录、怪物 / BUD 曲线…）：**不是 per-call 入参**。启动时一次性加载或用到时按需缓存，进 `PlannerCollections` 数据供给通道。适配层（`usePlannerCollections` / data-client）负责加载与缓存。
+- **动态状态**（随游戏开展变动：当前英雄等级、当前阵型、当前场景 / 层数、patron 选择、祝福量、专长 / feat / familiar 选择、manualStackCount…）：**才是 per-call 入参**（`PlannerEvaluateInput`）。
+
+例如「等级解锁门控」：解锁等级是**基础数据**（build 把 `required_level` 烘进 `HeroAbilitySignal`），英雄当前等级是**动态入参**（`heroLevels`，已有）；计算器按 `requiredLevel <= heroLevel` 过滤 signal，**不引入新入参**。
+
+### 入参契约（冻结清单）
+
+下表一次性登记全部入参，避免每次开发都「发现某参数没传」。`consumed`=已消费；`phased`=已登记待实现；nullable→可不传，非空→设默认。
+
+**A. 基础数据（加载 / 缓存进 PlannerCollections，非 per-call 入参）**
+
+| 字段 | 状态 |
+|---|---|
+| `variants` / `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
+| signal 解锁等级 `required_level` | consumed（已烘进 `HeroAbilitySignal.requiredLevel`，消费侧 evaluatePlacementFit 按 supportLevel 过滤） |
+| `global-buffs.json`（patron perk 定义） | consumed（已落盘） |
+| loot-catalog / 专长定义 / 怪物·BUD 曲线 | consumed（组件在） |
+
+**B. 动态状态（per-call 入参 PlannerEvaluateInput）**
+
+| 字段 | 状态 |
+|---|---|
+| `placements`（当前阵型）/ `variant`（场景 / objectiveArea / topology）/ `heroLevels`（每英雄当前等级） | consumed |
+| `scoringMode` / `candidateMode` / `computationMode` / `beamWidth` / `lockedCarryHeroId` / `lockedSlots` | consumed |
+| `manualStackCount`（当前层数假设） | consumed |
+| `globalBuffMultiplier`（外部加成）/ `equipmentAdjustmentByHero` | domain consumed、**phased** UI 接入 |
+| `aggregateProjection`（模式开关） | consumed（本轮新增） |
+| patron 选择 / blessing·favor 量 | **phased**（适配层聚合成 `globalBuffMultiplier` 传入，非直接入参） |
+| `perHeroSpecialization` / feat·familiar / modron 状态 | **phased**（待接入评分） |
+
+**后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
+
 ## 三层架构
 
 能力表达、加成聚合、优化目标分层是 planner 的核心设计原则：

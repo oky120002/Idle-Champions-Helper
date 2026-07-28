@@ -132,6 +132,8 @@ export interface NormalizeDefinitionsResult {
   outputDir: string
   versionFile: string
   updatedAt: string
+  /** raw 数据 checksum（稳定指纹，优先于 updatedAt 判断 raw 是否变化；CLAUDE.md §1.2）。 */
+  rawChecksum?: number | undefined
   /** 数据管线源码指纹（CLAUDE.md §1.2 增量跳过用）。 */
   pipelineHash: string
   /** 增量跳过（raw 未变 + 逻辑未变）时为 true，此时 counts 不重算。 */
@@ -165,6 +167,12 @@ function getUpdatedAt(rawDefinitions: RawDefinition): string {
   }
 
   return new Date().toISOString().slice(0, 10)
+}
+
+// raw 数据 checksum（稳定指纹）：游戏数据没变时不变。优先于 current_time 用于增量跳过——
+// current_time 每次 fetch 单调递增，会导致内容未变也重写（191 产物纯时间戳噪音的根因）。
+function getRawChecksum(rawDefinitions: RawDefinition): number | undefined {
+  return typeof rawDefinitions.checksum === 'number' ? rawDefinitions.checksum : undefined
 }
 
 /**
@@ -303,23 +311,27 @@ export async function normalizeDefinitionsSnapshot(
   const nextPipelineHash = await computePipelineHash()
   if (!isForceDataRebuild()) {
     const existingVersion = await readJsonIfExists(versionFile) as
-      | { updatedAt?: unknown; pipelineHash?: unknown; counts?: NormalizeDefinitionsResult['counts'] }
+      | { updatedAt?: unknown; pipelineHash?: unknown; rawChecksum?: unknown; counts?: NormalizeDefinitionsResult['counts'] }
       | null
+    const nextRawChecksum = getRawChecksum(rawDefinitions)
     if (
       shouldSkipDataPipeline({
         existingUpdatedAt: existingVersion?.updatedAt,
         existingHash: existingVersion?.pipelineHash,
         nextUpdatedAt: updatedAt,
         nextHash: nextPipelineHash,
+        existingRawChecksum: existingVersion?.rawChecksum,
+        nextRawChecksum,
       })
     ) {
       console.log(
-        `normalize skipped: raw updatedAt=${updatedAt}, pipelineHash=${nextPipelineHash}（FORCE_DATA_REBUILD=1 可强制重跑）`,
+        `normalize skipped: raw checksum=${nextRawChecksum ?? '?'}, pipelineHash=${nextPipelineHash}（FORCE_DATA_REBUILD=1 可强制重跑）`,
       )
       return {
         outputDir,
         versionFile,
         updatedAt,
+        rawChecksum: nextRawChecksum,
         pipelineHash: nextPipelineHash,
         skipped: true,
         counts: existingVersion?.counts,
@@ -646,6 +658,7 @@ export async function normalizeDefinitionsSnapshot(
   await writeJson(versionFile, {
     current: currentVersion,
     updatedAt,
+    rawChecksum: getRawChecksum(rawDefinitions),
     pipelineHash: nextPipelineHash,
     counts: {
       champions: champions.length,
@@ -675,6 +688,7 @@ export async function normalizeDefinitionsSnapshot(
     outputDir,
     versionFile,
     updatedAt,
+    rawChecksum: getRawChecksum(rawDefinitions),
     pipelineHash: nextPipelineHash,
     counts: {
       champions: champions.length,

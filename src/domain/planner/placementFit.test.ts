@@ -89,6 +89,50 @@ describe('placement fit', () => {
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('global-match')
   })
 
+  it('signal requiredLevel > supportLevel 时被过滤（等级解锁门控）', () => {
+    const supportHero = createHero('support', {
+      supportSignals: [
+        { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'locked_global,100', source: 'official-parsed', requiredLevel: 100 },
+      ],
+    })
+    const fitLocked = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      supportLevel: 50,
+    })
+    const fitUnlocked = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      supportLevel: 150,
+    })
+    expect(fitLocked.totalMultiplier).toBe(1)
+    expect(fitLocked.scoreBreakdown[0]?.reasonCode).toBe('level-locked')
+    expect(fitUnlocked.totalMultiplier).toBe(2)
+    expect(fitUnlocked.scoreBreakdown[0]?.reasonCode).toBe('global-match')
+  })
+
+  it('supportLevel 不传时不按等级过滤（向后兼容，未解锁 signal 仍计分）', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'g,100', source: 'official-parsed', requiredLevel: 999 },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+    })
+    expect(fit.totalMultiplier).toBe(2)
+    expect(fit.scoreBreakdown[0]?.reasonCode).toBe('global-match')
+  })
+
   it('adjacentBuff 只在相邻时生效', () => {
     const supportHero = createHero('support', {
       supportSignals: [

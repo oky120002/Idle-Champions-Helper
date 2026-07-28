@@ -51,6 +51,7 @@ export interface PlacementFitScorePart {
     | 'position-mismatch'
     | 'missing-target-qualifier'
     | 'unsupported-composition'
+    | 'level-locked'
   source: HeroAbilitySource
   /** signal 的聚合方式（add/mult）；消费层 crit_factor 等需区分时使用。 */
   amountFunc?: HeroAbilityAmountFunc | null
@@ -105,4 +106,9 @@ export interface EvaluatePlacementFitInput {
    * 仅影响 stacksMultiply=true 且无 stackFunc 的 signal；formation-count 等实时数英雄不受影响。
    */
   manualStackCount?: number | undefined
+  /**
+   * supportHero 当前等级，用于按 signal.requiredLevel 过滤（等级解锁门控）。
+   * 不传 = 无等级限制（向后兼容，不过滤）；由 scoreFormation 从 heroLevels 透传。
+   */
+  supportLevel?: number
 }

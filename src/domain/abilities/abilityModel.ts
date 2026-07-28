@@ -116,6 +116,11 @@ export interface HeroAbilitySignal {
    * null = 无条件（对任意怪物生效）；非空 = 仅当场景 enemyTypes 含其中任一 tag 时生效。
    */
   monsterTags?: string[] | null
+  /**
+   * 解锁等级（来自 champion-details upgrade 的 required_level）：该 signal 首次生效所需英雄等级。
+   * null/undefined = 无等级限制（向后兼容）；消费侧 evaluatePlacementFit 按 supportLevel 过滤。
+   */
+  requiredLevel?: number | null
 }
 
 export interface HeroUnsupportedSignal {

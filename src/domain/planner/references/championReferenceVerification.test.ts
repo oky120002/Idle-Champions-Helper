@@ -15,6 +15,9 @@ import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plann
 import { evaluatePlacementFit } from '../placementFit'
 import { vi95ReferenceData } from './vi95ReferenceData'
 
+// 蔚只有一份快照（area=193 机制参照）；统一 snapshots 口径下读 [0]。
+const viSnapshot = vi95ReferenceData.snapshots[0]!
+
 function createHero(heroId: string, tags: string[]): HeroAbilityProfile {
   return {
     heroId,
@@ -115,7 +118,7 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
       scenario,
       placements,
       heroesById,
-      manualStackCount: vi95ReferenceData.expected.manualStackCount,
+      manualStackCount: viSnapshot.expected.manualStackCount,
     })
 
     const entry = fit.scoreBreakdown.find(r => r.rawEffect === 'hero_dps_multiplier_mult,300' && r.active)
@@ -133,7 +136,7 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
       scenario,
       placements,
       heroesById,
-      manualStackCount: vi95ReferenceData.expected.manualStackCount,
+      manualStackCount: viSnapshot.expected.manualStackCount,
     })
 
     const entry = fit.scoreBreakdown.find(r => r.rawEffect === 'buff_upgrade,0.33,12312' && r.active)
@@ -153,7 +156,7 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
       scenario,
       placements,
       heroesById,
-      manualStackCount: vi95ReferenceData.expected.manualStackCount,
+      manualStackCount: viSnapshot.expected.manualStackCount,
     })
     const heroDpsPool = fit.pools.find(p => p.dimension === 'damage' && p.scope === 'hero')
     expect(heroDpsPool, 'damage:hero pool 须存在').toBeDefined()
@@ -165,8 +168,8 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
 describe('参照校准 expected 值真实性（非凑数）', () => {
   it('蔚 expectedMultiplier 由机制字段算术推导（perStackPercent / formationSize / manualStackCount）', () => {
     // 反向验证：expectedMultiplier 不是任意值，而是 mechanics 字段经公式推导。
-    // 与游戏显示交叉（vi-95.md）：善良榜样叠层加成 1.64e06%≈16384；出言不逊 57,639%≈576。
-    const ref = vi95ReferenceData
+    // 与游戏显示交叉（095-vi.md）：善良榜样叠层加成 1.64e06%≈16384；出言不逊 57,639%≈576。
+    const ref = viSnapshot
 
     // 善良榜样：perStackPercent=300 + amountFunc=mult + formationSize=7 → (1+300/100)^7 = 4^7 = 16384
     const goodExample = ref.abilities.find((a) => a.rawEffect === 'hero_dps_multiplier_mult,300')!
@@ -174,7 +177,7 @@ describe('参照校准 expected 值真实性（非凑数）', () => {
     expect(goodExample.mechanics.perStackPercent).toBe(300)
     expect(goodExample.mechanics.amountFunc).toBe('mult')
     expect(goodCheck.expectedMultiplier).toBeCloseTo(
-      (1 + (goodExample.mechanics.perStackPercent ?? 0) / 100) ** ref.scenario.formationSize,
+      (1 + (goodExample.mechanics.perStackPercent ?? 0) / 100) ** ref.context.formationSize,
       0,
     )
 
@@ -214,9 +217,11 @@ describe('关联一致性（mechanicId 三处一致）', () => {
     const refs = [vi95ReferenceData]
     const unknown: string[] = []
     for (const ref of refs) {
-      for (const ability of ref.abilities) {
-        for (const id of ability.mechanicIds) {
-          if (!registryIds.has(id)) unknown.push(`${ref.heroId}/${ability.nameZh}: ${id}`)
+      for (const snapshot of ref.snapshots) {
+        for (const ability of snapshot.abilities ?? []) {
+          for (const id of ability.mechanicIds) {
+            if (!registryIds.has(id)) unknown.push(`${ref.heroId}/${ability.nameZh}: ${id}`)
+          }
         }
       }
     }
