@@ -2,6 +2,20 @@
 
 《Idle Champions of the Forgotten Realms》个人成长导向的阵型决策台。仓库级硬约束见 `AGENTS.md`，完整文档索引见 `docs/README.md`。
 
+## 根本目标
+
+阵型模拟器存在的意义：帮用户找到「当前英雄 × 当前阵型」的最优配置——哪个位置上谁，最大化三种队伍效益：
+
+- **DPS 队**：推进更深的层数。
+- **金币队**：获取最多的金币。
+- **速度队**：最快地过层。
+
+典型推进节奏：前期金币队快速抬高队伍英雄等级 → 中期速度队冲到能达到的层数 → 后期 DPS 队不停突破；或金币队推不动时直接切 DPS 队突破。
+
+> 所有 planner 模块的开发不准偏离此目标：新特性要么服务于这三队之一，要么显式登记为架构文档里的后续目标。判定口径与计算原则见 `docs/specs/modules/planner/architecture.md`。
+
+> **速度队缺口**（如实登记）：当前仅有 `HeroAbilityDimension.speed` 维度（`src/domain/abilities/abilityModel.ts`），尚未接入 `ScoringMode` 优化目标，登记为后续目标。
+
 ## 在线访问
 
 - 正式地址：[https://oky120002.github.io/Idle-Champions-Helper/](https://oky120002.github.io/Idle-Champions-Helper/)
