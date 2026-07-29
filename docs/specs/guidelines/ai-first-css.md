@@ -42,6 +42,8 @@ CSS 语义密度低于 TS / TSX，但大文件会显著抬高一次样式修改�
 
 ## 5. 颜色 token
 
+（双主题 token 体系决策见 `decisions/0007-dual-theme-token-system.md`。）
+
 - 业务 CSS 禁止硬编码颜色（`rgb()` / `hsl()` / `oklch()` / `oklab()` / `lab()` / `lch()` 等颜色函数，或 `#hex` 含 alpha 位），必须走 token（`src/styles/foundations/tokens.css`）；守护脚本 `scripts/check-colors.ts` 扫残留并接入 `npm run lint`。命名色（`white` / `black` 等）仅允许作 `color-mix` 锚点，不单独用作颜色值。
 - 新增颜色先在 `tokens.css` 登记为 token；随主题翻转的 token 成对提供 `:root`（深）与 `:root[data-theme="light"]`（浅）值。
 - 底色 / 文字 / 边框 / 阴影 / gloss 随主题翻转；品牌色（铜 `--color-copper` / 钢 `--color-steel` / 金 `--color-gold`）与 categorical 属性色（`--cat-*`）两主题共用，不翻转。
