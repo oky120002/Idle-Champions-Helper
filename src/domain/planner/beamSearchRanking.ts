@@ -1,5 +1,5 @@
 import type { ScoringResult, SimulationBreakdown } from './steadyStateScoring'
-import type { AreaEstimationResult } from './areaEstimation'
+import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
 import { compareGameNumbers, type GameNumberValue } from '../simulator/gameNumber'
 

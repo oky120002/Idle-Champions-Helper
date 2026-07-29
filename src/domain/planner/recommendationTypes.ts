@@ -1,5 +1,5 @@
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
-import type { AreaEstimationResult } from './areaEstimation'
+import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { FeatCatalog } from '../abilities/featSignals'

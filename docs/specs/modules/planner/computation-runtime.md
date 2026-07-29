@@ -32,7 +32,7 @@ worker → UI:
 
 ## 推图层数预估
 
-`src/domain/planner/areaEstimation.ts` + `src/domain/simulator/monsterStats.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`，结合 survival 约束（effectiveHealth 不足 monster_damage 时限制推图层数）。
+`src/domain/simulator/areaEstimation.ts` + `src/domain/simulator/monsterStats.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`，结合 survival 约束（effectiveHealth 不足 monster_damage 时限制推图层数）。
 
 怪物 stats 是全局 game rule，按 per-area stepped curve 逐层复合累积。数据源字段与缩放公式见 `docs/research/data/planner/monster-and-area-scaling.md`。
 
