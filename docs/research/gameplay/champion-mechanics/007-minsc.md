@@ -41,6 +41,15 @@
 - **cost 曲线 ≠ 伤害曲线**：1→722 级顺势斩比值 = 5.02e62/1.25e45 ≈ 4.0e17，反推真实伤害增长率 ≈ **1.058**；而 built `costCurves['1']=1.12`，1.12^721 ≈ 3.4e35（高 18 个数量级）。即用金币 cost 曲线代理伤害曲线是上界近似（`baseDps.ts` 注释自承），真实伤害增长慢得多。注：比值含 722 级偏好敌人（若野兽在场）的额外加成，1.058 为近似。
 - **阵型交叉 buff**：瓦罗战斗指南（前面两列 +2.03e15%）在 cursed-farmer 阵型对明斯克 active（明斯克在瓦罗前列），`damageReferenceVerification` 断言瓦罗入阵提升明斯克阵型聚合——交叉位置 buff 是现有 mock 阵型测不到的核心用例。
 
-## 缺口与后续
+## 接入进展（2026-07-29）
 
-绝对伤害对照受阻于：外部加成建模（blessing/patron 入评分）、等级解锁门控（build 烘 required_level 进 signal + 评分按 heroLevels 过滤）、BUD/baseDamage 校准。formation-buff 模式（阵型内聚合）的对照已可自动化，绝对量待上述补全后落地。
+- ✅ 等级解锁门控（build 烘 requiredLevel + 评分按 heroLevels 过滤）。
+- ✅ 外部加成 blessing/patron（global_dps active 过滤 + effect_def filter_targets，#9）。
+- ✅ vulnerability `monster_with_tag_more_damage`（偏好敌人基础 +300%，commit 32ae5e72）。
+- ✅ feat 专长（active feats 按 scoringMode 维度注入；明斯克 feat 35 hero_dps +30% / 38 global_dps +10%，commit 95ed508c + dd7ef095）。
+- ⏳ feat wrapper（feat 399 buff_upgrades 偏好敌人 +80%）+ ability 升级 stacking（+2.43e6%）。
+- ⏳ BUD/baseDamage 校准（costCurves 1.12 上界 vs 真实 1.058）。
+
+## 度量校准（详见 damage-reference-calibration.md）
+
+同 level 722 calc vs obs dev=**-12.4**（真实偏差，非测试假象）。damageReferenceVerification singleSlot -32.7 是测试简化（level 1 门控 + globalBuff 乘积 ×500）偏离生产。obs 是单次攻击伤害（非 DPS）+ formationSize=1（无 support）。10^28 剩余大头：feat wrapper + ability 升级 stacking + modron/成就。

@@ -56,8 +56,12 @@ IC 两大英雄自定义系统，玩家选择带来 dps/金币/速度/生存加�
 
 非 vulnerability choice 专精穷举（beam search 每英雄×选项）。先盘点多英雄非 vulnerability choice 专精收益再设计架构。
 
-## 实现计划
+## 实现状态
 
-1. ✅ vulnerability（`monster_with_tag_more_damage`）接入（commit 32ae5e72，偏好敌人基础）。
-2. **feat 接入**（数据管线归一化 featCatalog + 运行时按维度选 top + 叠加）——本轮。
-3. specialization 穷举（后续）。
+1. ✅ vulnerability（`monster_with_tag_more_damage`，偏好敌人基础）接入（commit 32ae5e72）。
+2. ✅ **feat 接入**（commit 95ed508c 数据管线 + dd7ef095 运行时）：
+   - 数据管线：`scripts/data/feat-catalog.ts` 归一化 hero_feat_defines → `public/data/v1/feat-catalog.json`（signal + dimension）。
+   - 运行时：`src/domain/abilities/featSignals.ts`（selectFeatSignals + applyFeatsToProfile）+ engine `applyActiveFeats`（按 scoringMode 维度 carry-dps→damage / team-gold→gold，注入 OwnedHero.active feats）。明斯克 feat 35（hero_dps +30%）+ 38（global_dps +10%）生效。
+3. ⏳ **wrapper feat**（`buff_upgrades` 增强某 ability，如明斯克 feat 399 偏好敌人 +80%）：无 scoring dimension，留后续单独处理（解析 wrapper target + 增强 ability signal）。
+4. ⏳ **calc 选 top feat**（当前用玩家 active feats；用户要的「全遍历选最优搭配」是推荐 top 模式，需 beam search 扩展 feat 组合）。
+5. ⏳ **specialization 穷举**：非 vulnerability choice 专精需 beam search 每英雄×选项；vulnerability 类已按 scenario enemyTypes 匹配等效。
