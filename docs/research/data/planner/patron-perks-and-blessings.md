@@ -15,10 +15,22 @@
 
 | type | 语义 | 生效条件 |
 |---|---|---|
-| 1 | 本地增益 | 仅当前选中赞助者（`userdetails.details.current_patron_id`）开游戏时生效 |
+| 1 | 本地增益 | 仅当前 instance 的 patron 生效（见下「patron 选中机制」）|
 | 2 | 全局增益 | 恒生效（选不选都生效） |
 
 每赞助者两类各若干 tier，用该赞助者代币购买（`cost.base_cost` × `scaling`）。
+
+### patron「选中」机制（multi-instance）
+
+IC 用 multi-instance（多 game instance，每 instance 独立 patron + campaign）。当前 patron **不在顶层 `details.current_patron_id`（=0，误导）**，而在 `game_instances[active_game_instance_id].current_patron_id`：
+
+- `active_game_instance_id`：标识当前 instance。
+- `game_instances[].current_patron_id`：该 instance 选的 patron（`0`=无 patron 自由玩 / `1-5`=patron）；`current_patron_tier` 为 patron 等级。
+- 本地增益（patron_perk `type 1`）仅 active instance 的 patron 生效。
+
+patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free play adventure 的 `restrictions_text`/`requirements` 不含 patron 条件）—— patron 是 instance 选的，非 adventure 限定。所谓「变体地图」= multi-instance（每 instance 一个独立 patron game）。
+
+实测（明斯克账号）：3 个 instance，`active_game_instance_id=3`，instance 3 `current_patron_id=2`（Vajra/跋折罗），`current_adventure_id=30`（被诅咒的农夫 free play）—— 即明斯克参照对应的 game。instance 1/2 同 adventure 但 `patron=0`（自由玩，无 patron 本地增益）。
 
 **effect 载体**：
 - 裸 `effect_string`（如 `global_dps_multiplier_mult,$replace`）：直接全局加成，`$replace` 按 currentLevel 替换 = `per_level × level`。
@@ -34,11 +46,13 @@
 - 定义：`userdetails.defines.reset_upgrade_defines`（200 条）
 - actual level：`userdetails.details.reset_upgrade_levels`（142 个已购，`id → level`）
 
-**结构**：10 个 deity（`reset_currency_id` 对应 campaign：1=Torm 托姆/剑湾之旅、3=Kelemvor 克兰沃、15/22/23/25/30/31/35/36=其他 deity 如赤红骑士/裳禔亚/耶各/阿祖斯等）× 20 blessing/树 × `tier_id`（层级 1/2/3...）。用该 campaign 的 favor 购买。
+**结构**：10 个 deity（`reset_currency_id` = deity favor id，见 `reset_currency_defines`：1=Torm 托姆、2=Chauntea 裳禔亚、3=Kelemvor 克兰沃、5=Jergal 耶各、20=Azuth 阿祖斯、22=Tiamat、36=The Red Knight 赤红骑士 等）× 20 blessing/树 × `tier_id`（层级 1/2/3...）。用该 deity 的 favor 购买。`campaign_defines` 映射 campaign → deity：campaign 1（Sword Coast）→ Torm、2（Tomb of Annihilation）→ Kelemvor、15（Dragon Heist）→ Helm、32（Tales of Champions）→ Red Knight 等。
 
 **全局/地图**：
-- 地图祝福：`reset_currency_id` 对应 campaign，仅该 campaign 生效。
-- 全局祝福：跨所有 campaign（如「双倍伤害 ×2 适用于所有战役」）；`effect_defines` id=2718「for each Global Blessing, stacking additively」是消费 `num_global_blessings` 计数的元 effect（属某英雄 ability，非 blessing 定义本身）。
+- 地图祝福（`type 1`）：仅 `reset_currency_id`（deity）= 当前 campaign deity 的生效。
+- 全局祝福（`type 2`）：跨所有 campaign（如「双倍伤害 ×2 适用于所有战役」、Gem Hunter、Patron's Favor）。`effect_defines` id=2718「for each Global Blessing, stacking additively」是消费 `num_global_blessings` 计数的元 effect（属某英雄 ability，非 blessing 定义本身）。
+
+**地图 blessing 的 campaign 匹配**：地图 blessing 按当前 campaign 的 deity 生效。⚠️ instance 的 `formation_saves_v2_campaign_id` 编码（如 instance 3 = `1200001`）与 `campaign_defines.id`（1/2/15/32/18）不一致——疑 multi-instance 编码（base campaign + offset），接入时需解码到 base campaign 再查 deity（待理清）。
 
 **effect 载体**：同 patron_perk（裸 `effect_string` + `effect_def,<id>` 引用）。
 
