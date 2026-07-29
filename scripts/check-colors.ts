@@ -1,9 +1,11 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
-// 颜色字面量：rgb()/rgba() 或 #hex（3 或 6 位）。命中即视为硬编码。
-// color-mix 入参若用 var()/named-color（如 white）不会被匹配；裸 rgb 入参会匹配（本项目不使用）。
-const COLOR_LITERAL_RE = /rgba?\(\s*\d|#(?:[0-9a-fA-F]{3}){1,2}\b/
+// 颜色字面量：rgb/rgba/hsl/hsla/oklch/oklab/lab/lch 函数（紧接数字字面量）或 #hex（3/4/6/8 位，含 alpha）。
+// 命中即视为硬编码。要求括号后跟数字，故 oklch(var())、rgb(var()) 这类包 var 的合法写法不会误中；
+// color-mix 的 in oklch 关键字无括号也不会误中。命名色（white/black 等）不检测——
+// 本项目用它们作 color-mix 锚点（见 tokens.css 注释），强行检测会大面积误报。
+const COLOR_LITERAL_RE = /(?:rgba?|hsla?|oklch|oklab|lab|lch)\(\s*\d|#(?:[0-9a-fA-F]{3,4}){1,2}\b/
 
 export interface ColorViolation {
   file: string

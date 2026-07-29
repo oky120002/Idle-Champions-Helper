@@ -1,7 +1,7 @@
 /*
  * 双主题 token 体系
  * - :root 为深色默认；:root[data-theme="light"] 为浅色覆盖。
- * - data-theme 由 src/theme.tsx 写入：用户选 system 时按 prefers-color-scheme 解析为 light/dark。
+ * - data-theme 由 src/app/theme.tsx 写入：用户选 system 时按 prefers-color-scheme 解析为 light/dark。
  * - gloss 三档（--surface-gloss-soft/gloss/gloss-strong）基于 --color-gloss-base 派生，
  *   翻转 --color-gloss-base 即可让三档自动跟随（深底=白提亮 / 浅底=暖深压暗）。
  * - 铜/钢/金/categorical(--cat-*) 是品牌色或数据语义色，两主题共用，不随主题翻转。
