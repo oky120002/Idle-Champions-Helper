@@ -8,18 +8,18 @@
   font-size: 0.74rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(242, 239, 230, 0.54);
+  color: var(--color-text-muted);
 }
 
 .formation-mobile-editor__title {
   margin: 0;
   font-size: 1.04rem;
-  color: #fff7ea;
+  color: var(--color-text-strong);
 }
 
 .formation-mobile-editor__description {
   margin: 0.3rem 0 0;
-  color: rgba(242, 239, 230, 0.64);
+  color: var(--color-text-muted);
   line-height: 1.58;
 }
 
@@ -30,12 +30,12 @@
   align-items: center;
   padding: 0.82rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid var(--color-border-soft);
   background:
-    radial-gradient(circle at top right, rgba(62, 113, 147, 0.1), transparent 56%),
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 10%, transparent), transparent 56%),
     var(--surface-gloss),
-    rgba(8, 13, 19, 0.24);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.025);
+    var(--color-panel-soft);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 2.5%, transparent);
 }
 
 .formation-mobile-editor__current-copy {
@@ -44,18 +44,18 @@
 }
 
 .formation-mobile-editor__current-name {
-  color: #fff7ea;
+  color: var(--color-text-strong);
 }
 
 .formation-mobile-editor__current-meta,
 .formation-mobile-editor__empty {
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
 }
 
 .formation-mobile-editor__empty {
   margin: 0;
   padding: 0.86rem 0.9rem;
   border-radius: var(--radius-md);
-  border: 1px dashed rgba(227, 214, 193, 0.14);
-  background: rgba(255, 255, 255, 0.016);
+  border: 1px dashed var(--color-border);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.6%, transparent);
 }

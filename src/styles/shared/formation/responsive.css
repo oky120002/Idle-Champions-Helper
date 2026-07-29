@@ -77,9 +77,9 @@
       min-height: 1.15rem;
       padding: 0 0.18rem;
       border-radius: 999px;
-      border: 1px solid rgba(227, 214, 193, 0.14);
-      background: rgba(8, 13, 19, 0.9);
-      color: #fff4df;
+      border: 1px solid var(--color-border);
+      background: var(--color-interactive-bottom);
+      color: var(--color-text-strong);
       font-size: 0.58rem;
       font-weight: 700;
       display: inline-flex;
@@ -94,8 +94,8 @@
       align-items: center;
       justify-content: center;
       border-radius: 999px;
-      border: 1px dashed rgba(200, 167, 127, 0.3);
-      color: rgba(255, 243, 223, 0.74);
+      border: 1px dashed color-mix(in oklch, var(--color-copper) 30%, transparent);
+      color: var(--color-text);
       font-size: 1rem;
       line-height: 1;
     }
@@ -116,14 +116,14 @@
       margin-top: 0.85rem;
       padding: 1rem;
       border-radius: 22px;
-      border: 1px solid rgba(227, 214, 193, 0.1);
+      border: 1px solid var(--color-border-soft);
       background:
-        radial-gradient(circle at top right, rgba(200, 167, 127, 0.16), transparent 42%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
-        rgba(7, 12, 18, 0.42);
+        radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent 42%),
+        linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 4%, transparent), color-mix(in srgb, var(--color-gloss-base) 2%, transparent)),
+        var(--color-panel);
       box-shadow:
         var(--shadow-surface-soft),
-        inset 0 1px 0 rgba(255, 243, 223, 0.04);
+        inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 4%, transparent);
     }
 
   .formation-mobile-editor__clear {
