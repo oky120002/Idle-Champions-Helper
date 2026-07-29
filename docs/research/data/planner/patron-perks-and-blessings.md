@@ -81,4 +81,20 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 
 **赞助者机制（type 1 过滤，2026-07-29 #7 修复）**：patron type1（本地）/blessing type1（地图）已按 active instance 精确过滤。`normalize` 提取 `snapshot.activeContext = { patronId, deity }`：active = `game_instances[game_instance_id===active_game_instance_id]`，patronId=`current_patron_id`，deity=`formation_saves_v2_campaign_id` 解码 base(`%600000`)→`campaign_defines[base].reset_currency_id`。patron type1 仅 patronId===active 生效，blessing type1 仅 currencyId===deity 生效。量级（明斯克 active patron=2/deity=1）：合并 globalBuff ×324（全算上界）→ ×86.7（active 真实）。600000 编码常量基于 2 数据点反推，多 patron/campaign 待验证。
 
-**剩余 10^32 偏差大头**：`effect_def` tag 限定（142 blessing + ~80 patron perk）+ `global_dps_mult_per_*` 计数 + modron + 成就 + legendary 等，需逐类接入。
+**剩余 10^32 偏差大头**：`effect_def` filter_targets 限定 + `global_dps_mult_per_*` 计数 + modron + 成就 + legendary 等，需逐类接入。
+
+## effect_def 结构与 #9 接入路径（2026-07-29 #8 调研）
+
+`effect_defines` 公开（2872 条，CI 可重建）。每 effect_def 的 `effect_keys[]` 含 `effect_string` + 三类限定：
+
+- **`filter_targets[]`**（英雄属性限定，#9 核心）：`by_tags`（female/male/rogue|bard|wizard/evil/geneutral，`|` 为 OR）/ `hero_expr`（HasTag/GetStat 表达式）/ `stat_score`（属性≥X）/ `attack_type` / `has_neighbour_with_tag` / `by_seat` / `by_release_date`
+- **`targets[]`**（阵型目标范围）：`all` / `by_tags` / `heroes`(hero_ids) / `slots`(slot_ids) / `col_num`
+- **`tag`**（场景/英雄 tag）：outdoors/rime/lawful/...
+
+> 旧文档「effect_def 含 filter_targets」不够精确：`filter_targets` 在 `effect_keys[]` 内（非 effect_def 顶层）；effect_def 顶层字段是 `effect_keys / description / requirements / properties`。
+
+**量级**（blessing 142 + patron 72 effect_def 引用全命中 effect_defines）：
+- DPS effect_keys 164（hero_dps 122 + global_dps 42）
+- 含 `filter_targets` 的 effect_keys：blessing 29 + patron 35 = **64**（需 per-hero 匹配）；其余 `targets=all` 直接生效（无英雄限定）
+
+**复用路径**：`filter_targets` 机制与现有 hero abilities 管线同构（`src/domain/abilities/signalSemantics` + `heroPredicate` 已处理 by_tags/hero_expr/stat_score/attack_type）。#9 把符合条件的 patron/blessing effect_def 展开成 `HeroAbilitySignal`（带 targetQualifier/filter_targets），进现有 `evaluatePlacementFit` 评分管线，无需新写匹配逻辑。明斯克（human/ranger/good/male）符合的具体 effect_def 量级留 #9 per-hero 匹配时度量。
