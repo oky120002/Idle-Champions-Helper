@@ -5,6 +5,8 @@
  * - gloss 三档（--surface-gloss-soft/gloss/gloss-strong）基于 --color-gloss-base 派生，
  *   翻转 --color-gloss-base 即可让三档自动跟随（深底=白提亮 / 浅底=暖深压暗）。
  * - 铜/钢/金/categorical(--cat-*) 是品牌色或数据语义色，两主题共用，不随主题翻转。
+ * - 深色块保留迁移前的 rgba/oklch 字面量原样（不统一格式）：oklch 无法精确表示
+ *   历史 srgb 值，转换会破坏「深色逐字保留」约束（ADR-0007）；新增颜色用 oklch。
  * - 禁止在业务 CSS 硬编码颜色（rgb/rgba/#hex）；新增颜色必须在此登记为 token，
  *   并在需要时成对提供深/浅值。守护脚本会扫描残留硬编码。
  */
