@@ -13,12 +13,12 @@
   position: relative;
   min-width: 0;
   overflow: clip;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid var(--color-border-soft);
   border-radius: var(--page-workbench-shell-radius);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.004)),
-    rgba(8, 12, 17, 0.24);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.02);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 1.4%, transparent), color-mix(in srgb, var(--color-gloss-base) 0.4%, transparent)),
+    color-mix(in srgb, var(--color-panel) 35%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 2%, transparent);
 }
 
 .page-workbench--layout-collapsed {
@@ -62,14 +62,14 @@
   top: 0;
   z-index: 1;
   height: var(--page-workbench-chrome-size);
-  background: rgba(11, 17, 24, 0.1);
+  background: color-mix(in srgb, var(--color-panel) 15%, transparent);
 }
 
 .page-workbench__body::after {
   top: calc(var(--page-workbench-chrome-size) - 1px);
   z-index: 2;
   height: 1px;
-  background: rgba(227, 214, 193, 0.06);
+  background: color-mix(in srgb, var(--color-gloss-base) 6%, transparent);
 }
 
 .page-workbench--sidebarless .page-workbench__body {
@@ -86,7 +86,7 @@
 
 .page-workbench__sidebar {
   overflow: hidden;
-  background: rgba(11, 17, 24, 0.16);
+  background: color-mix(in srgb, var(--color-panel) 23%, transparent);
   will-change: transform, opacity;
   transition:
     transform var(--page-workbench-layout-duration) var(--page-workbench-layout-ease),
@@ -99,7 +99,7 @@
 }
 
 .page-workbench__content {
-  background: rgba(8, 12, 17, 0.16);
+  background: color-mix(in srgb, var(--color-panel) 23%, transparent);
   will-change: transform;
   transition: transform var(--page-workbench-layout-duration) var(--page-workbench-layout-ease);
 }
@@ -118,7 +118,7 @@
 }
 
 .page-workbench__sidebar-shell {
-  background: rgba(12, 18, 27, 0.1);
+  background: color-mix(in srgb, var(--color-panel) 15%, transparent);
   box-shadow: none;
 }
 
@@ -135,7 +135,7 @@
 }
 
 .page-workbench__content-shell {
-  background: linear-gradient(180deg, rgba(8, 12, 17, 0.86), rgba(6, 10, 15, 0.92));
+  background: linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom));
   box-shadow: none;
   contain: layout paint style;
 }
@@ -158,7 +158,7 @@
   padding: 0.82rem 0.84rem 0.88rem;
   scrollbar-gutter: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(200, 167, 127, 0.38) transparent;
+  scrollbar-color: color-mix(in oklch, var(--color-copper) 38%, transparent) transparent;
   will-change: transform, opacity;
   transition:
     opacity 180ms ease,
@@ -182,7 +182,7 @@
   gap: 0.82rem;
   padding: 0.78rem 0.84rem 0.88rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(200, 167, 127, 0.42) transparent;
+  scrollbar-color: color-mix(in oklch, var(--color-copper) 42%, transparent) transparent;
   scrollbar-gutter: stable both-edges;
 }
 

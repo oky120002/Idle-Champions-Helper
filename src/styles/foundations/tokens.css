@@ -85,6 +85,7 @@
   --color-panel-soft: rgba(10, 15, 22, 0.48);
   --color-panel-strong: rgba(7, 11, 16, 0.84);
   --color-scrim: oklch(14% 0.012 244); /* 图片文字遮罩：深主题深、浅主题浅，保证图上文字跨主题可读 */
+  --color-backdrop: oklch(14% 0.012 244 / 0.72); /* 模态遮罩：两主题都暗以突出模态 */
 
   /* === 光泽叠层（基于 --color-gloss-base 派生，翻基色即全跟随）=== */
   --color-gloss-base: white;
@@ -161,6 +162,7 @@
   --color-panel-soft: oklch(28% 0.012 80 / 0.04);
   --color-panel-strong: oklch(28% 0.012 80 / 0.08);
   --color-scrim: oklch(96% 0.006 84);
+  --color-backdrop: oklch(20% 0.012 244 / 0.5);
 
   /* === 光泽基色（白提亮 → 暖深压暗；三档自动跟随）=== */
   --color-gloss-base: oklch(28% 0.012 80);

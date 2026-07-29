@@ -40,12 +40,12 @@
   min-height: 2.5rem;
   padding: 0.55rem 0.88rem 0.6rem;
   overflow: hidden;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid var(--color-border-soft);
   border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0)),
-    rgba(7, 12, 18, 0.16);
-  color: rgba(242, 239, 230, 0.76);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent), transparent),
+    var(--color-panel-soft);
+  color: var(--color-text);
   font-size: 0.84rem;
   font-weight: 750;
   line-height: 1;
@@ -70,44 +70,44 @@
 
 .workbench-page__toolbar-tab:hover {
   transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.22);
+  border-color: color-mix(in oklch, var(--color-copper) 22%, transparent);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0)),
-    rgba(200, 167, 127, 0.07);
-  color: rgba(255, 246, 232, 0.94);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 5.2%, transparent), transparent),
+    color-mix(in oklch, var(--color-copper) 7%, transparent);
+  color: var(--color-text-strong);
 }
 
 .workbench-page__toolbar-tab:focus-visible {
   outline: none;
-  border-color: rgba(231, 209, 171, 0.5);
-  box-shadow: 0 0 0 3px rgba(200, 167, 127, 0.12);
+  border-color: color-mix(in oklch, var(--color-copper) 50%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-copper) 12%, transparent);
 }
 
 .workbench-page__toolbar-tab--active {
-  border-color: rgba(200, 167, 127, 0.36);
+  border-color: color-mix(in oklch, var(--color-copper) 36%, transparent);
   background:
-    radial-gradient(circle at top left, rgba(233, 190, 105, 0.18), transparent 56%),
-    linear-gradient(180deg, rgba(200, 167, 127, 0.16), rgba(200, 167, 127, 0.06)),
-    rgba(25, 18, 12, 0.48);
-  color: #fff6e8;
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-gold) 18%, transparent), transparent 56%),
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 16%, transparent), color-mix(in oklch, var(--color-copper) 6%, transparent)),
+    var(--color-panel);
+  color: var(--color-text-strong);
   box-shadow:
-    inset 0 1px 0 rgba(255, 246, 232, 0.08),
-    0 8px 18px rgba(1, 4, 9, 0.12);
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 8%, transparent),
+    var(--shadow-interactive);
 }
 
 .workbench-page__toolbar-tab--active::after {
-  background: #c8a77f;
+  background: var(--color-copper);
 }
 
 .workbench-page__toolbar-title {
-  color: rgba(255, 248, 237, 0.98);
+  color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: 0.98rem;
   line-height: 1;
 }
 
 .workbench-page__toolbar-detail {
-  color: rgba(242, 239, 230, 0.58);
+  color: var(--color-text-muted);
   font-size: 0.76rem;
   line-height: 1.4;
 }

@@ -1,20 +1,20 @@
 .workbench-page {
   --workbench-chip-min-height: 1.72rem;
   --workbench-chip-padding: 0.22rem 0.62rem 0.24rem;
-  --workbench-chip-border-color: rgba(227, 214, 193, 0.09);
+  --workbench-chip-border-color: var(--color-border-soft);
   --workbench-chip-border-color-strong: color-mix(in oklch, var(--color-copper) 24%, transparent);
   --workbench-chip-radius: 999px;
-  --workbench-chip-background: rgba(255, 255, 255, 0.026);
-  --workbench-chip-background-muted: rgba(255, 255, 255, 0.018);
+  --workbench-chip-background: color-mix(in srgb, var(--color-gloss-base) 2.6%, transparent);
+  --workbench-chip-background-muted: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
   --workbench-chip-background-accent:
-    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 12%, transparent), rgba(255, 255, 255, 0.018)),
-    rgba(200, 167, 127, 0.055);
-  --workbench-chip-text: rgba(255, 248, 237, 0.84);
-  --workbench-chip-text-muted: rgba(242, 239, 230, 0.58);
-  --workbench-chip-text-strong: #fff3df;
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 12%, transparent), color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent)),
+    color-mix(in oklch, var(--color-copper) 5.5%, transparent);
+  --workbench-chip-text: var(--color-text);
+  --workbench-chip-text-muted: var(--color-text-muted);
+  --workbench-chip-text-strong: var(--color-text-strong);
   --workbench-chip-font-size: 0.76rem;
   --workbench-chip-shadow: none;
-  --workbench-chip-keyline: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.1), transparent);
+  --workbench-chip-keyline: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gloss-base) 10%, transparent), transparent);
   gap: 0.48rem;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .workbench-page__sidebar-kicker {
-  color: rgba(255, 243, 223, 0.68);
+  color: var(--color-text);
   font-size: 0.62rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -37,7 +37,7 @@
 }
 
 .workbench-page__sidebar-title {
-  color: rgba(255, 248, 237, 0.98);
+  color: var(--color-text-strong);
   font-family: var(--font-display);
   line-height: 1;
 }
@@ -54,7 +54,7 @@
 
 .workbench-page__sidebar-description {
   margin: 0;
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
   font-size: 0.8rem;
   line-height: 1.48;
 }
@@ -76,7 +76,7 @@
   border-radius: var(--radius-md);
   background:
     var(--surface-gloss),
-    rgba(7, 12, 18, 0.2);
+    var(--color-panel-soft);
 }
 
 .workbench-page__content-stack {

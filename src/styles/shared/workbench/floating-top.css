@@ -18,17 +18,17 @@
   gap: 0.62rem;
   min-height: 2.84rem;
   padding: 0.42rem 0.64rem 0.42rem 0.44rem;
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  border: 1px solid var(--color-border-soft);
   border-radius: 999px;
   background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.1), transparent 36%),
-    linear-gradient(180deg, rgba(17, 26, 37, 0.88), rgba(9, 14, 20, 0.9)),
-    rgba(8, 13, 19, 0.3);
-  color: rgba(255, 245, 229, 0.96);
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 10%, transparent), transparent 36%),
+    linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom)),
+    var(--color-panel);
+  color: var(--color-text-strong);
   cursor: pointer;
   box-shadow:
-    0 12px 24px rgba(1, 4, 9, 0.18),
-    inset 0 1px 0 rgba(255, 243, 223, 0.03);
+    var(--shadow-surface-soft),
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
@@ -39,17 +39,17 @@
 
 .page-workbench__floating-top-button:hover {
   transform: translateY(-0.5px);
-  border-color: rgba(200, 167, 127, 0.28);
+  border-color: color-mix(in oklch, var(--color-copper) 28%, transparent);
   box-shadow:
-    0 14px 26px rgba(1, 4, 9, 0.2),
-    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+    var(--shadow-floating),
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 4%, transparent);
 }
 
 .page-workbench__floating-top-button:focus-visible {
   outline: none;
   box-shadow:
     var(--focus-ring),
-    0 14px 26px rgba(1, 4, 9, 0.2);
+    var(--shadow-floating);
 }
 
 .page-workbench__floating-top-icon {
@@ -59,12 +59,12 @@
   width: 1.94rem;
   height: 1.94rem;
   border-radius: 999px;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid var(--color-border-soft);
   background:
-    linear-gradient(180deg, rgba(62, 113, 147, 0.22), rgba(17, 30, 44, 0.46)),
-    rgba(255, 255, 255, 0.04);
-  color: rgba(255, 243, 223, 0.92);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
+    linear-gradient(180deg, color-mix(in oklch, var(--color-steel) 22%, transparent), var(--color-panel)),
+    color-mix(in srgb, var(--color-gloss-base) 4%, transparent);
+  color: var(--color-text-strong);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
 }
 
 .page-workbench__floating-top-icon svg {
@@ -85,7 +85,7 @@
 }
 
 .page-workbench__floating-top-copy span {
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;

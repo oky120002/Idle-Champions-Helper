@@ -11,8 +11,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at top, rgba(62, 113, 147, 0.14), transparent 36%),
-    rgba(2, 5, 9, 0.72);
+    radial-gradient(circle at top, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 36%),
+    var(--color-backdrop);
   backdrop-filter: blur(8px);
 }
 
@@ -23,21 +23,21 @@
   width: min(440px, 100%);
   padding: clamp(0.94rem, 2.2vw, 1.35rem);
   border-radius: var(--radius-2xl);
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  border: 1px solid var(--color-border-soft);
   background:
-    radial-gradient(circle at top left, rgba(200, 167, 127, 0.12), transparent 28%),
-    linear-gradient(180deg, rgba(15, 23, 33, 0.94), rgba(7, 11, 17, 0.96));
-  box-shadow: 0 22px 72px rgba(0, 0, 0, 0.34);
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 28%),
+    linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom));
+  box-shadow: var(--shadow-surface);
 }
 
 .confirm-dialog__title {
   margin: 0;
-  color: #fff5e5;
+  color: var(--color-text-strong);
 }
 
 .confirm-dialog__message {
   margin: 0;
-  color: rgba(242, 239, 230, 0.82);
+  color: var(--color-text);
   line-height: 1.6;
 }
 
@@ -52,9 +52,9 @@
 .confirm-dialog__action {
   padding: 0.5rem 0.9rem;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(227, 214, 193, 0.14);
-  background: rgba(8, 13, 19, 0.8);
-  color: #fff8ec;
+  border: 1px solid var(--color-border);
+  background: var(--color-interactive-bottom);
+  color: var(--color-text-strong);
   cursor: pointer;
 }
 
@@ -64,6 +64,6 @@
 }
 
 .confirm-dialog__action--danger {
-  border-color: rgba(170, 83, 83, 0.5);
-  background: rgba(170, 83, 83, 0.18);
+  border-color: color-mix(in oklch, var(--color-danger) 50%, transparent);
+  background: color-mix(in oklch, var(--color-danger) 18%, transparent);
 }

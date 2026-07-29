@@ -20,8 +20,8 @@
 
 .page-workbench--collapsed .page-workbench__sidebar {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.004)),
-    rgba(10, 16, 23, 0.16);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 1.4%, transparent), color-mix(in srgb, var(--color-gloss-base) 0.4%, transparent)),
+    color-mix(in srgb, var(--color-panel) 23%, transparent);
 }
 
 .page-workbench--collapsed .page-workbench__sidebar-scroll {

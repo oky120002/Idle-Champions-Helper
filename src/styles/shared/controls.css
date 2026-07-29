@@ -13,9 +13,9 @@
   max-width: 16rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(200, 167, 127, 0.32);
-  background: rgba(20, 14, 6, 0.96);
-  color: #fff5e5;
+  border: 1px solid color-mix(in oklch, var(--color-copper) 32%, transparent);
+  background: var(--color-interactive-bottom);
+  color: var(--color-text-strong);
   font-size: 0.8rem;
   line-height: 1.4;
   text-align: center;
@@ -41,10 +41,10 @@
   position: relative;
   overflow: clip;
   min-height: 2.56rem;
-  border: 1px solid rgba(227, 214, 193, 0.14);
+  border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.018);
-  color: #fff3df;
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text-strong);
   cursor: pointer;
   box-shadow: none;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
@@ -57,7 +57,7 @@
 .segmented-control__button:hover,
 .action-button:hover {
   transform: translateY(-0.5px);
-  border-color: rgba(200, 167, 127, 0.34);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
   box-shadow: none;
 }
 
@@ -66,7 +66,7 @@
   outline: none;
   box-shadow:
     var(--focus-ring),
-    0 10px 22px rgba(1, 4, 9, 0.14);
+    var(--shadow-interactive);
 }
 
 .segmented-control__button:disabled,
@@ -74,12 +74,12 @@
   cursor: not-allowed;
   opacity: 0.52;
   transform: none;
-  border-color: rgba(227, 214, 193, 0.1);
+  border-color: var(--color-border-soft);
 }
 
 .segmented-control__button--active {
-  border-color: rgba(200, 167, 127, 0.46);
-  background: rgba(200, 167, 127, 0.095);
+  border-color: color-mix(in oklch, var(--color-copper) 46%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 9.5%, transparent);
 }
 
 .form-stack {
@@ -95,12 +95,12 @@
 .field-label {
   font-size: 0.92rem;
   font-weight: 700;
-  color: #fff5e5;
+  color: var(--color-text-strong);
 }
 
 .field-hint {
   font-size: 0.9rem;
-  color: rgba(242, 239, 230, 0.58);
+  color: var(--color-text-muted);
 }
 
 .text-input,
@@ -108,10 +108,10 @@
 .select-input {
   width: 100%;
   padding: 0.82rem 0.92rem;
-  border: 1px solid rgba(227, 214, 193, 0.14);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: rgba(7, 12, 18, 0.22);
-  color: #fff8ec;
+  background: var(--color-panel-soft);
+  color: var(--color-text-strong);
   box-shadow: none;
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
@@ -127,7 +127,7 @@
   top: 50%;
   width: 1rem;
   height: 1rem;
-  color: rgba(242, 239, 230, 0.42);
+  color: var(--color-text-soft);
   pointer-events: none;
   transform: translateY(-50%);
 }
@@ -140,13 +140,13 @@
 .text-area:focus,
 .select-input:focus {
   outline: none;
-  border-color: rgba(200, 167, 127, 0.42);
-  box-shadow: 0 0 0 3px rgba(200, 167, 127, 0.1);
+  border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-copper) 10%, transparent);
 }
 
 .text-input::placeholder,
 .text-area::placeholder {
-  color: rgba(242, 239, 230, 0.42);
+  color: var(--color-text-soft);
 }
 
 .text-area {
@@ -194,14 +194,14 @@
 }
 
 .action-button--secondary {
-  background: rgba(62, 113, 147, 0.08);
+  background: color-mix(in oklch, var(--color-steel) 8%, transparent);
 }
 
 .action-button--ghost {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0)),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 1.6%, transparent), transparent),
     transparent;
-  color: rgba(242, 239, 230, 0.76);
+  color: var(--color-text);
 }
 
 .status-banner {
@@ -215,8 +215,8 @@
   border-radius: var(--radius-lg);
   border: 1px solid transparent;
   box-shadow:
-    0 12px 24px rgba(1, 4, 9, 0.12),
-    inset 0 1px 0 rgba(255, 243, 223, 0.025);
+    var(--shadow-surface-soft),
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 2.5%, transparent);
 }
 
 .status-banner::before,
@@ -229,8 +229,8 @@
 .status-banner::before {
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.024), transparent 26%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.012), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.012));
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 2.4%, transparent), transparent 26%),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-gloss-base) 1.2%, transparent), transparent 18%, transparent 82%, color-mix(in srgb, var(--color-gloss-base) 1.2%, transparent));
   opacity: 0.72;
 }
 
@@ -243,26 +243,26 @@
 
 .status-banner--info {
   background:
-    radial-gradient(circle at top right, rgba(62, 113, 147, 0.14), transparent 32%),
-    rgba(8, 12, 17, 0.26);
-  border-color: rgba(62, 113, 147, 0.18);
-  color: rgba(214, 230, 245, 0.96);
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 32%),
+    var(--color-panel);
+  border-color: color-mix(in oklch, var(--color-steel) 18%, transparent);
+  color: var(--color-text);
 }
 
 .status-banner--success {
   background:
-    radial-gradient(circle at top right, rgba(88, 145, 105, 0.14), transparent 32%),
-    rgba(8, 12, 17, 0.26);
-  border-color: rgba(88, 145, 105, 0.2);
-  color: rgba(226, 243, 231, 0.96);
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-success) 14%, transparent), transparent 32%),
+    var(--color-panel);
+  border-color: color-mix(in oklch, var(--color-success) 20%, transparent);
+  color: var(--color-text);
 }
 
 .status-banner--error {
   background:
-    radial-gradient(circle at top right, rgba(170, 83, 83, 0.16), transparent 32%),
-    rgba(8, 12, 17, 0.26);
-  border-color: rgba(170, 83, 83, 0.22);
-  color: rgba(250, 224, 224, 0.96);
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-danger) 16%, transparent), transparent 32%),
+    var(--color-panel);
+  border-color: color-mix(in oklch, var(--color-danger) 22%, transparent);
+  color: var(--color-text);
 }
 
 .status-banner__content {
@@ -290,12 +290,12 @@
 }
 
 .status-banner__title {
-  color: #fff6e9;
+  color: var(--color-text-strong);
 }
 
 .status-banner__detail {
   margin: 0;
-  color: rgba(242, 239, 230, 0.78);
+  color: var(--color-text);
 }
 
 .status-banner__meta {

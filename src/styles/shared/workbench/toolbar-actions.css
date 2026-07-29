@@ -30,7 +30,7 @@
   padding: 0.26rem 0.72rem 0.28rem;
   border-color: var(--workbench-chip-border-color);
   background: var(--workbench-chip-background-muted);
-  color: rgba(242, 239, 230, 0.74);
+  color: var(--color-text);
   font-size: var(--workbench-chip-font-size);
   letter-spacing: 0.01em;
   overflow: hidden;
@@ -58,7 +58,7 @@
 
 .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--share {
   border-radius: 0.72rem;
-  color: rgba(255, 245, 229, 0.88);
+  color: var(--color-text-strong);
 }
 
 .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--share.workbench-page__toolbar-action--icon-only {
@@ -76,9 +76,9 @@
 }
 
 .workbench-page__toolbar-action--prominent {
-  background: rgba(200, 167, 127, 0.055);
-  border-color: rgba(200, 167, 127, 0.14);
-  color: rgba(255, 239, 214, 0.9);
+  background: color-mix(in oklch, var(--color-copper) 5.5%, transparent);
+  border-color: color-mix(in oklch, var(--color-copper) 14%, transparent);
+  color: var(--color-text-strong);
 }
 
 .workbench-page__toolbar-action:hover {
@@ -87,9 +87,9 @@
 }
 
 .workbench-page__toolbar-action--prominent:hover {
-  background: rgba(200, 167, 127, 0.075);
-  border-color: rgba(200, 167, 127, 0.18);
-  color: rgba(255, 243, 223, 0.94);
+  background: color-mix(in oklch, var(--color-copper) 7.5%, transparent);
+  border-color: color-mix(in oklch, var(--color-copper) 18%, transparent);
+  color: var(--color-text-strong);
 }
 
 .workbench-page__toolbar-action.action-button--toggled,
@@ -100,7 +100,7 @@
 }
 
 .workbench-page__toolbar-action--error {
-  border-color: rgba(170, 83, 83, 0.22);
-  background: rgba(170, 83, 83, 0.08);
-  color: rgba(250, 224, 224, 0.92);
+  border-color: color-mix(in oklch, var(--color-danger) 22%, transparent);
+  background: color-mix(in oklch, var(--color-danger) 8%, transparent);
+  color: var(--color-text);
 }
