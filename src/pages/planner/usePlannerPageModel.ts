@@ -9,6 +9,7 @@ import type { PlannerRecommendation } from '../../domain/planner/recommendationT
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { computeEquipmentAdjustmentByHero } from '../../domain/simulator/equipmentMult'
 import { computeActualPatronPerkGlobalBuff } from '../../domain/simulator/patronPerkGlobalBuff'
+import { combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../../domain/simulator/blessingGlobalBuff'
 import { usePlannerCollections } from './usePlannerCollections'
 import { usePlannerRecommendation } from './usePlannerCompute'
 
@@ -61,14 +62,17 @@ export function usePlannerPageModel() {
       : new Map<string, number>(),
     [profileSnapshot, lootCatalog],
   )
-  // patron perk actual 全局 buff（用户实际购买等级，非满级理论值）。
-  // 未导入存档（无 patronPerks）→ 1（无加成，向后兼容）。
-  const globalBuffMultiplier = useMemo(
-    () => profileSnapshot?.patronPerks
+  // patron perk + blessing actual 全局 buff（global_dps add pool 合并：1 + Σ(value)/100）。
+  // 未导入存档 → 各源 1（无加成，向后兼容）；combineGlobalBuffMultipliers 合并同 pool。
+  const globalBuffMultiplier = useMemo(() => {
+    const patronMult = profileSnapshot?.patronPerks
       ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog)
-      : 1,
-    [profileSnapshot, patronPerkCatalog],
-  )
+      : 1
+    const blessingMult = profileSnapshot?.blessings
+      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog)
+      : 1
+    return combineGlobalBuffMultipliers([patronMult, blessingMult])
+  }, [profileSnapshot, patronPerkCatalog])
   // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(
     () => ({

@@ -51,6 +51,18 @@ export interface CampaignFavorBlessings {
   blessings: Record<string, number>
 }
 
+/**
+ * blessing（reset_upgrade）定义条目。
+ * type 1=地图（仅 currencyId 匹配的 campaign/deity 生效）/ 2=全局（跨 campaign）。
+ */
+export interface BlessingCatalogEntry {
+  id: string
+  type: number
+  /** reset_currency_id（地图 blessing 的生效 campaign/deity）。 */
+  currencyId: number
+  effects: ReadonlyArray<{ effectString: string; perLevel: number }>
+}
+
 export interface UserProfileSnapshot {
   schemaVersion: 1
   ownedHeroes: OwnedHero[]
@@ -59,6 +71,15 @@ export interface UserProfileSnapshot {
   campaigns?: CampaignFavorBlessings[]
   /** patron perk 已购等级（perk_id → level，来自 userdetails.patron_perks）；旧 snapshot 无此字段，消费侧 `?? {}` 兼容。 */
   patronPerks?: Record<string, number>
+  /**
+   * blessing 定义 + 已购等级（reset_upgrade；定义来自 userDetails.defines.reset_upgrade_defines，
+   * actual 来自 userDetails.details.reset_upgrade_levels——两者同源于私有 payload，故都进 snapshot 而非 public json）。
+   * 旧 snapshot 无此字段，消费侧 `?` 兼容。
+   */
+  blessings?: {
+    catalog: BlessingCatalogEntry[]
+    levels: Record<string, number>
+  }
   updatedAt: string
   warnings: string[]
   legendaryLevelCap: number

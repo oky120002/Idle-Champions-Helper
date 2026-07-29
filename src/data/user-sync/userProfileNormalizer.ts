@@ -1,4 +1,5 @@
 import type {
+  BlessingCatalogEntry,
   ImportedFormationSave,
   OwnedHero,
   OwnedHeroLegendarySlot,
@@ -22,11 +23,15 @@ import {
 interface UserDetailsPayload {
   user_id?: string | number
   heroes?: unknown
+  defines?: {
+    reset_upgrade_defines?: unknown
+  }
   details?: {
     instance_id?: string | number
     heroes?: unknown
     loot?: unknown
     patron_perks?: unknown
+    reset_upgrade_levels?: unknown
     legendary_details?: {
       legendary_items?: unknown
     }
@@ -70,6 +75,10 @@ interface FormationSavesPayload {
 export interface NormalizedUserDetails {
   ownedHeroes: OwnedHero[]
   patronPerks: Record<string, number>
+  blessings: {
+    catalog: BlessingCatalogEntry[]
+    levels: Record<string, number>
+  }
   warnings: string[]
 }
 
@@ -101,6 +110,32 @@ function normalizePatronPerks(value: unknown): Record<string, number> {
     if (id) {
       result[id] = toNumberValue(perk.level)
     }
+  }
+  return result
+}
+
+/**
+ * 提取 blessing 定义 catalog（来自 userDetails.defines.reset_upgrade_defines）。
+ * 保留全部 effects（global_dps 供 globalBuff 计算，effect_def 供后续 tag 限定展开）；
+ * id 缺失的条目跳过；无 effects → 空数组（currencyId/type 仍保留）。
+ */
+function normalizeBlessingCatalog(value: unknown): BlessingCatalogEntry[] {
+  const result: BlessingCatalogEntry[] = []
+  for (const item of normalizeObjectArray(value)) {
+    const id = toStringValue(item.id)
+    if (!id) {
+      continue
+    }
+    const effects = normalizeObjectArray(item.effects).map((effect) => ({
+      effectString: toStringValue(effect.effect_string),
+      perLevel: toNumberValue(effect.per_level),
+    }))
+    result.push({
+      id,
+      type: toNumberValue(item.type),
+      currencyId: toNumberValue(item.reset_currency_id),
+      effects,
+    })
   }
   return result
 }
@@ -211,6 +246,8 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
   const heroes = normalizeObjectArray(heroesValue)
   const lootByHeroId = normalizeLootByHeroId(payload.details?.loot)
   const patronPerks = normalizePatronPerks(payload.details?.patron_perks)
+  const blessingLevels = normalizeNumberRecord(payload.details?.reset_upgrade_levels)
+  const blessingCatalog = normalizeBlessingCatalog(payload.defines?.reset_upgrade_defines)
   const legendaryByHeroId = normalizeLegendaryByHeroId(payload.details?.legendary_details?.legendary_items)
 
   if (!Array.isArray(heroesValue) && !isRecord(heroesValue)) {
@@ -247,7 +284,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
     })
     .filter((hero) => hero.isOwned)
 
-  return { ownedHeroes, patronPerks, warnings }
+  return { ownedHeroes, patronPerks, blessings: { catalog: blessingCatalog, levels: blessingLevels }, warnings }
 }
 
 export function normalizeCampaignDetails(
@@ -316,6 +353,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
     importedFormationSaves: formationSaves.formations,
     campaigns: campaignDetails.campaigns,
     patronPerks: userDetails.patronPerks,
+    blessings: userDetails.blessings,
     updatedAt: input.updatedAt ?? new Date().toISOString(),
     legendaryLevelCap: toNumberValue(userDetailsPayload.details?.legendary_level_cap, 20),
     warnings: [

@@ -1,3 +1,5 @@
+import type { BlessingCatalogEntry } from '../user-profile/types'
+
 /**
  * 祝福（blessing）实际等级的全局 DPS 加成。
  *
@@ -17,16 +19,9 @@
  * 未导入存档（actualLevels=null/空）→ 1（无加成，向后兼容）。
  *
  * effect_def tag 限定（142 条）与 global_dps_mult_per_* 计数留后续（需 tag/英雄匹配）。
+ *
+ * BlessingCatalogEntry 类型定义在 ../user-profile/types（数据契约归数据层，snapshot 直接消费）。
  */
-
-export interface BlessingCatalogEntry {
-  id: string
-  /** 1=地图（仅 currencyId campaign 生效）/ 2=全局（跨 campaign）。 */
-  type: number
-  /** campaign id（地图 blessing 的 reset_currency_id）；全局 blessing 归属购买 campaign。 */
-  currencyId: number
-  effects: ReadonlyArray<{ effectString: string; perLevel: number }>
-}
 
 const GLOBAL_DPS_EFFECT_STRING = 'global_dps_multiplier_mult,$replace'
 

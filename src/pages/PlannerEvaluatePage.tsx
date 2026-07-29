@@ -26,6 +26,7 @@ import {
 } from './planner/evaluatePlacementsStore'
 import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
 import { computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
+import { combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/simulator/blessingGlobalBuff'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -90,13 +91,16 @@ export function PlannerEvaluatePage() {
       : new Map<string, number>(),
     [profileSnapshot, lootCatalog],
   )
-  // patron perk actual 全局 buff：未导入存档 → 1（无加成，向后兼容）。
-  const globalBuffMultiplier = useMemo(
-    () => profileSnapshot?.patronPerks
+  // patron perk + blessing actual 全局 buff（global_dps add pool 合并）；未导入存档 → 各源 1（向后兼容）。
+  const globalBuffMultiplier = useMemo(() => {
+    const patronMult = profileSnapshot?.patronPerks
       ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog)
-      : 1,
-    [profileSnapshot, patronPerkCatalog],
-  )
+      : 1
+    const blessingMult = profileSnapshot?.blessings
+      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog)
+      : 1
+    return combineGlobalBuffMultipliers([patronMult, blessingMult])
+  }, [profileSnapshot, patronPerkCatalog])
   const evaluateOptions = useMemo(
     () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier }),
     [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier],

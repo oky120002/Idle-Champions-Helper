@@ -138,6 +138,35 @@ describe('user payload normalizer', () => {
         },
       ])
     })
+
+    it('从 reset_upgrade_defines + reset_upgrade_levels 提取 blessing catalog 与等级', () => {
+      const result = normalizeUserDetails({
+        defines: {
+          reset_upgrade_defines: [
+            { id: 1, type: 2, reset_currency_id: 1, effects: [{ effect_string: 'global_dps_multiplier_mult,$replace', per_level: 100 }] },
+            { id: 2, type: 1, reset_currency_id: 3, effects: [{ effect_string: 'effect_def,1022' }] },
+            { id: 3, type: 1, reset_currency_id: 1 },
+          ],
+        },
+        details: {
+          reset_upgrade_levels: { '1': 5, '2': 40 },
+        },
+      })
+
+      expect(result.blessings.levels).toEqual({ '1': 5, '2': 40 })
+      expect(result.blessings.catalog).toEqual([
+        { id: '1', type: 2, currencyId: 1, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
+        { id: '2', type: 1, currencyId: 3, effects: [{ effectString: 'effect_def,1022', perLevel: 0 }] },
+        { id: '3', type: 1, currencyId: 1, effects: [] },
+      ])
+    })
+
+    it('blessing defines/levels 缺失 → 空 catalog/levels（向后兼容）', () => {
+      const result = normalizeUserDetails({})
+
+      expect(result.blessings.catalog).toEqual([])
+      expect(result.blessings.levels).toEqual({})
+    })
   })
 
   describe('normalizeCampaignDetails', () => {
@@ -260,8 +289,14 @@ describe('user payload normalizer', () => {
     it('把用户详情、campaign 和阵型 payload 合并为本地快照', () => {
       const snapshot = buildUserProfileSnapshot({
         userDetails: {
+          defines: {
+            reset_upgrade_defines: [
+              { id: 1, type: 2, reset_currency_id: 1, effects: [{ effect_string: 'global_dps_multiplier_mult,$replace', per_level: 100 }] },
+            ],
+          },
           details: {
             heroes: [{ hero_id: '1', level: 500 }],
+            reset_upgrade_levels: { '1': 5 },
           },
         },
         campaignDetails: {
@@ -281,11 +316,15 @@ describe('user payload normalizer', () => {
       expect(snapshot.warnings).toEqual(expect.arrayContaining([
         'campaign details imported: 1',
       ]))
-      // blessing 数据通道：campaignDetails.campaigns（favor/blessings）带进 snapshot，供适配层聚合进 globalBuffMultiplier。
+      // blessing 数据通道：reset_upgrade catalog+levels 进 snapshot，供 UI 聚合进 globalBuffMultiplier。
       const campaigns = snapshot.campaigns ?? []
       expect(campaigns).toHaveLength(1)
       expect(campaigns[0]?.campaignId).toBe('1')
       expect(campaigns[0]?.favor).toBe('1.50e92')
+      expect(snapshot.blessings?.levels).toEqual({ '1': 5 })
+      expect(snapshot.blessings?.catalog).toEqual([
+        { id: '1', type: 2, currencyId: 1, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
+      ])
     })
   })
 })

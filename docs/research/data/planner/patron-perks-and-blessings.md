@@ -60,22 +60,24 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 
 **effect 载体**：同 patron_perk（裸 `effect_string` + `effect_def,<id>` 引用）。
 
-**effect_string 分布（200 blessings）**：`global_dps_multiplier_mult,$replace` 23（无条件全局 DPS）/ `global_dps_multiplier_times_desc` 6 / `global_dps_mult_per_unique_race/class/alignment/loot_rarity/tagged_crusader_mult` 各 1（per 计数）/ `global_dps_multiplier_mult_area_tags` 2 / `effect_def,<id>` 142（tag 限定）/ `reduce_attack_cooldown` 4 / `bonus_favor_earned_from_reset` 4 / 其他（gold/ult/boss gems 等）少量。
+**effect_string 分布（200 blessings）**：`global_dps_multiplier_mult,$replace` 22（无条件全局 DPS；type1 地图 21 + type2 全局 1）/ `global_dps_multiplier_times_desc` 6 / `global_dps_mult_per_unique_race/class/alignment/loot_rarity/tagged_crusader_mult` 各 1（per 计数）/ `global_dps_multiplier_mult_area_tags` 2 / `effect_def,<id>` 142（tag 限定）/ `reduce_attack_cooldown` 4 / `bonus_favor_earned_from_reset` 4 / 其他（gold/ult/boss gems 等）少量。
 
-**量级**：23 条无条件 global_dps actual Σ=26800 → `1+26800/100 = ×269`（log10=2.43，迄今最大 globalBuff 单项）。
+**量级**：22 条无条件 global_dps actual Σ=26800 → `1+26800/100 = ×269`（log10=2.43，迄今最大 globalBuff 单项；2026-07-29 实测确认）。
 
 ## 接入状态与路径
 
-`global_dps_multiplier_mult`（patron 21 + blessing 23）同属 global DPS **add pool**：`globalBuffMultiplier = 1 + Σ(value)/100`，patron + blessing 合并 `1+(5470+26800)/100 = ×324`（非各自相乘）。
+`global_dps_multiplier_mult`（patron 21 + blessing 22）同属 global DPS **add pool**：`globalBuffMultiplier = 1 + Σ(value)/100`，patron + blessing 合并 `1+(5470+26800)/100 = ×324`（非各自相乘），UI 已用 `combineGlobalBuffMultipliers` 合并接入。
 
 | 项 | 量级 | 状态 |
 |---|---|---|
 | patron global_dps（21）actual | ×55.7 | ✅ 已接入 UI（f581562f）|
-| blessing global_dps（23）actual | ×269 | 待接入 |
+| blessing global_dps（22）actual | ×269 | ✅ 已接入 UI（snapshot.blessings catalog+levels + combine patron/blessing）|
 | 装备 hero_dps（per-carry）| ×28.2 | ✅ 已接入（3849d295）|
 | patron/blessing `effect_def` tag 限定 | 未估 | 未接入（明斯克符合的人类/巡林客/混乱善良等 tag）|
 | `global_dps_mult_per_*` 计数 | 未估 | 未接入 |
 | modron（effect 943「有 core +200%」）| ×3 | 未接入 |
+
+**blessing catalog 数据流（2026-07-29 接入）**：定义（`reset_upgrade_defines`）与 actual levels（`reset_upgrade_levels`）同源于私有 payload（`userDetails`），公开 getdefinitions **无** `reset_upgrade_defines`（0 次）。故 catalog+levels 都进 snapshot（非像 patron-perks.json 提成 public json——blessing 定义无公开源、不可 CI 重建）。`normalize` 提取 `snapshot.blessings = { catalog, levels }`（`BlessingCatalogEntry` 归数据层 `user-profile/types`）；UI `computeActualBlessingGlobalBuff(levels, catalog)` 与 patron 经 `combineGlobalBuffMultipliers` 合并。type 1（地图）暂全算（不传 campaign，与 patron 当前粗略度一致），按 active campaign 过滤留后续。
 
 **赞助者机制缺口**：当前 patron actual 接入未区分 type 1（本地）/type 2（全局），全按 actual 算 → 含非当前赞助者的本地增益（高估）。精确化需按 `game_instances[active].current_patron_id` 过滤 type 1（仅当前 instance 赞助者的本地增益生效）。
 
