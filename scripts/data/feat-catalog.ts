@@ -33,7 +33,7 @@ type RawFeat = Record<string, unknown>
 
 export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
   const id = feat.id
-  if (id === undefined || id === null) {
+  if (typeof id !== 'number' && typeof id !== 'string') {
     return null
   }
   const rarity = typeof feat.rarity === 'number' ? feat.rarity : 0
@@ -79,10 +79,10 @@ export function buildFeatCatalog(
       continue
     }
     const heroId = feat.hero_id
-    if (heroId === undefined || heroId === null) {
+    if (typeof heroId !== 'number' && typeof heroId !== 'string') {
       continue
     }
-    const entry = normalizeFeatEntry(feat as RawFeat)
+    const entry = normalizeFeatEntry(feat)
     if (!entry) {
       continue
     }

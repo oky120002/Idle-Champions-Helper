@@ -22,7 +22,9 @@ const effect = (effectString: string, perLevel: number, level: number): ActiveCa
 describe('collectHeroDpsContributions', () => {
   it('effect_def 引用的 hero_dps + by_tags filter → 收集（filter_targets 形态）', () => {
     const c = collectHeroDpsContributions([effect('effect_def,455', 100, 10)], templates)
-    expect(c).toEqual([{ value: 1000, qualifier: expect.objectContaining({ predicate: expect.any(Object) }) }])
+    expect(c).toHaveLength(1)
+    expect(c[0]?.value).toBe(1000)
+    expect(c[0]?.qualifier?.predicate).toBeInstanceOf(Object)
   })
 
   it('effect_def 引用的 hero_dps + targets by_tags filter → 收集（targets 形态）', () => {

@@ -41,7 +41,7 @@ function asJsonArray(value: unknown): JsonValue[] {
 
 export function normalizeEffectDefinitionTemplate(def: RawDefinition = {}): EffectDefinitionTemplate | null {
   const id = def.id
-  if (id === undefined || id === null) {
+  if (typeof id !== 'number' && typeof id !== 'string') {
     return null
   }
   const rawKeys = Array.isArray(def.effect_keys) ? def.effect_keys : []

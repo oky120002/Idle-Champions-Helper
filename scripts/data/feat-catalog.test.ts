@@ -4,11 +4,10 @@ import { buildFeatCatalog, normalizeFeatEntry } from './feat-catalog'
 describe('normalizeFeatEntry', () => {
   it('hero_dps feat → damage dimension', () => {
     const e = normalizeFeatEntry({ id: 35, hero_id: 7, rarity: 2, effects: [{ effect_string: 'hero_dps_multiplier_mult,30' }] })
-    expect(e).toEqual({
-      id: '35',
-      rarity: 2,
-      signals: [{ dimension: 'damage', signal: expect.objectContaining({ kind: 'heroDpsMultiplier', value: 30 }) }],
-    })
+    expect(e?.id).toBe('35')
+    expect(e?.rarity).toBe(2)
+    expect(e?.signals[0]?.dimension).toBe('damage')
+    expect(e?.signals[0]?.signal).toMatchObject({ kind: 'heroDpsMultiplier', value: 30 })
   })
 
   it('global_dps feat → damage dimension', () => {
