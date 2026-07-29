@@ -1,0 +1,63 @@
+# 专长（feat）与专精（specialization）
+
+IC 两大英雄自定义系统，玩家选择带来 dps/金币/速度/生存加成，需接入阵型模拟器。
+
+## 专长（feat）
+
+**数据源**：`hero_feat_defines`（2517 条，公开 getdefinitions）+ `snapshot.active_feats`（per-user 已激活 feat id 列表）。
+
+**机制**：每英雄 ~14 feat（中位数，max 24），玩家选 `feat_slots`（2-4，per-user，从 patron/favor/升级解锁）个激活。feat effect 多类，rarity 1-5（高 rarity 强）。相同 effect 的 feat 可叠加（同 pool add）。
+
+**effect kind 分布**（按 calc dimension 归类）：
+- **damage**：`buff_upgrade`(1136) + `global_dps_multiplier_mult`(430) + `buff_upgrades`(174) + `hero_dps_multiplier_mult`(138) + `effect_def`(42) + `buff_upgrade_per_any_tagged_crusader`(13) + `buff_upgrade_per_unique_race`(5) + `vicious_damage`(9) + `buff_base_crit_damage`(9) + `buff_base_crit_chance_add`(27) + `global_dps_multiplier_add`(1) + `favored_foe`(5)
+- **gold**：`gold_multiplier_mult`(65)
+- **speed**：`reduce_attack_cooldown`(7)
+- **survival**：`health_mult`(78) + `taunt`(17)
+- **utility**：`increase_ability_score`(151) + `add_hero_tags`(42) + `overwhelm_start_increase`(73)
+- **unique**（英雄专属）：`krond_*`/`ellywick_*`/`mehen_*`/`minthara_*` 等 → semantic-overrides 单独 patch
+
+**明斯克实例**：feat 35（旅店打手 `hero_dps +30%`）/ 38（无私 `global_dps +10%`）/ 399（力量之盔 `buff_upgrades,80,108-112` 偏好敌人 +80%）激活 `[35,38,399]`，feat_slots=3。
+
+**现状**：calc **完全未接入** feat。hero-abilities.json signal source 全 `official-parsed`（无 feat 来源）。明斯克 feat 35/38/399 激活但未算。
+
+## 专精（specialization）
+
+**数据源**：champion-details upgrades 的 `specializationName`/`specializationGraphicId`（choice upgrade）。
+
+**机制**：英雄升级中的 choice（选一个分支）。如明斯克「偏好敌人」（upgrade 108-112，reqLvl 50）选一个怪物类型。
+
+**现状**：calc build 期**全部**烘进 signal（非「选一个」穷举）。vulnerability 类（`monster_with_tag_more_damage`）按 scenario enemyTypes 匹配，等效玩家选匹配类型。但**非 vulnerability 类** choice 专精全 active 高估（玩家只选一个，calc 算全部）。
+
+## 设计
+
+**共性抽象**：feat 和专精的 effect 都是标准 `effect_string`，**复用 `normalizeEffectSignal` + `signalSemantics`**——不新写匹配逻辑。区别只在「来源标记 + 生效条件」：
+- feat：per-user（`snapshot.active_feats`），玩家已选 → 按 dimension 选 top。
+- specialization：per-hero choice → 穷举（beam search 每英雄×选项）。
+
+**独特单独**：极少数独一无二机制（明斯克「直吹自擂」速度队核心等）走 semantic-overrides patch（现有机制）。
+
+### feat 接入（按维度选 + 归一化叠加）
+
+**数据管线归一化**（build 期 → hero-abilities.json `featCatalog`）：
+- feat effect → signal（`normalizeEffectSignal` 复用）+ dimension 标记（effect kind → `HeroAbilityDimension`）。
+- 每条 feat：`{ id, dimension, rarity, signal }`。
+- 写 hero-abilities.json `featCatalog: Record<heroId, FeatEntry[]>`。
+
+**运行时按维度选**（scoringMode → dimension → top feat）：
+- `carry-dps` → damage dimension feat；`team-gold` → gold dimension feat。
+- 按 `snapshot.feat_slots` 选 top N feat（按 rarity/收益排序，非全遍历——用户「技巧」）。
+- 同 dimension feat 叠加（add pool，`applyHeroAbilityPatch` 注入 feat signal，source `'feat'`）。
+
+**相同效果叠加**：同 dimension feat（如 `global_dps_multiplier_mult,10`+`,25`+`,50`）add pool 合并（`1+Σ/100`）。高 rarity + 低 rarity 一起用 → 对象数值更高（add 累加）。
+
+**speed feat**（`reduce_attack_cooldown`）：calc 当前无 speed scoringMode（只有 `carry-dps`/`team-gold`），留后续（需 speed 评估维度）。
+
+### specialization 穷举（后续）
+
+非 vulnerability choice 专精穷举（beam search 每英雄×选项）。先盘点多英雄非 vulnerability choice 专精收益再设计架构。
+
+## 实现计划
+
+1. ✅ vulnerability（`monster_with_tag_more_damage`）接入（commit 32ae5e72，偏好敌人基础）。
+2. **feat 接入**（数据管线归一化 featCatalog + 运行时按维度选 top + 叠加）——本轮。
+3. specialization 穷举（后续）。

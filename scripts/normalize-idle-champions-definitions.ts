@@ -48,6 +48,7 @@ import {
   type PatronDefinition,
 } from './data/official-rule-helpers.ts'
 import { buildEffectDefinitionTemplates } from './data/effect-definition-templates.ts'
+import { buildFeatCatalog } from './data/feat-catalog.ts'
 import type { LocalizedText } from '../src/domain/types/common.ts'
 
 /**
@@ -657,6 +658,12 @@ export async function normalizeDefinitionsSnapshot(
   const effectDefinitionTemplates = buildEffectDefinitionTemplates(asRawArray(rawDefinitions.effect_defines))
   await writeJson(path.join(outputDir, 'effect-definitions.json'), {
     items: effectDefinitionTemplates,
+    updatedAt,
+  })
+  // feat-catalog（专长 effect 归一化为 signal + dimension，供运行时按 scoringMode 选 top feat）
+  const featCatalog = buildFeatCatalog(asRawArray(rawDefinitions.hero_feat_defines))
+  await writeJson(path.join(outputDir, 'feat-catalog.json'), {
+    catalog: featCatalog,
     updatedAt,
   })
   await writeJson(path.join(outputDir, 'enums.json'), {
