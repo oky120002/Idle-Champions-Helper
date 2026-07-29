@@ -7,9 +7,9 @@
 
 .site-header--subpage.site-header--condensed::before {
   background:
-    radial-gradient(circle at 12% 0%, rgba(62, 113, 147, 0.12), transparent 32%),
-    radial-gradient(circle at 88% 0%, rgba(198, 140, 92, 0.14), transparent 30%),
-    linear-gradient(145deg, rgba(14, 20, 28, 0.94), rgba(8, 12, 17, 0.95));
+    radial-gradient(circle at 12% 0%, color-mix(in oklch, var(--color-steel) 12%, transparent), transparent 32%),
+    radial-gradient(circle at 88% 0%, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 30%),
+    linear-gradient(145deg, var(--color-interactive-top), var(--color-interactive-bottom));
 }
 
 .site-header--subpage.site-header--condensed::after {

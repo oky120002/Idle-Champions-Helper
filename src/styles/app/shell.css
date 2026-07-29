@@ -13,11 +13,11 @@
   z-index: -2;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 14%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent), transparent 14%),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.012) 0,
-      rgba(255, 255, 255, 0.012) 1px,
+      color-mix(in srgb, var(--color-gloss-base) 1.2%, transparent) 0,
+      color-mix(in srgb, var(--color-gloss-base) 1.2%, transparent) 1px,
       transparent 1px,
       transparent 128px
     );
@@ -31,9 +31,9 @@
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 16% 12%, rgba(62, 113, 147, 0.1), transparent 24%),
-    radial-gradient(circle at 84% 8%, rgba(198, 140, 92, 0.1), transparent 26%),
-    linear-gradient(180deg, transparent 0%, rgba(1, 4, 9, 0.1) 100%);
+    radial-gradient(circle at 16% 12%, color-mix(in oklch, var(--color-steel) 10%, transparent), transparent 24%),
+    radial-gradient(circle at 84% 8%, color-mix(in oklch, var(--color-copper) 10%, transparent), transparent 26%),
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-scrim) 10%, transparent) 100%);
 }
 
 .background-orb {
@@ -49,7 +49,7 @@
   right: -8rem;
   width: 20rem;
   height: 20rem;
-  background: radial-gradient(circle, rgba(198, 140, 92, 0.16) 0%, rgba(198, 140, 92, 0) 70%);
+  background: radial-gradient(circle, color-mix(in oklch, var(--color-copper) 16%, transparent) 0%, transparent 70%);
 }
 
 .background-orb--two {
@@ -57,7 +57,7 @@
   top: 34%;
   width: 18rem;
   height: 18rem;
-  background: radial-gradient(circle, rgba(62, 113, 147, 0.14) 0%, rgba(62, 113, 147, 0) 72%);
+  background: radial-gradient(circle, color-mix(in oklch, var(--color-steel) 14%, transparent) 0%, transparent 72%);
 }
 
 .site-main {
