@@ -16,11 +16,11 @@
 import { collectHeroDpsContributions } from '../buffs/externalHeroDpsMult'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
-import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../simulator/blessingGlobalBuff'
-import { computeEquipmentAdjustmentByHero } from '../simulator/equipmentMult'
-import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../simulator/patronPerkGlobalBuff'
-import type { LootCatalogEntry } from '../simulator/equipmentMult'
-import type { PatronPerkCatalogEntry } from '../simulator/patronPerkGlobalBuff'
+import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../buffs/blessingGlobalBuff'
+import { computeEquipmentAdjustmentByHero } from '../buffs/equipmentMult'
+import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../buffs/patronPerkGlobalBuff'
+import type { LootCatalogEntry } from '../buffs/equipmentMult'
+import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
 import type { UserProfileSnapshot } from '../user-profile/types'
 
 export interface ScoringBonusInputs {

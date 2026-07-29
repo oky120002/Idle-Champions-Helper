@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import { buildScoringBonusInputs } from './scoringBonusInputs'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
-import type { PatronPerkCatalogEntry } from '../simulator/patronPerkGlobalBuff'
-import type { LootCatalogEntry } from '../simulator/equipmentMult'
+import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
+import type { LootCatalogEntry } from '../buffs/equipmentMult'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 
 function makeSnapshot(over: Partial<UserProfileSnapshot> = {}): UserProfileSnapshot {

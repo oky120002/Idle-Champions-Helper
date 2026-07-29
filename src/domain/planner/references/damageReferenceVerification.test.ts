@@ -18,7 +18,7 @@ import type { ChampionReference, ChampionReferenceSnapshot } from './championRef
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
 import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
 import { scoreFormation } from '../steadyStateScoring'
-import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../simulator/equipmentMult'
+import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../buffs/equipmentMult'
 import { evaluatePlacementFit } from '../placementFit'
 
 // 真自动发现：新 *ReferenceData.ts 文件零注册进流。
