@@ -34,7 +34,7 @@
   gap: 0.65rem;
   padding: 0.78rem 0;
   border: 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid var(--color-border-soft);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
@@ -52,13 +52,13 @@
 .filter-subgroup__title {
   font-size: 0.84rem;
   font-weight: 700;
-  color: #fff3df;
+  color: var(--color-text-strong);
 }
 
 .filter-subgroup__hint {
   margin: 0;
   font-size: 0.82rem;
-  color: rgba(242, 239, 230, 0.58);
+  color: var(--color-text-muted);
 }
 
 .filter-chip-grid,
@@ -73,14 +73,14 @@
   display: inline-flex;
   align-items: center;
   min-height: 1.86rem;
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  border: 1px solid var(--color-border-soft);
   border-radius: 999px;
 }
 
 .filter-chip {
   padding: 0.42rem 0.76rem;
-  background: rgba(255, 255, 255, 0.018);
-  color: rgba(242, 239, 230, 0.82);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text);
   cursor: pointer;
   box-shadow: none;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
@@ -88,25 +88,25 @@
 
 .tag-pill {
   padding: 0.38rem 0.66rem;
-  background: rgba(255, 255, 255, 0.018);
-  color: rgba(242, 239, 230, 0.8);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text);
   box-shadow: none;
 }
 
 .filter-chip:hover {
   transform: translateY(-0.5px);
-  border-color: rgba(200, 167, 127, 0.34);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
   box-shadow: none;
 }
 
 .filter-chip--active {
-  background: rgba(200, 167, 127, 0.095);
-  border-color: rgba(200, 167, 127, 0.48);
-  color: #fff3df;
+  background: color-mix(in oklch, var(--color-copper) 9.5%, transparent);
+  border-color: color-mix(in oklch, var(--color-copper) 48%, transparent);
+  color: var(--color-text-strong);
 }
 
 .filter-chip__count {
   margin-left: 0.45rem;
-  color: rgba(255, 244, 228, 0.56);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
 }

@@ -2,11 +2,11 @@
   justify-self: start;
   padding: 0.34rem 0.68rem;
   border-radius: 999px;
-  border: 1px solid rgba(200, 167, 127, 0.18);
+  border: 1px solid color-mix(in oklch, var(--color-copper) 18%, transparent);
   background:
     linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent),
-    rgba(200, 167, 127, 0.06);
-  color: rgba(255, 243, 223, 0.88);
+    color-mix(in oklch, var(--color-copper) 6%, transparent);
+  color: var(--color-text-strong);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -16,7 +16,7 @@
   margin: 0;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-size: 0.74rem;
 }
 
