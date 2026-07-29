@@ -7,6 +7,7 @@ import type { PlannerCollections } from '../../domain/planner/recommendationType
 import type { LootCatalogEntry } from '../../domain/simulator/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../../domain/simulator/patronPerkGlobalBuff'
 import type { EffectDefinitionEntry } from '../../domain/simulator/effectDefinitionDps'
+import type { FeatCatalog } from '../../domain/abilities/featSignals'
 import type { Champion, Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 
@@ -42,6 +43,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
     variants: [],
     plannerHeroes: [],
     plannerScenarios: [],
+    featCatalog: {},
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [lootCatalog, setLootCatalog] = useState<LootCatalogEntry[]>([])
@@ -61,7 +63,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
 
       try {
         const version = await loadVersion()
-        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData] = await Promise.all([
+        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData] = await Promise.all([
           loadCollection<Variant>('variants'),
           loadResolvedPlannerModel(),
           resolveUserProfileSnapshot(),
@@ -69,6 +71,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
           loadCollection<LootCatalogEntry>('loot-catalog'),
           fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
           loadCollection<EffectDefinitionEntry>('effect-definitions'),
+          fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
         ])
 
         if (!active) return
@@ -77,6 +80,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
           variants: variants.items,
           plannerHeroes: plannerModel.heroes,
           plannerScenarios: plannerModel.scenarios,
+          featCatalog: featCatalogData.catalog ?? {},
         })
         setProfileSnapshot(resolution.snapshot)
         setLootCatalog(lootCatalogCollection.items)

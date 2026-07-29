@@ -4,8 +4,9 @@ import { formatGameNumber } from '../simulator/gameNumber'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 import type { HeroDpsContribution } from '../simulator/externalHeroDpsMult'
+import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
-import type { UserProfileSnapshot } from '../user-profile/types'
+import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
@@ -280,6 +281,30 @@ export interface FormationEvaluation {
  * 与 buildPlannerRecommendation（beam search 找最佳）对应：本函数不搜索，直接对给定 placements 计算。
  * 用于 UI 调整英雄后重算当前阵型、CLI 指定阵型输出 JSON。合法性违规作为 warning 附加（仍出拆解）。
  */
+
+// 应用玩家 active feat（OwnedHero.feats）到 profile：按 scoringMode 选对应 dimension 的 feat
+// signal（carry-dps→damage, team-gold→gold），同 dimension add pool 叠加（applyFeatsToProfile）。
+// featCatalog 缺省（未加载）或英雄无 active feat → 跳过/原样。
+function applyActiveFeats(
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  ownedHeroes: readonly OwnedHero[],
+  featCatalog: FeatCatalog | undefined,
+  scoringMode: ScoringMode,
+): void {
+  if (!featCatalog) {
+    return
+  }
+  const dimension = scoringMode === 'team-gold' ? 'gold' : 'damage'
+  const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
+  for (const [heroId, profile] of heroById) {
+    const owned = ownedById.get(heroId)
+    if (!owned || !owned.feats || owned.feats.length === 0) {
+      continue
+    }
+    heroById.set(heroId, applyFeatsToProfile(profile, owned.feats, featCatalog[heroId], dimension))
+  }
+}
+
 export function evaluateFormation({
   variant: selectedVariant,
   collections,
@@ -300,6 +325,7 @@ export function evaluateFormation({
   const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
   const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
+  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog, scoringMode)
   const candidateIds = new Set(
     buildCandidatePool({
       mode: candidateMode,
@@ -477,6 +503,7 @@ export function buildPlannerRecommendation({
 
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
+  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog, scoringMode)
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {

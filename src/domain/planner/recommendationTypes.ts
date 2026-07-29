@@ -2,6 +2,7 @@ import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { AreaEstimationResult } from './areaEstimation'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type { FeatCatalog } from '../abilities/featSignals'
 import type { SimulationBreakdown } from './steadyStateScoring'
 
 export interface PlannerNarrativeLine {
@@ -46,6 +47,8 @@ export interface PlannerCollections {
   variants: Variant[]
   plannerHeroes: ResolvedHeroAbilityProfile[]
   plannerScenarios: ResolvedPlannerScenarioModel[]
+  /** feat 专长 catalog（heroId → FeatEntry[]），按 scoringMode 维度选 active feat signal。 */
+  featCatalog?: FeatCatalog
 }
 
 export type PlannerRecommendationBlocker =

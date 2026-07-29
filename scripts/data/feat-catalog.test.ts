@@ -13,18 +13,18 @@ describe('normalizeFeatEntry', () => {
 
   it('global_dps feat → damage dimension', () => {
     const e = normalizeFeatEntry({ id: 38, hero_id: 7, rarity: 2, effects: [{ effect_string: 'global_dps_multiplier_mult,10' }] })
-    expect(e?.signals[0].dimension).toBe('damage')
-    expect(e?.signals[0].signal.kind).toBe('globalDpsMultiplier')
+    expect(e?.signals[0]?.dimension).toBe('damage')
+    expect(e?.signals[0]?.signal.kind).toBe('globalDpsMultiplier')
   })
 
   it('gold feat → gold dimension', () => {
     const e = normalizeFeatEntry({ id: 1, hero_id: 4, rarity: 3, effects: [{ effect_string: 'gold_multiplier_mult,25' }] })
-    expect(e?.signals[0].dimension).toBe('gold')
+    expect(e?.signals[0]?.dimension).toBe('gold')
   })
 
   it('reduce_attack_cooldown feat → speed dimension', () => {
     const e = normalizeFeatEntry({ id: 1, hero_id: 19, rarity: 3, effects: [{ effect_string: 'reduce_attack_cooldown,0.5' }] })
-    expect(e?.signals[0].dimension).toBe('speed')
+    expect(e?.signals[0]?.dimension).toBe('speed')
   })
 
   it('非 scoring dimension（increase_ability_score）→ 跳过；无 scoring signal → null', () => {
@@ -38,7 +38,7 @@ describe('normalizeFeatEntry', () => {
     })
     // add_global_ceremorphosis_stacks 非 scoring dimension → 只 global_dps 进
     expect(e?.signals).toHaveLength(1)
-    expect(e?.signals[0].dimension).toBe('damage')
+    expect(e?.signals[0]?.dimension).toBe('damage')
   })
 
   it('无 id 或无 effects → null', () => {
@@ -56,6 +56,6 @@ describe('buildFeatCatalog', () => {
     ])
     expect(Object.keys(catalog).sort()).toEqual(['4', '7'])
     expect(catalog['7']).toHaveLength(1) // 270 过滤
-    expect(catalog['7']?.[0].id).toBe('35')
+    expect(catalog['7']?.[0]?.id).toBe('35')
   })
 })
