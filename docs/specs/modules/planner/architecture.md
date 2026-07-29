@@ -67,6 +67,20 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 
 **后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
 
+## 决策记录（ADR）
+
+计算原则与下列 ADR 互为依据（决策 why 在 ADR，最终态在此与各专题 spec）：
+
+- `0008` 加成机制按自然形态隔离（不引入统一接口/注册表）
+- `0009` 真实目标量 carryDps + pool 聚合 + beam search（淘汰启发式/黑盒）
+- `0010` hermetic 入参契约（纯函数，永不读登录态/数据源）
+- `0011` 投影模式 aggregateProjection（阵型倍率 vs 绝对 DPS 双模）
+- `0012` BUD vs DPS（相对比较用 DPS，绝对推图用 BUD）
+- `0013` DPS 机制抽象阈值（≥2 通用路径，>10 升级注册表）
+- `0014` GameNumber 用 break_eternity.js
+- `0015` 明斯克参照作重构回归守护（非绝对精度标尺）
+- `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量评分/降 beam）
+
 ## 三层架构
 
 能力表达、加成聚合、优化目标分层是 planner 的核心设计原则：
