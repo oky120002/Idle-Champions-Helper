@@ -138,6 +138,14 @@ export function powerGameNumber(base: GameNumberValue, exponent: number): GameNu
   return base.pow(exponent)
 }
 
+/**
+ * Base-10 logarithm as a plain number.
+ *
+ * ponytail: decimal.js `.log(10)` is ~1000× slower than `.gt`/`.mul`
+ * (arbitrary-precision logarithm, ~37µs/op vs ~0.05µs) — reserve for
+ * off-path analytics (calibration deviation); use `compareGameNumbers` for
+ * hot-path ordering. No current production caller.
+ */
 export function log10GameNumber(value: GameNumberValue): number {
   return value.log(10).toNumber()
 }

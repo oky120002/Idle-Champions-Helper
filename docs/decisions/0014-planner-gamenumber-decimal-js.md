@@ -11,7 +11,7 @@ planner 伤害量级远超 JS number 上限：游戏后期 carryDps 可达 `1e10
 
 引入 `decimal.js`（三方库，MikeMcl 维护，jsdom 等主流库依赖），只在 `src/domain/simulator/gameNumber.ts` 直接 import；业务代码统一用 wrapper（`parseGameNumber`/`formatGameNumber`/`multiply`/`divide`/`power`/`add`/`compare`/`log10`/`sort`）。性能策略：
 
-- 排序与 beam search 优先比较 `log10` 或 wrapper compare，不构造巨型十进制字符串。
+- 排序与 beam search 用 wrapper compare（`.gt`/`.lt`，实测 ~2000 万 ops/s）；`log10GameNumber` 走 decimal.js 高精度对数较慢（~37µs/op，慢 `.gt` 约 1000×），仅用于离线校准偏差，生产热路径零调用，不构造巨型十进制字符串。
 - 加法用集中阈值（初始 15 个数量级；小项不影响 3 位游戏显示时直接忽略）。
 - 显示层默认 `1.50e92` 风格；核心数值类型覆盖超过 `Number.MAX_VALUE` 的游戏数值范围。
 
