@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { App } from './App'
 import { I18nProvider } from './i18n'
+import { ThemeProvider } from './theme'
 
 describe('App', () => {
   it('在个人数据页完成本地导入 smoke 测试', async () => {
@@ -11,9 +12,11 @@ describe('App', () => {
 
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/user-data']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/user-data']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -40,9 +43,11 @@ describe('App', () => {
 
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/user-data']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/user-data']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -65,9 +70,11 @@ describe('App', () => {
 
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/user-data']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/user-data']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 

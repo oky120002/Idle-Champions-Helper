@@ -15,6 +15,7 @@ vi.mock('../../data/client', async () => {
 
 import { App } from '../../app/App'
 import { I18nProvider } from '../../app/i18n'
+import { ThemeProvider } from '../../app/theme'
 import { loadCollection } from '../../data/client'
 import { APP_DATABASE_NAME } from '../../data/localDatabase'
 import {
@@ -185,9 +186,11 @@ describe('planner route and navigation', () => {
   it('/planner 在无本地快照时只显示引导，不显示推荐结果', async () => {
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -213,9 +216,11 @@ describe('planner route and navigation', () => {
 
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -249,9 +254,11 @@ describe('planner route and navigation', () => {
 
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -288,9 +295,11 @@ describe('planner route and navigation', () => {
 
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 

@@ -16,6 +16,7 @@ vi.mock('../../data/client', async () => {
 
 import { App } from '../../app/App'
 import { I18nProvider } from '../../app/i18n'
+import { ThemeProvider } from '../../app/theme'
 import { loadCollection } from '../../data/client'
 import { APP_DATABASE_NAME } from '../../data/localDatabase'
 import { deleteUserProfileData } from '../../data/user-profile-store'
@@ -195,9 +196,11 @@ describe('planner evaluate route', () => {
   it('/planner/evaluate 渲染场景选择与候选范围', async () => {
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -209,9 +212,11 @@ describe('planner evaluate route', () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -231,9 +236,11 @@ describe('planner evaluate route', () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -254,9 +261,11 @@ describe('planner evaluate route', () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -284,11 +293,13 @@ describe('planner evaluate route', () => {
   it('带 initialVariantId 进入时默认选中该场景（跨页场景同步）', async () => {
     render(
       <I18nProvider>
-        <MemoryRouter
-          initialEntries={[{ pathname: '/planner/evaluate', state: { initialVariantId: 'variant-2' } }]}
-        >
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter
+            initialEntries={[{ pathname: '/planner/evaluate', state: { initialVariantId: 'variant-2' } }]}
+          >
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -299,9 +310,11 @@ describe('planner evaluate route', () => {
   it('toolbar 含返回自动计划按钮', async () => {
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -312,9 +325,11 @@ describe('planner evaluate route', () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
@@ -332,9 +347,11 @@ describe('planner evaluate route', () => {
     const user = userEvent.setup()
     render(
       <I18nProvider>
-        <MemoryRouter initialEntries={['/planner/evaluate']}>
-          <App />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/planner/evaluate']}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
       </I18nProvider>,
     )
 
