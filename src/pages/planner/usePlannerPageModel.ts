@@ -8,8 +8,9 @@ import type { PlannerRecommendationOptions } from '../../domain/planner/recommen
 import type { PlannerRecommendation } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { computeEquipmentAdjustmentByHero } from '../../domain/simulator/equipmentMult'
-import { computeActualPatronPerkGlobalBuff } from '../../domain/simulator/patronPerkGlobalBuff'
-import { combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../../domain/simulator/blessingGlobalBuff'
+import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../../domain/simulator/patronPerkGlobalBuff'
+import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../../domain/simulator/blessingGlobalBuff'
+import { collectHeroDpsContributions } from '../../domain/simulator/externalHeroDpsMult'
 import { usePlannerCollections } from './usePlannerCollections'
 import { usePlannerRecommendation } from './usePlannerCompute'
 
@@ -29,6 +30,7 @@ export function usePlannerPageModel() {
     profileSnapshot,
     lootCatalog,
     patronPerkCatalog,
+    effectDefinitions,
     championById,
     selectedVariantId,
     loadState,
@@ -62,18 +64,36 @@ export function usePlannerPageModel() {
       : new Map<string, number>(),
     [profileSnapshot, lootCatalog],
   )
+  // effect_def template（id → entry），供 globalBuff 解引用 global_dps + externalHeroDps 匹配 filter。
+  const effectDefTemplates = useMemo(
+    () => new Map(effectDefinitions.map((entry) => [entry.id, entry])),
+    [effectDefinitions],
+  )
   // patron perk + blessing actual 全局 buff（global_dps add pool 合并：1 + Σ(value)/100）。
-  // 未导入存档 → 各源 1（无加成，向后兼容）；combineGlobalBuffMultipliers 合并同 pool。
+  // 通道1：effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入。未导入存档 → 各源 1（向后兼容）。
   const globalBuffMultiplier = useMemo(() => {
     const active = profileSnapshot?.activeContext
     const patronMult = profileSnapshot?.patronPerks
-      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId)
+      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId, effectDefTemplates)
       : 1
     const blessingMult = profileSnapshot?.blessings
-      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity)
+      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity, effectDefTemplates)
       : 1
     return combineGlobalBuffMultipliers([patronMult, blessingMult])
-  }, [profileSnapshot, patronPerkCatalog])
+  }, [profileSnapshot, patronPerkCatalog, effectDefTemplates])
+  // 通道2：patron/blessing 的 effect_def hero_dps（带 filter，per-carry 条件生效）。
+  // active 过滤复用 globalBuff 的 collect 单一来源（#7 type1 规则不漂移）；未导入存档 → 空。
+  const externalHeroDpsContributions = useMemo(() => {
+    if (!profileSnapshot) return []
+    const active = profileSnapshot.activeContext
+    const patronEffects = profileSnapshot.patronPerks
+      ? collectActivePatronPerkEffects(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId)
+      : []
+    const blessingEffects = profileSnapshot.blessings
+      ? collectActiveBlessingEffects(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity)
+      : []
+    return collectHeroDpsContributions([...patronEffects, ...blessingEffects], effectDefTemplates)
+  }, [profileSnapshot, patronPerkCatalog, effectDefTemplates])
   // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(
     () => ({
@@ -85,8 +105,9 @@ export function usePlannerPageModel() {
       lockedSlots,
       equipmentAdjustmentByHero,
       globalBuffMultiplier,
+      externalHeroDpsContributions,
     }),
-    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, globalBuffMultiplier],
+    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
   const { result, loading: recommendLoading, error: recommendError } = usePlannerRecommendation(
     runner,

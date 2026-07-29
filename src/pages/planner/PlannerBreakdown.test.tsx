@@ -20,6 +20,7 @@ function buildBreakdown(overrides: Partial<SimulationBreakdown> = {}): Simulatio
       vulnerability: 1,
       globalBuff: 1,
       equipmentAdjustment: 1,
+      externalHeroDps: 1,
     },
     pools: [],
     contributions: [

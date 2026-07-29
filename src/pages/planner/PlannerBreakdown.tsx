@@ -63,6 +63,7 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
     { key: 'vulnerability', label: t({ zh: '易伤', en: 'Vulnerability' }), value: breakdown.factors.vulnerability },
     { key: 'globalBuff', label: t({ zh: '全局', en: 'Global' }), value: breakdown.factors.globalBuff },
     { key: 'equipment', label: t({ zh: '装备', en: 'Equipment' }), value: breakdown.factors.equipmentAdjustment },
+    { key: 'externalHeroDps', label: t({ zh: '外部加成', en: 'External' }), value: breakdown.factors.externalHeroDps },
   ]
   // 值显示为 ×1.00 的因子无贡献，渲染纯噪声（典型场景 crit/globalBuff/equipment 常为默认 1）——隐藏。
   const visibleFactors = factors.filter((factor) => formatFactor(factor.value) !== '1.00')

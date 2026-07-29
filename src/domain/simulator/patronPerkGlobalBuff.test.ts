@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { computeActualPatronPerkGlobalBuff } from './patronPerkGlobalBuff'
 import type { PatronPerkCatalogEntry } from './patronPerkGlobalBuff'
+import type { EffectDefinitionEntry } from './effectDefinitionDps'
 
 // typeId 2=全局（恒生效）；patronId 统一 '1'，全局语义下不影响。
 const PERKS: PatronPerkCatalogEntry[] = [
@@ -35,6 +36,29 @@ describe('computeActualPatronPerkGlobalBuff', () => {
       { id: '2', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
     ]
     expect(computeActualPatronPerkGlobalBuff({ '1': 10, '2': 10 }, perks)).toBeCloseTo(21, 5)
+  })
+
+  describe('effect_def,<id> 引用（#9 通道1）', () => {
+    const templates = new Map<string, EffectDefinitionEntry>([
+      ['930', { id: '930', effectKeys: [{ effectString: 'global_dps_multiplier_mult,$replace', filterTargets: [], targets: [] }] }],
+      ['455', { id: '455', effectKeys: [{ effectString: 'hero_dps_multiplier_mult,$replace', filterTargets: [{ type: 'by_tags', tags: 'male' }], targets: ['all'] }] }],
+    ])
+    const edPerks: PatronPerkCatalogEntry[] = [
+      { id: '20', patronId: '1', typeId: 2, effects: [{ effectString: 'effect_def,930', perLevel: 100 }] },
+      { id: '21', patronId: '1', typeId: 2, effects: [{ effectString: 'effect_def,455', perLevel: 100 }] },
+    ]
+
+    it('effect_def 引用的 global_dps 解引用计入 globalBuff', () => {
+      expect(computeActualPatronPerkGlobalBuff({ '20': 1 }, edPerks, null, templates)).toBeCloseTo(2, 5)
+    })
+
+    it('effect_def 引用的 hero_dps 不计入 globalBuff（属 per-carry 通道）', () => {
+      expect(computeActualPatronPerkGlobalBuff({ '21': 1 }, edPerks, null, templates)).toBe(1)
+    })
+
+    it('无 template → effect_def 引用跳过（向后兼容）', () => {
+      expect(computeActualPatronPerkGlobalBuff({ '20': 1 }, edPerks, null, null)).toBe(1)
+    })
   })
 })
 

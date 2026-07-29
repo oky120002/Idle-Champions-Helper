@@ -47,12 +47,13 @@ import {
   normalizeTrialsRoleDefinition,
   type PatronDefinition,
 } from './data/official-rule-helpers.ts'
+import { buildEffectDefinitionTemplates } from './data/effect-definition-templates.ts'
 import type { LocalizedText } from '../src/domain/types/common.ts'
 
 /**
  * definitions 归一化编排：把官方原始 definitions 快照拆成 champions / adventures /
  * variants / patrons / game-rules / effect-reference / patron-perks / trials /
- * formations / enums / champion-visuals / champion-details 集合。
+ * formations / enums / champion-visuals / champion-details / loot-catalog / effect-definitions 集合。
  */
 
 type RawDefinition = Record<string, unknown>
@@ -649,6 +650,13 @@ export async function normalizeDefinitionsSnapshot(
   const lootCatalog = buildLootCatalog(asRawArray(rawDefinitions.loot_defines))
   await writeJson(path.join(outputDir, 'loot-catalog.json'), {
     items: lootCatalog,
+    updatedAt,
+  })
+  // effect-definitions（DPS effect_def template），供 patron_perk/blessing 的 `effect_def,<id>` 引用
+  // 在运行时解引用（kind + $replace/固定值 + filter_targets/targets）。
+  const effectDefinitionTemplates = buildEffectDefinitionTemplates(asRawArray(rawDefinitions.effect_defines))
+  await writeJson(path.join(outputDir, 'effect-definitions.json'), {
+    items: effectDefinitionTemplates,
     updatedAt,
   })
   await writeJson(path.join(outputDir, 'enums.json'), {

@@ -3,6 +3,7 @@ import Decimal from 'break_eternity.js'
 import { formatGameNumber } from '../simulator/gameNumber'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import type { HeroDpsContribution } from '../simulator/externalHeroDpsMult'
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
@@ -188,6 +189,12 @@ export interface PlannerRecommendationOptions {
    * 默认无（=1，保持 理论 loot 基线）。UI 接入（owned 装备读取）在
    */
   equipmentAdjustmentByHero?: Map<string, number>
+  /**
+   * 外部 hero_dps per-carry 贡献（patron/blessing effect_def hero_dps，带 filter）。
+   * 由调用方从 effect-definitions.json + active patron/blessing effect_def 经 collectHeroDpsContributions 算后传入；
+   * scoreFormation 内按 carry 属性匹配，与 equipment 同 add pool 合并。默认空（无外部 hero_dps 加成）。
+   */
+  externalHeroDpsContributions?: readonly HeroDpsContribution[]
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
   /**
@@ -355,6 +362,7 @@ export function evaluateFormation({
     // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
     globalBuffMultiplier: options.globalBuffMultiplier,
     equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+    externalHeroDpsContributions: options.externalHeroDpsContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,
   })
@@ -512,6 +520,7 @@ export function buildPlannerRecommendation({
         // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
         globalBuffMultiplier: options.globalBuffMultiplier,
         equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+        externalHeroDpsContributions: options.externalHeroDpsContributions,
         manualStackCount: options.manualStackCount,
         aggregateProjection: options.aggregateProjection,
       })

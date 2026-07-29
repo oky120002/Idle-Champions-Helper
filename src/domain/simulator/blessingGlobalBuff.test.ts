@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from './blessingGlobalBuff'
+import type { EffectDefinitionEntry } from './effectDefinitionDps'
 import type { BlessingCatalogEntry } from '../../domain/user-profile/types'
 
 // type 1=地图（仅 currencyId campaign）/ type 2=全局（跨 campaign）
@@ -31,6 +32,40 @@ describe('computeActualBlessingGlobalBuff', () => {
   it('未导入存档（null/空）→ 1（向后兼容）', () => {
     expect(computeActualBlessingGlobalBuff({}, BLESSINGS, '1')).toBe(1)
     expect(computeActualBlessingGlobalBuff(null, BLESSINGS, '1')).toBe(1)
+  })
+
+  describe('effect_def,<id> 引用（#9 通道1）', () => {
+    const templates = new Map<string, EffectDefinitionEntry>([
+      ['930', { id: '930', effectKeys: [{ effectString: 'global_dps_multiplier_mult,$replace', filterTargets: [], targets: [] }] }],
+      ['455', { id: '455', effectKeys: [{ effectString: 'hero_dps_multiplier_mult,$replace', filterTargets: [{ type: 'by_tags', tags: 'male' }], targets: ['all'] }] }],
+    ])
+    const edBlessings: BlessingCatalogEntry[] = [
+      { id: '64', type: 2, currencyId: 1, effects: [{ effectString: 'effect_def,930', perLevel: 100 }] },
+      { id: '70', type: 2, currencyId: 1, effects: [{ effectString: 'effect_def,455', perLevel: 100 }] },
+    ]
+
+    it('effect_def 引用的 global_dps 解引用计入 globalBuff', () => {
+      // ed930 global_dps perLevel100 × lv1 = +100% → 2
+      expect(computeActualBlessingGlobalBuff({ '64': 1 }, edBlessings, null, templates)).toBeCloseTo(2, 5)
+    })
+
+    it('effect_def 引用的 hero_dps 不计入 globalBuff（属 per-carry 通道）', () => {
+      // ed455 hero_dps 不计入 globalBuff → 1
+      expect(computeActualBlessingGlobalBuff({ '70': 1 }, edBlessings, null, templates)).toBe(1)
+    })
+
+    it('无 template → effect_def 引用跳过（向后兼容，未加载 effect-definitions）', () => {
+      expect(computeActualBlessingGlobalBuff({ '64': 1 }, edBlessings, null, null)).toBe(1)
+    })
+
+    it('裸 global_dps 与 effect_def global_dps 同 pool 叠加', () => {
+      const mixed: BlessingCatalogEntry[] = [
+        { id: 'a', type: 2, currencyId: 1, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 50 }] },
+        { id: 'b', type: 2, currencyId: 1, effects: [{ effectString: 'effect_def,930', perLevel: 100 }] },
+      ]
+      // 50×1 + 100×1 = 150 → 2.5
+      expect(computeActualBlessingGlobalBuff({ a: 1, b: 1 }, mixed, null, templates)).toBeCloseTo(2.5, 5)
+    })
   })
 })
 

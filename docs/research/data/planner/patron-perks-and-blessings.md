@@ -73,7 +73,7 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 | patron global_dps（21）actual | ×55.7 全算 / ×25.7 active | ✅ 已接入 UI（f581562f + type1 过滤 #7）|
 | blessing global_dps（22）actual | ×269 全算 / ×62 active | ✅ 已接入 UI（catalog+levels + type1 过滤 #7）|
 | 装备 hero_dps（per-carry）| ×28.2 | ✅ 已接入（3849d295）|
-| patron/blessing `effect_def` tag 限定 | 未估 | 未接入（明斯克符合的人类/巡林客/混乱善良等 tag）|
+| patron/blessing `effect_def` filter_targets 限定 | global_dps ×4.34 + hero_dps Σ1950 | ✅ 已接入（#9，通道1 global_dps + 通道2 hero_dps per-carry）|
 | `global_dps_mult_per_*` 计数 | 未估 | 未接入 |
 | modron（effect 943「有 core +200%」）| ×3 | 未接入 |
 
@@ -81,7 +81,7 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 
 **赞助者机制（type 1 过滤，2026-07-29 #7 修复）**：patron type1（本地）/blessing type1（地图）已按 active instance 精确过滤。`normalize` 提取 `snapshot.activeContext = { patronId, deity }`：active = `game_instances[game_instance_id===active_game_instance_id]`，patronId=`current_patron_id`，deity=`formation_saves_v2_campaign_id` 解码 base(`%600000`)→`campaign_defines[base].reset_currency_id`。patron type1 仅 patronId===active 生效，blessing type1 仅 currencyId===deity 生效。量级（明斯克 active patron=2/deity=1）：合并 globalBuff ×324（全算上界）→ ×86.7（active 真实）。600000 编码常量基于 2 数据点反推，多 patron/campaign 待验证。
 
-**剩余 10^32 偏差大头**：`effect_def` filter_targets 限定 + `global_dps_mult_per_*` 计数 + modron + 成就 + legendary 等，需逐类接入。
+**剩余 10^32 偏差大头**：`global_dps_mult_per_*` 计数 + modron + 成就 + legendary 等，需逐类接入（`effect_def` filter_targets 已接入 #9）。
 
 ## effect_def 结构与 #9 接入路径（2026-07-29 #8 调研）
 
@@ -98,3 +98,17 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 - 含 `filter_targets` 的 effect_keys：blessing 29 + patron 35 = **64**（需 per-hero 匹配）；其余 `targets=all` 直接生效（无英雄限定）
 
 **复用路径**：`filter_targets` 机制与现有 hero abilities 管线同构（`src/domain/abilities/signalSemantics` + `heroPredicate` 已处理 by_tags/hero_expr/stat_score/attack_type）。#9 把符合条件的 patron/blessing effect_def 展开成 `HeroAbilitySignal`（带 targetQualifier/filter_targets），进现有 `evaluatePlacementFit` 评分管线，无需新写匹配逻辑。明斯克（human/ranger/good/male）符合的具体 effect_def 量级留 #9 per-hero 匹配时度量。
+
+## effect_def 接入评分（2026-07-29 #9 落地）
+
+**关键简化**（实现时验证）：global_dps effect_def **全部无属性 filter**（patron 0 + blessing 0）→ 全局生效；带属性 filter 的全是 **hero_dps**（patron by_tags/stat_score 等 17 个 active）。故无需 globalBuff per-carry 化——global_dps 进现有全局 pool，hero_dps 走 per-carry 通道。
+
+**数据流**：新建 `public/data/v1/effect-definitions.json`（`scripts/data/effect-definition-templates.ts` normalize 提取 DPS effect_def，公开 CI 重建），字段 `id → effectKeys[{effectString, filterTargets, targets}]`。运行时 catalog 的 `effect_def,<id>`（patron-perks.json `effectDefinitionId` / blessing catalog `effectString`）解引用 template，value = `perLevel × actualLevel`（`$replace`）或 effect_string 固定值（`effectDefinitionDps.ts` 的 `resolveEffectKeyValue`）。
+
+**两通道**（`effectDefinitionDps.ts` 共享解引用 + `externalHeroDpsMult.ts` 收集 hero_dps 贡献）：
+- **通道1**（global_dps effect_def 无 filter → globalBuff）：`computeActualPatronPerkGlobalBuff` / `computeActualBlessingGlobalBuff` 解析 `effect_def,<id>` 的 global_dps，进现有 globalBuff add pool。`parseEffectKind` 精确匹配 kind，避开 `global_dps_multiplier_mult_area_tags` 变体。
+- **通道2**（hero_dps effect_def 带 filter → per-carry）：`collectHeroDpsContributions` 把 filter 经 `normalizeTargetQualifier` 解析成 `HeroQualifier` → `ScoringInput.externalHeroDpsContributions` → `scoreFormation` 内按 carry 属性 `matchesHeroQualifier` 匹配，与 equipment 同 add pool 合并（IC `hero_dps_multiplier_mult` 同英雄 base DPS）。#7 的 type1 过滤经 `collectActivePatronPerkEffects` / `collectActiveBlessingEffects` 单一来源复用，globalBuff 与 externalHeroDps 共用，不漂移。
+
+**保守丢弃**：filter 存在（filterTargets/targets 非空）但 `normalizeTargetQualifier` 未解析成 qualifier（`heroes`/`slots`/`col_num` 位置范围限定，`isFilterLikeTarget` 只认 by_tags/tags/stat/stat_score/attack_type）→ 丢弃该 effect_def，避免被当全局过度生效。by_tags/stat_score/hero_ids/attack_type 正常匹配。
+
+**量级**（明斯克 active patron=2/deity=1）：通道1 global_dps effect_def Σ434（blessing type2 ed930/943/947/2444 等）→ globalBuff ×86.7 → ×91.04（+4.34 add）。通道2 hero_dps effect_def Σ1950（patron ed828/ed1039 type2 = 450 + blessing ed929 by_tags `human` = 1500）→ per-carry hero_dps pool ×28.2（装备）→ ×48.7（add 合并）。ed455/ed829（type1 patron1/4）正确不生效（active=2）。总 calc 收敛 ~0.26 数量级——10^32 偏差大头仍在 `global_dps_mult_per_*` 计数 + modron + 成就。

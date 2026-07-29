@@ -25,8 +25,9 @@ import {
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
 import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
-import { computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
-import { combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/simulator/blessingGlobalBuff'
+import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
+import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/simulator/blessingGlobalBuff'
+import { collectHeroDpsContributions } from '../domain/simulator/externalHeroDpsMult'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -55,6 +56,7 @@ export function PlannerEvaluatePage() {
     profileSnapshot,
     lootCatalog,
     patronPerkCatalog,
+    effectDefinitions,
     championById,
     selectedVariantId,
     selectVariantId: selectVariantIdBase,
@@ -91,20 +93,37 @@ export function PlannerEvaluatePage() {
       : new Map<string, number>(),
     [profileSnapshot, lootCatalog],
   )
+  const effectDefTemplates = useMemo(
+    () => new Map(effectDefinitions.map((entry) => [entry.id, entry])),
+    [effectDefinitions],
+  )
   // patron perk + blessing actual 全局 buff（global_dps add pool 合并）；未导入存档 → 各源 1（向后兼容）。
+  // 通道1：effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入。
   const globalBuffMultiplier = useMemo(() => {
     const active = profileSnapshot?.activeContext
     const patronMult = profileSnapshot?.patronPerks
-      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId)
+      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId, effectDefTemplates)
       : 1
     const blessingMult = profileSnapshot?.blessings
-      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity)
+      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity, effectDefTemplates)
       : 1
     return combineGlobalBuffMultipliers([patronMult, blessingMult])
-  }, [profileSnapshot, patronPerkCatalog])
+  }, [profileSnapshot, patronPerkCatalog, effectDefTemplates])
+  // 通道2：patron/blessing 的 effect_def hero_dps（带 filter，per-carry 条件生效）。
+  const externalHeroDpsContributions = useMemo(() => {
+    if (!profileSnapshot) return []
+    const active = profileSnapshot.activeContext
+    const patronEffects = profileSnapshot.patronPerks
+      ? collectActivePatronPerkEffects(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId)
+      : []
+    const blessingEffects = profileSnapshot.blessings
+      ? collectActiveBlessingEffects(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity)
+      : []
+    return collectHeroDpsContributions([...patronEffects, ...blessingEffects], effectDefTemplates)
+  }, [profileSnapshot, patronPerkCatalog, effectDefTemplates])
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier }),
-    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier],
+    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions }),
+    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -151,6 +170,7 @@ export function PlannerEvaluatePage() {
           manualStackCount,
           equipmentAdjustmentByHero,
           globalBuffMultiplier,
+          externalHeroDpsContributions,
         },
       })
       if (recommendation.result) {

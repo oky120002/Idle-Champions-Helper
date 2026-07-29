@@ -4,6 +4,8 @@ import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
+import type { HeroDpsContribution } from '../simulator/externalHeroDpsMult'
+import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeTeamGoldFind } from './goldObjective'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
@@ -52,6 +54,12 @@ export interface ScoringInput {
    * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustmentByHero 解析后传入。
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
+  /**
+   * 外部 hero_dps per-carry 贡献（patron_perk + blessing 的 effect_def hero_dps，带 filter 限定）。
+   * scoreFormation 内按 carry 属性匹配 qualifier，与 equipment 同 add pool 合并
+   * （IC hero_dps_multiplier_mult 同英雄 base DPS）。由调用方经 collectHeroDpsContributions 解析后传入。
+   */
+  externalHeroDpsContributions?: ReadonlyArray<HeroDpsContribution> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */
   lockedCarryHeroId?: string | undefined
   /**
@@ -79,6 +87,8 @@ export interface SimulationFactor {
   globalBuff: number
   /** 装备调整比（owned 装备相对理论最大的缩放，调用方传入）*/
   equipmentAdjustment: number
+  /** 外部 hero_dps 加成（patron/blessing effect_def hero_dps，per-carry 条件生效；与装备同 add pool）*/
+  externalHeroDps: number
 }
 
 export interface SimulationContribution {
@@ -324,6 +334,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     vulnFactor: number
     globalBuff: number
     equipmentAdjustment: number
+    externalHeroDpsMult: number
     damagePool: number
     contributions: SimulationContribution[]
   } | null = null
@@ -407,12 +418,22 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const vulnFactor = computeVulnerabilityFactor(vulnParts)
     const globalBuff = input.globalBuffMultiplier ?? 1
     const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1
+    // 外部 hero_dps（patron/blessing effect_def）按 carry 属性匹配，与装备同 add pool。
+    let externalHeroDpsAddPercent = 0
+    for (const contribution of input.externalHeroDpsContributions ?? []) {
+      if (matchesHeroQualifier(carryEntry.hero, contribution.qualifier)) {
+        externalHeroDpsAddPercent += contribution.value
+      }
+    }
+    const externalHeroDpsMult = 1 + externalHeroDpsAddPercent / 100
+    // hero_dps add pool：装备 + 外部 effect_def（IC hero_dps_multiplier_mult 同英雄 base DPS add 合并）。
+    const heroDpsPool = equipmentAdjustment + externalHeroDpsAddPercent / 100
     const damagePool = productOfPoolMultipliers(sharedPools)
     const formationAggregate = damagePool * critFactor * vulnFactor
     // 投影模式（约束②）：formation-buff 只取阵型内聚合，不乘 baseDamage/levelCurve/外部加成。
     const carryDps = aggregateProjection === 'formation-buff'
       ? new Decimal(formationAggregate)
-      : computeCarryDps(carryEntry.hero, carryLevel, formationAggregate * globalBuff * equipmentAdjustment)
+      : computeCarryDps(carryEntry.hero, carryLevel, formationAggregate * globalBuff * heroDpsPool)
 
     if (compareGameNumbers(carryDps, bestCarryDps) > 0) {
       bestCarryDps = carryDps
@@ -427,6 +448,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         vulnFactor,
         globalBuff,
         equipmentAdjustment,
+        externalHeroDpsMult,
         damagePool,
         contributions,
       }
@@ -477,6 +499,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       vulnFactor,
       globalBuff,
       equipmentAdjustment,
+      externalHeroDpsMult,
       damagePool,
       contributions,
     } = bestBreakdownData
@@ -496,6 +519,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         vulnerability: vulnFactor,
         globalBuff,
         equipmentAdjustment,
+        externalHeroDps: externalHeroDpsMult,
       },
       pools: [...pools.values()],
       contributions,
