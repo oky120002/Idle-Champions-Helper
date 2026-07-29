@@ -10,6 +10,19 @@
       content="Idle Champions 辅助站：以资料查询、限制筛选、阵型编辑和方案保存为核心的个人成长决策台。"
     />
     <title>Idle Champions 辅助站</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('idle-champions-helper.theme');
+          var preference = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
+          var systemLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          document.documentElement.dataset.theme =
+            preference === 'light' || (preference === 'system' && systemLight) ? 'light' : 'dark';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,6 +1,7 @@
 import type { AppLocale } from './i18n'
 import { MobileMenuIcon } from './AppIcons'
 import type { AppNavigationItem, TranslationFn } from './appNavigation'
+import { ThemeToggle } from './ThemeToggle'
 import { ToolbarLocaleSwitcher } from './LocaleSwitcher'
 import { GlobalSearchBox } from '../features/search/GlobalSearchBox'
 
@@ -63,6 +64,7 @@ export function HeaderTopbar({
       </div>
       <div className="site-header__topbar-actions">
         <GlobalSearchBox />
+        <ThemeToggle />
         <ToolbarLocaleSwitcher locale={locale} onSelect={onLocaleSelect} t={t} />
 
         <button

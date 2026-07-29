@@ -1,0 +1,54 @@
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.16rem;
+  padding: 0.16rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 34%),
+    var(--color-interactive-bottom);
+  box-shadow:
+    var(--shadow-interactive),
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
+}
+
+.theme-toggle__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.88rem;
+  min-height: 1.88rem;
+  padding: 0 0.42rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-soft);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.theme-toggle__option:hover {
+  transform: translateY(-0.5px);
+  color: var(--color-text-muted);
+  border-color: color-mix(in oklch, var(--color-copper) 18%, transparent);
+}
+
+.theme-toggle__option--active {
+  color: var(--color-copper);
+  border-color: color-mix(in oklch, var(--color-copper) 28%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--color-copper) 22%, transparent),
+    color-mix(in oklch, var(--color-copper) 10%, transparent)
+  );
+}
+
+.theme-toggle__icon {
+  width: 1rem;
+  height: 1rem;
+}

@@ -1,3 +1,13 @@
+/*
+ * 双主题 token 体系
+ * - :root 为深色默认；:root[data-theme="light"] 为浅色覆盖。
+ * - data-theme 由 src/theme.tsx 写入：用户选 system 时按 prefers-color-scheme 解析为 light/dark。
+ * - gloss 三档（--surface-gloss-soft/gloss/gloss-strong）基于 --color-gloss-base 派生，
+ *   翻转 --color-gloss-base 即可让三档自动跟随（深底=白提亮 / 浅底=暖深压暗）。
+ * - 铜/钢/金/categorical(--cat-*) 是品牌色或数据语义色，两主题共用，不随主题翻转。
+ * - 禁止在业务 CSS 硬编码颜色（rgb/rgba/#hex）；新增颜色必须在此登记为 token，
+ *   并在需要时成对提供深/浅值。守护脚本会扫描残留硬编码。
+ */
 :root {
   --space-2xs: 0.25rem;
   --space-xs: 0.5rem;
@@ -18,51 +28,159 @@
   --radius-lg: 22px;
   --radius-xl: 26px;
   --radius-2xl: 30px;
+
+  /* === 背景 === */
   --color-bg-top: oklch(22% 0.016 248);
   --color-bg-mid: oklch(18% 0.014 246);
   --color-bg-bottom: oklch(15% 0.012 244);
+  --bg-halo-warm: oklch(80% 0.08 72 / 0.08);
+  --bg-halo-cool: oklch(72% 0.05 232 / 0.1);
+
+  /* === 表面 === */
   --color-surface-top: oklch(24% 0.015 248 / 0.9);
   --color-surface-mid: oklch(20% 0.013 246 / 0.94);
   --color-surface-bottom: oklch(17% 0.01 244 / 0.97);
+
+  /* === 边框 === */
   --color-border-soft: oklch(78% 0.01 84 / 0.12);
   --color-border: oklch(80% 0.012 82 / 0.18);
   --color-border-strong: oklch(82% 0.016 78 / 0.24);
+
+  /* === 文字 === */
+  --color-text-strong: oklch(96% 0.008 80);
   --color-text: oklch(95% 0.01 80);
   --color-text-muted: oklch(82% 0.012 82 / 0.78);
   --color-text-soft: oklch(73% 0.01 82 / 0.72);
+  --color-text-cool: oklch(93% 0.033 247);
+
+  /* === 品牌色（两主题共用，半透明变体用 color-mix 派生）=== */
   --color-copper: oklch(80% 0.09 72);
   --color-copper-soft: oklch(80% 0.09 72 / 0.14);
   --color-steel: oklch(74% 0.05 232);
   --color-steel-soft: oklch(74% 0.05 232 / 0.14);
-  --color-accent-warm-soft: oklch(80% 0.09 72 / 0.16);
-  --color-accent-cool-soft: oklch(74% 0.05 232 / 0.16);
+  --color-gold: oklch(77% 0.114 77);
+  --color-gold-soft: oklch(77% 0.114 77 / 0.16);
+
+  /* === 状态色 === */
+  --color-success: oklch(61% 0.086 153);
+  --color-success-soft: oklch(95% 0.024 155);
+  --color-danger: oklch(55% 0.115 22);
+  --color-danger-soft: oklch(93% 0.029 18);
+  --color-info: var(--color-steel);
+  --color-info-soft: var(--color-steel-soft);
+
+  /* === categorical 属性色（数据语义，两主题共用，色相跨主题稳定）=== */
+  --cat-race: oklch(72% 0.06 237);
+  --cat-gender: oklch(65% 0.064 333);
+  --cat-alignment: oklch(72% 0.084 81);
+  --cat-profession: oklch(67% 0.048 163);
+  --cat-acquisition: oklch(71% 0.048 251);
+  --cat-mechanics: oklch(71% 0.039 209);
+
+  /* === 交互底 / 面板 === */
   --color-interactive-top: rgba(21, 31, 42, 0.88);
   --color-interactive-bottom: rgba(9, 14, 20, 0.92);
   --color-interactive-soft: rgba(9, 14, 20, 0.34);
   --color-panel: rgba(10, 15, 22, 0.68);
   --color-panel-soft: rgba(10, 15, 22, 0.48);
   --color-panel-strong: rgba(7, 11, 16, 0.84);
-  --surface-gloss: linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.01));
-  --surface-gloss-strong: linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.012));
+
+  /* === 光泽叠层（基于 --color-gloss-base 派生，翻基色即全跟随）=== */
+  --color-gloss-base: white;
+  --surface-gloss-soft: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-gloss-base) 1.4%, transparent),
+    color-mix(in srgb, var(--color-gloss-base) 0.6%, transparent)
+  );
+  --surface-gloss: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-gloss-base) 2.6%, transparent),
+    color-mix(in srgb, var(--color-gloss-base) 1%, transparent)
+  );
+  --surface-gloss-strong: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent),
+    color-mix(in srgb, var(--color-gloss-base) 1.2%, transparent)
+  );
+
+  /* === 阴影 === */
   --shadow-surface: 0 18px 44px rgba(1, 4, 9, 0.24);
   --shadow-surface-soft: 0 12px 28px rgba(1, 4, 9, 0.18);
   --shadow-floating: 0 14px 32px rgba(1, 4, 9, 0.2);
   --shadow-interactive: 0 10px 22px rgba(1, 4, 9, 0.18);
   --shadow-interactive-strong: 0 14px 28px rgba(1, 4, 9, 0.22);
+
   --focus-ring: 0 0 0 1px rgba(255, 243, 223, 0.1), 0 0 0 3px rgba(200, 167, 127, 0.16);
+
   color-scheme: dark;
   font-family: var(--font-sans);
   line-height: 1.5;
   font-weight: 400;
   color: var(--color-text);
   background:
-    radial-gradient(circle at 12% 0%, oklch(80% 0.08 72 / 0.08), transparent 22%),
-    radial-gradient(circle at 82% 8%, oklch(72% 0.05 232 / 0.1), transparent 26%),
+    radial-gradient(circle at 12% 0%, var(--bg-halo-warm), transparent 22%),
+    radial-gradient(circle at 82% 8%, var(--bg-halo-cool), transparent 26%),
     linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-mid) 38%, var(--color-bg-bottom) 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root[data-theme="light"] {
+  /* === 背景（冷调夜空 → 暖纸）=== */
+  --color-bg-top: oklch(97% 0.006 84);
+  --color-bg-mid: oklch(95% 0.007 82);
+  --color-bg-bottom: oklch(93% 0.008 80);
+  --bg-halo-warm: oklch(80% 0.08 72 / 0.04);
+  --bg-halo-cool: oklch(72% 0.05 232 / 0.05);
+
+  /* === 表面（比 bg 更亮的卡片层）=== */
+  --color-surface-top: oklch(99% 0.004 84 / 0.9);
+  --color-surface-mid: oklch(98% 0.005 82 / 0.94);
+  --color-surface-bottom: oklch(97% 0.006 80 / 0.97);
+
+  /* === 边框（亮线 → 暗线）=== */
+  --color-border-soft: oklch(40% 0.012 80 / 0.1);
+  --color-border: oklch(38% 0.014 80 / 0.14);
+  --color-border-strong: oklch(36% 0.016 78 / 0.2);
+
+  /* === 文字（暖白 → 暖深）=== */
+  --color-text-strong: oklch(22% 0.016 78);
+  --color-text: oklch(30% 0.012 80);
+  --color-text-muted: oklch(45% 0.012 82 / 0.82);
+  --color-text-soft: oklch(52% 0.012 82 / 0.7);
+  --color-text-cool: oklch(42% 0.033 247);
+
+  /* === 交互底 / 面板（半透明微压叠层）=== */
+  --color-interactive-top: oklch(97% 0.005 84 / 0.88);
+  --color-interactive-bottom: oklch(94% 0.008 82 / 0.92);
+  --color-interactive-soft: oklch(94% 0.008 82 / 0.34);
+  --color-panel: oklch(28% 0.012 80 / 0.06);
+  --color-panel-soft: oklch(28% 0.012 80 / 0.04);
+  --color-panel-strong: oklch(28% 0.012 80 / 0.08);
+
+  /* === 光泽基色（白提亮 → 暖深压暗；三档自动跟随）=== */
+  --color-gloss-base: oklch(28% 0.012 80);
+
+  /* === 阴影（大幅降 alpha，避免浅底显脏）=== */
+  --shadow-surface: 0 18px 44px oklch(28% 0.012 80 / 0.08);
+  --shadow-surface-soft: 0 12px 28px oklch(28% 0.012 80 / 0.06);
+  --shadow-floating: 0 14px 32px oklch(28% 0.012 80 / 0.07);
+  --shadow-interactive: 0 10px 22px oklch(28% 0.012 80 / 0.06);
+  --shadow-interactive-strong: 0 14px 28px oklch(28% 0.012 80 / 0.08);
+
+  --focus-ring: 0 0 0 1px oklch(28% 0.012 80 / 0.12), 0 0 0 3px color-mix(in oklch, var(--color-copper) 22%, transparent);
+
+  /* === 状态色（浅底更深更饱和）=== */
+  --color-success: oklch(48% 0.11 153);
+  --color-success-soft: oklch(96% 0.04 155);
+  --color-danger: oklch(50% 0.14 22);
+  --color-danger-soft: oklch(95% 0.05 18);
+
+  /* ponytail: 铜/钢在浅底可能偏淡，若强调感不足，此处降 L 提 C，如 --color-copper: oklch(68% 0.12 72) */
+
+  color-scheme: light;
 }
 
 @media (min-width: 1440px) {
