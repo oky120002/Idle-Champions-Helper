@@ -11,7 +11,7 @@
 | 模式 | 阶段 | 职责 | 位置 | 状态 |
 |---|---|---|---|---|
 | EffectResolver | build | effect_string → `HeroAbilitySignal` | `scripts/data/effect-resolvers/` | 已实现 |
-| MechanicResolver | runtime | signal → 乘数（`resolveSignalMultiplier` 拆分） | `src/domain/planner/mechanics/` | 计划 |
+| MechanicResolver | runtime | signal → 乘数（`resolveSignalMultiplier` 拆分） | `src/domain/planner/mechanics/` | 部分实现 |
 | DimensionFactor | scoring | 维度聚合（damage/gold/crit/vuln/survival） | `src/domain/planner/scoring/` | 部分实现 |
 | BonusProvider | 加成来源 | profile / scoring 贡献 | `src/domain/simulator/buffs/` | 计划 |
 
@@ -75,6 +75,28 @@ src/domain/planner/scoring/
 - `poolAggregation.test.ts`：同 key addPercent 相加/multFactor 相乘、不同 key 独立、合并交换律、pool 间乘积、空 Map→1。
 
 回归守护：`steadyStateScoring.test.ts`（scoreFormation 端到端，含 crit/vuln/team-gold/globalBuff/projection）+ `placementFit.test.ts`（103 案例）+ `references/damageReferenceVerification.test.ts`（明斯克 golden，偏差不退化）。
+
+## 模式 3：运行时机制（部分实现）
+
+`placementFit.ts` 的 `resolveSignalMultiplier`（signal → 乘数）+ `STACK_COUNT_RESOLVERS`（叠层计数 dispatch）抽到 `src/domain/planner/mechanics/`，解锁直接单测：
+
+```text
+src/domain/planner/mechanics/
+  signalMultiplier.ts      resolveSignalMultiplier（字段分支分发）+ percentToMultiplier/invertEffectMultiplier
+                          + DEFAULT_MANUAL_STACK_COUNT
+  stackCountResolver.ts    STACK_COUNT_RESOLVERS（stackFunc → 计数来源 mini-DSL）+ 计数 helper
+```
+
+`placementFit.ts` 保留 `evaluatePlacementFit`（阵型合法性 + pool 聚合主循环），import resolveSignalMultiplier，re-export STACK_COUNT_RESOLVERS / DEFAULT_MANUAL_STACK_COUNT 保持外部零改动。
+
+**偏差（相对原计划「MechanicResolver 接口 + 4 机制对象 + 注册表 dispatch」）**：不引入 MechanicResolver 注册表——`dps-mechanic-abstraction.md` 阈值 4 明确「机制总数 >10 才把字段分支升级为策略注册表；当前 7 机制属过度工程」，且由 `championReferenceVerification.test.ts` 守护。计划核心价值是机制可测性（resolveSignalMultiplier 原本无直接单测，22× 高估 bug 出在此处），通过抽出 + 直接单测达成，无需注册表。
+
+### 测试
+
+- `signalMultiplier.test.ts`：applyManually 守卫 / plain-percent / dynamic-stack-multiply（manualStackCount 缺省=1000 + 溢出降级）/ **bonusScaleOfSignal 折叠用 base.value 非聚合倍率（22× 高估回归：base mult 4 时修饰=2 非 4）** / 依赖三态（生效·multiplier≤1·不可解析）/ formation-count amountFunc add·mult 等价类 / 未知 stackFunc·amountFunc 降级。
+- `stackCountResolver.test.ts`：keys 契约（与 scoringSupportSync 守护一致）/ per_crusader 计数匹配英雄 / excludeSelf / 缺上下文→null。
+
+回归守护：`placementFit.test.ts`（103 案例，行为零变化）+ `steadyStateScoring.test.ts` + 明斯克 golden（偏差不退化）+ `championReferenceVerification.test.ts`（机制 id 三处一致，代码注释 leg 现扫描 placementFit.ts + mechanics/ + effect-helpers.ts）。
 
 ## 复用（不动）
 

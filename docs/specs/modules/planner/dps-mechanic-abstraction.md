@@ -22,7 +22,7 @@
 
 每个机制 id 必须三处存在且一致，由 `championReferenceVerification.test.ts` 守护，任一缺失即 fail：
 
-- `placementFit.ts` / `effect-helpers.ts` 分支注释 `// 机制: <id>`（代码注释 leg：注册表每个 id 必须在代码注释出现）
+- `placementFit.ts` / `mechanics/`（signalMultiplier.ts + stackCountResolver.ts）/ `effect-helpers.ts` 分支注释 `// 机制: <id>`（代码注释 leg：注册表每个 id 必须在代码注释出现；resolveSignalMultiplier + STACK_COUNT_RESOLVERS 抽到 mechanics/ 后注释随之迁移，`championReferenceVerification.test.ts` 扫描这三个位置）
 - `references/*ReferenceData.ts` 的 `mechanicIds`（reference leg：reference 的 id 必须在注册表）
 - `dps-mechanics.md` 注册表（单一来源）
 
