@@ -11,6 +11,7 @@ const SCANNED_DIRS = [
   __dirname, // src/domain/planner
   path.resolve(DOMAIN_ROOT, 'simulator'),
   path.resolve(DOMAIN_ROOT, 'abilities'),
+  path.resolve(DOMAIN_ROOT, 'buffs'),
 ]
 
 // 非测试代码不得直接获取数据。token 取调用形避免误伤注释里的单词。
@@ -31,7 +32,7 @@ function listDomainTsFiles(dir: string): string[] {
 
 const files = SCANNED_DIRS.flatMap(listDomainTsFiles)
 
-describe('planner/simulator/abilities 域 Hermetic 边界', () => {
+describe('planner/simulator/abilities/buffs 域 Hermetic 边界', () => {
   it('相对 import 必须解析到 src/domain 内（不依赖 src/data|app|components|pages）', () => {
     const violations: string[] = []
     const importRe = /\bfrom\s+['"](\.[^'"]+)['"]/g
@@ -65,6 +66,24 @@ describe('planner/simulator/abilities 域 Hermetic 边界', () => {
     expect(
       violations,
       `域文件出现直接数据获取（破坏 hermetic）：\n${violations.join('\n')}`,
+    ).toEqual([])
+  })
+
+  // simulator 是纯公式层；effect_string 解析（effects/）与 qualifier 解析（abilities/signalSemantics）
+  // 是 provider 职责（属 buffs/）。公式文件不得 import 它们——防 simulator→{effects,abilities} 跨层耦合回归。
+  it('simulator 纯公式层不得 import effects/ 或 abilities/signalSemantics（provider 职责，属 buffs/）', () => {
+    const simulatorFiles = listDomainTsFiles(path.resolve(DOMAIN_ROOT, 'simulator'))
+    const forbiddenImport = /\bfrom\s+['"]\.\.\/(?:effects\/|abilities\/signalSemantics)/
+    const violations: string[] = []
+    for (const file of simulatorFiles) {
+      const src = readFileSync(file, 'utf8')
+      if (forbiddenImport.test(src)) {
+        violations.push(path.relative(process.cwd(), file))
+      }
+    }
+    expect(
+      violations,
+      `simulator 公式文件 import 了 effects/ 或 abilities/signalSemantics（应迁 buffs/）：\n${violations.join('\n')}`,
     ).toEqual([])
   })
 })

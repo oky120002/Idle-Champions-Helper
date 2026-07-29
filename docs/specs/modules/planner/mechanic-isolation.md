@@ -13,7 +13,7 @@
 | EffectResolver | build | effect_string → `HeroAbilitySignal` | `scripts/data/effect-resolvers/` | 已实现 |
 | MechanicResolver | runtime | signal → 乘数（`resolveSignalMultiplier` 拆分） | `src/domain/planner/mechanics/` | 部分实现 |
 | DimensionFactor | scoring | 维度聚合（damage/gold/crit/vuln/survival） | `src/domain/planner/scoring/` | 部分实现 |
-| BonusProvider | 加成来源 | profile / scoring 贡献 | `src/domain/simulator/buffs/` | 计划 |
+| BonusProvider | 加成来源 | effect_def 解引用 / hero_dps 收集 / 装配 | `src/domain/buffs/` | 部分实现 |
 
 ## 模式 1：EffectResolver（已实现）
 
@@ -97,6 +97,31 @@ src/domain/planner/mechanics/
 - `stackCountResolver.test.ts`：keys 契约（与 scoringSupportSync 守护一致）/ per_crusader 计数匹配英雄 / excludeSelf / 缺上下文→null。
 
 回归守护：`placementFit.test.ts`（103 案例，行为零变化）+ `steadyStateScoring.test.ts` + 明斯克 golden（偏差不退化）+ `championReferenceVerification.test.ts`（机制 id 三处一致，代码注释 leg 现扫描 placementFit.ts + mechanics/ + effect-helpers.ts）。
+
+## 模式 4：BonusProvider（部分实现）
+
+加成来源（effect_def 解引用、hero_dps per-carry 收集、外部加成装配）隔离到 `src/domain/buffs/`。原错放 `simulator/`（是 provider 非公式）的 `effectDefinitionDps` + `externalHeroDpsMult` 迁出，消除 simulator→{effects, abilities/signalSemantics} 跨层运行时耦合。
+
+```text
+src/domain/buffs/
+  effectDefinitionDps.ts     effect_def,<id> 运行时解引用（消费 effect-definitions.json）
+                            + parseEffectKind / resolveEffectKeyValue
+  externalHeroDpsMult.ts     collectHeroDpsContributions（effect_def hero_dps per-carry + filter 解析）
+```
+
+`buffs/` 作 `simulator/` 兄弟目录（非嵌套 `simulator/buffs/`）：simulator 公式层与 buffs provider 层单向依赖，buffs→{effects, abilities} 的语义解析是合法方向。`hermeticBoundary.test.ts` 守护：simulator 非测试文件不得 import `../effects/` 或 `../abilities/signalSemantics`（公式不解析 effect 语义）。
+
+**装配下沉**：`usePlannerPageModel` 的 buff 装配 useMemo（equipment / globalBuff / externalHeroDps）下沉到纯函数 `src/domain/planner/scoringBonusInputs.ts` 的 `buildScoringBonusInputs`，hook 只 memoize 单次调用，解锁 React 外单测。
+
+**偏差（相对原计划「BonusProvider 接口 + feat/equipment/globalBuff/externalHeroDps/vulnerability/crit 各 provider」）**：本步只迁 2 个错分类文件 + 抽装配函数，不引入统一 `BonusProvider` 接口——patron/blessing/equipment 仍在 simulator/（子任务 6 渐进迁移时再统一）。位置 `simulator/buffs/` 改兄弟 `buffs/`：嵌套会让 hermetic 守护需排除子目录，兄弟目录让「simulator 整体禁 effects/signalSemantics、buffs 独立扫描」更干净。
+
+### 测试
+
+- `scoringBonusInputs.test.ts`：装配契约（null profile→全默认 / 空 catalog→默认 / patron global_dps→globalBuff / effect_def hero_dps→externalHeroDps / type1 active 过滤透传 / owned loot→equipment map）。
+- 迁移文件原有测试随文件落 buffs/，逻辑零变化。
+- `hermeticBoundary.test.ts` 增第三规则：simulator 不得 import effects/ 或 abilities/signalSemantics。
+
+回归守护：`test:simulator`（38 文件 / 307 测试）+ 明斯克 golden（`references/damageReferenceVerification`，偏差不退化）。
 
 ## 复用（不动）
 

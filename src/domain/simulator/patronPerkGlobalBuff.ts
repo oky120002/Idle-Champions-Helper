@@ -20,7 +20,7 @@ import {
   parseEffectKind,
   resolveEffectDefinitionKeys,
   resolveEffectKeyValue,
-} from './effectDefinitionDps'
+} from '../buffs/effectDefinitionDps'
 
 export interface PatronPerkCatalogEntry {
   id: string

@@ -140,4 +140,12 @@ repair: rebuild
     - 影响所有有 multi-rarity loot buff_upgrade 的英雄；与 atd_9a1b2c3d4e 共同构成 pool 欠估来源。
     - 处置：中优先级；collectEffectEntries 对 loot 源同信号位多 magnitude 应取最高（保守上界），而非首条。需区分 loot（rarity 互斥取最高）vs 其它来源语义。关联 vi-95.md「pool 对照现状」。
 
+- plannerPage.route component 测试 jsdom 下持续超时（baseline 隔离跑亦 4/6 失败） <!-- auto-todo:id=atd_3a8b1c5d2e -->
+  - 记录时间: `2026-07-29T21:08:00+08:00`
+  - 类型: flaky
+  - 位置: `src/pages/planner/plannerPage.route.test.tsx:298`（推荐结果卡片 findByRole）
+  - 备注: 加成机制隔离子任务4 验证时发现：mock 数据已加载（本地开发快照渲染成功），推荐结果卡在 beam search 完成前超时（~20s）。干净 baseline（818e9f5f，stash 本子任务改动后）隔离单跑同样 4/6 失败——非本子任务回归（buff 装配忠实提取，tsc + test:simulator 307 全绿 + 明斯克 golden 通过）。与「单独跑通过」既有认知矛盾，疑机器/负载相关（jsdom Sync beam search 接近超时阈值）。
+    - 非 buff 装配隔离（子任务4）引入；test:simulator 闸门不含该 component 测试。
+    - 处置：低优先级；jsdom Sync 推荐计算偏慢，可单独调高 timeout 或拆分重计算断言；不影响 planner 评分正确性。
+
 <!-- auto-todo:end -->

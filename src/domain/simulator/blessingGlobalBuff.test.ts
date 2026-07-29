@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from './blessingGlobalBuff'
-import type { EffectDefinitionEntry } from './effectDefinitionDps'
+import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { BlessingCatalogEntry } from '../../domain/user-profile/types'
 
 // type 1=地图（仅 currencyId campaign）/ type 2=全局（跨 campaign）

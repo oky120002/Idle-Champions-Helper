@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { computeActualPatronPerkGlobalBuff } from './patronPerkGlobalBuff'
 import type { PatronPerkCatalogEntry } from './patronPerkGlobalBuff'
-import type { EffectDefinitionEntry } from './effectDefinitionDps'
+import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 
 // typeId 2=全局（恒生效）；patronId 统一 '1'，全局语义下不影响。
 const PERKS: PatronPerkCatalogEntry[] = [

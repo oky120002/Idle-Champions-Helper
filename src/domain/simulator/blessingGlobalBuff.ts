@@ -5,7 +5,7 @@ import {
   parseEffectKind,
   resolveEffectDefinitionKeys,
   resolveEffectKeyValue,
-} from './effectDefinitionDps'
+} from '../buffs/effectDefinitionDps'
 
 /**
  * 祝福（blessing）实际等级的全局 DPS 加成。

@@ -27,7 +27,7 @@ import {
 import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
 import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
 import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/simulator/blessingGlobalBuff'
-import { collectHeroDpsContributions } from '../domain/simulator/externalHeroDpsMult'
+import { collectHeroDpsContributions } from '../domain/buffs/externalHeroDpsMult'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
