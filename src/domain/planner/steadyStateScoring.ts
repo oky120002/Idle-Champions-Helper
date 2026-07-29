@@ -13,6 +13,9 @@ import { computeSingleHitDamage } from '../simulator/budCalculation'
 import { estimateMaxArea, type AreaEstimationResult } from './areaEstimation'
 import { formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
+import { computeCritFactor } from './scoring/critFactor'
+import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
 
 /**
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
@@ -140,116 +143,6 @@ export interface ScoringResult {
 const ZERO: GameNumberValue = new Decimal(0)
 
 type PlacedEntry = { slotId: string; hero: ResolvedHeroAbilityProfile }
-
-/** 把一批 pool 合并进 sharedPools（同 dimension:scope 的 addPercent 相加、multFactor 相乘）。 */
-function mergePools(sharedPools: Map<string, AggregatedPool>, pools: AggregatedPool[]): void {
-  for (const pool of pools) {
-    const key = `${pool.dimension}:${pool.scope}`
-    const merged = sharedPools.get(key) ?? {
-      dimension: pool.dimension,
-      scope: pool.scope,
-      addPercent: 0,
-      multFactor: 1,
-      poolMultiplier: 1,
-    }
-    merged.addPercent += pool.addPercent
-    merged.multFactor *= pool.multFactor
-    merged.poolMultiplier = (1 + merged.addPercent / 100) * merged.multFactor
-    sharedPools.set(key, merged)
-  }
-}
-
-/** Π(poolMultiplier)：pool 间乘法。 */
-function productOfPoolMultipliers(pools: Map<string, AggregatedPool>): number {
-  let aggregate = 1
-  for (const pool of pools.values()) {
-    aggregate *= pool.poolMultiplier
-  }
-  return aggregate
-}
-
-// crit_factor 默认值来自 default_crit_info（游戏全局）：chance 2.5%，crit damage +100%（×2）。
-const DEFAULT_CRIT_CHANCE_PERCENT = 2.5
-const DEFAULT_CRIT_DAMAGE_PERCENT = 100
-// 基线 raw crit factor（无任何 crit signal 时）：1 + 0.025 × (2−1) = 1.025。
-const BASE_CRIT_FACTOR = 1
-  + (DEFAULT_CRIT_CHANCE_PERCENT / 100)
-  * (1 + DEFAULT_CRIT_DAMAGE_PERCENT / 100 - 1)
-
-const CRIT_CHANCE_KINDS: ReadonlySet<HeroAbilityKind> = new Set<HeroAbilityKind>([
-  'globalCritChance',
-  'heroCritChance',
-])
-
-/**
- * crit_factor：1 + total_chance × (total_damage_mult − 1)，基线归一化。
- * - 无 crit signal → 1.0（base crit 在归一中抵消，保持非 crit 阵型 carryDps 不变）。
- * - base chance(2.5%) 始终参与，使「纯 damage buff」类 crit signal 有效（否则 chance=0 无暴击）。
- * - ponytail/BUD 局限：crit 期望值在 BUD 机制下低估，MVP 可接受；绝对值偏差由归一基线吸收。
- */
-function computeCritFactor(parts: PlacementFitScorePart[]): number {
-  let chanceAddPercent = 0
-  let chanceMult = 1
-  let damageAddPercent = 0
-  let damageMult = 1
-  let hasCrit = false
-
-  for (const part of parts) {
-    if (!part.active) {
-      continue
-    }
-    const isChance = CRIT_CHANCE_KINDS.has(part.signalKind)
-    if (part.amountFunc === 'mult') {
-      if (isChance) {
-        chanceMult *= part.multiplier
-      } else {
-        damageMult *= part.multiplier
-      }
-    } else {
-      // add：evaluatePlacementFit 折算 multiplier = 1 + percent/100 → percent = (multiplier−1)×100
-      const percent = (part.multiplier - 1) * 100
-      if (isChance) {
-        chanceAddPercent += percent
-      } else {
-        damageAddPercent += percent
-      }
-    }
-    hasCrit = true
-  }
-
-  if (!hasCrit) {
-    return 1
-  }
-
-  const totalChanceFraction = ((DEFAULT_CRIT_CHANCE_PERCENT + chanceAddPercent) * chanceMult) / 100
-  const totalDamageMult = 1 + ((DEFAULT_CRIT_DAMAGE_PERCENT + damageAddPercent) * damageMult) / 100
-  const rawCritFactor = 1 + totalChanceFraction * (totalDamageMult - 1)
-  return rawCritFactor / BASE_CRIT_FACTOR
-}
-
-/**
- * vulnerability factor：已按场景怪物类型匹配的 vulnerability 进 DPS。
- * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成。
- * 聚合与 damage/gold pool 一致：add 类（amountFunc 缺省）同 pool 百分比相加 (1+Σadd/100)，
- * mult 类独立累乘；pool 内 (1+Σadd/100)×Πmult。原一律 Π 累乘把两个 +100% 易伤算成 4（正确 3）。
- */
-function computeVulnerabilityFactor(parts: PlacementFitScorePart[]): number {
-  let addPercent = 0
-  let multFactor = 1
-  let hasVuln = false
-  for (const part of parts) {
-    if (part.amountFunc === 'mult') {
-      multFactor *= part.multiplier
-    } else {
-      addPercent += (part.multiplier - 1) * 100
-    }
-    hasVuln = true
-  }
-  if (!hasVuln) {
-    return 1
-  }
-  return (1 + addPercent / 100) * multFactor
-}
 
 /**
  * team-gold 模式：全队聚合 gold signal（dimension:'gold'），无 carry 概念。
@@ -388,12 +281,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
             supportActiveParts.push(part)
           }
         } else if (dim === 'vulnerability') {
-          if (!part.active) {
-            continue
-          }
-          // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入。
-          const tags = part.monsterTags
-          if (tags && tags.length > 0 && !tags.some((tag) => enemyTypeSet.has(tag))) {
+          // 条件性匹配（active + monsterTags 与场景 enemyTypes 相交）下沉到 isVulnerabilityMatched。
+          if (!isVulnerabilityMatched(part, enemyTypeSet)) {
             continue
           }
           activeKinds.add(part.signalKind)

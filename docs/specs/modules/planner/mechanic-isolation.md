@@ -12,7 +12,7 @@
 |---|---|---|---|---|
 | EffectResolver | build | effect_string → `HeroAbilitySignal` | `scripts/data/effect-resolvers/` | 已实现 |
 | MechanicResolver | runtime | signal → 乘数（`resolveSignalMultiplier` 拆分） | `src/domain/planner/mechanics/` | 计划 |
-| DimensionFactor | scoring | 维度聚合（damage/gold/crit/vuln/survival） | `src/domain/planner/scoring/` | 计划 |
+| DimensionFactor | scoring | 维度聚合（damage/gold/crit/vuln/survival） | `src/domain/planner/scoring/` | 部分实现 |
 | BonusProvider | 加成来源 | profile / scoring 贡献 | `src/domain/simulator/buffs/` | 计划 |
 
 ## 模式 1：EffectResolver（已实现）
@@ -46,6 +46,35 @@ scripts/data/effect-resolvers/
 - 边界：value=0 / 负值原样透传；缺 qualifier → unsupported；不匹配名 → null。
 
 回归守护：`scripts/data/signalCoverage.test.ts`（解析总量不变）+ `build-models.test.ts`（collectEffectEntries 端到端）+ `effect-helpers.test.ts`（normalizeEffectSignal dispatch 入口）。
+
+## 模式 2：维度因子（部分实现）
+
+`steadyStateScoring.ts` 的维度聚合因子隔离到 `src/domain/planner/scoring/`，每个有独立聚合逻辑的因子一个文件 + 单测：
+
+```text
+src/domain/planner/scoring/
+  poolAggregation.ts       mergePools（同 dimension:scope addPercent 相加/multFactor 相乘）
+                          + productOfPoolMultipliers（pool 间乘积）；damage/survival/gold 共用
+  critFactor.ts            computeCritFactor（1+chance×(dmg−1) 期望公式，基线归一）+ crit 常量
+  vulnerabilityFactor.ts   computeVulnerabilityFactor（(1+Σadd/100)×Πmult）+ isVulnerabilityMatched
+                          （active + monsterTags 与场景 enemyTypes 条件匹配）
+```
+
+`steadyStateScoring.ts` 保留 `scoreFormation`（主循环编排）+ `scoreTeamGold`（team-gold 模式）+ 全部 public 类型，从 `scoring/` import 因子。
+
+**偏差（相对原计划「dimensionFactor 接口 + damage/gold/crit/vulnerability/survival 各一文件」）**：
+
+- 不引入 `DimensionFactor` 统一接口：damage/survival/gold 是 pool 聚合的应用（无独立逻辑），crit/vuln 是公式因子——两类形状不同，强塞统一接口会掩盖差异（且 contribution 拆解跨维度，接口泄漏）。按各自自然形态落地。
+- 不建 damageFactor/survivalFactor 文件：它们 = `productOfPoolMultipliers(pool)`，无独立逻辑，建空壳是无效层级。
+- `scoreTeamGold` 留 `steadyStateScoring`：抽出会与 ScoringInput/ScoringResult/DEFAULT_CARRY_LEVEL 循环依赖（需额外 scoringTypes 迁移），且已由 `steadyStateScoring.test.ts` 端到端覆盖，成本高于收益。
+
+### 测试
+
+- `critFactor.test.ts`：期望公式（无 crit→1 / chance add / damage mult / 混合 / global=hero chance / active 才计入），精确值 + 基线归一。
+- `vulnerabilityFactor.test.ts`：add/mult 聚合 + **两个 +100% 易伤 = 3（原累乘 bug 算成 4）回归** + add/mult 混合 + isVulnerabilityMatched（无条件/单 tag 命中/未命中/多 tag OR/非 active）。
+- `poolAggregation.test.ts`：同 key addPercent 相加/multFactor 相乘、不同 key 独立、合并交换律、pool 间乘积、空 Map→1。
+
+回归守护：`steadyStateScoring.test.ts`（scoreFormation 端到端，含 crit/vuln/team-gold/globalBuff/projection）+ `placementFit.test.ts`（103 案例）+ `references/damageReferenceVerification.test.ts`（明斯克 golden，偏差不退化）。
 
 ## 复用（不动）
 
