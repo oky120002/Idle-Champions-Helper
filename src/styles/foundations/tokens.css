@@ -9,17 +9,8 @@
  *   并在需要时成对提供深/浅值。守护脚本会扫描残留硬编码。
  */
 :root {
-  --space-2xs: 0.25rem;
-  --space-xs: 0.5rem;
-  --space-sm: 0.75rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
   --layout-max-width: 1400px;
   --layout-inline-gap: clamp(1rem, 2vw, 1.75rem);
-  --filter-sidebar-width: 20.25rem;
-  --champions-sidebar-width: var(--filter-sidebar-width);
   --champions-results-card-min: 260px;
   --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-display: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif;
@@ -36,11 +27,6 @@
   --bg-halo-warm: oklch(80% 0.08 72 / 0.08);
   --bg-halo-cool: oklch(72% 0.05 232 / 0.1);
 
-  /* === 表面 === */
-  --color-surface-top: oklch(24% 0.015 248 / 0.9);
-  --color-surface-mid: oklch(20% 0.013 246 / 0.94);
-  --color-surface-bottom: oklch(17% 0.01 244 / 0.97);
-
   /* === 边框 === */
   --color-border-soft: oklch(78% 0.01 84 / 0.12);
   --color-border: oklch(80% 0.012 82 / 0.18);
@@ -55,19 +41,12 @@
 
   /* === 品牌色（两主题共用，半透明变体用 color-mix 派生）=== */
   --color-copper: oklch(80% 0.09 72);
-  --color-copper-soft: oklch(80% 0.09 72 / 0.14);
   --color-steel: oklch(74% 0.05 232);
-  --color-steel-soft: oklch(74% 0.05 232 / 0.14);
   --color-gold: oklch(77% 0.114 77);
-  --color-gold-soft: oklch(77% 0.114 77 / 0.16);
 
   /* === 状态色 === */
   --color-success: oklch(61% 0.086 153);
-  --color-success-soft: oklch(95% 0.024 155);
   --color-danger: oklch(55% 0.115 22);
-  --color-danger-soft: oklch(93% 0.029 18);
-  --color-info: var(--color-steel);
-  --color-info-soft: var(--color-steel-soft);
 
   /* === categorical 属性色（数据语义，两主题共用，色相跨主题稳定）=== */
   --cat-race: oklch(72% 0.06 237);
@@ -87,7 +66,6 @@
   /* === 交互底 / 面板 === */
   --color-interactive-top: rgba(21, 31, 42, 0.88);
   --color-interactive-bottom: rgba(9, 14, 20, 0.92);
-  --color-interactive-soft: rgba(9, 14, 20, 0.34);
   --color-panel: rgba(10, 15, 22, 0.68);
   --color-panel-soft: rgba(10, 15, 22, 0.48);
   --color-panel-strong: rgba(7, 11, 16, 0.84);
@@ -147,11 +125,6 @@
   --bg-halo-warm: oklch(80% 0.08 72 / 0.04);
   --bg-halo-cool: oklch(72% 0.05 232 / 0.05);
 
-  /* === 表面（比 bg 更亮的卡片层）=== */
-  --color-surface-top: oklch(99% 0.004 84 / 0.9);
-  --color-surface-mid: oklch(98% 0.005 82 / 0.94);
-  --color-surface-bottom: oklch(97% 0.006 80 / 0.97);
-
   /* === 边框（亮线 → 暗线）=== */
   --color-border-soft: oklch(40% 0.012 80 / 0.1);
   --color-border: oklch(38% 0.014 80 / 0.14);
@@ -167,7 +140,6 @@
   /* === 交互底 / 面板（半透明微压叠层）=== */
   --color-interactive-top: oklch(97% 0.005 84 / 0.88);
   --color-interactive-bottom: oklch(94% 0.008 82 / 0.92);
-  --color-interactive-soft: oklch(94% 0.008 82 / 0.34);
   --color-panel: oklch(28% 0.012 80 / 0.06);
   --color-panel-soft: oklch(28% 0.012 80 / 0.04);
   --color-panel-strong: oklch(28% 0.012 80 / 0.08);
@@ -191,9 +163,7 @@
 
   /* === 状态色（浅底更深更饱和）=== */
   --color-success: oklch(48% 0.11 153);
-  --color-success-soft: oklch(96% 0.04 155);
   --color-danger: oklch(50% 0.14 22);
-  --color-danger-soft: oklch(95% 0.05 18);
 
   /* ponytail: 铜/钢在浅底可能偏淡，若强调感不足，此处降 L 提 C，如 --color-copper: oklch(68% 0.12 72) */
 
@@ -209,14 +179,12 @@
 @media (min-width: 1680px) {
   :root {
     --layout-max-width: 1760px;
-    --filter-sidebar-width: 20.75rem;
   }
 }
 
 @media (min-width: 1920px) {
   :root {
     --layout-max-width: 1960px;
-    --filter-sidebar-width: 21.25rem;
   }
 }
 
@@ -224,6 +192,5 @@
   :root {
     --layout-max-width: 2280px;
     --layout-inline-gap: clamp(1.25rem, 1.8vw, 2.25rem);
-    --filter-sidebar-width: 21.75rem;
   }
 }
