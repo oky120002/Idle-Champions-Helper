@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { scoreFormation } from './steadyStateScoring'
-import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import { compareGameNumbers } from '../simulator/gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 

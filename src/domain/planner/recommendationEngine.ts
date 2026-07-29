@@ -1,8 +1,6 @@
 import Decimal from 'break_eternity.js'
 
-import { formatGameNumber } from '../simulator/gameNumber'
-import type { GameNumberValue } from '../simulator/gameNumber'
-import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import type { FormationSlot, ScenarioRef, Variant } from '../types'

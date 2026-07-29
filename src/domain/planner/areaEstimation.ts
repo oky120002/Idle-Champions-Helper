@@ -1,5 +1,4 @@
-import type { GameNumberValue } from '../simulator/gameNumber'
-import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import { compareGameNumbers, type GameNumberValue } from '../simulator/gameNumber'
 import { MAX_AREA, monsterDpsAt, monsterHealthAt } from '../simulator/monsterStats'
 
 /**

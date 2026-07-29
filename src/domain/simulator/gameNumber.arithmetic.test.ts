@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { parseGameNumber } from './gameNumber'
 import {
   compareGameNumbers,
   divideGameNumbers,
   log10GameNumber,
   multiplyGameNumbers,
+  parseGameNumber,
   powerGameNumber,
   sortGameNumbers,
-} from './gameNumberArithmetic'
+} from './gameNumber'
 
 function gn(input: string) {
   const result = parseGameNumber(input)

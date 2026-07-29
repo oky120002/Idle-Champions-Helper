@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { parseGameNumber } from './gameNumber'
 import {
-  ADDITION_EXPONENT_THRESHOLD,
   addGameNumbers,
-} from './gameNumberAddition'
+  ADDITION_EXPONENT_THRESHOLD,
+  parseGameNumber,
+} from './gameNumber'
 
 function gn(input: string) {
   const result = parseGameNumber(input)
