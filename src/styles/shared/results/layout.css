@@ -34,7 +34,7 @@
 
 .results-panel__filter-summary {
   margin: 0.12rem 0 0;
-  color: rgba(242, 239, 230, 0.58);
+  color: var(--color-text-muted);
   font-size: 0.84rem;
   line-height: 1.45;
 }
@@ -76,18 +76,18 @@
   width: 3.65rem;
   min-height: 3.65rem;
   padding: 0.66rem 0.52rem 0.6rem;
-  border: 1px solid rgba(227, 214, 193, 0.16);
+  border: 1px solid var(--color-border);
   border-radius: 1.15rem;
   background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.12), transparent 34%),
-    linear-gradient(180deg, rgba(17, 26, 37, 0.94), rgba(9, 14, 20, 0.94)),
-    rgba(9, 14, 20, 0.48);
-  color: #f7ecd9;
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 34%),
+    linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom)),
+    var(--color-panel);
+  color: var(--color-text-strong);
   cursor: pointer;
   backdrop-filter: blur(16px);
   box-shadow:
-    0 18px 42px rgba(1, 4, 9, 0.32),
-    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+    var(--shadow-surface),
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 4%, transparent);
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -97,7 +97,7 @@
 
 .results-quick-nav__button:hover {
   transform: translateY(-2px);
-  border-color: rgba(200, 167, 127, 0.42);
+  border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
 }
 
 .results-quick-nav__button:disabled {
@@ -119,6 +119,6 @@
 
 .results-quick-nav__button--accent {
   background:
-    linear-gradient(180deg, rgba(62, 113, 147, 0.34), rgba(13, 29, 46, 0.92)),
-    rgba(9, 14, 20, 0.48);
+    linear-gradient(180deg, color-mix(in oklch, var(--color-steel) 34%, transparent), var(--color-interactive-bottom)),
+    var(--color-panel);
 }

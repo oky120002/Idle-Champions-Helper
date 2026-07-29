@@ -8,8 +8,8 @@
   contain-intrinsic-size: 20.5rem 27rem;
   padding: 0.9rem;
   border-radius: 14px;
-  background: rgba(10, 15, 21, 0.16);
-  border: 1px solid rgba(227, 214, 193, 0.065);
+  background: var(--color-panel-soft);
+  border: 1px solid var(--color-border-soft);
   box-shadow: none;
 }
 
@@ -20,7 +20,7 @@
 .result-card--champion {
   height: 100%;
   padding: 0.9rem;
-  background: rgba(8, 12, 17, 0.14);
+  background: var(--color-panel-soft);
 }
 
 .result-card--champion::before {
@@ -29,8 +29,8 @@
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(180deg, rgba(7, 11, 16, 0.14) 0%, rgba(7, 11, 16, 0.4) 46%, rgba(7, 11, 16, 0.64) 100%),
-    linear-gradient(135deg, rgba(7, 11, 16, 0.54), rgba(7, 11, 16, 0.16) 42%, rgba(7, 11, 16, 0.58) 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-scrim) 14%, transparent) 0%, color-mix(in srgb, var(--color-scrim) 40%, transparent) 46%, color-mix(in srgb, var(--color-scrim) 64%, transparent) 100%),
+    linear-gradient(135deg, color-mix(in srgb, var(--color-scrim) 54%, transparent), color-mix(in srgb, var(--color-scrim) 16%, transparent) 42%, color-mix(in srgb, var(--color-scrim) 58%, transparent) 100%);
   pointer-events: none;
 }
 
@@ -40,15 +40,15 @@
 
 .result-card--interactive:hover {
   transform: translateY(-0.5px);
-  border-color: rgba(200, 167, 127, 0.22);
+  border-color: color-mix(in oklch, var(--color-copper) 22%, transparent);
   box-shadow: none;
 }
 
 .result-card--interactive:focus-within {
-  border-color: rgba(200, 167, 127, 0.4);
+  border-color: color-mix(in oklch, var(--color-copper) 40%, transparent);
   box-shadow:
-    0 0 0 2px rgba(200, 167, 127, 0.18),
-    0 12px 24px rgba(1, 4, 9, 0.18);
+    0 0 0 2px color-mix(in oklch, var(--color-copper) 18%, transparent),
+    var(--shadow-surface-soft);
 }
 
 .result-card--link {
@@ -131,9 +131,9 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 82% 18%, rgba(255, 243, 223, 0.05), transparent 20%),
-    linear-gradient(180deg, rgba(8, 12, 17, 0.08), rgba(8, 12, 17, 0.22)),
-    linear-gradient(90deg, rgba(8, 12, 17, 0.9) 0%, rgba(8, 12, 17, 0.62) 26%, rgba(8, 12, 17, 0.28) 56%, rgba(8, 12, 17, 0.68) 100%);
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--color-gloss-base) 5%, transparent), transparent 20%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-scrim) 8%, transparent), color-mix(in srgb, var(--color-scrim) 22%, transparent)),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-scrim) 90%, transparent) 0%, color-mix(in srgb, var(--color-scrim) 62%, transparent) 26%, color-mix(in srgb, var(--color-scrim) 28%, transparent) 56%, color-mix(in srgb, var(--color-scrim) 68%, transparent) 100%);
 }
 
 .result-card__artbackdrop-image {
@@ -154,14 +154,14 @@
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #c8a77f;
+  color: var(--color-copper);
 }
 
 .result-card__title {
   margin: 0;
   font-size: 1.18rem;
   line-height: 1.04;
-  color: #fff8ec;
+  color: var(--color-text-strong);
 }
 
 .result-card__title--paired {
@@ -174,12 +174,12 @@
 
 .result-card__title-primary {
   min-width: 0;
-  color: #fff8ec;
+  color: var(--color-text-strong);
 }
 
 .result-card__secondary {
   margin: 0.04rem 0 0;
-  color: rgba(242, 239, 230, 0.56);
+  color: var(--color-text-muted);
 }
 
 .result-card__title--paired .result-card__secondary {
@@ -196,7 +196,7 @@
   position: relative;
   max-width: 20ch;
   padding-inline-start: 0.54rem;
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-family: var(--font-body);
   font-size: 0.88rem;
   font-weight: 500;
@@ -210,7 +210,7 @@
   top: 0.18em;
   bottom: 0.12em;
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(227, 214, 193, 0.28), transparent);
+  background: linear-gradient(180deg, transparent, var(--color-border-strong), transparent);
 }
 
 .result-card__supporting-slot {
@@ -239,8 +239,8 @@
   position: absolute;
   inset: 0;
   border-radius: 18px;
-  background: rgba(10, 15, 22, 0.36);
-  border: 1px solid rgba(227, 214, 193, 0.06);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border-soft);
 }
 
 .result-card__portrait-stage::after {
@@ -253,8 +253,8 @@
   display: inline-flex;
   padding: 0.22rem;
   border-radius: 16px;
-  background: rgba(10, 15, 22, 0.42);
-  border: 1px solid rgba(227, 214, 193, 0.06);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border-soft);
   transform: rotate(-3deg);
   transform-origin: 50% 55%;
 }
@@ -281,7 +281,7 @@
   width: 100%;
   height: 1px;
   margin-top: 0.74rem;
-  background: linear-gradient(90deg, rgba(200, 167, 127, 0.18), rgba(62, 113, 147, 0.1), transparent);
+  background: linear-gradient(90deg, color-mix(in oklch, var(--color-copper) 18%, transparent), color-mix(in oklch, var(--color-steel) 10%, transparent), transparent);
   pointer-events: none;
 }
 
@@ -298,24 +298,24 @@
   flex: 0 0 auto;
   min-height: calc(1.64rem * var(--champion-card-role-scale));
   padding: calc(0.2rem * var(--champion-card-role-scale)) calc(0.52rem * var(--champion-card-role-scale));
-  border-color: rgba(227, 214, 193, 0.08);
-  background: rgba(255, 255, 255, 0.018);
+  border-color: var(--color-border-soft);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
   font-size: calc(0.72rem * var(--champion-card-role-scale));
   white-space: nowrap;
   line-height: 1;
 }
 
 .result-card__role-row .tag-pill--seat {
-  border-color: rgba(200, 167, 127, 0.16);
-  background: rgba(200, 167, 127, 0.08);
-  color: rgba(255, 242, 219, 0.92);
+  border-color: color-mix(in oklch, var(--color-copper) 16%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 8%, transparent);
+  color: var(--color-text-strong);
 }
 
 .result-card__affiliation {
   display: block;
   margin: 0.42rem 0 0;
   min-width: 0;
-  color: rgba(244, 239, 226, 0.62);
+  color: var(--color-text-muted);
   font-size: 0.86rem;
   line-height: 1.18;
   white-space: nowrap;
