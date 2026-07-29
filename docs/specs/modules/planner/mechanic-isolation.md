@@ -139,5 +139,6 @@ src/domain/buffs/
 
 ## 关联
 
+- 决策依据：`docs/decisions/0008-mechanic-isolation-no-unified-abstraction.md`（四模式不引入统一接口/注册表，及其被否决的替代方案）
 - 机制抽象阈值（`>10` 升级策略注册表是 MechanicResolver 的升级路径）：`dps-mechanic-abstraction.md`
 - build 管线规则（解析层 amountFunc 约定 / build 改动重跑 / 增量跳过）：`docs/specs/guidelines/data-normalization.md`
