@@ -16,10 +16,10 @@
   background:
     radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 10%, transparent), transparent 44%),
     var(--surface-gloss),
-    rgba(6, 11, 17, 0.28);
+    var(--color-panel-soft);
   box-shadow:
-    0 8px 18px rgba(1, 4, 9, 0.1),
-    inset 0 1px 0 rgba(255, 243, 223, 0.025);
+    var(--shadow-interactive),
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 2.5%, transparent);
 }
 
 .page-header-metric::before {
@@ -29,19 +29,19 @@
   right: 0.7rem;
   top: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gloss-base) 12%, transparent), transparent);
 }
 
 .page-header-metric__label {
   display: block;
-  color: rgba(242, 239, 230, 0.6);
+  color: var(--color-text-soft);
   font-size: 0.62rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .page-header-metric__value {
-  color: #fff7ea;
+  color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: 0.94rem;
   line-height: 1.1;
@@ -83,7 +83,7 @@
 .workbench-page .page-header-metrics--compact .page-header-metric__label {
   display: inline-flex;
   align-items: center;
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-size: 0.54rem;
   line-height: 1;
   letter-spacing: 0.12em;

@@ -9,12 +9,12 @@
   position: relative;
   overflow: clip;
   isolation: isolate;
-  border: 1px solid rgba(227, 214, 193, 0.075);
+  border: 1px solid var(--color-border-soft);
   border-radius: var(--radius-xl);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.004)),
-    rgba(8, 12, 17, 0.22);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.018);
+    var(--surface-gloss-soft),
+    var(--color-panel-soft);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
 }
 
 .surface-card {
@@ -22,7 +22,7 @@
   overflow: visible;
   isolation: auto;
   border: 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid var(--color-border-soft);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
@@ -42,7 +42,7 @@
 .hero-panel::after {
   inset: auto 1rem 0.82rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gloss-base) 12%, transparent), transparent);
 }
 
 .surface-card::before,
@@ -71,7 +71,7 @@
 .hero-panel__title,
 .surface-card__title {
   margin: 0;
-  color: rgba(255, 248, 237, 0.98);
+  color: var(--color-text-strong);
   font-size: clamp(1.8rem, 3.2vw, 2.75rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
@@ -110,7 +110,7 @@
   padding: 0.78rem 0.82rem;
   border: 0;
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.018);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
   box-shadow: none;
 }
 
@@ -121,14 +121,14 @@
 .metric-card__label {
   display: block;
   margin-bottom: 0.52rem;
-  color: rgba(242, 239, 230, 0.58);
+  color: var(--color-text-soft);
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .metric-card__value {
-  color: #fff8ec;
+  color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: 1.12rem;
   line-height: 1.1;
@@ -151,7 +151,7 @@
   display: grid;
   gap: 0.92rem;
   padding-bottom: 0.96rem;
-  border-bottom: 1px solid rgba(255, 243, 223, 0.07);
+  border-bottom: 1px solid var(--color-border-soft);
 }
 
 .surface-card__header::after {
@@ -161,7 +161,7 @@
   right: 0;
   bottom: -1px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gloss-base) 10%, transparent), transparent);
   pointer-events: none;
 }
 
@@ -183,5 +183,5 @@
 .surface-card__footer {
   margin-top: 1rem;
   padding-top: 0.88rem;
-  border-top: 1px solid rgba(255, 243, 223, 0.07);
+  border-top: 1px solid var(--color-border-soft);
 }
