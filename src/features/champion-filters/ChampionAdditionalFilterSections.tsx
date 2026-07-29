@@ -4,7 +4,7 @@ import {
   FilterSidebarSchemaRenderer,
   type FilterSidebarGroupSchema,
 } from '../../components/filter-sidebar/FilterSidebarSchemaRenderer'
-import { getChampionAttributeGroupLabel, getChampionTagLabel } from '../../domain/championTags'
+import { getChampionAttributeGroupLabel, getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import { MechanicFilterFieldGroup } from './MechanicFilterFieldGroup'
 import type { MechanicOptionGroup } from './types'
 

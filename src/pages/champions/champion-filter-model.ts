@@ -1,5 +1,5 @@
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
-import { getChampionTagLabel } from '../../domain/championTags'
+import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { ActiveFilterChip } from '../../features/champion-filters/types'
 import type { AppLocale } from '../../app/i18n'
 import type { ChampionsPageTranslator, ChampionsFilterState } from './types'

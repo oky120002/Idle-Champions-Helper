@@ -4,7 +4,7 @@ import { FieldGroup } from '../../components/FieldGroup'
 import {
   getChampionMechanicCategoryLabel,
   getChampionTagLabel,
-} from '../../domain/championTags'
+} from '../../domain/champion-tags/selectors'
 import type { MechanicOptionGroup } from './types'
 
 interface MechanicFilterFieldGroupProps {

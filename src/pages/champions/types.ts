@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
-import type { ChampionMechanicCategoryId } from '../../domain/championTags'
+import type { ChampionMechanicCategoryId } from '../../domain/champion-tags/types'
 import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champion-filters/types'
 
