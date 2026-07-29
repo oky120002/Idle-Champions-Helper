@@ -2,34 +2,37 @@ import {
   buildEffectKeyPayload,
   extractTargetIdsFromParsedEffectPayload,
   parseEffectPayload,
-  resolveEffectPayloadAmountToken,
   type ParsedEffectPayload,
 } from '../../src/domain/effects/effect-string.ts'
 import {
   attachSignalSemantics,
   mergeHeroQualifiers,
-  normalizeExplicitTargeting,
   normalizeStatQualifiers,
   statQualifiersToNodes,
   normalizeTargetQualifier,
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.ts'
-import { parseHeroPredicate } from '../../src/domain/abilities/heroPredicate.ts'
 import type { JsonValue } from '../../src/domain/types'
 import type {
   HeroAbilityAmountFunc,
-  HeroAbilityKind,
   HeroAbilitySignal,
-  HeroAbilitySource,
   HeroPositionQualifier,
-  HeroPositionRelation,
   HeroQualifier,
-  HeroUnsupportedSignal,
 } from '../../src/domain/abilities/abilityModel'
+import {
+  parseTagQualifierFromArg,
+  resolveCountRelation,
+  resolveNumericValue,
+  type EffectSignalResult,
+  type SignalBucket,
+} from './effect-resolvers/resolverShared.ts'
+import { normalizeEffectSignal } from './effect-resolvers/resolverDispatch.ts'
+
+// effect → signal 的解析层拆分到 ./effect-resolvers/（8 个 resolver + dispatch + shared）；
+// 此处只保留 buff_upgrade 展开与 effect entry 收集（collectEffectEntries），解析入口 re-export。
+export { normalizeEffectSignal }
 
 // === Internal types ===
-
-type SignalBucket = 'supportSignals' | 'carrySignals'
 
 interface EffectEntry {
   effectString: string
@@ -43,30 +46,6 @@ interface EffectEntry {
   upgradePayloadsById: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
   /** upgrade 解锁等级；非 upgrade 源 = null。消费侧 evaluatePlacementFit 按 supportLevel 过滤。 */
   requiredLevel: number | null
-}
-
-// normalizeEffectSignal 接收的 metadata：所有字段可选（默认 {}），
-// 调用方通常传完整 EffectEntry，但也允许空对象走 fallback 路径。
-interface EffectSignalMetadata {
-  signalPreset?: HeroAbilitySignal | null
-  bucketOverride?: SignalBucket | null
-  effectPayload?: ParsedEffectPayload | null
-  effectPayloads?: Array<ParsedEffectPayload | null | undefined>
-  upgradePayloadsById?: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
-  effect?: unknown
-}
-
-type EffectSignalResult =
-  | { ok: true; signal: HeroAbilitySignal; bucket: SignalBucket }
-  | { ok: false; unsupported: HeroUnsupportedSignal }
-
-interface EffectResolveContext {
-  effectName: string
-  effectValue: string
-  source: HeroAbilitySource
-  numericValue: number
-  rawEffect: string
-  effectMetadata: EffectSignalMetadata
 }
 
 interface BuffUpgradeSeed {
@@ -107,76 +86,6 @@ function asRecord(value: unknown): Record<string, JsonValue> | null {
 
 function asUnknownArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : []
-}
-
-function resolveNumericValue(
-  effectValue: string,
-  effectPayload: ParsedEffectPayload | null | undefined,
-  effectPayloads: Array<ParsedEffectPayload | null | undefined> | null | undefined,
-  upgradePayloadsById: Map<string, Array<ParsedEffectPayload | null | undefined>> | null | undefined,
-): number {
-  if (effectPayload && typeof effectPayload.meta?.amount_expr === 'string') {
-    const resolved = resolveEffectPayloadAmountToken(
-      effectPayload,
-      effectPayloads ?? [effectPayload],
-      upgradePayloadsById,
-    )
-    const resolvedValue = resolved === null ? Number.NaN : parseFloat(String(resolved))
-
-    if (Number.isFinite(resolvedValue)) {
-      return resolvedValue
-    }
-  }
-
-  return parseFloat(effectValue)
-}
-
-function buildRawEffect(
-  effectName: string,
-  effectValue: string,
-  effectPayload: ParsedEffectPayload | null | undefined,
-): string {
-  return effectPayload?.effectString ?? `${effectName},${effectValue}`
-}
-
-function resolveBucket(effect: unknown): { ok: true; bucket: SignalBucket } | { ok: false; note: string } {
-  const explicitTargeting = normalizeExplicitTargeting(effect)
-
-  if (explicitTargeting.status === 'unsupported') {
-    return {
-      ok: false,
-      note: explicitTargeting.note,
-    }
-  }
-
-  return {
-    ok: true,
-    bucket:
-      explicitTargeting.status === 'supported' && explicitTargeting.relation !== 'self'
-        ? 'supportSignals'
-        : 'carrySignals',
-  }
-}
-
-function resolveCountRelation(rawTarget: unknown): HeroPositionRelation | null {
-  const targeting = normalizeExplicitTargeting({ targets: [rawTarget] })
-
-  // 'all' / 'all_slots' → relation 'any' = 全阵位计数（不计位置，只按 formationCountQualifier
-  // 计数所有匹配英雄）。消费层 countQualifiedHeroes 已显式支持 'any'（跳过 matchesSlotRelation），
-  // 故此处放行；曾因 relation==='any' 返回 null，导致全阵位 per_target_crusader effect 被静默丢弃。
-  if (targeting.status !== 'supported') {
-    return null
-  }
-
-  return targeting.relation
-}
-
-function parseTagQualifierFromArg(rawValue: unknown): HeroQualifier | null {
-  if (typeof rawValue !== 'string') {
-    return null
-  }
-  const predicate = parseHeroPredicate(rawValue, 'shorthand')
-  return predicate ? { predicate } : null
 }
 
 type EffectEntryInit = {
@@ -232,64 +141,6 @@ function isAnyBuffUpgradeWrapperKind(kind: unknown): boolean {
 
 function isBuffUpgradeKind(kind: unknown): kind is string {
   return typeof kind === 'string' && BUFF_UPGRADE_WRAPPER_KINDS.has(kind)
-}
-
-/**
- * crit effect 名 → (kind, amountFunc) 映射。
- * 默认暴击 chance/damage 由 crit_factor 公式（steadyStateScoring）应用，不在此处。
- */
-const CRIT_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
-  buff_base_crit_chance_add: { kind: 'heroCritChance', amountFunc: 'add' },
-  buff_base_crit_chance_mult: { kind: 'heroCritChance', amountFunc: 'mult' },
-  buff_base_crit_damage: { kind: 'heroCritDamage', amountFunc: 'add' },
-  buff_base_crit_damage_mult: { kind: 'heroCritDamage', amountFunc: 'mult' },
-  global_buff_base_crit_chance_add: { kind: 'globalCritChance', amountFunc: 'add' },
-  global_buff_base_crit_damage_add: { kind: 'globalCritDamage', amountFunc: 'add' },
-  global_buff_base_crit_damage_mult: { kind: 'globalCritDamage', amountFunc: 'mult' },
-}
-
-/**
- * survival effect 名 → (kind, amountFunc) 映射。
- * health/healing 折入 health multiplier（MVP：healing 近似为生命加成，survival 软约束）；
- * damage_reduction 单独 kind（玩家侧减伤，作用于 incoming damage）。
- */
-const SURVIVAL_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
-  health_mult: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
-  increase_health_by_source_percent: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
-  healing_mult: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
-  global_healing_mult: { kind: 'globalHealthMultiplier', amountFunc: 'add' },
-  global_health_mult: { kind: 'globalHealthMultiplier', amountFunc: 'add' },
-  damage_reduction: { kind: 'damageReduction', amountFunc: 'add' },
-  damage_reduction_ranged: { kind: 'damageReduction', amountFunc: 'add' },
-  fixed_damage_reduction_all_enemy_attacks: { kind: 'damageReduction', amountFunc: 'add' },
-  trials_damage_reduction_mult: { kind: 'damageReduction', amountFunc: 'mult' },
-}
-
-/**
- * vulnerability effect 名 → monsterTags 映射。
- * null = 无条件（对任意怪物生效）；数组 = 仅当场景 enemyTypes 含其中任一 tag 时生效。
- * increase_damage_against_monster_tag 的 tag 动态取自 args[1]，单独处理（| 为 OR，词表与 enemyTypes 一致）。
- */
-const VULNERABILITY_MONSTER_TAGS_BY_EFFECT: Record<string, string[] | null> = {
-  damage_increase: null,
-  increase_damage_against_monster: null,
-  increase_armored_damage: ['armored'],
-  bonus_armored_damage: ['armored'],
-}
-
-/**
- * speed/cooldown effect 名 → (kind, amountFunc) 映射。
- * attack_speed_mult/time_scale → attackSpeedMult（mult）；reduce_attack_cooldown → attackSpeedMult（add，
- * 减少攻击冷却=提速）；reduce_ultimate_cooldown/ability_cooldown_reduction_mult → cooldownReduction。
- */
-const SPEED_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
-  base_attack_speed_mult: { kind: 'attackSpeedMult', amountFunc: 'mult' },
-  ult_attack_speed_mult: { kind: 'attackSpeedMult', amountFunc: 'mult' },
-  time_scale: { kind: 'attackSpeedMult', amountFunc: 'mult' },
-  time_scale_when_not_attacked: { kind: 'attackSpeedMult', amountFunc: 'mult' },
-  reduce_attack_cooldown: { kind: 'attackSpeedMult', amountFunc: 'add' },
-  reduce_ultimate_cooldown: { kind: 'cooldownReduction', amountFunc: 'add' },
-  ability_cooldown_reduction_mult: { kind: 'cooldownReduction', amountFunc: 'mult' },
 }
 
 /**
@@ -776,369 +627,6 @@ export function analyzeBuffUpgradeWrappers(detail: unknown): BuffUpgradeWrapperA
   }
 
   return auditEntries
-}
-
-// 构造 unsupported 结果。normalizeEffectSignal 各分支共用，集中此处避免重复。
-function makeUnsupported(
-  effectName: string,
-  effectValue: string,
-  note: string,
-  source: HeroAbilitySource,
-): EffectSignalResult {
-  return {
-    ok: false,
-    unsupported: { rawEffect: effectName, rawValue: effectValue, note, source },
-  }
-}
-
-// crit/survival/speed 三个 map 派发池共用信号形状：kind + value + 可选 amountFunc=mult。
-function buildSimplePoolSignal(
-  ctx: Pick<EffectResolveContext, 'numericValue' | 'rawEffect' | 'source'>,
-  kind: HeroAbilityKind,
-  amountFunc: HeroAbilityAmountFunc,
-  bucket: SignalBucket,
-): EffectSignalResult {
-  return {
-    ok: true,
-    signal: {
-      kind,
-      value: ctx.numericValue,
-      rawEffect: ctx.rawEffect,
-      source: ctx.source,
-      ...(amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
-    },
-    bucket,
-  }
-}
-
-// hero_dps_mult_per_target_crusader[_mult|_prebonus_mult]：按位置计数目标。
-// add（单数名）/ mult（_mult、_prebonus_mult）仅 amountFunc 不同，其余逻辑一致。
-function resolveHeroDpsPerTarget(ctx: EffectResolveContext, amountFunc: HeroAbilityAmountFunc): EffectSignalResult {
-  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
-  const bucketResult = resolveBucket(effectMetadata.effect)
-  if (!bucketResult.ok) {
-    return makeUnsupported(effectName, effectValue, bucketResult.note, source)
-  }
-
-  const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
-  if (!countRelation) {
-    return makeUnsupported(
-      effectName,
-      effectValue,
-      `Unsupported per-target count relation: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-      source,
-    )
-  }
-
-  return {
-    ok: true,
-    signal: {
-      kind: 'heroDpsMultiplier',
-      value: numericValue,
-      rawEffect,
-      source,
-      amountFunc,
-      stackFunc: 'per_target_crusader',
-      formationCountPositionQualifier: { relation: countRelation },
-    },
-    bucket: bucketResult.bucket,
-  }
-}
-
-// hero_dps_mult_per_tagged_crusader_mult[_amount_before]：按 tag 计数。两个 effect 逻辑完全一致。
-function resolveHeroDpsPerTagged(ctx: EffectResolveContext): EffectSignalResult {
-  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
-  const bucketResult = resolveBucket(effectMetadata.effect)
-  if (!bucketResult.ok) {
-    return makeUnsupported(effectName, effectValue, bucketResult.note, source)
-  }
-
-  const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
-  if (!formationCountQualifier) {
-    return makeUnsupported(
-      effectName,
-      effectValue,
-      `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-      source,
-    )
-  }
-
-  return {
-    ok: true,
-    signal: {
-      kind: 'heroDpsMultiplier',
-      value: numericValue,
-      rawEffect,
-      source,
-      amountFunc: 'mult',
-      stackFunc: 'per_tagged_crusader_mult',
-      formationCountQualifier,
-    },
-    bucket: bucketResult.bucket,
-  }
-}
-
-// DPS 池。global_dps_multiplier_mult → 全队；hero_dps_* → 英雄侧（carry/support 按 targeting）。
-function resolveDpsSignal(ctx: EffectResolveContext): EffectSignalResult | null {
-  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
-
-  if (effectName === 'global_dps_multiplier_mult') {
-    return {
-      ok: true,
-      signal: { kind: 'globalDpsMultiplier', value: numericValue, rawEffect, source },
-      bucket: 'supportSignals',
-    }
-  }
-
-  if (effectName === 'hero_dps_multiplier_mult') {
-    const explicitTargeting = normalizeExplicitTargeting(effectMetadata.effect)
-
-    if (explicitTargeting.status === 'unsupported') {
-      return makeUnsupported(effectName, effectValue, explicitTargeting.note, source)
-    }
-
-    return {
-      ok: true,
-      signal: { kind: 'heroDpsMultiplier', value: numericValue, rawEffect, source },
-      bucket:
-        explicitTargeting.status === 'supported' && explicitTargeting.relation !== 'self'
-          ? 'supportSignals'
-          : 'carrySignals',
-    }
-  }
-
-  if (effectName === 'hero_dps_mult_per_target_crusader') {
-    return resolveHeroDpsPerTarget(ctx, 'add')
-  }
-
-  if (
-    effectName === 'hero_dps_mult_per_target_crusader_mult'
-    || effectName === 'hero_dps_mult_per_target_crusader_prebonus_mult'
-  ) {
-    return resolveHeroDpsPerTarget(ctx, 'mult')
-  }
-
-  if (
-    effectName === 'hero_dps_mult_per_tagged_crusader_mult'
-    || effectName === 'hero_dps_mult_per_tagged_crusader_mult_amount_before'
-  ) {
-    return resolveHeroDpsPerTagged(ctx)
-  }
-
-  if (effectName === 'hero_dps_mult_per_crusader_mult') {
-    const bucketResult = resolveBucket(effectMetadata.effect)
-    if (!bucketResult.ok) {
-      return makeUnsupported(effectName, effectValue, bucketResult.note, source)
-    }
-
-    const targetQualifier = normalizeTargetQualifier(effectMetadata.effect)
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'heroDpsMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'mult',
-        stackFunc: 'per_crusader',
-        targetQualifier,
-        formationCountQualifier: targetQualifier,
-      },
-      bucket: bucketResult.bucket,
-    }
-  }
-
-  if (effectName === 'hero_dps_mult_per_col_behind') {
-    const bucketResult = resolveBucket(effectMetadata.effect)
-    if (!bucketResult.ok) {
-      return makeUnsupported(effectName, effectValue, bucketResult.note, source)
-    }
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'heroDpsMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'mult',
-        stackFunc: 'per_col_behind',
-      },
-      bucket: bucketResult.bucket,
-    }
-  }
-
-  return null
-}
-
-// adjacent_* 前缀 → 邻位 buff。
-function resolveAdjacentSignal(ctx: Pick<EffectResolveContext, 'effectName' | 'numericValue' | 'rawEffect' | 'source'>): EffectSignalResult | null {
-  const { effectName, numericValue, rawEffect, source } = ctx
-  if (!effectName.startsWith('adjacent_')) {
-    return null
-  }
-  return {
-    ok: true,
-    signal: { kind: 'adjacentBuff', value: numericValue, rawEffect, source },
-    bucket: 'supportSignals',
-  }
-}
-
-// 金币池（gold find 全队聚合 stat → globalGoldMultiplier）。
-function resolveGoldSignal(ctx: EffectResolveContext): EffectSignalResult | null {
-  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
-
-  if (effectName === 'gold_multiplier_mult') {
-    return {
-      ok: true,
-      signal: { kind: 'globalGoldMultiplier', value: numericValue, rawEffect, source },
-      bucket: 'supportSignals',
-    }
-  }
-
-  if (effectName === 'gold_mult_per_tagged_crusader_mult') {
-    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
-    if (!formationCountQualifier) {
-      return makeUnsupported(
-        effectName,
-        effectValue,
-        `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-        source,
-      )
-    }
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'globalGoldMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'mult',
-        stackFunc: 'per_tagged_crusader_mult',
-        formationCountQualifier,
-      },
-      bucket: 'supportSignals',
-    }
-  }
-
-  return null
-}
-
-// 暴击池（chance/damage 各 global/hero；默认值来自 default_crit_info，在 crit_factor 公式应用，不在解析层）。
-function resolveCritSignal(ctx: EffectResolveContext): EffectSignalResult | null {
-  const match = CRIT_KIND_BY_EFFECT[ctx.effectName]
-  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
-}
-
-// survival 池（health/healing/damage_reduction）。
-function resolveSurvivalSignal(ctx: EffectResolveContext): EffectSignalResult | null {
-  const match = SURVIVAL_KIND_BY_EFFECT[ctx.effectName]
-  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
-}
-
-// vulnerability 池（敌人侧受伤倍率，条件性按怪物 tag）。
-function resolveVulnerabilitySignal(ctx: EffectResolveContext): EffectSignalResult | null {
-  const { effectName, source, numericValue, rawEffect, effectMetadata } = ctx
-
-  // monster_with_tag_more_damage（明斯克「偏好敌人」等）：tag 动态取自 args[1]，与
-  // increase_damage_against_monster_tag 同构（| 为 OR）。原漏接导致明斯克兽类 +2.43e6% 等未建模。
-  if (effectName === 'increase_damage_against_monster_tag' || effectName === 'monster_with_tag_more_damage') {
-    const tagArg = effectMetadata.effectPayload?.args?.[1] ?? null
-    const monsterTags = typeof tagArg === 'string'
-      ? tagArg.split('|').map((tag) => tag.trim()).filter(Boolean)
-      : null
-    return {
-      ok: true,
-      signal: {
-        kind: 'enemyVulnerability',
-        value: numericValue,
-        rawEffect,
-        source,
-        monsterTags: monsterTags && monsterTags.length > 0 ? monsterTags : null,
-      },
-      bucket: 'supportSignals',
-    }
-  }
-
-  const vulnMatch = VULNERABILITY_MONSTER_TAGS_BY_EFFECT[effectName]
-  if (vulnMatch !== undefined) {
-    return {
-      ok: true,
-      signal: {
-        kind: 'enemyVulnerability',
-        value: numericValue,
-        rawEffect,
-        source,
-        monsterTags: vulnMatch,
-      },
-      bucket: 'supportSignals',
-    }
-  }
-
-  return null
-}
-
-// speed/cooldown 池（进 pool 供覆盖率与未来 ult/step-simulation 消费；7.2 决定不进 carryDps——
-// hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
-function resolveSpeedSignal(ctx: EffectResolveContext): EffectSignalResult | null {
-  const match = SPEED_KIND_BY_EFFECT[ctx.effectName]
-  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
-}
-
-// tag_* 前缀 → tagged champion buff。
-function resolveTagSignal(ctx: Pick<EffectResolveContext, 'effectName' | 'numericValue' | 'rawEffect' | 'source'>): EffectSignalResult | null {
-  const { effectName, numericValue, rawEffect, source } = ctx
-  if (!effectName.startsWith('tag_')) {
-    return null
-  }
-  return {
-    ok: true,
-    signal: { kind: 'taggedChampionBuff', value: numericValue, rawEffect, source },
-    bucket: 'supportSignals',
-  }
-}
-
-export function normalizeEffectSignal(
-  effectName: string,
-  effectValue: string,
-  source: HeroAbilitySource,
-  effectMetadata: EffectSignalMetadata = {},
-): EffectSignalResult {
-  if (effectMetadata.signalPreset) {
-    return {
-      ok: true,
-      signal: effectMetadata.signalPreset,
-      bucket: effectMetadata.bucketOverride ?? 'supportSignals',
-    }
-  }
-
-  const rawEffect = buildRawEffect(effectName, effectValue, effectMetadata.effectPayload)
-  const numericValue = resolveNumericValue(
-    effectValue,
-    effectMetadata.effectPayload,
-    effectMetadata.effectPayloads,
-    effectMetadata.upgradePayloadsById,
-  )
-
-  if (!Number.isFinite(numericValue)) {
-    return makeUnsupported(effectName, effectValue, `Effect value is not numeric: ${effectValue}`, source)
-  }
-
-  const ctx: EffectResolveContext = { effectName, effectValue, source, numericValue, rawEffect, effectMetadata }
-
-  return (
-    resolveDpsSignal(ctx)
-    ?? resolveAdjacentSignal(ctx)
-    ?? resolveGoldSignal(ctx)
-    ?? resolveCritSignal(ctx)
-    ?? resolveSurvivalSignal(ctx)
-    ?? resolveVulnerabilitySignal(ctx)
-    ?? resolveSpeedSignal(ctx)
-    ?? resolveTagSignal(ctx)
-    ?? makeUnsupported(effectName, effectValue, `No parser for effect: ${effectName}`, source)
-  )
 }
 
 export function splitEffectString(effectString: unknown): { effectName: string; effectValue: string } | null {
