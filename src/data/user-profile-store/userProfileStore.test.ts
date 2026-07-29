@@ -1,16 +1,16 @@
 import 'fake-indexeddb/auto'
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import type { UserProfileSnapshot } from './types'
-import { createUserProfileSnapshot } from './fixtures'
-import { APP_DATABASE_NAME } from '../../data/localDatabase'
+import type { UserProfileSnapshot } from '../../domain/user-profile/types'
+import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
+import { APP_DATABASE_NAME } from '../localDatabase'
 import {
   deleteUserProfileData,
   readCredentialVault,
   readUserProfileSnapshot,
   saveCredentialVault,
   saveUserProfileSnapshot,
-} from '../../data/user-profile-store'
+} from './userProfileStore'
 
 async function resetDatabase(): Promise<void> {
   await new Promise<void>((resolve, reject) => {
