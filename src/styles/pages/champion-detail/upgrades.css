@@ -6,11 +6,11 @@
 
 .upgrade-card {
   gap: 0.78rem;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   background:
-    radial-gradient(circle at top left, rgba(200, 167, 127, 0.16), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0)),
-    rgba(7, 12, 18, 0.28);
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent), transparent),
+    color-mix(in srgb, var(--color-panel) 41%, transparent);
 }
 
 .upgrade-card--compact {
@@ -44,26 +44,26 @@
 
 .upgrade-card__level-pill {
   padding: 0.28rem 0.68rem;
-  border: 1px solid rgba(62, 113, 147, 0.22);
-  background: rgba(62, 113, 147, 0.12);
-  color: #eef7ff;
+  border: 1px solid color-mix(in oklch, var(--color-steel) 22%, transparent);
+  background: color-mix(in oklch, var(--color-steel) 12%, transparent);
+  color: var(--color-text-cool);
   letter-spacing: 0.08em;
 }
 
 .upgrade-card__type-badge {
   padding: 0.28rem 0.72rem;
-  border: 1px solid rgba(200, 167, 127, 0.28);
-  background: rgba(200, 167, 127, 0.12);
-  color: #fff2d6;
+  border: 1px solid color-mix(in oklch, var(--color-copper) 28%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 12%, transparent);
+  color: var(--color-text-strong);
   letter-spacing: 0.06em;
 }
 
 .upgrade-card__type-badge--spec {
-  border-color: rgba(233, 190, 105, 0.48);
+  border-color: color-mix(in oklch, var(--color-gold) 48%, transparent);
   background:
-    linear-gradient(180deg, rgba(233, 190, 105, 0.28), rgba(181, 125, 49, 0.2)),
-    rgba(200, 167, 127, 0.16);
-  color: #ffe9aa;
+    linear-gradient(180deg, color-mix(in oklch, var(--color-gold) 28%, transparent), color-mix(in oklch, var(--color-gold) 20%, transparent)),
+    color-mix(in oklch, var(--color-copper) 16%, transparent);
+  color: var(--color-gold);
 }
 
 .upgrade-card__spec-art {
@@ -72,11 +72,11 @@
   height: 3.35rem;
   overflow: hidden;
   border-radius: 16px;
-  border: 1px solid rgba(227, 214, 193, 0.16);
+  border: 1px solid var(--color-border);
   background:
-    radial-gradient(circle at 30% 26%, rgba(200, 167, 127, 0.22), rgba(200, 167, 127, 0)),
-    rgba(7, 12, 18, 0.42);
-  box-shadow: 0 14px 28px rgba(1, 4, 9, 0.22);
+    radial-gradient(circle at 30% 26%, color-mix(in oklch, var(--color-copper) 22%, transparent), transparent),
+    var(--color-panel-soft);
+  box-shadow: var(--shadow-interactive-strong);
 }
 
 .upgrade-card__spec-art img {
@@ -98,7 +98,7 @@
 
 .upgrade-card__summary {
   margin: 0;
-  color: rgba(242, 239, 230, 0.86);
+  color: var(--color-text-strong);
   font-size: 0.95rem;
   line-height: 1.58;
 }
@@ -115,12 +115,12 @@
   min-height: 1.9rem;
   padding: 0.32rem 0.66rem;
   border-radius: 999px;
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
+  background: color-mix(in srgb, var(--color-gloss-base) 3.5%, transparent);
 }
 
 .upgrade-card__meta-value {
-  color: #fff8ec;
+  color: var(--color-text-strong);
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.35;
@@ -131,8 +131,8 @@
   gap: 0.45rem;
   padding: 0.72rem 0.8rem;
   border-radius: 18px;
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
+  background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
 }
 
 .upgrade-card__details-body--compact {
@@ -141,7 +141,7 @@
 
 .upgrade-card__note {
   margin: 0;
-  color: rgba(242, 239, 230, 0.66);
+  color: var(--color-text-muted);
   font-size: 0.84rem;
   line-height: 1.55;
 }
@@ -154,11 +154,11 @@
   margin-top: 1rem;
   padding: 0.95rem;
   border-radius: 22px;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   background:
-    radial-gradient(circle at 100% 0%, rgba(62, 113, 147, 0.16), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0)),
-    rgba(7, 12, 18, 0.3);
+    radial-gradient(circle at 100% 0%, color-mix(in oklch, var(--color-steel) 16%, transparent), transparent 24%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 4.5%, transparent), transparent),
+    color-mix(in srgb, var(--color-panel) 44%, transparent);
 }
 
 .upgrade-filter-bar__copy {
@@ -172,12 +172,12 @@
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #c8a77f;
+  color: var(--color-copper);
 }
 
 .upgrade-filter-bar__description {
   margin: 0;
-  color: rgba(242, 239, 230, 0.68);
+  color: var(--color-text);
   font-size: 0.86rem;
   line-height: 1.48;
 }
@@ -212,10 +212,10 @@
   gap: 0.55rem;
   min-height: 2rem;
   padding: 0.42rem 0.78rem;
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  border: 1px solid var(--color-border-soft);
   border-radius: 999px;
   background: transparent;
-  color: rgba(242, 239, 230, 0.68);
+  color: var(--color-text);
   cursor: pointer;
   transition:
     transform 160ms ease,
@@ -226,13 +226,13 @@
 
 .upgrade-filter-chip:hover {
   transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.34);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
 }
 
 .upgrade-filter-chip--active {
-  border-color: rgba(200, 167, 127, 0.44);
-  background: rgba(200, 167, 127, 0.12);
-  color: #fff3df;
+  border-color: color-mix(in oklch, var(--color-copper) 44%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 12%, transparent);
+  color: var(--color-text-strong);
 }
 
 .upgrade-filter-chip__label {
@@ -247,7 +247,7 @@
   min-height: 1.5rem;
   padding: 0 0.32rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--color-gloss-base) 6%, transparent);
   color: inherit;
   font-size: 0.75rem;
 }
@@ -256,7 +256,7 @@
   margin-top: 0.82rem;
   overflow: hidden;
   border-radius: 18px;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
 }
 
 .upgrade-ledger__head,
@@ -268,30 +268,30 @@
 }
 
 .upgrade-ledger__head {
-  background: rgba(200, 167, 127, 0.1);
-  color: #fff4e0;
+  background: color-mix(in oklch, var(--color-copper) 10%, transparent);
+  color: var(--color-text-strong);
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .upgrade-ledger__row {
-  background: rgba(7, 12, 18, 0.28);
-  color: rgba(242, 239, 230, 0.8);
+  background: color-mix(in srgb, var(--color-panel) 41%, transparent);
+  color: var(--color-text);
   font-size: 0.92rem;
 }
 
 .upgrade-ledger__row + .upgrade-ledger__row {
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
 }
 
 .upgrade-ledger__empty {
   margin-top: 1rem;
   padding: 1rem 1.05rem;
   border-radius: 20px;
-  border: 1px dashed rgba(227, 214, 193, 0.14);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(242, 239, 230, 0.7);
+  border: 1px dashed var(--color-border);
+  background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
+  color: var(--color-text);
   line-height: 1.55;
 }
 

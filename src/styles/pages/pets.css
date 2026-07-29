@@ -12,8 +12,8 @@
   gap: 0.76rem;
   padding: 0.76rem;
   border-radius: 14px;
-  border: 1px solid rgba(227, 214, 193, 0.07);
-  background: rgba(8, 12, 17, 0.16);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 7%, transparent);
+  background: color-mix(in srgb, var(--color-panel) 24%, transparent);
   box-shadow: none;
 }
 
@@ -37,8 +37,8 @@
   overflow: hidden;
   border-radius: 12px;
   background:
-    radial-gradient(circle at top, rgba(205, 167, 110, 0.14), transparent 48%),
-    linear-gradient(180deg, rgba(16, 23, 34, 0.88), rgba(9, 13, 22, 0.9));
+    radial-gradient(circle at top, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 48%),
+    linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom));
   border: 0;
   box-shadow: none;
 }
@@ -47,8 +47,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--color-gloss-base) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-gloss-base) 3%, transparent) 1px, transparent 1px);
   background-size: 1.2rem 1.2rem;
   opacity: 0.18;
 }
@@ -63,7 +63,7 @@
   width: 100%;
   height: var(--pet-card-art-max-height);
   object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.34));
+  filter: drop-shadow(0 10px 18px color-mix(in srgb, black 34%, transparent));
 }
 
 .pet-card__preview {
@@ -85,13 +85,13 @@
   max-width: 18rem;
   padding: 0.86rem 0.94rem;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(244, 239, 226, 0.76);
+  background: color-mix(in srgb, var(--color-gloss-base) 6%, transparent);
+  color: var(--color-text);
   text-align: left;
 }
 
 .pet-card__stage-empty strong {
-  color: #fff8ee;
+  color: var(--color-text-strong);
   font-size: 1rem;
 }
 
@@ -116,24 +116,24 @@
   display: inline-flex;
   align-items: center;
   padding: 0.3rem 0.6rem;
-  border: 1px solid rgba(227, 214, 193, 0.1);
+  border: 1px solid var(--color-border-soft);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.018);
-  color: rgba(255, 246, 232, 0.84);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text);
   font-size: 0.76rem;
   font-weight: 700;
   box-shadow: none;
 }
 
 .pet-card__status--muted {
-  border-color: rgba(127, 143, 168, 0.16);
-  background: rgba(127, 143, 168, 0.08);
-  color: rgba(213, 221, 235, 0.8);
+  border-color: color-mix(in oklch, var(--color-steel) 16%, transparent);
+  background: color-mix(in oklch, var(--color-steel) 8%, transparent);
+  color: var(--color-text-cool);
 }
 
 .pet-card__title {
   margin: 0;
-  color: #fff7eb;
+  color: var(--color-text-strong);
   font-size: 1.04rem;
 }
 
@@ -143,12 +143,12 @@
 }
 
 .pet-card__secondary {
-  color: rgba(244, 239, 226, 0.72);
+  color: var(--color-text);
   font-size: 0.86rem;
 }
 
 .pet-card__description {
-  color: rgba(244, 239, 226, 0.8);
+  color: var(--color-text);
   line-height: 1.55;
   display: -webkit-box;
   overflow: hidden;
@@ -163,12 +163,12 @@
   padding: 0.68rem 0 0;
   border-radius: 0;
   border: 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   background: transparent;
 }
 
 .pet-card__acquisition-label {
-  color: rgba(223, 212, 193, 0.68);
+  color: var(--color-text);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -176,12 +176,12 @@
 }
 
 .pet-card__acquisition-detail {
-  color: #fff9f0;
+  color: var(--color-text-strong);
   font-size: 0.88rem;
 }
 
 .pet-card__acquisition-note {
-  color: rgba(223, 212, 193, 0.68);
+  color: var(--color-text);
   font-size: 0.78rem;
   line-height: 1.45;
 }

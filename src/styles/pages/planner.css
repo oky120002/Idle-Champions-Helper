@@ -10,7 +10,7 @@
   .planner-page__status-panel,
   .planner-save-preset,
   .planner-result-card {
-    background: rgba(4, 8, 13, 0.5);
+    background: var(--color-panel-soft);
   }
 
   .planner-page__result-column {
@@ -33,7 +33,7 @@
 
   .planner-scenario-selection__eyebrow {
     margin: 0;
-    color: rgba(201, 166, 124, 0.74);
+    color: color-mix(in oklch, var(--color-copper) 74%, transparent);
     font-size: 0.78rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -44,7 +44,7 @@
     font-family: "Songti SC", "Noto Serif SC", serif;
     font-size: 1.75rem;
     line-height: 1.1;
-    color: #fff5e4;
+    color: var(--color-text-strong);
   }
 
   .planner-scenario-selection__description,
@@ -53,7 +53,7 @@
   .planner-save-preset__status,
   .planner-result-card__slot-count {
     margin: 0;
-    color: rgba(239, 231, 214, 0.66);
+    color: var(--color-text-muted);
   }
 
   .planner-scenario-selection__metrics {
@@ -65,9 +65,9 @@
   .planner-scenario-selection__metric,
   .planner-scenario-selection__detail-grid > div,
   .planner-result-card__placement {
-    border: 1px solid rgba(227, 214, 193, 0.1);
+    border: 1px solid var(--color-border-soft);
     border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: color-mix(in srgb, var(--color-gloss-base) 2%, transparent);
   }
 
   .planner-scenario-selection__metric {
@@ -79,14 +79,14 @@
   .planner-scenario-selection__metric-label,
   .planner-scenario-selection__detail-grid dt,
   .planner-result-card__placement-slot {
-    color: rgba(201, 188, 166, 0.6);
+    color: var(--color-text-muted);
     font-size: 0.76rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .planner-scenario-selection__metric-value {
-    color: #fff6e5;
+    color: var(--color-text-strong);
     font-size: 1.2rem;
   }
 
@@ -121,7 +121,7 @@
   }
 
   .planner-scenario-selection__campaign-count {
-    color: rgba(255, 245, 229, 0.74);
+    color: var(--color-text);
     font-size: 0.84rem;
   }
 
@@ -153,24 +153,24 @@
     gap: 0.42rem;
     padding: 0.9rem 0.98rem;
     text-align: left;
-    border: 1px solid rgba(227, 214, 193, 0.1);
+    border: 1px solid var(--color-border-soft);
     border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.016);
-    color: #fff7e8;
+    background: color-mix(in srgb, var(--color-gloss-base) 1.6%, transparent);
+    color: var(--color-text-strong);
     transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
   }
 
   .planner-scenario-selection__item:hover {
     transform: translateY(-1px);
-    border-color: rgba(200, 167, 127, 0.28);
-    background: rgba(255, 255, 255, 0.032);
+    border-color: color-mix(in oklch, var(--color-copper) 28%, transparent);
+    background: color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent);
   }
 
   .planner-scenario-selection__item--selected {
-    border-color: rgba(200, 167, 127, 0.42);
+    border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
     background:
-      radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 42%),
-      rgba(255, 255, 255, 0.03);
+      radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 42%),
+      color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
   }
 
   .planner-scenario-selection__item-topline,
@@ -188,14 +188,14 @@
   .planner-scenario-selection__item-name,
   .planner-scenario-selection__detail-title {
     font-size: 1.03rem;
-    color: #fff6e5;
+    color: var(--color-text-strong);
     font-weight: 700;
   }
 
   .planner-scenario-selection__item-area,
   .planner-scenario-selection__detail-kicker,
   .planner-save-preset__status {
-    color: rgba(212, 192, 158, 0.88);
+    color: var(--color-text-strong);
   }
 
   .planner-scenario-selection__item-meta,
@@ -203,17 +203,17 @@
   .planner-scenario-selection__detail-subtitle,
   .planner-result-card__placement-copy span {
     flex-wrap: wrap;
-    color: rgba(239, 231, 214, 0.6);
+    color: var(--color-text-muted);
     font-size: 0.9rem;
   }
 
   .planner-scenario-selection__detail {
     padding: 1rem;
-    border: 1px solid rgba(227, 214, 193, 0.1);
+    border: 1px solid var(--color-border-soft);
     border-radius: 1.2rem;
     background:
-      radial-gradient(circle at top right, rgba(62, 113, 147, 0.12), transparent 38%),
-      rgba(255, 255, 255, 0.015);
+      radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 12%, transparent), transparent 38%),
+      color-mix(in srgb, var(--color-gloss-base) 1.5%, transparent);
   }
 
   .planner-scenario-selection__detail-hero {
@@ -234,7 +234,7 @@
 
   .planner-scenario-selection__detail-grid dd {
     margin: 0.22rem 0 0;
-    color: #fff5e4;
+    color: var(--color-text-strong);
   }
 
   .planner-scenario-selection__detail-group {
@@ -246,7 +246,7 @@
   .planner-result-card__section-title,
   .planner-save-preset__copy strong {
     margin: 0;
-    color: #fff6e5;
+    color: var(--color-text-strong);
     font-size: 0.94rem;
     letter-spacing: 0.04em;
   }
@@ -267,15 +267,15 @@
   .planner-result-card__warnings li {
     padding: 0.55rem 0.72rem;
     border-radius: 0.88rem;
-    background: rgba(255, 255, 255, 0.03);
-    color: rgba(245, 237, 219, 0.86);
+    background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
+    color: var(--color-text-strong);
   }
 
   .planner-scenario-selection__empty {
     padding: 0.95rem 1rem;
     border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.018);
-    color: rgba(245, 237, 219, 0.82);
+    background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+    color: var(--color-text);
   }
 
   .planner-scenario-selection__empty strong {
@@ -329,30 +329,30 @@
     gap: 0.15rem;
     padding: 0.5rem 0.8rem;
     border-radius: var(--radius-sm);
-    border: 1px solid rgba(200, 167, 127, 0.24);
-    background: rgba(255, 255, 255, 0.025);
-    color: rgba(242, 239, 230, 0.78);
+    border: 1px solid color-mix(in oklch, var(--color-copper) 24%, transparent);
+    background: color-mix(in srgb, var(--color-gloss-base) 2.5%, transparent);
+    color: var(--color-text);
   }
 
   .planner-top-lineups__tab.is-selected {
-    border-color: rgba(220, 170, 90, 0.6);
-    background: rgba(220, 170, 90, 0.12);
-    color: #fff5e5;
+    border-color: color-mix(in oklch, var(--color-gold) 60%, transparent);
+    background: color-mix(in oklch, var(--color-gold) 12%, transparent);
+    color: var(--color-text-strong);
   }
 
   .planner-top-lineups__tab-score {
     font-size: 0.78rem;
-    color: rgba(242, 239, 230, 0.58);
+    color: var(--color-text-muted);
   }
 
   .planner-result-card__area-estimate p[data-testid="planner-area-estimate"] {
     font-weight: 700;
-    color: #fff5e5;
+    color: var(--color-text-strong);
   }
 
   .planner-result-card__area-estimate-note {
     font-size: 0.82rem;
-    color: rgba(242, 239, 230, 0.56);
+    color: var(--color-text-muted);
   }
 
   .planner-result-card__placements {
@@ -383,14 +383,14 @@
   }
 
   .planner-result-card__score span {
-    color: rgba(201, 188, 166, 0.68);
+    color: var(--color-text);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .planner-result-card__score strong {
-    color: #fff7e6;
+    color: var(--color-text-strong);
     font-size: 1.5rem;
     line-height: 1;
   }
@@ -452,7 +452,7 @@
   }
 
   .planner-scoring-mode__legend {
-    color: rgba(201, 166, 124, 0.74);
+    color: color-mix(in oklch, var(--color-copper) 74%, transparent);
     font-size: 0.78rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -470,8 +470,8 @@
     min-width: 8rem;
     padding: 0.55rem 0.85rem;
     border-radius: 0.5rem;
-    border: 1px solid rgba(200, 167, 127, 0.18);
-    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid color-mix(in oklch, var(--color-copper) 18%, transparent);
+    background: color-mix(in srgb, var(--color-gloss-base) 2%, transparent);
     color: inherit;
     font: inherit;
     cursor: pointer;
@@ -479,50 +479,50 @@
   }
 
   .planner-scoring-mode__option:hover {
-    border-color: rgba(200, 167, 127, 0.28);
-    background: rgba(255, 255, 255, 0.032);
+    border-color: color-mix(in oklch, var(--color-copper) 28%, transparent);
+    background: color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent);
   }
 
   .planner-scoring-mode__option[data-selected='true'] {
-    border-color: rgba(200, 167, 127, 0.42);
+    border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
     background:
-      radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 42%),
-      rgba(255, 255, 255, 0.03);
+      radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 42%),
+      color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
   }
 
   .planner-stack-count__input {
     width: 8rem;
     padding: 0.55rem 0.85rem;
     border-radius: 0.5rem;
-    border: 1px solid rgba(200, 167, 127, 0.18);
-    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid color-mix(in oklch, var(--color-copper) 18%, transparent);
+    background: color-mix(in srgb, var(--color-gloss-base) 2%, transparent);
     color: inherit;
     font: inherit;
     transition: border-color 160ms ease, background-color 160ms ease;
   }
 
   .planner-stack-count__input:hover {
-    border-color: rgba(200, 167, 127, 0.28);
-    background: rgba(255, 255, 255, 0.032);
+    border-color: color-mix(in oklch, var(--color-copper) 28%, transparent);
+    background: color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent);
   }
 
   .planner-stack-count__input:focus {
     outline: none;
-    border-color: rgba(200, 167, 127, 0.42);
+    border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
   }
 
   .planner-breakdown {
     display: grid;
     gap: 0.6rem;
     padding: 0.85rem 0.95rem;
-    border: 1px solid rgba(227, 214, 193, 0.1);
+    border: 1px solid var(--color-border-soft);
     border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.016);
+    background: color-mix(in srgb, var(--color-gloss-base) 1.6%, transparent);
   }
 
   .planner-breakdown__formula {
     margin: 0;
-    color: #fff5e4;
+    color: var(--color-text-strong);
     font-size: 0.95rem;
     word-break: break-word;
   }
@@ -542,24 +542,24 @@
     align-items: baseline;
     padding: 0.4rem 0.62rem;
     border-radius: 0.65rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
   }
 
   .planner-breakdown__factor-label {
-    color: rgba(201, 188, 166, 0.66);
+    color: var(--color-text-muted);
     font-size: 0.78rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
   .planner-breakdown__factor-value {
-    color: #fff6e5;
+    color: var(--color-text-strong);
     font-variant-numeric: tabular-nums;
   }
 
   .planner-breakdown__sources-title {
     margin: 0.2rem 0 0;
-    color: rgba(212, 192, 158, 0.88);
+    color: var(--color-text-strong);
     font-size: 0.9rem;
   }
 
@@ -576,7 +576,7 @@
     gap: 0.32rem;
     padding: 0.6rem 0.72rem;
     border-radius: 0.8rem;
-    background: rgba(255, 255, 255, 0.022);
+    background: color-mix(in srgb, var(--color-gloss-base) 2.2%, transparent);
   }
 
   .planner-breakdown__contribution-head {
@@ -589,7 +589,7 @@
   }
 
   .planner-breakdown__contribution-head span {
-    color: rgba(239, 231, 214, 0.6);
+    color: var(--color-text-muted);
     font-size: 0.82rem;
   }
 
@@ -608,19 +608,19 @@
     align-items: baseline;
     padding: 0.3rem 0.55rem;
     border-radius: 0.55rem;
-    background: rgba(200, 167, 127, 0.08);
-    color: rgba(245, 237, 219, 0.86);
+    background: color-mix(in oklch, var(--color-copper) 8%, transparent);
+    color: var(--color-text-strong);
     font-size: 0.84rem;
   }
 
   .planner-breakdown__signals li strong {
-    color: #fff6e5;
+    color: var(--color-text-strong);
     font-variant-numeric: tabular-nums;
   }
 
   .planner-breakdown__more {
-    color: rgba(201, 188, 166, 0.6) !important;
-    background: rgba(255, 255, 255, 0.02) !important;
+    color: var(--color-text-muted) !important;
+    background: color-mix(in srgb, var(--color-gloss-base) 2%, transparent) !important;
   }
 
   @media (max-width: 720px) {

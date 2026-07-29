@@ -11,8 +11,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at top, rgba(62, 113, 147, 0.14), transparent 36%),
-    rgba(2, 5, 9, 0.72);
+    radial-gradient(circle at top, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 36%),
+    var(--color-backdrop);
   backdrop-filter: blur(8px);
 }
 
@@ -25,12 +25,12 @@
   padding: clamp(0.94rem, 2.2vw, 1.35rem);
   overflow: auto;
   border-radius: var(--radius-2xl);
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  border: 1px solid var(--color-border-soft);
   background:
-    radial-gradient(circle at top left, rgba(200, 167, 127, 0.12), transparent 28%),
-    radial-gradient(circle at 85% 18%, rgba(62, 113, 147, 0.12), transparent 24%),
-    linear-gradient(180deg, rgba(15, 23, 33, 0.94), rgba(7, 11, 17, 0.96));
-  box-shadow: 0 22px 72px rgba(0, 0, 0, 0.34);
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 28%),
+    radial-gradient(circle at 85% 18%, color-mix(in oklch, var(--color-steel) 12%, transparent), transparent 24%),
+    linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom));
+  box-shadow: var(--shadow-surface);
 }
 
 .skin-artwork-dialog__header {
@@ -58,24 +58,24 @@
 }
 
 .skin-artwork-dialog__hint {
-  color: rgba(242, 239, 230, 0.66);
+  color: var(--color-text-muted);
 }
 
 .skin-artwork-dialog__close {
   width: 2.52rem;
   height: 2.52rem;
-  border: 1px solid rgba(227, 214, 193, 0.1);
+  border: 1px solid var(--color-border-soft);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.03);
-  color: #fff6e8;
+  background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
+  color: var(--color-text-strong);
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
 }
 
 .skin-artwork-dialog__close:hover {
   transform: translateY(-0.5px);
-  border-color: rgba(200, 167, 127, 0.32);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: color-mix(in oklch, var(--color-copper) 32%, transparent);
+  background: color-mix(in srgb, var(--color-gloss-base) 6%, transparent);
 }
 
 .skin-artwork-dialog__body {
@@ -98,11 +98,11 @@
   place-items: center;
   padding: clamp(0.92rem, 2.8vw, 1.35rem);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(227, 214, 193, 0.1);
+  border: 1px solid var(--color-border-soft);
   background:
-    radial-gradient(circle at top, rgba(62, 113, 147, 0.12), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01)),
-    rgba(5, 9, 14, 0.64);
+    radial-gradient(circle at top, color-mix(in oklch, var(--color-steel) 12%, transparent), transparent 28%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 2.8%, transparent), color-mix(in srgb, var(--color-gloss-base) 1%, transparent)),
+    var(--color-panel);
   overflow: hidden;
 }
 
@@ -110,7 +110,7 @@
   max-width: 100%;
   max-height: min(62vh, 48rem);
   object-fit: contain;
-  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.22));
+  filter: drop-shadow(0 14px 28px color-mix(in srgb, black 22%, transparent));
 }
 
 .skin-artwork-dialog__canvas .skelanim-player__canvas,
@@ -119,12 +119,12 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.22));
+  filter: drop-shadow(0 14px 28px color-mix(in srgb, black 22%, transparent));
 }
 
 .skin-artwork-dialog__fallback {
   max-width: 28rem;
-  color: rgba(242, 239, 230, 0.74);
+  color: var(--color-text);
   text-align: center;
 }
 
@@ -132,7 +132,7 @@
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(242, 239, 230, 0.56);
+  color: var(--color-text-muted);
 }
 
 .skin-artwork-dialog__tabs {
@@ -144,10 +144,10 @@
   display: grid;
   gap: 0.22rem;
   padding: 0.78rem 0.84rem;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.024);
-  color: rgba(242, 239, 230, 0.78);
+  background: color-mix(in srgb, var(--color-gloss-base) 2.4%, transparent);
+  color: var(--color-text);
   text-align: left;
   cursor: pointer;
   transition:
@@ -159,25 +159,25 @@
 
 .skin-artwork-dialog__tab:hover {
   transform: translateY(-0.5px);
-  border-color: rgba(200, 167, 127, 0.24);
+  border-color: color-mix(in oklch, var(--color-copper) 24%, transparent);
 }
 
 .skin-artwork-dialog__tab--active {
-  border-color: rgba(200, 167, 127, 0.34);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
   background:
-    linear-gradient(180deg, rgba(200, 167, 127, 0.12), rgba(62, 113, 147, 0.05)),
-    rgba(9, 14, 20, 0.24);
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 12%, transparent), color-mix(in oklch, var(--color-steel) 5%, transparent)),
+    color-mix(in srgb, var(--color-panel) 35%, transparent);
   box-shadow:
-    inset 0 1px 0 rgba(255, 248, 230, 0.05),
-    0 10px 22px rgba(1, 4, 9, 0.12);
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 5%, transparent),
+    var(--shadow-interactive);
 }
 
 .skin-artwork-dialog__tab-title {
-  color: #fff8ee;
+  color: var(--color-text-strong);
 }
 
 .skin-artwork-dialog__tab-meta {
-  color: rgba(242, 239, 230, 0.56);
+  color: var(--color-text-muted);
   font-size: 0.8rem;
 }
 

@@ -15,19 +15,19 @@
   padding: 0.76rem 0;
   border-radius: 0;
   border: 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   background: transparent;
 }
 
 .animation-audit-summary-card span {
-  color: rgba(242, 239, 230, 0.58);
+  color: var(--color-text-muted);
   font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .animation-audit-summary-card strong {
-  color: #fff7eb;
+  color: var(--color-text-strong);
   font-size: 1.28rem;
 }
 
@@ -38,7 +38,7 @@
 
 .animation-audit-search span,
 .animation-audit-filter-group > span {
-  color: rgba(242, 239, 230, 0.64);
+  color: var(--color-text-muted);
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -49,13 +49,13 @@
   min-height: 2.8rem;
   padding: 0.78rem 0.96rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(227, 214, 193, 0.12);
-  background: rgba(4, 9, 14, 0.68);
-  color: #fff8ee;
+  border: 1px solid var(--color-border-soft);
+  background: var(--color-panel);
+  color: var(--color-text-strong);
 }
 
 .animation-audit-search input::placeholder {
-  color: rgba(242, 239, 230, 0.36);
+  color: var(--color-text-soft);
 }
 
 .animation-audit-filter-stack {
@@ -78,20 +78,20 @@
   min-height: 1.9rem;
   padding: 0.34rem 0.72rem;
   border-radius: 999px;
-  border: 1px solid rgba(227, 214, 193, 0.12);
-  background: rgba(255, 255, 255, 0.018);
-  color: rgba(242, 239, 230, 0.72);
+  border: 1px solid var(--color-border-soft);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text);
   cursor: pointer;
 }
 
 .animation-audit-pill--active {
-  border-color: rgba(200, 167, 127, 0.24);
-  background: rgba(200, 167, 127, 0.08);
-  color: #fff2db;
+  border-color: color-mix(in oklch, var(--color-copper) 24%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 8%, transparent);
+  color: var(--color-text-strong);
 }
 
 .animation-audit-state-card .surface-card__body {
-  color: rgba(242, 239, 230, 0.74);
+  color: var(--color-text);
 }
 
 .animation-audit-results {
@@ -108,7 +108,7 @@
 
 .animation-audit-results__eyebrow {
   margin: 0 0 0.24rem;
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-size: 0.74rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -116,14 +116,14 @@
 
 .animation-audit-results__title {
   margin: 0;
-  color: #fff8ec;
+  color: var(--color-text-strong);
   font-size: 1.24rem;
 }
 
 .animation-audit-results__description,
 .animation-audit-results__notice {
   margin: 0.2rem 0 0;
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
@@ -135,9 +135,9 @@
   min-height: 2.4rem;
   padding: 0.54rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid rgba(200, 167, 127, 0.2);
-  background: rgba(200, 167, 127, 0.08);
-  color: #fff0d8;
+  border: 1px solid color-mix(in oklch, var(--color-copper) 20%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 8%, transparent);
+  color: var(--color-text-strong);
   cursor: pointer;
 }
 
@@ -159,16 +159,16 @@
   padding: 0.92rem 0;
   border-radius: 0;
   border: 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   background: transparent;
 }
 
 .animation-audit-row--high {
-  border-color: rgba(208, 120, 95, 0.26);
+  border-color: color-mix(in oklch, var(--color-danger) 26%, transparent);
 }
 
 .animation-audit-row--medium {
-  border-color: rgba(200, 167, 127, 0.22);
+  border-color: color-mix(in oklch, var(--color-copper) 22%, transparent);
 }
 
 .animation-audit-row__header {
@@ -200,31 +200,31 @@
   min-height: 1.8rem;
   padding: 0.28rem 0.58rem;
   border-radius: 999px;
-  border: 1px solid rgba(227, 214, 193, 0.12);
-  background: rgba(9, 14, 20, 0.26);
-  color: #fff3e0;
+  border: 1px solid var(--color-border-soft);
+  background: color-mix(in srgb, var(--color-panel) 38%, transparent);
+  color: var(--color-text-strong);
   font-size: 0.76rem;
 }
 
 .animation-audit-row__level--high {
-  background: rgba(208, 120, 95, 0.12);
-  border-color: rgba(208, 120, 95, 0.26);
+  background: color-mix(in oklch, var(--color-danger) 12%, transparent);
+  border-color: color-mix(in oklch, var(--color-danger) 26%, transparent);
 }
 
 .animation-audit-row__level--medium {
-  background: rgba(200, 167, 127, 0.12);
-  border-color: rgba(200, 167, 127, 0.24);
+  background: color-mix(in oklch, var(--color-copper) 12%, transparent);
+  border-color: color-mix(in oklch, var(--color-copper) 24%, transparent);
 }
 
 .animation-audit-row__title {
   margin: 0;
-  color: #fff8ee;
+  color: var(--color-text-strong);
   font-size: 1.08rem;
 }
 
 .animation-audit-row__subtitle {
   margin: 0;
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
   font-size: 0.88rem;
 }
 
@@ -236,9 +236,9 @@
   min-height: 2.35rem;
   padding: 0.54rem 0.92rem;
   border-radius: 999px;
-  border: 1px solid rgba(200, 167, 127, 0.22);
-  background: rgba(200, 167, 127, 0.08);
-  color: #fff0d7;
+  border: 1px solid color-mix(in oklch, var(--color-copper) 22%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 8%, transparent);
+  color: var(--color-text-strong);
   cursor: pointer;
 }
 
@@ -259,7 +259,7 @@
   padding: 0.76rem 0 0;
   border-radius: 0;
   border: 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   background: transparent;
 }
 
@@ -276,13 +276,13 @@
 }
 
 .animation-audit-variant__label {
-  color: #fff8eb;
+  color: var(--color-text-strong);
   font-size: 0.96rem;
   font-weight: 700;
 }
 
 .animation-audit-variant__meta {
-  color: rgba(242, 239, 230, 0.56);
+  color: var(--color-text-muted);
   font-size: 0.8rem;
 }
 
@@ -292,8 +292,8 @@
   border-radius: 12px;
   border: 0;
   background:
-    radial-gradient(circle at top, rgba(207, 168, 112, 0.14), transparent 48%),
-    linear-gradient(180deg, rgba(17, 24, 38, 0.88), rgba(8, 12, 20, 0.92));
+    radial-gradient(circle at top, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 48%),
+    linear-gradient(180deg, var(--color-interactive-top), var(--color-interactive-bottom));
 }
 
 .animation-audit-variant__preview {
@@ -312,7 +312,7 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.34));
+  filter: drop-shadow(0 10px 18px color-mix(in srgb, black 34%, transparent));
 }
 
 .animation-audit-variant__facts {
@@ -328,7 +328,7 @@
 }
 
 .animation-audit-variant__facts dt {
-  color: rgba(242, 239, 230, 0.52);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -336,7 +336,7 @@
 
 .animation-audit-variant__facts dd {
   margin: 0;
-  color: #fff7ea;
+  color: var(--color-text-strong);
   font-size: 0.9rem;
 }
 

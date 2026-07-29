@@ -36,8 +36,8 @@
   min-width: 3.7rem;
   height: 3.7rem;
   border-radius: 14px;
-  border-color: rgba(227, 214, 193, 0.12);
-  background: rgba(7, 12, 18, 0.24);
+  border-color: var(--color-border-soft);
+  background: color-mix(in srgb, var(--color-panel) 35%, transparent);
   box-shadow: none;
 }
 
@@ -63,7 +63,7 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: rgba(200, 167, 127, 0.92);
+  color: color-mix(in oklch, var(--color-copper) 92%, transparent);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -76,7 +76,7 @@
   flex: 1 1 8rem;
   min-width: min(100%, 8rem);
   overflow-wrap: anywhere;
-  color: #fff7e8;
+  color: var(--color-text-strong);
   font-size: clamp(0.86rem, 0.98vw, 1.08rem);
   line-height: 1.28;
 }
@@ -84,7 +84,7 @@
 .specialization-column__summary {
   margin: 0;
   overflow-wrap: anywhere;
-  color: rgba(242, 239, 230, 0.8);
+  color: var(--color-text);
   font-size: clamp(0.76rem, 0.82vw, 0.94rem);
   line-height: 1.58;
 }
@@ -101,11 +101,11 @@
   padding: 0.62rem 0.66rem;
   border: 0;
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.018);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
 }
 
 .specialization-column__metric dt {
-  color: rgba(242, 239, 230, 0.54);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
   line-height: 1.2;
 }
@@ -113,7 +113,7 @@
 .specialization-column__metric dd {
   margin: 0.2rem 0 0;
   overflow-wrap: anywhere;
-  color: rgba(255, 248, 236, 0.94);
+  color: var(--color-text-strong);
   font-size: 0.86rem;
   font-weight: 700;
   line-height: 1.25;
@@ -132,7 +132,7 @@
 .specialization-column__overview p,
 .specialization-column__entry-notes p {
   margin: 0;
-  color: rgba(242, 239, 230, 0.66);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   line-height: 1.52;
 }
@@ -142,7 +142,7 @@
   gap: 0;
   margin: clamp(0.08rem, 0.22vw, 0.22rem) 0 0;
   padding-top: clamp(0.36rem, 0.58vw, 0.62rem);
-  border-top: 1px solid rgba(200, 167, 127, 0.24);
+  border-top: 1px solid color-mix(in oklch, var(--color-copper) 24%, transparent);
   background: transparent;
 }
 
@@ -157,13 +157,13 @@
 }
 
 .specialization-column__entry + .specialization-column__entry {
-  border-top: 1px solid rgba(227, 214, 193, 0.12);
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .specialization-column__entry--primary {
   margin-inline: 0;
-  border-top-color: rgba(200, 167, 127, 0.2);
-  border-bottom: 1px solid rgba(200, 167, 127, 0.16);
+  border-top-color: color-mix(in oklch, var(--color-copper) 20%, transparent);
+  border-bottom: 1px solid color-mix(in oklch, var(--color-copper) 16%, transparent);
   border-radius: 0;
   background: transparent;
 }
@@ -181,8 +181,8 @@
   min-width: 2.72rem;
   height: 2.72rem;
   border-radius: 12px;
-  border-color: rgba(227, 214, 193, 0.1);
-  background: rgba(7, 12, 18, 0.22);
+  border-color: var(--color-border-soft);
+  background: color-mix(in srgb, var(--color-panel) 32%, transparent);
   box-shadow: none;
 }
 
@@ -190,7 +190,7 @@
   margin: 0;
   min-width: min(100%, 8rem);
   overflow-wrap: anywhere;
-  color: rgba(255, 246, 228, 0.96);
+  color: var(--color-text-strong);
   font-size: clamp(0.9rem, 0.9vw, 1.04rem);
   font-weight: 800;
   line-height: 1.25;
@@ -198,13 +198,13 @@
 }
 
 .specialization-column__entry--primary .specialization-column__entry-title {
-  color: #ffe8af;
+  color: var(--color-gold);
 }
 
 .specialization-column__entry-summary {
   margin: 0;
   overflow-wrap: anywhere;
-  color: rgba(242, 239, 230, 0.8);
+  color: var(--color-text);
   font-size: clamp(0.72rem, 0.78vw, 0.88rem);
   line-height: 1.54;
 }
@@ -221,8 +221,8 @@
   padding: 0.25rem 0.5rem;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.032);
-  color: rgba(242, 239, 230, 0.64);
+  background: color-mix(in srgb, var(--color-gloss-base) 3.2%, transparent);
+  color: var(--color-text-muted);
   font-size: 0.74rem;
   line-height: 1.35;
 }

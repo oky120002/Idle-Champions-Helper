@@ -55,8 +55,8 @@
 .champion-dossier__hero-art {
   flex-shrink: 0;
   background:
-    radial-gradient(circle at 50% 100%, rgba(62, 113, 147, 0.18), transparent 38%),
-    rgba(1, 2, 4, 0.96);
+    radial-gradient(circle at 50% 100%, color-mix(in oklch, var(--color-steel) 18%, transparent), transparent 38%),
+    var(--color-panel-strong);
   object-fit: contain;
   object-position: center bottom;
 }
@@ -73,10 +73,10 @@
   place-items: center;
   width: 1.58rem;
   height: 1.58rem;
-  border: 1px solid rgba(255, 246, 232, 0.18);
+  border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(7, 12, 18, 0.62);
-  color: rgba(255, 246, 232, 0.9);
+  background: var(--color-panel);
+  color: var(--color-text-strong);
   font-size: 0.84rem;
   line-height: 1;
 }
@@ -97,12 +97,12 @@
 
 .champion-dossier__portrait-action:hover .champion-dossier__portrait-action-icon,
 .champion-dossier__portrait-action:focus-visible .champion-dossier__portrait-action-icon {
-  border-color: rgba(200, 167, 127, 0.34);
-  background: rgba(44, 33, 22, 0.72);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
+  background: var(--color-panel);
 }
 
 .champion-dossier__portrait-action:focus-visible {
-  outline: 2px solid rgba(200, 167, 127, 0.58);
+  outline: 2px solid color-mix(in oklch, var(--color-copper) 58%, transparent);
   outline-offset: -4px;
 }
 
@@ -119,14 +119,14 @@
   width: min(7.5rem, 54%);
   height: 1px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(200, 167, 127, 0.62), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--color-copper) 62%, transparent), transparent);
 }
 
 .champion-dossier__name {
   margin: 0;
   min-width: 0;
   max-width: 100%;
-  color: rgba(255, 246, 232, 0.98);
+  color: var(--color-text-strong);
   font-family: "Songti SC", "STSong", serif;
   font-size: 1.34rem;
   font-weight: 760;
@@ -134,8 +134,8 @@
   letter-spacing: 0.02em;
   overflow-wrap: anywhere;
   text-shadow:
-    0 0 12px rgba(200, 167, 127, 0.2),
-    0 1px 0 rgba(1, 4, 9, 0.7);
+    0 0 12px color-mix(in oklch, var(--color-copper) 20%, transparent),
+    0 1px 0 color-mix(in srgb, black 70%, transparent);
 }
 
 .champion-dossier__identity-title {
@@ -155,32 +155,32 @@
   min-width: 1.28rem;
   min-height: 1.28rem;
   padding: 0;
-  border: 1px solid rgba(200, 167, 127, 0.34);
+  border: 1px solid color-mix(in oklch, var(--color-copper) 34%, transparent);
   border-radius: 999px;
   background:
-    linear-gradient(180deg, rgba(200, 167, 127, 0.2), rgba(62, 113, 147, 0.1)),
-    rgba(7, 12, 18, 0.58);
-  color: rgba(255, 235, 198, 0.96);
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 20%, transparent), color-mix(in oklch, var(--color-steel) 10%, transparent)),
+    var(--color-panel-soft);
+  color: var(--color-text-strong);
   font-family: "Songti SC", "STSong", serif;
   font-size: 0.88rem;
   font-weight: 820;
   letter-spacing: 0;
   line-height: 1;
   box-shadow:
-    inset 0 1px 0 rgba(255, 243, 223, 0.08),
-    0 0 10px rgba(200, 167, 127, 0.12);
+    inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 8%, transparent),
+    0 0 10px color-mix(in oklch, var(--color-copper) 12%, transparent);
 }
 
 .champion-dossier__section {
   display: grid;
   gap: 0.62rem;
   padding: 0.82rem 0.84rem;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
 }
 
 .champion-dossier__section-label {
   margin: 0;
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -194,7 +194,7 @@
 
 .champion-dossier__line-label,
 .champion-dossier__section .detail-field__label {
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -203,7 +203,7 @@
 .champion-dossier__line-value,
 .champion-dossier__section .detail-field__value {
   min-width: 0;
-  color: rgba(255, 248, 237, 0.92);
+  color: var(--color-text-strong);
   font-size: 0.92rem;
   line-height: 1.38;
 }
@@ -223,19 +223,19 @@
 }
 
 .champion-dossier__score span {
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--color-text-soft);
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .champion-dossier__score strong {
-  color: rgba(255, 248, 237, 0.94);
+  color: var(--color-text-strong);
   font-size: 0.94rem;
 }
 
 .champion-dossier__score em {
-  color: rgba(200, 167, 127, 0.82);
+  color: color-mix(in oklch, var(--color-copper) 82%, transparent);
   font-size: 0.74rem;
   font-style: normal;
 }

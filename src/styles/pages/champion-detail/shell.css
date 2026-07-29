@@ -51,7 +51,7 @@
   min-height: 1.86rem;
   padding: 0;
   border-radius: 0.72rem;
-  color: rgba(255, 245, 229, 0.88);
+  color: var(--color-text-strong);
   text-decoration: none;
 }
 
@@ -76,8 +76,8 @@
 }
 
 .detail-section {
-  --detail-section-glow: rgba(200, 167, 127, 0.12);
-  --detail-section-glow-secondary: rgba(62, 113, 147, 0.12);
+  --detail-section-glow: color-mix(in oklch, var(--color-copper) 12%, transparent);
+  --detail-section-glow-secondary: color-mix(in oklch, var(--color-steel) 12%, transparent);
   overflow: hidden;
 }
 
@@ -97,27 +97,27 @@
 }
 
 .detail-section--character {
-  --detail-section-glow: rgba(98, 134, 152, 0.16);
+  --detail-section-glow: color-mix(in oklch, var(--color-steel) 16%, transparent);
 }
 
 .detail-section--combat {
-  --detail-section-glow: rgba(168, 113, 82, 0.14);
+  --detail-section-glow: color-mix(in oklch, var(--color-copper) 14%, transparent);
 }
 
 .detail-section--upgrades,
 .detail-section--loot,
 .detail-section--legendary {
-  --detail-section-glow: rgba(184, 154, 95, 0.14);
+  --detail-section-glow: color-mix(in oklch, var(--color-gold) 14%, transparent);
 }
 
 .detail-section--feats,
 .detail-section--skins {
-  --detail-section-glow: rgba(92, 128, 152, 0.14);
+  --detail-section-glow: color-mix(in oklch, var(--color-steel) 14%, transparent);
 }
 
 .detail-subcard {
-  border: 1px solid rgba(227, 214, 193, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border-soft);
+  background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
 }
 
 .champion-dossier__eyebrow {
@@ -125,7 +125,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #c8a77f;
+  color: var(--color-copper);
 }
 
 .champion-detail-tab-shell {
@@ -200,7 +200,7 @@
 
 .loot-card__effect {
   margin: 0;
-  color: rgba(242, 239, 230, 0.82);
+  color: var(--color-text);
   font-size: 0.9rem;
   line-height: 1.48;
 }
@@ -209,23 +209,23 @@
   flex: 0 0 auto;
   min-height: 2rem;
   padding: 0.34rem 0.66rem;
-  border: 1px solid rgba(200, 167, 127, 0.2);
+  border: 1px solid color-mix(in oklch, var(--color-copper) 20%, transparent);
   border-radius: 999px;
-  background: rgba(200, 167, 127, 0.08);
-  color: #fff3df;
+  background: color-mix(in oklch, var(--color-copper) 8%, transparent);
+  color: var(--color-text-strong);
   cursor: pointer;
 }
 
 .raw-snapshot {
   overflow: hidden;
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
   border-radius: 14px;
-  background: rgba(7, 12, 18, 0.24);
+  background: color-mix(in srgb, var(--color-panel) 35%, transparent);
 }
 
 .raw-snapshot summary {
   padding: 0.7rem 0.78rem;
-  color: rgba(255, 246, 232, 0.86);
+  color: var(--color-text-strong);
   cursor: pointer;
 }
 
@@ -234,8 +234,8 @@
   margin: 0;
   padding: 0.82rem;
   overflow: auto;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
-  color: rgba(242, 239, 230, 0.76);
+  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
+  color: var(--color-text);
   font-size: 0.78rem;
   line-height: 1.45;
   white-space: pre-wrap;
