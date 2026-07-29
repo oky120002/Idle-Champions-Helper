@@ -62,15 +62,15 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background: rgba(6, 10, 15, 0.6);
+  background: var(--color-panel);
 }
 
 body::-webkit-scrollbar-thumb {
-  border: 2px solid rgba(6, 10, 15, 0.72);
+  border: 2px solid var(--color-panel);
   border-radius: 999px;
   background:
     linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 44%, transparent), color-mix(in oklch, var(--color-steel) 36%, transparent)),
-    rgba(255, 255, 255, 0.08);
+    color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
 }
 
 :is(h1, h2, h3, .site-title, .surface-card__title, .page-tab-header__title, .hero-panel__title) {
