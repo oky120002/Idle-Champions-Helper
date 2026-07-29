@@ -80,6 +80,16 @@ export interface UserProfileSnapshot {
     catalog: BlessingCatalogEntry[]
     levels: Record<string, number>
   }
+  /**
+   * active instance 的赞助者/战役上下文（multi-instance 解码，来自 active_game_instance_id 对应的 game_instance）。
+   * - patronId：active instance 的 current_patron_id（0=无 patron 自由玩）；patron type1 本地增益仅此 patron 生效。
+   * - deity：active instance 当前战役的 reset_currency_id；地图 blessing type1 仅此 deity 生效。
+   * 旧 snapshot 无此字段，消费侧 `?` 兼容。
+   */
+  activeContext?: {
+    patronId: number
+    deity: number | null
+  }
   updatedAt: string
   warnings: string[]
   legendaryLevelCap: number

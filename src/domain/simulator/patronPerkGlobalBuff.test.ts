@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest'
 import { computeActualPatronPerkGlobalBuff } from './patronPerkGlobalBuff'
 import type { PatronPerkCatalogEntry } from './patronPerkGlobalBuff'
 
+// typeId 2=全局（恒生效）；patronId 统一 '1'，全局语义下不影响。
 const PERKS: PatronPerkCatalogEntry[] = [
-  { id: '1', effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
-  { id: '2', effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 10 }] },
-  { id: '3', effects: [{ effectString: 'gold_multiplier_mult,$replace', perLevel: 10 }] },
-  { id: '4', effects: [{ effectString: 'global_dps_multiplier_mult_area_tags,$replace,underground', perLevel: 100 }] },
+  { id: '1', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
+  { id: '2', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 10 }] },
+  { id: '3', patronId: '1', typeId: 2, effects: [{ effectString: 'gold_multiplier_mult,$replace', perLevel: 10 }] },
+  { id: '4', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult_area_tags,$replace,underground', perLevel: 100 }] },
 ]
 
 describe('computeActualPatronPerkGlobalBuff', () => {
@@ -29,12 +30,34 @@ describe('computeActualPatronPerkGlobalBuff', () => {
   })
 
   it('满级 21 global_dps perk 理论上界（反推自 patron-perks.json actual Σ=12600）→ ×127', () => {
-    // 简化：2 个 perk 满级验证公式 scale
     const perks: PatronPerkCatalogEntry[] = [
-      { id: '1', effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
-      { id: '2', effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
+      { id: '1', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
+      { id: '2', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
     ]
-    // lv 10/10 → 1+(1000+1000)/100 = 21
     expect(computeActualPatronPerkGlobalBuff({ '1': 10, '2': 10 }, perks)).toBeCloseTo(21, 5)
+  })
+})
+
+describe('computeActualPatronPerkGlobalBuff · type 1 本地 patron 过滤', () => {
+  // typeId 1=本地（仅 active patron 生效）/ 2=全局（恒生效）
+  const MIXED: PatronPerkCatalogEntry[] = [
+    { id: '10', patronId: '1', typeId: 1, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 50 }] },
+    { id: '11', patronId: '2', typeId: 1, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 50 }] },
+    { id: '12', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
+  ]
+
+  it('active patron=1：仅 patron1 的 type1 + 全部 type2 生效（patron2 type1 排除）', () => {
+    // id10(p1,type1,lv10=500) + id12(type2,lv10=1000)；id11(p2,type1) 排除
+    expect(computeActualPatronPerkGlobalBuff({ '10': 10, '11': 10, '12': 10 }, MIXED, '1')).toBeCloseTo(1 + (500 + 1000) / 100, 5)
+  })
+
+  it('不传 activePatronId → type1 全算（向后兼容）', () => {
+    // id10 + id11 + id12 全算（500+500+1000）
+    expect(computeActualPatronPerkGlobalBuff({ '10': 10, '11': 10, '12': 10 }, MIXED)).toBeCloseTo(1 + (500 + 500 + 1000) / 100, 5)
+  })
+
+  it('active patron=0（无 patron 自由玩）→ 排除所有 type1，仅 type2', () => {
+    // 仅 id12(type2)；'0' !== '1' 且 !== '2'，两 type1 均排除
+    expect(computeActualPatronPerkGlobalBuff({ '10': 10, '11': 10, '12': 10 }, MIXED, '0')).toBeCloseTo(1 + 1000 / 100, 5)
   })
 })

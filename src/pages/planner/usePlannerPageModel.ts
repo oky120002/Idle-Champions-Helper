@@ -65,11 +65,12 @@ export function usePlannerPageModel() {
   // patron perk + blessing actual 全局 buff（global_dps add pool 合并：1 + Σ(value)/100）。
   // 未导入存档 → 各源 1（无加成，向后兼容）；combineGlobalBuffMultipliers 合并同 pool。
   const globalBuffMultiplier = useMemo(() => {
+    const active = profileSnapshot?.activeContext
     const patronMult = profileSnapshot?.patronPerks
-      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog)
+      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId)
       : 1
     const blessingMult = profileSnapshot?.blessings
-      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog)
+      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity)
       : 1
     return combineGlobalBuffMultipliers([patronMult, blessingMult])
   }, [profileSnapshot, patronPerkCatalog])

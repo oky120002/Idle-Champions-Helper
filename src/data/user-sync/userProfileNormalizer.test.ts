@@ -167,6 +167,31 @@ describe('user payload normalizer', () => {
       expect(result.blessings.catalog).toEqual([])
       expect(result.blessings.levels).toEqual({})
     })
+
+    it('从 active game instance 提取赞助者 + 解码战役 deity', () => {
+      const result = normalizeUserDetails({
+        details: {
+          active_game_instance_id: 3,
+          game_instances: [
+            { game_instance_id: 1, current_patron_id: 0, formation_saves_v2_campaign_id: 1 },
+            { game_instance_id: 3, current_patron_id: 2, formation_saves_v2_campaign_id: 1200001 },
+          ],
+        },
+        defines: {
+          campaign_defines: [
+            { id: 1, reset_currency_id: 1 },
+            { id: 2, reset_currency_id: 3 },
+          ],
+        },
+      })
+      // active instance 3: patron=2；campaign 1200001 % 600000 = base 1 → deity 1
+      expect(result.activeContext).toEqual({ patronId: 2, deity: 1 })
+    })
+
+    it('active instance 缺失 → patronId=0 / deity=null（向后兼容）', () => {
+      const result = normalizeUserDetails({})
+      expect(result.activeContext).toEqual({ patronId: 0, deity: null })
+    })
   })
 
   describe('normalizeCampaignDetails', () => {
@@ -293,8 +318,13 @@ describe('user payload normalizer', () => {
             reset_upgrade_defines: [
               { id: 1, type: 2, reset_currency_id: 1, effects: [{ effect_string: 'global_dps_multiplier_mult,$replace', per_level: 100 }] },
             ],
+            campaign_defines: [{ id: 1, reset_currency_id: 1 }],
           },
           details: {
+            active_game_instance_id: 3,
+            game_instances: [
+              { game_instance_id: 3, current_patron_id: 2, formation_saves_v2_campaign_id: 1200001 },
+            ],
             heroes: [{ hero_id: '1', level: 500 }],
             reset_upgrade_levels: { '1': 5 },
           },
@@ -325,6 +355,7 @@ describe('user payload normalizer', () => {
       expect(snapshot.blessings?.catalog).toEqual([
         { id: '1', type: 2, currencyId: 1, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
       ])
+      expect(snapshot.activeContext).toEqual({ patronId: 2, deity: 1 })
     })
   })
 })

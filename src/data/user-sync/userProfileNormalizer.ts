@@ -25,9 +25,12 @@ interface UserDetailsPayload {
   heroes?: unknown
   defines?: {
     reset_upgrade_defines?: unknown
+    campaign_defines?: unknown
   }
   details?: {
     instance_id?: string | number
+    active_game_instance_id?: unknown
+    game_instances?: unknown
     heroes?: unknown
     loot?: unknown
     patron_perks?: unknown
@@ -78,6 +81,10 @@ export interface NormalizedUserDetails {
   blessings: {
     catalog: BlessingCatalogEntry[]
     levels: Record<string, number>
+  }
+  activeContext: {
+    patronId: number
+    deity: number | null
   }
   warnings: string[]
 }
@@ -138,6 +145,50 @@ function normalizeBlessingCatalog(value: unknown): BlessingCatalogEntry[] {
     })
   }
   return result
+}
+
+/**
+ * 解码 active instance 的战役 id → base campaign。
+ * multi-instance 编码：formation_saves_v2_campaign_id = patron × 600000 + base_campaign。
+ * 600000 常量基于 2 数据点反推（patron 0/2 + campaign 1），多 patron/campaign 组合待验证。
+ * patron=0 时 encoded = base（< 600000），% 600000 仍正确。
+ */
+function decodeBaseCampaign(encoded: unknown): number | null {
+  const value = toNumberValue(encoded)
+  if (!value) {
+    return null
+  }
+  return value % 600000
+}
+
+/**
+ * active instance 的赞助者/战役上下文（patron type1 / blessing type1 过滤用）。
+ * - active = game_instances 中 game_instance_id === active_game_instance_id 的那个。
+ * - patronId = active.current_patron_id（0=无 patron 自由玩）。
+ * - deity = active.formation_saves_v2_campaign_id 解码 base campaign → campaign_defines[base].reset_currency_id。
+ * 缺 active instance / campaign_defines → patronId=0 / deity=null（向后兼容）。
+ */
+function normalizeActiveContext(
+  details: unknown,
+  campaignDefines: unknown,
+): { patronId: number; deity: number | null } {
+  const detailsRecord = isRecord(details) ? details : {}
+  const activeId = toNumberValue(detailsRecord.active_game_instance_id)
+  const instances = normalizeObjectArray(detailsRecord.game_instances)
+  const active = instances.find((instance) => toNumberValue(instance.game_instance_id) === activeId)
+  const patronId = toNumberValue(active?.current_patron_id)
+  const base = active ? decodeBaseCampaign(active.formation_saves_v2_campaign_id) : null
+  let deity: number | null = null
+  if (base !== null) {
+    for (const def of normalizeObjectArray(campaignDefines)) {
+      if (toNumberValue(def.id) === base) {
+        const currencyId = toNumberValue(def.reset_currency_id)
+        deity = currencyId || null
+        break
+      }
+    }
+  }
+  return { patronId, deity }
 }
 
 function normalizeLootByHeroId(value: unknown): Map<string, Record<string, OwnedHeroLootSlot>> {
@@ -248,6 +299,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
   const patronPerks = normalizePatronPerks(payload.details?.patron_perks)
   const blessingLevels = normalizeNumberRecord(payload.details?.reset_upgrade_levels)
   const blessingCatalog = normalizeBlessingCatalog(payload.defines?.reset_upgrade_defines)
+  const activeContext = normalizeActiveContext(payload.details, payload.defines?.campaign_defines)
   const legendaryByHeroId = normalizeLegendaryByHeroId(payload.details?.legendary_details?.legendary_items)
 
   if (!Array.isArray(heroesValue) && !isRecord(heroesValue)) {
@@ -284,7 +336,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
     })
     .filter((hero) => hero.isOwned)
 
-  return { ownedHeroes, patronPerks, blessings: { catalog: blessingCatalog, levels: blessingLevels }, warnings }
+  return { ownedHeroes, patronPerks, blessings: { catalog: blessingCatalog, levels: blessingLevels }, activeContext, warnings }
 }
 
 export function normalizeCampaignDetails(
@@ -354,6 +406,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
     campaigns: campaignDetails.campaigns,
     patronPerks: userDetails.patronPerks,
     blessings: userDetails.blessings,
+    activeContext: userDetails.activeContext,
     updatedAt: input.updatedAt ?? new Date().toISOString(),
     legendaryLevelCap: toNumberValue(userDetailsPayload.details?.legendary_level_cap, 20),
     warnings: [

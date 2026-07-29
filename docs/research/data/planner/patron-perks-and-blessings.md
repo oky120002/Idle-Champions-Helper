@@ -70,15 +70,15 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 
 | 项 | 量级 | 状态 |
 |---|---|---|
-| patron global_dps（21）actual | ×55.7 | ✅ 已接入 UI（f581562f）|
-| blessing global_dps（22）actual | ×269 | ✅ 已接入 UI（snapshot.blessings catalog+levels + combine patron/blessing）|
+| patron global_dps（21）actual | ×55.7 全算 / ×25.7 active | ✅ 已接入 UI（f581562f + type1 过滤 #7）|
+| blessing global_dps（22）actual | ×269 全算 / ×62 active | ✅ 已接入 UI（catalog+levels + type1 过滤 #7）|
 | 装备 hero_dps（per-carry）| ×28.2 | ✅ 已接入（3849d295）|
 | patron/blessing `effect_def` tag 限定 | 未估 | 未接入（明斯克符合的人类/巡林客/混乱善良等 tag）|
 | `global_dps_mult_per_*` 计数 | 未估 | 未接入 |
 | modron（effect 943「有 core +200%」）| ×3 | 未接入 |
 
-**blessing catalog 数据流（2026-07-29 接入）**：定义（`reset_upgrade_defines`）与 actual levels（`reset_upgrade_levels`）同源于私有 payload（`userDetails`），公开 getdefinitions **无** `reset_upgrade_defines`（0 次）。故 catalog+levels 都进 snapshot（非像 patron-perks.json 提成 public json——blessing 定义无公开源、不可 CI 重建）。`normalize` 提取 `snapshot.blessings = { catalog, levels }`（`BlessingCatalogEntry` 归数据层 `user-profile/types`）；UI `computeActualBlessingGlobalBuff(levels, catalog)` 与 patron 经 `combineGlobalBuffMultipliers` 合并。type 1（地图）暂全算（不传 campaign，与 patron 当前粗略度一致），按 active campaign 过滤留后续。
+**blessing catalog 数据流（2026-07-29 接入）**：定义（`reset_upgrade_defines`）与 actual levels（`reset_upgrade_levels`）同源于私有 payload（`userDetails`），公开 getdefinitions **无** `reset_upgrade_defines`（0 次）。故 catalog+levels 都进 snapshot（非像 patron-perks.json 提成 public json——blessing 定义无公开源、不可 CI 重建）。`normalize` 提取 `snapshot.blessings = { catalog, levels }`（`BlessingCatalogEntry` 归数据层 `user-profile/types`）；UI `computeActualBlessingGlobalBuff(levels, catalog)` 与 patron 经 `combineGlobalBuffMultipliers` 合并。type 1（地图）已按 active campaign deity 过滤（#7，`snapshot.activeContext.deity`）。
 
-**赞助者机制缺口**：当前 patron actual 接入未区分 type 1（本地）/type 2（全局），全按 actual 算 → 含非当前赞助者的本地增益（高估）。精确化需按 `game_instances[active].current_patron_id` 过滤 type 1（仅当前 instance 赞助者的本地增益生效）。
+**赞助者机制（type 1 过滤，2026-07-29 #7 修复）**：patron type1（本地）/blessing type1（地图）已按 active instance 精确过滤。`normalize` 提取 `snapshot.activeContext = { patronId, deity }`：active = `game_instances[game_instance_id===active_game_instance_id]`，patronId=`current_patron_id`，deity=`formation_saves_v2_campaign_id` 解码 base(`%600000`)→`campaign_defines[base].reset_currency_id`。patron type1 仅 patronId===active 生效，blessing type1 仅 currencyId===deity 生效。量级（明斯克 active patron=2/deity=1）：合并 globalBuff ×324（全算上界）→ ×86.7（active 真实）。600000 编码常量基于 2 数据点反推，多 patron/campaign 待验证。
 
 **剩余 10^32 偏差大头**：`effect_def` tag 限定（142 blessing + ~80 patron perk）+ `global_dps_mult_per_*` 计数 + modron + 成就 + legendary 等，需逐类接入。
