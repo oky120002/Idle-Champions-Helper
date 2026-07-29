@@ -1,0 +1,62 @@
+import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { join, relative } from 'node:path'
+
+// 颜色字面量：rgb()/rgba() 或 #hex（3 或 6 位）。命中即视为硬编码。
+// color-mix 入参若用 var()/named-color（如 white）不会被匹配；裸 rgb 入参会匹配（本项目不使用）。
+const COLOR_LITERAL_RE = /rgba?\(\s*\d|#(?:[0-9a-fA-F]{3}){1,2}\b/
+
+export interface ColorViolation {
+  file: string
+  line: number
+  text: string
+}
+
+/** 递归扫描 stylesDir 下的 .css，返回硬编码颜色违规（排除 tokensFile 基色定义与注释行）。 */
+export function findHardcodedColors(stylesDir: string, tokensFile: string): ColorViolation[] {
+  const violations: ColorViolation[] = []
+
+  function scan(dir: string) {
+    for (const entry of readdirSync(dir)) {
+      const full = join(dir, entry)
+      if (statSync(full).isDirectory()) {
+        scan(full)
+        continue
+      }
+      if (!entry.endsWith('.css') || full === tokensFile) continue
+      const lines = readFileSync(full, 'utf8').split('\n')
+      lines.forEach((line, index) => {
+        const trimmed = line.trim()
+        if (trimmed.startsWith('/*') || trimmed.startsWith('*')) return
+        if (COLOR_LITERAL_RE.test(line)) {
+          violations.push({ file: relative(stylesDir, full), line: index + 1, text: trimmed })
+        }
+      })
+    }
+  }
+
+  scan(stylesDir)
+  return violations
+}
+
+function main() {
+  const stylesDir = join(process.cwd(), 'src/styles')
+  const tokensFile = join(stylesDir, 'foundations/tokens.css')
+  const violations = findHardcodedColors(stylesDir, tokensFile)
+
+  if (violations.length > 0) {
+    console.error(
+      `✗ 发现 ${violations.length} 处硬编码颜色。颜色必须登记为 token（src/styles/foundations/tokens.css），禁止在业务 CSS 写 rgb()/rgba()/#hex：`,
+    )
+    for (const v of violations) {
+      console.error(`  ${v.file}:${v.line}: ${v.text}`)
+    }
+    process.exit(1)
+  }
+
+  console.log('✓ 业务 CSS 无硬编码颜色。')
+}
+
+// vitest 运行时 process.env.VITEST 为 'true'，跳过 CLI；直接 tsx 运行时执行 main。
+if (!process.env.VITEST) {
+  main()
+}

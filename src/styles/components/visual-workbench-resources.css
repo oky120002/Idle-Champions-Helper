@@ -1,7 +1,7 @@
 .visual-workbench__resource-panel,
 .visual-workbench__skin-panel {
   padding: 0.9rem 0 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .visual-workbench__resource-panel-header {
@@ -12,7 +12,7 @@
 .visual-workbench__resource-meta,
 .visual-workbench__skin-secondary,
 .visual-workbench__skin-meta {
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
 }
 
 .visual-workbench__resource-tabs {
@@ -22,7 +22,7 @@
 
 .visual-workbench__resource-button,
 .visual-workbench__skin-button {
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  border: 1px solid var(--color-border);
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
 }
@@ -33,14 +33,14 @@
   padding: 0.85rem 0.9rem;
   border-radius: 14px;
   text-align: left;
-  background: rgba(255, 255, 255, 0.018);
-  color: #fff6e9;
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text-strong);
 }
 
 .visual-workbench__resource-button:hover,
 .visual-workbench__skin-button:hover {
   transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.34);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
 }
 
 .visual-workbench__resource-button:disabled {
@@ -51,13 +51,13 @@
 
 .visual-workbench__resource-button--active,
 .visual-workbench__skin-button--active {
-  border-color: rgba(200, 167, 127, 0.4);
-  background: rgba(200, 167, 127, 0.09);
+  border-color: color-mix(in oklch, var(--color-copper) 40%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 9%, transparent);
 }
 
 .visual-workbench__resource-label,
 .visual-workbench__skin-name {
-  color: #fff6e9;
+  color: var(--color-text-strong);
 }
 
 .visual-workbench__skin-strip {
@@ -75,8 +75,8 @@
   padding: 0.95rem 1rem;
   border-radius: 14px;
   text-align: left;
-  background: rgba(255, 255, 255, 0.018);
-  color: rgba(242, 239, 230, 0.76);
+  background: color-mix(in srgb, var(--color-gloss-base) 1.8%, transparent);
+  color: var(--color-text);
 }
 
 .visual-workbench__skin-kicker,
@@ -84,7 +84,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(242, 239, 230, 0.54);
+  color: var(--color-text-muted);
 }
 
 .visual-workbench__skin-name {
@@ -101,7 +101,7 @@
   display: grid;
   gap: 0.35rem;
   padding: 0.78rem 0;
-  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .visual-workbench__meta-item--wide {
@@ -109,7 +109,7 @@
 }
 
 .visual-workbench__meta-value {
-  color: #fff8ec;
+  color: var(--color-text-strong);
   line-height: 1.42;
 }
 

@@ -26,15 +26,15 @@
 }
 
 .skelanim-player__status {
-  color: rgba(242, 239, 230, 0.62);
+  color: var(--color-text-muted);
   font-size: 0.82rem;
 }
 
 .skelanim-player__button {
-  border: 1px solid rgba(200, 167, 127, 0.28);
+  border: 1px solid color-mix(in oklch, var(--color-copper) 28%, transparent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #fff8ee;
+  background: color-mix(in srgb, var(--color-gloss-base) 4%, transparent);
+  color: var(--color-text-strong);
   padding: 0.5rem 0.85rem;
   cursor: pointer;
   transition:
@@ -45,6 +45,6 @@
 
 .skelanim-player__button:hover {
   transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.4);
-  background: rgba(200, 167, 127, 0.1);
+  border-color: color-mix(in oklch, var(--color-copper) 40%, transparent);
+  background: color-mix(in oklch, var(--color-copper) 10%, transparent);
 }

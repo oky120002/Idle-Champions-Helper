@@ -90,6 +90,9 @@
 .champion-roster-slot__icon {
   position: absolute;
   inset: 0.46rem;
+  background-image:
+    radial-gradient(circle at 72% 70%, color-mix(in oklch, var(--color-gold) 18%, transparent), color-mix(in oklch, var(--color-steel) 8%, transparent) 36%, color-mix(in srgb, var(--color-gloss-base) 4%, transparent) 58%, transparent 78%),
+    var(--roster-icon-url);
   background-repeat: no-repeat, no-repeat;
   background-position: right center, right center;
   background-size: min(5.9rem, 60%), min(5rem, 48%);

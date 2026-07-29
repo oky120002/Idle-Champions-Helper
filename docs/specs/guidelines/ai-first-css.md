@@ -39,3 +39,13 @@ CSS 语义密度低于 TS / TSX，但大文件会显著抬高一次样式修改�
 - 选择器命名继续沿用当前 BEM 风格：块负责边界，`__` 表示内部结构，`--` 表示状态或变体。
 - 优先接受少量重复，也不要为了复用几行样式制造跨文件强耦合。
 - 页面私有选择器不回写到 `shared/`，除非它已经是稳定的跨页面契约。
+
+## 5. 颜色 token
+
+- 业务 CSS 禁止硬编码颜色（`rgb()` / `rgba()` / `#hex`），必须走 token（`src/styles/foundations/tokens.css`）；守护脚本 `scripts/check-colors.ts` 扫残留并接入 `npm run lint`。
+- 新增颜色先在 `tokens.css` 登记为 token；随主题翻转的 token 成对提供 `:root`（深）与 `:root[data-theme="light"]`（浅）值。
+- 底色 / 文字 / 边框 / 阴影 / gloss 随主题翻转；品牌色（铜 `--color-copper` / 钢 `--color-steel` / 金 `--color-gold`）与 categorical 属性色（`--cat-*`）两主题共用，不翻转。
+- 铜 / 钢的半透明变体用 `color-mix(in oklch, var(--color-copper|steel) X%, transparent)` 内联，alpha 保留原值不归并。
+- gloss 叠层基于 `--color-gloss-base` 派生（深底白提亮 / 浅底黑压暗），翻转 `--color-gloss-base` 即三档全跟随。
+- 图片上文字遮罩用 `--color-scrim`（深主题深 / 浅主题浅）；模态遮罩用 `--color-backdrop`（两主题都暗）；投影（`drop-shadow` / `text-shadow`）用 `color-mix(in srgb, black X%, transparent)`（两主题都暗）。
+- 禁止纯黑 `#000` / 纯白 `#fff` / 死灰；中性色带品牌色偏（暖轴 H≈80-84 / 冷轴 H≈232）。

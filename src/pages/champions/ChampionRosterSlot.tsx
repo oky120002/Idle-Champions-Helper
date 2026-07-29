@@ -1,3 +1,4 @@
+import { type CSSProperties } from 'react'
 import { resolveDataUrl } from '../../data/client'
 import type { ChampionEquipmentIcon } from '../../domain/types'
 import type { ChampionEquipmentSlotViewModel } from './championRoster'
@@ -19,9 +20,7 @@ export function ChampionRosterSlot({ slot, equipmentIcon }: ChampionRosterSlotPr
         <div
           className="champion-roster-slot__icon"
           aria-hidden="true"
-          style={{
-            backgroundImage: `radial-gradient(circle at 72% 70%, rgba(214, 179, 102, 0.18), rgba(88, 128, 196, 0.08) 36%, rgba(9, 14, 21, 0.04) 58%, transparent 78%), url("${resolveDataUrl(equipmentIcon.image.path)}")`,
-          }}
+          style={{ '--roster-icon-url': `url("${resolveDataUrl(equipmentIcon.image.path)}")` } as CSSProperties}
         />
       ) : null}
       <div className="champion-roster-slot__backdrop" aria-hidden="true">
