@@ -15,14 +15,14 @@
 
 | type | 语义 | 生效条件 |
 |---|---|---|
-| 1 | 本地增益 | 仅当前 instance 的 patron 生效（见下「patron 选中机制」）|
+| 1 | 本地增益 | 仅当前 instance 的 patron 生效（见下「赞助者机制」）|
 | 2 | 全局增益 | 恒生效（选不选都生效） |
 
 每赞助者两类各若干 tier，用该赞助者代币购买（`cost.base_cost` × `scaling`）。
 
-### patron「选中」机制（multi-instance）
+### 赞助者机制（multi-instance）
 
-IC 用 multi-instance（多 game instance，每 instance 独立 patron + campaign）。当前 patron **不在顶层 `details.current_patron_id`（=0，误导）**，而在 `game_instances[active_game_instance_id].current_patron_id`：
+IC 的赞助者系统通过 multi-instance 实现（多 game instance，每 instance 独立 patron + campaign）。当前 instance 的 patron **不在顶层 `details.current_patron_id`（=0，误导）**，而在 `game_instances[active_game_instance_id].current_patron_id`：
 
 - `active_game_instance_id`：标识当前 instance。
 - `game_instances[].current_patron_id`：该 instance 选的 patron（`0`=无 patron 自由玩 / `1-5`=patron）；`current_patron_tier` 为 patron 等级。
@@ -52,7 +52,11 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 - 地图祝福（`type 1`）：仅 `reset_currency_id`（deity）= 当前 campaign deity 的生效。
 - 全局祝福（`type 2`）：跨所有 campaign（如「双倍伤害 ×2 适用于所有战役」、Gem Hunter、Patron's Favor）。`effect_defines` id=2718「for each Global Blessing, stacking additively」是消费 `num_global_blessings` 计数的元 effect（属某英雄 ability，非 blessing 定义本身）。
 
-**地图 blessing 的 campaign 匹配**：地图 blessing 按当前 campaign 的 deity 生效。⚠️ instance 的 `formation_saves_v2_campaign_id` 编码（如 instance 3 = `1200001`）与 `campaign_defines.id`（1/2/15/32/18）不一致——疑 multi-instance 编码（base campaign + offset），接入时需解码到 base campaign 再查 deity（待理清）。
+**地图 blessing 的 campaign 匹配**：地图 blessing 按当前 campaign 的 deity（`reset_currency_id`）生效。instance 的 `formation_saves_v2_campaign_id` 是 **multi-instance 编码**：`patron × 600000 + base_campaign`（patron=0 时即 base_campaign）。解码 `base_campaign = id % 600000`（id ≥ 600000）或 `id`（id < 600000），再查 `campaign_defines[base_campaign].reset_currency_id` 得 deity。
+
+实测：instance 1/2（patron=0）→ campaign=1；instance 3（patron=2，明斯克参照）→ `1200001` → 解码 base_campaign=1（Sword Coast/Torm），故地图 blessing 按 Torm（`reset_currency_id=1`）生效——与明斯克 incomingBuffs 含「托姆的恩赐祝福」一致。
+
+> 编码 `patron × 600000 + base_campaign` 基于 2 数据点（patron 0/2, campaign 1）反推；600000 常量来源未确认，多 patron/campaign 组合待验证。
 
 **effect 载体**：同 patron_perk（裸 `effect_string` + `effect_def,<id>` 引用）。
 
@@ -73,6 +77,6 @@ patron 限定**不在 `adventure_defines`**（全字段无 `patron_id`，free pl
 | `global_dps_mult_per_*` 计数 | 未估 | 未接入 |
 | modron（effect 943「有 core +200%」）| ×3 | 未接入 |
 
-**本地/全局区分缺口**：当前 patron actual 接入未区分 type 1（本地）/type 2（全局），全按 actual 算 → 含未选中赞助者的本地增益（高估）。精确化需按 `current_patron_id` 过滤 type 1。
+**赞助者机制缺口**：当前 patron actual 接入未区分 type 1（本地）/type 2（全局），全按 actual 算 → 含非当前赞助者的本地增益（高估）。精确化需按 `game_instances[active].current_patron_id` 过滤 type 1（仅当前 instance 赞助者的本地增益生效）。
 
 **剩余 10^32 偏差大头**：`effect_def` tag 限定（142 blessing + ~80 patron perk）+ `global_dps_mult_per_*` 计数 + modron + 成就 + legendary 等，需逐类接入。
