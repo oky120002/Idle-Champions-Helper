@@ -23,7 +23,9 @@ import { evaluatePlacementFit } from '../placementFit'
 
 // 真自动发现：新 *ReferenceData.ts 文件零注册进流。
 const modules = import.meta.glob('./*ReferenceData.ts', { eager: true })
-const allReferences: ChampionReference[] = Object.values(modules).flatMap((mod) => Object.values(mod))
+const allReferences: ChampionReference[] = Object.values(modules).flatMap((mod) =>
+  Object.values(mod as Record<string, ChampionReference>),
+)
 const referencesByHeroId = new Map(allReferences.map((ref) => [ref.heroId, ref]))
 
 // 加载真实 built hero-abilities.json（归一化产物），计算器本身不读文件——此处仅测试构造入参。
