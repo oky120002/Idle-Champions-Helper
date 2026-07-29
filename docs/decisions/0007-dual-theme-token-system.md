@@ -13,6 +13,7 @@
 
 - **色标记用 oklch**：L/C/H 分量可独立调，浅色翻转按「L 大幅反转、C 略降、H 保持」一条规则即可批量生成与深色呼应的浅值；hex/hsl 做不到感知均匀的跨主题派生。
 - **gloss 三档基于 `--color-gloss-base` 派生**：深底 white 提亮、浅底暖深压暗，翻一个基色三档全跟随，不必为浅色另写三档。
+- **`color-mix` 稀释锚点必须够强，不能复用带 alpha 的终值 token**：`color-mix(in srgb, var(--T) N%, transparent)` 的产物 alpha = `alpha(T) × N%`。若 `--T` 自身已带 alpha（如浅色 `--color-panel` 仅 0.06），再稀释会双计 alpha，产物落到 0.01–0.03 实质不可见。故派生叠层锚定 `--color-panel-base`（深色与 panel 同值保零回归，浅色提强到 0.3），与 `--color-gloss-base` 同属「为 color-mix 准备的基色」家族；`--color-scrim` 本就不透明，可直接稀释。
 - **三种「暗」叠层语义分离，不合并**：`--color-scrim`（图上文字遮罩，随主题翻转，保跨主题可读）、`--color-backdrop`（模态遮罩，两主题都暗以突出模态）、投影（`color-mix(in srgb, black X%, transparent)`，两主题都暗）。三者都暗但服务不同可读性目标。
 - **品牌色（铜/钢/金）与 categorical（`--cat-*`）/稀有度色两主题共用不翻转**：它们是数据语义，跨主题色相稳定；只有底色/文字/边框/阴影/gloss 翻转。
 - **三态而非二值开关**：默认跟随系统以尊重 OS 偏好，`matchMedia` 订阅实时响应系统切换。

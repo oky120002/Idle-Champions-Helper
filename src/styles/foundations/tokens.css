@@ -91,6 +91,9 @@
   --color-panel: rgba(10, 15, 22, 0.68);
   --color-panel-soft: rgba(10, 15, 22, 0.48);
   --color-panel-strong: rgba(7, 11, 16, 0.84);
+  /* color-mix 派生叠层的锚点（仿 --color-gloss-base）。深色与 panel 同值，
+     保证既有稀释结果零回归；浅色在下方覆盖为更强值。 */
+  --color-panel-base: var(--color-panel);
   --color-scrim: oklch(14% 0.012 244); /* 图片文字遮罩：深主题深、浅主题浅，保证图上文字跨主题可读 */
   --color-backdrop: oklch(14% 0.012 244 / 0.72); /* 模态遮罩：两主题都暗以突出模态 */
 
@@ -168,6 +171,9 @@
   --color-panel: oklch(28% 0.012 80 / 0.06);
   --color-panel-soft: oklch(28% 0.012 80 / 0.04);
   --color-panel-strong: oklch(28% 0.012 80 / 0.08);
+  /* 稀释锚点：浅色 panel 仅 0.06，被 color-mix(... N%, transparent) 二次稀释后 alpha 0.03 不可见；
+     提强到 0.3 让 12%–62% 稀释产物落在 0.036–0.186 的可感知区间，仍贴合「薄、平、克制」基调。 */
+  --color-panel-base: oklch(28% 0.012 80 / 0.3);
   --color-scrim: oklch(96% 0.006 84);
   --color-backdrop: oklch(20% 0.012 244 / 0.5);
 

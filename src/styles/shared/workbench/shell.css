@@ -17,7 +17,7 @@
   border-radius: var(--page-workbench-shell-radius);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--color-gloss-base) 1.4%, transparent), color-mix(in srgb, var(--color-gloss-base) 0.4%, transparent)),
-    color-mix(in srgb, var(--color-panel) 35%, transparent);
+    color-mix(in srgb, var(--color-panel-base) 35%, transparent);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-gloss-base) 2%, transparent);
 }
 
@@ -62,7 +62,7 @@
   top: 0;
   z-index: 1;
   height: var(--page-workbench-chrome-size);
-  background: color-mix(in srgb, var(--color-panel) 15%, transparent);
+  background: color-mix(in srgb, var(--color-panel-base) 15%, transparent);
 }
 
 .page-workbench__body::after {
@@ -86,7 +86,7 @@
 
 .page-workbench__sidebar {
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-panel) 23%, transparent);
+  background: color-mix(in srgb, var(--color-panel-base) 23%, transparent);
   will-change: transform, opacity;
   transition:
     transform var(--page-workbench-layout-duration) var(--page-workbench-layout-ease),
@@ -99,7 +99,7 @@
 }
 
 .page-workbench__content {
-  background: color-mix(in srgb, var(--color-panel) 23%, transparent);
+  background: color-mix(in srgb, var(--color-panel-base) 23%, transparent);
   will-change: transform;
   transition: transform var(--page-workbench-layout-duration) var(--page-workbench-layout-ease);
 }
@@ -118,7 +118,7 @@
 }
 
 .page-workbench__sidebar-shell {
-  background: color-mix(in srgb, var(--color-panel) 15%, transparent);
+  background: color-mix(in srgb, var(--color-panel-base) 15%, transparent);
   box-shadow: none;
 }
 
