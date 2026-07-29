@@ -1042,7 +1042,9 @@ function resolveSurvivalSignal(ctx: EffectResolveContext): EffectSignalResult | 
 function resolveVulnerabilitySignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, source, numericValue, rawEffect, effectMetadata } = ctx
 
-  if (effectName === 'increase_damage_against_monster_tag') {
+  // monster_with_tag_more_damage（明斯克「偏好敌人」等）：tag 动态取自 args[1]，与
+  // increase_damage_against_monster_tag 同构（| 为 OR）。原漏接导致明斯克兽类 +2.43e6% 等未建模。
+  if (effectName === 'increase_damage_against_monster_tag' || effectName === 'monster_with_tag_more_damage') {
     const tagArg = effectMetadata.effectPayload?.args?.[1] ?? null
     const monsterTags = typeof tagArg === 'string'
       ? tagArg.split('|').map((tag) => tag.trim()).filter(Boolean)
