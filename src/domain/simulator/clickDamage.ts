@@ -28,5 +28,5 @@ export function computeClickDamage(
   clickSeconds: number = DEFAULT_CLICK_SECONDS,
 ): GameNumberValue {
   const seconds = typeof clickSeconds === 'number' && clickSeconds > 0 ? clickSeconds : DEFAULT_CLICK_SECONDS
-  return bud.times(seconds)
+  return bud.mul(seconds)
 }

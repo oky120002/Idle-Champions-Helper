@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
@@ -393,7 +393,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     } = bestBreakdownData
     const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
     const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
-    const baseDps = new Decimal(baseDamage).times(levelCurve)
+    const baseDps = new Decimal(baseDamage).mul(levelCurve)
     breakdown = {
       carryHeroId: carryEntry.hero.heroId,
       carrySlotId: carryEntry.slotId,

@@ -11,7 +11,7 @@ planner 计算器需可纯函数单测、可在 Web Worker 跑、可在 CLI 丢 
 
 `src/domain/{planner,simulator,abilities}/` 是 hermetic 模块，三位一体约束：
 
-- **域边界**：永不 import `src/data`/`src/app`/`src/components`/`src/pages`；非测试代码零 `fetch`/`readFileSync`/`indexedDB`/`loadCollection`。唯一非域依赖 `break_eternity.js`。由 `hermeticBoundary.test.ts` 守护，违规即 CI fail。
+- **域边界**：永不 import `src/data`/`src/app`/`src/components`/`src/pages`；非测试代码零 `fetch`/`readFileSync`/`indexedDB`/`loadCollection`。唯一非域依赖 `decimal.js`。由 `hermeticBoundary.test.ts` 守护，违规即 CI fail。
 - **数据分类铁律**：系统基础数据（技能解锁等级、机制定义、英雄属性 / cost 曲线、patron / feat / 装备 / 怪物曲线）启动加载 / 缓存进 `PlannerCollections`，**非 per-call**；动态状态（英雄等级、阵型、场景、patron / blessing / feat / 专精选择、manualStackCount）才是 **per-call 入参**。
 - **外部加成入参契约（约束③）**：计算器永不读登录态、永不直接读 profile 的 blessing/favor——后者已由 `userProfileNormalizer` 保留进 profile，由适配层聚合成 `globalBuffMultiplier` 传入；入参未传默认 1（`?? 1`）。
 

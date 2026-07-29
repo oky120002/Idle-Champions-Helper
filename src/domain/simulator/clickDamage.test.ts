@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 
 import { computeClickDamage, DEFAULT_CLICK_SECONDS } from './clickDamage'
@@ -11,7 +11,7 @@ describe('computeClickDamage', () => {
 
   it('clickSeconds 缺省用 DEFAULT_CLICK_SECONDS', () => {
     const bud = new Decimal(100)
-    expect(computeClickDamage(bud).eq(bud.times(DEFAULT_CLICK_SECONDS))).toBe(true)
+    expect(computeClickDamage(bud).eq(bud.mul(DEFAULT_CLICK_SECONDS))).toBe(true)
   })
 
   it('BUD 为 0 → click damage 0', () => {

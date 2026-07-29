@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { GameNumberValue } from './gameNumber'
@@ -24,7 +24,7 @@ function resolveHealthCurveRate(hero: ResolvedHeroAbilityProfile): number {
 }
 
 export function computeHealthLevelCurve(hero: ResolvedHeroAbilityProfile, level: number): GameNumberValue {
-  return Decimal.pow(resolveHealthCurveRate(hero), Math.max(0, level))
+  return new Decimal(resolveHealthCurveRate(hero)).pow(Math.max(0, level))
 }
 
 export function computeEffectiveHealth(
@@ -35,5 +35,5 @@ export function computeEffectiveHealth(
   const baseHealth = hero.baseHealth > 0 ? hero.baseHealth : 1
   const levelCurve = computeHealthLevelCurve(hero, level)
   const mult = Number.isFinite(healthPoolMultiplier) && healthPoolMultiplier > 0 ? healthPoolMultiplier : 1
-  return new Decimal(baseHealth).times(levelCurve).times(mult)
+  return new Decimal(baseHealth).mul(levelCurve).mul(mult)
 }

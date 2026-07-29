@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 import {
   compareGameNumbers,
@@ -15,6 +16,11 @@ function gn(input: string) {
   return result.value
 }
 
+// decimal.js 无 mantissa 属性：mantissa = value / 10^exponent（归一化到 [1,10)）。
+function mantissaOf(v: Decimal): number {
+  return v.div(new Decimal(10).pow(v.e)).toNumber()
+}
+
 describe('game number arithmetic', () => {
   it('1.5e92 * 2.72e75 在数量级上接近 4.08e167', () => {
     const a = gn('1.5e92')
@@ -24,7 +30,7 @@ describe('game number arithmetic', () => {
     // exponent should be ~167 (92 + 75 = 167)
     expect(product.e).toBe(167)
     // mantissa should be close to 4.08
-    expect(product.m).toBeCloseTo(4.08, 1)
+    expect(mantissaOf(product)).toBeCloseTo(4.08, 1)
   })
 
   it('除法保持预期排序', () => {

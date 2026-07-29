@@ -2,7 +2,7 @@
 
 ## GameNumber
 
-引入 `break_eternity.js`，只在 `src/domain/simulator/gameNumber.ts` 直接 import。业务代码只用 wrapper：`parseGameNumber`、`formatGameNumber`、`multiplyGameNumbers`、`divideGameNumbers`、`powerGameNumber`、`addGameNumbers`、`compareGameNumbers`、`log10GameNumber`、`sortGameNumbers`。
+引入 `decimal.js`，只在 `src/domain/simulator/gameNumber.ts` 直接 import。业务代码只用 wrapper：`parseGameNumber`、`formatGameNumber`、`multiplyGameNumbers`、`divideGameNumbers`、`powerGameNumber`、`addGameNumbers`、`compareGameNumbers`、`log10GameNumber`、`sortGameNumbers`。
 
 性能策略：
 

@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import type { GameNumberValue } from './gameNumber'
 
@@ -94,7 +94,7 @@ export function monsterHealthAt(area: number): GameNumberValue {
     const segStart = seg.fromArea === 1 ? 2 : seg.fromArea
     const layers = Math.max(0, segEnd - segStart + 1)
     if (layers > 0) {
-      health = health.times(Decimal.pow(seg.rate, layers))
+      health = health.mul(new Decimal(seg.rate).pow(layers))
     }
   }
   return health
@@ -113,7 +113,7 @@ export function monsterDpsAt(area: number): GameNumberValue {
   let dps = new Decimal(BASE_DPS)
   for (const spike of DPS_BOSS_SPIKES) {
     if (a >= spike.area) {
-      dps = dps.times(spike.mult)
+      dps = dps.mul(spike.mult)
     } else {
       break
     }

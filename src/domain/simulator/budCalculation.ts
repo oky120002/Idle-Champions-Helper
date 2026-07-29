@@ -19,5 +19,5 @@ export function computeSingleHitDamage(
   const cooldown = typeof attackCooldown === 'number' && attackCooldown > 0
     ? attackCooldown
     : DEFAULT_ATTACK_COOLDOWN
-  return heroDps.times(cooldown)
+  return heroDps.mul(cooldown)
 }

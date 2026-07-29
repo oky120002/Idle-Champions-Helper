@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'

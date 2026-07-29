@@ -38,7 +38,7 @@ describe('computeLevelCurve', () => {
     const slow = computeLevelCurve(hero({ costCurves: { '1': 1.06 } }), 500)
     const fast = computeLevelCurve(hero({ costCurves: { '1': 1.15 } }), 500)
     // log10(1.15^500 / 1.06^500) ≈ 17.7——统一 rate 会抹平这个差距
-    expect(fast.dividedBy(slow).log10().toNumber()).toBeGreaterThan(10)
+    expect(fast.div(slow).log(10).toNumber()).toBeGreaterThan(10)
   })
 
   it('costCurves 缺失或非法时回退默认率 1.06', () => {

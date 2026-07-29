@@ -26,7 +26,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
 
 - **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`（域不向外层依赖）。
-- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `break_eternity.js`。
+- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `decimal.js`。
 - 所有数据经适配层 `usePlannerCollections`（唯一调 `loadCollection` 处）→ 装入 `PlannerCollections` → 经 `runner.updateCollections()` 喂入。
 
 由 `src/domain/planner/hermeticBoundary.test.ts` 守护，违规即 CI fail。
@@ -77,7 +77,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 - `0011` 投影模式 aggregateProjection（阵型倍率 vs 绝对 DPS 双模）
 - `0012` BUD vs DPS（相对比较用 DPS，绝对推图用 BUD）
 - `0013` DPS 机制抽象阈值（≥2 通用路径，>10 升级注册表）
-- `0014` GameNumber 用 break_eternity.js
+- `0014` GameNumber 用 decimal.js
 - `0015` 明斯克参照作重构回归守护（非绝对精度标尺）
 - `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量评分/降 beam）
 

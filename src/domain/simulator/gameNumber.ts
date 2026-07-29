@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -68,10 +68,16 @@ export function parseGameNumber(input: string | number): GameNumberResult {
     return { ok: false, error: INPUT_EMPTY }
   }
 
-  const parsed = new Decimal(input)
+  // decimal.js throws on unparseable strings (unlike a NaN-returning parser).
+  let parsed: Decimal
+  try {
+    parsed = new Decimal(input)
+  } catch {
+    return { ok: false, error: INPUT_UNPARSABLE }
+  }
 
-  // break_eternity.js returns NaN Decimal for unparseable strings.
-  if (Decimal.isNaN(parsed)) {
+  // Reject non-finite results produced from strings like "NaN" or "Infinity".
+  if (!parsed.isFinite()) {
     return { ok: false, error: INPUT_UNPARSABLE }
   }
 
@@ -85,11 +91,13 @@ export function parseGameNumber(input: string | number): GameNumberResult {
 /**
  * Format a `GameNumberValue` to a display string.
  *
- * - Small integers (absolute value < 1e6) use plain notation (e.g. `"42"`).
- * - Values ≤ `Number.MAX_VALUE` use standard scientific notation
- *   (e.g. `"1.50e92"`).
- * - Values beyond `Number.MAX_VALUE` use the game-style notation
- *   produced by `break_eternity.js` (e.g. `"ee1000"`, `"e1e6"`).
+ * - Zero → `"0"`.
+ * - Small integers (|value| < 1e6) → plain notation (e.g. `"42"`).
+ * - Otherwise → scientific notation `mantissa e exponent`
+ *   (e.g. `"1.50e92"`, `"1.00e1000"`).
+ *
+ * mantissa/exponent are computed manually so the output stays stable
+ * regardless of the underlying library's toString/toExponential quirks.
  */
 export function formatGameNumber(
   value: GameNumberValue,
@@ -107,19 +115,11 @@ export function formatGameNumber(
     return value.toNumber().toString()
   }
 
-  // Layer 0 values that fit in a JS number: mantissa.toFixed(N) + "e" + exponent.
-  if (value.layer === 0) {
-    return value.m.toFixed(places) + 'e' + value.e
-  }
-
-  // Layer 1 (e.g. 1e1000): mantissa.toFixed(N) + "e" + exponent.
-  if (value.layer === 1) {
-    return value.m.toFixed(places) + 'e' + value.e
-  }
-
-  // Layer 2+: delegate to break_eternity.js toString,
-  // which produces "eeX", "eeeX", etc.
-  return value.toStringWithDecimalPlaces(places)
+  // decimal.js exposes the base-10 exponent as `.e`
+  // (value = mantissa × 10^e, mantissa ∈ [1,10)).
+  const exponent = value.e
+  const mantissa = value.div(new Decimal(10).pow(exponent))
+  return mantissa.toFixed(places) + 'e' + exponent
 }
 
 // ---------------------------------------------------------------------------
@@ -139,7 +139,7 @@ export function powerGameNumber(base: GameNumberValue, exponent: number): GameNu
 }
 
 export function log10GameNumber(value: GameNumberValue): number {
-  return value.log10().toNumber()
+  return value.log(10).toNumber()
 }
 
 export function compareGameNumbers(a: GameNumberValue, b: GameNumberValue): number {

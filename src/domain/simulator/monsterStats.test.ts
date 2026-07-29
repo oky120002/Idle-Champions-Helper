@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 import { describe, expect, test } from 'vitest'
 
 import {
@@ -14,11 +14,11 @@ describe('monsterHealthAt', () => {
   })
 
   test('area 2 = base × rate (2.031)', () => {
-    expect(monsterHealthAt(2).eq(new Decimal(10).times(2.031))).toBe(true)
+    expect(monsterHealthAt(2).eq(new Decimal(10).mul(2.031))).toBe(true)
   })
 
   test('area 50 = base × 2.031^49', () => {
-    expect(monsterHealthAt(50).eq(new Decimal(10).times(Decimal.pow(2.031, 49)))).toBe(true)
+    expect(monsterHealthAt(50).eq(new Decimal(10).mul(new Decimal(2.031).pow(49)))).toBe(true)
   })
 
   test('grows monotonically with area', () => {
@@ -35,10 +35,10 @@ describe('monsterHealthAt', () => {
     expect(ratio).toBeCloseTo(3.031, 2)
   })
 
-  test('high area exceeds double range (needs break_eternity)', () => {
+  test('high area exceeds double range (needs big-number lib)', () => {
     // area 1000 HP ~10^308，逼近 double 上界；必须用 Decimal
     const hp = monsterHealthAt(1000)
-    expect(hp.layer).toBeGreaterThanOrEqual(1)
+    expect(hp.gt(Number.MAX_VALUE)).toBe(true)
   })
 })
 
@@ -58,7 +58,7 @@ describe('monsterDpsAt', () => {
   test('area 100 = 1.75² (two boss areas passed)', () => {
     const dps = monsterDpsAt(100)
     const expected = new Decimal(1.75).pow(2)
-    // 数值容差比较（break_eternity 重复 times 与 pow 内部表示微差）。
+    // 数值容差比较（大数库重复 mul 与 pow 内部表示微差）。
     const ratio = dps.div(expected).toNumber()
     expect(ratio).toBeCloseTo(1, 10)
   })
