@@ -53,7 +53,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 1. **blessing 接入（大头）**：`UserProfileSnapshot` 加 `blessings` 字段（`userProfileNormalizer:254-255` 已保留 `normalizeNumberRecord(c.blessings)`，但未进最终 snapshot）+ 归一化 global blessing 乘数定义（raw `effect_defines` / `patron_perk_defines` 的 global_dps blessing）+ 适配层聚合进 `globalBuffMultiplier`。
 2. **modron 接入**：核心配置 → buff 链解析（复杂，单独工程）。
 
-结论（2026-07-28 用户数据验证修正）：blessing 方向**数据死路**——定义（raw 无 blessing 树）+ 拥有数据（getcampaigndetails 无 blessings 字段、getuserdetails 仅 UI 字段 `main_ui_blessings_button_order`）3 端点确认缺失；b01f33a1 的 `campaigns[].blessings` 通道接的是空数据。blessing 量级（明斯克 2 条 ×80=10^1.9）+ patron perk actual（userdetails 44 perk，×55.7=10^1.75）都远不够 10^33 偏差。
+结论（2026-07-29 翻案）：blessing **不是数据死路**——blessing = `reset_upgrade`（IC 内部名），定义在 `userdetails.defines.reset_upgrade_defines`（200 条），actual 在 `userdetails.details.reset_upgrade_levels`（142 已购）；旧「3 端点无」结论因搜 "blessing" 搜不到（字段名 reset_upgrade）。23 条无条件 global_dps actual Σ=26800 → ×269（log10=2.43，迄今最大 globalBuff 单项）；patron + blessing 合并 add pool ×324。10^32 偏差大头仍在 effect_def tag 限定（142 条）+ per_X 计数 + modron + 成就等（详见 patron-perks-and-blessings.md）。
 
 **10^33 真凶**：参照数据 incomingBuffs 严重不完整——明斯克 l1 单英雄 obs 10^45 需 10^38 放大，参照只记 4 条（×500=10^2.7），差 10^35.3 是账号未记录的全局放大（modron + hero-static 装备 ≈×68=10^1.8 + 更多 blessing/patron perk）。
 
