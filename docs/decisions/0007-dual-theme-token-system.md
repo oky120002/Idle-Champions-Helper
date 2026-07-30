@@ -12,7 +12,7 @@
 单一 token 层承担主题切换：`:root` 为深色默认，`:root[data-theme="light"]` 只覆盖需要翻转的 token；业务 CSS 只引用 token，绝不感知主题。`data-theme` 由 `src/app/theme.tsx` 按 `system`/`light`/`dark` 三态写入，`index.html` 内联脚本在 React 挂载前先写 `data-theme` 防 FOUC。六个子选择：
 
 - **色标记用 oklch**：L/C/H 分量可独立调，浅色翻转按「L 大幅反转、C 略降、H 保持」一条规则即可批量生成与深色呼应的浅值；hex/hsl 做不到感知均匀的跨主题派生。
-- **gloss 三档基于 `--color-gloss-base` 派生**：深底 white 提亮、浅底暖深压暗，翻一个基色三档全跟随，不必为浅色另写三档。
+- **gloss 两档基于 `--color-gloss-base` 派生**：深底 white 提亮、浅底暖深压暗，翻一个基色两档全跟随，不必为浅色另写两档。
 - **`color-mix` 稀释锚点必须够强，不能复用带 alpha 的终值 token**：`color-mix(in srgb, var(--T) N%, transparent)` 的产物 alpha = `alpha(T) × N%`。若 `--T` 自身已带 alpha（如浅色 `--color-panel` 仅 0.06），再稀释会双计 alpha，产物落到 0.01–0.03 实质不可见。故派生叠层锚定 `--color-panel-base`（深色与 panel 同值保零回归，浅色提强到 0.3），与 `--color-gloss-base` 同属「为 color-mix 准备的基色」家族；`--color-scrim` 本就不透明，可直接稀释。
 - **三种「暗」叠层语义分离，不合并**：`--color-scrim`（图上文字遮罩，随主题翻转，保跨主题可读）、`--color-backdrop`（模态遮罩，两主题都暗以突出模态）、投影（`color-mix(in srgb, black X%, transparent)`，两主题都暗）。三者都暗但服务不同可读性目标。
 - **品牌色（铜/钢/金）与 categorical（`--cat-*`）/稀有度色两主题共用不翻转**：它们是数据语义，跨主题色相稳定；只有底色/文字/边框/阴影/gloss 翻转。
@@ -30,7 +30,7 @@
 - **`dark:` 变体 / `@media` 分支写两份颜色**：颜色散落各处、维护成本高且易漂移；否决。
 - **双轨类名（`.light`/`.dark` 显式）**：选择器翻倍、结构耦合主题，违背「主题只是值」；否决。
 - **二值开关（无跟随系统）**：不尊重 OS 偏好，移动端体验差；否决。
-- **gloss 三档各写两主题共六值**：可工作但浅色调色时三档需逐一手调，`--color-gloss-base` 单钮派生更省且不易漂移。
+- **gloss 两档各写两主题共四值**：可工作但浅色调色时两档需逐一手调，`--color-gloss-base` 单钮派生更省且不易漂移。
 - **scrim / backdrop / 投影合并为一个「暗」token**：丢失「图上文字遮罩需随主题翻、模态遮罩与投影不需」的可读性语义；否决。
 
 ## 关联

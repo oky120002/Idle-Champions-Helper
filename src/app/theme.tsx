@@ -32,13 +32,13 @@ function getThemeStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
     return null
   }
 
-  const storage = window.localStorage
-
-  if (typeof storage?.getItem !== 'function' || typeof storage?.setItem !== 'function') {
+  // 部分隐私模式 / 禁用 cookie 时访问 localStorage 会抛 SecurityError；
+  // 与 index.html FOUC 内联脚本同样降级为无存储（data-theme 由内联脚本兜底）。
+  try {
+    return window.localStorage
+  } catch {
     return null
   }
-
-  return storage
 }
 
 function getSystemTheme(): ResolvedTheme {

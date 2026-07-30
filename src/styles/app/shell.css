@@ -70,17 +70,12 @@
 
 @media (min-width: 961px) {
   .site-main {
-    --site-header-sticky-top: 112px;
     padding-top: 176px;
   }
 
   .site-main--workbench {
     --site-workbench-top-clearance: 5.95rem;
     padding-top: var(--site-workbench-top-clearance);
-  }
-
-  .site-header--subpage.site-header--condensed ~ .site-main {
-    --site-header-sticky-top: 112px;
   }
 }
 
