@@ -4,7 +4,9 @@
  * - data-theme 由 src/app/theme.tsx 写入：用户选 system 时按 prefers-color-scheme 解析为 light/dark。
  * - gloss 两档（--surface-gloss-soft/gloss）基于 --color-gloss-base 派生，
  *   翻转 --color-gloss-base 即可让两档自动跟随（深底=白提亮 / 浅底=暖深压暗）。
- * - 铜/钢/金/categorical(--cat-*) 是品牌色或数据语义色，两主题共用，不随主题翻转。
+ * - 铜/钢/金/categorical(--cat-*)/稀有度色是品牌色或数据语义色：色相（hue）跨主题稳定，
+ *   保持品牌/语义身份；但 L/C 按主题适配——深色 :root 用高 L 亮金属，浅主题暖纸底下降 L
+ *   提 C，否则作文字不可读、作边框/底色过隐（详见 :root[data-theme="light"] 各段注释）。
  * - 深色块保留迁移前的 rgba/oklch 字面量原样（不统一格式）：oklch 无法精确表示
  *   历史 srgb 值，转换会破坏「深色逐字保留」约束（ADR-0007）；新增颜色用 oklch。
  * - 禁止在业务 CSS 硬编码颜色（rgb/rgba/#hex）；新增颜色必须在此登记为 token，
@@ -50,7 +52,7 @@
   --color-success: oklch(61% 0.086 153);
   --color-danger: oklch(55% 0.115 22);
 
-  /* === categorical 属性色（数据语义，两主题共用，色相跨主题稳定）=== */
+  /* === categorical 属性色（数据语义，色相跨主题稳定；浅主题 L/C 见 [data-theme=light]）=== */
   --cat-race: oklch(72% 0.06 237);
   --cat-gender: oklch(65% 0.064 333);
   --cat-alignment: oklch(72% 0.084 81);
@@ -58,7 +60,7 @@
   --cat-acquisition: oklch(71% 0.048 251);
   --cat-mechanics: oklch(71% 0.039 209);
 
-  /* === 稀有度色（游戏语义，两主题共用，不翻转）=== */
+  /* === 稀有度色（游戏语义，色相跨主题稳定；浅主题 epic–common 降 L 作文字，见 [data-theme=light]）=== */
   --color-rarity-legendary: oklch(57% 0.194 292);
   --color-rarity-epic: oklch(78% 0.141 306);
   --color-rarity-rare: oklch(72% 0.145 260);
@@ -127,11 +129,13 @@
   --color-border: oklch(44% 0.048 68 / 0.2);
   --color-border-strong: oklch(42% 0.054 68 / 0.26);
 
-  /* === 文字（暖深棕：主文字保持高对比，次级带铜暖）=== */
+  /* === 文字（暖深棕：主文字保持高对比，次级带铜暖）===
+     次级文字不带 alpha：深色 :root 的 alpha 是「向深底稀释仍偏亮」的柔化手法，
+     浅底上同样稀释会把字推向纸色、掉对比；浅主题直接用更暗的实色表达层级。 */
   --color-text-strong: oklch(24% 0.022 70);
   --color-text: oklch(33% 0.02 70);
-  --color-text-muted: oklch(47% 0.032 68 / 0.85);
-  --color-text-soft: oklch(54% 0.038 68 / 0.75);
+  --color-text-muted: oklch(46% 0.032 68);
+  --color-text-soft: oklch(52% 0.038 68);
   --color-text-cool: oklch(42% 0.033 247);
 
   /* === 交互底 / 面板（暖纸上的轻铜洗，不再泥灰）=== */
@@ -162,7 +166,30 @@
   --color-success: oklch(48% 0.11 153);
   --color-danger: oklch(50% 0.14 22);
 
-  /* ponytail: 铜/钢在浅底可能偏淡，若强调感不足，此处降 L 提 C，如 --color-copper: oklch(68% 0.12 72) */
+  /* === 品牌强调色（浅底专用：深色 :root 的亮铜保持不变）===
+     铜/钢/金在深色 :root 是亮金属色（L≈0.74–0.80），作点缀文字、边框、底色 wash 都成立。
+     但浅主题暖纸底（L≈0.91）上，亮铜既作文字不可读（对比 < 1.5），作边框过淡、作底色过隐；
+     故浅主题统一降到 L≈0.48 并提彩度，三用途同时受益：文字可读、边框可见、底色微暖。 */
+  --color-copper: oklch(48% 0.13 72);
+  --color-steel: oklch(48% 0.10 232);
+  --color-gold: oklch(46% 0.15 77);
+
+  /* === 稀有度色（浅底文字专用：legendary 仅作进度条渐变填充，不翻转）===
+     epic/rare/uncommon/common 在 slot.css 直接作稀有度标签文字，深色 :root 的高 L 在浅底不可读。 */
+  --color-rarity-epic: oklch(48% 0.17 306);
+  --color-rarity-rare: oklch(46% 0.16 260);
+  --color-rarity-uncommon: oklch(44% 0.14 153);
+  --color-rarity-common: oklch(48% 0.018 83);
+
+  /* === categorical 属性色（浅底专用）===
+     经 color-mix(cat 80%, text) 作属性标签文字；深色 :root 高 L 在浅底稀释后仍偏浅（ratio≈2.3），
+     降 L 后 80/20 mix 跟随变暗，属性标签可读；fill/border 的 16–20% 稀释仅微调，无副作用。 */
+  --cat-race: oklch(50% 0.06 237);
+  --cat-gender: oklch(48% 0.07 333);
+  --cat-alignment: oklch(50% 0.08 81);
+  --cat-profession: oklch(48% 0.05 163);
+  --cat-acquisition: oklch(50% 0.05 251);
+  --cat-mechanics: oklch(50% 0.04 209);
 
   color-scheme: light;
 }
