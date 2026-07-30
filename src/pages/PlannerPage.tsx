@@ -10,6 +10,7 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerComputationMode } from './planner/PlannerComputationMode'
 import { PlannerStackCount } from './planner/PlannerStackCount'
+import { PlannerSpecializationPanel } from './planner/PlannerSpecializationPanel'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerImportFormation } from './planner/PlannerImportFormation'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
@@ -71,11 +72,14 @@ export function PlannerPage() {
     loadState,
     manualStackCount,
     plannerRecommendation,
+    profileSnapshot,
     recommendError,
     recommendLoading,
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
+    specializationOverrides,
+    clearHeroSpecializationOverride,
     clearSlotLock,
     selectCandidateMode,
     selectComputationMode,
@@ -84,6 +88,7 @@ export function PlannerPage() {
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
+    setHeroSpecializationOverride,
     lockSlot,
   } = usePlannerPageModel()
 
@@ -195,6 +200,14 @@ export function PlannerPage() {
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                   <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
                   <PlannerStackCount value={manualStackCount} onChange={selectManualStackCount} />
+                  <PlannerSpecializationPanel
+                    ownedHeroes={profileSnapshot?.ownedHeroes ?? []}
+                    catalog={collections.specializationCatalog ?? {}}
+                    overrides={specializationOverrides}
+                    championById={championById}
+                    onSetOverride={setHeroSpecializationOverride}
+                    onClearOverride={clearHeroSpecializationOverride}
+                  />
                 </div>
               </section>
 
