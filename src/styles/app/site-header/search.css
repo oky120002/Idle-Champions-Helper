@@ -42,6 +42,14 @@
   outline: none;
 }
 
+/* iOS/触屏 Safari：输入框字号 < 16px 触发聚焦自动缩放（整页 zoom，观感像「主菜单/整站缩小」），
+   触屏强制 ≥16px；桌面保留紧凑 0.84rem。同选择器置于上方规则之后以覆盖。 */
+@media (hover: none) and (pointer: coarse) {
+  .global-search__input {
+    font-size: 1rem;
+  }
+}
+
 .global-search__input::placeholder {
   color: var(--color-text-soft);
 }

@@ -8,6 +8,7 @@ const WORKBENCH_ROUTE_PATHS = new Set([
   '/presets',
   '/planner',
   '/user-data',
+  '/search',
 ])
 
 export function isWorkbenchRoute(pathname: string): boolean {
