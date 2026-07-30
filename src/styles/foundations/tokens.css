@@ -5,7 +5,7 @@
  * - gloss 两档（--surface-gloss-soft/gloss）基于 --color-gloss-base 派生，
  *   翻转 --color-gloss-base 即可让两档自动跟随（深底=白提亮 / 浅底=暖深压暗）。
  * - 铜/钢/金/categorical(--cat-*)/稀有度色是品牌色或数据语义色：色相（hue）跨主题稳定，
- *   保持品牌/语义身份；但 L/C 按主题适配——深色 :root 用高 L 亮金属，浅主题暖纸底下降 L
+ *   保持品牌/语义身份；但 L/C 按主题适配——深色 :root 用高 L 亮金属，浅主题冷白底下降 L
  *   提 C，否则作文字不可读、作边框/底色过隐（详见 :root[data-theme="light"] 各段注释）。
  * - 深色块保留迁移前的 rgba/oklch 字面量原样（不统一格式）：oklch 无法精确表示
  *   历史 srgb 值，转换会破坏「深色逐字保留」约束（ADR-0007）；新增颜色用 oklch。
@@ -117,59 +117,60 @@
 }
 
 :root[data-theme="light"] {
-  /* === 背景（暖纸底：彩度提到铜米色，告别死灰）=== */
-  --color-bg-top: oklch(95% 0.02 85);
-  --color-bg-mid: oklch(93% 0.022 85);
-  --color-bg-bottom: oklch(91% 0.024 85);
-  --bg-halo-warm: oklch(80% 0.09 68 / 0.07);
-  --bg-halo-cool: oklch(72% 0.05 232 / 0.04);
+  /* === 背景（冷白画布：明亮白底略压一档，让浮层/卡片更白以建立层次；
+     极轻冷调避免纯白刺眼；中性色走冷蓝灰轴，与深主题 bg hue 248 同轴；品牌铜作暖点缀平衡冷底）=== */
+  --color-bg-top: oklch(97% 0.006 244);
+  --color-bg-mid: oklch(95.5% 0.008 244);
+  --color-bg-bottom: oklch(94% 0.01 244);
+  --bg-halo-warm: oklch(72% 0.06 244 / 0.05);
+  --bg-halo-cool: oklch(72% 0.07 232 / 0.05);
 
-  /* === 边框（灰线 → 铜金刻线：大幅提彩度、色相偏铜）=== */
-  --color-border-soft: oklch(46% 0.042 68 / 0.15);
-  --color-border: oklch(44% 0.048 68 / 0.2);
-  --color-border-strong: oklch(42% 0.054 68 / 0.26);
+  /* === 边框（冷蓝灰刻线）=== */
+  --color-border-soft: oklch(46% 0.02 244 / 0.15);
+  --color-border: oklch(44% 0.024 244 / 0.22);
+  --color-border-strong: oklch(42% 0.028 244 / 0.28);
 
-  /* === 文字（暖深棕：主文字保持高对比，次级带铜暖）===
+  /* === 文字（冷中性深灰）===
      次级文字不带 alpha：深色 :root 的 alpha 是「向深底稀释仍偏亮」的柔化手法，
-     浅底上同样稀释会把字推向纸色、掉对比；浅主题直接用更暗的实色表达层级。 */
-  --color-text-strong: oklch(24% 0.022 70);
-  --color-text: oklch(33% 0.02 70);
-  --color-text-muted: oklch(46% 0.032 68);
-  --color-text-soft: oklch(52% 0.038 68);
+     浅底上同样稀释会把字推向底色、掉对比；浅主题直接用更暗的实色表达层级。 */
+  --color-text-strong: oklch(22% 0.008 244);
+  --color-text: oklch(30% 0.006 244);
+  --color-text-muted: oklch(45% 0.01 244);
+  --color-text-soft: oklch(48% 0.012 244);
   --color-text-cool: oklch(42% 0.033 247);
 
-  /* === 交互底 / 面板（暖纸上的轻铜洗，不再泥灰）=== */
-  --color-interactive-top: oklch(96% 0.018 85 / 0.9);
-  --color-interactive-bottom: oklch(93% 0.022 85 / 0.94);
-  --color-panel: oklch(72% 0.05 68 / 0.4);
-  --color-panel-soft: oklch(72% 0.042 68 / 0.26);
-  --color-panel-strong: oklch(66% 0.055 68 / 0.56);
-  /* 稀释锚点：暖铜中调 + 适中 alpha，让 color-mix(... N%, transparent) 的 12%–62% 稀释产物
-     落在轻铜洗的可感区间，贴合「薄、平、克制」基调，同时避免浅底泥灰。 */
-  --color-panel-base: oklch(70% 0.055 68 / 0.42);
-  --color-scrim: oklch(95% 0.014 85);
-  --color-backdrop: oklch(20% 0.012 244 / 0.5);
+  /* === 交互底 / 面板（浮层更白提亮 + 冷蓝灰洗提彩去死灰）=== */
+  --color-interactive-top: oklch(99% 0.01 244 / 0.9);
+  --color-interactive-bottom: oklch(96% 0.014 244 / 0.94);
+  --color-panel: oklch(70% 0.035 244 / 0.4);
+  --color-panel-soft: oklch(70% 0.03 244 / 0.26);
+  --color-panel-strong: oklch(64% 0.04 244 / 0.56);
+  /* 稀释锚点：冷蓝灰中调 + 适中 alpha，让 color-mix(... N%, transparent) 的 12%–62% 稀释产物
+     落在可感的冷蓝灰洗区间，保有质感不死灰，贴合「薄、平、克制」基调。 */
+  --color-panel-base: oklch(68% 0.04 244 / 0.42);
+  --color-scrim: oklch(96% 0.008 244);
+  --color-backdrop: oklch(20% 0.02 244 / 0.5);
 
-  /* === 光泽基色（白提亮 → 暖铜压暗；两档自动跟随）=== */
-  --color-gloss-base: oklch(50% 0.05 68);
+  /* === 光泽基色（冷蓝灰压暗；两档自动跟随）=== */
+  --color-gloss-base: oklch(50% 0.028 244);
 
-  /* === 阴影（暖铜调，避免灰阴影在浅底显脏）=== */
-  --shadow-surface: 0 18px 44px oklch(45% 0.04 68 / 0.11);
-  --shadow-surface-soft: 0 12px 28px oklch(45% 0.04 68 / 0.08);
-  --shadow-floating: 0 14px 32px oklch(45% 0.04 68 / 0.09);
-  --shadow-interactive: 0 10px 22px oklch(45% 0.04 68 / 0.07);
-  --shadow-interactive-strong: 0 14px 28px oklch(45% 0.04 68 / 0.11);
+  /* === 阴影（冷蓝灰调）=== */
+  --shadow-surface: 0 18px 44px oklch(45% 0.025 244 / 0.11);
+  --shadow-surface-soft: 0 12px 28px oklch(45% 0.025 244 / 0.08);
+  --shadow-floating: 0 14px 32px oklch(45% 0.025 244 / 0.09);
+  --shadow-interactive: 0 10px 22px oklch(45% 0.025 244 / 0.07);
+  --shadow-interactive-strong: 0 14px 28px oklch(45% 0.025 244 / 0.11);
 
-  --focus-ring: 0 0 0 1px oklch(45% 0.04 68 / 0.16), 0 0 0 3px color-mix(in oklch, var(--color-copper) 22%, transparent);
+  --focus-ring: 0 0 0 1px oklch(45% 0.015 244 / 0.16), 0 0 0 3px color-mix(in oklch, var(--color-copper) 22%, transparent);
 
   /* === 状态色（浅底更深更饱和）=== */
   --color-success: oklch(48% 0.11 153);
   --color-danger: oklch(50% 0.14 22);
 
   /* === 品牌强调色（浅底专用：深色 :root 的亮铜保持不变）===
-     铜/钢/金在深色 :root 是亮金属色（L≈0.74–0.80），作点缀文字、边框、底色 wash 都成立。
-     但浅主题暖纸底（L≈0.91）上，亮铜既作文字不可读（对比 < 1.5），作边框过淡、作底色过隐；
-     故浅主题统一降到 L≈0.48 并提彩度，三用途同时受益：文字可读、边框可见、底色微暖。 */
+     铜/钢/金在深色 :root 是亮金属色（L≈0.74–0.80）。浅主题冷白底（L≈0.97）上亮铜作文字
+     不可读（对比 < 1.5），故统一降到 L≈0.48 提彩度；色相保留作品牌身份，作稀少暖点缀平衡
+     冷底（logo / active / focus ring / 极少强调点），文字可读、边框可见。 */
   --color-copper: oklch(48% 0.13 72);
   --color-steel: oklch(48% 0.10 232);
   --color-gold: oklch(46% 0.15 77);
