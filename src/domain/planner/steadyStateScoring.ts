@@ -24,7 +24,7 @@ export type ScoringMode = 'carry-dps' | 'team-gold'
 
 /**
  * 投影模式（约束②，见 architecture.md「投影模式」）——把阵型加成聚合投影成 objectiveValue 的方式。
- * - 'absolute-dps'（默认）：baseDamage × levelCurve × 全因子（damagePool×crit×vuln×globalBuff×equipmentAdj）。
+ * - 'absolute-dps'（默认）：baseDamage × levelCurve × 全因子（damagePool×crit×vuln×globalBuff×heroDpsPool）。
  *   绝对量未校准（baseDamage/BUD 未校准），作 BUD 校准回归基线。
  * - 'formation-buff'：只阵型内聚合 damagePool×crit×vuln，**不含** baseDamage/levelCurve/外部加成。
  *   阵型模拟器本质是阵型内 signal 聚合，外部全局加成不属于阵型（游戏只给全量数据故加开关）。
@@ -87,10 +87,10 @@ export interface SimulationFactor {
   vulnerability: number
   /** 全局 buff pool 乘数（patron-perk 等，调用方传入）*/
   globalBuff: number
-  /** 装备调整比（owned 装备相对理论最大的缩放，调用方传入）*/
-  equipmentAdjustment: number
-  /** 外部 hero_dps 加成（patron/blessing effect_def hero_dps，per-carry 条件生效；与装备同 add pool）*/
-  externalHeroDps: number
+  /** hero_dps 加成池：装备 + 外部（patron/blessing）hero_dps_multiplier_mult 同 key 加法合并
+   *  （IC 同 key effect 加法叠加，非各自独立乘）= equipmentAdjustment + externalAddPercent/100。
+   *  作单一因子乘进 carryDps，使 breakdown 因子可相乘复现 carryDps。*/
+  heroDpsPool: number
 }
 
 export interface SimulationContribution {
@@ -225,8 +225,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     critFactor: number
     vulnFactor: number
     globalBuff: number
-    equipmentAdjustment: number
-    externalHeroDpsMult: number
+    heroDpsPool: number
     damagePool: number
     contributions: SimulationContribution[]
   } | null = null
@@ -313,8 +312,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         externalHeroDpsAddPercent += contribution.value
       }
     }
-    const externalHeroDpsMult = 1 + externalHeroDpsAddPercent / 100
-    // hero_dps add pool：装备 + 外部 effect_def（IC hero_dps_multiplier_mult 同英雄 base DPS add 合并）。
+    // hero_dps add pool：装备 + 外部 effect_def 同 key（hero_dps_multiplier_mult）加法合并
+    // （IC 同 key effect 加法叠加，非各自独立乘）= equipmentAdjustment + ext%/100。
     const heroDpsPool = equipmentAdjustment + externalHeroDpsAddPercent / 100
     const damagePool = productOfPoolMultipliers(sharedPools)
     const formationAggregate = damagePool * critFactor * vulnFactor
@@ -335,8 +334,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         critFactor,
         vulnFactor,
         globalBuff,
-        equipmentAdjustment,
-        externalHeroDpsMult,
+        heroDpsPool,
         damagePool,
         contributions,
       }
@@ -386,8 +384,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       critFactor,
       vulnFactor,
       globalBuff,
-      equipmentAdjustment,
-      externalHeroDpsMult,
+      heroDpsPool,
       damagePool,
       contributions,
     } = bestBreakdownData
@@ -406,8 +403,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         crit: critFactor,
         vulnerability: vulnFactor,
         globalBuff,
-        equipmentAdjustment,
-        externalHeroDps: externalHeroDpsMult,
+        heroDpsPool,
       },
       pools: [...pools.values()],
       contributions,

@@ -51,7 +51,7 @@ worker → UI:
 
 - `carryHeroId` / `carrySlotId` / `carryLevel`：核心输出位。
 - `baseDps` / `levelCurve` / `carryDps`：加成前基线、增长率、最终 DPS（游戏记数法字符串，可超 `Number.MAX_VALUE`）。
-- `factors`：`damagePool` / `crit` / `vulnerability` / `globalBuff` / `equipmentAdjustment`（`carryDps = baseDps × 各因子之积`）。
+- `factors`：`damagePool` / `crit` / `vulnerability` / `globalBuff` / `heroDpsPool`（`carryDps = baseDps × 各因子之积`）。`heroDpsPool` 是装备 + 外部（patron/blessing）`hero_dps_multiplier_mult` 同 key 加法合并后的单一池因子（`= equipmentAdjustment + externalAddPercent/100`），非各自独立乘——故作单一因子外露以保证因子之积可复现 carryDps。
 - `pools`：damage 维度聚合池（`dimension:scope`，`addPercent`/`multFactor`/`poolMultiplier`）。
 - `contributions`：每位支持位的 active signal 拆解（`signalKind`/`multiplier`/`reasonCode`/`rawEffect`）。
 
