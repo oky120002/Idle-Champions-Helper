@@ -98,6 +98,7 @@ describe('user payload normalizer', () => {
               unlocked_feats: [101, 102],
               feat_slots: 3,
               gildable_slot_id: 4,
+              specialization_choices: [109],
             },
           ],
         },
@@ -115,6 +116,7 @@ describe('user payload normalizer', () => {
           featSlots: 3,
           isOwned: true,
           gildableSlotId: '4',
+          specializations: ['109'],
           lootBySlot: {
             1: {
               slotId: '1',

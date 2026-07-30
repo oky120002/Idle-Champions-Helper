@@ -354,10 +354,14 @@ function collectRawEffectEntries(detail: unknown): {
   effectEntries: EffectEntry[]
   upgradeEffectEntriesById: Map<string, EffectEntry[]>
   staticDpsMults: Map<string, number>
+  specializationEntries: EffectEntry[]
 } {
   const detailRecord = asRecord(detail)
   const effectEntries: EffectEntry[] = []
   const upgradeEffectEntriesById = new Map<string, EffectEntry[]>()
+  // 专精 upgrade（specializationName != null）的 effect entry：与 base 同源同解析（buildEffectEntry），
+  // 供 specialization-catalog build 期归一化为按 upgradeId 索引的可选 signal（ADR 0017）。
+  const specializationEntries: EffectEntry[] = []
   // 机制: static-dps-mult-fallback（upgrade id → static_dps_mult，CNE 静态 dps 乘数近似 1.25–5）；
   // 其 effect 多为复杂机制（target_attacking_monsters_hero_dps_mult 等）进 unsupported，static_dps_mult 作 fallback。
   const staticDpsMults = new Map<string, number>()
@@ -372,6 +376,9 @@ function collectRawEffectEntries(detail: unknown): {
     const upgradeId = typeof upgrade.id === 'string' || typeof upgrade.id === 'number'
       ? String(upgrade.id)
       : ''
+    // 专精 upgrade 标记：normalize 层已把 specialization_name 提到 upgrades[].specializationName
+    // （{original, display} 或 null）。非 null = 玩家互斥选择的专精节点。
+    const isSpecialization = upgrade.specializationName != null
 
     const staticDpsMultRaw = upgrade.staticDpsMult
     const staticDpsMult = typeof staticDpsMultRaw === 'number'
@@ -406,6 +413,7 @@ function collectRawEffectEntries(detail: unknown): {
       })
       effectEntries.push(entry)
       upgradeEntries.push(entry)
+      if (isSpecialization) specializationEntries.push(entry)
     }
 
     // effect_keys 只认数组：raw 中 6 个 effect_def 的 effect_keys 是单对象/空串
@@ -438,6 +446,7 @@ function collectRawEffectEntries(detail: unknown): {
           })
           effectEntries.push(entry)
           upgradeEntries.push(entry)
+          if (isSpecialization) specializationEntries.push(entry)
         }
       })
     }
@@ -524,7 +533,16 @@ function collectRawEffectEntries(detail: unknown): {
     entry.upgradePayloadsById = upgradePayloadsById
   }
 
-  return { effectEntries, upgradeEffectEntriesById, staticDpsMults }
+  return { effectEntries, upgradeEffectEntriesById, staticDpsMults, specializationEntries }
+}
+
+/**
+ * 专精 upgrade 的 effect entry（collectRawEffectEntries 已按 specializationName 标记分流）。
+ * 与 base effect entry 同源同解析（同一 buildEffectEntry），供 specialization-catalog 归一化为
+ * 按 upgradeId 索引的可选 signal——保证 catalog signal 与原 base 逐字节一致（ADR 0017）。
+ */
+export function collectSpecializationEffectEntries(detail: unknown): EffectEntry[] {
+  return collectRawEffectEntries(detail).specializationEntries
 }
 
 function summarizeBuffUpgradeBase(

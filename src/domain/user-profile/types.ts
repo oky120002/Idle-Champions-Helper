@@ -31,6 +31,12 @@ export interface OwnedHero {
   gildableSlotId: string | null
   lootBySlot: Record<string, OwnedHeroLootSlot>
   legendaryBySlot: Record<string, OwnedHeroLegendarySlot>
+  /**
+   * 玩家已选专精 upgrade id（来自 userDetails details.heroes[].specialization_choices）。
+   * 专精是互斥选项（一个专精层选一个），id 对应 specialization-catalog 的 upgradeId；
+   * 运行时只注入这些 id 的 signal，而非全 active（ADR 0017）。
+   */
+  specializations: string[]
 }
 
 export interface ImportedFormationSave {

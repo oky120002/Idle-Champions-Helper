@@ -32,6 +32,7 @@ function makeOwnedHero(heroId: string, lootBySlot: OwnedHero['lootBySlot']): Own
     gildableSlotId: null,
     lootBySlot,
     legendaryBySlot: {},
+    specializations: [],
   }
 }
 

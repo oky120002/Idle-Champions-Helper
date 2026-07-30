@@ -6,6 +6,7 @@ import { parsePatronPerkSignals } from './patron-perk-signals.ts'
 import { buildOfficialHeroModel } from './buildHeroModels.ts'
 import { buildOfficialScenarioModel } from './buildScenarioModels.ts'
 import { normalizeSemanticOverrides } from './buildSemanticOverrides.ts'
+import { buildSpecializationEntries, type SpecializationEntry } from './specialization-catalog.ts'
 import type { HeroAbilityProfile, HeroAbilitySignal } from '../../src/domain/abilities/abilityModel'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
@@ -73,6 +74,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   }
 
   const heroAbilities: HeroAbilityProfile[] = []
+  const specializationCatalog: Record<string, SpecializationEntry[]> = {}
   for (const championRaw of asArray(championsRecord.items)) {
     const champion = asRecord(championRaw)
     if (!champion) continue
@@ -82,6 +84,11 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     const detail = await readJson(path.join(versionDir, 'champion-details', `${championId}.json`))
     const detailRecord = asRecord(detail) ?? {}
     heroAbilities.push(buildOfficialHeroModel(champion, detailRecord))
+    // 专精 upgrade → 按 heroId 索引的可选 signal catalog（ADR 0017）；无专精的英雄不进 catalog。
+    const specializationEntries = buildSpecializationEntries(detailRecord)
+    if (specializationEntries.length > 0) {
+      specializationCatalog[championId] = specializationEntries
+    }
   }
 
   const scenarioModels = asArray(variantsRecord.items)
@@ -94,6 +101,10 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     items: heroAbilities,
     updatedAt,
     pipelineHash: nextPipelineHash,
+  })
+  await writeJson(path.join(versionDir, 'specialization-catalog.json'), {
+    catalog: specializationCatalog,
+    updatedAt,
   })
   await writeJson(path.join(versionDir, 'scenarios.json'), {
     items: scenarioModels,
