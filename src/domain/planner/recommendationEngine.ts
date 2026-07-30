@@ -3,6 +3,7 @@ import Decimal from 'decimal.js'
 import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
+import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
@@ -236,6 +237,28 @@ function applyActiveFeats(
   }
 }
 
+// 应用玩家已选专精（OwnedHero.specializations）到 profile：注入选中 upgradeId 的全部 scoring signal
+//（不做 scoringMode 维度过滤——专精是全局互斥选择，scoring 按模式自取所需维度；ADR 0017）。
+// 与 feat 的差异：feat 按 scoringMode 取 damage/gold 维度；专精不过滤，否则漏 vulnerability 维度
+//（如明斯克偏好敌人 enemyVulnerability）。catalog 缺省（未加载）或英雄无已选专精 → 跳过/原样。
+function applyActiveSpecializations(
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  ownedHeroes: readonly OwnedHero[],
+  specializationCatalog: SpecializationCatalog | undefined,
+): void {
+  if (!specializationCatalog) {
+    return
+  }
+  const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
+  for (const [heroId, profile] of heroById) {
+    const owned = ownedById.get(heroId)
+    if (!owned || !owned.specializations || owned.specializations.length === 0) {
+      continue
+    }
+    heroById.set(heroId, applySpecializationsToProfile(profile, owned.specializations, specializationCatalog[heroId]))
+  }
+}
+
 export function evaluateFormation({
   variant: selectedVariant,
   collections,
@@ -257,6 +280,7 @@ export function evaluateFormation({
   const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
   const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog, scoringMode)
+  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   const candidateIds = new Set(
     buildCandidatePool({
       mode: candidateMode,
@@ -435,6 +459,7 @@ export function buildPlannerRecommendation({
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog, scoringMode)
+  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {

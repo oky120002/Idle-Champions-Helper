@@ -8,6 +8,7 @@ import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../../domain/buffs/patronPerkGlobalBuff'
 import type { EffectDefinitionEntry } from '../../domain/buffs/effectDefinitionDps'
 import type { FeatCatalog } from '../../domain/abilities/featSignals'
+import type { SpecializationCatalog } from '../../domain/abilities/specializationSignals'
 import type { Champion, Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 
@@ -44,6 +45,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
     plannerHeroes: [],
     plannerScenarios: [],
     featCatalog: {},
+    specializationCatalog: {},
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [lootCatalog, setLootCatalog] = useState<LootCatalogEntry[]>([])
@@ -63,7 +65,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
 
       try {
         const version = await loadVersion()
-        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData] = await Promise.all([
+        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
           loadCollection<Variant>('variants'),
           loadResolvedPlannerModel(),
           resolveUserProfileSnapshot(),
@@ -72,6 +74,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
           fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
           loadCollection<EffectDefinitionEntry>('effect-definitions'),
           fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
+          fetchJson<{ catalog: SpecializationCatalog }>(`${version.current}/specialization-catalog.json`),
         ])
 
         if (!active) return
@@ -81,6 +84,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
           plannerHeroes: plannerModel.heroes,
           plannerScenarios: plannerModel.scenarios,
           featCatalog: featCatalogData.catalog ?? {},
+          specializationCatalog: specializationCatalogData.catalog ?? {},
         })
         setProfileSnapshot(resolution.snapshot)
         setLootCatalog(lootCatalogCollection.items)

@@ -120,7 +120,7 @@ src/domain/buffs/
 **偏差（相对原计划「BonusProvider 接口 + feat/equipment/globalBuff/externalHeroDps/vulnerability/crit 各 provider + dispatch」）**：不引入统一 `BonusProvider` 接口——
 
 - 五个 provider 输出形态根本不同：patron/blessing→`number`（global_dps add pool）、equipment→`Map<heroId, number>`（per-hero）、externalHeroDps→`HeroDpsContribution[]`（per-carry 条件）。统一 `contribute() → ProviderContribution` 需多形态 contribution（`{globalPool?, perHero?, perCarry?}`），是接口泄漏——与模式 2 拒绝 DimensionFactor 同理（强塞统一接口掩盖形态差异）。
-- 两条消费路径：前三者走 ScoringInput 字段，feat/专精走 profile-patch（改 heroById），单一接口跨不了。
+- 两条消费路径：前三者走 ScoringInput 字段，feat/专精走 profile-patch（改 heroById；专精外部化见 ADR 0017），单一接口跨不了。
 - provider 总数（5）远低于 `dps-mechanic-abstraction.md` 阈值 4 的 >10 升级线。
 - 装配函数已清晰表达装配关系，无接口收益。
 - vuln/crit 是 scoring 维度因子（模式 2 的 `scoring/`），非加成来源，不进 buffs/。

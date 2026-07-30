@@ -3,6 +3,7 @@ import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { FeatCatalog } from '../abilities/featSignals'
+import type { SpecializationCatalog } from '../abilities/specializationSignals'
 import type { SimulationBreakdown } from './steadyStateScoring'
 
 export interface PlannerNarrativeLine {
@@ -49,6 +50,8 @@ export interface PlannerCollections {
   plannerScenarios: ResolvedPlannerScenarioModel[]
   /** feat 专长 catalog（heroId → FeatEntry[]），按 scoringMode 维度选 active feat signal。 */
   featCatalog?: FeatCatalog
+  /** 专精 catalog（heroId → SpecializationEntry[]），按 OwnedHero.specializations 注入选中专精 signal（ADR 0017）。 */
+  specializationCatalog?: SpecializationCatalog
 }
 
 export type PlannerRecommendationBlocker =

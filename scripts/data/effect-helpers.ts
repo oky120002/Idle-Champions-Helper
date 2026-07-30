@@ -411,9 +411,12 @@ function collectRawEffectEntries(detail: unknown): {
         upgradeId,
         requiredLevel: upgradeRequiredLevel,
       })
-      effectEntries.push(entry)
-      upgradeEntries.push(entry)
-      if (isSpecialization) specializationEntries.push(entry)
+      if (isSpecialization) {
+        specializationEntries.push(entry)
+      } else {
+        effectEntries.push(entry)
+        upgradeEntries.push(entry)
+      }
     }
 
     // effect_keys 只认数组：raw 中 6 个 effect_def 的 effect_keys 是单对象/空串
@@ -444,9 +447,12 @@ function collectRawEffectEntries(detail: unknown): {
             upgradeId,
             requiredLevel: upgradeRequiredLevel,
           })
-          effectEntries.push(entry)
-          upgradeEntries.push(entry)
-          if (isSpecialization) specializationEntries.push(entry)
+          if (isSpecialization) {
+            specializationEntries.push(entry)
+          } else {
+            effectEntries.push(entry)
+            upgradeEntries.push(entry)
+          }
         }
       })
     }
@@ -530,6 +536,9 @@ function collectRawEffectEntries(detail: unknown): {
 
   // 附加 upgradePayloadsById 到所有 entry，使 resolveNumericValue 能跨 upgrade 解析 amount_expr。
   for (const entry of effectEntries) {
+    entry.upgradePayloadsById = upgradePayloadsById
+  }
+  for (const entry of specializationEntries) {
     entry.upgradePayloadsById = upgradePayloadsById
   }
 
