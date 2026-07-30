@@ -10,6 +10,7 @@ import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { buildScoringBonusInputs } from '../../domain/planner/scoringBonusInputs'
 import { usePlannerCollections } from './usePlannerCollections'
 import { usePlannerRecommendation } from './usePlannerCompute'
+import { mergeSpecializationOverrides, type SpecializationOverrideMap } from './specializationSelection'
 
 // 首次计算 / 错误态占位：hook result 为 null 时用，保证 UI 消费方拿到稳定结构。
 const EMPTY_RECOMMENDATION: PlannerRecommendation = {
@@ -42,6 +43,8 @@ export function usePlannerPageModel() {
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
+  // 专精选择 override（session 级 working copy，不写回 IndexedDB）：heroId → 选中的 upgradeId 列表。
+  const [specializationOverrides, setSpecializationOverrides] = useState<SpecializationOverrideMap>({})
 
   // runner 单例：浏览器用 worker 卸载 beam search（UI 不冻）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
@@ -74,11 +77,17 @@ export function usePlannerPageModel() {
     }),
     [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
+  // 有效 snapshot = 存档 + 专精 override；engine 按 OwnedHero.specializations 注入 signal（ADR 0017）。
+  // 无 override 时同引用返回，避免 usePlannerRecommendation 无谓重算。
+  const effectiveProfileSnapshot = useMemo(
+    () => mergeSpecializationOverrides(profileSnapshot, specializationOverrides),
+    [profileSnapshot, specializationOverrides],
+  )
   const { result, loading: recommendLoading, error: recommendError } = usePlannerRecommendation(
     runner,
     collections,
     selectedVariant,
-    profileSnapshot,
+    effectiveProfileSnapshot,
     options,
   )
   const selectVariantId = useCallback((variantId: string | null) => {
@@ -119,6 +128,17 @@ export function usePlannerPageModel() {
   const selectResultIndex = useCallback((index: number) => {
     setSelectedResultIndex(index)
   }, [])
+  const setHeroSpecializationOverride = useCallback((heroId: string, upgradeIds: string[]) => {
+    setSpecializationOverrides((current) => ({ ...current, [heroId]: upgradeIds }))
+  }, [])
+  const clearHeroSpecializationOverride = useCallback((heroId: string) => {
+    setSpecializationOverrides((current) => {
+      if (!Object.prototype.hasOwnProperty.call(current, heroId)) return current
+      const next = { ...current }
+      delete next[heroId]
+      return next
+    })
+  }, [])
 
   return {
     candidateMode,
@@ -131,11 +151,14 @@ export function usePlannerPageModel() {
     loadState,
     manualStackCount,
     plannerRecommendation: result ?? EMPTY_RECOMMENDATION,
+    profileSnapshot,
     recommendLoading,
     recommendError,
     scoringMode,
     selectedResultIndex,
     selectedVariantId,
+    specializationOverrides,
+    clearHeroSpecializationOverride,
     clearSlotLock,
     selectCandidateMode,
     selectComputationMode,
@@ -144,6 +167,7 @@ export function usePlannerPageModel() {
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
+    setHeroSpecializationOverride,
     lockSlot,
   }
 }
