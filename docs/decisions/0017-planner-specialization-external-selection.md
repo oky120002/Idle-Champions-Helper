@@ -23,7 +23,7 @@
 
 ## 后果
 
-- 正面：专精不再全 active，按玩家选择生效（修正明斯克等 5 选 1 高估）；wrapper 增益也随专精按选择生效（chosen 专精 = 自身 + 派生，如明斯克偏好敌人 +300+25=+325）。受控实验：`hero-abilities.json` 全局 **0 新增信号**（专精自身 + 靶向专精的派生均离开 base，纯减法）；catalog 125 自身 + 100 派生 = 225 signal，80 个专精含派生。
+- 正面：专精不再全 active，按玩家选择生效（修正明斯克等 5 选 1 高估）；wrapper 增益也随专精按选择生效（chosen 专精 = 自身 + 派生，如明斯克偏好敌人 +300+25=+325）。受控实验：`hero-abilities.json` 全局 **0 新增信号**（专精自身 + 靶向专精的派生均离开 base，纯减法）；catalog 125 自身 + 100 派生 = 225 signal，77 个专精含派生。
 - 已知**下界偏差**（低估、保守方向，非过冲）：**专精自身效果为复杂 buff_upgrade wrapper**（`buff_upgrade_mult_by_distance` / `buff_upgrade_add_flat_amount` 等需展开解析）的约 4 英雄，catalog 走原始 `normalizeEffectSignal`（无展开）解析不出 → 省略，chosen 专精该效果丢失。量级极小（这些 wrapper 多为 distance/conditional 增益，非主力），若后续影响推荐质量再单独处理。
 - 明斯克 golden（`damageReferenceVerification`，ADR 0015）level1 不受影响（专精 `requiredLevel=50` 未解锁），level722 度量值随专精离开 base 偏移（符合 0015「回归守护非精度标尺」，测试度量不断言）。
 

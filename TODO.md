@@ -148,4 +148,11 @@ repair: rebuild
     - 非 buff 装配隔离（子任务4）引入；test:simulator 闸门不含该 component 测试。
     - 处置：低优先级；jsdom Sync 推荐计算偏慢，可单独调高 timeout 或拆分重计算断言；不影响 planner 评分正确性。
 
+- 专精选择面板对级联型专精树不尊重依赖链（hero 165/55/81 what-if 可能产生游戏不可能组合） <!-- auto-todo:id=atd_7c4a2e9b01 -->
+  - 记录时间: `2026-07-30T13:30:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/pages/planner/specializationSelection.ts:groupSpecializationsByTier`（按 requiredLevel 分层，无 requiredUpgradeId 依赖链）
+  - 备注: ADR 0017 UI 输入层按 requiredLevel 分层、每层单选，假设「同 requiredLevel = 同互斥组」。hero 165/55/81 是级联型专精树：依赖层（如 165 lvl=150 的 24 选项）各自 requiredUpgradeId 指向上层某个选择，UI 把依赖层全平铺成单选、且改上层后 applyTierSelection 不重置下层 → what-if override 可能保留游戏不可能的组合（如 lvl70=Tyr 但 lvl150 选了要求 Moradin 的项）。仅影响面板 override 探索（3 英雄）；核心推荐用存档 specialization_choices（游戏保证合法），不受影响。
+    - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
+
 <!-- auto-todo:end -->
