@@ -6,13 +6,6 @@
   --champion-detail-content-inset: 0.56rem;
 }
 
-.champion-detail-workbench__toolbar-main {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
 .champion-detail-workbench .page-workbench__content-scroll {
   gap: var(--champion-detail-content-inset);
   padding:
@@ -31,14 +24,6 @@
 
 .champion-detail-workbench .surface-card.detail-section .surface-card__body {
   gap: 0.62rem;
-}
-
-.champion-detail-workbench__toolbar-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.42rem;
-  min-width: 0;
-  max-width: 100%;
 }
 
 .champion-detail-workbench__toolbar-back {
@@ -120,14 +105,6 @@
   background: color-mix(in srgb, var(--color-gloss-base) 3%, transparent);
 }
 
-.champion-dossier__eyebrow {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-copper);
-}
-
 .champion-detail-tab-shell {
   min-width: 0;
   display: grid;
@@ -159,7 +136,6 @@
 }
 
 .detail-card-grid,
-.upgrade-showcase-grid,
 .feat-grid,
 .loot-grid,
 .legendary-grid,
@@ -192,8 +168,7 @@
 
 .loot-card__effects,
 .legendary-card__effects,
-.story-misc-stack,
-.raw-snapshot-list {
+.story-misc-stack {
   display: grid;
   gap: 0.62rem;
 }
@@ -216,32 +191,6 @@
   cursor: pointer;
 }
 
-.raw-snapshot {
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--color-panel-base) 35%, transparent);
-}
-
-.raw-snapshot summary {
-  padding: 0.7rem 0.78rem;
-  color: var(--color-text-strong);
-  cursor: pointer;
-}
-
-.raw-snapshot pre {
-  max-height: 22rem;
-  margin: 0;
-  padding: 0.82rem;
-  overflow: auto;
-  border-top: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
-  color: var(--color-text);
-  font-size: 0.78rem;
-  line-height: 1.45;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
 @media (max-width: 720px) {
   .detail-subcard__header,
   .attack-card__header,
@@ -254,7 +203,6 @@
 
 @media (max-width: 520px) {
   .detail-card-grid,
-  .upgrade-showcase-grid,
   .feat-grid,
   .loot-grid,
   .legendary-grid,

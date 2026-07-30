@@ -1,9 +1,3 @@
-.upgrade-showcase-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 0.95rem;
-}
-
 .upgrade-card {
   gap: 0.78rem;
   border: 1px solid color-mix(in srgb, var(--color-gloss-base) 8%, transparent);
@@ -56,14 +50,6 @@
   background: color-mix(in oklch, var(--color-copper) 12%, transparent);
   color: var(--color-text-strong);
   letter-spacing: 0.06em;
-}
-
-.upgrade-card__type-badge--spec {
-  border-color: color-mix(in oklch, var(--color-gold) 48%, transparent);
-  background:
-    linear-gradient(180deg, color-mix(in oklch, var(--color-gold) 28%, transparent), color-mix(in oklch, var(--color-gold) 20%, transparent)),
-    color-mix(in oklch, var(--color-copper) 16%, transparent);
-  color: var(--color-gold);
 }
 
 .upgrade-card__spec-art {
@@ -296,10 +282,6 @@
 }
 
 @media (max-width: 720px) {
-  .upgrade-showcase-grid {
-    grid-template-columns: 1fr;
-  }
-
   .upgrade-card__topline {
     flex-direction: column;
     align-items: flex-start;
