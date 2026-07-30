@@ -19,11 +19,15 @@
 
 **类型/提取**：`OwnedHero` 加 `specializations: string[]`；`userProfileNormalizer` 从 `details.heroes[].specialization_choices` 提取。
 
-**runtime**：`applySpecializationsToProfile` 注入玩家选中 `upgradeId`（`OwnedHero.specializations`）的全部 scoring signal。**不做 scoringMode 维度过滤**——专精是全局互斥选择，scoring 按模式自取所需维度，与外部化前 base 行为对称；若照 feat 按 `damage`/`gold` 过滤会漏掉 `vulnerability` 维度（明斯克偏好敌人 `enemyVulnerability`）。
+**runtime**：`applySpecializationsToProfile` 注入玩家选中 `upgradeId`（`OwnedHero.specializations`）的全部 scoring signal。**不做 scoringMode 维度过滤**——专精是全局互斥选择，scoring 按模式自取所需维度，与外部化前 base 行为对称；若照 feat 按 `damage`/`gold` 过滤会漏掉 `vulnerability` 维度（明斯克偏好敌人 `enemyVulnerability`）。**按 bucket 追加**（不替换）：catalog 每 signal 携带 build 期 `resolveBucket` 判定的归属（自增益 `hero_dps` 无目标 → `carrySignals`；全局/支援 → `supportSignals`），runtime 经 `appendHeroAbilitySignals` 追加到对应 bucket。两个不变量（曾因误用 `applyHeroAbilityPatch` 替换式注入而破，已修）：
+
+1. **追加非替换**：`applyHeroAbilityPatch` 是全量覆盖语义（repo/local override 用）；注入子集若复用它会整体替换、抹掉 base 支援信号（实测英雄 70 的 35 个 ability 源全队增益被 2 个专精信号覆盖成 2）。`appendHeroAbilitySignals` 专为增量追加，保留 base 信号与其 source。
+2. **bucket 路由复现 base 分类**：自增益注入 `supportSignals` 会泄漏给其他 carry（collectSignals 跨英雄支援只读 supportSignals）；按 build bucket 路由（`hero_dps` 自增益 → carrySignals，仅自走 carry 时计入）复现「base 只含该专精」的预外部化行为。
 
 ## 后果
 
 - 正面：专精不再全 active，按玩家选择生效（修正明斯克等 5 选 1 高估）；wrapper 增益也随专精按选择生效（chosen 专精 = 自身 + 派生，如明斯克偏好敌人 +300+25=+325）。受控实验：`hero-abilities.json` 全局 **0 新增信号**（专精自身 + 靶向专精的派生均离开 base，纯减法）；catalog 125 自身 + 100 派生 = 225 signal，77 个专精含派生。
+- **P0 修复（feat/专精注入替换式根因）**：审计发现 `applyFeatsToProfile`（feat 外部化引入）与 `applySpecializationsToProfile`（本 ADR）误用 `applyHeroAbilityPatch` 传 signal 子集 → 整体替换、抹掉 base 支援信号。任何选了 feat/专精的英雄，其 ability 源全队增益（hero 70 的 35→2）几乎归零，推荐排名系统性失真。统一改用 `appendHeroAbilitySignals` 追加 + bucket 路由；feat 同步从 base 剥离（`buildOfficialHeroModel` 跳过 `sourceBucket='feat'`）+ catalog 补 bucket/语义，runtime 按选择追加（避免双计/全 active）。
 - 已知**下界偏差**（低估、保守方向，非过冲）：**专精自身效果为复杂 buff_upgrade wrapper**（`buff_upgrade_mult_by_distance` / `buff_upgrade_add_flat_amount` 等需展开解析）的约 4 英雄，catalog 走原始 `normalizeEffectSignal`（无展开）解析不出 → 省略，chosen 专精该效果丢失。量级极小（这些 wrapper 多为 distance/conditional 增益，非主力），若后续影响推荐质量再单独处理。
 - 明斯克 golden（`damageReferenceVerification`，ADR 0015）level1 不受影响（专精 `requiredLevel=50` 未解锁），level722 度量值随专精离开 base 偏移（符合 0015「回归守护非精度标尺」，测试度量不断言）。
 

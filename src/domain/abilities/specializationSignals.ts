@@ -1,8 +1,9 @@
 import {
-  applyHeroAbilityPatch,
+  appendHeroAbilitySignals,
   type HeroAbilityDimension,
   type HeroAbilitySignal,
   type ResolvedHeroAbilityProfile,
+  type SignalBucket,
 } from './abilityModel'
 
 /**
@@ -21,6 +22,8 @@ import {
  */
 export interface SpecializationSignalEntry {
   dimension: HeroAbilityDimension
+  /** build 期 resolveBucket 判定的归属（自增益 carrySignals / 支援全局 supportSignals）。 */
+  bucket: SignalBucket
   signal: HeroAbilitySignal
 }
 
@@ -59,21 +62,36 @@ export function selectSpecializationSignals(
 }
 
 /**
- * 应用玩家已选专精 signal 到 profile（注入 supportSignals）。
- * 无 active 专精 signal → 原样返回（不建空 patch）。
+ * 应用玩家已选专精 signal 到 profile：按 build 期 bucket 追加到 carry/support（保留 base 信号）。
+ *
+ * 关键不变量（ADR 0017）：注入后 =「base 只含该选中专精」的预外部化行为。故
+ *  - bucket 路由：自增益（hero_dps 无目标）→ carrySignals，仅自走 carry 时计入；支援/全局 → supportSignals。
+ *    复现 collectSignals 的 carry/support 区分，避免自增益泄漏到其他 carry。
+ *  - 追加而非替换：误用 applyHeroAbilityPatch 传子集会整体替换、抹掉 base 支援信号（35→2，P0 根因）。
+ * 无 active 专精 signal → 原样返回。
  */
 export function applySpecializationsToProfile(
   profile: ResolvedHeroAbilityProfile,
   activeUpgradeIds: readonly string[],
   heroSpecializations: readonly SpecializationEntry[] | undefined,
 ): ResolvedHeroAbilityProfile {
-  const signals = selectSpecializationSignals(activeUpgradeIds, heroSpecializations)
-  if (signals.length === 0) {
+  const active = new Set(activeUpgradeIds.map((id) => String(id)))
+  const carry: HeroAbilitySignal[] = []
+  const support: HeroAbilitySignal[] = []
+  for (const entry of heroSpecializations ?? []) {
+    if (!active.has(entry.upgradeId)) {
+      continue
+    }
+    for (const signalEntry of entry.signals) {
+      if (signalEntry.bucket === 'carrySignals') {
+        carry.push(signalEntry.signal)
+      } else {
+        support.push(signalEntry.signal)
+      }
+    }
+  }
+  if (carry.length === 0 && support.length === 0) {
     return profile
   }
-  return applyHeroAbilityPatch(
-    profile,
-    { heroId: profile.heroId, supportSignals: signals },
-    'official-parsed',
-  )
+  return appendHeroAbilitySignals(profile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
 }

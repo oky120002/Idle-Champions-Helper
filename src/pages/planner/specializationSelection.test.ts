@@ -14,6 +14,7 @@ function makeEntry(upgradeId: string, requiredLevel: number | null, display = up
     requiredLevel,
     signals: [{
       dimension: 'damage',
+      bucket: 'carrySignals',
       signal: { kind: 'heroDpsMultiplier', value: 40, rawEffect: 'hero_dps_multiplier_mult,40', source: 'official-parsed' },
     }],
   }

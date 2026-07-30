@@ -1,22 +1,25 @@
 import {
-  applyHeroAbilityPatch,
+  appendHeroAbilitySignals,
   type HeroAbilityDimension,
   type HeroAbilitySignal,
   type ResolvedHeroAbilityProfile,
+  type SignalBucket,
 } from './abilityModel'
 
 /**
  * feat（专长）运行时信号注入。
  *
  * featCatalog（build 期 hero_feat_defines 归一化，scripts/data/feat-catalog.ts）按 heroId 索引
- * FeatEntry[]；每 feat 含按 dimension 归类的 signal。运行时按 scoringMode 选对应 dimension
- * 的 active feat → signal → applyHeroAbilityPatch 注入 profile（同 dimension add pool 叠加）。
+ * FeatEntry[]；每 feat 含按 dimension 归类、按 bucket 路由的 signal。运行时按 scoringMode 选对应
+ * dimension 的 active feat → signal → 按 bucket 追加到 profile（保留 base 信号，同 dimension add pool 叠加）。
  *
- * 消费类型与 scripts/data/feat-catalog.ts 的 FeatEntry 字段对齐（id/rarity/signals.dimension/.signal），
+ * 消费类型与 scripts/data/feat-catalog.ts 的 FeatEntry 字段对齐（id/rarity/signals.dimension/.bucket/.signal），
  * 序列化兼容 feat-catalog.json。
  */
 export interface FeatSignalEntry {
   dimension: HeroAbilityDimension
+  /** build 期 resolveBucket 判定的归属（自增益 carrySignals / 支援全局 supportSignals），与专精同构。 */
+  bucket: SignalBucket
   signal: HeroAbilitySignal
 }
 
@@ -54,9 +57,12 @@ export function selectFeatSignals(
 }
 
 /**
- * 应用 active feat signal 到 profile（注入 supportSignals）。
+ * 应用 active feat signal 到 profile：按 build 期 bucket 追加（保留 base 信号）。
  * - dimension 缺省 = 所有 dimension（向后兼容/全 feat）。
- * - 无 active feat signal → 原样返回（不建空 patch）。
+ * - 无 active feat signal → 原样返回。
+ *
+ * 与专精同构（appendHeroAbilitySignals）：误用 applyHeroAbilityPatch 传子集会整体替换、抹掉
+ * base 支援信号（P0 根因，与专精注入同病）。bucket 路由复现 base 分类。
  */
 export function applyFeatsToProfile(
   profile: ResolvedHeroAbilityProfile,
@@ -64,13 +70,26 @@ export function applyFeatsToProfile(
   heroFeats: readonly FeatEntry[] | undefined,
   dimension?: HeroAbilityDimension,
 ): ResolvedHeroAbilityProfile {
-  const signals = selectFeatSignals(activeFeatIds, heroFeats, dimension)
-  if (signals.length === 0) {
+  const active = new Set(activeFeatIds.map((id) => String(id)))
+  const carry: HeroAbilitySignal[] = []
+  const support: HeroAbilitySignal[] = []
+  for (const feat of heroFeats ?? []) {
+    if (!active.has(feat.id)) {
+      continue
+    }
+    for (const entry of feat.signals) {
+      if (dimension && entry.dimension !== dimension) {
+        continue
+      }
+      if (entry.bucket === 'carrySignals') {
+        carry.push(entry.signal)
+      } else {
+        support.push(entry.signal)
+      }
+    }
+  }
+  if (carry.length === 0 && support.length === 0) {
     return profile
   }
-  return applyHeroAbilityPatch(
-    profile,
-    { heroId: profile.heroId, supportSignals: signals },
-    'official-parsed',
-  )
+  return appendHeroAbilitySignals(profile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
 }

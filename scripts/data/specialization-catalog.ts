@@ -6,6 +6,7 @@ import {
   type HeroAbilityDimension,
   type HeroAbilitySignal,
 } from '../../src/domain/abilities/abilityModel'
+import type { SignalBucket } from './effect-resolvers/resolverShared'
 
 /**
  * 专精（specialization）归一化：champion-details upgrades（specializationName != null）→ SpecializationEntry[]。
@@ -21,6 +22,12 @@ import {
  */
 export interface SpecializationSignalEntry {
   dimension: HeroAbilityDimension
+  /**
+   * signal 归属 bucket（build 期 resolveBucket 判定）：自增益→carrySignals（仅自走 carry 时计入），
+   * 支援/全局→supportSignals（支援任意 carry 时计入）。runtime 按此路由到正确 bucket 追加，
+   * 复现「base 只含该专精」的预外部化行为（ADR 0017 不变量）。
+   */
+  bucket: SignalBucket
   signal: HeroAbilitySignal
 }
 
@@ -90,7 +97,8 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     const dimension = DIMENSION_BY_KIND[signal.kind]
     if (!dimension) continue
     const list = signalsByUpgradeId.get(upgradeId) ?? []
-    list.push({ dimension, signal })
+    // bucket 与 buildOfficialHeroModel 同源（同一 normalizeEffectSignal 调用），逐字复现 base 分类。
+    list.push({ dimension, bucket: parsed.bucket, signal })
     signalsByUpgradeId.set(upgradeId, list)
   }
 
@@ -104,8 +112,11 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
       if (!signal) continue
       const dimension = DIMENSION_BY_KIND[signal.kind]
       if (!dimension) continue
+      // 派生信号 bucket = 目标 spec 的 bucket（collectEffectEntries 已写入 bucketOverride）；
+      // 与 base 派生展开同源（resolveEntrySignal 的 bucketOverride ?? 'supportSignals'）。
+      const bucket: SignalBucket = derivedEntry.bucketOverride ?? 'supportSignals'
       const derived = signalsByUpgradeId.get(specUpgradeId) ?? []
-      derived.push({ dimension, signal })
+      derived.push({ dimension, bucket, signal })
       signalsByUpgradeId.set(specUpgradeId, derived)
     }
   }

@@ -74,6 +74,26 @@ describe('buildSpecializationEntries', () => {
     expect(entries[0]?.signals[0]?.signal.kind).toBe('heroDpsMultiplier')
   })
 
+  it('【bucket 路由】hero_dps 无目标 → carrySignals；global_dps / monster_with_tag → supportSignals', () => {
+    // bucket 复现 base 分类（同一 normalizeEffectSignal）：自增益仅自走 carry 时计入，防泄漏给其他 carry。
+    const detail = {
+      upgrades: [
+        { id: '201', requiredLevel: 50, specializationName: { original: 'Self', display: 'Self' }, effectReference: 'hero_dps_multiplier_mult,40' },
+        { id: '202', requiredLevel: 50, specializationName: { original: 'Global', display: 'Global' }, effectReference: 'global_dps_multiplier_mult,40' },
+        {
+          id: '203',
+          requiredLevel: 50,
+          specializationName: { original: 'Vuln', display: 'Vuln' },
+          effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'monster_with_tag_more_damage,300,beast' }] } } },
+        },
+      ],
+    }
+    const byId = new Map(buildSpecializationEntries(detail).map((e) => [e.upgradeId, e]))
+    expect(byId.get('201')?.signals[0]?.bucket).toBe('carrySignals')
+    expect(byId.get('202')?.signals[0]?.bucket).toBe('supportSignals')
+    expect(byId.get('203')?.signals[0]?.bucket).toBe('supportSignals')
+  })
+
   it('非专精 upgrade（specializationName=null）不进 catalog', () => {
     const detail = {
       upgrades: [

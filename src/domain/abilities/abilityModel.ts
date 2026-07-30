@@ -178,6 +178,13 @@ export interface HeroAbilityOverridePatch {
   unsupportedSignals?: Omit<HeroUnsupportedSignal, 'source'>[]
 }
 
+/**
+ * signal 归属的信号列表：自增益（仅 supportHero===carryHero 时计入）vs 支援（支援任意 carry 时计入）。
+ * build 期由 resolveBucket 判定（effect.targets 位置定向关系）；catalog 携带此字段供 runtime 路由。
+ * 消费侧 collectSignals 按 supportHero 是否等于 carryHero 区分读取（见 placementFit.ts）。
+ */
+export type SignalBucket = 'carrySignals' | 'supportSignals'
+
 export type ResolvedHeroAbilityProfile = HeroAbilityProfile
 
 export type HeroAbilityOverrideCollection = DataCollection<HeroAbilityOverridePatch>
@@ -322,6 +329,41 @@ export function applyHeroAbilityPatch(
       carrySignals: patch.carrySignals ? patch.carrySignals.map(() => source) : hero.sourceBreakdown.carrySignals,
       supportSignals: patch.supportSignals ? patch.supportSignals.map(() => source) : hero.sourceBreakdown.supportSignals,
       unsupportedSignals: patch.unsupportedSignals ? patch.unsupportedSignals.map(() => source) : hero.sourceBreakdown.unsupportedSignals,
+    },
+  }
+}
+
+/**
+ * 把额外 signal 按 bucket 追加到已有 profile（保留 base 信号与其 source），重算 gainProfile。
+ *
+ * 与 applyHeroAbilityPatch 的区别：后者是「全量覆盖」（repo/local override 整表替换），本函数是
+ * 「增量追加」——供 feat/专精注入复用。误用 applyHeroAbilityPatch 传子集会整体替换、抹掉 base
+ * 支援信号（35→2），是已修复的 P0 根因。未提供的 bucket 原样保留。
+ */
+export function appendHeroAbilitySignals(
+  hero: ResolvedHeroAbilityProfile,
+  additions: { carrySignals?: HeroAbilitySignal[]; supportSignals?: HeroAbilitySignal[] },
+  source: HeroAbilitySource,
+): ResolvedHeroAbilityProfile {
+  const carrySignals = additions.carrySignals
+    ? [...hero.carrySignals, ...additions.carrySignals.map((signal) => ({ ...signal, source }))]
+    : hero.carrySignals
+  const supportSignals = additions.supportSignals
+    ? [...hero.supportSignals, ...additions.supportSignals.map((signal) => ({ ...signal, source }))]
+    : hero.supportSignals
+  return {
+    ...hero,
+    carrySignals,
+    supportSignals,
+    gainProfile: computeHeroGainProfile(carrySignals, supportSignals),
+    sourceBreakdown: {
+      carrySignals: additions.carrySignals
+        ? [...hero.sourceBreakdown.carrySignals, ...additions.carrySignals.map(() => source)]
+        : hero.sourceBreakdown.carrySignals,
+      supportSignals: additions.supportSignals
+        ? [...hero.sourceBreakdown.supportSignals, ...additions.supportSignals.map(() => source)]
+        : hero.sourceBreakdown.supportSignals,
+      unsupportedSignals: hero.sourceBreakdown.unsupportedSignals,
     },
   }
 }

@@ -22,6 +22,12 @@ export function buildOfficialHeroModel(
   const unsupportedSignals: HeroUnsupportedSignal[] = []
 
   for (const entry of collectEffectEntries(detail).entries) {
+    // feat 外部化（与专精同构，ADR 0017）：feat effect 不进 base，由 feat-catalog + runtime
+    // 按玩家选择（OwnedHero.feats）注入。否则 base 含全 feat（理论最大），runtime 再注入会双计；
+    // 旧实现误用替换式注入还抹掉了 base 支援信号。signal-coverage 仍计 feat（entries 未过滤）。
+    if (entry.sourceBucket === 'feat') {
+      continue
+    }
     const split = splitEffectString(entry.effectString)
 
     if (!split) {

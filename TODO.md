@@ -155,4 +155,11 @@ repair: rebuild
   - 备注: ADR 0017 UI 输入层按 requiredLevel 分层、每层单选，假设「同 requiredLevel = 同互斥组」。hero 165/55/81 是级联型专精树：依赖层（如 165 lvl=150 的 24 选项）各自 requiredUpgradeId 指向上层某个选择，UI 把依赖层全平铺成单选、且改上层后 applyTierSelection 不重置下层 → what-if override 可能保留游戏不可能的组合（如 lvl70=Tyr 但 lvl150 选了要求 Moradin 的项）。仅影响面板 override 探索（3 英雄）；核心推荐用存档 specialization_choices（游戏保证合法），不受影响。
     - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
 
+- planner 路由集成测试（plannerPage/plannerEvaluate.route.test）长期失败（11 用例，HEAD 即失败） <!-- auto-todo:id=atd_8f3a1c0d2e -->
+  - 记录时间: `2026-07-30T14:10:00+08:00`
+  - 类型: issue
+  - 位置: `src/pages/planner/plannerPage.route.test.tsx`、`src/pages/planner/plannerEvaluate.route.test.tsx`
+  - 备注: 测试只 mock `loadCollection`，但 `usePlannerCollections` 还调 `loadVersion()` + 3 个 `fetchJson`（patron-perks / feat-catalog / specialization-catalog）走原生 fetch；jsdom 无服务器 → Promise.all reject → loadError → 无「推荐结果」→ 用例 5s 超时。fetchJson/loadVersion 在范围起点（1f4cb65d）已存在，非本审计引入，但属长期红区（非本次 P0 修复回归）。
+    - 处置：路由测试 beforeEach 须补 fetch mock（version.json + patron-perks + feat-catalog + specialization-catalog 返回空/夹具），或改用 MSW 拦截 data fetches。
+
 <!-- auto-todo:end -->
