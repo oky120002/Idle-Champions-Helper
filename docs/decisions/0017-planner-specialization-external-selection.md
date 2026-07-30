@@ -15,7 +15,7 @@
 
 ## 决策
 
-**build 侧**：`collectRawEffectEntries` 按 `specializationName != null` 把专精 upgrade 的 effect entry 分流到 `specializationEntries`（复用 `buildEffectEntry`，与 base 同源同解析），并**从 base `effectEntries`/`upgradeEffectEntriesById` 剔除**（专精不再 always-active）。`specialization-catalog.ts` 按 `upgradeId` 归一化专精 signal（`splitEffectString`+`normalizeEffectSignal`+`attachSignalSemantics`，与 `buildOfficialHeroModel` 逐字相同，保证 catalog signal 与原 base 等价）→ `public/data/v1/specialization-catalog.json`（`{catalog: Record<heroId, SpecializationEntry[]>, updatedAt}`，47 hero / 115 专精选项）。
+**build 侧**：`collectRawEffectEntries` 按 `specializationName != null` 把专精 upgrade 的 effect entry 分流到 `specializationEntries`（复用 `buildEffectEntry`，与 base 同源同解析）；专精进 `upgradeEntries`（作 wrapper target）但**不进 base `effectEntries`**（不再 always-active）。`collectEffectEntries` 的 buff_upgrade 展开中，wrapper 派生信号若**靶向专精**则路由到 `specializationDerived`（按 target spec upgradeId，进 catalog），**不进 base**——使 wrapper 增益（如明斯克偏好敌人 `buff_upgrades,25,108-112` 每 tag +25%）随专精进 catalog，runtime 按选择注入（chosen +300 自身 + 派生 +25 = +325），既不丢失也不泄漏到 base。`specialization-catalog.ts` 按 `upgradeId` 归一化专精自身 signal（`splitEffectString`+`normalizeEffectSignal`+`attachSignalSemantics`，与 `buildOfficialHeroModel` 逐字相同）+ 附 `specializationDerived` 派生 → `public/data/v1/specialization-catalog.json`（`{catalog: Record<heroId, SpecializationEntry[]>, updatedAt}`）。
 
 **类型/提取**：`OwnedHero` 加 `specializations: string[]`；`userProfileNormalizer` 从 `details.heroes[].specialization_choices` 提取。
 
@@ -23,15 +23,12 @@
 
 ## 后果
 
-- 正面：专精不再全 active，按玩家选择生效（修正明斯克等 5 选 1 高估）。受控实验：`hero-abilities.json` 全局 **0 新增信号**，纯减法（174 信号移除：专精自身 + buff_upgrade 派生）。
-- 已知**下界偏差**（均为低估、保守方向，非过冲；根因是约束「不动 buff_upgrade 展开 / HeroAbilitySignal 字段」，见替代方案）：
-  1. **ability/loot/feat 源 buff_upgrade wrapper 增益专精时**，派生信号随专精离开 base（专精不再是其 target，wrapper 展开无目标），chosen 专精损失该 wrapper 增益。如明斯克 `buff_upgrades,25,108-112`（每 tag +25%）随专精离开 → chosen 偏好敌人保留 +300、丢失 +25（原 +325）。影响约 47 英雄。
-  2. **专精自身效果为复杂 buff_upgrade wrapper**（`buff_upgrade_mult_by_distance` / `buff_upgrade_add_flat_amount` 等需展开解析）的约 4 英雄，catalog 走原始 `normalizeEffectSignal`（无展开）解析不出 → 省略，chosen 专精该效果丢失。
+- 正面：专精不再全 active，按玩家选择生效（修正明斯克等 5 选 1 高估）；wrapper 增益也随专精按选择生效（chosen 专精 = 自身 + 派生，如明斯克偏好敌人 +300+25=+325）。受控实验：`hero-abilities.json` 全局 **0 新增信号**（专精自身 + 靶向专精的派生均离开 base，纯减法）；catalog 125 自身 + 100 派生 = 225 signal，80 个专精含派生。
+- 已知**下界偏差**（低估、保守方向，非过冲）：**专精自身效果为复杂 buff_upgrade wrapper**（`buff_upgrade_mult_by_distance` / `buff_upgrade_add_flat_amount` 等需展开解析）的约 4 英雄，catalog 走原始 `normalizeEffectSignal`（无展开）解析不出 → 省略，chosen 专精该效果丢失。量级极小（这些 wrapper 多为 distance/conditional 增益，非主力），若后续影响推荐质量再单独处理。
 - 明斯克 golden（`damageReferenceVerification`，ADR 0015）level1 不受影响（专精 `requiredLevel=50` 未解锁），level722 度量值随专精离开 base 偏移（符合 0015「回归守护非精度标尺」，测试度量不断言）。
 
 ## 替代方案
 
-- **给 buff_upgrade 展开加「派生信号靶向专精时挂到 catalog」**：否决——违反「不动 `collectEffectEntries` buff_upgrade 展开核心逻辑」约束；且派生 entry 的 `upgradeId` 是 wrapper 源（非 target），不携带 target upgradeId 难溯源到具体专精。
 - **HeroAbilitySignal 加 upgradeId 字段，runtime 按「未选则剔除」**（不移除 base）：否决——违反「不动 HeroAbilitySignal 字段」约束。
 - **catalog 按 scoringMode 维度过滤（照 feat）**：否决——漏 `vulnerability` 维度，明斯克偏好敌人永不注入。
 - **专精 catalog 走 `feat-catalog` 同款独立解析（不共用 `collectRawEffectEntries`）**：否决——专精 effect 含 effect_keys/effectReference/复杂 wrapper，独立解析会与 base 发散；共用 `buildEffectEntry` 保证等价。

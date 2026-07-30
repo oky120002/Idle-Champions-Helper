@@ -21,7 +21,7 @@ export function buildOfficialHeroModel(
   const supportSignals: HeroAbilitySignal[] = []
   const unsupportedSignals: HeroUnsupportedSignal[] = []
 
-  for (const entry of collectEffectEntries(detail)) {
+  for (const entry of collectEffectEntries(detail).entries) {
     const split = splitEffectString(entry.effectString)
 
     if (!split) {

@@ -411,11 +411,11 @@ function collectRawEffectEntries(detail: unknown): {
         upgradeId,
         requiredLevel: upgradeRequiredLevel,
       })
+      upgradeEntries.push(entry)
       if (isSpecialization) {
         specializationEntries.push(entry)
       } else {
         effectEntries.push(entry)
-        upgradeEntries.push(entry)
       }
     }
 
@@ -447,11 +447,11 @@ function collectRawEffectEntries(detail: unknown): {
             upgradeId,
             requiredLevel: upgradeRequiredLevel,
           })
+          upgradeEntries.push(entry)
           if (isSpecialization) {
             specializationEntries.push(entry)
           } else {
             effectEntries.push(entry)
-            upgradeEntries.push(entry)
           }
         }
       })
@@ -681,10 +681,26 @@ function rarityGroupKey(preset: HeroAbilitySignal): string {
   })
 }
 
-export function collectEffectEntries(detail: unknown): EffectEntry[] {
-  const { effectEntries, upgradeEffectEntriesById, staticDpsMults } = collectRawEffectEntries(detail)
+export function collectEffectEntries(detail: unknown): {
+  entries: EffectEntry[]
+  /** buff_upgrade wrapper 派生信号中靶向专精的部分，按 target spec upgradeId 归集（进 catalog，不进 base）。 */
+  specializationDerived: Map<string, EffectEntry[]>
+} {
+  const { effectEntries, upgradeEffectEntriesById, staticDpsMults, specializationEntries } = collectRawEffectEntries(detail)
+
+  // 专精 upgradeId 集合：wrapper 派生信号若靶向专精，路由到 catalog（附到该 spec），不进 base。
+  // 修复 ADR 0017 偏差：专精外部化后 wrapper 仍能找到专精作 target，派生增益（如明斯克偏好敌人 +25%）
+  // 随专精进 catalog，runtime 按玩家选择注入，而非丢失或泄漏到 base。
+  const specializationUpgradeIds = new Set<string>()
+  for (const entry of specializationEntries) {
+    if (entry.upgradeId) {
+      specializationUpgradeIds.add(entry.upgradeId)
+    }
+  }
 
   const derivedByKey = new Map<string, EffectEntry>()
+  // spec upgradeId →（dedupKey → 派生 entry）
+  const specializationDerivedByKey = new Map<string, Map<string, EffectEntry>>()
 
   for (const entry of effectEntries) {
     if (!isBuffUpgradeKind(entry.effectPayload?.kind)) {
@@ -717,7 +733,9 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
 
     const targetUpgradeIds = resolveTargetUpgradeIds(entry.effectPayload)
     for (const targetUpgradeId of targetUpgradeIds) {
-      const targetEntries = upgradeEffectEntriesById.get(String(targetUpgradeId)) ?? []
+      const targetIdStr = String(targetUpgradeId)
+      const targetsSpecialization = specializationUpgradeIds.has(targetIdStr)
+      const targetEntries = upgradeEffectEntriesById.get(targetIdStr) ?? []
       for (const targetEntry of targetEntries) {
         const targetSignalResult = resolveEntrySignal(targetEntry)
         if (!targetSignalResult || !targetSignalResult.ok) {
@@ -745,20 +763,28 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
           formationCountPositionQualifier: buffSeed.formationCountPositionQualifier ?? null,
         }
 
-        // 同信号位去重：key=rarityGroupKey@upgradeId。同 upgrade 内重复展开的 wrapper（同位同源）
+        // 同信号位去重：key=rarityGroupKey@wrapperUpgradeId。同 upgrade 内重复展开的 wrapper（同位同源）
         // 只生效一次（首条保留）；不同 upgrade 的 wrapper upgradeId 不同，各自独立。
         const key = `${rarityGroupKey(preset)}@${entry.upgradeId ?? '?'}`
-        if (!derivedByKey.has(key)) {
-          derivedByKey.set(key, buildEffectEntry({
-            effectString: entry.effectString,
-            effect: entry.effect,
-            effectPayload: entry.effectPayload,
-            effectPayloads: entry.effectPayloads,
-            sourceBucket: 'upgrade-buffed-signal',
-            upgradeId: entry.upgradeId,
-            bucketOverride: targetSignalResult.bucket,
-            signalPreset: preset,
-          }))
+        // 派生信号靶向专精 → 路由到 catalog（附到 target spec），不进 base；其余进 base derivedByKey。
+        const buffedEntry = buildEffectEntry({
+          effectString: entry.effectString,
+          effect: entry.effect,
+          effectPayload: entry.effectPayload,
+          effectPayloads: entry.effectPayloads,
+          sourceBucket: 'upgrade-buffed-signal',
+          upgradeId: entry.upgradeId,
+          bucketOverride: targetSignalResult.bucket,
+          signalPreset: preset,
+        })
+        if (targetsSpecialization) {
+          const inner = specializationDerivedByKey.get(targetIdStr) ?? new Map()
+          if (!inner.has(key)) {
+            inner.set(key, buffedEntry)
+          }
+          specializationDerivedByKey.set(targetIdStr, inner)
+        } else if (!derivedByKey.has(key)) {
+          derivedByKey.set(key, buffedEntry)
         }
       }
     }
@@ -804,5 +830,9 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
     }
   }
 
-  return allEntries
+  const specializationDerived = new Map<string, EffectEntry[]>()
+  for (const [specId, inner] of specializationDerivedByKey) {
+    specializationDerived.set(specId, [...inner.values()])
+  }
+  return { entries: allEntries, specializationDerived }
 }

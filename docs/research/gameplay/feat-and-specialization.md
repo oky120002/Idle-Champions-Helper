@@ -56,7 +56,7 @@ IC 两大英雄自定义系统，玩家选择带来 dps/金币/速度/生存加�
 
 build 期 `collectRawEffectEntries` 按 `specializationName != null` 把专精 upgrade effect 分流到 `specializationEntries`（与 base 同源 `buildEffectEntry`，逐字等价）并剔除出 base；`specialization-catalog.ts` 按 upgradeId 归一化 → `specialization-catalog.json`（`{catalog: Record<heroId, SpecializationEntry[]>, updatedAt}`）。runtime `applySpecializationsToProfile` 注入玩家选中 upgradeId 的全部 scoring signal（不做 scoringMode 维度过滤——否则漏 vulnerability 维度）。与 feat 不同：feat 按 scoringMode 取 damage/gold 维度；专精是全局互斥选择，不过滤。
 
-**已知下界偏差**（约束「不动 buff_upgrade 展开」所致，均低估非过冲）：ability/loot/feat 源 buff_upgrade wrapper 增益专精时，派生信号随专精一起离开 base（chosen 专精损失 wrapper 增益，如明斯克偏好敌人 +300 保留、+25 wrapper 丢失）；专精自身效果为复杂 wrapper（`buff_upgrade_mult_by_distance` 等，需展开）的约 4 英雄 catalog 原始解析不出 → 省略。详见 ADR 0017。
+**wrapper 增益随专精按选择生效**：`collectEffectEntries` 的 buff_upgrade 展开中，wrapper 派生信号靶向专精时路由到 `specializationDerived`（按 target spec upgradeId，进 catalog），不进 base——runtime 随玩家选择注入（chosen 专精 = 自身 + 派生，如明斯克偏好敌人 +300+25=+325），既不丢失也不泄漏到 base。**残留下界偏差**（量级极小）：专精自身效果为复杂 wrapper（`buff_upgrade_mult_by_distance` 等需展开）的约 4 英雄 catalog 原始解析不出 → 省略。详见 ADR 0017。
 
 ## 实现状态
 

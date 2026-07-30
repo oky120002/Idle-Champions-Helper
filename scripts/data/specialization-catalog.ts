@@ -1,4 +1,4 @@
-import { collectSpecializationEffectEntries, normalizeEffectSignal, splitEffectString } from './effect-helpers'
+import { collectEffectEntries, collectSpecializationEffectEntries, normalizeEffectSignal, splitEffectString } from './effect-helpers'
 import { asArray, asRecord } from './io-utils'
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics'
 import {
@@ -82,6 +82,22 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     const list = signalsByUpgradeId.get(upgradeId) ?? []
     list.push({ dimension, signal })
     signalsByUpgradeId.set(upgradeId, list)
+  }
+
+  // buff_upgrade wrapper 派生信号（靶向专精）：附到对应 spec，runtime 随玩家选择注入。
+  // 修复 ADR 0017 偏差：专精外部化后 wrapper 仍以专精为 target，派生增益（如明斯克偏好敌人 +25%）
+  // 随专精进 catalog，不再丢失。派生 entry 已是 resolved signalPreset，直接取（与 base 展开同源）。
+  const { specializationDerived } = collectEffectEntries(detail)
+  for (const [specUpgradeId, derivedEntries] of specializationDerived) {
+    for (const derivedEntry of derivedEntries) {
+      const signal = derivedEntry.signalPreset
+      if (!signal) continue
+      const dimension = DIMENSION_BY_KIND[signal.kind]
+      if (!dimension) continue
+      const derived = signalsByUpgradeId.get(specUpgradeId) ?? []
+      derived.push({ dimension, signal })
+      signalsByUpgradeId.set(specUpgradeId, derived)
+    }
   }
 
   const entries: SpecializationEntry[] = []

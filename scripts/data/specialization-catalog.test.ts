@@ -99,19 +99,42 @@ describe('buildSpecializationEntries', () => {
     expect(entries.map((e) => e.upgradeId).sort()).toEqual(['108', '109'])
   })
 
-  it('真实 Minsc(7) champion-details → 5 偏好敌人专精（108-112），各 enemyVulnerability 300 + 对应 monsterTag', () => {
+  it('buff_upgrade wrapper 增益专精 → 派生信号附到 catalog（修复 ADR 0017 偏差，不丢增益）', () => {
+    const detail = {
+      upgrades: [
+        {
+          id: '109',
+          requiredLevel: 50,
+          specializationName: { original: 'Beasts', display: '兽类' },
+          effectDefinition: {
+            snapshots: { original: { effect_keys: [{ effect_string: 'monster_with_tag_more_damage,300,beast' }] } },
+          },
+        },
+      ],
+      // 能力源 wrapper：+25% 增益 spec 109（非 upgrade-tree 源，不被 progression-exclusion 排除）
+      ability: { effects: ['buff_upgrades,25,109'] },
+    }
+    const entries = buildSpecializationEntries(detail)
+    const beast = entries.find((e) => e.upgradeId === '109')
+    // 自身 +300 + 派生 +25，都 beast tag（runtime 随玩家选 109 注入 → +325）
+    expect(beast?.signals).toHaveLength(2)
+    const values = beast!.signals.map((s) => s.signal.value).sort((a, b) => a - b)
+    expect(values).toEqual([25, 300])
+    expect(beast!.signals.map((s) => s.signal.monsterTags)).toEqual([['beast'], ['beast']])
+  })
+
+  it('真实 Minsc(7) champion-details → 5 偏好敌人专精（108-112），各含自身 +300 与 wrapper 派生 +25', () => {
     const entries = buildSpecializationEntries(minscDetail())
     const byId = new Map(entries.map((e) => [e.upgradeId, e]))
     expect(['108', '109', '110', '111', '112'].every((id) => byId.has(id))).toBe(true)
     const beast = byId.get('109')
     expect(beast?.specializationName?.display).toContain('兽类')
-    expect(beast?.signals[0]?.signal).toMatchObject({
-      kind: 'enemyVulnerability',
-      value: 300,
-      monsterTags: ['beast'],
-    })
-    // 等价性：catalog signal 与原 base 同 kind/value/tag（非全 active 烘进，而是按选择注入）
-    expect(byId.get('108')?.signals[0]?.signal.monsterTags).toEqual(['humanoid'])
-    expect(byId.get('112')?.signals[0]?.signal.monsterTags).toEqual(['monstrosity'])
+    // 自身 enemyVulnerability 300 + wrapper 派生 25（buff_upgrades,25,108-112 增益），都 beast tag
+    expect(beast?.signals).toHaveLength(2)
+    expect(beast!.signals.map((s) => s.signal.value).sort((a, b) => a - b)).toEqual([25, 300])
+    expect(beast!.signals.every((s) => s.signal.monsterTags?.includes('beast'))).toBe(true)
+    // 其余专精同理（humanoid/monstrosity 各含自身 + 派生）
+    expect(byId.get('108')?.signals.length).toBeGreaterThanOrEqual(2)
+    expect(byId.get('112')?.signals.some((s) => s.signal.monsterTags?.includes('monstrosity'))).toBe(true)
   })
 })
