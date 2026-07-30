@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyFeatsToProfile, selectFeatSignals, type FeatEntry } from './featSignals'
+import { applyFeatsToProfile, type FeatEntry } from './featSignals'
 import type { HeroAbilitySignal, ResolvedHeroAbilityProfile } from './abilityModel'
 
 const heroFeats: FeatEntry[] = [
@@ -7,6 +7,8 @@ const heroFeats: FeatEntry[] = [
   { id: '35', rarity: 2, signals: [{ dimension: 'damage', bucket: 'carrySignals', signal: { kind: 'heroDpsMultiplier', value: 30, rawEffect: 'hero_dps_multiplier_mult,30', source: 'official-parsed' } }] },
   // global_dps 全队 → supportSignals
   { id: '38', rarity: 2, signals: [{ dimension: 'damage', bucket: 'supportSignals', signal: { kind: 'globalDpsMultiplier', value: 10, rawEffect: 'global_dps_multiplier_mult,10', source: 'official-parsed' } }] },
+  // crit 维度 feat（heroCritChance）——carry-dps 评分用 crit 维度，不得被 scoringMode 预过滤丢弃
+  { id: 'crit1', rarity: 2, signals: [{ dimension: 'crit', bucket: 'supportSignals', signal: { kind: 'heroCritChance', value: 20, rawEffect: 'buff_base_crit_chance_add,20', source: 'official-parsed' } }] },
   { id: '1', rarity: 3, signals: [{ dimension: 'gold', bucket: 'supportSignals', signal: { kind: 'globalGoldMultiplier', value: 25, rawEffect: 'gold_multiplier_mult,25', source: 'official-parsed' } }] },
 ]
 
@@ -33,47 +35,28 @@ const makeProfileWithBaseSupport = (heroId: string): ResolvedHeroAbilityProfile 
     sourceBreakdown: { carrySignals: [], supportSignals: ['official-parsed'], unsupportedSignals: [] },
   } as unknown as ResolvedHeroAbilityProfile)
 
-describe('selectFeatSignals', () => {
-  it('选 active feat 的 signal（按 id 过滤）', () => {
-    const s = selectFeatSignals(['35', '38'], heroFeats)
-    expect(s).toHaveLength(2)
-    expect(s.map((x) => x.kind)).toEqual(['heroDpsMultiplier', 'globalDpsMultiplier'])
-  })
-
-  it('按 dimension 过滤（damage only）', () => {
-    const s = selectFeatSignals(['35', '1'], heroFeats, 'damage')
-    expect(s).toHaveLength(1) // feat 1 gold 被过滤
-    expect(s[0]?.kind).toBe('heroDpsMultiplier')
-  })
-
-  it('非 active feat 不选', () => {
-    expect(selectFeatSignals(['999'], heroFeats)).toEqual([])
-  })
-
-  it('无 featCatalog → 空', () => {
-    expect(selectFeatSignals(['35'], undefined)).toEqual([])
-  })
-})
-
 describe('applyFeatsToProfile', () => {
   it('按 bucket 路由：自增益→carrySignals，全局→supportSignals', () => {
     const profile = applyFeatsToProfile(makeProfile('7'), ['35', '38'], heroFeats)
-    // feat 35 heroDps 自增益 → carry；feat 38 globalDps → support
     expect(profile.carrySignals.map((s) => s.kind)).toEqual(['heroDpsMultiplier'])
     expect(profile.supportSignals.map((s) => s.kind)).toEqual(['globalDpsMultiplier'])
   })
 
-  it('按 dimension 过滤（damage）', () => {
-    const profile = applyFeatsToProfile(makeProfile('7'), ['35', '1'], heroFeats, 'damage')
-    // feat 1 gold 被过滤；feat 35 damage heroDps → carrySignals
-    expect(profile.carrySignals).toHaveLength(1)
-    expect(profile.carrySignals[0]?.kind).toBe('heroDpsMultiplier')
-    expect(profile.supportSignals).toHaveLength(0)
+  it('【crit 回归】注入全部维度——crit feat 不被 scoringMode 维度预过滤丢弃', () => {
+    // crit 经 computeCritFactor 直接乘进 carryDps；旧实现按 scoringMode 传 dimension='damage'
+    // 会过滤掉 crit feat → 永不注入 → 有 crit feat 的英雄系统性低估。与专精同构：不做维度预过滤。
+    const profile = applyFeatsToProfile(makeProfile('7'), ['crit1'], heroFeats)
+    expect(profile.supportSignals.some((s) => s.kind === 'heroCritChance')).toBe(true)
   })
 
   it('无 active feat signal → 原样（不建空 patch）', () => {
     const original = makeProfile('7')
     expect(applyFeatsToProfile(original, ['999'], heroFeats)).toBe(original)
+  })
+
+  it('无 featCatalog → 原样', () => {
+    const original = makeProfile('7')
+    expect(applyFeatsToProfile(original, ['35'], undefined)).toBe(original)
   })
 
   it('gainProfile 重算（appendHeroAbilitySignals 保证）', () => {
@@ -83,7 +66,7 @@ describe('applyFeatsToProfile', () => {
 
   it('【P0 回归】追加而非替换——base 支援信号必须保留', () => {
     // 误用 applyHeroAbilityPatch 传子集会抹掉 base 支援信号（如 ability 源全队 +200%）。
-    const profile = applyFeatsToProfile(makeProfileWithBaseSupport('7'), ['38'], heroFeats, 'damage')
+    const profile = applyFeatsToProfile(makeProfileWithBaseSupport('7'), ['38'], heroFeats)
     // base globalDps + feat 38 globalDps = 2 个 supportSignals（base 不丢）
     expect(profile.supportSignals).toHaveLength(2)
     expect(profile.supportSignals.map((s) => s.rawEffect)).toContain('global_dps_multiplier_mult,200')

@@ -214,26 +214,24 @@ export interface FormationEvaluation {
  * 用于 UI 调整英雄后重算当前阵型、CLI 指定阵型输出 JSON。合法性违规作为 warning 附加（仍出拆解）。
  */
 
-// 应用玩家 active feat（OwnedHero.feats）到 profile：按 scoringMode 选对应 dimension 的 feat
-// signal（carry-dps→damage, team-gold→gold），同 dimension add pool 叠加（applyFeatsToProfile）。
-// featCatalog 缺省（未加载）或英雄无 active feat → 跳过/原样。
+// 应用玩家 active feat（OwnedHero.feats）到 profile：注入选中 feat 的全部 signal（按 bucket 追加），
+// scoring 按模式自取所需维度——与专精同构（ADR 0017 不变量），不做 scoringMode 维度预过滤
+// （否则 carry-dps 漏 crit 维度 feat）。featCatalog 缺省（未加载）或英雄无 active feat → 跳过/原样。
 function applyActiveFeats(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   ownedHeroes: readonly OwnedHero[],
   featCatalog: FeatCatalog | undefined,
-  scoringMode: ScoringMode,
 ): void {
   if (!featCatalog) {
     return
   }
-  const dimension = scoringMode === 'team-gold' ? 'gold' : 'damage'
   const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
   for (const [heroId, profile] of heroById) {
     const owned = ownedById.get(heroId)
     if (!owned || !owned.feats || owned.feats.length === 0) {
       continue
     }
-    heroById.set(heroId, applyFeatsToProfile(profile, owned.feats, featCatalog[heroId], dimension))
+    heroById.set(heroId, applyFeatsToProfile(profile, owned.feats, featCatalog[heroId]))
   }
 }
 
@@ -279,7 +277,7 @@ export function evaluateFormation({
   const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
   const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
-  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog, scoringMode)
+  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   const candidateIds = new Set(
     buildCandidatePool({
@@ -458,7 +456,7 @@ export function buildPlannerRecommendation({
 
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
-  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog, scoringMode)
+  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))

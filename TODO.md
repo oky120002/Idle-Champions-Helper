@@ -162,4 +162,12 @@ repair: rebuild
   - 备注: 测试只 mock `loadCollection`，但 `usePlannerCollections` 还调 `loadVersion()` + 3 个 `fetchJson`（patron-perks / feat-catalog / specialization-catalog）走原生 fetch；jsdom 无服务器 → Promise.all reject → loadError → 无「推荐结果」→ 用例 5s 超时。fetchJson/loadVersion 在范围起点（1f4cb65d）已存在，非本审计引入，但属长期红区（非本次 P0 修复回归）。
     - 处置：路由测试 beforeEach 须补 fetch mock（version.json + patron-perks + feat-catalog + specialization-catalog 返回空/夹具），或改用 MSW 拦截 data fetches。
 
+- crit/speed/survival resolver 一刀切 supportSignals（潜在自增益泄漏，待 IC 语义确认） <!-- auto-todo:id=atd_5e2b9c1d4f -->
+  - 记录时间: `2026-07-30T15:55:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/effect-resolvers/critResolver.ts:21`、`speedResolver.ts:23`（survivalResolver 同构）
+  - 备注: 深度审计 [1f4cb65d..b7a3bdb8] 核查 heroCritChance bucket 发现：crit/speed/survival resolver 对所有 effect 硬编码 `buildSimplePoolSignal(..., 'supportSignals')`，无视 effect.targets 定向；而 dpsResolver（`hero_dps_multiplier_mult`）是 targeting-aware（无目标→carrySignals，targets 非 self→supportSignals）。若 IC 里 `buff_base_crit_chance_add`（feat/base，raw targets=None）实为**自增益**（修饰持有者自身暴击，非全队光环），则一刀切 supportSignals 会让该英雄支援他人时把自身暴击泄漏给其他 carry（collectSignals 支援位读 supportSignals → carry critFactor 被误增），系统性高估有 crit feat 的支援英雄。影响 base（14 crit signal）+ catalog（36 crit feat）。**预存行为**（1f4cb65d effect-helpers.ts:1032 已如此，9f8108c6 逐字搬迁，非范围内回归；6d363819 catalog 正确复现 base，无新偏差）。
+    - 阻断：需先确认 IC 语义——`buff_base_crit_chance_add`（无 global_ 前缀、无 targets）是持有者自身暴击还是全队光环。若全队则 supportSignals 正确（非 bug）；若自身则应按 targeting-aware 判 carrySignals。验证需读 per-hero champion-details（upgrade description）。
+    - 处置：低优先级（待语义确认）；确认自增益后，crit/speed/survival resolver 改用 resolveBucket 与 dpsResolver 一致，FORCE_DATA_REBUILD 重建。
+
 <!-- auto-todo:end -->

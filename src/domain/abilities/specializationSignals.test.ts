@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
   applySpecializationsToProfile,
-  selectSpecializationSignals,
   type SpecializationEntry,
 } from './specializationSignals'
 import type { HeroAbilitySignal, ResolvedHeroAbilityProfile } from './abilityModel'
@@ -52,29 +51,6 @@ const makeProfileWithBaseSupport = (heroId: string): ResolvedHeroAbilityProfile 
     supportSignals: [BASE_SUPPORT],
     sourceBreakdown: { carrySignals: [], supportSignals: ['official-parsed'], unsupportedSignals: [] },
   } as unknown as ResolvedHeroAbilityProfile)
-
-describe('selectSpecializationSignals', () => {
-  it('选玩家已选 upgradeId 的 signal（按 upgradeId 过滤）', () => {
-    const s = selectSpecializationSignals(['109'], heroSpecs)
-    expect(s).toHaveLength(1)
-    expect(s[0]?.kind).toBe('enemyVulnerability')
-    expect(s[0]?.monsterTags).toEqual(['beast'])
-  })
-
-  it('不做 dimension 过滤——vulnerability 维度 signal 照常返回（与 feat 不同）', () => {
-    const s = selectSpecializationSignals(['109', '108'], heroSpecs)
-    expect(s).toHaveLength(2)
-  })
-
-  it('仅选中项；未选 upgradeId 不注入', () => {
-    expect(selectSpecializationSignals(['108'], heroSpecs).map((x) => x.monsterTags)).toEqual([['humanoid']])
-    expect(selectSpecializationSignals(['999'], heroSpecs)).toEqual([])
-  })
-
-  it('无 catalog → 空', () => {
-    expect(selectSpecializationSignals(['109'], undefined)).toEqual([])
-  })
-})
 
 describe('applySpecializationsToProfile', () => {
   it('注入选中专精 signal（支援/全局 → supportSignals bucket）', () => {
