@@ -148,4 +148,11 @@ repair: rebuild
     - 剩余 scenario-selection + result-card + save-preset 三块约 400 行，经 13 组跨块共享逗号选择器深度交织，且有 8 个跨范围重复选择器（如 .planner-result-card__placement 在 67/181/367），级联顺序敏感，强拆会改级联。
     - 处置：低优先级，当前 445 行可接受；待 scenario-selection 或 result-card 单块演进显著时，先抽 12 组跨块共享原语（panel 背景、muted 文本、label/pill/list 样式）到 pages/planner/panels.css，再按块拆 scenario-selection.css / result-card.css / save-preset.css。
 
+- 颜色可读性守护缺对比度检查（check-colors 只查硬编码） <!-- auto-todo:id=atd_9c4e7f2a1b -->
+  - 记录时间: `2026-07-30T17:30:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/check-colors.ts`（守护），补强方法见 [[theme-color-readability-audit]]
+  - 备注: 双主题深度审计（854c8ff1）发现 `check-colors.ts` 只扫描硬编码颜色字面量（rgb/#hex），不校验「文字 vs 背景」对比度。前序 b0e03936 自称「技术可读性（L 差 >65%）已自动保证」是过度承诺——铜/钢/金/rarity/cat 作文字在浅底实测 ratio 1.08–1.47（不可读），靠人工 oklch 实测才发现。eyebrow 类装饰标签 <4.5 仍存（planner/result-card__secondary spot 3.72、tag-pill--muted cat 色 4.48）。
+    - 处置：中优先级；补一个 puppeteer/playwright 跑双主题各页、按 oklch→线性亮度→WCAG ratio 校验文字（含前景 alpha 合成、背景向上追溯），低于阈值（正文 4.5 / 大字 3）即报。可作为 npm run lint:contrast 接入 pre-push（参考 [[test-chain-lint-strategy]] 勿拖慢日常 TDD）。
+
 <!-- auto-todo:end -->
