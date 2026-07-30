@@ -1,9 +1,22 @@
 import { describe, expect, it } from 'vitest'
-import { mergeSpecializationOverrides } from './specializationSelection'
+import { applyTierSelection, groupSpecializationsByTier, mergeSpecializationOverrides } from './specializationSelection'
+import type { SpecializationEntry } from '../../domain/abilities/specializationSignals'
 import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 
 function specOf(snapshot: { ownedHeroes: { heroId: string; specializations: string[] }[] }, heroId: string) {
   return snapshot.ownedHeroes.find((hero) => hero.heroId === heroId)?.specializations
+}
+
+function makeEntry(upgradeId: string, requiredLevel: number | null, display = upgradeId): SpecializationEntry {
+  return {
+    upgradeId,
+    specializationName: { original: display, display },
+    requiredLevel,
+    signals: [{
+      dimension: 'damage',
+      signal: { kind: 'heroDpsMultiplier', value: 40, rawEffect: 'hero_dps_multiplier_mult,40', source: 'official-parsed' },
+    }],
+  }
 }
 
 describe('mergeSpecializationOverrides', () => {
@@ -51,5 +64,52 @@ describe('mergeSpecializationOverrides', () => {
   it('override 的英雄不在 snapshot 中 → 同引用返回（无实际变更）', () => {
     const snap = createUserProfileSnapshot({ ownedHeroes: [createOwnedHero({ heroId: '7' })] })
     expect(mergeSpecializationOverrides(snap, { '999': ['x'] })).toBe(snap)
+  })
+})
+
+describe('groupSpecializationsByTier', () => {
+  it('按 requiredLevel 分组，升序；组内保持 catalog 原序', () => {
+    const tiers = groupSpecializationsByTier([
+      makeEntry('109', 50),
+      makeEntry('110', 50),
+      makeEntry('200', 120),
+      makeEntry('201', 20),
+    ])
+    expect(tiers.map((tier) => tier.requiredLevel)).toEqual([20, 50, 120])
+    expect(tiers.find((tier) => tier.requiredLevel === 50)!.entries.map((entry) => entry.upgradeId)).toEqual(['109', '110'])
+  })
+
+  it('requiredLevel 缺失（null）归入同一组并排在末尾', () => {
+    const tiers = groupSpecializationsByTier([
+      makeEntry('a', null),
+      makeEntry('b', 50),
+      makeEntry('c', null),
+    ])
+    expect(tiers.map((tier) => tier.requiredLevel)).toEqual([50, null])
+    expect(tiers.find((tier) => tier.requiredLevel === null)!.entries.map((entry) => entry.upgradeId)).toEqual(['a', 'c'])
+  })
+
+  it('空 → 空', () => {
+    expect(groupSpecializationsByTier([])).toEqual([])
+  })
+})
+
+describe('applyTierSelection', () => {
+  const tier = ['108', '109', '110']
+
+  it('选本层一个：移除本层其它、加入选中，保留其它层选择', () => {
+    expect(applyTierSelection(['109', '200'], tier, '110')).toEqual(['200', '110'])
+  })
+
+  it('selected=null（选「无」）：仅移除本层，不加入', () => {
+    expect(applyTierSelection(['109', '200'], tier, null)).toEqual(['200'])
+  })
+
+  it('当前不含本层 id 时选一个 → 加入', () => {
+    expect(applyTierSelection(['200'], tier, '109')).toEqual(['200', '109'])
+  })
+
+  it('selected 不在本层 id 集合内（防御）→ 仍加入', () => {
+    expect(applyTierSelection(['200'], tier, '999')).toEqual(['200', '999'])
   })
 })

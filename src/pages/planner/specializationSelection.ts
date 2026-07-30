@@ -1,3 +1,4 @@
+import type { SpecializationEntry } from '../../domain/abilities/specializationSignals'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 
 /**
@@ -34,4 +35,51 @@ export function mergeSpecializationOverrides(
   })
 
   return changed ? { ...snapshot, ownedHeroes } : snapshot
+}
+
+/** 一个专精层（同 requiredLevel 互斥选项组）。null requiredLevel 归为一组（保守互斥）。 */
+export interface SpecializationTier {
+  requiredLevel: number | null
+  entries: SpecializationEntry[]
+}
+
+/**
+ * 把英雄的 catalog 专精条目按 requiredLevel 分层（同层互斥、层间各选一个）。
+ * 升序排列；requiredLevel 缺失（null）的归入同一组并排在末尾。组内保持 catalog 原序。
+ */
+export function groupSpecializationsByTier(entries: SpecializationEntry[]): SpecializationTier[] {
+  const byLevel = new Map<number | null, SpecializationEntry[]>()
+  for (const entry of entries) {
+    const key = entry.requiredLevel ?? null
+    const list = byLevel.get(key)
+    if (list) {
+      list.push(entry)
+    } else {
+      byLevel.set(key, [entry])
+    }
+  }
+  return [...byLevel.entries()]
+    .sort(([a], [b]) => tierSortKey(a) - tierSortKey(b))
+    .map(([requiredLevel, tierEntries]) => ({ requiredLevel, entries: tierEntries }))
+}
+
+function tierSortKey(level: number | null): number {
+  return level === null ? Number.POSITIVE_INFINITY : level
+}
+
+/**
+ * 应用单层选择：从当前选择数组中移除本层全部 id，再加入新选 id（null = 选「无」，只移除）。
+ * 返回新数组（不改入参）；其它层的选择原样保留。upgradeId 跨层唯一，理论不冲突。
+ */
+export function applyTierSelection(
+  current: readonly string[],
+  tierUpgradeIds: readonly string[],
+  selected: string | null,
+): string[] {
+  const tier = new Set(tierUpgradeIds)
+  const next = current.filter((id) => !tier.has(id))
+  if (selected !== null) {
+    next.push(selected)
+  }
+  return next
 }
