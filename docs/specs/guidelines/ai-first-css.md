@@ -46,7 +46,7 @@ CSS 语义密度低于 TS / TSX，但大文件会显著抬高一次样式修改�
 
 - 业务 CSS 禁止硬编码颜色（`rgb()` / `hsl()` / `oklch()` / `oklab()` / `lab()` / `lch()` 等颜色函数，或 `#hex` 含 alpha 位），必须走 token（`src/styles/foundations/tokens.css`）；守护脚本 `scripts/check-colors.ts` 扫残留并接入 `npm run lint`。命名色（`white` / `black` 等）仅允许作 `color-mix` 锚点，不单独用作颜色值。
 - 新增颜色先在 `tokens.css` 登记为 token；随主题翻转的 token 成对提供 `:root`（深）与 `:root[data-theme="light"]`（浅）值。
-- 底色 / 文字 / 边框 / 阴影 / gloss 随主题翻转；品牌色（铜 `--color-copper` / 钢 `--color-steel` / 金 `--color-gold`）与 categorical 属性色（`--cat-*`）两主题共用，不翻转。
+- 底色 / 文字 / 边框 / 阴影 / gloss 随主题翻转；品牌色（铜 / 钢 / 金）、categorical 属性色（`--cat-*`）、稀有度色（`--color-rarity-*`）**色相跨主题稳定、L/C 按主题适配**：深色用高 L 亮金属，浅主题暖纸底下降 L 提 C，否则作文字不可读（ratio<1.5）、作边框过淡。新增此类色作文字用途时，浅主题值须实测 oklch 对比度 ≥3（装饰标签）或 ≥4.5（正文）。
 - 铜 / 钢的半透明变体用 `color-mix(in oklch, var(--color-copper|steel) X%, transparent)` 内联，alpha 保留原值不归并。
 - gloss 叠层基于 `--color-gloss-base` 派生（深底白提亮 / 浅底黑压暗），翻转 `--color-gloss-base` 即两档全跟随。
 - 图片上文字遮罩用 `--color-scrim`（深主题深 / 浅主题浅）；模态遮罩用 `--color-backdrop`（两主题都暗）；投影（`drop-shadow` / `text-shadow`）用 `color-mix(in srgb, black X%, transparent)`（两主题都暗）。
