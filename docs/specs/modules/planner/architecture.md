@@ -129,7 +129,7 @@ scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 - `src/domain/abilities/`：能力表达层——`HeroAbilitySignal`、`ResolvedHeroAbilityProfile`、build→JSON→runtime 边界类型。
 - `src/domain/simulator/`：`GameNumber`、最后专精基线、金币预算基线、`baseDps`/`BUD`/`survival` 计算、稳态 DPS 模拟。
 - `src/domain/planner/`：变体限制投影（`variantConstraints`）、候选池、假设英雄公平基线、阵型合法性、beam search 和结果模型。
-- `src/pages/planner/`：profile 状态面板、场景选择、候选模式、基线输入、结果卡和保存 preset 操作。
+- `src/pages/planner/`：profile 状态面板、场景选择、候选模式、基线输入、专精选择（per-hero session override，ADR 0017 UI 输入源）、结果卡和保存 preset 操作。
 - `scripts/private-user-data/`：敏感扫描、私有 env loader、私有快照 manifest。
 
 ## 命名约定
