@@ -25,6 +25,7 @@ describe('buildSpecializationEntries', () => {
     expect(entries).toHaveLength(1)
     expect(entries[0]?.upgradeId).toBe('109')
     expect(entries[0]?.specializationName?.display).toBe('偏好敌人：兽类')
+    expect(entries[0]?.requiredLevel).toBe(50)
     expect(entries[0]?.signals).toHaveLength(1)
     expect(entries[0]?.signals[0]?.dimension).toBe('vulnerability')
     expect(entries[0]?.signals[0]?.signal).toMatchObject({
@@ -32,6 +33,29 @@ describe('buildSpecializationEntries', () => {
       value: 300,
       monsterTags: ['beast'],
     })
+  })
+
+  it('requiredLevel 透传到 entry（UI 按 requiredLevel 分层：同层互斥，层间各选一个）', () => {
+    const detail = {
+      upgrades: [
+        { id: '109', requiredLevel: 50, specializationName: { original: 'A', display: 'A' }, effectReference: 'hero_dps_multiplier_mult,40' },
+        { id: '110', requiredLevel: 50, specializationName: { original: 'B', display: 'B' }, effectReference: 'hero_dps_multiplier_mult,40' },
+        { id: '200', requiredLevel: 120, specializationName: { original: 'C', display: 'C' }, effectReference: 'hero_dps_multiplier_mult,40' },
+      ],
+    }
+    const entries = buildSpecializationEntries(detail)
+    expect(entries.find((e) => e.upgradeId === '109')?.requiredLevel).toBe(50)
+    expect(entries.find((e) => e.upgradeId === '110')?.requiredLevel).toBe(50)
+    expect(entries.find((e) => e.upgradeId === '200')?.requiredLevel).toBe(120)
+  })
+
+  it('requiredLevel 缺失 → null（向后兼容无等级门控的专精）', () => {
+    const detail = {
+      upgrades: [
+        { id: '109', specializationName: { original: 'A', display: 'A' }, effectReference: 'hero_dps_multiplier_mult,40' },
+      ],
+    }
+    expect(buildSpecializationEntries(detail)[0]?.requiredLevel).toBeNull()
   })
 
   it('effectReference 专精（hero_dps）→ damage 维度', () => {

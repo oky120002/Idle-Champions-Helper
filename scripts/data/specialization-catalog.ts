@@ -27,6 +27,11 @@ export interface SpecializationSignalEntry {
 export interface SpecializationEntry {
   upgradeId: string
   specializationName: { original: string; display: string } | null
+  /**
+   * 专精 upgrade 解锁等级（champion-details upgrade.required_level）。UI 按 requiredLevel 分层：
+   * 同 requiredLevel = 同层互斥（单选），不同 requiredLevel = 不同层各选一个。null = 无等级信息。
+   */
+  requiredLevel: number | null
   signals: SpecializationSignalEntry[]
 }
 
@@ -51,8 +56,9 @@ function readSpecializationName(raw: unknown): SpecializationNameValue | null {
 export function buildSpecializationEntries(detail: unknown): SpecializationEntry[] {
   const detailRecord = asRecord(detail)
 
-  // upgradeId → specializationName（仅 specializationName != null 的专精节点）
-  const nameByUpgradeId = new Map<string, SpecializationNameValue>()
+  // upgradeId → specializationName + requiredLevel（仅 specializationName != null 的专精节点）。
+  // requiredLevel 来自 upgrade.required_level，UI 按它分层（同层互斥、层间各选一个）。
+  const metaByUpgradeId = new Map<string, { name: SpecializationNameValue; requiredLevel: number | null }>()
   for (const upgradeRaw of asArray(detailRecord?.upgrades)) {
     const upgrade = asRecord(upgradeRaw)
     if (!upgrade) continue
@@ -60,7 +66,11 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     if (!name) continue
     const id = typeof upgrade.id === 'string' || typeof upgrade.id === 'number' ? String(upgrade.id) : ''
     if (!id) continue
-    nameByUpgradeId.set(id, name)
+    const requiredLevelRaw = upgrade.requiredLevel
+    const requiredLevel = typeof requiredLevelRaw === 'number' && Number.isFinite(requiredLevelRaw)
+      ? requiredLevelRaw
+      : null
+    metaByUpgradeId.set(id, { name, requiredLevel })
   }
 
   // 按 upgradeId 聚合 spec effect → scoring signals（与 buildOfficialHeroModel 同解析路径）
@@ -101,10 +111,10 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   }
 
   const entries: SpecializationEntry[] = []
-  for (const [upgradeId, specializationName] of nameByUpgradeId) {
+  for (const [upgradeId, { name, requiredLevel }] of metaByUpgradeId) {
     const signals = signalsByUpgradeId.get(upgradeId) ?? []
     if (signals.length === 0) continue
-    entries.push({ upgradeId, specializationName, signals })
+    entries.push({ upgradeId, specializationName: name, requiredLevel, signals })
   }
   return entries
 }

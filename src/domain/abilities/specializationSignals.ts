@@ -17,7 +17,7 @@ import {
  * 含全部维度 spec signal）。若按 damage/gold 过滤会漏掉 vulnerability 维度（如明斯克偏好敌人）。
  *
  * 消费类型与 scripts/data/specialization-catalog.ts 的 SpecializationEntry 字段对齐
- *（upgradeId/specializationName/signals.dimension/.signal），序列化兼容 specialization-catalog.json。
+ *（upgradeId/specializationName/requiredLevel/signals.dimension/.signal），序列化兼容 specialization-catalog.json。
  */
 export interface SpecializationSignalEntry {
   dimension: HeroAbilityDimension
@@ -27,6 +27,12 @@ export interface SpecializationSignalEntry {
 export interface SpecializationEntry {
   upgradeId: string
   specializationName: { original: string; display: string } | null
+  /**
+   * 专精 upgrade 解锁等级（来自 build 期 specialization-catalog）。UI 按 requiredLevel 分层：
+   * 同 requiredLevel = 同层互斥（单选），不同 requiredLevel = 不同层各选一个。
+   * undefined/null = 无等级信息或旧 catalog（向后兼容）。engine 不消费此字段。
+   */
+  requiredLevel?: number | null
   signals: SpecializationSignalEntry[]
 }
 
