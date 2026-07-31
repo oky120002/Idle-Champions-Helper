@@ -24,17 +24,6 @@ repair: rebuild
     - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- slot_escort 英雄占格：仅 v80 有干净 hero_id，v232 需 name 解析，v181/v186 是 NPC <!-- auto-todo:id=atd_aca5040e39 -->
-  - 记录时间: `2026-07-25T00:05:44+08:00`
-  - 类型: issue
-  - 位置: `scripts/data/normalize-adventures.ts:706`
-  - 备注: 第十二轮审计复核修正原范围：全库仅 1 个 slot_escort 带 hero_id（v80 Drizzt=hero 18，确认为可玩英雄）；auto-todo 原列的 v181/v186 Azaka 实为 slot_escort_by_area + names:["Azaka's Corpse"]（NPC 尸体，非英雄，正确不进 forcedHeroIds）；v232 Nordom 是 {name:"Nordom"}（英雄但无 hero_id，需 name→hero 解析）。
-    - 三种数据形态：① v80 hero_id（干净，可直接提取）；② v181/v186 NPC names（非英雄）；③ v232 hero by name（脆弱，本地化敏感）。
-    - 语义确认（2026-07-25 产品反馈）：情况甲——护送英雄是玩家可拥有、能操控的英雄；玩家千小时经验未遇「护送英雄但未拥有」，默认 force-include 合理；玩家可选开关 ROI 不划算（1 variant + 玩家基本都有），不做。
-    - raw 复核（2026-07-25）：slot_escort 记录共 340 条，含 hero_id 的仅 v80（=18）；另发现 follow_hero_id（hero 141，语义待查，暂不处理）；NPC 形态含 names 无 hero_id，天然排除。
-    - 实施障碍：planner scenario 来自 build-models.ts buildOfficialScenarioModel（forcedHeroes=variant.forcedHeroIds 原始字段，不含 slot_escort hero_id）；slot_escort hero_id 在 definition.game_changes，normalize-adventures 的 collectHeroRestrictions 已遍历但产物未喂 planner。要让 planner 知道护送英雄，需 build-models 接入 game_changes 数据源（数据流改造，非 auto-todo 原记的「collectHeroRestrictions 加几行」）。
-    - 处置：影响面 1 variant，原标注「不优先」成立；实施需 build-models 数据流改造 + 管线重跑 + 下游验证，暂不做。
-
 - planner.css 剩余交织块未完全拆分（scenario-selection + result-card + save-preset） <!-- auto-todo:id=atd_7a3f1c9d2e -->
   - 记录时间: `2026-07-30T15:40:00+08:00`
   - 类型: optimization
