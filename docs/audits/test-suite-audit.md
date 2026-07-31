@@ -13,7 +13,7 @@
 
 夹具：11 个 co-located 单元。引用密度：`user-profile/fixtures.ts` 20 处、`resolverTestFixtures` 8 处、`mechanic/scoringTestFixtures` 各 2 处。`scripts/fixtures/` 目录存在但 sync 系列测试未充分复用（见 §3-B）。
 
-巨型文件（行/用例）：`placementFit.test.ts` 1531/40、`build-models.test.ts` 1182/17、`sync-illustrations.test.ts` 1064/6、`normalize.test.ts` 789/4、`sync-pets.test.ts` 777/4、`skelanim.test.ts` 720/8。
+巨型文件（行/用例）：`placementFit.test.ts` 1531/40、`build-models.test.ts` 1200/19、`sync-illustrations.test.ts` 1064/6、`normalize.test.ts` 789/4、`sync-pets.test.ts` 777/4、`skelanim.test.ts` 720/8。
 
 ## 2. P0 — planner route 11 红回归（单根因）
 
@@ -40,7 +40,7 @@
 | 文件 | 行/用例 | 动作 |
 |---|---|---|
 | `placementFit.test.ts` | 1531/40 | 单 describe + 40 it，按信号家族拆主题文件（`.relations` / `.stacking` / `.counting` / `.upgrade`），被测单一无需改 |
-| `build-models.test.ts` | 1182/17 | 首用例 88–625 单跨 ~537 行覆盖三大主题（abilities/scenarios/overrides）→ 拆三用例；`normalizeEffectSignal` 系列转 `it.each`（见 D） |
+| `build-models.test.ts` | 1200/19 | ✅ 首用例已拆三（abilities / scenarios / semantic overrides）+ 共享 `setupBuildModelsOutputs` helper（写全 fixture + 跑 buildModels 返回四输出）；`normalizeEffectSignal` 系列经评估**不**转 `it.each`（见 D） |
 
 ### B. 抽夹具（重复构造）
 sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/用例：`sync-illustrations`（1064/6）、`sync-pets`（777/4）、`sync-animations`（533/3）、`normalize`（789/4）。动作：抽公共读取/构造到 `scripts/fixtures/`（已存在目录），各 sync 测试引用。
@@ -49,7 +49,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 最小文件多为合理的 prod-only 守护或单职责（`plannerProfileSourceLabelProd.test.ts` 9 行、`scoringSupportSync.test.ts` 14 行守护）。**默认不合并**——co-located 规范鼓励「被测-测试 1:1」，合并破坏导航。仅当多微文件覆盖同一被测且无独立语义时才合并。
 
 ### D. 抽象（同构用例 → it.each / helper）
-- `build-models.test.ts`：`normalizeEffectSignal 解析 {gold|crit|health|vulnerability|speed} effect`（1039–1182）五用例高度同构 → `it.each(effects)` 参数化。
+- ~~`build-models.test.ts`：`normalizeEffectSignal` 五用例 → `it.each`~~ **评估后否决（批 1）**：五用例各测一个信号家族（gold/crit/health/vulnerability/speed），族内断言维度各异（`bucket` / `amountFunc` / `stackFunc` / `formationCountQualifier` / `monsterTags` / 非法值守卫），部分还需 `parseEffectPayload` 构造 effect——非"高度同构"。强制 `it.each` 统一表会丢族特定断言（无法表达"此族查 monsterTags、彼族查 formationCountQualifier"），多可选列表反而比显式更难读。保留 5 个家族用例原样：co-located 鼓励被测-测试 1:1，"不得损伤校验能力"优先于行数精简。
 - `collectEffectEntries ...` 系列同质化 → 评估提取断言 helper。
 
 ### E. 模块化（夹具组织）
@@ -86,7 +86,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | 批次 | 目标 | 风险 | 进度 |
 |---|---|---|---|
 | 0（P0） | 修 planner route 11 红回绿 | 低（改测试 mock，不动产品） | ✅ 完成 |
-| 1 | `build-models.test.ts` 重构（it.each + 拆首用例） | 低（纯重构，行为不变） | ⏳ |
+| 1 | `build-models.test.ts` 重构（拆首用例；`it.each` 经评估否决） | 低（纯重构，行为不变） | ✅ 完成 |
 | 2 | sync 系列抽公共夹具到 `scripts/fixtures/` | 中（重构 + 重跑） | ⏳ |
 | 3 | `placementFit.test.ts` 按信号家族拆主题 | 中（40 用例分组迁移） | ⏳ |
 | 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | ⏳ |

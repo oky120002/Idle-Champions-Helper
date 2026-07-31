@@ -85,7 +85,12 @@ interface EffectSignalResultLike {
   bucket: string
 }
 
-it('buildModels 产出 hero abilities / scenarios / semantic overrides', async () => {
+async function setupBuildModelsOutputs(): Promise<{
+  result: BuildModelsResult
+  heroAbilities: HeroAbilities
+  scenarioModels: ScenarioModels
+  semanticOverrides: SemanticOverrides
+}> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-hero-ability-models-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
@@ -466,6 +471,11 @@ it('buildModels 产出 hero abilities / scenarios / semantic overrides', async (
   const scenarioModels = (await readJson(path.join(versionDir, 'scenarios.json'))) as ScenarioModels
   const semanticOverrides = (await readJson(path.join(versionDir, 'semantic-overrides.json'))) as SemanticOverrides
 
+  return { result, heroAbilities, scenarioModels, semanticOverrides }
+}
+
+it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链路）', async () => {
+  const { result, heroAbilities } = await setupBuildModelsOutputs()
   const first = heroAbilities.items[0]
   expect(result.heroCount).toBe(1)
   expect(result.scenarioCount).toBe(1)
@@ -602,6 +612,10 @@ it('buildModels 产出 hero abilities / scenarios / semantic overrides', async (
       .map((signal) => signal.rawEffect)
       .filter((rawEffect) => rawEffect !== 'effect_def'),
   ).toEqual(['pre_stack_amount', 'pre_stack_amount', 'pre_stack_amount'])
+})
+
+it('buildModels 产出 scenarios（阵型布局 + slot_escort 锁槽 + 警告）', async () => {
+  const { scenarioModels } = await setupBuildModelsOutputs()
   expect(scenarioModels.items[0]?.formationLayoutId).toBe('layout-a')
   expect(scenarioModels.items[0]?.slotTopology).toEqual([
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },
@@ -612,6 +626,10 @@ it('buildModels 产出 hero abilities / scenarios / semantic overrides', async (
   expect(
     scenarioModels.items[0]?.scenarioWarnings.some((w) => w.includes('护送任务')),
   ).toBeTruthy()
+})
+
+it('buildModels 透传 semantic overrides', async () => {
+  const { semanticOverrides } = await setupBuildModelsOutputs()
   expect(semanticOverrides.items).toEqual([
     {
       heroId: '1',
