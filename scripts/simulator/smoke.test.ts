@@ -105,7 +105,11 @@ describe('全英雄评分 smoke', () => {
     const sass = vi!.supportSignals.find((s) => s.rawEffect === 'buff_upgrade,0.33,12312')
     expect(sass, '出言不逊（effect_keys stacks_multiply 动态）须保留').toBeDefined()
     expect(sass?.stacksMultiply).toBe(true)
-    const shawl = vi!.supportSignals.find((s) => s.rawEffect === 'buff_upgrade,25,12312')
+    const shawl = vi!.supportSignals.find((s) => s.rawEffect === 'buff_upgrade,275,12312')
     expect(shawl, '时髦披肩（loot 外部源装备，不在 ability snapshot 内）须保留').toBeDefined()
+    // loot 多 rarity 同信号位取最高 magnitude（装备每槽只装一件最高 rarity；理论最大基线）。
+    // 时髦披肩 slot2 rarity1=25/2=87.5/3=150/4=275，取 rarity4。
+    expect(shawl?.value).toBe(275)
+    expect(vi!.supportSignals.filter((s) => s.rawEffect === 'buff_upgrade,25,12312')).toHaveLength(0)
   })
 })

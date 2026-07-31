@@ -681,6 +681,18 @@ function rarityGroupKey(preset: HeroAbilitySignal): string {
   })
 }
 
+// 同信号位已有 entry 时是否应以 candidate 替换：loot/feat 装备源同槽多 rarity（upgradeId=null→同 key）
+// 装备每槽只装一件最高 rarity，取最大 magnitude（保守上界）。upgrade 源 CNE 重复展开副本 magnitude
+// 相同，取 max 等价首条保留，无副作用。magnitude 缺失（非数值）不替换。
+function shouldReplaceWithHigherMagnitude(existing: EffectEntry | undefined, candidate: EffectEntry): boolean {
+  const existingValue = existing?.signalPreset?.value
+  const candidateValue = candidate.signalPreset?.value
+  if (typeof candidateValue !== 'number' || typeof existingValue !== 'number') {
+    return false
+  }
+  return candidateValue > existingValue
+}
+
 export function collectEffectEntries(detail: unknown): {
   entries: EffectEntry[]
   /** buff_upgrade wrapper 派生信号中靶向专精的部分，按 target spec upgradeId 归集（进 catalog，不进 base）。 */
@@ -779,11 +791,11 @@ export function collectEffectEntries(detail: unknown): {
         })
         if (targetsSpecialization) {
           const inner = specializationDerivedByKey.get(targetIdStr) ?? new Map<string, EffectEntry>()
-          if (!inner.has(key)) {
+          if (!inner.has(key) || shouldReplaceWithHigherMagnitude(inner.get(key), buffedEntry)) {
             inner.set(key, buffedEntry)
           }
           specializationDerivedByKey.set(targetIdStr, inner)
-        } else if (!derivedByKey.has(key)) {
+        } else if (!derivedByKey.has(key) || shouldReplaceWithHigherMagnitude(derivedByKey.get(key), buffedEntry)) {
           derivedByKey.set(key, buffedEntry)
         }
       }

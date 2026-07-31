@@ -736,6 +736,38 @@ it('loot buff_upgrade 派生 target base 信号（外部装备源运行时修饰
   expect(derived?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
 })
 
+it('collectEffectEntries loot buff_upgrade 多 rarity 同信号位取最高 magnitude', () => {
+  // IC 装备每槽只装备一件（最高 rarity）；loot 源 upgradeId=null → 同信号位多 rarity 去重时
+  // 应取最大 magnitude（保守上界），而非首条（最低 rarity）。
+  // 真实例：蔚时髦披肩 slot2 rarity1(+25%)/rarity2(+50%)/rarity4(+157.8%)，原取 rarity1 +25% 欠估。
+  const detail = {
+    upgrades: [
+      {
+        id: '4',
+        effectReference: 'effect_def,base-4',
+        effectDefinition: {
+          snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,80' }] } },
+        },
+      },
+    ],
+    loot: [
+      { id: '9001', slotId: 1, rarity: '1', effects: [{ effect_string: 'buff_upgrade,25,4' }] },
+      { id: '9002', slotId: 1, rarity: '2', effects: [{ effect_string: 'buff_upgrade,50,4' }] },
+      { id: '9003', slotId: 1, rarity: '4', effects: [{ effect_string: 'buff_upgrade,157.8,4' }] },
+    ],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
+  const derived = entries.filter(
+    (entry) => entry.sourceBucket === 'upgrade-buffed-signal' && entry.effectString.startsWith('buff_upgrade,'),
+  )
+  // 三 rarity 同信号位去重为 1 条，且保留最高 magnitude（157.8）。
+  expect(derived).toHaveLength(1)
+  expect(derived[0]?.effectString).toBe('buff_upgrade,157.8,4')
+  expect(derived[0]?.signalPreset.value).toBe(157.8)
+})
+
 it('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前 upgrade）', async () => {
   // 真实数据（如 hero 106/141）：upgrade A 的 effect 用 amount_expr='upgrade_amount(B,0)'
   // 引用 upgrade B 的 effect_keys[0]。旧 resolveSimpleAmountExpr 忽略 upgrade id，
