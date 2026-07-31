@@ -1,5 +1,5 @@
 import type { HeroAbilityAmountFunc, HeroAbilityKind } from '../../../src/domain/abilities/abilityModel'
-import { buildSimplePoolSignal, type EffectResolveContext, type EffectSignalResult } from './resolverShared.ts'
+import { resolvePoolSignal, type EffectResolveContext, type EffectSignalResult } from './resolverShared.ts'
 
 /**
  * speed/cooldown effect 名 → (kind, amountFunc) 映射。
@@ -20,5 +20,5 @@ const SPEED_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: 
 // hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
 export function resolveSpeedSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = SPEED_KIND_BY_EFFECT[ctx.effectName]
-  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
+  return match ? resolvePoolSignal(ctx, match.kind, match.amountFunc) : null
 }

@@ -1,5 +1,5 @@
 import type { HeroAbilityAmountFunc, HeroAbilityKind } from '../../../src/domain/abilities/abilityModel'
-import { buildSimplePoolSignal, type EffectResolveContext, type EffectSignalResult } from './resolverShared.ts'
+import { resolvePoolSignal, type EffectResolveContext, type EffectSignalResult } from './resolverShared.ts'
 
 /**
  * crit effect 名 → (kind, amountFunc) 映射。
@@ -16,7 +16,8 @@ const CRIT_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: H
 }
 
 // 暴击池（chance/damage 各 global/hero；默认值来自 default_crit_info，在 crit_factor 公式应用，不在解析层）。
+// bucket 由 resolvePoolSignal 按 pool scope + targeting 判定（global→support；hero 按 target）。
 export function resolveCritSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = CRIT_KIND_BY_EFFECT[ctx.effectName]
-  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
+  return match ? resolvePoolSignal(ctx, match.kind, match.amountFunc) : null
 }

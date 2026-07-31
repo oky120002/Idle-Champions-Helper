@@ -1067,12 +1067,19 @@ it('normalizeEffectSignal 解析 gold multiplier effect', () => {
 })
 
 it('normalizeEffectSignal 解析 crit effect', () => {
-  // chance add → heroCritChance
+  // chance add 无 target → heroCritChance / carrySignals（自身暴击；与 hero_dps 一致）
   const chanceAdd = normalizeEffectSignal('buff_base_crit_chance_add', '35', 'official-parsed', {}) as EffectSignalResultLike
   expect(chanceAdd.ok).toBe(true)
   expect(chanceAdd.signal.kind).toBe('heroCritChance')
   expect(chanceAdd.signal.value).toBe(35)
-  expect(chanceAdd.bucket).toBe('supportSignals')
+  expect(chanceAdd.bucket).toBe('carrySignals')
+
+  // chance add 带 targets:["all"] → supportSignals（光环，如「所有同伴暴击+」）
+  const chanceAddAura = normalizeEffectSignal('buff_base_crit_chance_add', '20', 'official-parsed', {
+    effect: { targets: ['all'] },
+  }) as EffectSignalResultLike
+  expect(chanceAddAura.ok).toBe(true)
+  expect(chanceAddAura.bucket).toBe('supportSignals')
 
   // chance mult → heroCritChance + amountFunc mult
   const chanceMult = normalizeEffectSignal('buff_base_crit_chance_mult', '50', 'official-parsed', {}) as EffectSignalResultLike
@@ -1089,9 +1096,10 @@ it('normalizeEffectSignal 解析 crit effect', () => {
   expect(dmgMult.signal.kind).toBe('heroCritDamage')
   expect(dmgMult.signal.amountFunc).toBe('mult')
 
-  // global chance/damage
+  // global chance/damage → 全队 supportSignals
   const gChance = normalizeEffectSignal('global_buff_base_crit_chance_add', '10', 'official-parsed', {}) as EffectSignalResultLike
   expect(gChance.signal.kind).toBe('globalCritChance')
+  expect(gChance.bucket).toBe('supportSignals')
   const gDmgAdd = normalizeEffectSignal('global_buff_base_crit_damage_add', '12', 'official-parsed', {}) as EffectSignalResultLike
   expect(gDmgAdd.signal.kind).toBe('globalCritDamage')
   expect(gDmgAdd.signal.amountFunc).toBe(undefined)
@@ -1105,10 +1113,18 @@ it('normalizeEffectSignal 解析 crit effect', () => {
 })
 
 it('normalizeEffectSignal 解析 health/healing/damage_reduction effect', () => {
+  // health_mult 无 target → heroHealthMultiplier / carrySignals（自身生命）
   const healthMult = normalizeEffectSignal('health_mult', '100', 'official-parsed', {}) as EffectSignalResultLike
   expect(healthMult.ok).toBe(true)
   expect(healthMult.signal.kind).toBe('heroHealthMultiplier')
-  expect(healthMult.bucket).toBe('supportSignals')
+  expect(healthMult.bucket).toBe('carrySignals')
+
+  // health_mult 带 targets:["all"] → supportSignals（光环）
+  const healthAura = normalizeEffectSignal('health_mult', '100', 'official-parsed', {
+    effect: { targets: ['all'] },
+  }) as EffectSignalResultLike
+  expect(healthAura.ok).toBe(true)
+  expect(healthAura.bucket).toBe('supportSignals')
 
   const incHealth = normalizeEffectSignal('increase_health_by_source_percent', '50', 'official-parsed', {}) as EffectSignalResultLike
   expect(incHealth.signal.kind).toBe('heroHealthMultiplier')
@@ -1122,6 +1138,7 @@ it('normalizeEffectSignal 解析 health/healing/damage_reduction effect', () => 
   const dmgRed = normalizeEffectSignal('damage_reduction', '15', 'official-parsed', {}) as EffectSignalResultLike
   expect(dmgRed.signal.kind).toBe('damageReduction')
   expect(dmgRed.signal.amountFunc).toBe(undefined)
+  expect(dmgRed.bucket).toBe('supportSignals')
 
   const dmgRedMult = normalizeEffectSignal('trials_damage_reduction_mult', '25', 'official-parsed', {}) as EffectSignalResultLike
   expect(dmgRedMult.signal.kind).toBe('damageReduction')
