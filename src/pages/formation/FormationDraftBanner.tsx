@@ -21,12 +21,12 @@ export function FormationDraftBanner({ model }: FormationDraftBannerProps) {
         title={
           draftPrompt.kind === 'restore'
             ? t({ zh: '检测到最近草稿，是否恢复？', en: 'Recent draft detected. Restore it?' })
-            : draftPrompt.title
+            : t(draftPrompt.title)
         }
         detail={
           draftPrompt.kind === 'restore'
             ? `${buildDraftPromptSummary(draftPrompt, locale)} · ${getLocalizedTextPair(draftPrompt.preview.layoutName, locale)}`
-            : draftPrompt.detail
+            : t(draftPrompt.detail)
         }
         actions={
           <ActionButtons
@@ -57,7 +57,7 @@ export function FormationDraftBanner({ model }: FormationDraftBannerProps) {
       >
         {draftPrompt.kind === 'restore' ? (
           <>
-            <p className="status-banner__detail">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
+            <p className="status-banner__detail">{t(buildRestoreStatusDetail(draftPrompt.preview))}</p>
             <div className="tag-row">
               <span className="tag-pill tag-pill--muted">
                 {t({ zh: '保存版本', en: 'Saved version' })}：{draftPrompt.preview.snapshot.dataVersion}

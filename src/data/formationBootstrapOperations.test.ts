@@ -106,8 +106,8 @@ describe('formation bootstrap operations', () => {
         placements: {},
         updatedAt: '2026-04-20T00:00:00.000Z',
       },
-      title: 'ignored',
-      detail: '布局引用已失效',
+      title: { zh: 'ignored', en: 'ignored' },
+      detail: { zh: '布局引用已失效', en: 'layout reference invalid' },
     })
 
     const setters = createSetters()
@@ -127,8 +127,8 @@ describe('formation bootstrap operations', () => {
     expect(setters.setIsDraftPersistenceArmed).toHaveBeenCalledWith(true)
     expect(setters.setDraftStatus).toHaveBeenCalledWith({
       tone: 'error',
-      title: '方案“推图常用队”当前不能恢复',
-      detail: '布局引用已失效',
+      title: { zh: '方案“推图常用队”当前不能恢复', en: 'Preset "推图常用队" cannot be restored' },
+      detail: { zh: '布局引用已失效', en: 'layout reference invalid' },
     })
     expect(mockedSaveRecentFormationDraft).not.toHaveBeenCalled()
     expect(setters.setState).not.toHaveBeenCalled()
@@ -190,8 +190,8 @@ describe('formation bootstrap operations', () => {
     expect(setters.setDraftPrompt).toHaveBeenCalledWith(null)
     expect(setters.setDraftStatus).toHaveBeenLastCalledWith({
       tone: 'error',
-      title: '方案已恢复，但最近草稿回写失败',
-      detail: 'IndexedDB 写入失败',
+      title: { zh: '方案已恢复，但最近草稿回写失败', en: 'Preset restored, but recent-draft write-back failed' },
+      detail: { zh: 'IndexedDB 写入失败', en: 'IndexedDB 写入失败' },
     })
   })
 
@@ -211,8 +211,11 @@ describe('formation bootstrap operations', () => {
     expect(setters.setIsDraftPersistenceArmed).toHaveBeenCalledWith(true)
     expect(setters.setDraftStatus).toHaveBeenCalledWith({
       tone: 'error',
-      title: '最近草稿读取失败',
-      detail: '读取失败 当前仍可继续编辑，但不会自动恢复旧草稿。',
+      title: { zh: '最近草稿读取失败', en: 'Failed to read recent draft' },
+      detail: {
+        zh: '读取失败 当前仍可继续编辑，但不会自动恢复旧草稿。',
+        en: '读取失败 You can keep editing, but the old draft won\'t auto-restore.',
+      },
     })
     expect(setters.setDraftPrompt).not.toHaveBeenCalled()
   })

@@ -21,7 +21,7 @@ import {
   buildReadyFormationState,
   buildRestoredDraftFromPreview,
   convertPresetToDraft,
-  getErrorMessage,
+  errorMessageLocaleText,
   pickPreferredSlotId,
 } from './formation-model-helpers'
 import {
@@ -102,8 +102,8 @@ export async function loadFormationBootstrapData({
   setActiveMobileSlotId(pickPreferredSlotId(initialLayout))
   setDraftStatus(
     createInfoStatusMessage(
-      '最近草稿会自动保存在当前浏览器',
-      '介质为 IndexedDB；只保存在本地，不上传到外部服务。',
+      { zh: '最近草稿会自动保存在当前浏览器', en: 'Recent drafts auto-save in this browser' },
+      { zh: '介质为 IndexedDB；只保存在本地，不上传到外部服务。', en: 'Stored in IndexedDB; kept locally only, never uploaded.' },
     ),
   )
 
@@ -166,7 +166,7 @@ export async function restorePendingPreset({
     version,
     formations,
     champions,
-    '方案',
+    { zh: '方案', en: 'preset' },
     PRESET_SCHEMA_VERSION,
   )
 
@@ -176,12 +176,15 @@ export async function restorePendingPreset({
 
   if (pendingPrompt.kind !== 'restore') {
     setIsDraftPersistenceArmed(true)
-    setDraftStatus(createErrorStatusMessage(`方案“${pendingPresetRestore.name}”当前不能恢复`, pendingPrompt.detail))
+    setDraftStatus(createErrorStatusMessage(
+      { zh: `方案“${pendingPresetRestore.name}”当前不能恢复`, en: `Preset "${pendingPresetRestore.name}" cannot be restored` },
+      pendingPrompt.detail,
+    ))
     return
   }
 
   const restoredDraft = buildRestoredDraftFromPreview(pendingPrompt.preview)
-  let writeBackFailureDetail: string | null = null
+  let writeBackFailureDetail: { zh: string; en: string } | null = null
 
   try {
     await saveRecentFormationDraft(restoredDraft)
@@ -190,7 +193,7 @@ export async function restorePendingPreset({
       return
     }
 
-    writeBackFailureDetail = getErrorMessage(error)
+    writeBackFailureDetail = errorMessageLocaleText(error)
   }
 
   if (isDisposed()) {
@@ -217,13 +220,16 @@ export async function restorePendingPreset({
   setDraftPrompt(null)
 
   if (writeBackFailureDetail) {
-    setDraftStatus(createErrorStatusMessage('方案已恢复，但最近草稿回写失败', writeBackFailureDetail))
+    setDraftStatus(createErrorStatusMessage(
+      { zh: '方案已恢复，但最近草稿回写失败', en: 'Preset restored, but recent-draft write-back failed' },
+      writeBackFailureDetail,
+    ))
     return
   }
 
   setDraftStatus(
     createSuccessStatusMessage(
-      `已从方案“${pendingPresetRestore.name}”恢复到阵型页`,
+      { zh: `已从方案“${pendingPresetRestore.name}”恢复到阵型页`, en: `Restored preset "${pendingPresetRestore.name}" to the formation page` },
       buildRestoreStatusDetail(pendingPrompt.preview),
     ),
   )
@@ -255,7 +261,7 @@ export async function loadStoredDraftPrompt({
       version,
       formations,
       champions,
-      '最近草稿',
+      { zh: '最近草稿', en: 'recent draft' },
       DRAFT_SCHEMA_VERSION,
     )
 
@@ -272,8 +278,11 @@ export async function loadStoredDraftPrompt({
     setIsDraftPersistenceArmed(true)
     setDraftStatus(
       createErrorStatusMessage(
-        '最近草稿读取失败',
-        `${getErrorMessage(error)} 当前仍可继续编辑，但不会自动恢复旧草稿。`,
+        { zh: '最近草稿读取失败', en: 'Failed to read recent draft' },
+        {
+          zh: `${errorMessageLocaleText(error).zh} 当前仍可继续编辑，但不会自动恢复旧草稿。`,
+          en: `${errorMessageLocaleText(error).en} You can keep editing, but the old draft won't auto-restore.`,
+        },
       ),
     )
   }

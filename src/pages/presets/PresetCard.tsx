@@ -41,8 +41,8 @@ export function PresetCard({ model, view }: PresetCardProps) {
         tone: 'error',
         ...(view.prompt.kind === 'invalid'
           ? {
-              title: view.prompt.title,
-              detail: view.prompt.detail,
+              title: t(view.prompt.title),
+              detail: t(view.prompt.detail),
             }
           : {}),
       },
@@ -52,7 +52,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
         tone: 'info',
         title: t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' }),
         ...(view.prompt.kind === 'restore' && showCompatibilityNotice
-          ? { detail: buildRestoreStatusDetail(view.prompt.preview) }
+          ? { detail: t(buildRestoreStatusDetail(view.prompt.preview)) }
           : {}),
       },
     ],
