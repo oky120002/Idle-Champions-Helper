@@ -3,7 +3,7 @@ import type { NavigateFunction } from 'react-router-dom'
 import { createErrorStatusMessage, createSuccessStatusMessage } from '../../components/statusMessage'
 import { saveFormationPreset } from '../../data/formationPresetStore'
 import type { FormationLayout, PresetPriority, ScenarioRef } from '../../domain/types'
-import { buildPresetId, getErrorMessage, parseScenarioTags } from './formation-model-helpers'
+import { buildPresetId, errorMessageLocaleText, parseScenarioTags } from './formation-model-helpers'
 import {
   DEFAULT_PRESET_FORM_STATE,
   PRESET_SCHEMA_VERSION,
@@ -76,12 +76,15 @@ export function buildFormationPresetActions({
         setPresetForm({ ...DEFAULT_PRESET_FORM_STATE })
         setPresetStatus(
           createSuccessStatusMessage(
-            `方案“${preset.name}”已保存`,
-            '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。',
+            { zh: `方案“${preset.name}”已保存`, en: `Preset "${preset.name}" saved` },
+            { zh: '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。', en: 'Open the Preset Library page to edit, delete, or restore it back to the formation page.' },
           ),
         )
       } catch (error: unknown) {
-        setPresetStatus(createErrorStatusMessage('保存方案失败', getErrorMessage(error)))
+        setPresetStatus(createErrorStatusMessage(
+          { zh: '保存方案失败', en: 'Failed to save preset' },
+          errorMessageLocaleText(error),
+        ))
       } finally {
         setIsSavingPreset(false)
       }

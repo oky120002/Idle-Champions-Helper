@@ -1,3 +1,4 @@
+import type { LocaleText } from '../../app/i18n'
 import type { Champion, FormationLayout, LocalizedText, ScenarioRef } from '../../domain/types'
 
 export interface FormationSnapshotLike {
@@ -38,6 +39,6 @@ export type FormationSnapshotPrompt<T extends FormationSnapshotLike> =
   | {
       kind: 'invalid'
       snapshot: T
-      title: string
-      detail: string
+      title: LocaleText
+      detail: LocaleText
     }

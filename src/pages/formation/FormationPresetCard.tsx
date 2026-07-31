@@ -5,6 +5,7 @@ import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { PresetFormFields } from '../../components/PresetFormFields'
 import { StatusMessageBanner } from '../../components/StatusMessageBanner'
 import { SurfaceCard } from '../../components/SurfaceCard'
+import { useScenarioLabelLookup } from '../../data/useScenarioLabelLookup'
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
 import { getFormationLayoutLabel } from '../../domain/formationLayout'
 import { PRESET_PRIORITY_OPTIONS, type FormationPageModel } from './types'
@@ -30,6 +31,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     handleOpenPresetsPage,
     getPresetPriorityLabel,
   } = model
+  const getScenarioLabel = useScenarioLabelLookup()
   const saveDisabledReason = !canSavePreset && !isSavingPreset
     ? (selectedChampions.length === 0
         ? t({ zh: '先放置至少 1 名英雄', en: 'Place at least one champion first' })
@@ -50,7 +52,9 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     {
       id: 'scenario-context',
       label: t({ zh: '场景上下文', en: 'Scenario context' }),
-      value: scenarioRef ? `${scenarioRef.kind}:${scenarioRef.id}` : t({ zh: '当前未绑定', en: 'Not linked yet' }),
+      value: scenarioRef
+        ? (getScenarioLabel(scenarioRef) ?? `${scenarioRef.kind}:${scenarioRef.id}`)
+        : t({ zh: '当前未绑定', en: 'Not linked yet' }),
     },
   ]
 

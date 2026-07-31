@@ -31,6 +31,9 @@ export function isFilterLikeTarget(target: unknown): boolean {
     || type === 'attack_type'
     || type === 'stat'
     || type === 'stat_score'
+    // heroes：英雄 ID 白名单（{type:"heroes",hero_ids:[...]}），限定 buff 目标而非位置，
+    // 语义同 filter_targets 的 hero_ids filter（位置关系=any）。真实样本：ed=196/621/1279。
+    || type === 'heroes'
 }
 
 // Array.isArray 对 unknown narrow 成 any[]（触发 no-unsafe-assignment），统一用谓词收窄到 unknown[]。

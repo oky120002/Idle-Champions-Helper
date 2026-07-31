@@ -1,3 +1,4 @@
+import type { LocaleText } from '../../app/i18n'
 import type { Champion, FormationLayout } from '../../domain/types'
 import { loadCollectionAtVersion } from '../client'
 import { buildDroppedReferenceDetail } from './messages'
@@ -13,15 +14,21 @@ export async function buildFormationSnapshotPrompt<T extends FormationSnapshotLi
   currentDataVersion: string,
   currentFormations: FormationLayout[],
   currentChampions: Champion[],
-  sourceLabel: string,
+  sourceLabel: LocaleText,
   expectedSchemaVersion: number,
 ): Promise<FormationSnapshotPrompt<T>> {
   if (snapshot.schemaVersion !== expectedSchemaVersion) {
     return {
       kind: 'invalid',
       snapshot,
-      title: `${sourceLabel}版本过旧，当前不能直接恢复`,
-      detail: `当前只识别 schemaVersion=${expectedSchemaVersion} 的${sourceLabel}；检测到旧版本为 ${snapshot.schemaVersion}。`,
+      title: {
+        zh: `${sourceLabel.zh}版本过旧，当前不能直接恢复`,
+        en: `${sourceLabel.en} version is too old to restore directly`,
+      },
+      detail: {
+        zh: `当前只识别 schemaVersion=${expectedSchemaVersion} 的${sourceLabel.zh}；检测到旧版本为 ${snapshot.schemaVersion}。`,
+        en: `Only schemaVersion=${expectedSchemaVersion} ${sourceLabel.en} is supported; detected old version ${snapshot.schemaVersion}.`,
+      },
     }
   }
 
@@ -51,11 +58,20 @@ export async function buildFormationSnapshotPrompt<T extends FormationSnapshotLi
     return {
       kind: 'invalid',
       snapshot,
-      title: `${sourceLabel}引用的布局已不存在，当前不能安全恢复`,
+      title: {
+        zh: `${sourceLabel.zh}引用的布局已不存在，当前不能安全恢复`,
+        en: `The layout referenced by ${sourceLabel.en} no longer exists; cannot restore safely`,
+      },
       detail:
         restoreMode === 'compatible'
-          ? `保存时的数据版本 ${snapshot.dataVersion} 已不可读，且当前版本 ${currentDataVersion} 中也找不到布局 ${snapshot.layoutId}。`
-          : `保存版本 ${snapshot.dataVersion} 中已找不到布局 ${snapshot.layoutId}。`,
+          ? {
+              zh: `保存时的数据版本 ${snapshot.dataVersion} 已不可读，且当前版本 ${currentDataVersion} 中也找不到布局 ${snapshot.layoutId}。`,
+              en: `Saved data version ${snapshot.dataVersion} is unreadable, and layout ${snapshot.layoutId} is not found in the current version ${currentDataVersion} either.`,
+            }
+          : {
+              zh: `保存版本 ${snapshot.dataVersion} 中已找不到布局 ${snapshot.layoutId}。`,
+              en: `Layout ${snapshot.layoutId} is not found in saved version ${snapshot.dataVersion}.`,
+            },
     }
   }
 
@@ -68,8 +84,14 @@ export async function buildFormationSnapshotPrompt<T extends FormationSnapshotLi
     return {
       kind: 'invalid',
       snapshot,
-      title: `${sourceLabel}没有可恢复的有效放置结果`,
-      detail: droppedDetail || `${sourceLabel}中没有任何可用的槽位与英雄映射。`,
+      title: {
+        zh: `${sourceLabel.zh}没有可恢复的有效放置结果`,
+        en: `${sourceLabel.en} has no valid placements to restore`,
+      },
+      detail: droppedDetail ?? {
+        zh: `${sourceLabel.zh}中没有任何可用的槽位与英雄映射。`,
+        en: `${sourceLabel.en} has no usable slot-to-champion mapping.`,
+      },
     }
   }
 

@@ -211,6 +211,23 @@ describe('normalizeTargetQualifier', () => {
       ],
     })
   })
+
+  it('targets type:heroes → 英雄白名单谓词（真实样本 ed=196 hero_ids:[1..12]）', () => {
+    // raw targets:[{type:"heroes",hero_ids:[...]}] 语义＝"仅这些英雄吃 buff"（position=any）。
+    // 修复前 normalizeObjectRelation 无 type:heroes 映射 → unsupported → 整条 effect 丢弃。
+    const qualifier = normalizeTargetQualifier({
+      targets: [{ type: 'heroes', hero_ids: [18, 32] }],
+    })
+    expect(qualifier?.predicate).toEqual({
+      op: 'or',
+      children: [
+        { op: 'heroId', heroId: '18', negate: false },
+        { op: 'heroId', heroId: '32', negate: false },
+      ],
+    })
+    expect(matchesHeroQualifier(createHero('18'), qualifier)).toBe(true)
+    expect(matchesHeroQualifier(createHero('1'), qualifier)).toBe(false)
+  })
 })
 
 describe('normalizeStatQualifiers', () => {
@@ -264,6 +281,14 @@ describe('normalizeExplicitTargeting', () => {
     expect(normalizeExplicitTargeting({ targets: [{ type: 'exactly_x_behind', num_columns: 2 }] })).toEqual({ status: 'supported', relation: 'exactlyBehindTwoColumns' })
     expect(normalizeExplicitTargeting({ targets: [{ type: 'col_num', start_from_back: true, column: 0 }] })).toEqual({ status: 'supported', relation: 'rearMostColumn' })
     expect(normalizeExplicitTargeting({ targets: ['front'] }).status).toBe('unsupported')
+  })
+
+  it('targets type:heroes → supported relation=any（英雄白名单不限定位置）', () => {
+    // {type:"heroes",hero_ids:[...]} 是英雄白名单（filter-like），位置关系=any（任意位置的目标英雄）。
+    expect(normalizeExplicitTargeting({ targets: [{ type: 'heroes', hero_ids: [1, 2] }] })).toEqual({
+      status: 'supported',
+      relation: 'any',
+    })
   })
 })
 
@@ -435,6 +460,30 @@ describe('attachSignalSemantics', () => {
       },
     })
     expect(signal.targetQualifier).toBeNull()
+  })
+
+  it('hero 作用域 + stack_func + filter_targets → filter 同时作 target 和 count（ed=2390 Dwarf）', () => {
+    // 真实样本：ed=2390 "Dwarf Champions ... for each Dwarf"、ed=2883 "Neutral ... per affected"、
+    // ed=1612 "magic-attack Champions ... per magic"。hero 作用域 buff 的 filter_targets 同时是 target 和 count
+    // （游戏描述统一 "buff [F] Champions ... for each [F] Champion"）。修复前 legacy 路径 target=null
+    // → 非匹配 carry 也吃 buff（过度 buff）。注意：per_tagged_crusader* / per_hero_attribute + per_hero_expr
+    // 的 tag 是纯 count（自增益 "$source's damage per [tag]"），不在本路径——它们 target=null 正确。
+    const signal = attachSignalSemantics(
+      { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      { stack_func: 'per_crusader', amount_func: 'mult', filter_targets: [{ type: 'by_tags', tags: 'dwarf' }] },
+    )
+    expect(signal.targetQualifier).toEqual({ predicate: { op: 'tag', tag: 'dwarf' } })
+    expect(signal.formationCountQualifier).toEqual({ predicate: { op: 'tag', tag: 'dwarf' } })
+  })
+
+  it('global 作用域 + stack_func + filter_targets → filter 仅作 count，target=null（Ezmerelda chaotic）', () => {
+    // 全局 buff 打全体，filter_targets 仅是 count 源（"per Chaotic Champion"），target=all 保持 null。
+    const signal = attachSignalSemantics(
+      { kind: 'globalDpsMultiplier', value: 20, rawEffect: 'global_dps_multiplier_mult,20', source: 'official-parsed' },
+      { stack_func: 'per_crusader', amount_func: 'mult', filter_targets: [{ type: 'by_tags', tags: 'chaotic' }] },
+    )
+    expect(signal.targetQualifier).toBeNull()
+    expect(signal.formationCountQualifier).toEqual({ predicate: { op: 'tag', tag: 'chaotic' } })
   })
 })
 

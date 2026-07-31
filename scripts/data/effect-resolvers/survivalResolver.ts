@@ -1,5 +1,5 @@
 import type { HeroAbilityAmountFunc, HeroAbilityKind } from '../../../src/domain/abilities/abilityModel'
-import { buildSimplePoolSignal, type EffectResolveContext, type EffectSignalResult } from './resolverShared.ts'
+import { resolvePoolSignal, type EffectResolveContext, type EffectSignalResult } from './resolverShared.ts'
 
 /**
  * survival effect 名 → (kind, amountFunc) 映射。
@@ -18,8 +18,8 @@ const SURVIVAL_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFun
   trials_damage_reduction_mult: { kind: 'damageReduction', amountFunc: 'mult' },
 }
 
-// survival 池（health/healing/damage_reduction）。
+// survival 池（health/healing/damage_reduction）。bucket 由 resolvePoolSignal 按 pool scope + targeting 判定。
 export function resolveSurvivalSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = SURVIVAL_KIND_BY_EFFECT[ctx.effectName]
-  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
+  return match ? resolvePoolSignal(ctx, match.kind, match.amountFunc) : null
 }

@@ -1,4 +1,5 @@
-import type { AppLocale } from '../../app/i18n'
+import type { AppLocale, LocaleText } from '../../app/i18n'
+import { pickLocaleText } from '../../app/i18n'
 import type { FormationSnapshotPreview } from '../../data/formationPersistence'
 import { matchesLocalizedText } from '../../domain/localizedText'
 import type { Champion, FormationDraft, FormationLayout, FormationPreset } from '../../domain/types'
@@ -20,6 +21,15 @@ export function buildReadyFormationState(
 
 export function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '未知错误'
+}
+
+// 错误信息 LocaleText：原始 error.message 不可本地化（多为运行时/IO 报错），zh/en 同串；
+// 仅兜底文案「未知错误/Unknown error」双语。供 StatusMessage detail 在事件处理中直接传双语对。
+export function errorMessageLocaleText(error: unknown): LocaleText {
+  if (error instanceof Error && error.message) {
+    return { zh: error.message, en: error.message }
+  }
+  return { zh: '未知错误', en: 'Unknown error' }
 }
 
 export function formatDateTime(value: string, locale: AppLocale): string {
@@ -82,7 +92,7 @@ export function buildDraftPromptSummary(
   locale: AppLocale,
 ): string {
   if (draftPrompt.kind !== 'restore') {
-    return draftPrompt.detail
+    return pickLocaleText(locale, draftPrompt.detail)
   }
 
   const championCount = Object.keys(draftPrompt.preview.placements).length

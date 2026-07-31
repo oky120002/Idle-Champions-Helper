@@ -4,14 +4,15 @@ import {
 } from '../../../src/domain/effects/effect-string.ts'
 import { normalizeExplicitTargeting } from '../../../src/domain/abilities/signalSemantics.ts'
 import { parseHeroPredicate } from '../../../src/domain/abilities/heroPredicate.ts'
-import type {
-  HeroAbilityAmountFunc,
-  HeroAbilityKind,
-  HeroAbilitySignal,
-  HeroAbilitySource,
-  HeroPositionRelation,
-  HeroQualifier,
-  HeroUnsupportedSignal,
+import {
+  POOL_SCOPE_BY_KIND,
+  type HeroAbilityAmountFunc,
+  type HeroAbilityKind,
+  type HeroAbilitySignal,
+  type HeroAbilitySource,
+  type HeroPositionRelation,
+  type HeroQualifier,
+  type HeroUnsupportedSignal,
 } from '../../../src/domain/abilities/abilityModel'
 
 // === Shared resolver types ===
@@ -95,6 +96,32 @@ export function resolveBucket(effect: unknown): { ok: true; bucket: SignalBucket
         ? 'supportSignals'
         : 'carrySignals',
   }
+}
+
+/**
+ * crit/survival/speed map 派发池的 bucket 判定（替代原先一刀切 'supportSignals'）：
+ * - global 池（globalCrit/globalHealth/damageReduction/cooldownReduction）全队生效 → 恒 supportSignals。
+ * - hero 池（heroCrit/heroHealth/attackSpeed）按 explicit targeting：无目标=自身增益→carrySignals，
+ *   有非 self 目标=光环→supportSignals；targeting 不可解析→unsupported。
+ *   与 dpsResolver 的 hero_dps_multiplier_mult 一致——同是无 target 的英雄侧 stat 增益视为自身。
+ *   依据：effect_def id 1603「Increases $source's Critical Hit chance」(无 target=自身) vs
+ *   id 1504「all Companions」(targets:["all"]+filter=光环)。
+ */
+export function resolvePoolSignal(
+  ctx: EffectResolveContext,
+  kind: HeroAbilityKind,
+  amountFunc: HeroAbilityAmountFunc,
+): EffectSignalResult {
+  if (POOL_SCOPE_BY_KIND[kind] === 'global') {
+    return buildSimplePoolSignal(ctx, kind, amountFunc, 'supportSignals')
+  }
+
+  const bucketResult = resolveBucket(ctx.effectMetadata.effect)
+  if (!bucketResult.ok) {
+    return makeUnsupported(ctx.effectName, ctx.effectValue, bucketResult.note, ctx.source)
+  }
+
+  return buildSimplePoolSignal(ctx, kind, amountFunc, bucketResult.bucket)
 }
 
 export function resolveCountRelation(rawTarget: unknown): HeroPositionRelation | null {

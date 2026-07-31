@@ -68,12 +68,10 @@ ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放�
 **normalize/build 侧（checksum + pipelineHash 双判定）**：`normalizeDefinitionsSnapshot` 与 `buildModels` 经 `shouldSkipDataPipeline` 判定 skip——① raw `checksum`（稳定数据指纹，主判据）与既有产物记录对比、② 管线源码指纹 `pipelineHash`——两者都没变才 skip。`checksum` 缺失时 fallback 到 `current_time`（→updatedAt），但 `current_time` 每次 fetch 单调递增，曾致 ~191 产物纯时间戳空重写，故仅作 fallback。三种重跑触发：
 
 - **raw 更新**（游戏数据更新）：raw `checksum` 变（`current_time` 亦单调前进）→ 重跑。
-- **逻辑改动**（开发者改 normalize/build/数据脚本）：`pipelineHash` 变（`scripts/data` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
+- **逻辑改动**（开发者改 normalize/build/数据脚本或归一化语义）：`pipelineHash` 变（`scripts/data` + `src/domain/abilities` + `src/domain/effects` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
 - **`FORCE_DATA_REBUILD=1`**：手动强制逃生口，覆盖「调试 / 嫌疑产物脏」等需要无条件重跑的场景。
 
-`pipelineHash` 粗粒度覆盖整个 `scripts/data/`：任何数据脚本（effect-helpers / build-models / normalize-champions / patron-perk-signals / ...）改动都触发重跑，保守不漏优于精确但漏检。fetch 无法下载前跳过（discovery 只返回 play_server，`current_time` 在 getDefinitions 响应里），故 fetch 仍每次下载；normalize/build 的 skip 在 fetch 之后生效——raw 没变时省 normalize/build 的几秒重生成，但不省 fetch 带宽。
-
-**`src/domain/abilities` 盲区**：`pipelineHash` 只哈希 `scripts/data`，但 `effect-helpers` / `specialization-catalog` 导入 `src/domain/abilities`（`signalSemantics` 等）为 build 依赖，这些文件不在覆盖内——改动后须 `FORCE_DATA_REBUILD=1` 强制重建，否则 `hero-abilities.json` / `specialization-catalog.json` 保持旧逻辑（见 `docs/runbooks/verify-formation-simulator.md`「归一化改动注意」）。
+`pipelineHash` 粗粒度覆盖 `scripts/data/` + `src/domain/abilities/` + `src/domain/effects/`：后两个 domain 目录的全部源文件都是数据管线 build 依赖（被 effect-helpers / effect-resolvers / feat-catalog / specialization-catalog 导入），任何数据脚本或归一化语义改动都触发重跑，保守不漏优于精确但漏检。fetch 无法下载前跳过（discovery 只返回 play_server，`current_time` 在 getDefinitions 响应里），故 fetch 仍每次下载；normalize/build 的 skip 在 fetch 之后生效——raw 没变时省 normalize/build 的几秒重生成，但不省 fetch 带宽。
 
 **只改 build 产物时单独跑 build-models，避免上游 timestamp 漂移污染 diff**：feature 只动 `build-models.ts`（新增派生字段，如 `gainProfile`）时，跑全量 `data:official` 会顺带 fetch 上游——CNE definitions `current_time` 每日 ticking（即使内容没变）→ normalize 全刷 → ~180 个 champion-details/*.json + 各 collection 纯 `updatedAt` 时间戳 churn 混进 feature commit。此时用 `FORCE_DATA_REBUILD=1 npx tsx scripts/data/build-models.ts` 单独跑，从已提交的 champion-details 只重生成 hero-abilities.json/scenarios.json，diff 干净（仅 feature 真实改动）。
 

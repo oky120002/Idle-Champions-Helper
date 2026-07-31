@@ -3,29 +3,39 @@ import { resolveSurvivalSignal } from './survivalResolver.ts'
 import { buildResolveContext } from './resolverTestFixtures.ts'
 
 describe('resolveSurvivalSignal', () => {
-  it('health_mult → heroHealthMultiplier / add', () => {
+  it('health_mult 无 target → heroHealthMultiplier / carrySignals（自身生命）', () => {
     const r = resolveSurvivalSignal(buildResolveContext({ effectName: 'health_mult', numericValue: 200 }))
     expect(r?.ok).toBe(true)
     if (r?.ok) {
       expect(r.signal.kind).toBe('heroHealthMultiplier')
       expect(r.signal.value).toBe(200)
       expect(r.signal.amountFunc).toBeUndefined()
-      expect(r.bucket).toBe('supportSignals')
+      expect(r.bucket).toBe('carrySignals')
     }
   })
 
-  it('global_health_mult → globalHealthMultiplier', () => {
+  it('health_mult 带 targets:["all"] → supportSignals（光环）', () => {
+    const r = resolveSurvivalSignal(
+      buildResolveContext({ effectName: 'health_mult', effect: { targets: ['all'] } }),
+    )
+    expect(r?.ok).toBe(true)
+    expect(r && r.ok && r.bucket).toBe('supportSignals')
+  })
+
+  it('global_health_mult → globalHealthMultiplier / supportSignals（全队）', () => {
     const r = resolveSurvivalSignal(buildResolveContext({ effectName: 'global_health_mult' }))
     expect(r?.ok).toBe(true)
     expect(r && r.ok && r.signal.kind).toBe('globalHealthMultiplier')
+    expect(r && r.ok && r.bucket).toBe('supportSignals')
   })
 
-  it('damage_reduction → damageReduction / add', () => {
+  it('damage_reduction → damageReduction / add（global 池→supportSignals）', () => {
     const r = resolveSurvivalSignal(buildResolveContext({ effectName: 'damage_reduction' }))
     expect(r?.ok).toBe(true)
     if (r?.ok) {
       expect(r.signal.kind).toBe('damageReduction')
       expect(r.signal.amountFunc).toBeUndefined()
+      expect(r.bucket).toBe('supportSignals')
     }
   })
 

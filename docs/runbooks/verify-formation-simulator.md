@@ -31,7 +31,9 @@ npm run test:simulator
 
 ## 归一化改动注意
 
-`src/domain/abilities/` 下的归一化逻辑改动**不被 pipelineHash 自动检测**（pipelineHash 只覆盖 `scripts/data/**` + 三入口）。改归一化后须 `FORCE_DATA_REBUILD=1` 强制重建 hero-abilities.json，否则产物仍是旧逻辑。
+`pipelineHash` 已覆盖 `scripts/data` + `src/domain/abilities` + `src/domain/effects` + normalize/fetch/build 三入口——`src/domain/abilities`（signalSemantics / heroPredicate / abilityModel / heroTargetingRelation 等）与 `src/domain/effects`（effect-string）的全部源文件都是数据管线 build 依赖，改归一化语义会自动触发 hero-abilities / feat-catalog / specialization-catalog 重建，无需手动 force。
+
+`FORCE_DATA_REBUILD=1` 作通用逃生口（如怀疑指纹漏检、产物异常，或强制覆盖增量跳过）：
 
 ```bash
 FORCE_DATA_REBUILD=1 npm run data:official   # 含网络 fetch

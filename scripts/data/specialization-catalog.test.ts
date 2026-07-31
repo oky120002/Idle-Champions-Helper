@@ -167,15 +167,16 @@ describe('buildSpecializationEntries', () => {
     expect(beast!.signals.map((s) => s.signal.monsterTags)).toEqual([['beast'], ['beast']])
   })
 
-  it('真实 Minsc(7) champion-details → 5 偏好敌人专精（108-112），各含自身 +300 与 wrapper 派生 +25', () => {
+  it('真实 Minsc(7) champion-details → 5 偏好敌人专精（108-112），各含自身 +300 与 wrapper 派生 +275（loot 最高 rarity）', () => {
     const entries = buildSpecializationEntries(minscDetail())
     const byId = new Map(entries.map((e) => [e.upgradeId, e]))
     expect(['108', '109', '110', '111', '112'].every((id) => byId.has(id))).toBe(true)
     const beast = byId.get('109')
     expect(beast?.specializationName?.display).toContain('兽类')
-    // 自身 enemyVulnerability 300 + wrapper 派生 25（buff_upgrades,25,108-112 增益），都 beast tag
+    // 自身 enemyVulnerability 300 + wrapper 派生 275（slot4 loot buff_upgrades 多 rarity 取最高：
+    // rarity1=25/2=87.5/3=150/4=275，装备每槽只装一件最高 rarity）
     expect(beast?.signals).toHaveLength(2)
-    expect(beast!.signals.map((s) => s.signal.value).sort((a, b) => a - b)).toEqual([25, 300])
+    expect(beast!.signals.map((s) => s.signal.value).sort((a, b) => a - b)).toEqual([275, 300])
     expect(beast!.signals.every((s) => s.signal.monsterTags?.includes('beast'))).toBe(true)
     // 其余专精同理（humanoid/monstrosity 各含自身 + 派生）
     expect(byId.get('108')?.signals.length).toBeGreaterThanOrEqual(2)

@@ -4,6 +4,7 @@ import { ChampionPill } from '../../components/ChampionPill'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
 import { createExclusiveStatusBannerItems } from '../../components/statusBannerStackItemBuilders'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
+import { useScenarioLabelLookup } from '../../data/useScenarioLabelLookup'
 import {
   buildChampionSummary,
   buildLayoutSummary,
@@ -22,6 +23,7 @@ type PresetCardProps = {
 
 export function PresetCard({ model, view }: PresetCardProps) {
   const { locale, t, editingPresetId, deleteConfirmId, startEditingPreset, openDeleteConfirm, clearDeleteConfirm, restorePreset, deletePreset } = model
+  const getScenarioLabel = useScenarioLabelLookup()
   const championSummary = buildChampionSummary(view)
   const showCompatibilityNotice = isCompatibleRestore(view) || hasDroppedReferences(view)
   const isEditing = editingPresetId === view.preset.id
@@ -41,8 +43,8 @@ export function PresetCard({ model, view }: PresetCardProps) {
         tone: 'error',
         ...(view.prompt.kind === 'invalid'
           ? {
-              title: view.prompt.title,
-              detail: view.prompt.detail,
+              title: t(view.prompt.title),
+              detail: t(view.prompt.detail),
             }
           : {}),
       },
@@ -52,7 +54,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
         tone: 'info',
         title: t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' }),
         ...(view.prompt.kind === 'restore' && showCompatibilityNotice
-          ? { detail: buildRestoreStatusDetail(view.prompt.preview) }
+          ? { detail: t(buildRestoreStatusDetail(view.prompt.preview)) }
           : {}),
       },
     ],
@@ -83,7 +85,8 @@ export function PresetCard({ model, view }: PresetCardProps) {
         </span>
         <span className="tag-pill tag-pill--muted">
           {view.preset.scenarioRef
-            ? `${view.preset.scenarioRef.kind}:${view.preset.scenarioRef.id}`
+            ? (getScenarioLabel(view.preset.scenarioRef)
+              ?? `${view.preset.scenarioRef.kind}:${view.preset.scenarioRef.id}`)
             : t({ zh: '未绑定正式场景', en: 'No formal scenario linked' })}
         </span>
       </div>
