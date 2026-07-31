@@ -96,13 +96,4 @@ repair: rebuild
     - （按 requiredLevel 分层，无 requiredUpgradeId 依赖链）
     - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
 
-- 专精 buff_upgrade wrapper 靶向非专精 upgrade 未展开（蔚 ed=1650 +200% 善良榜样缺失） <!-- auto-todo:id=atd_e4e90d5148 -->
-  - 记录时间: `2026-07-31T21:41:58+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/specialization-catalog.ts:85`
-  - 备注: ADR 0017 已外部化专精（catalog + applySpecializationsToProfile 运行时按玩家选择注入，47 英雄/225 信号），原 atd_9a1b2c3d4e「specialization 源未采集」已大部分解决；其提议的「加 specialization 到 collectRawEffectEntries effectEntries」会重复计数，勿采纳。
-    - 剩余缺口：专精 upgrade 上的 buff_upgrade wrapper 若靶向非专精 upgrade，三条路径都漏——base collectEffectEntries 不展开 specializationEntries（专精不应在 base，正确）；catalog buildSpecializationEntries 的 normalizeEffectSignal 不解析 wrapper kind（返回 unsupported，跳过）；specializationDerived 只收靶向专精 upgrade 的 wrapper。结果玩家选该专精时增益未注入。
-    - 真实样本：蔚 hero 95 ed=1650 劝人向善 buff_upgrade,200,12312（+200% 善良榜样 upgrade 12312）；hero 95 base 信号无此 +200%（已核实），carryDps 欠估。ed=1648/1649 是 change_upgrade_data（改目标集，非 scoring，正确不进 catalog）。
-    - 处置：buildSpecializationEntries 补 buff_upgrade wrapper 展开——从 specializationEntries 找 wrapper kind，靶向非专精 upgrade 时，resolveEntrySignal 解析目标 upgrade base signal + 派生信号挂到源专精 upgradeId（玩家选该专精时随 applySpecializationsToProfile 注入）。复用 collectEffectEntries 的 wrapper 展开逻辑。
-
 <!-- auto-todo:end -->
