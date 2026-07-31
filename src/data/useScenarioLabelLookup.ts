@@ -46,7 +46,9 @@ export function useScenarioLabelLookup(): (ref: ScenarioRef) => string | null {
 
   useEffect(() => {
     let disposed = false
-    loadScenarioLabelLookup().then((loaded) => {
+    // ponytail: loadScenarioLabelLookup 内部已 .catch 回退空表，此处 fire-and-forget；
+    // void 显式标记不等待，满足 no-floating-promises。
+    void loadScenarioLabelLookup().then((loaded) => {
       if (!disposed) {
         setLookup(loaded)
       }
