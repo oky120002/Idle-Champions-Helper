@@ -4,6 +4,7 @@ import path from 'node:path'
 import { mkdtemp, readFile } from 'node:fs/promises'
 import {
   compareUpdatedAt,
+  collectPipelineFiles,
   computePipelineHash,
   getUpdatedAtFromDefinitions,
   isForceDataRebuild,
@@ -64,15 +65,25 @@ it('writeUpdatedAtJsonFile 会创建父目录并写出 JSON', async () => {
 })
 
 // 数据管线（normalize/build）增量跳过 —— AGENTS.md §1.2「未变整批跳过重生成」。
-// pipelineHash 覆盖 scripts/data + normalize/fetch/build 三入口（自动检测、无需 force）；
-// 但 src/domain/abilities 归一化逻辑（signalSemantics 等，effect-helpers 的 build 依赖）不在覆盖内——
-// 改后须 FORCE_DATA_REBUILD=1 强制重建（见 docs/runbooks/verify-formation-simulator.md「归一化改动注意」）。
+// pipelineHash 覆盖 scripts/data + src/domain/abilities + src/domain/effects + normalize/fetch/build 三入口
+// （自动检测、无需 force）。src/domain/abilities 与 src/domain/effects 全部源文件都是数据管线 build 依赖，
+// 改归一化语义自动触发重建，不再需要手动 FORCE_DATA_REBUILD。
 
 it('computePipelineHash 返回 16 字符 hex 且稳定', async () => {
   const first = await computePipelineHash()
   const second = await computePipelineHash()
   expect(first).toMatch(/^[0-9a-f]{16}$/)
   expect(second).toBe(first)
+})
+
+it('pipelineHash 覆盖 src/domain/abilities + src/domain/effects 的 build 依赖', async () => {
+  const files = await collectPipelineFiles()
+  expect(files.some((f) => f.includes('src/domain/abilities/signalSemantics.ts'))).toBe(true)
+  expect(files.some((f) => f.includes('src/domain/abilities/heroPredicate.ts'))).toBe(true)
+  expect(files.some((f) => f.includes('src/domain/abilities/abilityModel.ts'))).toBe(true)
+  expect(files.some((f) => f.includes('src/domain/effects/effect-string.ts'))).toBe(true)
+  // test 文件不进指纹（避免改测试触发数据重建）
+  expect(files.some((f) => f.endsWith('.test.ts'))).toBe(false)
 })
 
 it('shouldSkipDataPipeline: 无 existingHash（首次/旧 version.json）→ 不 skip', () => {

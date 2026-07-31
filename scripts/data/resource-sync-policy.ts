@@ -174,11 +174,19 @@ export async function removeUnexpectedFiles(
 // ---------------------------------------------------------------------------
 
 /**
- * 数据管线源码指纹：scripts/data 下所有非 test 的 .ts + normalize/fetch/build 三个入口脚本。
+ * 数据管线源码指纹：scripts/data + src/domain/abilities + src/domain/effects 下所有非 test 的 .ts，
+ * 外加 normalize/fetch/build 三个入口脚本。
+ *
+ * src/domain/abilities（signalSemantics / heroPredicate / abilityModel / heroTargetingRelation 等）
+ * 与 src/domain/effects（effect-string）是 effect-helpers / effect-resolvers / feat-catalog /
+ * specialization-catalog 的 build 依赖——这两个目录的全部源文件都被数据管线消费，无纯运行时文件，
+ * 故纳入粗粒度指纹不会误触发：任何改动都确会影响产物。曾长期仅覆盖 scripts/data，导致改归一化
+ * 语义后忘记 FORCE_DATA_REBUILD → 静默 stale build（见 854... / a108aaca）。
+ *
  * 用于增量跳过：归一化/build 逻辑改动 → 指纹变 → 自动重跑，不依赖开发者记得 force。
- * ponytail: 粗粒度（整个 scripts/data），任何数据脚本改动都触发重跑——保守不漏优于精确但漏检。
+ * ponytail: 粗粒度（整目录），任何 build 依赖改动都触发重跑——保守不漏优于精确但漏检。
  */
-const PIPELINE_HASH_DIRS = ['scripts/data']
+const PIPELINE_HASH_DIRS = ['scripts/data', 'src/domain/abilities', 'src/domain/effects']
 const PIPELINE_HASH_FILES = [
   'scripts/normalize-idle-champions-definitions.ts',
   'scripts/fetch-idle-champions-definitions.ts',
@@ -204,15 +212,21 @@ async function collectTsFiles(dir: string): Promise<string[]> {
   return result
 }
 
-export async function computePipelineHash(): Promise<string> {
+/** pipelineHash 覆盖的文件清单（排序），导出供测试验证 build 依赖覆盖。 */
+export async function collectPipelineFiles(): Promise<string[]> {
   const files = new Set<string>(PIPELINE_HASH_FILES)
   for (const dir of PIPELINE_HASH_DIRS) {
     for (const file of await collectTsFiles(dir)) {
       files.add(file)
     }
   }
+  return [...files].sort()
+}
+
+export async function computePipelineHash(): Promise<string> {
+  const files = await collectPipelineFiles()
   const hash = createHash('sha256')
-  for (const file of [...files].sort()) {
+  for (const file of files) {
     hash.update(file)
     try {
       hash.update(await readFile(file))
