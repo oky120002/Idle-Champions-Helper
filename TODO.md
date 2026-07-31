@@ -35,15 +35,6 @@ repair: rebuild
     - 实施障碍：planner scenario 来自 build-models.ts buildOfficialScenarioModel（forcedHeroes=variant.forcedHeroIds 原始字段，不含 slot_escort hero_id）；slot_escort hero_id 在 definition.game_changes，normalize-adventures 的 collectHeroRestrictions 已遍历但产物未喂 planner。要让 planner 知道护送英雄，需 build-models 接入 game_changes 数据源（数据流改造，非 auto-todo 原记的「collectHeroRestrictions 加几行」）。
     - 处置：影响面 1 variant，原标注「不优先」成立；实施需 build-models 数据流改造 + 管线重跑 + 下游验证，暂不做。
 
-- 阵型预设卡片显示场景原始标识串（如 variant:v80），玩家无法识别对应关卡 <!-- auto-todo:id=atd_83d6a91777 -->
-  - 记录时间: `2026-07-25T23:39:00+08:00`
-  - 类型: optimization
-  - 位置: `src/pages/formation/FormationPresetCard.tsx:48`
-  - 备注: FormationPresetCard.tsx:48 与 PresetCard.tsx:85-86 把阵型绑定的场景标识渲染为 `${kind}:${id}` 原始串（如 variant:v80），玩家看不懂对应哪个关卡
-    - 深入评估原 atd_c6d7b8b82a（validation 校验场景标识）时发现方向有误：场景标识是元数据，不参与恢复/推荐/评分任何功能逻辑；真问题是 UI 展示不友好
-    - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
-    - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
-
 - planner.css 剩余交织块未完全拆分（scenario-selection + result-card + save-preset） <!-- auto-todo:id=atd_7a3f1c9d2e -->
   - 记录时间: `2026-07-30T15:40:00+08:00`
   - 类型: optimization
