@@ -62,7 +62,7 @@ ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放�
 
 ## 12. normalize/build 增量跳过：updatedAt + pipelineHash 双判定，FORCE 强制逃生
 
-CLAUDE.md §1.2「未变整批跳过重生成」在 normalize/build 的实现：`normalizeDefinitionsSnapshot` 与 `buildModels` 开头对比 ① raw `current_time`（→ updatedAt）与产物 `updatedAt`、② 数据管线源码指纹 `pipelineHash`——两者都没变才 skip。三种重跑触发：
+`CLAUDE.md`「资源更新与仓库体积」（未变整批跳过重生成）在 normalize/build 的实现：`normalizeDefinitionsSnapshot` 与 `buildModels` 开头对比 ① raw `current_time`（→ updatedAt）与产物 `updatedAt`、② 数据管线源码指纹 `pipelineHash`——两者都没变才 skip。三种重跑触发：
 
 - **raw 更新**（游戏数据更新）：`current_time` 前进 → updatedAt 变 → 重跑。
 - **逻辑改动**（开发者改 normalize/build/数据脚本）：`pipelineHash` 变（`scripts/data` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
