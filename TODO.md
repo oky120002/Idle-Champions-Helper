@@ -98,16 +98,6 @@ repair: rebuild
     - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
     - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
 
-- pipelineHash 不覆盖 src/domain/abilities build 依赖（改归一化须手动 FORCE_DATA_REBUILD） <!-- auto-todo:id=atd_b7e2d9f1c4 -->
-  - 记录时间: `2026-07-28T02:32:00+08:00`
-  - 类型: enhancement
-  - 位置: `scripts/data/resource-sync-policy.ts:181`
-  - 备注: planner DPS 审计（A11 runbooks 可执行性）发现：pipelineHash 仅哈希 scripts/data + normalize/fetch/build 三入口；effect-helpers（scripts/data）导入 src/domain/abilities（signalSemantics/heroPredicate/abilityModel）与 src/domain/effects（effect-string）为 build 依赖，但这些文件不在哈希覆盖内。改这些文件后若不 FORCE_DATA_REBUILD=1，hero-abilities.json 保持旧逻辑（静默 stale build）。
-    - （PIPELINE_HASH_DIRS = ['scripts/data']）
-    - runbook（verify-formation-simulator.md「归一化改动注意」）+ AGENTS.md §1.2 + resource-sync-policy.test.ts 注释均已诚实标注此局限与 workaround（A11 修正了原过宽自述）。
-    - 根因修复选项：PIPELINE_HASH_DIRS 加 `src/domain/abilities` + `src/domain/effects`（粗粒度，保守不漏，但 abilities 运行时改动也触发数据重建 ~10-30s，over-trigger）；或精确列 build 依赖文件（脆弱，transitive deps 易漏）。权衡未定，暂不做。
-    - 处置：低优先级；当前 workaround（FORCE_DATA_REBUILD）已文档化且可执行；扩展覆盖待 over-trigger 代价 vs stale-build 风险的产品权衡。
-
 - heroDpsMultiplier legacy filter→count 潜在 target 丢失（119 signal target=null） <!-- auto-todo:id=atd_c8f3a2b1d9 -->
   - 记录时间: `2026-07-28T08:28:00+08:00`
   - 类型: investigation
