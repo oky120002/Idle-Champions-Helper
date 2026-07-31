@@ -43,7 +43,14 @@
 | `build-models.test.ts` | 1200/19 | ✅ 首用例已拆三（abilities / scenarios / semantic overrides）+ 共享 `setupBuildModelsOutputs` helper（写全 fixture + 跑 buildModels 返回四输出）；`normalizeEffectSignal` 系列经评估**不**转 `it.each`（见 D） |
 
 ### B. 抽夹具（重复构造）
-sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/用例：`sync-illustrations`（1064/6）、`sync-pets`（777/4）、`sync-animations`（533/3）、`normalize`（789/4）。动作：抽公共读取/构造到 `scripts/fixtures/`（已存在目录），各 sync 测试引用。
+sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/用例：`sync-illustrations`（1064/6）、`sync-pets`（777/4）、`sync-animations`（533/3）、`normalize`（789/4）。原动作：抽公共读取/构造到 `scripts/fixtures/`。
+
+**⚠️ 执行时复核（批 2 recon）——原框定需修正**：这些测试重复的是**读产物样板**（`readJson(path.join(outputDir, 'X.json')) as T`），非共享**输入数据**。`scripts/fixtures/` 现存的是共享输入 mock（`mock-definitions{,-zh}.json`，纯数据），把读 helper 放这里会混淆数据与代码。实测各文件：
+- `sync-pets`：3 处重复读 `{ pets.json as PetsCollection, pet-animations.json as PetAnimationsCollection }` 同类型对 → 真 repeating，可抽 `readPetsOutput(outputDir)` helper。
+- `normalize`：11 处读**不同**产物（champions/adventures/patrons/game-rules/effect-reference/patron-perks/trials/variants/enums/champion-details/version）+ 各自内联类型 → 非数据重复；至多抽 `readOutputJson<T>(dir, name)` 减 `path.join` 样板，边际收益。
+- `sync-illustrations`（3 命中）/ `sync-animations`（1 命中）：重复度低，逐文件评估，可能不值得改。
+
+重定 scope：批 2 = 抽**读 helper**（非 fixture 数据）到合适位置（就近或 `scripts/data/` 下 test-util），pets 优先；normalize/illustrations 仅边际收益时跳过。**勿强行套用"抽到 scripts/fixtures/"**——co-located 规范鼓励被测-测试 1:1，读样板轻度重复不构成拆分理由（见 CLAUDE.md AI-first 根目标 3 指标）。
 
 ### C. 合并（过碎文件，谨慎）
 最小文件多为合理的 prod-only 守护或单职责（`plannerProfileSourceLabelProd.test.ts` 9 行、`scoringSupportSync.test.ts` 14 行守护）。**默认不合并**——co-located 规范鼓励「被测-测试 1:1」，合并破坏导航。仅当多微文件覆盖同一被测且无独立语义时才合并。
@@ -87,7 +94,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 |---|---|---|---|
 | 0（P0） | 修 planner route 11 红回绿 | 低（改测试 mock，不动产品） | ✅ 完成 |
 | 1 | `build-models.test.ts` 重构（拆首用例；`it.each` 经评估否决） | 低（纯重构，行为不变） | ✅ 完成 |
-| 2 | sync 系列抽公共夹具到 `scripts/fixtures/` | 中（重构 + 重跑） | ⏳ |
+| 2 | sync 系列抽读 helper（recon 已修正 scope：非 fixture 数据，见 §B） | 低–中（pets 真重复；其余边际） | ⏳ recon 完成，待执行 |
 | 3 | `placementFit.test.ts` 按信号家族拆主题 | 中（40 用例分组迁移） | ⏳ |
 | 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | ⏳ |
 | 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ⏳ |
