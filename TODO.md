@@ -24,25 +24,6 @@ repair: rebuild
     - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- equipmentAdjustment 结构性局限（stage 15 接线前需重审） <!-- auto-todo:id=atd_4410248f38 -->
-  - 记录时间: `2026-07-24T22:10:04+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/planner/steadyStateScoring.ts:335`
-  - 备注: 当前 equipmentAdjustmentByHero 按 carryId 取调整比（ownedEquipMult/theoreticalLootMult）乘进整个 carryDps，但支持位 loot 贡献未调整且只收 global_dps
-    - 影响①：carryDps 的 sharedPools 聚合所有英雄 global_dps loot，支持位装备贡献从不缩放
-    - 影响②：theoreticalLootMult/ownedEquipMult 只收 global_dps_multiplier_mult（692 条），不收 hero_dps（160）和 buff_upgrade（2088）loot，而 M1 collectRawEffectEntries 全部进 damage pool → carry 自己的 hero_dps loot 停在 M1 理论上界
-    - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
-    - 当前死码（?? 1 默认）无运行时影响；关联 `docs/research/data/planner/equipment-and-abilities.md`（hero_dps 缺口已文档化，支持位未调整后果未显式记录）
-
-- scoreFormation 三重 evaluatePlacementFit 调用（实际冗余小，非 3× position 检查） <!-- auto-todo:id=atd_d71dd2a7d8 -->
-  - 记录时间: `2026-07-25T00:05:30+08:00`
-  - 类型: optimization
-  - 位置: `src/domain/planner/steadyStateScoring.ts:260`
-  - 备注: 第十二轮审计复核修正原描述：dimension filter 在 matchesPositionQualifier/matchesHeroQualifier 之前（placementFit.ts:218-223），每个信号只在自己维度的调用里做 position/hero 检查一次——原「position/hero 检查 3×」是事实错误。
-    - 实际冗余：collectSignals 跑 3 次（廉价 array spread）+ for-loop 3 次（每信号 dimension check 跑 3 次但 position/hero/pool 只 1 次）；crit/vuln 维度的 pool 聚合已由 evaluatePlacementFit 的 aggregatePools:false 跳过（原 atd_6badc71012 已解决），剩余冗余仅 collectSignals 与 dimension filter 重复。
-    - 量级：crit/vuln 活跃信号通常 0-2 个，pool 聚合是廉价 Map op；整体浪费可忽略（H² 对 × 少量 op）。
-    - 处置：不优先优化（ponytail：无实测性能需求不重构热路径；scoring core 改动风险 > 收益）。若 profiling 显示 scoreFormation 是瓶颈再统一调用 + 按 dimension 分区。
-
 - slot_escort 英雄占格：仅 v80 有干净 hero_id，v232 需 name 解析，v181/v186 是 NPC <!-- auto-todo:id=atd_aca5040e39 -->
   - 记录时间: `2026-07-25T00:05:44+08:00`
   - 类型: issue
@@ -53,15 +34,6 @@ repair: rebuild
     - raw 复核（2026-07-25）：slot_escort 记录共 340 条，含 hero_id 的仅 v80（=18）；另发现 follow_hero_id（hero 141，语义待查，暂不处理）；NPC 形态含 names 无 hero_id，天然排除。
     - 实施障碍：planner scenario 来自 build-models.ts buildOfficialScenarioModel（forcedHeroes=variant.forcedHeroIds 原始字段，不含 slot_escort hero_id）；slot_escort hero_id 在 definition.game_changes，normalize-adventures 的 collectHeroRestrictions 已遍历但产物未喂 planner。要让 planner 知道护送英雄，需 build-models 接入 game_changes 数据源（数据流改造，非 auto-todo 原记的「collectHeroRestrictions 加几行」）。
     - 处置：影响面 1 variant，原标注「不优先」成立；实施需 build-models 数据流改造 + 管线重跑 + 下游验证，暂不做。
-
-- Planner 可编辑阵型棋盘（exact-formation 评估 UI） <!-- auto-todo:id=atd_147941fa1e -->
-  - 记录时间: `2026-07-25T21:03:14+08:00`
-  - 类型: follow-up
-  - 位置: `src/pages/planner/`
-  - 备注: evaluateFormation 纯入口已就绪（评估指定阵型不搜索，CLI 已证明），planner UI 尚无可编辑棋盘触发它
-    - 需 UX 设计桌面拖拽 / 移动 HeroPicker 的 exact-formation 评估面板
-    - 区别于现有 lockedSlots 重搜：lockedSlots 仍搜索最优排列，evaluateFormation 评估用户指定阵型
-    - 当前调整→重算闭环由 lockedSlots 承担，exact-formation 评估是下一步
 
 - 阵型预设卡片显示场景原始标识串（如 variant:v80），玩家无法识别对应关卡 <!-- auto-todo:id=atd_83d6a91777 -->
   - 记录时间: `2026-07-25T23:39:00+08:00`
@@ -95,5 +67,15 @@ repair: rebuild
   - 备注: ADR 0017 UI 输入层按 requiredLevel 分层、每层单选，假设「同 requiredLevel = 同互斥组」。hero 165/55/81 是级联型专精树：依赖层（如 165 lvl=150 的 24 选项）各自 requiredUpgradeId 指向上层某个选择，UI 把依赖层全平铺成单选、且改上层后 applyTierSelection 不重置下层 → what-if override 可能保留游戏不可能的组合（如 lvl70=Tyr 但 lvl150 选了要求 Moradin 的项）。仅影响面板 override 探索（3 英雄）；核心推荐用存档 specialization_choices（游戏保证合法），不受影响。
     - （按 requiredLevel 分层，无 requiredUpgradeId 依赖链）
     - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
+
+- equipmentAdjustment 支持位 loot 未调整 + hero_dps/buff_upgrade loot 不收（UI 已接线，近似仍存） <!-- auto-todo:id=atd_3cb8df390e -->
+  - 记录时间: `2026-07-31T22:11:10+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/planner/steadyStateScoring.ts:335`
+  - 备注: 原 atd_4410248f38 备注「stage 15 UI 接线前需重审」已部分过期——UI 已接线（PlannerEvaluatePage.tsx:90 + usePlannerPageModel.ts:61 计算 equipmentAdjustmentByHero 并传入）。结构性局限仍然成立：
+    - 影响①：carryDps 的 sharedPools 聚合所有英雄 global_dps loot，支持位装备贡献从不缩放
+    - 影响②：theoreticalLootMult/ownedEquipMult 只收 global_dps_multiplier_mult（692 条），不收 hero_dps（160）和 buff_upgrade（2088）loot；equipmentMult.ts:13-17 注释明确 MVP 范围只接 hero_dps_multiplier_mult
+    - 当前死码（?? 1 默认）已活，非阻塞；近似后果（支持位 loot 未调整）未在 docs/research/data/planner/equipment-and-abilities.md 显式记录
+    - 处置：待 owned 装备精化时再评估是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）；当前降低优先级
 
 <!-- auto-todo:end -->
