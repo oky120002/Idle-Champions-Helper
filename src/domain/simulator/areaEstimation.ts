@@ -1,6 +1,5 @@
-import type { GameNumberValue } from '../simulator/gameNumber'
-import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
-import { MAX_AREA, monsterDpsAt, monsterHealthAt } from '../simulator/monsterStats'
+import { compareGameNumbers, type GameNumberValue } from './gameNumber'
+import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
 
 /**
  * 推图层数预估。

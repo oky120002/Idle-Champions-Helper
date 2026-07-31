@@ -32,7 +32,7 @@ stat(area) = base × Π_{a=2..area} curve_lookup(a)
 - **生命**（area ≤ 2000）：`health(A) = 10 × 2.031^(A-1)`。area 2001+ 增长率升至 3.031、2251+ 升至 4.531（高层加速）。
 - **dps**：增长率常态为 1（不增长），仅 boss 层（50/100/151/201…，第 3 个起 = 151 + 50k）×1.75；即 `dps(A) = 1.75^(boss 层数)`。
 
-数值合理性：`health(50) ≈ 10^16`，`health(100) ≈ 10^31`，`health(1000) ≈ 10^308`（逼近 double 上界），`health(2000) ≈ 10^616`（超出 float → 必须用 break_eternity，`GameNumberValue` 已是）。怪物生命每层 ~2× 是 IC 指数墙核心；dps 增长缓慢 → survival 约束在推图初期决定后长期稳定，**HP（击杀时间）才是推图层数的主要约束**。
+数值合理性：`health(50) ≈ 10^16`，`health(100) ≈ 10^31`，`health(1000) ≈ 10^308`（逼近 double 上界），`health(2000) ≈ 10^616`（超出 float → 必须用 decimal.js，`GameNumberValue` 已是）。怪物生命每层 ~2× 是 IC 指数墙核心；dps 增长缓慢 → survival 约束在推图初期决定后长期稳定，**HP（击杀时间）才是推图层数的主要约束**。
 
 ### 绝对值校准边界
 

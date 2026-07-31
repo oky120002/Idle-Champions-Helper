@@ -4,7 +4,9 @@ import {
   type HeroAbilityDimension,
   type HeroAbilitySignal,
 } from '../../src/domain/abilities/abilityModel'
+import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics'
 import { parseEffectPayload } from '../../src/domain/effects/effect-string'
+import type { SignalBucket } from './effect-resolvers/resolverShared'
 
 /**
  * feat（专长）归一化：hero_feat_defines → 按 heroId 索引的 FeatEntry[]。
@@ -20,6 +22,8 @@ import { parseEffectPayload } from '../../src/domain/effects/effect-string'
  */
 export interface FeatSignalEntry {
   dimension: HeroAbilityDimension
+  /** build 期 resolveBucket 判定的归属（自增益 carrySignals / 支援全局 supportSignals）。 */
+  bucket: SignalBucket
   signal: HeroAbilitySignal
 }
 
@@ -53,7 +57,7 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
       continue
     }
     const payload = parseEffectPayload(effectString)
-    const result = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', { effectPayload: payload })
+    const result = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', { effectPayload: payload, effect })
     if (!result.ok) {
       continue
     }
@@ -61,7 +65,10 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
     if (!dimension) {
       continue
     }
-    signals.push({ dimension, signal: result.signal })
+    // attachSignalSemantics 与 buildOfficialHeroModel 同源，保证限定符与 base 一致；
+    // bucket 复现 base 分类（resolveBucket），供 runtime 路由（feat 外部化，与专精同构）。
+    const signal = attachSignalSemantics(result.signal, effect as Record<string, unknown>)
+    signals.push({ dimension, bucket: result.bucket, signal })
   }
 
   if (signals.length === 0) {

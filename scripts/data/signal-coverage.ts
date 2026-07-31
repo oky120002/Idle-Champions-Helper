@@ -215,7 +215,7 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
       }
     }
 
-    for (const entry of collectEffectEntries(detail)) {
+    for (const entry of collectEffectEntries(detail).entries) {
       totalEffectEntries += 1
       incrementCounter(sourceBucketCounts, entry.sourceBucket)
 

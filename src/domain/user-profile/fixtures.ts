@@ -16,6 +16,7 @@ export function createOwnedHero(
     gildableSlotId: null,
     lootBySlot: {},
     legendaryBySlot: {},
+    specializations: [],
     ...overrides,
   }
 }

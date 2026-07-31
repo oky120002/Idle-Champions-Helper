@@ -1,0 +1,121 @@
+@layer pages.planner {
+  /* 专精选择面板：扁平高密度战术资料——外层用轻分隔线，内部条目透明化（.impeccable.md）。 */
+  .planner-specialization-panel {
+    display: grid;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--color-border-soft);
+  }
+
+  .planner-specialization-panel__summary {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    cursor: pointer;
+    list-style: none;
+  }
+  .planner-specialization-panel__summary::-webkit-details-marker {
+    display: none;
+  }
+  .planner-specialization-panel__summary::before {
+    content: '▸';
+    align-self: center;
+    color: var(--color-copper);
+    font-size: 0.7rem;
+    transition: transform 160ms ease;
+  }
+  .planner-specialization-panel[open] .planner-specialization-panel__summary::before {
+    transform: rotate(90deg);
+  }
+
+  .planner-specialization-panel__title {
+    color: var(--color-copper);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .planner-specialization-panel__hint {
+    color: var(--color-text-soft);
+    font-size: 0.72rem;
+  }
+
+  .planner-specialization-panel__body {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .planner-specialization-row {
+    display: grid;
+    gap: var(--space-2xs);
+    padding: var(--space-2xs) 0;
+    border-top: 1px solid var(--color-border-soft);
+  }
+  .planner-specialization-row:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .planner-specialization-row__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-xs);
+  }
+
+  .planner-specialization-row__name {
+    color: var(--color-text);
+    font-size: 0.9rem;
+  }
+
+  .planner-specialization-row__reset {
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 0.72rem;
+    color: var(--color-text-soft);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .planner-specialization-row__reset:hover {
+    color: var(--color-copper);
+  }
+
+  .planner-specialization-tier {
+    display: grid;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .planner-specialization-tier__legend {
+    padding: 0;
+    color: var(--color-text-soft);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .planner-specialization-tier__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+  }
+
+  .planner-specialization-tier__option input[type='radio'] {
+    width: 0.95rem;
+    height: 0.95rem;
+    accent-color: var(--color-copper);
+  }
+
+  .planner-specialization-tier__option:has(input:checked) {
+    color: var(--color-text);
+  }
+}

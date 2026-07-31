@@ -889,7 +889,7 @@ it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，理�
       },
     ],
   }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const featEntries = entries.filter((entry) => entry.sourceBucket === 'feat')
   const effectStrings = featEntries.map((entry) => entry.effectString).sort()
   expect(effectStrings).toEqual(['global_dps_multiplier_mult,10', 'hero_dps_multiplier_mult,100'])
@@ -913,7 +913,7 @@ it('collectEffectEntries 收集 ability effects', () => {
       effects: ['global_dps_multiplier_mult,0.8333333333333333', 'do_nothing'],
     },
   }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const abilityEntries = entries.filter((entry) => entry.sourceBucket === 'ability')
   const effectStrings = abilityEntries.map((entry) => entry.effectString).sort()
   expect(effectStrings).toEqual(['do_nothing', 'global_dps_multiplier_mult,0.8333333333333333'])
@@ -952,7 +952,7 @@ it('collectEffectEntries ability 源静态 buff_upgrade 不派生（贡献已在
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
   // ability 源静态 buff_upgrade 全部不派生（不论 required_level、magnitude、单复数）。
   expect(derived).toHaveLength(0)
@@ -978,7 +978,7 @@ it('collectEffectEntries static_dps_mult fallback：复杂 effect 进 unsupporte
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const fallback = entries.filter((entry) => entry.sourceBucket === 'static-dps')
   expect(fallback.length).toBe(1)
   expect(fallback[0]?.signalPreset.kind).toBe('heroDpsMultiplier')
@@ -1002,7 +1002,7 @@ it('collectEffectEntries static_dps_mult 不与可解析 effect 重复（防双�
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const fallback = entries.filter((entry) => entry.sourceBucket === 'static-dps')
   expect(fallback.length).toBe(0)
   // effect signal 仍在（可解析，未丢失）
@@ -1027,7 +1027,7 @@ it('collectEffectEntries loot buff_upgrade wrapper 合并 wrapper 自身 filter_
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
   expect(derived.length).toBe(1)
   // wrapper 的 hero_ids 限定合并到 derived signal 的 targetQualifier（base 无 filter → 直接取 wrapper 限定）。

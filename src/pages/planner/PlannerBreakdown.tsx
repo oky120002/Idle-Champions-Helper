@@ -62,8 +62,8 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
     { key: 'crit', label: t({ zh: '暴击', en: 'Crit' }), value: breakdown.factors.crit },
     { key: 'vulnerability', label: t({ zh: '易伤', en: 'Vulnerability' }), value: breakdown.factors.vulnerability },
     { key: 'globalBuff', label: t({ zh: '全局', en: 'Global' }), value: breakdown.factors.globalBuff },
-    { key: 'equipment', label: t({ zh: '装备', en: 'Equipment' }), value: breakdown.factors.equipmentAdjustment },
-    { key: 'externalHeroDps', label: t({ zh: '外部加成', en: 'External' }), value: breakdown.factors.externalHeroDps },
+    // 装备 + 外部（patron/blessing）hero_dps 同 key 加法合并为单一池因子，非各自独立乘。
+    { key: 'heroDpsPool', label: t({ zh: '英雄 DPS 加成', en: 'Hero DPS bonus' }), value: breakdown.factors.heroDpsPool },
   ]
   // 值显示为 ×1.00 的因子无贡献，渲染纯噪声（典型场景 crit/globalBuff/equipment 常为默认 1）——隐藏。
   const visibleFactors = factors.filter((factor) => formatFactor(factor.value) !== '1.00')

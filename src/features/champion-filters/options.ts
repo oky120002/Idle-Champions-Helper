@@ -2,7 +2,7 @@ import {
   getChampionMechanicCategoryId,
   getChampionTagLabel,
   getChampionTagsForGroup,
-} from '../../domain/championTags'
+} from '../../domain/champion-tags/selectors'
 import type { Champion } from '../../domain/types'
 import type { AppLocale } from '../../app/i18n'
 import type { AttributeFilterGroupId, MechanicOptionGroup } from './types'

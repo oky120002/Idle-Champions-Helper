@@ -32,6 +32,7 @@
 - `expression-evaluator.md`：当前布尔表达式求值边界，以及其他表达式域的职责分界。
 - `dps-mechanics.md`：DPS 机制注册表（id / 识别字段 / 代码处理点 / 使用英雄），机制 id 三处一致的锚点。
 - `dps-mechanic-abstraction.md`：机制抽象四条阈值（≥2 抽象 / 孤儿特化+预警 / 孤儿→≥2 立刻抽象 / >10 升级策略注册表）。
+- `mechanic-isolation.md`：加成机制隔离架构——四种同构隔离模式（EffectResolver / MechanicResolver / DimensionFactor / BonusProvider），模式 1（effect→signal 解析层）已实现。
 - `champion-reference-verification.md`：英雄实测参照数据统一 schema（机制倍率 + 伤害快照）、校准口径与测试两组。
 
 ## 关联入口

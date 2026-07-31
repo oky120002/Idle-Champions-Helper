@@ -155,4 +155,36 @@ repair: rebuild
   - 备注: 双主题深度审计（854c8ff1）发现 `check-colors.ts` 只扫描硬编码颜色字面量（rgb/#hex），不校验「文字 vs 背景」对比度。前序 b0e03936 自称「技术可读性（L 差 >65%）已自动保证」是过度承诺——铜/钢/金/rarity/cat 作文字在浅底实测 ratio 1.08–1.47（不可读），靠人工 oklch 实测才发现。eyebrow 类装饰标签 <4.5 仍存（planner/result-card__secondary spot 3.72、tag-pill--muted cat 色 4.48）。
     - 处置：中优先级；补一个 puppeteer/playwright 跑双主题各页、按 oklch→线性亮度→WCAG ratio 校验文字（含前景 alpha 合成、背景向上追溯），低于阈值（正文 4.5 / 大字 3）即报。可作为 npm run lint:contrast 接入 pre-push（参考 [[test-chain-lint-strategy]] 勿拖慢日常 TDD）。
 
+
+- plannerPage.route component 测试 jsdom 下持续超时（baseline 隔离跑亦 4/6 失败） <!-- auto-todo:id=atd_3a8b1c5d2e -->
+  - 记录时间: `2026-07-29T21:08:00+08:00`
+  - 类型: flaky
+  - 位置: `src/pages/planner/plannerPage.route.test.tsx:298`（推荐结果卡片 findByRole）
+  - 备注: 加成机制隔离子任务4 验证时发现：mock 数据已加载（本地开发快照渲染成功），推荐结果卡在 beam search 完成前超时（~20s）。干净 baseline（818e9f5f，stash 本子任务改动后）隔离单跑同样 4/6 失败——非本子任务回归（buff 装配忠实提取，tsc + test:simulator 307 全绿 + 明斯克 golden 通过）。与「单独跑通过」既有认知矛盾，疑机器/负载相关（jsdom Sync beam search 接近超时阈值）。
+    - 非 buff 装配隔离（子任务4）引入；test:simulator 闸门不含该 component 测试。
+    - 处置：低优先级；jsdom Sync 推荐计算偏慢，可单独调高 timeout 或拆分重计算断言；不影响 planner 评分正确性。
+
+- 专精选择面板对级联型专精树不尊重依赖链（hero 165/55/81 what-if 可能产生游戏不可能组合） <!-- auto-todo:id=atd_7c4a2e9b01 -->
+  - 记录时间: `2026-07-30T13:30:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/pages/planner/specializationSelection.ts:groupSpecializationsByTier`（按 requiredLevel 分层，无 requiredUpgradeId 依赖链）
+  - 备注: ADR 0017 UI 输入层按 requiredLevel 分层、每层单选，假设「同 requiredLevel = 同互斥组」。hero 165/55/81 是级联型专精树：依赖层（如 165 lvl=150 的 24 选项）各自 requiredUpgradeId 指向上层某个选择，UI 把依赖层全平铺成单选、且改上层后 applyTierSelection 不重置下层 → what-if override 可能保留游戏不可能的组合（如 lvl70=Tyr 但 lvl150 选了要求 Moradin 的项）。仅影响面板 override 探索（3 英雄）；核心推荐用存档 specialization_choices（游戏保证合法），不受影响。
+    - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
+
+- planner 路由集成测试（plannerPage/plannerEvaluate.route.test）长期失败（11 用例，HEAD 即失败） <!-- auto-todo:id=atd_8f3a1c0d2e -->
+  - 记录时间: `2026-07-30T14:10:00+08:00`
+  - 类型: issue
+  - 位置: `src/pages/planner/plannerPage.route.test.tsx`、`src/pages/planner/plannerEvaluate.route.test.tsx`
+  - 备注: 测试只 mock `loadCollection`，但 `usePlannerCollections` 还调 `loadVersion()` + 3 个 `fetchJson`（patron-perks / feat-catalog / specialization-catalog）走原生 fetch；jsdom 无服务器 → Promise.all reject → loadError → 无「推荐结果」→ 用例 5s 超时。fetchJson/loadVersion 在范围起点（1f4cb65d）已存在，非本审计引入，但属长期红区（非本次 P0 修复回归）。
+    - 处置：路由测试 beforeEach 须补 fetch mock（version.json + patron-perks + feat-catalog + specialization-catalog 返回空/夹具），或改用 MSW 拦截 data fetches。
+
+- crit/speed/survival resolver 一刀切 supportSignals（潜在自增益泄漏，待 IC 语义确认） <!-- auto-todo:id=atd_5e2b9c1d4f -->
+  - 记录时间: `2026-07-30T15:55:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/effect-resolvers/critResolver.ts:21`、`speedResolver.ts:23`（survivalResolver 同构）
+  - 备注: 深度审计 [1f4cb65d..b7a3bdb8] 核查 heroCritChance bucket 发现：crit/speed/survival resolver 对所有 effect 硬编码 `buildSimplePoolSignal(..., 'supportSignals')`，无视 effect.targets 定向；而 dpsResolver（`hero_dps_multiplier_mult`）是 targeting-aware（无目标→carrySignals，targets 非 self→supportSignals）。**坐实的不对称**：feat-catalog 实测 `heroDpsMultiplier`（无目标自增益）正确落 carrySignals（138 个），同是无目标自身 stat 增益的 `heroCritChance`(27)/`heroCritDamage`(9)/`heroHealthMultiplier`(78)/`attackSpeedMult`(9) 却全落 supportSignals——resolver 代码层的不一致无文档解释（非有意的语义区分）。若 IC 里 `buff_base_crit_chance_add`（raw targets=None）实为自增益，则一刀切 supportSignals 会让该英雄支援他人时把自身暴击泄漏给其他 carry（collectSignals 支援位读 supportSignals → carry critFactor 被误增），系统性高估有 crit/health/speed feat 的支援英雄。影响 base（14 crit + survival/speed signal）+ catalog（feat 全维度）。**预存行为**（1f4cb65d effect-helpers.ts:1032 已如此，9f8108c6 逐字搬迁，非范围内回归；6d363819 catalog 正确复现 base，无新偏差）。
+    - 阻断：需先确认 IC 语义——`buff_base_crit_chance_add`（无 global_ 前缀、无 targets）是持有者自身暴击还是全队光环。若全队则 supportSignals 正确（非 bug）；若自身则应按 targeting-aware 判 carrySignals（与 hero_dps 一致）。definitions-*.json 的 upgrade_defines.effect 字段结构 + 缺 description，无法直接判读；验证需读 per-hero champion-details（带 description/name）。
+    - 处置：中优先级（不对称已坐实，疑似遗漏而非有意）；确认自增益后，crit/speed/survival resolver 改用 resolveBucket 与 dpsResolver 一致，FORCE_DATA_REBUILD 重建 hero-abilities + feat-catalog + specialization-catalog。
+
+
 <!-- auto-todo:end -->

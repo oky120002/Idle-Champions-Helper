@@ -2,15 +2,15 @@ import 'fake-indexeddb/auto'
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { APP_DATABASE_NAME } from './localDatabase'
-import { saveUserProfileSnapshot } from './user-profile-store'
-import { createUserProfileSnapshot } from '../domain/user-profile/fixtures'
+import { APP_DATABASE_NAME } from '../localDatabase'
+import { saveUserProfileSnapshot } from './userProfileStore'
+import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 import {
   isLocalDevUserProfileSourceEnabled,
   readPreferredUserProfileSource,
   resolveUserProfileSnapshot,
   savePreferredUserProfileSource,
-} from './user-profile-store/userProfileSourceResolver.prod'
+} from './userProfileSourceResolver.prod'
 
 async function resetDatabase(): Promise<void> {
   await new Promise<void>((resolve, reject) => {

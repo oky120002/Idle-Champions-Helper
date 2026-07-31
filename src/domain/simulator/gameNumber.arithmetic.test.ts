@@ -1,18 +1,24 @@
+import Decimal from 'decimal.js'
 import { describe, expect, it } from 'vitest'
-import { parseGameNumber } from './gameNumber'
 import {
   compareGameNumbers,
   divideGameNumbers,
   log10GameNumber,
   multiplyGameNumbers,
+  parseGameNumber,
   powerGameNumber,
   sortGameNumbers,
-} from './gameNumberArithmetic'
+} from './gameNumber'
 
 function gn(input: string) {
   const result = parseGameNumber(input)
   if (!result.ok) throw new Error(`parse failed: ${result.error}`)
   return result.value
+}
+
+// decimal.js 无 mantissa 属性：mantissa = value / 10^exponent（归一化到 [1,10)）。
+function mantissaOf(v: Decimal): number {
+  return v.div(new Decimal(10).pow(v.e)).toNumber()
 }
 
 describe('game number arithmetic', () => {
@@ -24,7 +30,7 @@ describe('game number arithmetic', () => {
     // exponent should be ~167 (92 + 75 = 167)
     expect(product.e).toBe(167)
     // mantissa should be close to 4.08
-    expect(product.m).toBeCloseTo(4.08, 1)
+    expect(mantissaOf(product)).toBeCloseTo(4.08, 1)
   })
 
   it('除法保持预期排序', () => {

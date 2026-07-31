@@ -71,3 +71,14 @@ CLAUDE.md §1.2「未变整批跳过重生成」在 normalize/build 的实现：
 `pipelineHash` 粗粒度覆盖整个 `scripts/data/`：任何数据脚本（effect-helpers / build-models / normalize-champions / patron-perk-signals / ...）改动都触发重跑，保守不漏优于精确但漏检。fetch 无法下载前跳过（discovery 只返回 play_server，`current_time` 在 getDefinitions 响应里），故 fetch 仍每次下载；normalize/build 的 skip 在 fetch 之后生效——raw 没变时省 normalize/build 的几秒重生成，但不省 fetch 带宽。
 
 **只改 build 产物时单独跑 build-models，避免上游 timestamp 漂移污染 diff**：feature 只动 `build-models.ts`（新增派生字段，如 `gainProfile`）时，跑全量 `data:official` 会顺带 fetch 上游——CNE definitions `current_time` 每日 ticking（即使内容没变）→ normalize 全刷 → ~180 个 champion-details/*.json + 各 collection 纯 `updatedAt` 时间戳 churn 混进 feature commit。此时用 `FORCE_DATA_REBUILD=1 npx tsx scripts/data/build-models.ts` 单独跑，从已提交的 champion-details 只重生成 hero-abilities.json/scenarios.json，diff 干净（仅 feature 真实改动）。
+
+## 13. 信号外部化（base→catalog）必须四项核查：base 剔除干净 + catalog 完整 + 端到端接线 + 同构注入器不变量同步
+
+把 effect/signal 从 base（如 `hero-abilities.json`）移到独立 catalog（如 `feat-catalog.json`、`specialization-catalog.json`）供 runtime 按玩家选择注入时，必须四项核查，否则要么双重计数（base 残留 + runtime 注入）要么信号丢失：
+
+1. **base 零残留**：grep 原始 effect 串确认在 base 产物 0 命中。如 ADR 0017 专精外部化后，明斯克 `monster_with_tag_more_damage,300,humanoid`（专精自身）与 `buff_upgrades,25,108`（靶向专精的 wrapper 派生）在 `hero-abilities.json` 均 0——证明已离开 base，runtime 注入不会双计。
+2. **catalog 完整**：jq 计 catalog signal 总数与设计预期对齐（如 specialization 125 自身 + 100 派生 = 225 signal，47 hero/115 entry）。ADR 文档声称的计数必须以产物实际值为准（曾出现「80 个专精含派生」实为 77 的漂移）。
+3. **端到端接线**：确认加载链路（fetch JSON → collections 字段 → runtime 注入函数 → engine 消费）打通，且边界安全（catalog 缺该英雄 / override 含未知 id 均降级跳过，不抛错）。
+4. **同构注入器不变量同步**：两个外部化的注入器（feat / specialization）设计上同构（base 剥离 + runtime 按选择追加 + bucket 路由）。**修其中一个的不变量时必须核查另一个是否也该同步**——否则会留下不对称 bug。实例：ADR 0017 让专精注入不做 scoringMode 维度预过滤（避免漏 vulnerability 维度），但同构的 feat 注入仍残留维度过滤 → carry-dps 模式丢弃 36 个 crit feat + 78 个 survival feat（crit 经 computeCritFactor 直接乘进 carryDps），直到后续审计才发现（commit 7b8a9226）。规则：注入器注入选中项的**全部** signal，scoring 按模式自取所需维度；维度过滤属于 scoring 层（evaluatePlacementFit 的 dimensionFilterSet），不属于注入层。
+
+ADR 0017（专精外部化）即按此模式验证（commit dd31505f 深度审计），feat 外部化同构。

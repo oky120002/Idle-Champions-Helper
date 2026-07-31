@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { scoreFormation } from './steadyStateScoring'
-import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import { compareGameNumbers } from '../simulator/gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 
@@ -479,7 +479,7 @@ describe('steady state scoring', () => {
       expect(breakdown!.factors.crit).toBeCloseTo(1, 6)
       expect(breakdown!.factors.vulnerability).toBeCloseTo(1, 6)
       expect(breakdown!.factors.globalBuff).toBeCloseTo(1, 6)
-      expect(breakdown!.factors.equipmentAdjustment).toBeCloseTo(1, 6)
+      expect(breakdown!.factors.heroDpsPool).toBeCloseTo(1, 6)
       // pools：hero self（addPercent 100 → ×2）与 global（addPercent 200 → ×3）
       const heroPool = breakdown!.pools.find((p) => p.addPercent === 100)
       expect(heroPool?.poolMultiplier).toBeCloseTo(2, 6)
@@ -490,6 +490,27 @@ describe('steady state scoring', () => {
       expect(bufContribution?.signals.some((s) => s.signalKind === 'globalDpsMultiplier' && Math.abs(s.multiplier - 3) < 1e-6)).toBe(true)
       const carryContribution = breakdown!.contributions.find((c) => c.supportHeroId === 'carry')
       expect(carryContribution?.signals.some((s) => s.signalKind === 'heroDpsMultiplier')).toBe(true)
+    })
+
+    it('heroDpsPool = 装备 + 外部 hero_dps 同池加法（breakdown 因子可相乘复现 carryDps）', () => {
+      // 装备（+50%→1.5）与外部 patron/blessing hero_dps（+200%）同为 hero_dps_multiplier_mult，
+      // IC 同 key 加法叠加 → heroDpsPool = 1.5 + 2.0 = 3.5（非各自独立乘 1.5×3=4.5）。
+      // breakdown 须外露合并后的单一因子，使 baseDps × Π factors = carryDps 可复现。
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const result = scoreFormation({
+        placements: { s1: 'carry' },
+        heroesById,
+        scenario,
+        equipmentAdjustmentByHero: new Map([['carry', 1.5]]),
+        externalHeroDpsContributions: [{ value: 200, qualifier: null }],
+      })
+      const b = result.breakdown!
+      expect(b.factors.heroDpsPool).toBeCloseTo(3.5, 6)
+      const recomputed = Number(b.baseDps)
+        * b.factors.damagePool * b.factors.crit * b.factors.vulnerability
+        * b.factors.globalBuff * b.factors.heroDpsPool
+      expect(recomputed).toBeCloseTo(Number(b.carryDps), 4)
     })
 
     it('team-gold 模式与空阵型 breakdown 为 null', () => {

@@ -26,7 +26,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
 
 - **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`（域不向外层依赖）。
-- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `break_eternity.js`。
+- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `decimal.js`。
 - 所有数据经适配层 `usePlannerCollections`（唯一调 `loadCollection` 处）→ 装入 `PlannerCollections` → 经 `runner.updateCollections()` 喂入。
 
 由 `src/domain/planner/hermeticBoundary.test.ts` 守护，违规即 CI fail。
@@ -66,6 +66,21 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 | `perHeroSpecialization` / feat·familiar / modron 状态 | **phased**（待接入评分） |
 
 **后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
+
+## 决策记录（ADR）
+
+计算原则与下列 ADR 互为依据（决策 why 在 ADR，最终态在此与各专题 spec）：
+
+- `0008` 加成机制按自然形态隔离（不引入统一接口/注册表）
+- `0009` 真实目标量 carryDps + pool 聚合 + beam search（淘汰启发式/黑盒）
+- `0010` hermetic 入参契约（纯函数，永不读登录态/数据源）
+- `0011` 投影模式 aggregateProjection（阵型倍率 vs 绝对 DPS 双模）
+- `0012` BUD vs DPS（相对比较用 DPS，绝对推图用 BUD）
+- `0013` DPS 机制抽象阈值（≥2 通用路径，>10 升级注册表）
+- `0014` GameNumber 用 decimal.js
+- `0015` 明斯克参照作重构回归守护（非绝对精度标尺）
+- `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量评分/降 beam）
+- `0017` 专精外部选择（build catalog + runtime 按玩家选择注入）
 
 ## 三层架构
 
@@ -114,7 +129,7 @@ scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 - `src/domain/abilities/`：能力表达层——`HeroAbilitySignal`、`ResolvedHeroAbilityProfile`、build→JSON→runtime 边界类型。
 - `src/domain/simulator/`：`GameNumber`、最后专精基线、金币预算基线、`baseDps`/`BUD`/`survival` 计算、稳态 DPS 模拟。
 - `src/domain/planner/`：变体限制投影（`variantConstraints`）、候选池、假设英雄公平基线、阵型合法性、beam search 和结果模型。
-- `src/pages/planner/`：profile 状态面板、场景选择、候选模式、基线输入、结果卡和保存 preset 操作。
+- `src/pages/planner/`：profile 状态面板、场景选择、候选模式、基线输入、专精选择（per-hero session override，ADR 0017 UI 输入源）、结果卡和保存 preset 操作。
 - `scripts/private-user-data/`：敏感扫描、私有 env loader、私有快照 manifest。
 
 ## 命名约定

@@ -1,18 +1,20 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
-import type { HeroDpsContribution } from '../simulator/externalHeroDpsMult'
+import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeTeamGoldFind } from './goldObjective'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
 import { computeSingleHitDamage } from '../simulator/budCalculation'
-import { estimateMaxArea, type AreaEstimationResult } from './areaEstimation'
-import { formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
-import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+import { estimateMaxArea, type AreaEstimationResult } from '../simulator/areaEstimation'
+import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
+import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
+import { computeCritFactor } from './scoring/critFactor'
+import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
 
 /**
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
@@ -22,7 +24,7 @@ export type ScoringMode = 'carry-dps' | 'team-gold'
 
 /**
  * 投影模式（约束②，见 architecture.md「投影模式」）——把阵型加成聚合投影成 objectiveValue 的方式。
- * - 'absolute-dps'（默认）：baseDamage × levelCurve × 全因子（damagePool×crit×vuln×globalBuff×equipmentAdj）。
+ * - 'absolute-dps'（默认）：baseDamage × levelCurve × 全因子（damagePool×crit×vuln×globalBuff×heroDpsPool）。
  *   绝对量未校准（baseDamage/BUD 未校准），作 BUD 校准回归基线。
  * - 'formation-buff'：只阵型内聚合 damagePool×crit×vuln，**不含** baseDamage/levelCurve/外部加成。
  *   阵型模拟器本质是阵型内 signal 聚合，外部全局加成不属于阵型（游戏只给全量数据故加开关）。
@@ -85,10 +87,10 @@ export interface SimulationFactor {
   vulnerability: number
   /** 全局 buff pool 乘数（patron-perk 等，调用方传入）*/
   globalBuff: number
-  /** 装备调整比（owned 装备相对理论最大的缩放，调用方传入）*/
-  equipmentAdjustment: number
-  /** 外部 hero_dps 加成（patron/blessing effect_def hero_dps，per-carry 条件生效；与装备同 add pool）*/
-  externalHeroDps: number
+  /** hero_dps 加成池：装备 + 外部（patron/blessing）hero_dps_multiplier_mult 同 key 加法合并
+   *  （IC 同 key effect 加法叠加，非各自独立乘）= equipmentAdjustment + externalAddPercent/100。
+   *  作单一因子乘进 carryDps，使 breakdown 因子可相乘复现 carryDps。*/
+  heroDpsPool: number
 }
 
 export interface SimulationContribution {
@@ -140,116 +142,6 @@ export interface ScoringResult {
 const ZERO: GameNumberValue = new Decimal(0)
 
 type PlacedEntry = { slotId: string; hero: ResolvedHeroAbilityProfile }
-
-/** 把一批 pool 合并进 sharedPools（同 dimension:scope 的 addPercent 相加、multFactor 相乘）。 */
-function mergePools(sharedPools: Map<string, AggregatedPool>, pools: AggregatedPool[]): void {
-  for (const pool of pools) {
-    const key = `${pool.dimension}:${pool.scope}`
-    const merged = sharedPools.get(key) ?? {
-      dimension: pool.dimension,
-      scope: pool.scope,
-      addPercent: 0,
-      multFactor: 1,
-      poolMultiplier: 1,
-    }
-    merged.addPercent += pool.addPercent
-    merged.multFactor *= pool.multFactor
-    merged.poolMultiplier = (1 + merged.addPercent / 100) * merged.multFactor
-    sharedPools.set(key, merged)
-  }
-}
-
-/** Π(poolMultiplier)：pool 间乘法。 */
-function productOfPoolMultipliers(pools: Map<string, AggregatedPool>): number {
-  let aggregate = 1
-  for (const pool of pools.values()) {
-    aggregate *= pool.poolMultiplier
-  }
-  return aggregate
-}
-
-// crit_factor 默认值来自 default_crit_info（游戏全局）：chance 2.5%，crit damage +100%（×2）。
-const DEFAULT_CRIT_CHANCE_PERCENT = 2.5
-const DEFAULT_CRIT_DAMAGE_PERCENT = 100
-// 基线 raw crit factor（无任何 crit signal 时）：1 + 0.025 × (2−1) = 1.025。
-const BASE_CRIT_FACTOR = 1
-  + (DEFAULT_CRIT_CHANCE_PERCENT / 100)
-  * (1 + DEFAULT_CRIT_DAMAGE_PERCENT / 100 - 1)
-
-const CRIT_CHANCE_KINDS: ReadonlySet<HeroAbilityKind> = new Set<HeroAbilityKind>([
-  'globalCritChance',
-  'heroCritChance',
-])
-
-/**
- * crit_factor：1 + total_chance × (total_damage_mult − 1)，基线归一化。
- * - 无 crit signal → 1.0（base crit 在归一中抵消，保持非 crit 阵型 carryDps 不变）。
- * - base chance(2.5%) 始终参与，使「纯 damage buff」类 crit signal 有效（否则 chance=0 无暴击）。
- * - ponytail/BUD 局限：crit 期望值在 BUD 机制下低估，MVP 可接受；绝对值偏差由归一基线吸收。
- */
-function computeCritFactor(parts: PlacementFitScorePart[]): number {
-  let chanceAddPercent = 0
-  let chanceMult = 1
-  let damageAddPercent = 0
-  let damageMult = 1
-  let hasCrit = false
-
-  for (const part of parts) {
-    if (!part.active) {
-      continue
-    }
-    const isChance = CRIT_CHANCE_KINDS.has(part.signalKind)
-    if (part.amountFunc === 'mult') {
-      if (isChance) {
-        chanceMult *= part.multiplier
-      } else {
-        damageMult *= part.multiplier
-      }
-    } else {
-      // add：evaluatePlacementFit 折算 multiplier = 1 + percent/100 → percent = (multiplier−1)×100
-      const percent = (part.multiplier - 1) * 100
-      if (isChance) {
-        chanceAddPercent += percent
-      } else {
-        damageAddPercent += percent
-      }
-    }
-    hasCrit = true
-  }
-
-  if (!hasCrit) {
-    return 1
-  }
-
-  const totalChanceFraction = ((DEFAULT_CRIT_CHANCE_PERCENT + chanceAddPercent) * chanceMult) / 100
-  const totalDamageMult = 1 + ((DEFAULT_CRIT_DAMAGE_PERCENT + damageAddPercent) * damageMult) / 100
-  const rawCritFactor = 1 + totalChanceFraction * (totalDamageMult - 1)
-  return rawCritFactor / BASE_CRIT_FACTOR
-}
-
-/**
- * vulnerability factor：已按场景怪物类型匹配的 vulnerability 进 DPS。
- * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成。
- * 聚合与 damage/gold pool 一致：add 类（amountFunc 缺省）同 pool 百分比相加 (1+Σadd/100)，
- * mult 类独立累乘；pool 内 (1+Σadd/100)×Πmult。原一律 Π 累乘把两个 +100% 易伤算成 4（正确 3）。
- */
-function computeVulnerabilityFactor(parts: PlacementFitScorePart[]): number {
-  let addPercent = 0
-  let multFactor = 1
-  let hasVuln = false
-  for (const part of parts) {
-    if (part.amountFunc === 'mult') {
-      multFactor *= part.multiplier
-    } else {
-      addPercent += (part.multiplier - 1) * 100
-    }
-    hasVuln = true
-  }
-  if (!hasVuln) {
-    return 1
-  }
-  return (1 + addPercent / 100) * multFactor
-}
 
 /**
  * team-gold 模式：全队聚合 gold signal（dimension:'gold'），无 carry 概念。
@@ -333,8 +225,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     critFactor: number
     vulnFactor: number
     globalBuff: number
-    equipmentAdjustment: number
-    externalHeroDpsMult: number
+    heroDpsPool: number
     damagePool: number
     contributions: SimulationContribution[]
   } | null = null
@@ -388,12 +279,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
             supportActiveParts.push(part)
           }
         } else if (dim === 'vulnerability') {
-          if (!part.active) {
-            continue
-          }
-          // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入。
-          const tags = part.monsterTags
-          if (tags && tags.length > 0 && !tags.some((tag) => enemyTypeSet.has(tag))) {
+          // 条件性匹配（active + monsterTags 与场景 enemyTypes 相交）下沉到 isVulnerabilityMatched。
+          if (!isVulnerabilityMatched(part, enemyTypeSet)) {
             continue
           }
           activeKinds.add(part.signalKind)
@@ -425,8 +312,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         externalHeroDpsAddPercent += contribution.value
       }
     }
-    const externalHeroDpsMult = 1 + externalHeroDpsAddPercent / 100
-    // hero_dps add pool：装备 + 外部 effect_def（IC hero_dps_multiplier_mult 同英雄 base DPS add 合并）。
+    // hero_dps add pool：装备 + 外部 effect_def 同 key（hero_dps_multiplier_mult）加法合并
+    // （IC 同 key effect 加法叠加，非各自独立乘）= equipmentAdjustment + ext%/100。
     const heroDpsPool = equipmentAdjustment + externalHeroDpsAddPercent / 100
     const damagePool = productOfPoolMultipliers(sharedPools)
     const formationAggregate = damagePool * critFactor * vulnFactor
@@ -447,8 +334,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         critFactor,
         vulnFactor,
         globalBuff,
-        equipmentAdjustment,
-        externalHeroDpsMult,
+        heroDpsPool,
         damagePool,
         contributions,
       }
@@ -498,14 +384,13 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       critFactor,
       vulnFactor,
       globalBuff,
-      equipmentAdjustment,
-      externalHeroDpsMult,
+      heroDpsPool,
       damagePool,
       contributions,
     } = bestBreakdownData
     const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
     const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
-    const baseDps = new Decimal(baseDamage).times(levelCurve)
+    const baseDps = new Decimal(baseDamage).mul(levelCurve)
     breakdown = {
       carryHeroId: carryEntry.hero.heroId,
       carrySlotId: carryEntry.slotId,
@@ -518,8 +403,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         crit: critFactor,
         vulnerability: vulnFactor,
         globalBuff,
-        equipmentAdjustment,
-        externalHeroDps: externalHeroDpsMult,
+        heroDpsPool,
       },
       pools: [...pools.values()],
       contributions,

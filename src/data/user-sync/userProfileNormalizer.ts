@@ -332,6 +332,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
             : toStringValue(hero.gildable_slot_id),
         lootBySlot,
         legendaryBySlot: legendaryByHeroId.get(heroId) ?? {},
+        specializations: normalizeIdArray(hero.specialization_choices),
       }
     })
     .filter((hero) => hero.isOwned)

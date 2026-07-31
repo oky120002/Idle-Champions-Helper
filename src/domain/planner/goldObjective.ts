@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import type { GameNumberValue } from '../simulator/gameNumber'
 
@@ -17,5 +17,5 @@ const BASE_GOLD = 1
 
 export function computeTeamGoldFind(goldPoolMultiplier: number): GameNumberValue {
   const mult = Number.isFinite(goldPoolMultiplier) && goldPoolMultiplier > 0 ? goldPoolMultiplier : 1
-  return new Decimal(BASE_GOLD).times(mult)
+  return new Decimal(BASE_GOLD).mul(mult)
 }

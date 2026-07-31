@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 /**
- * scripts 通用 JSON 读写、并发池与 CLI 过滤参数解析。
+ * scripts 通用 JSON 读写、raw 收窄、并发池与 CLI 过滤参数解析。
  * 各 sync / build 脚本统一从此处导入，避免复制粘贴漂移。
  */
 
@@ -22,6 +22,18 @@ export async function readJsonIfExists(filePath: string): Promise<unknown> {
 
     throw error
   }
+}
+
+// raw JSON 收窄辅助：readJson 返回 unknown，这些 helper 在消费边界安全收窄（见
+// docs/specs/guidelines/testing.md §8）。build 管线各 builder 共用，故下沉到此。
+/** 把 unknown 安全收窄为 Record<string, unknown>（null 安全）；非对象返回 null。 */
+export function asRecord(value: unknown): Record<string, unknown> | null {
+  return value !== null && typeof value === 'object' ? (value as Record<string, unknown>) : null
+}
+
+/** 把 unknown 收窄为数组；非数组返回空数组（防 undefined.map 崩溃）。 */
+export function asArray(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : []
 }
 
 export async function writeJson(filePath: string, value: unknown): Promise<void> {

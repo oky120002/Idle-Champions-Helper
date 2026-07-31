@@ -4,7 +4,7 @@ import {
   getChampionAttributeTags,
   getChampionTagsForGroup,
   getChampionTagLabel,
-} from './championTags'
+} from './selectors'
 
 describe('championTags', () => {
   it('属性标签会排除已经单独展示的定位标签', () => {

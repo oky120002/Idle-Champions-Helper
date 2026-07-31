@@ -4,7 +4,7 @@
 
 - **阈值 4（>10 升级策略注册表）**：`championReferenceVerification.test.ts` 断言注册表机制数 ≤ 10。
 - **三处一致**：`championReferenceVerification.test.ts` 断言 reference `mechanicIds` ⊆ 注册表、注册表每个 id 在代码 `// 机制: <id>` 注释存在（代码注释 leg）。
-- **阈值 1（≥2→通用路径）**：结构性保证——评分路径（`placementFit.ts` resolveSignalMultiplier / STACK_COUNT_RESOLVERS / pool 聚合，`effect-helpers.ts` effect→signal 派生）无英雄 id 特化分支，所有机制走通用字段分发。
+- **阈值 1（≥2→通用路径）**：结构性保证——评分路径（`placementFit.ts` resolveSignalMultiplier / STACK_COUNT_RESOLVERS / pool 聚合，`effect-resolvers/` effect→signal 派生）无英雄 id 特化分支，所有机制走通用字段分发。
 - **阈值 2/3（孤儿预警 / 孤儿→≥2 立刻抽象）**：设计准则。reference 当前仅蔚(95)一英雄，孤儿扫描待 reference 增长后落地；新增 reference 时人工确认机制通用性。
 
 ## 四条阈值
@@ -22,7 +22,7 @@
 
 每个机制 id 必须三处存在且一致，由 `championReferenceVerification.test.ts` 守护，任一缺失即 fail：
 
-- `placementFit.ts` / `effect-helpers.ts` 分支注释 `// 机制: <id>`（代码注释 leg：注册表每个 id 必须在代码注释出现）
+- `placementFit.ts` / `mechanics/`（signalMultiplier.ts + stackCountResolver.ts）/ `effect-helpers.ts` 分支注释 `// 机制: <id>`（代码注释 leg：注册表每个 id 必须在代码注释出现；resolveSignalMultiplier + STACK_COUNT_RESOLVERS 抽到 mechanics/ 后注释随之迁移，`championReferenceVerification.test.ts` 扫描这三个位置）
 - `references/*ReferenceData.ts` 的 `mechanicIds`（reference leg：reference 的 id 必须在注册表）
 - `dps-mechanics.md` 注册表（单一来源）
 

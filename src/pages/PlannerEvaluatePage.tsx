@@ -24,10 +24,10 @@ import {
   removeEvaluatePlacement,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
-import { computeEquipmentAdjustmentByHero } from '../domain/simulator/equipmentMult'
-import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../domain/simulator/patronPerkGlobalBuff'
-import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/simulator/blessingGlobalBuff'
-import { collectHeroDpsContributions } from '../domain/simulator/externalHeroDpsMult'
+import { computeEquipmentAdjustmentByHero } from '../domain/buffs/equipmentMult'
+import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../domain/buffs/patronPerkGlobalBuff'
+import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/buffs/blessingGlobalBuff'
+import { collectHeroDpsContributions } from '../domain/buffs/externalHeroDpsMult'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 

@@ -229,10 +229,13 @@ describe('关联一致性（mechanicId 三处一致）', () => {
   })
 
   it('注册表每个机制 id 在代码中以 `// 机制: <id>` 注释存在（三处一致·代码注释 leg）', () => {
-    // 三处一致第三 leg：注册表 id 必须在 placementFit.ts / effect-helpers.ts 的机制注释中出现。
+    // 三处一致第三 leg：注册表 id 必须在机制代码注释中出现。resolveSignalMultiplier + STACK_COUNT_RESOLVERS
+    // 抽到 mechanics/ 后，注释随之在 signalMultiplier.ts / stackCountResolver.ts；placementFit.ts 仍含 pool 分流注释。
     // 补齐 reference→注册表（上一测试）之外的代码注释 leg；新增机制漏注释即 fail。
     const codeSource = [
       readFileSync(path.resolve(__dirname, '../placementFit.ts'), 'utf8'),
+      readFileSync(path.resolve(__dirname, '../mechanics/signalMultiplier.ts'), 'utf8'),
+      readFileSync(path.resolve(__dirname, '../mechanics/stackCountResolver.ts'), 'utf8'),
       readFileSync(path.resolve(__dirname, '../../../../scripts/data/effect-helpers.ts'), 'utf8'),
     ].join('\n')
     const mechanismCommentLines = codeSource

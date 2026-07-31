@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 
 import { MODRON_AUTO_RESET_CAP } from './modronInfo'

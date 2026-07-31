@@ -1,4 +1,4 @@
-import type { ChampionMechanicCategoryId } from '../../domain/championTags'
+import type { ChampionMechanicCategoryId } from '../../domain/champion-tags/types'
 import type { Champion, LocalizedText } from '../../domain/types'
 
 export type AttributeFilterGroupId =

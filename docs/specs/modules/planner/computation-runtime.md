@@ -32,7 +32,7 @@ worker → UI:
 
 ## 推图层数预估
 
-`src/domain/planner/areaEstimation.ts` + `src/domain/simulator/monsterStats.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`，结合 survival 约束（effectiveHealth 不足 monster_damage 时限制推图层数）。
+`src/domain/simulator/areaEstimation.ts` + `src/domain/simulator/monsterStats.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`，结合 survival 约束（effectiveHealth 不足 monster_damage 时限制推图层数）。
 
 怪物 stats 是全局 game rule，按 per-area stepped curve 逐层复合累积。数据源字段与缩放公式见 `docs/research/data/planner/monster-and-area-scaling.md`。
 
@@ -51,7 +51,7 @@ worker → UI:
 
 - `carryHeroId` / `carrySlotId` / `carryLevel`：核心输出位。
 - `baseDps` / `levelCurve` / `carryDps`：加成前基线、增长率、最终 DPS（游戏记数法字符串，可超 `Number.MAX_VALUE`）。
-- `factors`：`damagePool` / `crit` / `vulnerability` / `globalBuff` / `equipmentAdjustment`（`carryDps = baseDps × 各因子之积`）。
+- `factors`：`damagePool` / `crit` / `vulnerability` / `globalBuff` / `heroDpsPool`（`carryDps = baseDps × 各因子之积`）。`heroDpsPool` 是装备 + 外部（patron/blessing）`hero_dps_multiplier_mult` 同 key 加法合并后的单一池因子（`= equipmentAdjustment + externalAddPercent/100`），非各自独立乘——故作单一因子外露以保证因子之积可复现 carryDps。
 - `pools`：damage 维度聚合池（`dimension:scope`，`addPercent`/`multFactor`/`poolMultiplier`）。
 - `contributions`：每位支持位的 active signal 拆解（`signalKind`/`multiplier`/`reasonCode`/`rawEffect`）。
 

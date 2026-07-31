@@ -12,13 +12,13 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 
 import { describe, expect, it } from 'vitest'
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 import type { ChampionReference, ChampionReferenceSnapshot } from './championReferenceTypes'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
 import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
 import { scoreFormation } from '../steadyStateScoring'
-import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../simulator/equipmentMult'
+import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../buffs/equipmentMult'
 import { evaluatePlacementFit } from '../placementFit'
 
 // 真自动发现：新 *ReferenceData.ts 文件零注册进流。
@@ -237,8 +237,8 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
       const calcWithBuff = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff }).objectiveValue
       const obs = new Decimal(obsStr)
       // log10(calc/obs)：calc<obs 为负，绝对值 = 数量级差距。含外部加成 calc 变大 → 值往 0 靠（收敛）。
-      const devNoBuff = calcNoBuff.dividedBy(obs).abs().log10().toNumber()
-      const devWithBuff = calcWithBuff.dividedBy(obs).abs().log10().toNumber()
+      const devNoBuff = calcNoBuff.div(obs).abs().log(10).toNumber()
+      const devWithBuff = calcWithBuff.div(obs).abs().log(10).toNumber()
       // 用 process.stdout 绕过 vitest console 拦截，让偏差基线在正常跑测时可见。
       process.stdout.write(
         `\n[BUD-gap] 明斯克 ${snapId}: 外部加成×${globalBuff.toFixed(0)} | 无加成 log10=${devNoBuff.toFixed(1)} → 含加成 log10=${devWithBuff.toFixed(1)}\n`,
@@ -274,8 +274,8 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
     const calcWithBuff = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff }).objectiveValue
     const calcWithEq = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff, equipmentAdjustmentByHero }).objectiveValue
     const obs = new Decimal('1.25e45')
-    const devBuff = calcWithBuff.dividedBy(obs).abs().log10().toNumber()
-    const devEq = calcWithEq.dividedBy(obs).abs().log10().toNumber()
+    const devBuff = calcWithBuff.div(obs).abs().log(10).toNumber()
+    const devEq = calcWithEq.div(obs).abs().log(10).toNumber()
     process.stdout.write(
       `\n[BUD-gap] 明斯克装备: equipmentMult=${eqMult.toFixed(1)} (slot1+2 hero_dps enchant 缩放) | 含外部加成 log10=${devBuff.toFixed(1)} → +装备 log10=${devEq.toFixed(1)}\n`,
     )

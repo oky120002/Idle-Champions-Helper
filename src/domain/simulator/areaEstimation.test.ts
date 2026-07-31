@@ -1,8 +1,8 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 import { describe, expect, test } from 'vitest'
 
 import { estimateMaxArea } from './areaEstimation'
-import { monsterHealthAt } from '../simulator/monsterStats'
+import { monsterHealthAt } from './monsterStats'
 
 describe('estimateMaxArea', () => {
   test('高 BUD 阵型预估层数 > 低 BUD', () => {

@@ -1,4 +1,4 @@
-import Decimal from 'break_eternity.js'
+import Decimal from 'decimal.js'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -68,10 +68,16 @@ export function parseGameNumber(input: string | number): GameNumberResult {
     return { ok: false, error: INPUT_EMPTY }
   }
 
-  const parsed = new Decimal(input)
+  // decimal.js throws on unparseable strings (unlike a NaN-returning parser).
+  let parsed: Decimal
+  try {
+    parsed = new Decimal(input)
+  } catch {
+    return { ok: false, error: INPUT_UNPARSABLE }
+  }
 
-  // break_eternity.js returns NaN Decimal for unparseable strings.
-  if (Decimal.isNaN(parsed)) {
+  // Reject non-finite results produced from strings like "NaN" or "Infinity".
+  if (!parsed.isFinite()) {
     return { ok: false, error: INPUT_UNPARSABLE }
   }
 
@@ -85,11 +91,13 @@ export function parseGameNumber(input: string | number): GameNumberResult {
 /**
  * Format a `GameNumberValue` to a display string.
  *
- * - Small integers (absolute value < 1e6) use plain notation (e.g. `"42"`).
- * - Values ≤ `Number.MAX_VALUE` use standard scientific notation
- *   (e.g. `"1.50e92"`).
- * - Values beyond `Number.MAX_VALUE` use the game-style notation
- *   produced by `break_eternity.js` (e.g. `"ee1000"`, `"e1e6"`).
+ * - Zero → `"0"`.
+ * - Small integers (|value| < 1e6) → plain notation (e.g. `"42"`).
+ * - Otherwise → scientific notation `mantissa e exponent`
+ *   (e.g. `"1.50e92"`, `"1.00e1000"`).
+ *
+ * mantissa/exponent are computed manually so the output stays stable
+ * regardless of the underlying library's toString/toExponential quirks.
  */
 export function formatGameNumber(
   value: GameNumberValue,
@@ -107,17 +115,77 @@ export function formatGameNumber(
     return value.toNumber().toString()
   }
 
-  // Layer 0 values that fit in a JS number: mantissa.toFixed(N) + "e" + exponent.
-  if (value.layer === 0) {
-    return value.m.toFixed(places) + 'e' + value.e
+  // decimal.js exposes the base-10 exponent as `.e`
+  // (value = mantissa × 10^e, mantissa ∈ [1,10)).
+  const exponent = value.e
+  const mantissa = value.div(new Decimal(10).pow(exponent))
+  return mantissa.toFixed(places) + 'e' + exponent
+}
+
+// ---------------------------------------------------------------------------
+// Arithmetic
+// ---------------------------------------------------------------------------
+
+export function multiplyGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumberValue {
+  return a.mul(b)
+}
+
+export function divideGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumberValue {
+  return a.div(b)
+}
+
+export function powerGameNumber(base: GameNumberValue, exponent: number): GameNumberValue {
+  return base.pow(exponent)
+}
+
+/**
+ * Base-10 logarithm as a plain number.
+ *
+ * ponytail: decimal.js `.log(10)` is ~1000× slower than `.gt`/`.mul`
+ * (arbitrary-precision logarithm, ~37µs/op vs ~0.05µs) — reserve for
+ * off-path analytics (calibration deviation); use `compareGameNumbers` for
+ * hot-path ordering. No current production caller.
+ */
+export function log10GameNumber(value: GameNumberValue): number {
+  return value.log(10).toNumber()
+}
+
+export function compareGameNumbers(a: GameNumberValue, b: GameNumberValue): number {
+  if (a.lt(b)) return -1
+  if (a.gt(b)) return 1
+  return 0
+}
+
+export function sortGameNumbers(values: GameNumberValue[]): GameNumberValue[] {
+  return [...values].sort(compareGameNumbers)
+}
+
+// ---------------------------------------------------------------------------
+// Addition
+// ---------------------------------------------------------------------------
+
+/**
+ * Maximum exponent difference below which the smaller term is still included
+ * in the sum. Beyond this threshold the smaller value is too small to affect
+ * display precision and is ignored.
+ */
+export const ADDITION_EXPONENT_THRESHOLD = 15
+
+export function addGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumberValue {
+  // If one value is zero, return the other directly.
+  if (a.eq(0)) return b
+  if (b.eq(0)) return a
+
+  // Determine which is larger and which is smaller.
+  const larger = a.gt(b) ? a : b
+  const smaller = a.gt(b) ? b : a
+
+  // If the exponent difference exceeds the threshold, the smaller term is
+  // negligible for display and sort purposes — return the larger value.
+  const expDiff = larger.e - smaller.e
+  if (expDiff >= ADDITION_EXPONENT_THRESHOLD) {
+    return larger
   }
 
-  // Layer 1 (e.g. 1e1000): mantissa.toFixed(N) + "e" + exponent.
-  if (value.layer === 1) {
-    return value.m.toFixed(places) + 'e' + value.e
-  }
-
-  // Layer 2+: delegate to break_eternity.js toString,
-  // which produces "eeX", "eeeX", etc.
-  return value.toStringWithDecimalPlaces(places)
+  return a.add(b)
 }
