@@ -127,15 +127,6 @@ repair: rebuild
     - 影响所有有专长 buff_upgrade 的英雄（蔚等），carryDps 欠估专长修饰倍率。
     - 处置：中优先级；需在 collectRawEffectEntries 加 specialization 源采集（专长互斥选择 → 仅取选中项，需 profile context 或理论最大假设）。关联 vi-95.md 修复记录 #3。
 
-- loot buff_upgrade rarity 选择取首条而非最高（蔚时髦披肩 rarity1 +25% 而非 +157.8%） <!-- auto-todo:id=atd_5f6e7d8c9b -->
-  - 记录时间: `2026-07-28T13:10:00+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/effect-helpers.ts:collectEffectEntries`
-  - 备注: buff_upgrade progression 审计发现：蔚「时髦披肩」（loot slot2）有 rarity1(+25%)/2(+?)/.../+4(+157.8%) 多 tier，代码 collectEffectEntries 对同信号位（rarityGroupKey@upgradeId，loot upgradeId=null→'?'）按首条保留 → 取 rarity1 +25% 而非最高 +157.8%。IC 装备每槽只装备一件（最高 rarity），应取最高。
-    - （loot 多 rarity 同槽去重）
-    - 影响所有有 multi-rarity loot buff_upgrade 的英雄；与 atd_9a1b2c3d4e 共同构成 pool 欠估来源。
-    - 处置：中优先级；collectEffectEntries 对 loot 源同信号位多 magnitude 应取最高（保守上界），而非首条。需区分 loot（rarity 互斥取最高）vs 其它来源语义。关联 vi-95.md「pool 对照现状」。
-
 - planner.css 剩余交织块未完全拆分（scenario-selection + result-card + save-preset） <!-- auto-todo:id=atd_7a3f1c9d2e -->
   - 记录时间: `2026-07-30T15:40:00+08:00`
   - 类型: optimization
