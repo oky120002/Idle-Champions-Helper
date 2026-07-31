@@ -9,7 +9,7 @@
 | 用例总数 | **1194**（vitest 1164 = unit 906 + component 258；playwright e2e 30） |
 | 测试文件 | 221（vitest 209 + e2e 12） |
 | typecheck | ✅ 通过 |
-| vitest 基线 | ⚠️ **11 红 / 2 文件失败**（见 §2 P0） |
+| vitest 基线 | ✅ **1164/1164 全绿**（批 0 已修，见 §2） |
 
 夹具：11 个 co-located 单元。引用密度：`user-profile/fixtures.ts` 20 处、`resolverTestFixtures` 8 处、`mechanic/scoringTestFixtures` 各 2 处。`scripts/fixtures/` 目录存在但 sync 系列测试未充分复用（见 §3-B）。
 
@@ -27,6 +27,12 @@
 **修复路径**：读 `src/pages/planner/usePlannerCollections.ts` 当前数据源（哪些经 `loadCollection`、哪些经 IndexedDB），对齐 route 测试 mock——补齐 `profileSnapshot`/`lootCatalog`/相关 catalog 的 mock 返回或 IndexedDB 种子，使 `loadState` 翻过 loading。只跑 2 个失败文件验证：`npx vitest run src/pages/planner/plannerEvaluate.route.test.tsx src/pages/planner/plannerPage.route.test.tsx`。
 
 **为何优先**：11 红挡在所有整改前面——红色基线上无法区分新失败是新引入还是旧债。必须先回绿。
+
+**✅ 已修复（批 0）**：确认根因 = route 测试 mock 过期。`usePlannerCollections` 的 `Promise.all` 已增长到 10 个数据源，而 `vi.mock('../../data/client')` 只 override 了 `loadCollection` 且 `mockPlannerCollections` 只喂 5 个 collection 名。缺口：
+- `loadCollection('loot-catalog')` / `loadCollection('effect-definitions')` 命中 mock 的 `throw new Error('unexpected collection')`；
+- `loadVersion()` + 3 个 `fetchJson`（`patron-perks.json`/`feat-catalog.json`/`specialization-catalog.json`）走 `...actual` 真实实现，jsdom 无 fetch 兜底直接抛。
+
+任一拒绝 → `Promise.all` reject → `loadState='error'` → ScenarioSelection 不渲染。修复：route 测试 mock 追加 `loadVersion`/`fetchJson` 两个 override + `mockPlannerCollections` 补 loot-catalog/effect-definitions 空夹具与 3 个 fetchJson 路径返回。`loadResolvedPlannerModel`（全走 mocked loadCollection）与 `resolveUserProfileSnapshot`（真实 IndexedDB，空快照即可）无需改。两个 route 测试同构修补，未抽公共夹具（批 2 统一处理）。
 
 ## 3. 整改分类清单（P1+，按 ROI 排序）
 
@@ -79,7 +85,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 
 | 批次 | 目标 | 风险 | 进度 |
 |---|---|---|---|
-| 0（P0） | 修 planner route 11 红回绿 | 低（改测试 mock，不动产品） | ⏳ 待执行 |
+| 0（P0） | 修 planner route 11 红回绿 | 低（改测试 mock，不动产品） | ✅ 完成 |
 | 1 | `build-models.test.ts` 重构（it.each + 拆首用例） | 低（纯重构，行为不变） | ⏳ |
 | 2 | sync 系列抽公共夹具到 `scripts/fixtures/` | 中（重构 + 重跑） | ⏳ |
 | 3 | `placementFit.test.ts` 按信号家族拆主题 | 中（40 用例分组迁移） | ⏳ |
