@@ -30,7 +30,7 @@
 
 `effect_defines[].effect_keys[].filter_targets[].type` 全量分布（377 处）与处理状态：
 
-- 已处理（`normalizeTargetQualifier` → `HeroQualifier.predicate`）：`by_tags` / `tags` / `hero_expr` / `stat` / `stat_score` / `attack_type`；`hero_ids` / `exclude_heroes`（已接入，复用 `heroId` AST 节点，与 `per_hero_expr` 的 `hero_id==N` 同节点）。
+- 已处理（`normalizeTargetQualifier` → `HeroQualifier.predicate`）：`by_tags` / `tags` / `hero_expr` / `stat` / `stat_score` / `attack_type`；`hero_ids` / `exclude_heroes`（已接入，复用 `heroId` AST 节点，与 `per_hero_expr` 的 `hero_id==N` 同节点）；`heroes`（`targets` 字段的英雄 ID 白名单 `{type:"heroes",hero_ids:[...]}`，30 处——`isFilterLikeTarget` 认作 filter-like，位置关系=any，`hero_ids` 提取为 heroId OR 谓词；真实样本 ed=196/621/1279）。
 - 未处理（阵型聚合，归 `docs/specs/modules/planner/expression-evaluator.md` formationAggregate / step simulation）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag`。
 - 未处理（存档依赖，归 conditionEvaluator）：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12)。
 - 未处理（叠加上限，归 buff_upgrade 精细 / step simulation）：`limit_effect_def_per_hero_attack` / `limit_per_effect`。

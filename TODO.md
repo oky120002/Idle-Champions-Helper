@@ -24,16 +24,6 @@ repair: rebuild
     - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- targets.type:heroes 英雄 ID 白名单未映射（filter_targets hero_ids/exclude_heroes 已处理） <!-- auto-todo:id=atd_3f8b5d17e2 -->
-  - 记录时间: `2026-07-21T16:10:00+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/signalSemantics.ts:114`
-  - 备注: 英雄 ID 定位两条路径的处理状态：
-    - filter_targets：exclude_heroes/hero_ids **已处理**（146c4723 normalizeTargetQualifier heroIdsToPredicate，heroId AST 节点）；wrapper 派生路径合并生效（f389586b，hero 82 等 +210 行）。
-    - targets：`{type:"heroes",hero_ids:[...]}`（raw 30 处）仍未处理——normalizeObjectRelation 无 type:heroes 映射 → normalizeExplicitTargeting unsupported → 整条 effect 丢弃。当前影响小（hero_dps_multiplier_mult 仅 10 处因 targets unsupported，其中 type:heroes 1 处，余为 other/active_campaign/slot_if_expr 等，多为孤立 effect_def）。
-    - affected_by_upgrade 是 upgrade_id 运行时依赖，保持丢弃合理。
-    - 处置：低频，归 M2+ 目标限定精化时补（normalizeObjectRelation 映射 type:heroes→relation='any' + hero_ids 提取到 targetQualifier）。
-
 - deleteUserProfileData 未清 heroAbilityOverrides，override 是否随 profile 删待产品决策 <!-- auto-todo:id=atd_218690060f -->
   - 记录时间: `2026-07-24T10:59:06+08:00`
   - 类型: follow-up
@@ -97,16 +87,6 @@ repair: rebuild
     - 深入评估原 atd_c6d7b8b82a（validation 校验场景标识）时发现方向有误：场景标识是元数据，不参与恢复/推荐/评分任何功能逻辑；真问题是 UI 展示不友好
     - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
     - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
-
-- heroDpsMultiplier legacy filter→count 潜在 target 丢失（119 signal target=null） <!-- auto-todo:id=atd_c8f3a2b1d9 -->
-  - 记录时间: `2026-07-28T08:28:00+08:00`
-  - 类型: investigation
-  - 位置: `src/domain/abilities/signalSemantics.ts:246`
-  - 备注: planner DPS 审计 RV-A01-1 切入点 2 发现：FQ=true TQ=false（filter→count，无显式 count 源）的 signal 中，329 globalDpsMultiplier（全局 buff，target=null 正确）+ 7 globalGoldMultiplier，但 **119 heroDpsMultiplier + 3 heroHealthMultiplier** target=null。hero 作用域 buff target=null 意味着 buff 任意 carry（按 filter 计数）；若游戏语义是「filter 英雄吃 buff」（如 Bruenor Rally 仅 buff dwarf），则 filter 被误作 count、target 丢失 → 过度 buff。
-    - （attachSignalSemantics useFormationCountQualifier 分支）
-    - 蔚善良榜样（有 stack_func_data.tag）已由 937e68c4 hasExplicitCountQualifier 正确分离；此 119 是**无 stack_func_data** 的 legacy 路径（filter→count，signalSemantics.ts:246 注释明确记载为设计近似）。
-    - 确认需 per-effect 游戏语义核查（filter 是 count 源还是 target）——当前审计未逐一确认，不视为已确认缺陷。
-    - 处置：低优先级；需对 119 heroDpsMultiplier 抽样核对 raw effect_string + 游戏描述；若确认反例，扩 hasExplicitCountQualifier 逻辑或补 target 推断。
 
 - 专长/feat 修饰信号未进 built hero-abilities（蔚道德规范 +20% 缺失） <!-- auto-todo:id=atd_9a1b2c3d4e -->
   - 记录时间: `2026-07-28T13:10:00+08:00`

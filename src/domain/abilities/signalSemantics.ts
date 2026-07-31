@@ -7,6 +7,7 @@ import type {
   HeroStatQualifier,
   ResolvedHeroAbilityProfile,
 } from './abilityModel'
+import { POOL_SCOPE_BY_KIND } from './abilityModel'
 import { evalHeroPredicate, parseHeroPredicate } from './heroPredicate.ts'
 import { isFilterLikeTarget, isUnknownArray, normalizeExplicitTargeting } from './heroTargetingRelation'
 
@@ -130,8 +131,12 @@ export function normalizeTargetQualifier(effect: unknown): HeroQualifier | null 
   // hero_ids / exclude_heroes filter：按英雄 id 白名单/黑名单限定 effect 目标。
   // 真实样本：effect_def 134（adj + hero_id=24 恩拉克 +400%）、163（adj + hero_id=27 宾温 +400%）。
   // 复用 heroId AST 节点（与 per_hero_expr 的 hero_id==N 同节点），多 id → OR，exclude → NOT。
+  // type:'heroes'（targets 字段的英雄白名单，如 ed=196 hero_ids:[1..12]）同结构，一并提取。
   const heroIdAsts = rawFilters
-    .filter((filter) => (filter as Record<string, unknown>).type === 'hero_ids')
+    .filter((filter) => {
+      const t = (filter as Record<string, unknown>).type
+      return t === 'hero_ids' || t === 'heroes'
+    })
     .map((filter) => heroIdsToPredicate((filter as Record<string, unknown>).hero_ids, false))
     .filter((node): node is HeroPredicateAST => node !== null)
 
@@ -243,26 +248,34 @@ export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown
   const stackFuncDataPredicate = stackFuncDataTag ? parseHeroPredicate(stackFuncDataTag, 'shorthand') : null
   const stackFuncDataQualifier = stackFuncDataPredicate ? { predicate: stackFuncDataPredicate } : null
 
-  // 有显式 count 限定来源（per_hero_expr 或 stack_func_data.tag）时，filter_targets 回归 target 语义；
-  // 否则保留旧行为（stack_func 场景 filter_targets 当 count，per_upgrade_targets 当 target）。
+  // 有显式 count 限定来源（per_hero_expr 或 stack_func_data.tag）时，filter_targets 回归 target 语义。
   const hasExplicitCountQualifier = stackFuncDataQualifier !== null || perHeroQualifier !== null
+
+  const formationCountQualifier: HeroQualifier | null =
+    signal.formationCountQualifier
+    ?? perHeroQualifier
+    ?? stackFuncDataQualifier
+    ?? (useFormationCountQualifier || keepTargetQualifier ? filterQualifier : null)
+
+  // legacy filter→count 路径（stack_func 作 count 源、无显式 count 限定）：hero 作用域 buff 的 filter/count 同源
+  // ——游戏描述统一为 "buff [F] 英雄 ... for each [F] Champion"（ed=2390 矮人 / ed=2883 中立 / buff_upgrade_per_any_tagged_crusader*），
+  // target=null 会让非匹配 carry 也吃 buff（过度 buff）。此时 target = formationCountQualifier
+  // （覆盖 filter_targets 与 wrapper effect_string 参数两种 tag 来源）。global 作用域 filter 仅作 count，target=all 保持 null。
+  const heroScopedLegacyTarget =
+    useFormationCountQualifier && !hasExplicitCountQualifier && POOL_SCOPE_BY_KIND[signal.kind] === 'hero'
+      ? formationCountQualifier
+      : null
 
   return {
     ...signal,
     targetQualifier:
       signal.targetQualifier
-      ?? (hasExplicitCountQualifier
+      ?? (hasExplicitCountQualifier || keepTargetQualifier
         ? filterQualifier
-        : keepTargetQualifier
-          ? filterQualifier
-          : useFormationCountQualifier
-            ? null
-            : filterQualifier),
-    formationCountQualifier:
-      signal.formationCountQualifier
-      ?? perHeroQualifier
-      ?? stackFuncDataQualifier
-      ?? (useFormationCountQualifier || keepTargetQualifier ? filterQualifier : null),
+        : useFormationCountQualifier
+          ? heroScopedLegacyTarget
+          : filterQualifier),
+    formationCountQualifier,
     // 显式 targets（含 'all'/'all_slots'）→ 记 {relation}；无 targets（自增益）→ null。
     // 'all' 必须显式记 {relation:'any'}：resolvePositionRelation 对 null 走类型默认（heroDpsMultiplier→'self'），
     // 若 'all' 降 null，阵型范围 hero_dps 信号（如蔚善良榜样 targets:all）会被误判自增益，support 位永不 buff carry。

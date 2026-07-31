@@ -9,7 +9,7 @@ const templates = new Map<string, EffectDefinitionEntry>([
   ['929', { id: '929', effectKeys: [{ effectString: 'hero_dps_multiplier_mult,$replace', filterTargets: [], targets: [{ type: 'by_tags', tags: 'dwarf|elf|halfling|human' }] }] }],
   // 无 filter（全局 hero_dps）
   ['1039', { id: '1039', effectKeys: [{ effectString: 'hero_dps_multiplier_mult,$replace', filterTargets: [], targets: [] }] }],
-  // heroes 白名单（type=heroes，非 filter-like，未解析 → 丢弃）
+  // heroes 白名单（type=heroes → isFilterLikeTarget 解析为 heroId OR 谓词 + position=any）
   ['196', { id: '196', effectKeys: [{ effectString: 'hero_dps_multiplier_mult,400', filterTargets: [], targets: [{ type: 'heroes', hero_ids: [1, 2, 3] }] }] }],
   // slots 位置限定（未解析 → 丢弃）
   ['192', { id: '192', effectKeys: [{ effectString: 'hero_dps_multiplier_mult,$replace', filterTargets: [], targets: [{ type: 'slots', slot_ids: [3, 4, 5] }] }] }],
@@ -42,8 +42,22 @@ describe('collectHeroDpsContributions', () => {
     expect(collectHeroDpsContributions([effect('effect_def,930', 100, 1)], templates)).toEqual([])
   })
 
-  it('filter 未解析（heroes 白名单 / slots 位置）→ 保守丢弃', () => {
-    expect(collectHeroDpsContributions([effect('effect_def,196', 0, 1)], templates)).toEqual([])
+  it('targets type:heroes 白名单 → 收集为 heroId 限定（atd_3f8b5d17e2）', () => {
+    // {type:"heroes",hero_ids:[...]} 经 isFilterLikeTarget 解析为 heroId OR 谓词 + position=any。
+    // 修复前 normalizeObjectRelation 无 type:heroes 映射 → unsupported → 整条 effect 丢弃。
+    const c = collectHeroDpsContributions([effect('effect_def,196', 0, 1)], templates)
+    expect(c).toHaveLength(1)
+    expect(c[0]?.qualifier?.predicate).toEqual({
+      op: 'or',
+      children: [
+        { op: 'heroId', heroId: '1', negate: false },
+        { op: 'heroId', heroId: '2', negate: false },
+        { op: 'heroId', heroId: '3', negate: false },
+      ],
+    })
+  })
+
+  it('slots 位置限定（非 filter-like）→ 保守丢弃', () => {
     expect(collectHeroDpsContributions([effect('effect_def,192', 50, 40)], templates)).toEqual([])
   })
 
