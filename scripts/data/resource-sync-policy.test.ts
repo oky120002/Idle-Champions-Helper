@@ -63,7 +63,7 @@ it('writeUpdatedAtJsonFile 会创建父目录并写出 JSON', async () => {
   })
 })
 
-// 数据管线（normalize/build）增量跳过 —— AGENTS.md §1.2「未变整批跳过重生成」。
+// 数据管线（normalize/build）增量跳过 —— AGENTS.md「资源更新与仓库体积」（未变整批跳过重生成）。
 // pipelineHash 覆盖 scripts/data + normalize/fetch/build 三入口（自动检测、无需 force）；
 // 但 src/domain/abilities 归一化逻辑（signalSemantics 等，effect-helpers 的 build 依赖）不在覆盖内——
 // 改后须 FORCE_DATA_REBUILD=1 强制重建（见 docs/runbooks/verify-formation-simulator.md「归一化改动注意」）。

@@ -22,7 +22,7 @@ interface BuildModelsResult {
   updatedAt: string
   heroCount: number
   scenarioCount: number
-  /** 数据管线源码指纹（CLAUDE.md §1.2 增量跳过用）。 */
+  /** 数据管线源码指纹（AGENTS.md「资源更新与仓库体积」）。 */
   pipelineHash: string
   /** 增量跳过时为 true。 */
   skipped?: boolean
@@ -43,7 +43,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   const updatedAtRaw = championsRecord.updatedAt ?? variantsRecord.updatedAt ?? formationsRecord.updatedAt
   const updatedAt = typeof updatedAtRaw === 'string' ? updatedAtRaw : ''
 
-  // 数据管线增量跳过（CLAUDE.md §1.2）：输入（champion-details 等，由 normalize 产）未变 +
+  // 数据管线增量跳过（AGENTS.md「资源更新与仓库体积」）：输入（champion-details 等，由 normalize 产）未变 +
   // build 逻辑指纹未变 → skip。normalize skip 时输入不变，build 也 skip；FORCE_DATA_REBUILD=1 强制。
   const nextPipelineHash = await computePipelineHash()
   if (!isForceDataRebuild()) {
