@@ -13,7 +13,7 @@
 
 夹具：11 个 co-located 单元。引用密度：`user-profile/fixtures.ts` 20 处、`resolverTestFixtures` 8 处、`mechanic/scoringTestFixtures` 各 2 处。`scripts/fixtures/` 目录存在但 sync 系列测试未充分复用（见 §3-B）。
 
-巨型文件（行/用例）：`placementFit.test.ts` 1531/40、`build-models.test.ts` 1200/19、`sync-illustrations.test.ts` 1064/6、`normalize.test.ts` 789/4、`sync-pets.test.ts` 777/4、`skelanim.test.ts` 720/8。
+巨型文件（行/用例）：`build-models.test.ts` 1200/19（批 1 已拆首测）、`sync-illustrations.test.ts` 1064/6、`normalize.test.ts` 789/4、`sync-pets.test.ts` 777/4、`skelanim.test.ts` 720/8。`placementFit.test.ts` 1531/40 已按批 3 拆 6 主题。
 
 ## 2. P0 — planner route 11 红回归（单根因）
 
@@ -39,7 +39,7 @@
 ### A. 拆分（巨型文件）
 | 文件 | 行/用例 | 动作 |
 |---|---|---|
-| `placementFit.test.ts` | 1531/40 | 单 describe + 40 it，按信号家族拆主题文件（`.relations` / `.stacking` / `.counting` / `.upgrade`），被测单一无需改 |
+| `placementFit.test.ts` | 1531/40 | ✅ 已拆 6 主题（`relations` 10 / `counting` 9 / `gating` 8 / `pools` 5 / `stacking` 4 / `upgrade` 4 用例）+ 共享 `placementFitTestFixtures.ts`（`createHero` + 3 scenario 模板）。原拟 4 信号家族，实证 13 用例属框架级（pool 聚合 5 / 门控过滤 8）不归任何家族 → 扩到 6 主题 |
 | `build-models.test.ts` | 1200/19 | ✅ 首用例已拆三（abilities / scenarios / semantic overrides）+ 共享 `setupBuildModelsOutputs` helper（写全 fixture + 跑 buildModels 返回四输出）；`normalizeEffectSignal` 系列经评估**不**转 `it.each`（见 D） |
 
 ### B. 抽夹具（重复构造）
@@ -95,7 +95,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | 0（P0） | 修 planner route 11 红回绿 | 低（改测试 mock，不动产品） | ✅ 完成 |
 | 1 | `build-models.test.ts` 重构（拆首用例；`it.each` 经评估否决） | 低（纯重构，行为不变） | ✅ 完成 |
 | 2 | sync 系列抽读 helper（recon 已修正 scope：非 fixture 数据，见 §B） | 低–中（pets 真重复；其余边际） | ⏳ recon 完成，待执行 |
-| 3 | `placementFit.test.ts` 按信号家族拆主题 | 中（40 用例分组迁移） | ⏳ |
+| 3 | `placementFit.test.ts` 按信号家族拆主题（4→6：框架级用例单列 pools/gating） | 中（40 用例分组迁移） | ✅ 完成 |
 | 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | ⏳ |
 | 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ⏳ |
 
