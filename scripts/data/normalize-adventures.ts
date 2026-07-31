@@ -724,6 +724,13 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
       }
     }
 
+    // slot_escort 带 hero_id（全库仅 v80 Drizzt=hero 18）：护送英雄是玩家可拥有、能操控的英雄，
+    // 产品确认（2026-07-25）默认 force-include。slot_escort_by_area / 仅 slot_id 的 slot_escort
+    //（v232 by-name）不在此时理——前者是 NPC 尸体非英雄，后者需 name→hero 解析（脆弱，暂不展开）。
+    if (type === 'slot_escort' && record.hero_id != null) {
+      forcedHeroIds.add(toStr(record.hero_id))
+    }
+
     if (type === 'only_allow_crusaders') {
       hasAllowed = true
       const ids = asRawRecord(record.by_ids).ids
