@@ -6,10 +6,10 @@
 
 | 维度 | 数值 |
 |---|---|
-| 用例总数 | **1227**（vitest 1197；playwright e2e 30；批 0-4 后） |
+| 用例总数 | **1228**（vitest 1198；playwright e2e 30；批 0-5 后） |
 | 测试文件 | 221（vitest 209 + e2e 12） |
 | typecheck | ✅ 通过 |
-| vitest 基线 | ✅ **1197/1197 全绿**（批 0 修红 + 批 1 拆首测 +2 + 批 4 formatting +31） |
+| vitest 基线 | ✅ **1198/1198 全绿**（批 0 修红 + 批 1 拆首测 +2 + 批 4 formatting +31 + 批 5 因子之积组合守护 +1） |
 
 夹具：11 个 co-located 单元。引用密度：`user-profile/fixtures.ts` 20 处、`resolverTestFixtures` 8 处、`mechanic/scoringTestFixtures` 各 2 处。`scripts/fixtures/` 目录存在但 sync 系列测试未充分复用（见 §3-B）。
 
@@ -81,10 +81,10 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 
 已配守护：`references/{damageReferenceVerification,championReferenceVerification}.test.ts` 覆盖聚合层与 buff_upgrade 双重计数（历史教训已闭环）。
 
-执行阶段需逐项核对 §6 三类：
-1. 跨边界 keys 同步（src 侧 scorer 与 scripts 侧脚本平行白名单）——`scoringSupportSync.test.ts` 已守一处，查其余。
-2. 数据管线真实产物端到端守护（聚合层 pool/total/carryDps，非只中间信号）。
-3. 因子之积 = 目标值的组合测试（多来源加法同 pool 场景）——`heroDpsPool` 已修，查同类未覆盖。
+**✅ 批 5 逐项核对结论**：
+1. **跨边界 keys 同步**——全仓只 `SCORING_SUPPORTED_STACK_FUNCS`（scripts/signal-coverage.ts）一处平行白名单，`scoringSupportSync.test.ts` 已守 keys 集合；`signal-coverage.test.ts` 另守 `classifyScoringSupport` 行为对称（含 `stacksMultiply` 短路、`amountFunc` 判定，含 per_mithral_hall_stacks 回归用例）。keys + 行为两层均已闭环，无遗漏。
+2. **真实产物端到端聚合**——`championReferenceVerification` 加载 built `hero-abilities.json` → `evaluatePlacementFit` 断言 pool 聚合 multFactor（善良榜样 16384 × 出言不逊 576）；`damageReferenceVerification` → `scoreFormation` 断言聚合层（objectiveValue / carryHeroId / 交叉位置 buff）。聚合层（非只中间信号值）已覆盖。
+3. **因子之积 = 目标值**——补 `steadyStateScoring.test.ts`「全因子同时非默认」组合守护：damage/crit/vuln/globalBuff/heroDpsPool 五因子同时 ≠1，断言 `baseDps × Π factors = objectiveValue`（对照全精度 Decimal 非 2 位尾数显示串）。变异验证：去掉任一因子（如 heroDpsPool）测试即红。原 `:495` heroDpsPool 单因子测试与 `:445` damagePool 单因子测试因其余因子=1 而无法发现「因子漏乘/漏外露」非对称回归——heroDpsPool 曾是此形 bug（equipment/external 分列独立 × 因子，实际加法合并），组合守护补上此缺口。其余因子（damagePool/crit/vuln/globalBuff）均单来源聚合，无「多来源加法同池」同类风险。
 
 ## 6. 整改路线图
 
@@ -97,7 +97,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | 2 | sync 系列抽读 helper（recon 已修正 scope：非 fixture 数据，见 §B） | 低–中（pets 真重复；其余边际） | ⏳ recon 完成，待执行 |
 | 3 | `placementFit.test.ts` 按信号家族拆主题（4→6：框架级用例单列 pools/gating） | 中（40 用例分组迁移） | ✅ 完成 |
 | 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | 🔄 formatting ✅（31 用例）；placementSlotRelation 判间接覆盖非缺口；heroTargetingRelation/skelanim 待评估 |
-| 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ⏳ |
+| 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ✅ 完成（三类均已闭环；唯一新补：因子之积全因子组合守护，见 §5.3） |
 
 ## 7. 风险与约束
 
