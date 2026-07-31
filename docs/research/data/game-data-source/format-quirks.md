@@ -1,7 +1,7 @@
 # 上游 definitions 已确认格式特性
 
 - 作用：记录官方 definitions 快照中已确认的格式怪癖，以及归一化层 / 消费层的适配方式。排查上游数据异常时先在此比对，区分「数据源格式特性」与「归一化 bug」。
-- 配套原则：见根 `AGENTS.md`「数据源格式追溯」——上游格式异常必须先追溯 raw 源头，raw 证实前不得下「数据源 bug」结论。
+- 配套原则：见 `docs/specs/guidelines/data-normalization.md`「数据源格式追溯」——上游格式异常必须先追溯 raw 源头，raw 证实前不得下「数据源 bug」结论。
 
 ## 处理原则
 

@@ -111,7 +111,7 @@ repair: rebuild
   - 类型: enhancement
   - 位置: `scripts/data/resource-sync-policy.ts:181`（PIPELINE_HASH_DIRS = ['scripts/data']）
   - 备注: planner DPS 审计（A11 runbooks 可执行性）发现：pipelineHash 仅哈希 scripts/data + normalize/fetch/build 三入口；effect-helpers（scripts/data）导入 src/domain/abilities（signalSemantics/heroPredicate/abilityModel）与 src/domain/effects（effect-string）为 build 依赖，但这些文件不在哈希覆盖内。改这些文件后若不 FORCE_DATA_REBUILD=1，hero-abilities.json 保持旧逻辑（静默 stale build）。
-    - runbook（verify-formation-simulator.md「归一化改动注意」）+ AGENTS.md「资源更新与仓库体积」+ resource-sync-policy.test.ts 注释均已诚实标注此局限与 workaround（A11 修正了原过宽自述）。
+    - runbook（verify-formation-simulator.md「归一化改动注意」）+ data-normalization.md §12 + resource-sync-policy.test.ts 注释均已诚实标注此局限与 workaround（A11 修正了原过宽自述）。
     - 根因修复选项：PIPELINE_HASH_DIRS 加 `src/domain/abilities` + `src/domain/effects`（粗粒度，保守不漏，但 abilities 运行时改动也触发数据重建 ~10-30s，over-trigger）；或精确列 build 依赖文件（脆弱，transitive deps 易漏）。权衡未定，暂不做。
     - 处置：低优先级；当前 workaround（FORCE_DATA_REBUILD）已文档化且可执行；扩展覆盖待 over-trigger 代价 vs stale-build 风险的产品权衡。
 

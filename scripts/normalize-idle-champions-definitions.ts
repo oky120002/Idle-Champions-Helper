@@ -134,9 +134,9 @@ export interface NormalizeDefinitionsResult {
   outputDir: string
   versionFile: string
   updatedAt: string
-  /** raw 数据 checksum（稳定指纹，优先于 updatedAt 判断 raw 是否变化；AGENTS.md「资源更新与仓库体积」）。 */
+  /** raw 数据 checksum（稳定指纹，优先于 updatedAt 判断 raw 是否变化；data-normalization.md §12）。 */
   rawChecksum?: number | undefined
-  /** 数据管线源码指纹（AGENTS.md「资源更新与仓库体积」）。 */
+  /** 数据管线源码指纹（data-normalization.md §12）。 */
   pipelineHash: string
   /** 增量跳过（raw 未变 + 逻辑未变）时为 true，此时 counts 不重算。 */
   skipped?: boolean
@@ -307,7 +307,7 @@ export async function normalizeDefinitionsSnapshot(
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
 
-  // 数据管线增量跳过（AGENTS.md「资源更新与仓库体积」）：raw updatedAt 没变 + 归一化逻辑
+  // 数据管线增量跳过（data-normalization.md §12）：raw updatedAt 没变 + 归一化逻辑
   // 指纹没变 → skip。开发者改 normalize 逻辑 → pipelineHash 变 → 自动重跑；FORCE_DATA_REBUILD=1
   // → 强制重跑（不对比时间，覆盖「调整归一化逻辑必须强制」场景，不依赖开发者记得 force）。
   const nextPipelineHash = await computePipelineHash()

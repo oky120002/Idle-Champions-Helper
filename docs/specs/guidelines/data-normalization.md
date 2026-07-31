@@ -2,6 +2,7 @@
 
 - 适用范围：raw `definitions` → normalize → collect → resolve → consume 全链路（`scripts/normalize-idle-champions-definitions.ts`、`scripts/data/**`、`src/domain/abilities/**`，以及 `src/domain/planner/**`、`src/domain/simulator/**` 等消费层）。
 - 目标：在 100% AI 开发前提下，保证 raw 基座数据不丢、不错配、不静默漂移。
+- 数据源格式追溯：上游格式异常先追溯 raw 源头（`tmp/idle-champions-api/definitions-*.json`），区分「数据源格式特性」vs「归一化 bug」，禁止直接在消费层兜底；合理性判据：游戏能正常线上运行即源数据大概率没坏，出现矛盾优先怀疑自己的解析假设或 normalize 脚本，raw 证实前不得下「数据源 bug」结论。已确认特性见 `docs/research/data/game-data-source/format-quirks.md`。
 - 来源：多轮数据流审计沉淀；案例保留为规则的可操作依据，不得在精简时删除。
 
 ## 1. amountFunc 约定：解析层 add 不设字段（默认 null=add），消费层必须 `=== 'mult' ? mult : add` 分流
@@ -60,9 +61,11 @@ override 用 `includes` 子串匹配，**一条 match 可能命中多个 variant
 
 ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放消费层，会因 `collectEffectEntries` 的多派生路径（wrapper 派生 `upgrade-buffed-signal` / static-dps fallback / 直接 entry）各自折算或丢失 entry 标记——Channel Divinity（`buff_upgrades` wrapper）派生 signal 会丢原 entry 的 duration/base_cooldown，无法折算。**根因方案**：折算收敛在 normalize 层（`normalizeChampionAbility` 把 `value × uptime` 预折算进 effect_string），消费层（`collectRawEffectEntries` `'ability'` 源）按折算后串正常处理——wrapper 派生自动用折算后 magnitude，所有路径一致。规则：当派生值（uptime / rarity 缩放 / level 折算等）需穿越消费层多路径时，在 normalize 层预折算进 effect_string，而非要求每个消费路径各自识别 + 折算。
 
-## 12. normalize/build 增量跳过：checksum + pipelineHash 双判定，FORCE 强制逃生
+## 12. 数据管线增量跳过（资源同步 + normalize/build）
 
-`CLAUDE.md`「资源更新与仓库体积」（未变整批跳过重生成）在 normalize/build 的实现：`normalizeDefinitionsSnapshot` 与 `buildModels` 经 `shouldSkipDataPipeline` 判定 skip——① raw `checksum`（稳定数据指纹，主判据）与既有产物记录对比、② 管线源码指纹 `pipelineHash`——两者都没变才 skip。`checksum` 缺失时 fallback 到 `current_time`（→updatedAt），但 `current_time` 每次 fetch 单调递增，曾致 ~191 产物纯时间戳空重写，故仅作 fallback。三种重跑触发：
+**资源同步侧（两层跳过）**：先比全局资源更新时间，再比单资源 `sourceGraphic`/`sourceVersion`/`path`/本地存在性；全量流水线（如 `data:official`）先比 definitions `updatedAt`，未变整批跳过下载、覆盖、重生成。单资源脚本有可持久化 manifest/collection 就必须基于它增量复用，禁止无条件清空目录后全量重下。
+
+**normalize/build 侧（checksum + pipelineHash 双判定）**：`normalizeDefinitionsSnapshot` 与 `buildModels` 经 `shouldSkipDataPipeline` 判定 skip——① raw `checksum`（稳定数据指纹，主判据）与既有产物记录对比、② 管线源码指纹 `pipelineHash`——两者都没变才 skip。`checksum` 缺失时 fallback 到 `current_time`（→updatedAt），但 `current_time` 每次 fetch 单调递增，曾致 ~191 产物纯时间戳空重写，故仅作 fallback。三种重跑触发：
 
 - **raw 更新**（游戏数据更新）：raw `checksum` 变（`current_time` 亦单调前进）→ 重跑。
 - **逻辑改动**（开发者改 normalize/build/数据脚本）：`pipelineHash` 变（`scripts/data` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
