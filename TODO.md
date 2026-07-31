@@ -98,14 +98,6 @@ repair: rebuild
     - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
     - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
 
-- userDataPage.syncFlow 「本地开发快照读取失败」测试偶发超时（5016ms > 5000ms 默认） <!-- auto-todo:id=atd_a4f1c2e7b8 -->
-  - 记录时间: `2026-07-28T02:02:00+08:00`
-  - 类型: flaky
-  - 位置: `src/pages/user-data/userDataPage.syncFlow.test.tsx`
-  - 备注: planner DPS 审计（A04）质量门验证时发现：`npm run test:run` 偶发 1 failed，失败用例为该 sync flow 测试（5016ms 超 vitest 默认 5000ms），与 planner/DPS 改动无关（user-data 同步流）。系统负载高时（typecheck+vitest 串行，duration 66s+）触发；轻载（62s）通过。
-    - 非本次审计引入（审计未触 user-data 模块）。
-    - 处置：低优先级；该测试本身是异步同步流偏慢，可考虑单独调高 timeout 或拆分；不影响 planner 评分正确性。
-
 - pipelineHash 不覆盖 src/domain/abilities build 依赖（改归一化须手动 FORCE_DATA_REBUILD） <!-- auto-todo:id=atd_b7e2d9f1c4 -->
   - 记录时间: `2026-07-28T02:32:00+08:00`
   - 类型: enhancement
