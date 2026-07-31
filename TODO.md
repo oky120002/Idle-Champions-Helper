@@ -24,13 +24,6 @@ repair: rebuild
     - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- deleteUserProfileData 未清 heroAbilityOverrides，override 是否随 profile 删待产品决策 <!-- auto-todo:id=atd_218690060f -->
-  - 记录时间: `2026-07-24T10:59:06+08:00`
-  - 类型: follow-up
-  - 位置: `src/data/user-profile-store/userProfileStore.ts:68`
-  - 备注: deleteUserProfileData 语义是删 profile snapshot（handleDelete 后 setSyncState no-snapshot），不清 heroAbilityOverrides；override 是否随 profile 删待产品决策
-    - 原 generateCoverageReport 孤学子项已于 2026-07-24 删除（simulator-data-coverage.ts + simulatorDataCoverage.test.ts，无调用方、无文档计划），本条仅剩 heroAbilityOverrides
-
 - equipmentAdjustment 结构性局限（stage 15 接线前需重审） <!-- auto-todo:id=atd_4410248f38 -->
   - 记录时间: `2026-07-24T22:10:04+08:00`
   - 类型: follow-up
@@ -88,15 +81,6 @@ repair: rebuild
     - 修复方向：查 variant 集合显示场景友好名；失效场景标记「原场景已消失」
     - 处置：低优先级 UX 改进；需 FormationPresetCard/PresetCard 引入 variant 集合数据依赖
 
-- 专长/feat 修饰信号未进 built hero-abilities（蔚道德规范 +20% 缺失） <!-- auto-todo:id=atd_9a1b2c3d4e -->
-  - 记录时间: `2026-07-28T13:10:00+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/effect-helpers.ts:collectRawEffectEntries`
-  - 备注: buff_upgrade progression 审计修复后，蔚 damage:hero pool 从 6.4e8（22× 高估）降到 1.66e7（0.57× 游戏，欠估 1.75×）。欠估主因之一：专长修饰（蔚「道德规范」对善良榜样 +20%）未进 built signals——`collectRawEffectEntries` 采集 upgrades/loot/legendaryEffects/feats/ability 五源，但 specialization（专长选择）不在其中。修 progression 后此缺口暴露（原被 progression 噪声掩盖）。
-    - （specialization 源未采集）
-    - 影响所有有专长 buff_upgrade 的英雄（蔚等），carryDps 欠估专长修饰倍率。
-    - 处置：中优先级；需在 collectRawEffectEntries 加 specialization 源采集（专长互斥选择 → 仅取选中项，需 profile context 或理论最大假设）。关联 vi-95.md 修复记录 #3。
-
 - planner.css 剩余交织块未完全拆分（scenario-selection + result-card + save-preset） <!-- auto-todo:id=atd_7a3f1c9d2e -->
   - 记录时间: `2026-07-30T15:40:00+08:00`
   - 类型: optimization
@@ -120,5 +104,14 @@ repair: rebuild
   - 备注: ADR 0017 UI 输入层按 requiredLevel 分层、每层单选，假设「同 requiredLevel = 同互斥组」。hero 165/55/81 是级联型专精树：依赖层（如 165 lvl=150 的 24 选项）各自 requiredUpgradeId 指向上层某个选择，UI 把依赖层全平铺成单选、且改上层后 applyTierSelection 不重置下层 → what-if override 可能保留游戏不可能的组合（如 lvl70=Tyr 但 lvl150 选了要求 Moradin 的项）。仅影响面板 override 探索（3 英雄）；核心推荐用存档 specialization_choices（游戏保证合法），不受影响。
     - （按 requiredLevel 分层，无 requiredUpgradeId 依赖链）
     - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
+
+- 专精 buff_upgrade wrapper 靶向非专精 upgrade 未展开（蔚 ed=1650 +200% 善良榜样缺失） <!-- auto-todo:id=atd_e4e90d5148 -->
+  - 记录时间: `2026-07-31T21:41:58+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/specialization-catalog.ts:85`
+  - 备注: ADR 0017 已外部化专精（catalog + applySpecializationsToProfile 运行时按玩家选择注入，47 英雄/225 信号），原 atd_9a1b2c3d4e「specialization 源未采集」已大部分解决；其提议的「加 specialization 到 collectRawEffectEntries effectEntries」会重复计数，勿采纳。
+    - 剩余缺口：专精 upgrade 上的 buff_upgrade wrapper 若靶向非专精 upgrade，三条路径都漏——base collectEffectEntries 不展开 specializationEntries（专精不应在 base，正确）；catalog buildSpecializationEntries 的 normalizeEffectSignal 不解析 wrapper kind（返回 unsupported，跳过）；specializationDerived 只收靶向专精 upgrade 的 wrapper。结果玩家选该专精时增益未注入。
+    - 真实样本：蔚 hero 95 ed=1650 劝人向善 buff_upgrade,200,12312（+200% 善良榜样 upgrade 12312）；hero 95 base 信号无此 +200%（已核实），carryDps 欠估。ed=1648/1649 是 change_upgrade_data（改目标集，非 scoring，正确不进 catalog）。
+    - 处置：buildSpecializationEntries 补 buff_upgrade wrapper 展开——从 specializationEntries 找 wrapper kind，靶向非专精 upgrade 时，resolveEntrySignal 解析目标 upgrade base signal + 派生信号挂到源专精 upgradeId（玩家选该专精时随 applySpecializationsToProfile 注入）。复用 collectEffectEntries 的 wrapper 展开逻辑。
 
 <!-- auto-todo:end -->
