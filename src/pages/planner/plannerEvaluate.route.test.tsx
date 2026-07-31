@@ -10,21 +10,31 @@ vi.mock('../../data/client', async () => {
 
   return {
     ...actual,
+    loadVersion: vi.fn(),
     loadCollection: vi.fn(),
+    fetchJson: vi.fn(),
   }
 })
 
 import { App } from '../../app/App'
 import { I18nProvider } from '../../app/i18n'
 import { ThemeProvider } from '../../app/theme'
-import { loadCollection } from '../../data/client'
+import { fetchJson, loadCollection, loadVersion } from '../../data/client'
 import { APP_DATABASE_NAME } from '../../data/localDatabase'
 import { deleteUserProfileData } from '../../data/user-profile-store'
 import type { HeroAbilityProfile } from '../../domain/abilities/abilityModel'
+import type { EffectDefinitionEntry } from '../../domain/buffs/effectDefinitionDps'
+import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
 import type { OfficialPlannerScenarioModel } from '../../domain/planner/plannerModel'
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../domain/types'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
+const mockedLoadVersion = vi.mocked(loadVersion)
+const mockedFetchJson = vi.mocked(fetchJson)
+
+const dataVersionFixture = { current: 'test-version', updatedAt: '2026-05-03T00:00:00.000Z', notes: [] }
+const lootCatalogFixture: DataCollection<LootCatalogEntry> = { updatedAt: '2026-05-03T00:00:00.000Z', items: [] }
+const effectDefinitionsFixture: DataCollection<EffectDefinitionEntry> = { updatedAt: '2026-05-03T00:00:00.000Z', items: [] }
 
 function text(original: string, display = original): LocalizedText {
   return { original, display }
@@ -162,13 +172,22 @@ const plannerSemanticOverridesFixture: DataCollection<{ heroId: string }> = {
 }
 
 function mockPlannerCollections() {
+  mockedLoadVersion.mockResolvedValue(dataVersionFixture)
   mockedLoadCollection.mockImplementation(async (name) => {
     if (name === 'variants') return variantsFixture
     if (name === 'champions') return championsFixture
     if (name === 'hero-abilities') return plannerHeroesFixture
     if (name === 'scenarios') return plannerScenariosFixture
     if (name === 'semantic-overrides') return plannerSemanticOverridesFixture
+    if (name === 'loot-catalog') return lootCatalogFixture
+    if (name === 'effect-definitions') return effectDefinitionsFixture
     throw new Error(`unexpected collection: ${name}`)
+  })
+  mockedFetchJson.mockImplementation(async (path: string) => {
+    if (path.endsWith('patron-perks.json')) return { perks: [] }
+    if (path.endsWith('feat-catalog.json')) return { catalog: {} }
+    if (path.endsWith('specialization-catalog.json')) return { catalog: {} }
+    throw new Error(`unexpected fetch: ${path}`)
   })
 }
 
@@ -188,7 +207,9 @@ beforeEach(async () => {
 })
 
 afterEach(async () => {
+  mockedLoadVersion.mockReset()
   mockedLoadCollection.mockReset()
+  mockedFetchJson.mockReset()
   await resetDatabase()
 })
 

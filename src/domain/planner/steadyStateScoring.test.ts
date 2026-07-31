@@ -513,6 +513,58 @@ describe('steady state scoring', () => {
       expect(recomputed).toBeCloseTo(Number(b.carryDps), 4)
     })
 
+    it('全因子同时非默认时 baseDps × Π factors = carryDps（防新增因子漏乘/漏外露）', () => {
+      // §6.3 组合守护：单因子非默认的测试（上方 damagePool / heroDpsPool 各测）无法发现
+      // 「某因子乘进 carryDps 却未外露进 factors」（或反之）的非对称回归——heroDpsPool 曾是此形 bug
+      // （equipment/external 分列两独立 × 因子，实际加法合并）。全因子同时 ≠ 1 时，任一因子漏乘或漏外露
+      // 都使重算乘积 ≠ carryDps；单因子测试因其余因子 = 1 而漏检。
+      const carry = createHero('carry', {
+        seat: 1,
+        baseDamage: 10,
+        carrySignals: [
+          { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_mult,100', source: 'official-parsed' },
+        ],
+      })
+      const critBuf = createHero('crit', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalCritDamage', value: 100, rawEffect: 'crit_dmg,100', source: 'official-parsed' },
+        ],
+      })
+      const vulnBuf = createHero('vuln', {
+        seat: 3,
+        supportSignals: [
+          { kind: 'enemyVulnerability', value: 100, rawEffect: 'vuln,100', source: 'official-parsed', monsterTags: [] },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['crit', critBuf], ['vuln', vulnBuf]])
+
+      const result = scoreFormation({
+        placements: { s1: 'carry', s2: 'crit', s3: 'vuln' },
+        heroesById,
+        scenario,
+        globalBuffMultiplier: 1.5,
+        equipmentAdjustmentByHero: new Map([['carry', 1.5]]),
+        externalHeroDpsContributions: [{ value: 200, qualifier: null }],
+      })
+      const b = result.breakdown!
+
+      // 全因子同时非默认——任一为 1 则该因子的非对称回归不可见
+      expect(b.factors.damagePool).toBeGreaterThan(1)
+      expect(b.factors.crit).toBeGreaterThan(1)
+      expect(b.factors.vulnerability).toBeGreaterThan(1)
+      expect(b.factors.globalBuff).toBeGreaterThan(1)
+      expect(b.factors.heroDpsPool).toBeGreaterThan(1)
+
+      // carryDps = baseDps × Π factors（steadyStateScoring.ts breakdown 契约）。
+      // 对照 objectiveValue（bestCarryDps 全精度 Decimal），非 breakdown.carryDps 显示字符串——
+      // 后者是 2 位尾数舍入形式（如 228.029 → "2.28e2" → 228），会吃掉精度。
+      const product = Number(b.baseDps)
+        * b.factors.damagePool * b.factors.crit * b.factors.vulnerability
+        * b.factors.globalBuff * b.factors.heroDpsPool
+      expect(product).toBeCloseTo(result.objectiveValue.toNumber(), 6)
+    })
+
     it('team-gold 模式与空阵型 breakdown 为 null', () => {
       const carry = createHero('carry', { seat: 1, baseDamage: 10 })
       const gold = createHero('gold', {
