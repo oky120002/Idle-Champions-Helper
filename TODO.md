@@ -160,13 +160,4 @@ repair: rebuild
     - （按 requiredLevel 分层，无 requiredUpgradeId 依赖链）
     - 处置：低优先级；依赖感知 UI 需 catalog 带 requiredUpgradeId + 渲染时禁用/过滤未满足前置的依赖层选项（或改上层时清孤立的下游选择）。YAGNI：仅 3 英雄 what-if 探索场景，暂不展开。
 
-- crit/speed/survival resolver 一刀切 supportSignals（潜在自增益泄漏，待 IC 语义确认） <!-- auto-todo:id=atd_5e2b9c1d4f -->
-  - 记录时间: `2026-07-30T15:55:00+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/effect-resolvers/critResolver.ts:21`
-  - 备注: 深度审计 [1f4cb65d..b7a3bdb8] 核查 heroCritChance bucket 发现：crit/speed/survival resolver 对所有 effect 硬编码 `buildSimplePoolSignal(..., 'supportSignals')`，无视 effect.targets 定向；而 dpsResolver（`hero_dps_multiplier_mult`）是 targeting-aware（无目标→carrySignals，targets 非 self→supportSignals）。**坐实的不对称**：feat-catalog 实测 `heroDpsMultiplier`（无目标自增益）正确落 carrySignals（138 个），同是无目标自身 stat 增益的 `heroCritChance`(27)/`heroCritDamage`(9)/`heroHealthMultiplier`(78)/`attackSpeedMult`(9) 却全落 supportSignals——resolver 代码层的不一致无文档解释（非有意的语义区分）。若 IC 里 `buff_base_crit_chance_add`（raw targets=None）实为自增益，则一刀切 supportSignals 会让该英雄支援他人时把自身暴击泄漏给其他 carry（collectSignals 支援位读 supportSignals → carry critFactor 被误增），系统性高估有 crit/health/speed feat 的支援英雄。影响 base（14 crit + survival/speed signal）+ catalog（feat 全维度）。**预存行为**（1f4cb65d effect-helpers.ts:1032 已如此，9f8108c6 逐字搬迁，非范围内回归；6d363819 catalog 正确复现 base，无新偏差）。
-    - `speedResolver.ts:23`（survivalResolver 同构）
-    - 阻断：需先确认 IC 语义——`buff_base_crit_chance_add`（无 global_ 前缀、无 targets）是持有者自身暴击还是全队光环。若全队则 supportSignals 正确（非 bug）；若自身则应按 targeting-aware 判 carrySignals（与 hero_dps 一致）。definitions-*.json 的 upgrade_defines.effect 字段结构 + 缺 description，无法直接判读；验证需读 per-hero champion-details（带 description/name）。
-    - 处置：中优先级（不对称已坐实，疑似遗漏而非有意）；确认自增益后，crit/speed/survival resolver 改用 resolveBucket 与 dpsResolver 一致，FORCE_DATA_REBUILD 重建 hero-abilities + feat-catalog + specialization-catalog。
-
 <!-- auto-todo:end -->
