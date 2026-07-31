@@ -11,13 +11,15 @@ vi.mock('../../data/client', async () => {
   return {
     ...actual,
     loadCollection: vi.fn(),
+    loadVersion: vi.fn(),
+    fetchJson: vi.fn(),
   }
 })
 
 import { App } from '../../app/App'
 import { I18nProvider } from '../../app/i18n'
 import { ThemeProvider } from '../../app/theme'
-import { loadCollection } from '../../data/client'
+import { fetchJson, loadCollection, loadVersion } from '../../data/client'
 import { APP_DATABASE_NAME } from '../../data/localDatabase'
 import { deleteUserProfileData } from '../../data/user-profile-store'
 import type { HeroAbilityProfile } from '../../domain/abilities/abilityModel'
@@ -25,6 +27,8 @@ import type { OfficialPlannerScenarioModel } from '../../domain/planner/plannerM
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../domain/types'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
+const mockedLoadVersion = vi.mocked(loadVersion)
+const mockedFetchJson = vi.mocked(fetchJson)
 
 function text(original: string, display = original): LocalizedText {
   return { original, display }
@@ -168,7 +172,21 @@ function mockPlannerCollections() {
     if (name === 'hero-abilities') return plannerHeroesFixture
     if (name === 'scenarios') return plannerScenariosFixture
     if (name === 'semantic-overrides') return plannerSemanticOverridesFixture
+    if (name === 'loot-catalog' || name === 'effect-definitions') {
+      return { items: [], updatedAt: '2026-05-03T00:00:00.000Z' }
+    }
     throw new Error(`unexpected collection: ${name}`)
+  })
+  mockedLoadVersion.mockResolvedValue({
+    current: 'v1',
+    updatedAt: '2026-05-03T00:00:00.000Z',
+    notes: [],
+  })
+  mockedFetchJson.mockImplementation(async (path: string) => {
+    if (path.endsWith('patron-perks.json')) return { perks: [] }
+    if (path.endsWith('feat-catalog.json')) return { catalog: {} }
+    if (path.endsWith('specialization-catalog.json')) return { catalog: {} }
+    throw new Error(`unexpected fetchJson path: ${path}`)
   })
 }
 
@@ -189,6 +207,8 @@ beforeEach(async () => {
 
 afterEach(async () => {
   mockedLoadCollection.mockReset()
+  mockedLoadVersion.mockReset()
+  mockedFetchJson.mockReset()
   await resetDatabase()
 })
 
