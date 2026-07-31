@@ -6,10 +6,10 @@
 
 | 维度 | 数值 |
 |---|---|
-| 用例总数 | **1194**（vitest 1164 = unit 906 + component 258；playwright e2e 30） |
+| 用例总数 | **1227**（vitest 1197；playwright e2e 30；批 0-4 后） |
 | 测试文件 | 221（vitest 209 + e2e 12） |
 | typecheck | ✅ 通过 |
-| vitest 基线 | ✅ **1164/1164 全绿**（批 0 已修，见 §2） |
+| vitest 基线 | ✅ **1197/1197 全绿**（批 0 修红 + 批 1 拆首测 +2 + 批 4 formatting +31） |
 
 夹具：11 个 co-located 单元。引用密度：`user-profile/fixtures.ts` 20 处、`resolverTestFixtures` 8 处、`mechanic/scoringTestFixtures` 各 2 处。`scripts/fixtures/` 目录存在但 sync 系列测试未充分复用（见 §3-B）。
 
@@ -72,10 +72,10 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 3. 纯数据（referenceData/types/index）→ 不补。
 
 优先补测候选（执行时语义确认无 route 覆盖）：
-- `src/domain/planner/placementSlotRelation.ts`（5.5KB，列关系计算）
-- `src/domain/abilities/heroTargetingRelation.ts`（5.4KB，目标关系计算）
-- `src/pages/pets/formatting.ts`（5.3KB，纯格式化）
-- `src/features/skelanim-player/{walk-selection,browser-codec}.ts`（9.0/5.2KB）
+- ✅ `src/pages/pets/formatting.ts`（144 行，纯格式化）— 批 4 已补 `formatting.test.ts`（31 用例覆盖 5 导出函数全分支）。确凿真缺口：调用方仅 `PetResultCard.tsx`（组件本身无测试），5 个纯函数分支密集（`buildAcquisitionLabel` 8+ 分支 × 双语）
+- `src/domain/planner/placementSlotRelation.ts`（194 行，列关系计算）— **间接覆盖非缺口**：被 `placementFit.ts` + `mechanics/stackCountResolver.ts` 调用，`placementFit.relations.test.ts` 已覆盖关系逻辑
+- `src/domain/abilities/heroTargetingRelation.ts`（155 行，目标关系计算）— 间接覆盖（`signalSemantics.ts` 调用 → buildModels 测试），边界复杂度待评估
+- `src/features/skelanim-player/{walk-selection,browser-codec}.ts`（295/174 行）— 间接覆盖（`skelanim-canvas-model`/`asset-loader` 调用），边界待评估
 
 ## 5. 守护测试（规范 §6）对照
 
@@ -96,7 +96,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | 1 | `build-models.test.ts` 重构（拆首用例；`it.each` 经评估否决） | 低（纯重构，行为不变） | ✅ 完成 |
 | 2 | sync 系列抽读 helper（recon 已修正 scope：非 fixture 数据，见 §B） | 低–中（pets 真重复；其余边际） | ⏳ recon 完成，待执行 |
 | 3 | `placementFit.test.ts` 按信号家族拆主题（4→6：框架级用例单列 pools/gating） | 中（40 用例分组迁移） | ✅ 完成 |
-| 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | ⏳ |
+| 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | 🔄 formatting ✅（31 用例）；placementSlotRelation 判间接覆盖非缺口；heroTargetingRelation/skelanim 待评估 |
 | 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ⏳ |
 
 ## 7. 风险与约束
