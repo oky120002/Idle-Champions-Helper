@@ -24,10 +24,11 @@ export type ScoringMode = 'carry-dps' | 'team-gold'
 
 /**
  * 投影模式（约束②，见 architecture.md「投影模式」）——把阵型加成聚合投影成 objectiveValue 的方式。
- * - 'absolute-dps'（默认）：baseDamage × levelCurve × 全因子（damagePool×crit×vuln×globalBuff×heroDpsPool）。
- *   绝对量未校准（baseDamage/BUD 未校准），作 BUD 校准回归基线。
- * - 'formation-buff'：只阵型内聚合 damagePool×crit×vuln，**不含** baseDamage/levelCurve/外部加成。
- *   阵型模拟器本质是阵型内 signal 聚合，外部全局加成不属于阵型（游戏只给全量数据故加开关）。
+ * - 'absolute-dps'（默认）：baseDamage × levelCurve × globalBuff × heroDpsPool × damagePool × crit × vuln。
+ *   globalBuff/heroDpsPool 是 ability 池与外部加成（patron/blessing/装备）同 key 加法合并后的 unified 池
+ *   （A1：IC 同 key 全来源加法，非跨源相乘）；damagePool 为残余非 global/hero 池。绝对量未校准，作 BUD 回归基线。
+ * - 'formation-buff'：只阵型内 ability 聚合（globalBuff×heroDpsPool×damagePool×crit×vuln），**不含**
+ *   baseDamage/levelCurve/外部加成。阵型模拟器本质是阵型内 signal 聚合，外部全局加成不属于阵型。
  * 禁复用 ComputationMode（已用于 beam-search 候选裁剪 `computationMode.ts`，两者正交）。
  */
 export type AggregateProjection = 'absolute-dps' | 'formation-buff'
@@ -45,21 +46,24 @@ export interface ScoringInput {
   heroLevels?: Map<string, number>
   scoringMode?: ScoringMode
   /**
-   * 全局 buff pool 乘数。
-   * 由调用方从 patron-perks + blessings 经 computeActual*GlobalBuff 解析后传入（combineGlobalBuffMultipliers 合成）。
-   * 默认 1（无全局加成）；乘进 carryDps：baseDps × levelCurve × damagePool × crit × vuln × globalBuff。
+   * 外部 global_dps 乘数（patron-perks + blessings 的 global_dps_multiplier_mult，add pool = 1+Σ/100）。
+   * 由调用方经 computeActual*GlobalBuff 解析 + combineGlobalBuffMultipliers 合成后传入。
+   * 默认 1（无外部加成）。absolute-dps 下与 ability 的 global_dps 同 key 加法合并进 unified global 池
+   * （A1：IC 同 key 全来源加法，非 ability 池 × 外部池 相乘）；formation-buff 不消费（排除外部加成）。
    */
   globalBuffMultiplier?: number | undefined
   /**
    * 装备调整比：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
    * 把理论 loot 基线缩放到玩家实际装备；默认无（=1，保持理论基线）。
    * 由调用方从 loot-catalog.json + owned loot 经 computeEquipmentAdjustmentByHero 解析后传入。
+   * absolute-dps 下与 ability 的 hero_dps 同 key 加法合并进 unified hero 池（A1）。
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
   /**
    * 外部 hero_dps per-carry 贡献（patron_perk + blessing 的 effect_def hero_dps，带 filter 限定）。
-   * scoreFormation 内按 carry 属性匹配 qualifier，与 equipment 同 add pool 合并
-   * （IC hero_dps_multiplier_mult 同英雄 base DPS）。由调用方经 collectHeroDpsContributions 解析后传入。
+   * scoreFormation 内按 carry 属性匹配 qualifier；absolute-dps 下与装备 + ability hero_dps 同 key 加法
+   * 合并进 unified hero 池（IC hero_dps_multiplier_mult 同英雄 base DPS，A1 同 key 全源加法）。
+   * 由调用方经 collectHeroDpsContributions 解析后传入。
    */
   externalHeroDpsContributions?: ReadonlyArray<HeroDpsContribution> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */
@@ -218,15 +222,13 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   let bestCarryHeroId: string | null = null
   let bestActiveKinds: Set<HeroAbilityKind> = new Set()
   // best carry 的拆解中间量；循环结束据此构建 SimulationBreakdown。
+  // globalBuff/heroDpsPool/damagePool 不预存——从 pools 提取（damage:global/hero 池 + 残余）。
   let bestBreakdownData: {
     carryEntry: PlacedEntry
     carryLevel: number
     pools: Map<string, AggregatedPool>
     critFactor: number
     vulnFactor: number
-    globalBuff: number
-    heroDpsPool: number
-    damagePool: number
     contributions: SimulationContribution[]
   } | null = null
 
@@ -303,24 +305,51 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
     const critFactor = computeCritFactor(critParts, carryEntry.hero.baseCritChancePercent)
     const vulnFactor = computeVulnerabilityFactor(vulnParts)
-    const globalBuff = input.globalBuffMultiplier ?? 1
-    const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1
-    // 外部 hero_dps（patron/blessing effect_def）按 carry 属性匹配，与装备同 add pool。
-    let externalHeroDpsAddPercent = 0
-    for (const contribution of input.externalHeroDpsContributions ?? []) {
-      if (matchesHeroQualifier(carryEntry.hero, contribution.qualifier)) {
-        externalHeroDpsAddPercent += contribution.value
+    const critVuln = critFactor * vulnFactor
+
+    // 阵型内 ability 加成池聚合（formation-buff 投影的 objective 与 breakdown 都用它）。
+    const abilityDamageAggregate = productOfPoolMultipliers(sharedPools)
+
+    // absolute-dps：外部加成（patron/blessing 的 global_dps、装备 + 外部 effect_def 的 hero_dps）与 ability
+    // 同 key 同池，IC 语义同 key 全来源加法（1 + Σ/100），非跨池相乘（A1，correctness-audit.md §2）。
+    // 注入 ability 池副本（mergePools 同 key addPercent 相加、保留 multFactor）得 unified 池。
+    // formation-buff 不注入（约束②：只取阵型内聚合，排除外部加成）。
+    let damageAggregate: number
+    let breakdownPools: Map<string, AggregatedPool>
+    if (aggregateProjection === 'formation-buff') {
+      damageAggregate = abilityDamageAggregate
+      breakdownPools = sharedPools
+    } else {
+      const externalPools: AggregatedPool[] = []
+      const globalBuffMultiplier = input.globalBuffMultiplier ?? 1
+      const globalAddPercent = (globalBuffMultiplier - 1) * 100
+      if (globalAddPercent !== 0) {
+        externalPools.push({ dimension: 'damage', scope: 'global', addPercent: globalAddPercent, multFactor: 1, poolMultiplier: 1 })
       }
+      const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1
+      let externalHeroDpsAddPercent = 0
+      for (const contribution of input.externalHeroDpsContributions ?? []) {
+        if (matchesHeroQualifier(carryEntry.hero, contribution.qualifier)) {
+          externalHeroDpsAddPercent += contribution.value
+        }
+      }
+      const heroAddPercent = (equipmentAdjustment - 1) * 100 + externalHeroDpsAddPercent
+      if (heroAddPercent !== 0) {
+        externalPools.push({ dimension: 'damage', scope: 'hero', addPercent: heroAddPercent, multFactor: 1, poolMultiplier: 1 })
+      }
+      const unifiedPools = new Map<string, AggregatedPool>()
+      for (const [key, pool] of sharedPools) {
+        unifiedPools.set(key, { ...pool })
+      }
+      mergePools(unifiedPools, externalPools)
+      damageAggregate = productOfPoolMultipliers(unifiedPools)
+      breakdownPools = unifiedPools
     }
-    // hero_dps add pool：装备 + 外部 effect_def 同 key（hero_dps_multiplier_mult）加法合并
-    // （IC 同 key effect 加法叠加，非各自独立乘）= equipmentAdjustment + ext%/100。
-    const heroDpsPool = equipmentAdjustment + externalHeroDpsAddPercent / 100
-    const damagePool = productOfPoolMultipliers(sharedPools)
-    const formationAggregate = damagePool * critFactor * vulnFactor
-    // 投影模式（约束②）：formation-buff 只取阵型内聚合，不乘 baseDamage/levelCurve/外部加成。
+
+    // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。
     const carryDps = aggregateProjection === 'formation-buff'
-      ? new Decimal(formationAggregate)
-      : computeCarryDps(carryEntry.hero, carryLevel, formationAggregate * globalBuff * heroDpsPool)
+      ? new Decimal(damageAggregate * critVuln)
+      : computeCarryDps(carryEntry.hero, carryLevel, damageAggregate * critVuln)
 
     if (compareGameNumbers(carryDps, bestCarryDps) > 0) {
       bestCarryDps = carryDps
@@ -330,12 +359,9 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       bestBreakdownData = {
         carryEntry,
         carryLevel,
-        pools: sharedPools,
+        pools: breakdownPools,
         critFactor,
         vulnFactor,
-        globalBuff,
-        heroDpsPool,
-        damagePool,
         contributions,
       }
     }
@@ -383,14 +409,19 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       pools,
       critFactor,
       vulnFactor,
-      globalBuff,
-      heroDpsPool,
-      damagePool,
       contributions,
     } = bestBreakdownData
     const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
     const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
     const baseDps = new Decimal(baseDamage).mul(levelCurve)
+    // factors 从 pools 提取：damage:global/hero 池各外露为 globalBuff/heroDpsPool（unified = ability + 外部同 key 加法）；
+    // damagePool 为残余（非 global/hero 的 damage 池；adjacentBuff/taggedChampionBuff 死代码移除后结构性 =1）。
+    const globalBuff = pools.get('damage:global')?.poolMultiplier ?? 1
+    const heroDpsPool = pools.get('damage:hero')?.poolMultiplier ?? 1
+    let damagePool = 1
+    for (const [key, pool] of pools) {
+      if (key !== 'damage:global' && key !== 'damage:hero') damagePool *= pool.poolMultiplier
+    }
     breakdown = {
       carryHeroId: carryEntry.hero.heroId,
       carrySlotId: carryEntry.slotId,

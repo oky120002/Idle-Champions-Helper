@@ -12,8 +12,8 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 
 阵型模拟器本质是「阵型内 signal 聚合器」，外部全局加成（恩赐祝福 / 赞助者）不属于阵型。因游戏只给全量数据、无纯阵型数据，加入参开关 `aggregateProjection`：
 
-- `'formation-buff'`（默认）：`objectiveValue` = 阵型内 signal 聚合因子（damagePool × crit × vuln），**不含** baseDamage / levelCurve / 外部加成。对照止于阵型倍率。
-- `'absolute-dps'`：`objectiveValue` = baseDamage × levelCurve × damagePool × crit × vuln × globalBuff × equipmentAdj。绝对量未校准（baseDamage / BUD 未校准），仅作 BUD 校准回归基线。
+- `'absolute-dps'`（默认）：`objectiveValue` = baseDamage × levelCurve × globalBuff × heroDpsPool × damagePool × crit × vuln。globalBuff/heroDpsPool 是 ability 池与外部加成（patron/blessing/装备）同 key 加法合并后的 unified 池（A1：IC 同 key 全源加法，非跨源相乘）；damagePool 为残余非 global/hero 池。绝对量未校准（baseDamage / BUD 未校准），仅作 BUD 校准回归基线。
+- `'formation-buff'`：`objectiveValue` = 阵型内 ability 聚合因子（globalBuff × heroDpsPool × damagePool × crit × vuln，池为 ability-only 不含外部加成），**不含** baseDamage / levelCurve / 外部加成。对照止于阵型倍率；外部加成注入只发生在 absolute-dps（约束②）。
 
 命名锁：**禁止复用 `ComputationMode`**——该名已用于 beam-search 候选裁剪（`computationMode.ts`，`full|p90|…|p50`），两者正交。
 
@@ -30,7 +30,7 @@ planner 对伤害加成的建模遵循以下硬约束（用户决策，2026-08-0
 3. **宁可不准，不可错**：未建模的来源明确标注「没算」（不准确，可接受）；错误建模（如把条件加成剥成无条件 = 过度生效）不可接受。带未解析条件的 effect 一律保守丢弃，不臆断。
 4. **劣后分类**：条件性攻击加成（种族 / 年龄 / 性别 / 小队等）属锦上添花，待主体加成正确性收敛后再做。
 
-背景调研与修复路径：`docs/research/data/planner/damage-bonus-sources.md`（A1）。
+背景调研与修复路径：`docs/research/data/planner/damage-bonus-sources.md`（A1）。原则 1（同 key 加法）已由 A1 落地（2026-08-01）：`scoreFormation` 把外部加成注入 ability 池副本实现同 key 全源加法，偏差由「负负得正的接近」转为「纯低估」（未建模缺口显现，见 ADR 0015 变更）。
 
 ### Hermetic 边界（审计结论）
 

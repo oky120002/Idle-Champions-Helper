@@ -820,7 +820,7 @@ export function collectEffectEntries(detail: unknown): {
 
   const allEntries = [...effectEntries, ...derivedByKey.values()]
 
-  // static_dps_mult fallback（见 development-design-simulator.md「加成聚合与 DPS 公式」Π(static_dps_mults)）：upgrade 带 static_dps_mult
+  // static_dps_mult fallback（见 simulator.md「加成聚合与 DPS 公式」Π(static_dps_mults)）：upgrade 带 static_dps_mult
   // （CNE 静态 dps 乘数近似）且其 effect 未产出可解析 signal（复杂机制 effect 进 unsupported）时，
   // 生成一个 mult signal 作为静态近似，避免 dps 贡献丢失。防重复：该 upgrade 已有可解析
   // signal（含 wrapper 派生的 signalPreset entry）时不 fallback。

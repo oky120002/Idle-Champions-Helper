@@ -30,16 +30,14 @@ baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
 carry-dps 模式的真实 DPS 公式：
 
 ```
-hero_final_dps = base_dps
-  × global_dps_pool           // Σ(add) → Π(mult)
-  × hero_dps_pool
-  × Π(formation_effects)      // formation_effect 特殊 pool
-  × Π(static_dps_mults)       // upgrade.static_dps_mult 近似
+hero_final_dps = base_dps × level_curve
+  × global_dps_pool           // unified：ability + patron/blessing 同 key global_dps_multiplier_mult 加法（1+Σ/100）→ Π(mult)
+  × hero_dps_pool             // unified：ability + 装备 + patron/blessing 同 key hero_dps_multiplier_mult 加法（1+Σ/100）
   × crit_factor               // 1 + Σ(crit_chance)·(crit_damage_mult−1)
   × vulnerability_pool        // 按怪物 tag 条件匹配，Σ(add) → Π(mult)
-  × global_buff_pool          // patron-perks / blessing 的 global_dps_multiplier_mult
-  × hero_dps_external_pool    // 装备 + patron/blessing 的 hero_dps_multiplier_mult 加法合并（heroDpsPool，非 ratio）
 ```
+
+`global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron/blessing/装备）同属一个 IC effect key（`global_dps_multiplier_mult` / `hero_dps_multiplier_mult`），按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。修复前二者分列相乘是 A1 bug（`docs/audits/correctness-audit.md` §2）：同 key 跨源该加法却相乘，高估 carryDps 并与未建模源「负负得正」。scoreFormation 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
 
 `HeroAbilitySignal.unit: 'percent'|'flat'|'boolean'`（默认 percent；`buff_upgrade_add_flat_amount` 是 flat）。
 
@@ -59,8 +57,8 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 | vulnerability | 是 | 按场景怪物 tag 条件性匹配（`scenario.enemyTypes`）；add/mult 分流聚合，与 damage pool 一致。 |
 | survival | 推图约束 | `effectiveHealth = baseHealth × health_pool`；`damage_reduction_mult` 玩家侧减伤。不进 carryDps，作为推图预估的存活约束。 |
 | speed | 否 | `attack_speed_mult`/`reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown）。 |
-| global-buff | 是 | patron-perks 的 `patronPerkMult`（无条件全局 DPS）；blessings 因 definitions 无效果定义且 snapshot 丢弃 favor/blessings，不可做。 |
-| equipment | 是 | 装备 `hero_dps_multiplier_mult`（loot-catalog，enchant 缩放 `base×(1+enchant/250)`，`computeEquipmentMult`）+ patron/blessing 的 hero_dps 同 key 加法合并成 heroDpsPool（`1+Σ%/100`），独立乘 carryDps。与 ability 源 hero_dps 池分列乘法——IC 同 key 应加法合并，见 `docs/audits/correctness-audit.md` §2。 |
+| global-buff | 是 | patron-perks 的 `global_dps_multiplier_mult`（无条件全局 DPS，`computeActualPatronPerkGlobalBuff`）+ blessings（`computeActualBlessingGlobalBuff`），`combineGlobalBuffMultipliers` 合成外部 global_dps 池；与 ability 源同 key 加法合并进 unified global_dps_pool（A1）。 |
+| equipment | 是 | 装备 `hero_dps_multiplier_mult`（loot-catalog，enchant 缩放 `base×(1+enchant/250)`，`computeEquipmentMult`）+ patron/blessing 的 hero_dps effect_def，与 ability 源同 key 加法合并进 unified hero_dps_pool（A1：IC 同 key 全源加法，`correctness-audit.md` §2）。 |
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 

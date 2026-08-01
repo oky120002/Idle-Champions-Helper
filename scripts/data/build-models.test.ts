@@ -1014,7 +1014,7 @@ it('collectEffectEntries static_dps_mult fallback：复杂 effect 进 unsupporte
   // upgrade 带 static_dps_mult（CNE 静态 dps 乘数近似），其 effect 是复杂机制
   // （target_attacking_monsters_hero_dps_mult 等）resolveDpsSignal 无 parser → 进 unsupported；
   // static_dps_mult 接管，生成 heroDpsMultiplier mult signal（carryDps self-buff），避免 dps 丢失。
-  // 35 个 upgrade 受此影响（static_dps_mult 是 CNE 静态 dps 乘数近似，见 development-design-simulator.md「加成聚合与 DPS 公式」）。
+  // 35 个 upgrade 受此影响（static_dps_mult 是 CNE 静态 dps 乘数近似，见 simulator.md「加成聚合与 DPS 公式」）。
   const detail = {
     upgrades: [
       {

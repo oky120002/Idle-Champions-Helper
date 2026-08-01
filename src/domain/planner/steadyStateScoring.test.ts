@@ -357,8 +357,9 @@ describe('steady state scoring', () => {
     expect(result.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 3, 4)
   })
 
-  it('global buff pool（patron-perk）乘进 carryDps（11.4）', () => {
-    // 含全局加成（patronPerkMult pool ×2）的 carryDps 应 > 不含。
+  it('global buff pool（patron-perk）合并进 carryDps（11.4）', () => {
+    // 外部 global_dps（patronPerkMult ×2）与 ability 同 key 加法合并进 carryDps（A1：同 key 全源加法）。
+    // 本例 carry 无 ability global signal，合并退化为 ×external；有 ability 源时见 A1 专项测试。
     const carry = createHero('carry', { seat: 1, baseDamage: 10 })
     const heroesById = new Map([['carry', carry]])
 
@@ -393,12 +394,14 @@ describe('steady state scoring', () => {
       const heroesById = new Map([['carry', carry], ['buf', support]])
       const placements = { s1: 'carry', s2: 'buf' }
 
-      // absolute-dps（默认）：含 baseDamage/levelCurve/globalBuff → 10 × 1.06 × damagePool(3) × 5 = 159
+      // absolute-dps：ability global 池(support +200%→×3) 与外部 globalBuff(×5=+400%) 同 key 加法合并
+      // → unified global = 1+(200+400)/100 = 7；10 × 1.06 × 7 = 74.2。
+      // 修复前 bug：同 key 跨源相乘 3×5=15 → 159（A1，correctness-audit.md §2）。
       const abs = scoreFormation({ placements, heroesById, scenario, globalBuffMultiplier: 5 })
-      expect(abs.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 3 * 5, 3)
+      expect(abs.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 7, 3)
       expect(abs.areaEstimate).not.toBeNull()
 
-      // formation-buff：只 damagePool×crit×vuln = 3，与 baseDamage/levelCurve/globalBuff 无关
+      // formation-buff：只取阵型内 ability 聚合（global 池 ×3），排除 baseDamage/levelCurve/外部加成
       const fb = scoreFormation({ placements, heroesById, scenario, globalBuffMultiplier: 5, aggregateProjection: 'formation-buff' })
       expect(fb.objectiveValue.toNumber()).toBeCloseTo(3, 6)
       // formation-buff 模式 bestCarryDps 是聚合倍率（非真实 DPS），areaEstimate 无意义 → null
@@ -472,17 +475,21 @@ describe('steady state scoring', () => {
       expect(Number(breakdown!.baseDps)).toBeCloseTo(10.6, 4)
       // levelCurve 是游戏记数法字符串（与 baseDps/carryDps 同契约），Number 解析后 ≈ rate
       expect(Number(breakdown!.levelCurve)).toBeCloseTo(1.06, 4)
-      // carryDps = baseDps × damagePool(2×3) = 10.6 × 6 = 63.6；与 score 一致
+      // carryDps = baseDps(10.6) × globalBuff(3) × heroDpsPool(2) = 63.6；与 score 一致
+      // 同 key 全源加法后：ability global(support +200%)→globalBuff=3，ability hero(carry +100%)→heroDpsPool=2，
+      // 各自外露为独立因子；damagePool 为残余（非 global/hero 的 damage 池，结构性 =1）。
       expect(Number(breakdown!.carryDps)).toBeCloseTo(63.6, 4)
-      expect(breakdown!.factors.damagePool).toBeCloseTo(6, 4)
+      expect(breakdown!.factors.damagePool).toBeCloseTo(1, 6)
       expect(breakdown!.factors.crit).toBeCloseTo(1, 6)
       expect(breakdown!.factors.vulnerability).toBeCloseTo(1, 6)
-      expect(breakdown!.factors.globalBuff).toBeCloseTo(1, 6)
-      expect(breakdown!.factors.heroDpsPool).toBeCloseTo(1, 6)
+      expect(breakdown!.factors.globalBuff).toBeCloseTo(3, 6)
+      expect(breakdown!.factors.heroDpsPool).toBeCloseTo(2, 6)
       // pools：hero self（addPercent 100 → ×2）与 global（addPercent 200 → ×3）
-      const heroPool = breakdown!.pools.find((p) => p.addPercent === 100)
+      const heroPool = breakdown!.pools.find((p) => p.scope === 'hero')
+      expect(heroPool?.addPercent).toBeCloseTo(100, 6)
       expect(heroPool?.poolMultiplier).toBeCloseTo(2, 6)
-      const globalPool = breakdown!.pools.find((p) => p.addPercent === 200)
+      const globalPool = breakdown!.pools.find((p) => p.scope === 'global')
+      expect(globalPool?.addPercent).toBeCloseTo(200, 6)
       expect(globalPool?.poolMultiplier).toBeCloseTo(3, 6)
       // contributions：carry 自带 heroDpsMultiplier、buf 贡献 globalDpsMultiplier
       const bufContribution = breakdown!.contributions.find((c) => c.supportHeroId === 'buf')
@@ -548,8 +555,9 @@ describe('steady state scoring', () => {
       })
       const b = result.breakdown!
 
-      // 全因子同时非默认——任一为 1 则该因子的非对称回归不可见
-      expect(b.factors.damagePool).toBeGreaterThan(1)
+      // 全因子同时非默认——任一为 1 则该因子的非对称回归不可见。
+      // damagePool 是残余（非 global/hero 的 damage 池，结构性 =1），不在此测；
+      // globalBuff/heroDpsPool 已接手 damage 维度的全源加法（含外部），任一漏乘/漏外露都使重算 ≠ carryDps。
       expect(b.factors.crit).toBeGreaterThan(1)
       expect(b.factors.vulnerability).toBeGreaterThan(1)
       expect(b.factors.globalBuff).toBeGreaterThan(1)
@@ -614,7 +622,7 @@ describe('steady state scoring', () => {
     })
 
     it('levelCurve 为字符串，高 level 也不溢出为 null（JSON 契约）', () => {
-      // 契约：development-design-simulator.md 声明 levelCurve 为「游戏记数法字符串，可超 MAX_VALUE」。
+      // 契约：simulator.md 声明 levelCurve 为「游戏记数法字符串，可超 MAX_VALUE」。
       // 原 .toNumber() 在 1.06^20000（≈10^506）溢出为 Infinity，JSON.stringify 静默变 null，破坏契约。
       const carry = createHero('carry', { seat: 1, baseDamage: 1 })
       const heroesById = new Map([['carry', carry]])
@@ -630,6 +638,82 @@ describe('steady state scoring', () => {
       const roundTrip = JSON.parse(JSON.stringify({ levelCurve: breakdown.levelCurve })) as { levelCurve: unknown }
       expect(roundTrip.levelCurve).not.toBeNull()
       expect(typeof roundTrip.levelCurve).toBe('string')
+    })
+  })
+
+  describe('A1 同 key 跨源加法（外部加成与 ability 同池，非相乘）', () => {
+    it('ability global_dps 与外部 globalBuff 同 key 加法（修复前跨源相乘高估）', () => {
+      // A1 核心（correctness-audit.md §2）：global_dps_multiplier_mult 的 ability 源与
+      // patron/blessing 外部源同 key，IC 语义全来源加法 1+Σ/100。
+      // 修复前：ability global 池(×3) × 外部 globalBuff(×5) = 15（高估）。
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const support = createHero('buf', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 200, rawEffect: 'global_dps,200', source: 'official-parsed' },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['buf', support]])
+      const result = scoreFormation({
+        placements: { s1: 'carry', s2: 'buf' },
+        heroesById,
+        scenario,
+        globalBuffMultiplier: 5, // 外部 global_dps = 1+400/100
+      })
+      // unified global = 1+(200+400)/100 = 7（非 3×5=15）；carryDps = 10 × 1.06 × 7 = 74.2
+      expect(result.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 7, 4)
+      expect(result.breakdown!.factors.globalBuff).toBeCloseTo(7, 6)
+      // global 池 addPercent = 200(ability) + 400(外部) = 600
+      const globalPool = result.breakdown!.pools.find((p) => p.scope === 'global')
+      expect(globalPool?.addPercent).toBeCloseTo(600, 6)
+    })
+
+    it('ability hero_dps 与装备/外部 hero_dps 同 key 加法（修复前跨源相乘高估）', () => {
+      // A1 核心：hero_dps_multiplier_mult 的 ability 源与装备/外部 effect_def 同 key 加法。
+      // 修复前：ability hero 池(×2) × heroDpsPool(装备+外部=3.5) = 7（高估）。
+      const carry = createHero('carry', {
+        seat: 1,
+        baseDamage: 10,
+        carrySignals: [
+          { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_mult,100', source: 'official-parsed' },
+        ],
+      })
+      const heroesById = new Map([['carry', carry]])
+      const result = scoreFormation({
+        placements: { s1: 'carry' },
+        heroesById,
+        scenario,
+        equipmentAdjustmentByHero: new Map([['carry', 1.5]]), // 装备 +50%
+        externalHeroDpsContributions: [{ value: 200, qualifier: null }], // 外部 +200%
+      })
+      // unified hero = 1+(100+50+200)/100 = 4.5（非 2×3.5=7）；carryDps = 10 × 1.06 × 4.5 = 47.7
+      expect(result.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 4.5, 4)
+      expect(result.breakdown!.factors.heroDpsPool).toBeCloseTo(4.5, 6)
+      const heroPool = result.breakdown!.pools.find((p) => p.scope === 'hero')
+      expect(heroPool?.addPercent).toBeCloseTo(350, 6)
+    })
+
+    it('formation-buff 排除外部加成（A1 合并不污染投影模式，约束②）', () => {
+      // formation-buff 只取阵型内 ability 聚合；A1 的外部加成注入不得污染该模式。
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const support = createHero('buf', {
+        seat: 2,
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 200, rawEffect: 'global_dps,200', source: 'official-parsed' },
+        ],
+      })
+      const heroesById = new Map([['carry', carry], ['buf', support]])
+      const withExternal = scoreFormation({
+        placements: { s1: 'carry', s2: 'buf' },
+        heroesById,
+        scenario,
+        globalBuffMultiplier: 5,
+        aggregateProjection: 'formation-buff',
+      })
+      // formation-buff：ability global 池(×3) only，外部 +400% 不注入 → 3
+      expect(withExternal.objectiveValue.toNumber()).toBeCloseTo(3, 6)
+      // breakdown factors 也只反映 ability（globalBuff=3，外部未注入）
+      expect(withExternal.breakdown!.factors.globalBuff).toBeCloseTo(3, 6)
     })
   })
 
