@@ -98,7 +98,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | 3 | `placementFit.test.ts` 按信号家族拆主题（4→6：框架级用例单列 pools/gating） | 中（40 用例分组迁移） | ✅ 完成 |
 | 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | ✅ 完成：formatting ✅（31）；批 6 深度复审收口 heroTargetingRelation（已覆盖）/skelanim（低 ROI 跳过）/placementSlotRelation（间接覆盖），见 §8 |
 | 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ✅ 完成（三类均已闭环；唯一新补：因子之积全因子组合守护，见 §5.3） |
-| 6 | §4 覆盖缺口函数级穷尽复审（155→真缺口仅 1，补 animation-audit） | 低（纯新增测试） | ✅ 完成（feedback +34、useAnimationAuditPageModel +15；详见 §8） |
+| 6 | §4 覆盖缺口函数级穷尽复审（155→真缺口仅 animation-audit + skelanim browser-codec） | 低（纯新增测试） | ✅ 完成（feedback +34、useAnimationAuditPageModel +15、browser-codec +4；详见 §8） |
 
 ## 7. 风险与约束
 
@@ -141,13 +141,14 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 |---|---|---|
 | `animation-audit/feedback.test.ts` | 34 | 8 导出全分支：`ANIMATION_AUDIT_FEEDBACK_TAGS` 契约 / `createEmpty` / `normalizeAnimationAuditFeedbackDraft`（空→null / note trim / tag 去重排序）/ `isMeaningfulAnimationAuditFeedback`（类型守卫）/ `toggleAnimationAuditFeedbackTag`（追加/移除/保 verdict-note）/ `buildAnimationAuditFeedbackPayload`（verdict→sequenceIndex 4 分支 + alternate 无候选回退 + 过滤空反馈 + 元信息快照）/ `readStoredAnimationAuditFeedback`（window 守卫 + malformed JSON/非对象/条目类型守卫/tag coerce/note 强制 / 空 draft 丢弃）/ `writeStoredAnimationAuditFeedback`（window 守卫 + JSON 落盘）。localStorage 防御解析用 `vi.stubGlobal('window')` 在 node 环境注入 |
 | `animation-audit/useAnimationAuditPageModel.test.tsx` | 15 | 页面首个测试，`renderHook` 覆盖：3 个私有过滤谓词（matchesLevel flagged=非none/精确等级、matchesKind、matchesSearch 中英文/ID 大小写不敏感/空白透传）/ summary 按 level+kind 聚合 / 反馈状态（verdict/tag/note 写入、空 draft 删除不留壳、clear 单条/全清）/ feedbackSummary 计数 / visibleEntries 24 截断 + showAll + canShowMore / 加载成功与失败两态 |
+| `features/skelanim-player/browser-codec.test.ts` | 4 | src 侧 `decodeSkelAnimBuffer` 端到端：自建 deflate 二进制夹具（轻量 raw bytes 纹理，无需 PNG）→ 解析全字段（sheet/texture/character/piece/frame 序号标注 + 多 sequence 顺序 + 缺失帧 null + 空字符串角色名）。覆盖 src 特有 `inflateContainer`（DecompressionStream→fflate 回退）+ parseInflatedBuffer 接线；与 scripts 侧 `skelanim-codec`（已测）同格式平行移植，本测补 src 运行时侧 |
 
 ### 8.4 有意识跳过（ROI 不足）
 
-- `features/skelanim-player/{walk-selection,browser-codec}.ts`（295/174 行，零测试引用）：walk-selection 是动画播放器的**视觉启发式**（6 因子加权评分 + 5 阈值候选过滤，magic number 编码视觉口味），构造能预测输出的夹具成本高、判定是视觉判断；browser-codec 是二进制协议解析器，需真实 `.skelanim` 二进制夹具。scripts 侧有平行实现（`scripts/data/skelanim-{codec,walk-selection}.ts` + `skelanim.test.ts`，node:zlib/PNG）已覆盖数据管线侧。属次要视觉功能，夹具成本 vs 价值不抵，纯函数变异风险低。
+- `features/skelanim-player/walk-selection.ts`（295 行，零测试引用）：动画播放器的**视觉启发式**（6 因子加权评分 + 5 阈值候选过滤，magic number 编码视觉口味），构造能预测输出的夹具成本高、判定本身是视觉判断而非确定正确解；属次要视觉功能，纯函数变异风险低。`browser-codec.ts` 见 §8.3（确定性解析器，已补）。
 - `animationAuditFilterLabels.ts`：见 §8.2。
 
 ### 8.5 度量
 
-vitest **1284**（批 5 后 1235 + feedback 34 + hook 15）/ **219** 文件，全绿；typecheck ✅。e2e 30 不变。
+vitest **1288**（批 5 后 1235 + feedback 34 + hook 15 + browser-codec 4）/ **220** 文件，全绿；typecheck ✅。e2e 30 不变。
 
