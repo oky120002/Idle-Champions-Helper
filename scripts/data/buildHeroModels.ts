@@ -2,6 +2,7 @@ import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantic
 import {
   collectEffectEntries,
   normalizeEffectSignal,
+  parseBaseCritChancePercent,
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
 } from './effect-helpers.ts'
@@ -20,6 +21,7 @@ export function buildOfficialHeroModel(
   const carrySignals: HeroAbilitySignal[] = []
   const supportSignals: HeroAbilitySignal[] = []
   const unsupportedSignals: HeroUnsupportedSignal[] = []
+  let baseCritChancePercent: number | null = null
 
   for (const entry of collectEffectEntries(detail).entries) {
     // feat 外部化（与专精同构，ADR 0017）：feat effect 不进 base，由 feat-catalog + runtime
@@ -31,6 +33,13 @@ export function buildOfficialHeroModel(
     const split = splitEffectString(entry.effectString)
 
     if (!split) {
+      continue
+    }
+
+    // set_base_crit_chance：英雄 innate base crit SET（非位置信号），提取为 hero 字段，不进信号池
+    const baseCritChance = parseBaseCritChancePercent(split.effectName, split.effectValue)
+    if (baseCritChance !== null) {
+      baseCritChancePercent = baseCritChance
       continue
     }
 
@@ -77,6 +86,7 @@ export function buildOfficialHeroModel(
     age: typeof characterSheet.age === 'number' ? characterSheet.age : null,
     abilityScores: characterSheet.abilityScores as HeroAbilityProfile['abilityScores'] ?? {},
     baseDamage,
+    baseCritChancePercent,
     costCurves,
     baseHealth,
     healthCurves,

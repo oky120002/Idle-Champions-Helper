@@ -301,7 +301,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       }
     }
 
-    const critFactor = computeCritFactor(critParts)
+    const critFactor = computeCritFactor(critParts, carryEntry.hero.baseCritChancePercent)
     const vulnFactor = computeVulnerabilityFactor(vulnParts)
     const globalBuff = input.globalBuffMultiplier ?? 1
     const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1

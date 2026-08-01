@@ -148,6 +148,11 @@ export interface HeroAbilityProfile {
   abilityScores: Partial<Record<AbilityScoreKey, number>>
   baseDamage: number
   /**
+   * 英雄 innate base 暴击 %（来自 set_base_crit_chance SET，覆盖游戏全局默认 2.5%）。
+   * null/undefined = 用默认 2.5%（critFactor 归一）。非位置信号，build 期提取。
+   */
+  baseCritChancePercent?: number | null
+  /**
    * 升级 cost 曲线（来自 champion-details.costCurves，key 统一为 "1"）。
    * levelCurve(level) = rate^level 近似 DPS 增长上界（ponytail，BUD 精确化）。
    */

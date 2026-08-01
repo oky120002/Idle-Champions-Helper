@@ -50,3 +50,27 @@ describe('computeCritFactor', () => {
     expect(computeCritFactor(parts)).toBeGreaterThan(1)
   })
 })
+
+describe('computeCritFactor · per-hero base crit（set_base_crit_chance 覆盖默认 2.5%）', () => {
+  // 归一锚 BASE_CRIT_FACTOR = 1 + 0.025×(2−1) = 1.025（全局默认 base，作归一基准不变）。
+  // per-hero base crit 覆盖默认：无 crit signal 时不再强制 1.0，保留 innate 暴击期望（carry 排序感知）。
+  it('20% base、无 crit signal → ~1.1707（高 base crit 自带暴击期望增益）', () => {
+    // totalChance=0.20, totalDamage=2.0, rawCrit=1+0.20×(2−1)=1.20, /1.025≈1.1707
+    expect(computeCritFactor([], 20)).toBeCloseTo(1.1707, 4)
+  })
+
+  it('null/undefined base → 用默认 2.5%（无信号 → 1.0，与既有行为一致）', () => {
+    expect(computeCritFactor([], null)).toBe(1)
+    expect(computeCritFactor([], undefined)).toBe(1)
+  })
+
+  it('20% base + crit damage 信号 → base 与 damage 叠加，高于默认 base 同信号', () => {
+    // 20% base + heroCritDamage mult×2: totalChance=0.20, totalDamage=1+(100×2)/100=3
+    // rawCrit=1+0.20×(3−1)=1.40, /1.025≈1.3659
+    const parts = [buildScorePart({ signalKind: 'heroCritDamage', multiplier: 2, amountFunc: 'mult' })]
+    expect(computeCritFactor(parts, 20)).toBeCloseTo(1.3659, 4)
+    // 默认 base 同信号：rawCrit=1+0.025×2=1.05, /1.025≈1.0244（base crit 提升让 crit damage 信号更值）
+    expect(computeCritFactor(parts)).toBeCloseTo(1.0244, 4)
+    expect(computeCritFactor(parts, 20)).toBeGreaterThan(computeCritFactor(parts))
+  })
+})

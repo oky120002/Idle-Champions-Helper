@@ -154,7 +154,23 @@ export function shouldIgnoreUnsupportedEffectEntry(rawEffect: string): boolean {
   if (rawEffect === 'effect_def') {
     return true
   }
+  if (rawEffect === 'set_base_crit_chance') {
+    return true
+  }
   return isBuffUpgradeKind(rawEffect)
+}
+
+/**
+ * set_base_crit_chance：英雄 innate base crit % 的 SET（非位置信号）。
+ * build 期提取为 hero.baseCritChancePercent（覆盖默认 2.5%），不进信号池；
+ * shouldIgnoreUnsupportedEffectEntry 同名忽略，使 signal-coverage 不计 unsupported（两处同源，勿单改）。
+ */
+export function parseBaseCritChancePercent(effectName: string, effectValue: string): number | null {
+  if (effectName !== 'set_base_crit_chance') {
+    return null
+  }
+  const value = parseFloat(effectValue)
+  return Number.isFinite(value) ? value : null
 }
 
 function resolveTargetUpgradeIds(payload: ParsedEffectPayload | null): string[] {

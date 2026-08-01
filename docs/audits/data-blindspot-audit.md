@@ -29,7 +29,9 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 ## 3. 真缺口（P1）— 系统性低估证据
 
-### 3.1 `set_base_crit_chance`（10 条 / 10 英雄）— base crit 被丢
+### 3.1 `set_base_crit_chance`（10 条 / 10 英雄）— base crit 被丢（✅ 已收口 2026-08-01）
+
+> ✅ **已收口**（2026-08-01，集群 A2）：`set_base_crit_chance` build 期提取为 `hero.baseCritChancePercent`（非位置信号，不进信号池），`computeCritFactor` 接 per-hero base 参数。10 英雄 20% base crit 生效，无信号时保留 ~1.171 暴击期望增益（carry 排序感知）；移除 `if (!hasCrit) return 1` 短路，默认 base 仍归一 1.0（既有行为不变）。signal-coverage unsupported 2418→2408。下为轮 6 原始发现。
 
 `critFactor.ts:5` 硬编码 `DEFAULT_CRIT_CHANCE_PERCENT=2.5` 作 base，`computeCritFactor` 只读 `globalCritChance`/`heroCritChance`（ADD 类）。`set_base_crit_chance,<amount>` 是 SET 语义（覆盖 base），无 parser。全 10 条均为 `set_base_crit_chance,20`。
 
@@ -95,7 +97,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 | `add_attack_targets` | 17 | A | 基本攻击多打 N 个附近敌人 | 多目标=清怪，非单体 BUD | 不动 |
 | `favored_foe` | 14 | C | tag 敌人成偏好敌人（无 amount，tag-setter） | §3.3，直接 DPS=0；深层 tag 保留问题待查 | 观察/P1-low |
 | `heal` | 13 | A | 每秒回血 | survival sustain | 不动 |
-| `set_base_crit_chance` | 10 | B | SET base 暴击% | §3.1 | **P1** |
+| `set_base_crit_chance` | 10 | B | SET base 暴击% | §3.1（✅ 已收口） | ✅ |
 | `change_upgrade_data` | 10 | C | 改另一 upgrade 数据 | 跨 upgrade 元数据 | 不动 |
 | `buff_upgrade_effect_stacks_max_mult` | 9 | C | +另一 buff 叠层上限% | 间接；manualStackCount 不卡上限 | 不动 |
 | `broadcast_on_trigger`/`apply_effects_at_stacks` | 16 | C | 触发/条件 plumbing | 其效果由被触发信号承载 | 不动 |
@@ -117,9 +119,11 @@ memory 记 planner 计算器观测值比理论大 ~10^31，大头来自**外部�
 
 ### P1（登记，不当轮动手——跨 resolver/需 amount 个案核定）
 
+> ✅ `set_base_crit_chance` base crit 丢失已收口（2026-08-01，集群 A2，详见 §3.1）——原行移出本表。
+
 | 项 | 动作 | ROI | 影响面 | 决策点 |
 |---|---|---|---|---|
-| `set_base_crit_chance` base crit 丢失 | critFactor 引入 per-hero base crit（resolver 把 SET 转 heroCritChance 等价增量，或 critFactor 读 hero base） | 中-高（Drizzt/贾拉索/沃夫加等 7 英雄 base crit 全丢，carry 排序修正） | critFactor.ts + dpsResolver + 10 英雄 | SET→ADD 等价转换 vs critFactor 直接读 base |
+| ~~`set_base_crit_chance` base crit 丢失~~ | ✅ 已收口：critFactor 接 per-hero base（build 提取 `set_base_crit_chance` → `hero.baseCritChancePercent`），采「直接读 base」方案（非 SET→ADD 转换） | 中-高（10 英雄 20% base crit 生效，carry 排序修正） | critFactor.ts + buildHeroModels + effect-helpers + abilityModel | ✅ 已决：直接读 base |
 | enemy-type-conditional 伤害 tag 保留（favored_foe 暴露的深层问题） | 单独审计 effect_def 模板解析路径：`monster_with_tag_more_damage` 经 effect_def 模板解析后 tag 去向（剥成无条件 heroDps = 过度应用，或静默丢弃 = 低估） | 待定（方向都需先查清） | effect-definition-templates / effectDefinitionDps | 须先查清偏差方向再决定是否修 |
 | `hero_dps` 位置/条件限定符 6 类 | 扩展限定符词表：tallest_column/middle_columns/snowflake/slot_if_expr/active_campaign/other | 低（每英雄仅 1 条，34-44 条替代） | signalSemantics 限定符解析 | 6 类限定符是否常见到值得扩 |
 

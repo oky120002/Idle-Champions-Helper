@@ -15,20 +15,24 @@ const CRIT_CHANCE_KINDS: ReadonlySet<HeroAbilityKind> = new Set<HeroAbilityKind>
 ])
 
 /**
- * crit_factor：1 + total_chance × (total_damage_mult − 1)，基线归一化。
- * - 无 crit signal → 1.0（base crit 在归一中抵消，保持非 crit 阵型 carryDps 不变）。
- * - base chance(2.5%) 始终参与，使「纯 damage buff」类 crit signal 有效（否则 chance=0 无暴击）。
+ * crit_factor：1 + total_chance × (total_damage_mult − 1)，基线归一化（锚=全局默认 2.5% base）。
+ * - base crit chance 默认 2.5%（default_crit_info），per-hero 可被 set_base_crit_chance SET 覆盖（如 20%）。
+ * - 默认 base 无 crit signal → 1.0（归一抵消，非 crit 阵型 carryDps 不变）；
+ *   per-hero 覆盖 base 无 signal 时保留其 innate 暴击期望（20% → ~1.171），使暴击流 carry 排序正确。
  * - ponytail/BUD 局限：crit 期望值在 BUD 机制下低估，MVP 可接受；绝对值偏差由归一基线吸收。
  *
  * amountFunc 分流：add 类（缺省）的 multiplier=1+percent/100 → 反推 percent 累加；
  * mult 类累乘。chance/damage 各自独立聚合后合成期望。
  */
-export function computeCritFactor(parts: PlacementFitScorePart[]): number {
+export function computeCritFactor(
+  parts: PlacementFitScorePart[],
+  baseCritChancePercent?: number | null,
+): number {
+  const baseChancePercent = baseCritChancePercent ?? DEFAULT_CRIT_CHANCE_PERCENT
   let chanceAddPercent = 0
   let chanceMult = 1
   let damageAddPercent = 0
   let damageMult = 1
-  let hasCrit = false
 
   for (const part of parts) {
     if (!part.active) {
@@ -50,14 +54,9 @@ export function computeCritFactor(parts: PlacementFitScorePart[]): number {
         damageAddPercent += percent
       }
     }
-    hasCrit = true
   }
 
-  if (!hasCrit) {
-    return 1
-  }
-
-  const totalChanceFraction = ((DEFAULT_CRIT_CHANCE_PERCENT + chanceAddPercent) * chanceMult) / 100
+  const totalChanceFraction = ((baseChancePercent + chanceAddPercent) * chanceMult) / 100
   const totalDamageMult = 1 + ((DEFAULT_CRIT_DAMAGE_PERCENT + damageAddPercent) * damageMult) / 100
   const rawCritFactor = 1 + totalChanceFraction * (totalDamageMult - 1)
   return rawCritFactor / BASE_CRIT_FACTOR
