@@ -45,9 +45,11 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 
 `collectEffectEntries` 展开 `buff_upgrade` wrapper 时，派生 signal 的 `sourceBucket` 曾被统一改成 `'upgrade-buffed-signal'`，丢失原始 wrapper 来源（loot/legendary/feat/upgrade）。下游 `buildHeroModels` 的源过滤（`entry.sourceBucket === 'feat'`）只拦简单 entry，**漏拦 wrapper 派生** → 外部源（装备/feat）的 buff_upgrade 泄漏进 base profile。
 
+**实例（2026-08-01，spec catalog 路径漏过滤，atd_b1e5f3a2c7）**：`collectEffectEntries` 已透传 wrapper 的 `sourceBucket`（effect-helpers.ts:806），base profile 路径（`buildHeroModels`）据此过滤 loot/legendary 不进 scored（e053b759）。但**专精 catalog 路径**（`specialization-catalog.ts:108` 消费 `specializationDerived`）没接同样过滤——loot/legendary/feat 源 wrapper 全烘进 spec catalog，runtime 选专精无条件注入（不查 owned）→ overcount（spec wrapper 100 个，Minsc spec 109 凭空 +275%）。修复：spec catalog 路径同构过滤 `sourceBucket ∈ {loot,legendary,feat}` 移出，wrapper 100→16，仅留 ability 源。
+
 ### 防范纪律
 
-派生/wrapper signal **必须透传原始来源的 `sourceBucket`**（或加 `originSource` 字段），保证下游源过滤统一生效。`sourceBucket` 是 build 管线的来源追溯键，不得在派生环节抹除。
+派生/wrapper signal **必须透传原始来源的 `sourceBucket`**（或加 `originSource` 字段），且**每条消费路径**（base profile / spec catalog / 未来新路径）都必须接同样的源过滤——透传了不用等于没过滤。`sourceBucket` 是 build 管线的来源追溯键，不得在派生环节抹除，也不得在任一消费环节漏拦。
 
 ## 不变式（见 simulator.md「加成源唯一性」）
 

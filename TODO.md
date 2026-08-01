@@ -60,15 +60,12 @@ repair: rebuild
     - ⏳ taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码；额外触及运行时 placementFit.ts:77-96（tag/stat 限定节点检查）+ plannerNarrative.ts hasTagSignal + 多测试（placementFit.gating/signalSemantics/plannerModel.test）。
     - 处置：删 kind+resolver+resolverDispatch 注册+运行时分支+测试 fixture（adjacency/tag 机制由 heroDpsMultiplier+positionQualifier/tagQualifier 覆盖，改测试用真实 kind）；独立大子任务，需逐项验证 scoring 无引用。
 
-- 装备 buff_upgrade target 专精的 ownership 泄漏：spec catalog 无 sourceBucket 过滤，选专精时无条件注入 loot/feat 源 wrapper <!-- auto-todo:id=atd_b1e5f3a2c7 -->
-  - 记录时间: `2026-08-01T21:36:00+08:00`
-  - 严重级别: P1
-  - 类型: bug
-  - 位置: `scripts/data/specialization-catalog.ts:108`
-  - 备注: specialization-catalog.ts:108-122 把 specializationDerived 全部（含 loot/legendary/feat 源 wrapper）烘进 spec catalog，runtime 选专精时无条件注入（不查 loot/feat owned）。spec catalog 实测 100 个 buff_upgrade wrapper（32 spec）全是 plain，按 effect-helpers.ts:753-755 排除逻辑，plain wrapper 进 specializationDerived 的只可能是 loot/legendary/feat 源（ability 源 plain 已被排除）。
-    - 影响：例 hero 6 选 spec 90 即得 buff_upgrades,275,90,91,92,975,976,977 的 +275% hero_dps 放大，无需拥有该 loot（overcount）
-    - 证据：specialization-catalog.ts:108-122 无 sourceBucket 过滤；collectEffectEntries 把 target spec 的 wrapper 路由到 specializationDerived；stage 1 e053b759 只过滤 base profile loot/legendary 源，没覆盖 spec catalog 路径
-    - 修复需：(a) specialization-catalog build 按 sourceBucket 过滤 specializationDerived（只留 ability 源 dynamic wrapper，loot/feat 源移出）；(b) 给 spec catalog signal 加 upgradeId（当前无，runtime 反查不到 spec base）；(c) loot 源 spec-targeting wrapper 路由到 owned-aware applyEquipmentBuffs（engine 顺序已保证 spec 注入在 equipment 之前）
-    - 与阶段 2 不相交：loot buff_upgrade target 非 spec 走 applyEquipmentBuffs（owned-aware ✅），target spec 走 spec catalog（本问题），二者互斥无双重计数
+- loot/feat 源 buff_upgrade target 专精的 owned-aware 接入（b/c；a 止血已完成） <!-- auto-todo:id=atd_b1e5f3a2c7 -->
+  - 记录时间: `2026-08-01T23:40:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/equipmentBuffSignals.ts` + `scripts/data/specialization-catalog.ts`
+  - 备注: 原 P1 overcount（spec catalog 无 sourceBucket 过滤，选专精无条件注入 loot/feat 源 wrapper）已于 2026-08-01 方案 a 止血——specialization-catalog build 按 sourceBucket 过滤移出 loot/legendary/feat 源（与 buildHeroModels 过滤 base profile 同构 e053b759），spec catalog wrapper 100→16（仅留 ability 源），overcount 消除；planner/buffs/abilities 384 测试 + signal-coverage gate + schema 校验全绿。
+    - 剩余 b/c（优化，非 bug）：loot/feat 源 target 专精的 wrapper 现移出 catalog「没算」（owned 玩家选对应专精 + 装备时不生效）。精确接入需：(b) spec catalog signal 带 upgradeId（当前无，runtime 反查不到 spec base）；(c) applyEquipmentBuffs 扩展支持 spec target（engine 顺序已保证 spec 注入在 equipment 前）。当前「宁可不准不可错」。
+    - 原分析订正：ability 源（sourceBucket='ability'）plain wrapper **不**被 effect-helpers.ts:753 progression-exclusion 排除（isAbilitySource 只含 upgrade/upgrade-effect-key），故保留进 catalog 正确（ADR 0017 设计）；Minsc(7) 实测 upgrade 源 +200% 被排除（IC snapshot 已含）、loot +25~275 / feat +80 移出、ability 源 0。
 
 <!-- auto-todo:end -->

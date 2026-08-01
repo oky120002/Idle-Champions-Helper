@@ -167,19 +167,40 @@ describe('buildSpecializationEntries', () => {
     expect(beast!.signals.map((s) => s.signal.monsterTags)).toEqual([['beast'], ['beast']])
   })
 
-  it('真实 Minsc(7) champion-details → 5 偏好敌人专精（108-112），各含自身 +300 与 wrapper 派生 +275（loot 最高 rarity）', () => {
+  it('loot/feat 源 buff_upgrade wrapper 不进 spec catalog（选专精无条件注入不查 owned → overcount；atd_b1e5f3a2c7）', () => {
+    const detail = {
+      upgrades: [
+        {
+          id: '109',
+          requiredLevel: 50,
+          specializationName: { original: 'Beasts', display: '兽类' },
+          effectDefinition: {
+            snapshots: { original: { effect_keys: [{ effect_string: 'monster_with_tag_more_damage,300,beast' }] } },
+          },
+        },
+      ],
+      // loot/feat 源 wrapper：放大 spec 109（玩家未必拥有该装备/feat，无条件注入 → overcount）
+      loot: [{ effects: [{ effect_string: 'buff_upgrades,500,109' }] }],
+      feats: [{ effects: [{ effect_string: 'buff_upgrades,200,109' }] }],
+    }
+    const beast = buildSpecializationEntries(detail).find((e) => e.upgradeId === '109')
+    // 仅自身 +300；loot/feat 源 wrapper 移出 catalog（base signal 无 bonusScaleOfSignal）
+    expect(beast?.signals).toHaveLength(1)
+    expect(beast?.signals.every((s) => s.signal.bonusScaleOfSignal == null)).toBe(true)
+    expect(beast?.signals[0]?.signal.value).toBe(300)
+  })
+
+  it('真实 Minsc(7) champion-details → 5 偏好敌人专精（108-112），各仅自身 +300（loot/feat 源 wrapper 移出 catalog，防 overcount）', () => {
     const entries = buildSpecializationEntries(minscDetail())
     const byId = new Map(entries.map((e) => [e.upgradeId, e]))
     expect(['108', '109', '110', '111', '112'].every((id) => byId.has(id))).toBe(true)
     const beast = byId.get('109')
     expect(beast?.specializationName?.display).toContain('兽类')
-    // 自身 enemyVulnerability 300 + wrapper 派生 275（slot4 loot buff_upgrades 多 rarity 取最高：
-    // rarity1=25/2=87.5/3=150/4=275，装备每槽只装一件最高 rarity）
-    expect(beast?.signals).toHaveLength(2)
-    expect(beast!.signals.map((s) => s.signal.value).sort((a, b) => a - b)).toEqual([275, 300])
-    expect(beast!.signals.every((s) => s.signal.monsterTags?.includes('beast'))).toBe(true)
-    // 其余专精同理（humanoid/monstrosity 各含自身 + 派生）
-    expect(byId.get('108')?.signals.length).toBeGreaterThanOrEqual(2)
+    // 自身 enemyVulnerability 300；loot(+25~275)/feat(+80) 源 wrapper 已移出 catalog（无条件注入不查 owned
+    // → overcount）；upgrade 源 +200% 被 progression-exclusion 排除（IC snapshot 已含，effect-helpers.ts:753）
+    expect(beast?.signals.every((s) => s.signal.bonusScaleOfSignal == null)).toBe(true)
+    expect(beast?.signals.some((s) => s.signal.value === 300 && s.signal.monsterTags?.includes('beast'))).toBe(true)
+    expect(beast?.signals.some((s) => s.signal.value === 275)).toBe(false)
     expect(byId.get('112')?.signals.some((s) => s.signal.monsterTags?.includes('monstrosity'))).toBe(true)
   })
 })

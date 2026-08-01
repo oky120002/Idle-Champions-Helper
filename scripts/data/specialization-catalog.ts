@@ -103,11 +103,15 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   }
 
   // buff_upgrade wrapper 派生信号（靶向专精）：附到对应 spec，runtime 随玩家选择注入。
-  // 修复 ADR 0017 偏差：专精外部化后 wrapper 仍以专精为 target，派生增益（如明斯克偏好敌人 +25%）
-  // 随专精进 catalog，不再丢失。派生 entry 已是 resolved signalPreset，直接取（与 base 展开同源）。
+  // 只保留能力源（ability/upgrade/upgrade-effect-key）wrapper——英雄自带，随专精注入合理（ADR 0017）。
+  // 外部装备/feat 源（loot/legendary/feat）移出：spec catalog 选专精时无条件注入不查 owned → overcount
+  //（与 buildHeroModels 过滤 loot/legendary 不进 base profile 同构，e053b759）。loot/feat 源 target 专精的
+  // owned 接入需 spec signal 带 upgradeId + runtime applyEquipmentBuffs 扩展（TODO atd_b1e5f3a2c7 方案 b/c）。
+  const externalSourceBuckets = new Set(['loot', 'legendary', 'feat'])
   const { specializationDerived } = collectEffectEntries(detail)
   for (const [specUpgradeId, derivedEntries] of specializationDerived) {
     for (const derivedEntry of derivedEntries) {
+      if (externalSourceBuckets.has(derivedEntry.sourceBucket)) continue
       const signal = derivedEntry.signalPreset
       if (!signal) continue
       const dimension = DIMENSION_BY_KIND[signal.kind]
