@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest'
 
 import {
   computeEquipmentAdjustmentByHero,
+  computeEquipmentGlobalDpsMult,
   computeEquipmentMult,
-  parseLootEffectValue,
+  parseLootEffect,
 } from './equipmentMult'
 import type { LootCatalogEntry } from './equipmentMult'
 
@@ -19,15 +20,21 @@ const MINSC_CATALOG: LootCatalogEntry[] = [
   cat('7', '2', '4', 'hero_dps_multiplier_mult,350'),
 ]
 
-describe('parseLootEffectValue', () => {
-  it('提取 hero_dps_multiplier_mult 数值（per-carry base DPS 装备）', () => {
-    expect(parseLootEffectValue('hero_dps_multiplier_mult,350')).toBe(350)
+describe('parseLootEffect', () => {
+  it('hero_dps_multiplier_mult → {kind, value}', () => {
+    expect(parseLootEffect('hero_dps_multiplier_mult,350')).toEqual({ kind: 'hero_dps_multiplier_mult', value: 350 })
   })
-  it('非 base-DPS effect（buff_upgrade 技能 buff）→ null', () => {
-    expect(parseLootEffectValue('buff_upgrade,275,2192')).toBeNull()
+  it('global_dps_multiplier_mult → {kind, value}', () => {
+    expect(parseLootEffect('global_dps_multiplier_mult,230')).toEqual({ kind: 'global_dps_multiplier_mult', value: 230 })
   })
-  it('非 base-DPS effect（reduce_ultimate_cooldown 冷却）→ null', () => {
-    expect(parseLootEffectValue('reduce_ultimate_cooldown,45')).toBeNull()
+  it('health_mult → {kind, value}', () => {
+    expect(parseLootEffect('health_mult,100')).toEqual({ kind: 'health_mult', value: 100 })
+  })
+  it('非单参数 effect（buff_upgrade 元加成）→ null', () => {
+    expect(parseLootEffect('buff_upgrade,275,2192')).toBeNull()
+  })
+  it('未接入 effect（reduce_ultimate_cooldown 冷却）→ null', () => {
+    expect(parseLootEffect('reduce_ultimate_cooldown,45')).toBeNull()
   })
 })
 
@@ -74,6 +81,44 @@ describe('computeEquipmentMult', () => {
   it('owned rarity 缺失（catalog 无该 rarity）→ 该槽不计', () => {
     const mult = computeEquipmentMult('7', { '1': { rarity: 9, enchant: 100 } }, MINSC_CATALOG)
     expect(mult).toBe(1)
+  })
+
+  it('只计 hero_dps，global_dps 装备不计入 per-carry adjustment', () => {
+    // hero 1 slot1 是 global_dps（非 hero_dps），对 per-carry hero_dps adjustment 贡献 0
+    const catalog = [cat('1', '1', '1', 'global_dps_multiplier_mult,230')]
+    expect(computeEquipmentMult('1', { '1': { rarity: 1 } }, catalog)).toBe(1)
+  })
+})
+
+describe('computeEquipmentGlobalDpsMult', () => {
+  it('跨英雄全队聚合：两英雄 global_dps 装备求和（enchant=0 取 base）', () => {
+    // hero 1 slot1 r1=10、hero 2 slot1 r1=50 → 10+50=60% → 1.6
+    const catalog = [
+      cat('1', '1', '1', 'global_dps_multiplier_mult,10'),
+      cat('2', '1', '1', 'global_dps_multiplier_mult,50'),
+    ]
+    const heroes = [
+      { heroId: '1', lootBySlot: { '1': { rarity: 1 } } },
+      { heroId: '2', lootBySlot: { '1': { rarity: 1 } } },
+    ]
+    expect(computeEquipmentGlobalDpsMult(heroes, catalog)).toBeCloseTo(1.6, 5)
+  })
+
+  it('enchant 缩放同 hero_dps（base × (1+enchant/250)，hero 1 slot1 r4 base230）', () => {
+    // 230 × (1 + 750/250) = 230 × 4 = 920% → 9.2
+    const catalog = [cat('1', '1', '4', 'global_dps_multiplier_mult,230')]
+    const heroes = [{ heroId: '1', lootBySlot: { '1': { rarity: 4, enchant: 750 } } }]
+    expect(computeEquipmentGlobalDpsMult(heroes, catalog)).toBeCloseTo(1 + 920 / 100, 1)
+  })
+
+  it('只计 global_dps，hero_dps 装备不计入全队池（明斯克 slot1 是 hero_dps）', () => {
+    const heroes = [{ heroId: '7', lootBySlot: { '1': { rarity: 4, enchant: 734 } } }]
+    expect(computeEquipmentGlobalDpsMult(heroes, MINSC_CATALOG)).toBe(1)
+  })
+
+  it('无 owned loot（未导入存档）→ 1', () => {
+    expect(computeEquipmentGlobalDpsMult([], MINSC_CATALOG)).toBe(1)
+    expect(computeEquipmentGlobalDpsMult([{ heroId: '1', lootBySlot: {} }], MINSC_CATALOG)).toBe(1)
   })
 })
 

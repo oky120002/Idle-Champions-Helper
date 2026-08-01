@@ -58,7 +58,7 @@
 | 专精（specialization-catalog，115 spec） | 11 kind 全量注入、全建模（heroDps×142、vulnerability×21、crit、health、gold、damageReduction） | cooldownReduction×12、attackSpeedMult×9 已解析未消费 |
 | effect_def 模板（effect-definitions，552 key） | 全 dps、全建模（patron/blessing 运行时解引用：hero_dps×474 + global_dps×78） | — |
 | patron 特权（patron-perks，110 perk） | global_dps×21（patronPerkGlobalBuff）；effect_def×72 部分（只取 global_dps/hero_dps） | gold×4、health×1、vulnerability×1、area_tags×3、count 变体×3 未建模 |
-| 装备（loot-catalog，4044 item） | hero_dps×160（equipmentMult，enchant `(1+enchant/250)` 缩放） | **大头未接**：buff_upgrade×1824、global_dps×688、reduce_ultimate_cooldown×608、buff_ultimate×272、health×104、gold×12、crit×8 |
+| 装备（loot-catalog，4044 item） | hero_dps×160 + global_dps×688（equipmentMult，enchant `(1+enchant/250)` 缩放；global_dps 跨英雄全队聚合进 globalBuff 通道） | **大头未接**：buff_upgrade×1824、reduce_ultimate_cooldown×608、buff_ultimate×272、health×104、gold×12、crit×8 |
 | 药水 / buff（effect-reference.buffs，790） | — | **全量无消费通道**（actual 值在 userdetails 私有存档：event_buff×670、legend_loot×20、global_dps×10…） |
 
 ## 5. 未建模缺口清单（planner 真实缺口，决策依据）
@@ -72,7 +72,7 @@
 - `patronPerkMult`（patron 走独立通道，此 kind 零产出）、`heroGoldMultiplier`（无 `hero_gold_*` effect 映射）、`adjacentBuff`（0 个 `adjacent_*` effect）、`taggedChampionBuff`（0 个 `tag_*` effect）。
 
 **C. 来源有加成 effect 但无 parser / 无消费通道**（按量级排序）：
-- 装备：`buff_upgrade`×1824、`global_dps`×688、`reduce_ultimate_cooldown`×608、`buff_ultimate`×272、`health_mult`×104、`gold`×12、`crit`×8——**装备加成大头未接**（equipmentMult 只接 hero_dps）。
+- 装备：`buff_upgrade`×1824、`reduce_ultimate_cooldown`×608、`buff_ultimate`×272、`health_mult`×104、`gold`×12、`crit`×8——**装备加成大头未接**（equipmentMult 接 hero_dps+global_dps，余维度未接）。
 - 英雄技能 unsupported：`health_add`×411（flat 血量）、`buff_ultimate`×280（大招）、`global_dps_area_tags`×1、`global_buff_base_crit_damage`×1。
 - patron：`gold`×4、`health`×1、`vulnerability`×1、`area_tags`×3、count 变体×3。
 - effect-reference buffs：全量 790 无消费通道（药水 / 契约 / 事件 buff，actual 在私有存档）。
@@ -82,7 +82,7 @@
 - favor（神恩）：`bonus_favor_earned_from_reset` 等；`user-profile/types.ts:56` 有 `favor` 字段但 `src/domain/planner + buffs + simulator` 零消费（**存了不用**）；神恩→DPS 公式在服务端黑箱。
 - gem（宝石）：`increase_boss_gems` 等属奖励类，非阵型评分因子。
 
-**量级判断**：装备 `buff_upgrade`/`global_dps` 未建模与 speed/cooldown 维度未接入是**最大真实缺口**；modron/favor/药水需先解决私有存档（userdetails）导入通道。
+**量级判断**：装备 `buff_upgrade` 未建模与 speed/cooldown 维度未接入是**最大真实缺口**（global_dps×688 已接 B1-a）；modron/favor/药水需先解决私有存档（userdetails）导入通道。
 
 ## 6. 高风险机制模式（对 planner 建模有结构性影响）
 

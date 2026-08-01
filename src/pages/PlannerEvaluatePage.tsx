@@ -24,10 +24,7 @@ import {
   removeEvaluatePlacement,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
-import { computeEquipmentAdjustmentByHero } from '../domain/buffs/equipmentMult'
-import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../domain/buffs/patronPerkGlobalBuff'
-import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../domain/buffs/blessingGlobalBuff'
-import { collectHeroDpsContributions } from '../domain/buffs/externalHeroDpsMult'
+import { buildScoringBonusInputs } from '../domain/planner/scoringBonusInputs'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -86,41 +83,12 @@ export function PlannerEvaluatePage() {
   // runner 单例：浏览器用 worker 卸载评分（拖拽重算不冻 UI）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
   useEffect(() => () => runner.dispose(), [runner])
-  // 装备加成（per-hero map）：未导入存档 → 空 map → 无加成（向后兼容）。
-  const equipmentAdjustmentByHero = useMemo(
-    () => profileSnapshot && lootCatalog.length > 0
-      ? computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
-      : new Map<string, number>(),
-    [profileSnapshot, lootCatalog],
+  // 外部加成（装备 + patron + blessing）单一来源：buildScoringBonusInputs 纯函数装配，与主 planner 页同源。
+  // 未导入存档（profileSnapshot=null）→ 各源缺省（无加成，向后兼容）。
+  const { equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
+    () => buildScoringBonusInputs({ profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog }),
+    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog],
   )
-  const effectDefTemplates = useMemo(
-    () => new Map(effectDefinitions.map((entry) => [entry.id, entry])),
-    [effectDefinitions],
-  )
-  // patron perk + blessing actual 全局 buff（global_dps add pool 合并）；未导入存档 → 各源 1（向后兼容）。
-  // 通道1：effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入。
-  const globalBuffMultiplier = useMemo(() => {
-    const active = profileSnapshot?.activeContext
-    const patronMult = profileSnapshot?.patronPerks
-      ? computeActualPatronPerkGlobalBuff(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId, effectDefTemplates)
-      : 1
-    const blessingMult = profileSnapshot?.blessings
-      ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity, effectDefTemplates)
-      : 1
-    return combineGlobalBuffMultipliers([patronMult, blessingMult])
-  }, [profileSnapshot, patronPerkCatalog, effectDefTemplates])
-  // 通道2：patron/blessing 的 effect_def hero_dps（带 filter，per-carry 条件生效）。
-  const externalHeroDpsContributions = useMemo(() => {
-    if (!profileSnapshot) return []
-    const active = profileSnapshot.activeContext
-    const patronEffects = profileSnapshot.patronPerks
-      ? collectActivePatronPerkEffects(profileSnapshot.patronPerks, patronPerkCatalog, active?.patronId)
-      : []
-    const blessingEffects = profileSnapshot.blessings
-      ? collectActiveBlessingEffects(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity)
-      : []
-    return collectHeroDpsContributions([...patronEffects, ...blessingEffects], effectDefTemplates)
-  }, [profileSnapshot, patronPerkCatalog, effectDefTemplates])
   const evaluateOptions = useMemo(
     () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions }),
     [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, globalBuffMultiplier, externalHeroDpsContributions],

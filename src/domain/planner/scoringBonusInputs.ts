@@ -7,8 +7,9 @@
  *
  * - equipmentAdjustmentByHero：ownedHeroes.lootBySlot + loot-catalog → per-hero 装备调整比；
  *   未导入存档或 lootCatalog 空 → 空 map（scoreFormation 缺省 ?? 1，向后兼容）。
- * - globalBuffMultiplier：patron + blessing 的 global_dps add pool 合并（1 + Σ(value)/100）；
- *   effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入；未导入存档 → 1。
+ * - globalBuffMultiplier：patron + blessing + 装备 global_dps 的 add pool 合并（1 + Σ(value)/100）；
+ *   effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入；装备 global_dps 跨英雄全队聚合；
+ *   未导入存档 → 1。
  * - externalHeroDpsContributions：patron/blessing 的 effect_def hero_dps（带 filter，per-carry 条件生效）；
  *   active 过滤复用 globalBuff 的 collect 单一来源（#7 type1 规则不漂移）；未导入存档 → 空。
  */
@@ -17,7 +18,7 @@ import { collectHeroDpsContributions } from '../buffs/externalHeroDpsMult'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../buffs/blessingGlobalBuff'
-import { computeEquipmentAdjustmentByHero } from '../buffs/equipmentMult'
+import { computeEquipmentAdjustmentByHero, computeEquipmentGlobalDpsMult } from '../buffs/equipmentMult'
 import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../buffs/patronPerkGlobalBuff'
 import type { LootCatalogEntry } from '../buffs/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
@@ -42,6 +43,9 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   const equipmentAdjustmentByHero = profileSnapshot && lootCatalog.length > 0
     ? computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
     : new Map<string, number>()
+  const equipmentGlobalDpsMult = profileSnapshot && lootCatalog.length > 0
+    ? computeEquipmentGlobalDpsMult(profileSnapshot.ownedHeroes, lootCatalog)
+    : 1
 
   const effectDefTemplates = new Map(effectDefinitions.map((entry) => [entry.id, entry]))
 
@@ -52,7 +56,7 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   const blessingMult = profileSnapshot?.blessings
     ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity, effectDefTemplates)
     : 1
-  const globalBuffMultiplier = combineGlobalBuffMultipliers([patronMult, blessingMult])
+  const globalBuffMultiplier = combineGlobalBuffMultipliers([patronMult, blessingMult, equipmentGlobalDpsMult])
 
   let externalHeroDpsContributions: HeroDpsContribution[] = []
   if (profileSnapshot) {
