@@ -37,8 +37,8 @@ hero_final_dps = base_dps
   × Π(static_dps_mults)       // upgrade.static_dps_mult 近似
   × crit_factor               // 1 + Σ(crit_chance)·(crit_damage_mult−1)
   × vulnerability_pool        // 按怪物 tag 条件匹配，Σ(add) → Π(mult)
-  × global_buff_pool          // patron-perks
-  × equipment_adjustment      // owned 装备 / 理论基线 比
+  × global_buff_pool          // patron-perks / blessing 的 global_dps_multiplier_mult
+  × hero_dps_external_pool    // 装备 + patron/blessing 的 hero_dps_multiplier_mult 加法合并（heroDpsPool，非 ratio）
 ```
 
 `HeroAbilitySignal.unit: 'percent'|'flat'|'boolean'`（默认 percent；`buff_upgrade_add_flat_amount` 是 flat）。
@@ -60,7 +60,7 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 | survival | 推图约束 | `effectiveHealth = baseHealth × health_pool`；`damage_reduction_mult` 玩家侧减伤。不进 carryDps，作为推图预估的存活约束。 |
 | speed | 否 | `attack_speed_mult`/`reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown）。 |
 | global-buff | 是 | patron-perks 的 `patronPerkMult`（无条件全局 DPS）；blessings 因 definitions 无效果定义且 snapshot 丢弃 favor/blessings，不可做。 |
-| equipment | 是（调整比） | `equipmentAdjustment = ownedEquipMult / theoreticalLootMult`，非侵入缩放理论上界到玩家实际装备。MVP 只算 `global_dps_multiplier_mult`。 |
+| equipment | 是 | 装备 `hero_dps_multiplier_mult`（loot-catalog，enchant 缩放 `base×(1+enchant/250)`，`computeEquipmentMult`）+ patron/blessing 的 hero_dps 同 key 加法合并成 heroDpsPool（`1+Σ%/100`），独立乘 carryDps。与 ability 源 hero_dps 池分列乘法——IC 同 key 应加法合并，见 `docs/audits/correctness-audit.md` §2。 |
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
