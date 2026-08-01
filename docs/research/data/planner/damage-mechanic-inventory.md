@@ -58,7 +58,7 @@
 | 专精（specialization-catalog，115 spec） | 11 kind 全量注入、全建模（heroDps×142、vulnerability×21、crit、health、gold、damageReduction） | cooldownReduction×12、attackSpeedMult×9 已解析未消费 |
 | effect_def 模板（effect-definitions，552 key） | 全 dps、全建模（patron/blessing 运行时解引用：hero_dps×474 + global_dps×78） | — |
 | patron 特权（patron-perks，110 perk） | global_dps×21（patronPerkGlobalBuff）；effect_def×72 部分（只取 global_dps/hero_dps） | gold×4、health×1、vulnerability×1、area_tags×3、count 变体×3 未建模 |
-| 装备（loot-catalog，4044 item） | hero_dps×160 + global_dps×688 + health×104 + gold×12 + crit×8（equipmentMult，enchant `(1+enchant/250)` 缩放；global_dps/gold 为 global-scope placement-aware per-hero，health/crit 为 hero-scope per-carry） | `buff_upgrade`×1824 **已移除 baked**（2026-08-01：曾与 owned 通道双重计数，阶段 2 接入中——① upgradeId→signal 映射基建 ✅ 落地，② catalog/runtime wrapper 注入待续，见 `docs/specs/modules/planner/simulator.md` 不变式 / `modeling-pitfalls.md`）；`reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/大招）不接 |
+| 装备（loot-catalog，4044 item） | hero_dps×160 + global_dps×688 + health×104 + gold×12 + crit×8（equipmentMult，enchant `(1+enchant/250)` 缩放；global_dps/gold 为 global-scope placement-aware per-hero，health/crit 为 hero-scope per-carry）+ `buff_upgrade`×1824 owned-aware wrapper 通道（阶段 2，2026-08-01：upgradeId 反查 base + bonusScaleOfSignal 注入，与 feat/专精同层） | `reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/大招）不接；复杂 buff_upgrade 变体（`buff_upgrade_effect_stacks_max_mult` 等，依赖 build 期 stack 元数据）runtime 不构造 |
 | 药水 / buff（effect-reference.buffs，790） | — | **全量无消费通道**（actual 值在 userdetails 私有存档：event_buff×670、legend_loot×20、global_dps×10…） |
 
 ## 5. 未建模缺口清单（planner 真实缺口，决策依据）
@@ -72,7 +72,7 @@
 - `patronPerkMult`（patron 走独立通道，此 kind 零产出）、`heroGoldMultiplier`（无 `hero_gold_*` effect 映射）、`adjacentBuff`（0 个 `adjacent_*` effect）、`taggedChampionBuff`（0 个 `tag_*` effect）。
 
 **C. 来源有加成 effect 但无 parser / 无消费通道**（按量级排序）：
-- 装备：`buff_upgrade`×1824 **已移除 baked**（曾误判"未建模"实为与 owned 通道双重计数，2026-08-01 移除；阶段 2 进行中：① upgradeId→signal 映射基建 ✅ 2026-08-01 落地——`HeroAbilitySignal` 加 `upgradeId`，build 期写入，runtime 可按 target upgradeId 反查 direct base signal；② catalog/runtime wrapper 注入待续，复用 loot-catalog + bonusScaleOfSignal 机制）；`reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/大招）不接。
+- 装备：`buff_upgrade`×1824 **已接入 owned-aware wrapper 通道**（Phase B 方向 A 阶段 2，2026-08-01）：① `HeroAbilitySignal.upgradeId` build 期写入；② `collectEquipmentBuffsByHero`（loot-catalog + enchant 缩放，产 per-hero wrapper 元数据）；③ `applyEquipmentBuffsToProfile`（按 target upgradeId 反查 direct base，构造 bonusScaleOfSignal wrapper 注入 profile，与 feat/专精同层）；④ 只接 DPS/gold/crit/health target kind，非该范围/递归元家族/复杂变体（`buff_upgrade_effect_stacks_max_mult` 等）→ 没算。真数据 672 collected buff → 201 wrapper（heroDps 132/globalDps 50/gold 16/crit 2/health 1）；`reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/大招）不接。
 - 英雄技能 unsupported：`health_add`×411（flat 血量）、`buff_ultimate`×280（大招）、`global_dps_area_tags`×1、`global_buff_base_crit_damage`×1。
 - patron：`gold`×4、`health`×1、`vulnerability`×1、`area_tags`×3、count 变体×3。
 - effect-reference buffs：全量 790 无消费通道（药水 / 契约 / 事件 buff，actual 在私有存档）。

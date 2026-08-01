@@ -39,7 +39,7 @@ hero_final_dps = base_dps × level_curve
 
 `global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron/blessing/装备）同属一个 IC effect key（`global_dps_multiplier_mult` / `hero_dps_multiplier_mult`），按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。修复前二者分列相乘是 A1 bug（`docs/audits/correctness-audit.md` §2）：同 key 跨源该加法却相乘，高估 carryDps 并与未建模源「负负得正」。scoreFormation 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
 
-**加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot/legendary）只走 owned-aware 通道（`equipmentMult.ts`，B1-a/b/c/d；buff_upgrade 待 catalog + runtime 注入，见下文），build 管线**不得**把装备源信号烘进 base profile 的 scored signals——与 feat 外部化（`buildHeroModels` 过滤 feat + `feat-catalog.json`）同构。违反此不变式 → 双重计数（实测案例与防范纪律见 `modeling-pitfalls.md`）。
+**加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot/legendary）只走 owned-aware 通道：加性 kind（hero_dps/global_dps/gold/health/crit，`equipmentMult.ts` B1-a/b/c/d）+ `buff_upgrade` wrapper（B1-e，`equipmentBuffSignals.ts` applyEquipmentBuffsToProfile：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 bonusScaleOfSignal wrapper 注入 profile，与 feat/专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals——与 feat 外部化（`buildHeroModels` 过滤 feat + `feat-catalog.json`）同构。违反此不变式 → 双重计数（实测案例与防范纪律见 `modeling-pitfalls.md`）。
 
 `HeroAbilitySignal.unit: 'percent'|'flat'|'boolean'`（默认 percent；`buff_upgrade_add_flat_amount` 是 flat）。
 

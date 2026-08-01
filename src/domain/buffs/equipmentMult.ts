@@ -28,6 +28,8 @@
  * 未传入 owned loot（未导入存档）→ 无加成（向后兼容）。
  */
 
+import { extractTargetIdsFromParsedEffectPayload, parseEffectPayload } from '../effects/effect-string'
+
 export interface LootCatalogEntry {
   heroId: string
   slotId: string
@@ -264,6 +266,90 @@ export function computeEquipmentCritByHero(
       chanceMult: 1 + (chance.get(heroId) ?? 0) / 100,
       damageMult: 1 + (damage.get(heroId) ?? 0) / 100,
     })
+  }
+  return result
+}
+
+/**
+ * 装备 buff_upgrade 元加成：放大英雄自身某 upgrade 的效果值。
+ *
+ * 与 hero_dps/global_dps/gold/crit/health 加性通道不同，buff_upgrade 是 wrapper（bonusScaleOfSignal
+ * 指向 base signal），产出 signal 注入 profile（equipmentBuffSignals.ts applyEquipmentBuffsToProfile），
+ * 非聚合数值。loot 数据全是 plain `buff_upgrade`/`buff_upgrades`（2168 条实测，0 条 stacks_multiply/
+ * stack_func）；复杂变体（per_tagged/distance/where）依赖 build 期 stack 元数据，runtime 从 effectString
+ * 不可构造 → 只接 plain 两 kind，复杂变体返回 null（标注「没算」）。
+ *
+ * target 是英雄自己的 upgrade（champion-details upgrades[].id）；effect-string.ts 的 target 抽取已覆盖
+ * 单/多 target + 4 参变体（buff_upgrade→args[1]，buff_upgrades→args.slice(1)，第4参忽略）。
+ */
+const PLAIN_BUFF_UPGRADE_KINDS = new Set(['buff_upgrade', 'buff_upgrades'])
+
+export interface ParsedBuffUpgrade {
+  value: number
+  targetUpgradeIds: string[]
+}
+
+export function parseBuffUpgradeEffect(effectString: string): ParsedBuffUpgrade | null {
+  const payload = parseEffectPayload(effectString)
+  if (!payload || !PLAIN_BUFF_UPGRADE_KINDS.has(payload.kind)) {
+    return null
+  }
+  const value = Number(payload.args[0])
+  if (!Number.isFinite(value)) {
+    return null
+  }
+  const targetUpgradeIds = extractTargetIdsFromParsedEffectPayload(payload)
+  if (targetUpgradeIds.length === 0) {
+    return null
+  }
+  return { value, targetUpgradeIds }
+}
+
+/** 一件装备 buff_upgrade wrapper 的 runtime 注入元数据（经 enchant 缩放）。 */
+export interface EquipmentBuff {
+  /** 被放大的目标 upgrade id（英雄自身 upgrade）；runtime 按此反查 direct base signal。 */
+  targetUpgradeId: string
+  /** enchant 缩放后的 wrapper 百分比：base × (1 + enchant/250)。 */
+  value: number
+  /** 源 effectString（wrapper signal 的 rawEffect，保留来源可追溯）。 */
+  rawEffect: string
+}
+
+/**
+ * 批量收集每英雄 owned 装备的 buff_upgrade wrapper 元数据，供 runtime applyEquipmentBuffsToProfile
+ * 按 target upgradeId 反查 base signal 构造 wrapper 注入。enchant 缩放同加性通道（base × (1+enchant/250)）。
+ * 未导入存档（无 owned loot）或无 buff_upgrade 装备 → 空 map（向后兼容）。
+ */
+export function collectEquipmentBuffsByHero(
+  heroes: ReadonlyArray<{
+    heroId: string
+    lootBySlot: Readonly<Record<string, OwnedLootSlot>>
+  }>,
+  catalog: readonly LootCatalogEntry[],
+): Map<string, EquipmentBuff[]> {
+  const index = new Map<string, { rawEffect: string; value: number; targetUpgradeIds: string[] }>()
+  for (const entry of catalog) {
+    const parsed = parseBuffUpgradeEffect(entry.effectString)
+    if (parsed) {
+      index.set(`${entry.heroId}:${entry.slotId}:${entry.rarity}`, { rawEffect: entry.effectString, ...parsed })
+    }
+  }
+  const result = new Map<string, EquipmentBuff[]>()
+  for (const hero of heroes) {
+    const buffs: EquipmentBuff[] = []
+    for (const [slotId, owned] of Object.entries(hero.lootBySlot)) {
+      const indexed = index.get(`${hero.heroId}:${slotId}:${owned.rarity}`)
+      if (!indexed) {
+        continue
+      }
+      const scaledValue = indexed.value * (1 + (owned.enchant ?? 0) * ENCHANT_SCALE)
+      for (const targetUpgradeId of indexed.targetUpgradeIds) {
+        buffs.push({ targetUpgradeId, value: scaledValue, rawEffect: indexed.rawEffect })
+      }
+    }
+    if (buffs.length > 0) {
+      result.set(hero.heroId, buffs)
+    }
   }
   return result
 }

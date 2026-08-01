@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  collectEquipmentBuffsByHero,
   computeEquipmentAdjustmentByHero,
   computeEquipmentCritByHero,
   computeEquipmentGlobalDpsByHero,
   computeEquipmentGoldByHero,
   computeEquipmentHealthByHero,
   computeEquipmentMult,
+  parseBuffUpgradeEffect,
   parseLootEffect,
 } from './equipmentMult'
 import type { LootCatalogEntry } from './equipmentMult'
@@ -226,5 +228,86 @@ describe('computeEquipmentAdjustmentByHero', () => {
 
   it('空 ownedHeroes → 空 map', () => {
     expect(computeEquipmentAdjustmentByHero([], MINSC_CATALOG).size).toBe(0)
+  })
+})
+
+describe('parseBuffUpgradeEffect', () => {
+  it('buff_upgrade 单 target → {value, targetUpgradeIds:[uid]}', () => {
+    expect(parseBuffUpgradeEffect('buff_upgrade,275,2192')).toEqual({ value: 275, targetUpgradeIds: ['2192'] })
+  })
+
+  it('buff_upgrades 多 target → 每个 uid 一项', () => {
+    expect(parseBuffUpgradeEffect('buff_upgrades,87.5,9761,9762')).toEqual({
+      value: 87.5,
+      targetUpgradeIds: ['9761', '9762'],
+    })
+  })
+
+  it('4 参变体 buff_upgrade,10,13416,0 → 取 args[1]，第4参忽略（与 build extractTargetIds 一致）', () => {
+    expect(parseBuffUpgradeEffect('buff_upgrade,10,13416,0')).toEqual({
+      value: 10,
+      targetUpgradeIds: ['13416'],
+    })
+  })
+
+  it('非 buff_upgrade effect（加性 hero_dps）→ null', () => {
+    expect(parseBuffUpgradeEffect('hero_dps_multiplier_mult,350')).toBeNull()
+  })
+
+  it('复杂 buff_upgrade 变体（per_tagged，依赖 build 期 stack 元数据）→ null（runtime 不构造）', () => {
+    expect(parseBuffUpgradeEffect('buff_upgrade_per_any_tagged_crusader_mult,200,12345,evil')).toBeNull()
+  })
+
+  it('reduce_ultimate_cooldown（非 DPS）→ null', () => {
+    expect(parseBuffUpgradeEffect('reduce_ultimate_cooldown,45')).toBeNull()
+  })
+})
+
+describe('collectEquipmentBuffsByHero', () => {
+  it('owned buff_upgrade 装备 → per-hero EquipmentBuff（enchant=0 取 base）', () => {
+    const catalog = [cat('1', '3', '1', 'buff_upgrade,25,4'), cat('1', '3', '4', 'buff_upgrade,275,4')]
+    const map = collectEquipmentBuffsByHero(
+      [{ heroId: '1', lootBySlot: { '3': { rarity: 4, enchant: 0 } } }],
+      catalog,
+    )
+    expect(map.get('1')).toEqual([
+      { targetUpgradeId: '4', value: 275, rawEffect: 'buff_upgrade,275,4' },
+    ])
+  })
+
+  it('enchant 缩放：base 275 enchant 250 → 275×2=550', () => {
+    const catalog = [cat('1', '3', '4', 'buff_upgrade,275,4')]
+    const map = collectEquipmentBuffsByHero(
+      [{ heroId: '1', lootBySlot: { '3': { rarity: 4, enchant: 250 } } }],
+      catalog,
+    )
+    expect(map.get('1')?.[0]?.value).toBe(550)
+  })
+
+  it('buff_upgrades 多 target → 每 target 一个 EquipmentBuff（同 value/rawEffect）', () => {
+    const catalog = [cat('1', '1', '1', 'buff_upgrades,87.5,9761,9762')]
+    const map = collectEquipmentBuffsByHero(
+      [{ heroId: '1', lootBySlot: { '1': { rarity: 1 } } }],
+      catalog,
+    )
+    expect(map.get('1')).toEqual([
+      { targetUpgradeId: '9761', value: 87.5, rawEffect: 'buff_upgrades,87.5,9761,9762' },
+      { targetUpgradeId: '9762', value: 87.5, rawEffect: 'buff_upgrades,87.5,9761,9762' },
+    ])
+  })
+
+  it('加性装备（hero_dps）不计入 buff_upgrade 收集', () => {
+    const catalog = [cat('1', '1', '1', 'hero_dps_multiplier_mult,100')]
+    const map = collectEquipmentBuffsByHero(
+      [{ heroId: '1', lootBySlot: { '1': { rarity: 1 } } }],
+      catalog,
+    )
+    expect(map.has('1')).toBe(false)
+  })
+
+  it('无 owned loot → 空 map（向后兼容）', () => {
+    const catalog = [cat('1', '3', '4', 'buff_upgrade,275,4')]
+    expect(collectEquipmentBuffsByHero([{ heroId: '1', lootBySlot: {} }], catalog).has('1')).toBe(false)
+    expect(collectEquipmentBuffsByHero([], catalog).size).toBe(0)
   })
 })

@@ -4,6 +4,8 @@ import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../s
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
+import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
+import type { EquipmentBuff } from '../buffs/equipmentMult'
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
@@ -128,6 +130,12 @@ export interface PlannerRecommendationOptions {
   equipmentGoldByHero?: ReadonlyMap<string, number>
   /** 装备 per-carry crit mult（hero-scope buff_base_crit_*_mult，{chanceMult, damageMult}）；scoreFormation 经 critFactor 注入。默认空。 */
   equipmentCritByHero?: ReadonlyMap<string, { chanceMult: number; damageMult: number }>
+  /**
+   * 装备 buff_upgrade wrapper 元数据（per-hero，owned loot + loot-catalog + enchant 缩放）。
+   * engine applyEquipmentBuffs 按 target upgradeId 反查 base signal 构造 wrapper 注入 profile（与 feat/专精
+   * 同层 profile 改写，非 scoreFormation 加性数值通道）。默认空（无 buff_upgrade 装备或未导入存档）。
+   */
+  equipmentBuffsByHero?: ReadonlyMap<string, EquipmentBuff[]>
   /**
    * 外部 hero_dps per-carry 贡献（patron/blessing effect_def hero_dps，带 filter）。
    * 由调用方从 effect-definitions.json + active patron/blessing effect_def 经 collectHeroDpsContributions 算后传入；
@@ -263,6 +271,25 @@ function applyActiveSpecializations(
   }
 }
 
+// 应用 owned 装备 buff_upgrade wrapper 到 profile：按 target upgradeId 反查 direct base signal 构造 wrapper
+// 注入（与 feat/专精同层 profile 改写，appendHeroAbilitySignals 追加保留 base）。equipmentBuffsByHero 缺省
+//（未加载/未导入存档）或英雄无 owned buff_upgrade 装备 → 跳过/原样。wrapper 通道独立于 5 个加性装备数值通道。
+function applyEquipmentBuffs(
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  equipmentBuffsByHero: ReadonlyMap<string, EquipmentBuff[]> | undefined,
+): void {
+  if (!equipmentBuffsByHero || equipmentBuffsByHero.size === 0) {
+    return
+  }
+  for (const [heroId, profile] of heroById) {
+    const buffs = equipmentBuffsByHero.get(heroId)
+    if (!buffs || buffs.length === 0) {
+      continue
+    }
+    heroById.set(heroId, applyEquipmentBuffsToProfile(profile, buffs))
+  }
+}
+
 /**
  * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评分上下文 + options 对称透传。
  * 抽成单一来源，结构性锁定两入口透传一致——否则新增透传字段（如 aggregateProjection）漏改一处，
@@ -318,6 +345,7 @@ export function evaluateFormation({
   const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
+  applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
   const candidateIds = new Set(
     buildCandidatePool({
       mode: candidateMode,
@@ -483,6 +511,7 @@ export function buildPlannerRecommendation({
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
+  applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {

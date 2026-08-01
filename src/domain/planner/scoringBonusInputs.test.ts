@@ -125,4 +125,35 @@ describe('buildScoringBonusInputs', () => {
     // 350 × (1 + 0/250) = 350 → 1 + 350/100 = 4.5
     expect(r.equipmentAdjustmentByHero.get('h1')).toBeCloseTo(4.5, 5)
   })
+
+  it('owned buff_upgrade loot → equipmentBuffsByHero 收集（enchant 缩放，per-hero wrapper 元数据）', () => {
+    const lootCatalog: LootCatalogEntry[] = [
+      { heroId: 'h1', slotId: '3', rarity: '4', effectString: 'buff_upgrade,275,4' },
+      { heroId: 'h1', slotId: '1', rarity: '1', effectString: 'hero_dps_multiplier_mult,100' },
+    ]
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({
+        // slot3 buff_upgrade enchant 250 → 275 × (1+250/250) = 550
+        ownedHeroes: [makeOwnedHero('h1', { '3': { slotId: '3', rarity: 4, gild: 0, enchant: 250, pigment: 0, found: {} } })],
+      }),
+      lootCatalog,
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+    })
+    expect(r.equipmentBuffsByHero.get('h1')).toEqual([
+      { targetUpgradeId: '4', value: 550, rawEffect: 'buff_upgrade,275,4' },
+    ])
+    // 加性装备（hero_dps slot1）不计入 buff_upgrade 通道（无 owned slot1 → adjustment 空）
+    expect(r.equipmentAdjustmentByHero.has('h1')).toBe(false)
+  })
+
+  it('未导入存档或无 buff_upgrade 装备 → equipmentBuffsByHero 空（向后兼容）', () => {
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [] }),
+      lootCatalog: [{ heroId: 'h1', slotId: '3', rarity: '4', effectString: 'buff_upgrade,275,4' }],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+    })
+    expect(r.equipmentBuffsByHero.size).toBe(0)
+  })
 })
