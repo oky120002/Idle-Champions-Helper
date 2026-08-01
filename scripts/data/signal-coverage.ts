@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { readdir, readFile } from 'node:fs/promises'
+import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
 import {
@@ -353,10 +353,72 @@ export async function generateSignalCoverageFromVersionDir(
   return generateSignalCoverageReport(details)
 }
 
+/**
+ * 基线 gate：把覆盖率报告的关键计数抽成扁平记录，与提交的基线文件比对。
+ * 任何计数漂移（新 effect kind 变 unsupported、识别率升/降、数据同步带来新英雄）
+ * 都须用 `--update-baseline` 显式确认并审查，避免覆盖率静默回退。
+ */
+export type CoverageBaseline = Record<string, number>
+
+export function extractCoverageBaseline(report: SignalCoverageReport): CoverageBaseline {
+  return {
+    totalHeroes: report.totals.totalHeroes,
+    totalEffectEntries: report.totals.totalEffectEntries,
+    recognizedSignals: report.totals.recognizedSignals,
+    unsupportedSignals: report.totals.unsupportedSignals,
+    manualSignals: report.totals.manualSignals,
+    stackedSignals: report.totals.stackedSignals,
+    perHeroExprTotal: report.totals.perHeroExprTotal,
+    parsedPerHeroExprTotal: report.totals.parsedPerHeroExprTotal,
+    unparsedPerHeroExprTotal: report.totals.unparsedPerHeroExprTotal,
+    ...Object.fromEntries(report.scoringSupport.map((entry) => [`scoringSupport.${entry.key}`, entry.count])),
+    ...Object.fromEntries(report.buffUpgradeWrapperStatus.map((entry) => [`buffUpgrade.${entry.key}`, entry.count])),
+  }
+}
+
+export function diffCoverageBaseline(expected: CoverageBaseline, actual: CoverageBaseline): string | null {
+  const keys = [...new Set([...Object.keys(expected), ...Object.keys(actual)])].sort()
+  const lines: string[] = []
+  for (const key of keys) {
+    const before = expected[key]
+    const after = actual[key]
+    if (before === after) continue
+    const delta = (after ?? 0) - (before ?? 0)
+    const sign = delta > 0 ? '+' : ''
+    lines.push(`  ${key}: ${before ?? '(missing)'} → ${after ?? '(missing)'} (${sign}${delta})`)
+  }
+  return lines.length > 0 ? lines.join('\n') : null
+}
+
 async function main(): Promise<void> {
-  const versionDir = process.argv[2] ?? DEFAULT_VERSION_DIR
+  const args = process.argv.slice(2)
+  const versionDir = args.find((arg) => !arg.startsWith('--')) ?? DEFAULT_VERSION_DIR
   const report = await generateSignalCoverageFromVersionDir(versionDir)
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`)
+
+  const baselinePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'signal-coverage-baseline.json')
+  const actual = extractCoverageBaseline(report)
+
+  if (args.includes('--update-baseline')) {
+    await writeFile(baselinePath, `${JSON.stringify(actual, null, 2)}\n`)
+    process.stderr.write(`signal-coverage 基线已写入：${baselinePath}（审查变化后提交）\n`)
+    return
+  }
+
+  let expected: CoverageBaseline
+  try {
+    expected = JSON.parse(await readFile(baselinePath, 'utf8')) as CoverageBaseline
+  } catch {
+    process.stderr.write(`无法读取基线 ${baselinePath}；运行 --update-baseline 生成初始基线。\n`)
+    process.exitCode = 1
+    return
+  }
+
+  const diff = diffCoverageBaseline(expected, actual)
+  if (diff) {
+    process.stderr.write(`signal-coverage 基线漂移（覆盖率变化须显式确认）：\n${diff}\n\n运行 --update-baseline 更新基线，并审查变化是否符合预期。\n`)
+    process.exitCode = 1
+  }
 }
 
 const currentFilePath = fileURLToPath(import.meta.url)

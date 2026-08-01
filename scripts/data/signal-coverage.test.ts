@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { classifyScoringSupport } from './signal-coverage.ts'
+import {
+  classifyScoringSupport,
+  diffCoverageBaseline,
+  extractCoverageBaseline,
+  generateSignalCoverageReport,
+} from './signal-coverage.ts'
 
 // classifyScoringSupport 必须与 placementFit.resolveSignalMultiplier 的计分判定对称——
 // 分类器说 supported 的，scorer 必须真计分；说 unsupported-composition 的，scorer 必须真不计分。
@@ -40,5 +45,67 @@ describe('classifyScoringSupport', () => {
   it('白名单 stackFunc 但 amountFunc 非 add/mult → unsupported-composition（scorer 无法判定叠层方式）', () => {
     expect(classifyScoringSupport({ stackFunc: 'per_hero', amountFunc: null })).toBe('unsupported-composition')
     expect(classifyScoringSupport({ stackFunc: 'per_hero', amountFunc: 'unknown' })).toBe('unsupported-composition')
+  })
+})
+
+describe('coverage baseline gate', () => {
+  // 基线 gate 守 signal-coverage 不静默回退：真实数据跑出的关键计数须与提交基线一致，
+  // 漂移（新 effect kind 变 unsupported、识别率变化、数据同步带来新英雄）须 --update-baseline 显式确认。
+  function buildReport(overrides: {
+    totalHeroes?: number
+    recognizedSignals?: number
+    unsupportedSignals?: number
+    supported?: number
+    unsupportedComposition?: number
+    wrapperFamilyUnsupported?: number
+  }) {
+    const report = generateSignalCoverageReport([])
+    report.totals.totalHeroes = overrides.totalHeroes ?? 0
+    report.totals.recognizedSignals = overrides.recognizedSignals ?? 0
+    report.totals.unsupportedSignals = overrides.unsupportedSignals ?? 0
+    report.scoringSupport = [
+      { key: 'supported', count: overrides.supported ?? 0 },
+      { key: 'unsupported-composition', count: overrides.unsupportedComposition ?? 0 },
+    ]
+    if (overrides.wrapperFamilyUnsupported) {
+      report.buffUpgradeWrapperStatus = [
+        { key: 'wrapper-family-unsupported', count: overrides.wrapperFamilyUnsupported },
+      ]
+    }
+    return report
+  }
+
+  it('extractCoverageBaseline 抽取 totals + scoringSupport + buffUpgrade 关键计数为扁平记录', () => {
+    const baseline = extractCoverageBaseline(buildReport({
+      totalHeroes: 164,
+      recognizedSignals: 11717,
+      unsupportedSignals: 2418,
+      supported: 11664,
+      unsupportedComposition: 19,
+      wrapperFamilyUnsupported: 11,
+    }))
+    expect(baseline.totalHeroes).toBe(164)
+    expect(baseline.recognizedSignals).toBe(11717)
+    expect(baseline.unsupportedSignals).toBe(2418)
+    expect(baseline['scoringSupport.supported']).toBe(11664)
+    expect(baseline['scoringSupport.unsupported-composition']).toBe(19)
+    expect(baseline['buffUpgrade.wrapper-family-unsupported']).toBe(11)
+  })
+
+  it('diffCoverageBaseline 一致 → null', () => {
+    const baseline = extractCoverageBaseline(buildReport({ totalHeroes: 5, unsupportedSignals: 3 }))
+    expect(diffCoverageBaseline(baseline, { ...baseline })).toBeNull()
+  })
+
+  it('diffCoverageBaseline 漂移 → 描述每个变化键（旧→新 + delta），回归与改善都触发', () => {
+    const expected = extractCoverageBaseline(buildReport({ unsupportedSignals: 15, recognizedSignals: 80 }))
+    const actual = { ...expected, unsupportedSignals: 18, recognizedSignals: 77 }
+    const diff = diffCoverageBaseline(expected, actual)
+    expect(diff).toMatch(/unsupportedSignals: 15 → 18 \(\+3\)/)
+    expect(diff).toMatch(/recognizedSignals: 80 → 77 \(-3\)/)
+  })
+
+  it('diffCoverageBaseline 缺失键 → 标记 (missing)', () => {
+    expect(diffCoverageBaseline({ foo: 5 }, {})).toMatch(/foo: 5 → \(missing\)/)
   })
 })
