@@ -53,8 +53,6 @@ function formatLegalityViolation(violation: LegalityViolation): string {
   switch (violation.kind) {
     case 'seatConflict':
       return `seat ${violation.seat} 冲突：${violation.heroes.join(', ')}`
-    case 'bannedChampion':
-      return `${violation.heroId} 被当前规则禁用`
     case 'missingForced':
       return `缺少强制英雄：${violation.heroIds.join(', ')}`
     case 'lockedSlot':
@@ -293,7 +291,6 @@ export function evaluateFormation({
 
   const variantRules: VariantRuleResult = {
     constraints: [
-      ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),
       ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
     ],
     warnings: scenario.scenarioWarnings,
@@ -462,7 +459,6 @@ export function buildPlannerRecommendation({
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {
     constraints: [
-      ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),
       ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
     ],
     warnings: scenario.scenarioWarnings,

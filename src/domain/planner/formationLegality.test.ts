@@ -15,21 +15,6 @@ describe('formation legality checks', () => {
     expect(seatConflict!.heroes).toContain('5')
   })
 
-  it('检测 banned champions', () => {
-    const result = checkFormationLegality({
-      placements: { s1: '3' },
-      heroSeats: { '3': 2 },
-      variantRules: {
-        constraints: [{ kind: 'banList', heroIds: ['3'] }],
-        warnings: [],
-      },
-    })
-
-    const banViolation = result.violations.find((v) => v.kind === 'bannedChampion')
-    expect(banViolation).toBeDefined()
-    expect(banViolation!.heroId).toBe('3')
-  })
-
   it('检测缺失的 forced champions', () => {
     const result = checkFormationLegality({
       placements: { s1: '5' },

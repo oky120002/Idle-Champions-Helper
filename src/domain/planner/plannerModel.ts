@@ -28,7 +28,6 @@ export interface OfficialPlannerScenarioModel {
   objectiveArea: number | null
   slotTopology: PlannerScenarioSlot[]
   forcedHeroes: string[]
-  bannedHeroes: string[]
   lockedSlots: string[]
   scenarioWarnings: string[]
   /** 场景怪物类型（来自 variant.enemyTypes），供 vulnerability 条件性匹配。 */

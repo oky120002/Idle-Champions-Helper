@@ -84,7 +84,6 @@ function buildScenario(
       { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1'] },
     ],
     forcedHeroes: [],
-    bannedHeroes: [],
     lockedSlots: [],
     scenarioWarnings: [],
     enemyTypes: [],
@@ -102,29 +101,6 @@ function buildCollections(scenarios: OfficialPlannerScenarioModel[]): PlannerCol
     plannerScenarios: scenarios,
   }
 }
-
-describe('runtime edge — forced∩banned 冲突', () => {
-  it('同一英雄同时被强制与禁用 → no-legal-recommendation（被禁用方胜出，不放非法阵型）', () => {
-    const scenario = buildScenario('v-conflict', {
-      forcedHeroes: ['h1'],
-      bannedHeroes: ['h1'],
-    })
-    const collections = buildCollections([scenario])
-    const profile = createUserProfileSnapshot({
-      ownedHeroes: heroIds.map((id) => createOwnedHero({ heroId: id, level: 100 })),
-    })
-
-    const recommendation = buildPlannerRecommendation({
-      variant: buildVariant('v-conflict'),
-      collections,
-      profileSnapshot: profile,
-    })
-
-    // forced 让 h1 进候选，但 checkFormationLegality 把它判 bannedChampion → 全部 beam 结果非法
-    expect(recommendation.blocker).toBe('no-legal-recommendation')
-    expect(recommendation.result).toBeNull()
-  })
-})
 
 describe('runtime edge — 损坏个人快照', () => {
   it('level=NaN 的拥有英雄不崩溃，DPS 比较仍可排序（NaN 兜底为 DEFAULT_CARRY_LEVEL）', () => {

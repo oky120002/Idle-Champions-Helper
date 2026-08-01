@@ -18,7 +18,6 @@ interface ScenarioModel {
   objectiveArea: unknown
   slotTopology: SlotTopologyEntry[]
   forcedHeroes: unknown[]
-  bannedHeroes: unknown[]
   lockedSlots: unknown[]
   enemyTypes: unknown[]
   allowedHeroes: unknown[]
@@ -147,7 +146,6 @@ export function buildOfficialScenarioModel(
     objectiveArea: variant.objectiveArea ?? null,
     slotTopology,
     forcedHeroes: asArray(variant.forcedHeroIds),
-    bannedHeroes: [],
     lockedSlots,
     enemyTypes: asArray(variant.enemyTypes),
     allowedHeroes: allowedHeroIds,

@@ -9,7 +9,6 @@ export interface LegalityCheckInput {
 
 export type LegalityViolation =
   | { kind: 'seatConflict'; seat: number; heroes: string[] }
-  | { kind: 'bannedChampion'; heroId: string }
   | { kind: 'missingForced'; heroIds: string[] }
   | { kind: 'lockedSlot'; slotId: string }
 
@@ -36,16 +35,6 @@ export function checkFormationLegality(input: LegalityCheckInput): LegalityResul
   for (const [seat, heroes] of seatMap) {
     if (heroes.length > 1) {
       violations.push({ kind: 'seatConflict', seat, heroes })
-    }
-  }
-
-  // Check banned champions
-  const banList = variantRules.constraints.find((c) => c.kind === 'banList')
-  if (banList) {
-    for (const heroId of Object.values(placements)) {
-      if (banList.heroIds.includes(heroId)) {
-        violations.push({ kind: 'bannedChampion', heroId })
-      }
     }
   }
 
