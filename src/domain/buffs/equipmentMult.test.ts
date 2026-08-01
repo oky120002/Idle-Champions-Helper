@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import {
   computeEquipmentAdjustmentByHero,
-  computeEquipmentGlobalDpsMult,
+  computeEquipmentGlobalDpsByHero,
+  computeEquipmentGoldByHero,
   computeEquipmentHealthByHero,
   computeEquipmentMult,
   parseLootEffect,
@@ -91,9 +92,8 @@ describe('computeEquipmentMult', () => {
   })
 })
 
-describe('computeEquipmentGlobalDpsMult', () => {
-  it('跨英雄全队聚合：两英雄 global_dps 装备求和（enchant=0 取 base）', () => {
-    // hero 1 slot1 r1=10、hero 2 slot1 r1=50 → 10+50=60% → 1.6
+describe('computeEquipmentGlobalDpsByHero', () => {
+  it('per-hero global_dps addPercent（enchant=0 取 base；非全队求和，scoreFormation 按 placed 求和）', () => {
     const catalog = [
       cat('1', '1', '1', 'global_dps_multiplier_mult,10'),
       cat('2', '1', '1', 'global_dps_multiplier_mult,50'),
@@ -102,24 +102,44 @@ describe('computeEquipmentGlobalDpsMult', () => {
       { heroId: '1', lootBySlot: { '1': { rarity: 1 } } },
       { heroId: '2', lootBySlot: { '1': { rarity: 1 } } },
     ]
-    expect(computeEquipmentGlobalDpsMult(heroes, catalog)).toBeCloseTo(1.6, 5)
+    const map = computeEquipmentGlobalDpsByHero(heroes, catalog)
+    expect(map.get('1')).toBe(10) // addPercent（非 multiplier）
+    expect(map.get('2')).toBe(50)
   })
 
-  it('enchant 缩放同 hero_dps（base × (1+enchant/250)，hero 1 slot1 r4 base230）', () => {
-    // 230 × (1 + 750/250) = 230 × 4 = 920% → 9.2
+  it('enchant 缩放（base × (1+enchant/250)，hero 1 slot1 r4 base230 enchant750 → 920）', () => {
     const catalog = [cat('1', '1', '4', 'global_dps_multiplier_mult,230')]
     const heroes = [{ heroId: '1', lootBySlot: { '1': { rarity: 4, enchant: 750 } } }]
-    expect(computeEquipmentGlobalDpsMult(heroes, catalog)).toBeCloseTo(1 + 920 / 100, 1)
+    expect(computeEquipmentGlobalDpsByHero(heroes, catalog).get('1')).toBeCloseTo(920, 1)
   })
 
-  it('只计 global_dps，hero_dps 装备不计入全队池（明斯克 slot1 是 hero_dps）', () => {
+  it('只计 global_dps，hero_dps 装备不计入（明斯克 slot1 是 hero_dps）', () => {
     const heroes = [{ heroId: '7', lootBySlot: { '1': { rarity: 4, enchant: 734 } } }]
-    expect(computeEquipmentGlobalDpsMult(heroes, MINSC_CATALOG)).toBe(1)
+    expect(computeEquipmentGlobalDpsByHero(heroes, MINSC_CATALOG).has('7')).toBe(false)
   })
 
-  it('无 owned loot（未导入存档）→ 1', () => {
-    expect(computeEquipmentGlobalDpsMult([], MINSC_CATALOG)).toBe(1)
-    expect(computeEquipmentGlobalDpsMult([{ heroId: '1', lootBySlot: {} }], MINSC_CATALOG)).toBe(1)
+  it('无 global_dps 装备 → 空 map', () => {
+    expect(computeEquipmentGlobalDpsByHero([], MINSC_CATALOG).size).toBe(0)
+    expect(computeEquipmentGlobalDpsByHero([{ heroId: '7', lootBySlot: {} }], MINSC_CATALOG).size).toBe(0)
+  })
+})
+
+describe('computeEquipmentGoldByHero', () => {
+  it('per-hero gold addPercent（gold_multiplier_mult，enchant=0 取 base）', () => {
+    const catalog = [cat('goldhero', '1', '4', 'gold_multiplier_mult,100')]
+    const heroes = [{ heroId: 'goldhero', lootBySlot: { '1': { rarity: 4 } } }]
+    expect(computeEquipmentGoldByHero(heroes, catalog).get('goldhero')).toBe(100)
+  })
+
+  it('enchant 缩放（base × (1+enchant/250)，base100 enchant250 → 200）', () => {
+    const catalog = [cat('goldhero', '1', '4', 'gold_multiplier_mult,100')]
+    const heroes = [{ heroId: 'goldhero', lootBySlot: { '1': { rarity: 4, enchant: 250 } } }]
+    expect(computeEquipmentGoldByHero(heroes, catalog).get('goldhero')).toBeCloseTo(200, 1)
+  })
+
+  it('只计 gold，hero_dps/global_dps 装备不计入（明斯克 slot1 是 hero_dps）', () => {
+    const heroes = [{ heroId: '7', lootBySlot: { '1': { rarity: 4, enchant: 734 } } }]
+    expect(computeEquipmentGoldByHero(heroes, MINSC_CATALOG).has('7')).toBe(false)
   })
 })
 

@@ -122,6 +122,10 @@ export interface PlannerRecommendationOptions {
   equipmentAdjustmentByHero?: Map<string, number>
   /** 装备 per-carry health multiplier（health_mult，hero-scoped 生命）；透传 scoreFormation survival 段。默认无（=1）。 */
   equipmentHealthByHero?: Map<string, number>
+  /** 装备 global_dps per-hero addPercent（global-scope）；scoreFormation 按 placed 求和并入 damage:global。默认空。 */
+  equipmentGlobalDpsByHero?: ReadonlyMap<string, number>
+  /** 装备 gold per-hero addPercent（global-scope）；scoreTeamGold 按 placed 求和并入 gold:global。默认空。 */
+  equipmentGoldByHero?: ReadonlyMap<string, number>
   /**
    * 外部 hero_dps per-carry 贡献（patron/blessing effect_def hero_dps，带 filter）。
    * 由调用方从 effect-definitions.json + active patron/blessing effect_def 经 collectHeroDpsContributions 算后传入；
@@ -281,6 +285,8 @@ function scorePlannerFormation(
     globalBuffMultiplier: options.globalBuffMultiplier,
     equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
     equipmentHealthByHero: options.equipmentHealthByHero,
+    equipmentGlobalDpsByHero: options.equipmentGlobalDpsByHero,
+    equipmentGoldByHero: options.equipmentGoldByHero,
     externalHeroDpsContributions: options.externalHeroDpsContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,

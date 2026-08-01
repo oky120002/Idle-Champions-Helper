@@ -9,9 +9,11 @@
  *   未导入存档或 lootCatalog 空 → 空 map（scoreFormation 缺省 ?? 1，向后兼容）。
  * - equipmentHealthByHero：per-hero health_mult multiplier（hero-scoped 生命）；scoreFormation survival 段
  *   并入 carry 的 survival:hero 池；未导入存档 → 空 map。
- * - globalBuffMultiplier：patron + blessing + 装备 global_dps 的 add pool 合并（1 + Σ(value)/100）；
- *   effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入；装备 global_dps 跨英雄全队聚合；
- *   未导入存档 → 1。
+ * - equipmentGlobalDpsByHero / equipmentGoldByHero：per-hero global-scope addPercent（global_dps / gold）；
+ *   scoreFormation/scoreTeamGold 按 placed 英雄求和并入 damage:global / gold:global 池（装备英雄绑定，排除 bench）；
+ *   未导入存档 → 空 map。
+ * - globalBuffMultiplier：patron + blessing 账号级 global_dps add pool 合并（1 + Σ(value)/100）；
+ *   effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入；未导入存档 → 1。
  * - externalHeroDpsContributions：patron/blessing 的 effect_def hero_dps（带 filter，per-carry 条件生效）；
  *   active 过滤复用 globalBuff 的 collect 单一来源（#7 type1 规则不漂移）；未导入存档 → 空。
  */
@@ -20,7 +22,7 @@ import { collectHeroDpsContributions } from '../buffs/externalHeroDpsMult'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../buffs/blessingGlobalBuff'
-import { computeEquipmentAdjustmentByHero, computeEquipmentGlobalDpsMult, computeEquipmentHealthByHero } from '../buffs/equipmentMult'
+import { computeEquipmentAdjustmentByHero, computeEquipmentGlobalDpsByHero, computeEquipmentGoldByHero, computeEquipmentHealthByHero } from '../buffs/equipmentMult'
 import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../buffs/patronPerkGlobalBuff'
 import type { LootCatalogEntry } from '../buffs/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
@@ -29,6 +31,8 @@ import type { UserProfileSnapshot } from '../user-profile/types'
 export interface ScoringBonusInputs {
   equipmentAdjustmentByHero: Map<string, number>
   equipmentHealthByHero: Map<string, number>
+  equipmentGlobalDpsByHero: Map<string, number>
+  equipmentGoldByHero: Map<string, number>
   globalBuffMultiplier: number
   externalHeroDpsContributions: HeroDpsContribution[]
 }
@@ -45,11 +49,13 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
 
   let equipmentAdjustmentByHero = new Map<string, number>()
   let equipmentHealthByHero = new Map<string, number>()
-  let equipmentGlobalDpsMult = 1
+  let equipmentGlobalDpsByHero = new Map<string, number>()
+  let equipmentGoldByHero = new Map<string, number>()
   if (profileSnapshot && lootCatalog.length > 0) {
     equipmentAdjustmentByHero = computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
     equipmentHealthByHero = computeEquipmentHealthByHero(profileSnapshot.ownedHeroes, lootCatalog)
-    equipmentGlobalDpsMult = computeEquipmentGlobalDpsMult(profileSnapshot.ownedHeroes, lootCatalog)
+    equipmentGlobalDpsByHero = computeEquipmentGlobalDpsByHero(profileSnapshot.ownedHeroes, lootCatalog)
+    equipmentGoldByHero = computeEquipmentGoldByHero(profileSnapshot.ownedHeroes, lootCatalog)
   }
 
   const effectDefTemplates = new Map(effectDefinitions.map((entry) => [entry.id, entry]))
@@ -61,7 +67,7 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   const blessingMult = profileSnapshot?.blessings
     ? computeActualBlessingGlobalBuff(profileSnapshot.blessings.levels, profileSnapshot.blessings.catalog, active?.deity, effectDefTemplates)
     : 1
-  const globalBuffMultiplier = combineGlobalBuffMultipliers([patronMult, blessingMult, equipmentGlobalDpsMult])
+  const globalBuffMultiplier = combineGlobalBuffMultipliers([patronMult, blessingMult])
 
   let externalHeroDpsContributions: HeroDpsContribution[] = []
   if (profileSnapshot) {
@@ -74,5 +80,5 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
     externalHeroDpsContributions = collectHeroDpsContributions([...patronEffects, ...blessingEffects], effectDefTemplates)
   }
 
-  return { equipmentAdjustmentByHero, equipmentHealthByHero, globalBuffMultiplier, externalHeroDpsContributions }
+  return { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions }
 }

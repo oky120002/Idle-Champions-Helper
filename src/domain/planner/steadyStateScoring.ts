@@ -66,6 +66,13 @@ export interface ScoringInput {
    */
   equipmentHealthByHero?: Map<string, number> | undefined
   /**
+   * 装备 global_dps per-hero addPercent（global_dps_multiplier_mult，global-scope）。scoreFormation 按 placed
+   * 英雄求和并入 damage:global 池（装备英雄绑定，排除 bench；与账号级 globalBuffMultiplier 分列）。默认空 map。
+   */
+  equipmentGlobalDpsByHero?: ReadonlyMap<string, number> | undefined
+  /** 装备 gold per-hero addPercent（gold_multiplier_mult，global-scope）。scoreTeamGold 按 placed 求和并入 gold:global 池。默认空 map。 */
+  equipmentGoldByHero?: ReadonlyMap<string, number> | undefined
+  /**
    * 外部 hero_dps per-carry 贡献（patron_perk + blessing 的 effect_def hero_dps，带 filter 限定）。
    * scoreFormation 内按 carry 属性匹配 qualifier；absolute-dps 下与装备 + ability hero_dps 同 key 加法
    * 合并进 unified hero 池（IC hero_dps_multiplier_mult 同英雄 base DPS，A1 同 key 全源加法）。
@@ -154,6 +161,24 @@ const ZERO: GameNumberValue = new Decimal(0)
 type PlacedEntry = { slotId: string; hero: ResolvedHeroAbilityProfile }
 
 /**
+ * 按 placed 英雄求和装备 per-hero addPercent（global-scope 装备：装备者必须在阵型内才生效，排除 bench）。
+ * 用于 global_dps（damage:global 池）与 gold（gold:global 池）的 placement-aware 注入。
+ */
+function sumPlacedEquipmentAddPercent(
+  placements: Record<string, string>,
+  equipmentByHero?: ReadonlyMap<string, number>,
+): number {
+  if (!equipmentByHero || equipmentByHero.size === 0) {
+    return 0
+  }
+  let sum = 0
+  for (const heroId of Object.values(placements)) {
+    sum += equipmentByHero.get(heroId) ?? 0
+  }
+  return sum
+}
+
+/**
  * team-gold 模式：全队聚合 gold signal（dimension:'gold'），无 carry 概念。
  * 每个英雄作为自身 support（collectSignals 返回其 carry+support gold signal）；
  * global-scope gold 不依赖位置/目标即生效，tagged gold 按 formation 计数。
@@ -186,6 +211,12 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
       }
     }
     mergePools(sharedPools, fit.pools)
+  }
+
+  // 装备 gold（global-scope，placement-aware）并入 gold:global 池（只计阵型内英雄装备，排除 bench）。
+  const equipmentGoldAddPercent = sumPlacedEquipmentAddPercent(input.placements, input.equipmentGoldByHero)
+  if (equipmentGoldAddPercent !== 0) {
+    mergePools(sharedPools, [{ dimension: 'gold', scope: 'global', addPercent: equipmentGoldAddPercent, multFactor: 1, poolMultiplier: 1 }])
   }
 
   const aggregate = productOfPoolMultipliers(sharedPools)
@@ -328,7 +359,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     } else {
       const externalPools: AggregatedPool[] = []
       const globalBuffMultiplier = input.globalBuffMultiplier ?? 1
-      const globalAddPercent = (globalBuffMultiplier - 1) * 100
+      // 账号级 patron/blessing global_dps（不依赖 placed）+ 装备 global_dps（placement-aware，只计阵型内英雄）。
+      const globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
       if (globalAddPercent !== 0) {
         externalPools.push({ dimension: 'damage', scope: 'global', addPercent: globalAddPercent, multFactor: 1, poolMultiplier: 1 })
       }

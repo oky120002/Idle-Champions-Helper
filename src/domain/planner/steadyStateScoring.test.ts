@@ -672,6 +672,49 @@ describe('steady state scoring', () => {
     })
   })
 
+  describe('装备 global_dps/gold（B1-a fix placement + B1-c gold）', () => {
+    it('装备 global_dps 并入 placed 英雄 damage:global 池 → carryDps ×3（+200%）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const placements = { s1: 'carry' }
+      const base = scoreFormation({ placements, heroesById, scenario })
+      const withGlobalDps = scoreFormation({
+        placements, heroesById, scenario,
+        equipmentGlobalDpsByHero: new Map([['carry', 200]]),
+      })
+      expect(withGlobalDps.objectiveValue.toNumber()).toBeCloseTo(base.objectiveValue.toNumber() * 3, 4)
+    })
+
+    it('global_dps placement-aware：只计阵型内英雄，排除 bench（修 B1-a overcount）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const placements = { s1: 'carry' }
+      const withoutBench = scoreFormation({
+        placements, heroesById, scenario,
+        equipmentGlobalDpsByHero: new Map([['carry', 100]]),
+      })
+      const withBench = scoreFormation({
+        placements, heroesById, scenario,
+        equipmentGlobalDpsByHero: new Map([['carry', 100], ['bench', 500]]),
+      })
+      // bench 不在阵型 → 其 global_dps 不计入，两者 carryDps 相同
+      expect(withBench.objectiveValue.toNumber()).toBeCloseTo(withoutBench.objectiveValue.toNumber(), 6)
+    })
+
+    it('装备 gold 并入 placed 英雄 gold:global 池 → teamGold ×2（+100%，B1-c）', () => {
+      const hero = createHero('goldhero', { seat: 1 })
+      const heroesById = new Map([['goldhero', hero]])
+      const placements = { s1: 'goldhero' }
+      const base = scoreFormation({ placements, heroesById, scenario, scoringMode: 'team-gold' })
+      const withGold = scoreFormation({
+        placements, heroesById, scenario, scoringMode: 'team-gold',
+        equipmentGoldByHero: new Map([['goldhero', 100]]),
+      })
+      // computeTeamGoldFind = BASE_GOLD × goldPoolMultiplier；+100% → ×2
+      expect(withGold.objectiveValue.toNumber()).toBeCloseTo(base.objectiveValue.toNumber() * 2, 4)
+    })
+  })
+
   describe('A1 同 key 跨源加法（外部加成与 ability 同池，非相乘）', () => {
     it('ability global_dps 与外部 globalBuff 同 key 加法（修复前跨源相乘高估）', () => {
       // A1 核心（correctness-audit.md §2）：global_dps_multiplier_mult 的 ability 源与
