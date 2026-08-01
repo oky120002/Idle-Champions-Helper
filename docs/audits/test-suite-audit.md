@@ -96,8 +96,9 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | 1 | `build-models.test.ts` 重构（拆首用例；`it.each` 经评估否决） | 低（纯重构，行为不变） | ✅ 完成 |
 | 2 | sync 系列抽读 helper（recon 已修正 scope：非 fixture 数据，见 §B） | 低–中（pets 真重复；其余边际） | ⏳ recon 完成，待执行 |
 | 3 | `placementFit.test.ts` 按信号家族拆主题（4→6：框架级用例单列 pools/gating） | 中（40 用例分组迁移） | ✅ 完成 |
-| 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | 🔄 formatting ✅（31 用例）；placementSlotRelation 判间接覆盖非缺口；heroTargetingRelation/skelanim 待评估 |
+| 4 | 补纯逻辑模块单测（§4 候选，语义确认后） | 低（纯新增） | ✅ 完成：formatting ✅（31）；批 6 深度复审收口 heroTargetingRelation（已覆盖）/skelanim（低 ROI 跳过）/placementSlotRelation（间接覆盖），见 §8 |
 | 5 | §5 守护测试三类逐项核对补强 | 中（涉及真实产物） | ✅ 完成（三类均已闭环；唯一新补：因子之积全因子组合守护，见 §5.3） |
+| 6 | §4 覆盖缺口函数级穷尽复审（155→真缺口仅 1，补 animation-audit） | 低（纯新增测试） | ✅ 完成（feedback +34、useAnimationAuditPageModel +15；详见 §8） |
 
 ## 7. 风险与约束
 
@@ -105,3 +106,48 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 - 重构类批次（1/2/3）遵守 `docs/specs/guidelines/testing.md`：co-located、命名、夹具纪律；迁移零残留（删旧测试连同夹具）。
 - 补测类批次（4/5）TDD：先写覆盖目标行为的测试，跑红，再视情况补被测（多数被测已存在，只需补测）。
 - 不为本审计新增测试目录；不扩大运行器 glob 除非新增目录。
+
+## 8. 批 6 — §4 覆盖缺口函数级穷尽复审（2026-08-01，分支 `opencode/dev1`）
+
+§4「155 个纯 `.ts` 模块无 co-located 测试」的逐模块收口。方法论：208 个纯 `.ts` 模块（排除 .tsx/test/types/data/index）→ 154 无 co-located 测试 → 按「是否有任意测试文件 import」粗筛得 106 候选 → 逐模块读源码 + 查消费方测试，按 §4 三规则（纯计算无 route 触及=真缺口 / hook-model 被组件或 route 测试传递覆盖=间接 / 纯数据=不补）分类。
+
+**结论：§4「严重虚高」判断成立，真缺口仅 animation-audit 一个页面（零测试），其余全覆盖或 trivial。**
+
+### 8.1 已覆盖（批 4「待评估」项 + 粗筛误判收口）
+
+| 模块 | 覆盖方式 |
+|---|---|
+| `abilities/heroTargetingRelation.ts`（159 行） | ✅ 直接测：`signalSemantics.test.ts:249-288` 有 `describe('normalizeExplicitTargeting')` ~30 case（22 项字符串映射 / distance 组合 / 5 类对象类型 / unsupported / heroes 白名单）。函数在消费方测试中被直接 import，模块级 import grep 漏判 |
+| `planner/placementReasonCode.ts`（83 行） | ✅ 间接：`placementFit.{relations,gating,pools,counting}.test.ts` 断言 `reasonCode` 共 38 处，覆盖 30+ relation→reasonCode 映射 |
+| `planner/placementSlotRelation.ts`（194 行） | ✅ 间接：`placementFit.relations.test.ts`（位置关系家族）+ `stackCountResolver` 测试 |
+| `champion-detail/*`（11 个 helper：detail-json/effect-descriptor/effect-targets/specialization-column-model/upgrade-presentation-model/detail-derived-sections/navigation 等） | ✅ 传递：`championDetailPage.{content,interactions,navigation}.test.tsx` 渲染整页断言分区内容（专精/能力/装备/传奇/天赋/皮肤/故事 tab + 派生文本），任一 helper 断裂则断言红 |
+| `champion-filters/*`（7 模块） | ✅ 跨目录 co-located：`champions/filterActionBuilder.test.ts` 测 filter-action-builder；`filterQueryState.test.ts` 测 query-state（传递覆盖 query.ts）；options/headerMetrics 由 `championsPage.filterState/filterInteractions.test.tsx` 组件测试传递覆盖 |
+| `domain/formationLayout.ts` | ✅ 传递：`formationPage.layoutFilters.test.tsx` 等 |
+| `rules/illustrationFilter.ts`（85 行 10 维过滤） | ✅ 传递：illustrations 页组件测试 |
+| `planner/evaluatePlacementsStore.ts` | ✅ 传递：`plannerEvaluate.route.test.tsx` |
+
+**教训**：模块级「是否有测试 import」严重高估缺口——纯函数常在消费方测试中被直接 import 测试（如 heroTargetingRelation 在 signalSemantics.test.ts）。覆盖判定必须降到**函数级** + 查消费方测试目录。
+
+### 8.2 不补（trivial / 纯数据 / 纯类型 / hook-model 传递覆盖）
+
+- `goldObjective.ts`（3 行纯函数，finite/>0 守卫）、`variantConstraints.ts`（纯 interface 无逻辑）。
+- `mechanicHints.ts` / `animationAuditFilterLabels.ts`：exhaustive switch 标签映射，TypeScript 穷尽性保证无漏 case，无逻辑分支。
+- 各 `useXxx.ts` hook / `*PageModel.ts` / `*Model.ts`：React 状态编排，被组件或 route 测试传递覆盖。
+- `champion-tags/tag-labels/*`（7 文件）、`planner/references/*ReferenceData.ts`：纯数据/参照数据。
+
+### 8.3 真缺口 ✅ 已补（animation-audit 页此前零测试）
+
+| 新增测试 | 用例 | 覆盖 |
+|---|---|---|
+| `animation-audit/feedback.test.ts` | 34 | 8 导出全分支：`ANIMATION_AUDIT_FEEDBACK_TAGS` 契约 / `createEmpty` / `normalizeAnimationAuditFeedbackDraft`（空→null / note trim / tag 去重排序）/ `isMeaningfulAnimationAuditFeedback`（类型守卫）/ `toggleAnimationAuditFeedbackTag`（追加/移除/保 verdict-note）/ `buildAnimationAuditFeedbackPayload`（verdict→sequenceIndex 4 分支 + alternate 无候选回退 + 过滤空反馈 + 元信息快照）/ `readStoredAnimationAuditFeedback`（window 守卫 + malformed JSON/非对象/条目类型守卫/tag coerce/note 强制 / 空 draft 丢弃）/ `writeStoredAnimationAuditFeedback`（window 守卫 + JSON 落盘）。localStorage 防御解析用 `vi.stubGlobal('window')` 在 node 环境注入 |
+| `animation-audit/useAnimationAuditPageModel.test.tsx` | 15 | 页面首个测试，`renderHook` 覆盖：3 个私有过滤谓词（matchesLevel flagged=非none/精确等级、matchesKind、matchesSearch 中英文/ID 大小写不敏感/空白透传）/ summary 按 level+kind 聚合 / 反馈状态（verdict/tag/note 写入、空 draft 删除不留壳、clear 单条/全清）/ feedbackSummary 计数 / visibleEntries 24 截断 + showAll + canShowMore / 加载成功与失败两态 |
+
+### 8.4 有意识跳过（ROI 不足）
+
+- `features/skelanim-player/{walk-selection,browser-codec}.ts`（295/174 行，零测试引用）：walk-selection 是动画播放器的**视觉启发式**（6 因子加权评分 + 5 阈值候选过滤，magic number 编码视觉口味），构造能预测输出的夹具成本高、判定是视觉判断；browser-codec 是二进制协议解析器，需真实 `.skelanim` 二进制夹具。scripts 侧有平行实现（`scripts/data/skelanim-{codec,walk-selection}.ts` + `skelanim.test.ts`，node:zlib/PNG）已覆盖数据管线侧。属次要视觉功能，夹具成本 vs 价值不抵，纯函数变异风险低。
+- `animationAuditFilterLabels.ts`：见 §8.2。
+
+### 8.5 度量
+
+vitest **1284**（批 5 后 1235 + feedback 34 + hook 15）/ **219** 文件，全绿；typecheck ✅。e2e 30 不变。
+
