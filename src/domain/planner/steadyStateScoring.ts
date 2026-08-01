@@ -15,6 +15,7 @@ import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../s
 import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
+import type { EquipmentCritBonus } from '../buffs/equipmentMult'
 
 /**
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
@@ -72,6 +73,11 @@ export interface ScoringInput {
   equipmentGlobalDpsByHero?: ReadonlyMap<string, number> | undefined
   /** 装备 gold per-hero addPercent（gold_multiplier_mult，global-scope）。scoreTeamGold 按 placed 求和并入 gold:global 池。默认空 map。 */
   equipmentGoldByHero?: ReadonlyMap<string, number> | undefined
+  /**
+   * 装备 per-carry crit mult（hero-scope buff_base_crit_*_mult，{chanceMult, damageMult}）。
+   * scoreFormation 取 carry 值经 computeCritFactor 独立通道注入（非池聚合，mult 语义）。默认空 map。
+   */
+  equipmentCritByHero?: ReadonlyMap<string, EquipmentCritBonus> | undefined
   /**
    * 外部 hero_dps per-carry 贡献（patron_perk + blessing 的 effect_def hero_dps，带 filter 限定）。
    * scoreFormation 内按 carry 属性匹配 qualifier；absolute-dps 下与装备 + ability hero_dps 同 key 加法
@@ -340,7 +346,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       }
     }
 
-    const critFactor = computeCritFactor(critParts, carryEntry.hero.baseCritChancePercent)
+    const critFactor = computeCritFactor(critParts, carryEntry.hero.baseCritChancePercent, input.equipmentCritByHero?.get(carryEntry.hero.heroId))
     const vulnFactor = computeVulnerabilityFactor(vulnParts)
     const critVuln = critFactor * vulnFactor
 

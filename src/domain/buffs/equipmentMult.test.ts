@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   computeEquipmentAdjustmentByHero,
+  computeEquipmentCritByHero,
   computeEquipmentGlobalDpsByHero,
   computeEquipmentGoldByHero,
   computeEquipmentHealthByHero,
@@ -140,6 +141,39 @@ describe('computeEquipmentGoldByHero', () => {
   it('只计 gold，hero_dps/global_dps 装备不计入（明斯克 slot1 是 hero_dps）', () => {
     const heroes = [{ heroId: '7', lootBySlot: { '1': { rarity: 4, enchant: 734 } } }]
     expect(computeEquipmentGoldByHero(heroes, MINSC_CATALOG).has('7')).toBe(false)
+  })
+})
+
+describe('computeEquipmentCritByHero', () => {
+  it('per-hero crit mult（hero 25 slot3 chance 275 + slot4 damage 150，enchant=0 取 base）', () => {
+    const catalog = [
+      cat('25', '3', '4', 'buff_base_crit_chance_mult,275'),
+      cat('25', '4', '4', 'buff_base_crit_damage_mult,150'),
+    ]
+    const heroes = [{ heroId: '25', lootBySlot: { '3': { rarity: 4 }, '4': { rarity: 4 } } }]
+    const bonus = computeEquipmentCritByHero(heroes, catalog).get('25')!
+    // chance: 1 + 275/100 = 3.75；damage: 1 + 150/100 = 2.5
+    expect(bonus.chanceMult).toBeCloseTo(3.75, 5)
+    expect(bonus.damageMult).toBeCloseTo(2.5, 5)
+  })
+
+  it('enchant 缩放（base × (1+enchant/250)，chance base275 enchant250 → value550 → mult6.5）', () => {
+    const catalog = [cat('25', '3', '4', 'buff_base_crit_chance_mult,275')]
+    const heroes = [{ heroId: '25', lootBySlot: { '3': { rarity: 4, enchant: 250 } } }]
+    expect(computeEquipmentCritByHero(heroes, catalog).get('25')!.chanceMult).toBeCloseTo(6.5, 5)
+  })
+
+  it('只 chance 无 damage → damageMult=1（反之亦然）', () => {
+    const catalog = [cat('25', '3', '4', 'buff_base_crit_chance_mult,275')]
+    const heroes = [{ heroId: '25', lootBySlot: { '3': { rarity: 4 } } }]
+    const bonus = computeEquipmentCritByHero(heroes, catalog).get('25')!
+    expect(bonus.chanceMult).toBeCloseTo(3.75, 5)
+    expect(bonus.damageMult).toBe(1)
+  })
+
+  it('无 crit 装备 → 空 map', () => {
+    expect(computeEquipmentCritByHero([{ heroId: '7', lootBySlot: { '1': { rarity: 4, enchant: 734 } } }], MINSC_CATALOG).has('7')).toBe(false)
+    expect(computeEquipmentCritByHero([], MINSC_CATALOG).size).toBe(0)
   })
 })
 

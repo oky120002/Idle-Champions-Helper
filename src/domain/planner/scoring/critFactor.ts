@@ -27,6 +27,8 @@ const CRIT_CHANCE_KINDS: ReadonlySet<HeroAbilityKind> = new Set<HeroAbilityKind>
 export function computeCritFactor(
   parts: PlacementFitScorePart[],
   baseCritChancePercent?: number | null,
+  /** 装备 per-carry crit mult（hero-scope buff_base_crit_*_mult，B1-d）；null/缺省 = 无装备 crit。 */
+  equipmentCrit?: { chanceMult: number; damageMult: number } | null,
 ): number {
   const baseChancePercent = baseCritChancePercent ?? DEFAULT_CRIT_CHANCE_PERCENT
   let chanceAddPercent = 0
@@ -54,6 +56,12 @@ export function computeCritFactor(
         damageAddPercent += percent
       }
     }
+  }
+
+  // 装备 crit（hero-scope mult，per-carry）：chance/damage 各自乘 mult，独立于 ability critParts（B1-d）。
+  if (equipmentCrit) {
+    chanceMult *= equipmentCrit.chanceMult
+    damageMult *= equipmentCrit.damageMult
   }
 
   const totalChanceFraction = ((baseChancePercent + chanceAddPercent) * chanceMult) / 100

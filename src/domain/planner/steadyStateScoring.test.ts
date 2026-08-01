@@ -715,6 +715,33 @@ describe('steady state scoring', () => {
     })
   })
 
+  describe('装备 crit → critFactor 独立通道（B1-d，mult 语义）', () => {
+    it('装备 crit 并入 carry critFactor → carryDps 上升', () => {
+      const carry = createHero('25', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['25', carry]])
+      const placements = { s1: '25' }
+      const base = scoreFormation({ placements, heroesById, scenario })
+      const withCrit = scoreFormation({
+        placements, heroesById, scenario,
+        equipmentCritByHero: new Map([['25', { chanceMult: 2, damageMult: 2 }]]),
+      })
+      // crit mult → critFactor 上升 → carryDps 上升
+      expect(withCrit.objectiveValue.toNumber()).toBeGreaterThan(base.objectiveValue.toNumber())
+    })
+
+    it('未导入存档（equipmentCritByHero 空）→ critFactor 不变（向后兼容）', () => {
+      const carry = createHero('25', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['25', carry]])
+      const placements = { s1: '25' }
+      const without = scoreFormation({ placements, heroesById, scenario })
+      const emptyMap = scoreFormation({
+        placements, heroesById, scenario,
+        equipmentCritByHero: new Map(),
+      })
+      expect(emptyMap.objectiveValue.toNumber()).toBeCloseTo(without.objectiveValue.toNumber(), 6)
+    })
+  })
+
   describe('A1 同 key 跨源加法（外部加成与 ability 同池，非相乘）', () => {
     it('ability global_dps 与外部 globalBuff 同 key 加法（修复前跨源相乘高估）', () => {
       // A1 核心（correctness-audit.md §2）：global_dps_multiplier_mult 的 ability 源与

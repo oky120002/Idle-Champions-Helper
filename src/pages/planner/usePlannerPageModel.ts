@@ -58,7 +58,7 @@ export function usePlannerPageModel() {
   )
   // 外部加成装配（装备 + patron perk + blessing → scoring 三项入参）下沉纯函数 buildScoringBonusInputs；hook 只 memoize。
   // 未导入存档（profileSnapshot=null）→ 空 map / globalBuff 1 / hero_dps 空（scoreFormation 缺省，向后兼容）。
-  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
+  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
     () => buildScoringBonusInputs({ profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog }),
     [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog],
   )
@@ -75,10 +75,11 @@ export function usePlannerPageModel() {
       equipmentHealthByHero,
       equipmentGlobalDpsByHero,
       equipmentGoldByHero,
+      equipmentCritByHero,
       globalBuffMultiplier,
       externalHeroDpsContributions,
     }),
-    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions],
+    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
   // 有效 snapshot = 存档 + 专精 override；engine 按 OwnedHero.specializations 注入 signal（ADR 0017）。
   // 无 override 时同引用返回，避免 usePlannerRecommendation 无谓重算。

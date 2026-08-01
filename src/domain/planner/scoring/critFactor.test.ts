@@ -74,3 +74,23 @@ describe('computeCritFactor · per-hero base crit（set_base_crit_chance 覆盖�
     expect(computeCritFactor(parts, 20)).toBeGreaterThan(computeCritFactor(parts))
   })
 })
+
+describe('computeCritFactor · 装备 crit mult（B1-d，第三参 equipmentCrit）', () => {
+  it('equipmentCrit chanceMult/damageMult 各自乘进（无 ability crit signal）', () => {
+    // chanceMult=2, damageMult=2: totalChance=2.5×2/100=0.05, totalDamage=1+(100×2)/100=3
+    // rawCrit = 1 + 0.05×(3−1) = 1.1; /1.025 ≈ 1.0732
+    expect(computeCritFactor([], undefined, { chanceMult: 2, damageMult: 2 })).toBeCloseTo(1.0732, 4)
+  })
+
+  it('equipmentCrit 与 ability critParts 叠加（damage mult 累乘：×2×2=4）', () => {
+    // ability heroCritDamage mult×2 + equipment damageMult×2 → damageMult=4
+    // totalChance=0.025, totalDamage=1+(100×4)/100=5; rawCrit=1+0.025×4=1.1; /1.025≈1.0732
+    const parts = [buildScorePart({ signalKind: 'heroCritDamage', multiplier: 2, amountFunc: 'mult' })]
+    expect(computeCritFactor(parts, undefined, { chanceMult: 1, damageMult: 2 })).toBeCloseTo(1.0732, 4)
+  })
+
+  it('null/undefined equipmentCrit → 不影响（向后兼容）', () => {
+    expect(computeCritFactor([], undefined, null)).toBe(1)
+    expect(computeCritFactor([], undefined, undefined)).toBe(1)
+  })
+})

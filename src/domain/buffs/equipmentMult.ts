@@ -16,13 +16,14 @@
  * - `global_dps_multiplier_mult`（global-scope，全队 DPS）→ per-hero addPercent，
  *   scoreFormation 按 **placed 英雄**求和并入 damage:global 池（装备英雄绑定，只阵型内生效，排除 bench）。
  * - `gold_multiplier_mult`（global-scope，全队金币）→ per-hero addPercent，scoreTeamGold 按 placed 求和并入 gold:global 池。
+ * - `buff_base_crit_chance_mult`/`buff_base_crit_damage_mult`（hero-scope，per-carry 暴击，mult 语义）
+ *   → per-hero {chanceMult, damageMult}，scoreFormation 取 carry 值经 computeCritFactor 独立通道注入（非池聚合）。
  *
- * hero-scope（hero_dps/health）只 boost 装备者自身 → scoreFormation 仅取 carry 值；
+ * hero-scope（hero_dps/health/crit）只 boost 装备者自身 → scoreFormation 仅取 carry 值；
  * global-scope（global_dps/gold）影响全队但装备者必须在阵型内 → scoreFormation/scoreTeamGold 按 placed 求和
  * （与 patron/blessing 账号级 globalBuff 分列——后者不依赖 placed）。
  *
- * 未接（留后续 B1）：`buff_base_crit_*`（crit，mult 语义走 critFactor 独立通道）、
- * `buff_upgrade`（元加成，放大另一 upgrade 效果值，需先 resolve 被放大对象）。
+ * 未接（留后续 B1）：`buff_upgrade`（元加成，放大另一 upgrade 效果值，需先 resolve 被放大对象）。
  *
  * 未传入 owned loot（未导入存档）→ 无加成（向后兼容）。
  */
@@ -233,4 +234,35 @@ export function computeEquipmentGoldByHero(
   catalog: readonly LootCatalogEntry[],
 ): Map<string, number> {
   return computeAddPercentByHero(heroes, catalog, 'gold_multiplier_mult')
+}
+
+/**
+ * 批量算每英雄的暴击 mult（hero-scope buff_base_crit_chance_mult / buff_base_crit_damage_mult），
+ * 供 options.equipmentCritByHero。crit 是 mult 语义、走 critFactor 独立通道（非池聚合）：每 sub-type 的
+ * 原始百分比经 enchant 缩放后折算 mult（1+Σ/100），chance/damage 各自独立。
+ * scoreFormation 取 carry 值经 computeCritFactor 第三参注入（hero-scope 仅 carry 计）。
+ */
+export interface EquipmentCritBonus {
+  /** 暴击几率 mult = 1 + Σ(buff_base_crit_chance_mult base × (1+enchant/250))/100。 */
+  chanceMult: number
+  /** 暴击伤害 mult = 1 + Σ(buff_base_crit_damage_mult base × (1+enchant/250))/100。 */
+  damageMult: number
+}
+export function computeEquipmentCritByHero(
+  heroes: ReadonlyArray<{
+    heroId: string
+    lootBySlot: Readonly<Record<string, OwnedLootSlot>>
+  }>,
+  catalog: readonly LootCatalogEntry[],
+): Map<string, EquipmentCritBonus> {
+  const chance = computeAddPercentByHero(heroes, catalog, 'buff_base_crit_chance_mult')
+  const damage = computeAddPercentByHero(heroes, catalog, 'buff_base_crit_damage_mult')
+  const result = new Map<string, EquipmentCritBonus>()
+  for (const heroId of new Set([...chance.keys(), ...damage.keys()])) {
+    result.set(heroId, {
+      chanceMult: 1 + (chance.get(heroId) ?? 0) / 100,
+      damageMult: 1 + (damage.get(heroId) ?? 0) / 100,
+    })
+  }
+  return result
 }

@@ -126,6 +126,8 @@ export interface PlannerRecommendationOptions {
   equipmentGlobalDpsByHero?: ReadonlyMap<string, number>
   /** 装备 gold per-hero addPercent（global-scope）；scoreTeamGold 按 placed 求和并入 gold:global。默认空。 */
   equipmentGoldByHero?: ReadonlyMap<string, number>
+  /** 装备 per-carry crit mult（hero-scope buff_base_crit_*_mult，{chanceMult, damageMult}）；scoreFormation 经 critFactor 注入。默认空。 */
+  equipmentCritByHero?: ReadonlyMap<string, { chanceMult: number; damageMult: number }>
   /**
    * 外部 hero_dps per-carry 贡献（patron/blessing effect_def hero_dps，带 filter）。
    * 由调用方从 effect-definitions.json + active patron/blessing effect_def 经 collectHeroDpsContributions 算后传入；
@@ -287,6 +289,7 @@ function scorePlannerFormation(
     equipmentHealthByHero: options.equipmentHealthByHero,
     equipmentGlobalDpsByHero: options.equipmentGlobalDpsByHero,
     equipmentGoldByHero: options.equipmentGoldByHero,
+    equipmentCritByHero: options.equipmentCritByHero,
     externalHeroDpsContributions: options.externalHeroDpsContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,

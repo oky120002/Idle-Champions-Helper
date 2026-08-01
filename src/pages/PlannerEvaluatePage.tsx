@@ -85,13 +85,13 @@ export function PlannerEvaluatePage() {
   useEffect(() => () => runner.dispose(), [runner])
   // 外部加成（装备 + patron + blessing）单一来源：buildScoringBonusInputs 纯函数装配，与主 planner 页同源。
   // 未导入存档（profileSnapshot=null）→ 各源缺省（无加成，向后兼容）。
-  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
+  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
     () => buildScoringBonusInputs({ profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog }),
     [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog],
   )
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions }),
-    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions],
+    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, globalBuffMultiplier, externalHeroDpsContributions }),
+    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -140,6 +140,7 @@ export function PlannerEvaluatePage() {
           equipmentHealthByHero,
           equipmentGlobalDpsByHero,
           equipmentGoldByHero,
+          equipmentCritByHero,
           globalBuffMultiplier,
           externalHeroDpsContributions,
         },

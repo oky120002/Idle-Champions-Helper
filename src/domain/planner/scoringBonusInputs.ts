@@ -12,6 +12,8 @@
  * - equipmentGlobalDpsByHero / equipmentGoldByHero：per-hero global-scope addPercent（global_dps / gold）；
  *   scoreFormation/scoreTeamGold 按 placed 英雄求和并入 damage:global / gold:global 池（装备英雄绑定，排除 bench）；
  *   未导入存档 → 空 map。
+ * - equipmentCritByHero：per-hero crit mult（hero-scope buff_base_crit_*_mult，chance/damage）；scoreFormation
+ *   取 carry 值经 computeCritFactor 独立通道注入（非池聚合）；未导入存档 → 空 map。
  * - globalBuffMultiplier：patron + blessing 账号级 global_dps add pool 合并（1 + Σ(value)/100）；
  *   effect_def,<id> 引用的 global_dps 经 effectDefTemplates 解引用计入；未导入存档 → 1。
  * - externalHeroDpsContributions：patron/blessing 的 effect_def hero_dps（带 filter，per-carry 条件生效）；
@@ -22,9 +24,9 @@ import { collectHeroDpsContributions } from '../buffs/externalHeroDpsMult'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../buffs/blessingGlobalBuff'
-import { computeEquipmentAdjustmentByHero, computeEquipmentGlobalDpsByHero, computeEquipmentGoldByHero, computeEquipmentHealthByHero } from '../buffs/equipmentMult'
+import { computeEquipmentAdjustmentByHero, computeEquipmentCritByHero, computeEquipmentGlobalDpsByHero, computeEquipmentGoldByHero, computeEquipmentHealthByHero } from '../buffs/equipmentMult'
 import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../buffs/patronPerkGlobalBuff'
-import type { LootCatalogEntry } from '../buffs/equipmentMult'
+import type { EquipmentCritBonus, LootCatalogEntry } from '../buffs/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
 import type { UserProfileSnapshot } from '../user-profile/types'
 
@@ -33,6 +35,7 @@ export interface ScoringBonusInputs {
   equipmentHealthByHero: Map<string, number>
   equipmentGlobalDpsByHero: Map<string, number>
   equipmentGoldByHero: Map<string, number>
+  equipmentCritByHero: Map<string, EquipmentCritBonus>
   globalBuffMultiplier: number
   externalHeroDpsContributions: HeroDpsContribution[]
 }
@@ -51,11 +54,13 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   let equipmentHealthByHero = new Map<string, number>()
   let equipmentGlobalDpsByHero = new Map<string, number>()
   let equipmentGoldByHero = new Map<string, number>()
+  let equipmentCritByHero = new Map<string, EquipmentCritBonus>()
   if (profileSnapshot && lootCatalog.length > 0) {
     equipmentAdjustmentByHero = computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
     equipmentHealthByHero = computeEquipmentHealthByHero(profileSnapshot.ownedHeroes, lootCatalog)
     equipmentGlobalDpsByHero = computeEquipmentGlobalDpsByHero(profileSnapshot.ownedHeroes, lootCatalog)
     equipmentGoldByHero = computeEquipmentGoldByHero(profileSnapshot.ownedHeroes, lootCatalog)
+    equipmentCritByHero = computeEquipmentCritByHero(profileSnapshot.ownedHeroes, lootCatalog)
   }
 
   const effectDefTemplates = new Map(effectDefinitions.map((entry) => [entry.id, entry]))
@@ -80,5 +85,5 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
     externalHeroDpsContributions = collectHeroDpsContributions([...patronEffects, ...blessingEffects], effectDefTemplates)
   }
 
-  return { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, globalBuffMultiplier, externalHeroDpsContributions }
+  return { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, globalBuffMultiplier, externalHeroDpsContributions }
 }
