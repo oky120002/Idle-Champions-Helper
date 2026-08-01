@@ -9,7 +9,8 @@ import type { ResolvedPlannerScenarioModel } from '../plannerModel'
 import type { PlannerCollections, PlannerRecommendation } from '../recommendationTypes'
 
 // === Worker 通信协议（UI ↔ worker 消息） ===
-// init 一次性把大数据（plannerHeroes + plannerScenarios，~17.5M）发进 worker 缓存；
+// init 一次性把大数据（plannerHeroes + plannerScenarios）发进 worker 缓存；
+// 内存对象图 ~17.5M（Decimal/对象开销），序列化载荷 6.6MB；postMessage 走 structuredClone 实测 ~32ms 一次性。
 // 之后 recommend/evaluate 只传小载荷（variant + profileSnapshot + options/placements）。
 // variants 不进 worker——engine 只用 UI 已解析的 selectedVariant（见 resolvePlannerScenario）。
 
