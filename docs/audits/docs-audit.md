@@ -19,7 +19,9 @@
 
 **为何是当轮修**：两处是明确事实错误（ratio vs 原始倍率、global_dps vs hero_dps），非观点或待决设计；保留违反治理硬约束。公式结构（external hero_dps 与 ability hero_dps 池分列乘法）保留——匹配当前代码，且 correctness-audit §2 已登记其 IC 语义偏差作 P1 待协同修，结构变更随彼时一起做避免二次改。
 
-## 3. P1 — README.md 超根文档预算
+## 3. P1 — README.md 超根文档预算（✅ 已收口）
+
+> ✅ **已收口**（2026-08-01）：`README.md` 103→50 行，命中根 ≤60 默认阈值。「常用验证」命令去重（`docs/runbooks/testing.md` 已有同款表格），「数据相关命令」整段下沉 `docs/runbooks/public-data.md`（扩充命令表 + 资源增量复用说明 + private-user-data 备注），README 改留一跳指针。`architecture.md:9` 反向引用的「根本目标」段保留作三队目标唯一来源。下为轮 3 原始发现。
 
 `README.md`（103 行）超根文档「应拆」阈值（治理：根 ≤60 默认 / 61-90 评估 / **91-140 应拆** / >140 必须拆）。可下沉内容：
 
@@ -28,7 +30,7 @@
 
 | 项 | 动作 | ROI | 影响面 | 进度 |
 |----|------|-----|--------|------|
-| README 命令清单下沉 | 数据/验证命令移至 runbooks 或 `docs/commands.md`，README 留指针 | 中（103→~60，根文档命中预算；命令集中一处便于维护） | README.md + runbooks/README.md（或新 commands.md） | **未启动**；须确认 runbooks 不重复 |
+| README 命令清单下沉 | 数据/验证命令移至 runbooks 或 `docs/commands.md`，README 留指针 | 中（103→~60，根文档命中预算；命令集中一处便于维护） | README.md + runbooks/public-data.md | ✅ 已收口（2026-08-01，103→50 行） |
 
 ## 4. P2 — TODO atd_3cb8df390e 陈旧
 
@@ -46,7 +48,7 @@
 ## 6. 轮 3 收口
 
 - **当轮修复**：simulator.md equipment 加成两处漂移（§2，以代码事实修正）。
-- **P1 登记**：README.md 超根预算，命令清单可下沉（§3）。
+- **P1 登记**：README.md 超根预算，命令清单可下沉（§3）——✅ 已收口（2026-08-01，103→50 行）。
 - **P2 登记**：TODO atd_3cb8df390e 陈旧（§4，建议 auto-todo 流程更新）。
 - **验证健康**：§5 体量/退役名/迁移叙事/根级文档核查无问题。
 - **未覆盖**：非 planner 模块 spec + 代码注释 JSDoc，留后续文档 pass。
