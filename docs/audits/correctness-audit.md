@@ -71,4 +71,3 @@ carryDps = baseDps × levelCurve × damagePool × crit × vuln × globalBuff × 
 - **P1 登记**：外部加成池分裂（§2）+ spec/TODO 漂移，均带明确动作与「须协同」约束。
 - **验证安全**：§3 七项核心区域核查无 bug；近期四个机制重构无回归。
 
-轮 1 完成于 commit `fa483aa7`。
