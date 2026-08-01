@@ -72,6 +72,9 @@ describe('buildSpecializationEntries', () => {
     const entries = buildSpecializationEntries(detail)
     expect(entries[0]?.signals[0]?.dimension).toBe('damage')
     expect(entries[0]?.signals[0]?.signal.kind).toBe('heroDpsMultiplier')
+    // spec signal 带 upgradeId（= spec upgrade id），使 owned loot buff_upgrade target spec 能经
+    // applyEquipmentBuffsToProfile 反查 spec base 构造 wrapper（atd_b1e5f3a2c7 方案 b/c）
+    expect(entries[0]?.signals[0]?.signal.upgradeId).toBe('200')
   })
 
   it('【bucket 路由】hero_dps 无目标 → carrySignals；global_dps / monster_with_tag → supportSignals', () => {

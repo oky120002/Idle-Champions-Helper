@@ -60,12 +60,13 @@ repair: rebuild
     - ⏳ taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码；额外触及运行时 placementFit.ts:77-96（tag/stat 限定节点检查）+ plannerNarrative.ts hasTagSignal + 多测试（placementFit.gating/signalSemantics/plannerModel.test）。
     - 处置：删 kind+resolver+resolverDispatch 注册+运行时分支+测试 fixture（adjacency/tag 机制由 heroDpsMultiplier+positionQualifier/tagQualifier 覆盖，改测试用真实 kind）；独立大子任务，需逐项验证 scoring 无引用。
 
-- loot/feat 源 buff_upgrade target 专精的 owned-aware 接入（b/c；a 止血已完成） <!-- auto-todo:id=atd_b1e5f3a2c7 -->
-  - 记录时间: `2026-08-01T23:40:00+08:00`
+- loot/feat 源 buff_upgrade target 专精的 owned-aware 接入（a ✅ + b ✅ + c-loot ✅；剩余 c-feat + vulnerability 扩展） <!-- auto-todo:id=atd_b1e5f3a2c7 -->
+  - 记录时间: `2026-08-01T23:55:00+08:00`
   - 类型: follow-up
   - 位置: `src/domain/abilities/equipmentBuffSignals.ts` + `scripts/data/specialization-catalog.ts`
-  - 备注: 原 P1 overcount（spec catalog 无 sourceBucket 过滤，选专精无条件注入 loot/feat 源 wrapper）已于 2026-08-01 方案 a 止血——specialization-catalog build 按 sourceBucket 过滤移出 loot/legendary/feat 源（与 buildHeroModels 过滤 base profile 同构 e053b759），spec catalog wrapper 100→16（仅留 ability 源），overcount 消除；planner/buffs/abilities 384 测试 + signal-coverage gate + schema 校验全绿。
-    - 剩余 b/c（优化，非 bug）：loot/feat 源 target 专精的 wrapper 现移出 catalog「没算」（owned 玩家选对应专精 + 装备时不生效）。精确接入需：(b) spec catalog signal 带 upgradeId（当前无，runtime 反查不到 spec base）；(c) applyEquipmentBuffs 扩展支持 spec target（engine 顺序已保证 spec 注入在 equipment 前）。当前「宁可不准不可错」。
-    - 原分析订正：ability 源（sourceBucket='ability'）plain wrapper **不**被 effect-helpers.ts:753 progression-exclusion 排除（isAbilitySource 只含 upgrade/upgrade-effect-key），故保留进 catalog 正确（ADR 0017 设计）；Minsc(7) 实测 upgrade 源 +200% 被排除（IC snapshot 已含）、loot +25~275 / feat +80 移出、ability 源 0。
+  - 备注: a 止血 overcount（78820cfb，wrapper 100→16）；b 给 spec catalog signal 加 upgradeId（collectSpecializationEffectEntries 路径，125 direct signal）；c-loot 自动——owned loot buff_upgrade target spec（heroDps/crit/health/gold）经 collectEquipmentBuffsByHero + applyEquipmentBuffsToProfile 反查 spec base 接入（engine 顺序 spec→equipment 保证 spec signal 先注入；反查逻辑单测覆盖）。
+    - 剩余：①feat 源 target spec 无通道（featCatalog 按 DIMENSION_BY_KIND 过滤不收 buff_upgrade wrapper），需 feat wrapper 通道（更大工程）；②vulnerability/damageReduction/attackSpeed/cooldown spec 的 loot wrapper 不接入（SUPPORTED_BUFF_TARGET_KINDS 只含 DPS/gold/crit/health），需扩展 SUPPORTED。Minsc spec 109 vulnerability +275 即属此类（仍「没算」）。
+    - 验证：384 planner/buffs/abilities + 11 specialization-catalog 测试全绿；signal-coverage gate + schema 校验通过。
+    - 原分析订正：ability 源 sourceBucket='ability' 不被 progression-exclusion 排除（isAbilitySource 只含 upgrade/upgrade-effect-key），保留进 catalog 正确（ADR 0017）；Minsc(7) 实测 upgrade 源 +200% 被排除（IC snapshot 已含）、loot/feat 源移出。
 
 <!-- auto-todo:end -->

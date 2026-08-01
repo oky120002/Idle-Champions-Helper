@@ -92,6 +92,9 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)
     const signal: HeroAbilitySignal = {
       ...semanticSignal,
+      // spec signal 带 upgradeId（= spec upgrade id）：owned loot buff_upgrade target spec 经
+      // applyEquipmentBuffsToProfile 反查 spec base 构造 wrapper（atd_b1e5f3a2c7 方案 b/c）。
+      upgradeId,
       requiredLevel: semanticSignal.requiredLevel ?? entry.requiredLevel,
     }
     const dimension = DIMENSION_BY_KIND[signal.kind]
