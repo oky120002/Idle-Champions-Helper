@@ -61,6 +61,16 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 影响：每英雄只丢 1 条、且各有 34-44 条替代 DPS 信号，**单英雄低估幅度小**；但是一个真实类别——复杂位置/条件 DPS buff 被静默丢弃，无告警。归类 P1-low（量小但真，需决策是否扩展限定符词表）。
 
+**调研结论（A4，2026-08-01）→ 登记不修**。逐类对照限定符解析基建（`heroTargetingRelation.ts` 的 `normalizeTargetRelation` 只产静态 `HeroPositionRelation` 或 `any`；`placementSlotRelation.ts` 的 `matchesSlotRelation` 只评估静态列差/邻接）：
+
+- `tallest_column` / `slot_if_expr`：依赖**当前阵型填充状态**（最高列随阵型变；slot_if_expr 是槽位条件表达式），非静态关系，需在评分期加每阵型动态评估器——超出「扩位置词表」范畴。
+- `snowflake`：**阵型形状**条件（是否雪花布局），属形状匹配另一维度，非位置关系。
+- `active_campaign`：**战役**条件，需 scenario.campaign 匹配，另一维度。
+- `middle_columns`：几何上最接近，但「中间列」定义依赖布局宽度、无现成枚举，加它要动 `HeroPositionRelation` + `matchesSlotRelation` + 映射 4 处，救 1 条信号不抵。
+- `other`：语义清晰（raw 实测 =「全员除自己」，如 Nova `increase_health_by_source_percent`「提升其他所有勇士」），= relation `any` + excludeSelf；但 excludeSelf 需从 target 派生（非纯词表项），且只救回 ~1 条 hero_dps。
+
+5/6 超出位置关系词表扩展范畴、需新基建；`other` 可行但 ROI 低（1 条信号，34-44 条替代）。planner 是推荐引擎（非精确模拟），丢 1/N DPS 信号对排序影响可忽略，且缺口已在 unsupported 有 note 追踪（非 C1 式静默零分）。**全类登记不修**；若未来生存/其它维度也受益于 `other`=excludeSelf 语义（ broader recovery），可单点 reopen。
+
 ### 3.3 `favored_foe`（14 条）— 重新定性：tag-setter，非伤害缺口
 
 初判曾怀疑「偏好敌人伤害未建模」，逐证后推翻。事实链：
@@ -125,7 +135,7 @@ memory 记 planner 计算器观测值比理论大 ~10^31，大头来自**外部�
 |---|---|---|---|---|
 | ~~`set_base_crit_chance` base crit 丢失~~ | ✅ 已收口：critFactor 接 per-hero base（build 提取 `set_base_crit_chance` → `hero.baseCritChancePercent`），采「直接读 base」方案（非 SET→ADD 转换） | 中-高（10 英雄 20% base crit 生效，carry 排序修正） | critFactor.ts + buildHeroModels + effect-helpers + abilityModel | ✅ 已决：直接读 base |
 | enemy-type-conditional 伤害 tag 保留（favored_foe 暴露的深层问题） | 单独审计 effect_def 模板解析路径：`monster_with_tag_more_damage` 经 effect_def 模板解析后 tag 去向（剥成无条件 heroDps = 过度应用，或静默丢弃 = 低估） | 待定（方向都需先查清） | effect-definition-templates / effectDefinitionDps | 须先查清偏差方向再决定是否修 |
-| `hero_dps` 位置/条件限定符 6 类 | 扩展限定符词表：tallest_column/middle_columns/snowflake/slot_if_expr/active_campaign/other | 低（每英雄仅 1 条，34-44 条替代） | signalSemantics 限定符解析 | 6 类限定符是否常见到值得扩 |
+| ✅ `hero_dps` 位置/条件限定符 6 类（A4，2026-08-01 登记不修） | 调研结论见 §3.2：5/6（tallest_column/middle_columns/snowflake/slot_if_expr/active_campaign）需位置关系模型之外的新基建（动态阵型评估/形状匹配/战役匹配），`other`=excludeSelf+any 可行但 ROI 低。全类登记不修；planner 为推荐引擎丢 1/N 信号影响可忽略，缺口已 unsupported 有 note 追踪 |
 
 ### P2（顺手）
 
