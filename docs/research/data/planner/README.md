@@ -15,3 +15,4 @@
 - BUD 实测校准：`bud-calibration.md`
 - 加成升级包装效果核实：`buff-upgrade-wrappers.md`
 - 推荐信号覆盖率：`signal-coverage.md`
+- 加成来源全盘点与叠加正确性（A1）：`damage-bonus-sources.md`

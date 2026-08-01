@@ -88,6 +88,8 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 判定：**机制未缺失**（叠层乘算已建模），缺的是「每英雄每机制的合理默认 stack 值」。用户已知可手调（UI 按「当前冒险最高区域」设）。归类 P1-low（体验/默认值缺口，非正确性缺口）。
 
+✅ **维持现状登记不修**（A5，2026-08-01 用户决策）：默认 1000 + UI 按冒险区域手调；per-hero 默认值作为未来特性登记（`docs/specs/product/future-features.md`），优先级待评。
+
 ## 4. 逐 kind 语义判定表（头部 + 代表性长尾）
 
 判定栏：A=无 BUD 影响（正确未建模）/ B=真缺口 / C=间接基础设施 / D=英雄专属命名。
@@ -98,7 +100,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 | `buff_ultimate` | 280 | A | +大招伤害% | 大招不进 BUD；全部来自装备槽 | 不动 |
 | `set_ultimate_attack` | 163 | A | 解锁/选择大招 | 纯元数据（选哪个大招） | 不动 |
 | `do_nothing` | 55 | A | 占位（desc=空） | 无效果 | **P2：进忽略清单降噪** |
-| `pre_stack`/`pre_stack_amount` | 84 | B | 叠层初始值 | §3.4 | P1-low |
+| `pre_stack`/`pre_stack_amount` | 84 | B | 叠层初始值 | §3.4 | ✅ 维持现状（A5） |
 | `increase_health_by_source_percent` | 31 | A | 按源英雄最大生命%加血 | survival 约束 | P2 记账 |
 | `change_base_attack` | 30 | A | 换基本攻击动作 | baseDamage 不变；AoE 改命中目标数非 BUD | 不动 |
 | `stacks_data_binder_safe` | 24 | C | 绑定命名叠层变量 | plumbing；DPS 由引用它的信号承载 | 不动 |
@@ -134,7 +136,7 @@ memory 记 planner 计算器观测值比理论大 ~10^31，大头来自**外部�
 | 项 | 动作 | ROI | 影响面 | 决策点 |
 |---|---|---|---|---|
 | ~~`set_base_crit_chance` base crit 丢失~~ | ✅ 已收口：critFactor 接 per-hero base（build 提取 `set_base_crit_chance` → `hero.baseCritChancePercent`），采「直接读 base」方案（非 SET→ADD 转换） | 中-高（10 英雄 20% base crit 生效，carry 排序修正） | critFactor.ts + buildHeroModels + effect-helpers + abilityModel | ✅ 已决：直接读 base |
-| enemy-type-conditional 伤害 tag 保留（favored_foe 暴露的深层问题） | 单独审计 effect_def 模板解析路径：`monster_with_tag_more_damage` 经 effect_def 模板解析后 tag 去向（剥成无条件 heroDps = 过度应用，或静默丢弃 = 低估） | 待定（方向都需先查清） | effect-definition-templates / effectDefinitionDps | 须先查清偏差方向再决定是否修 |
+| ✅ enemy-type-conditional 伤害 tag 保留（A3，2026-08-01 并入 A1 劣后） | 用户决策：种族/年龄/性别/小队等条件攻击加成劣后——主体加成正确性收敛后再做；当前 effect_def 带 filter 未解析已保守丢弃（`externalHeroDpsMult.ts:50`，宁可不算不错算）。机制全貌调研见 `docs/research/data/planner/damage-bonus-sources.md` §5 |
 | ✅ `hero_dps` 位置/条件限定符 6 类（A4，2026-08-01 登记不修） | 调研结论见 §3.2：5/6（tallest_column/middle_columns/snowflake/slot_if_expr/active_campaign）需位置关系模型之外的新基建（动态阵型评估/形状匹配/战役匹配），`other`=excludeSelf+any 可行但 ROI 低。全类登记不修；planner 为推荐引擎丢 1/N 信号影响可忽略，缺口已 unsupported 有 note 追踪 |
 
 ### P2（顺手）

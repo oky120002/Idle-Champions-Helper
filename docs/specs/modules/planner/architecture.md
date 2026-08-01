@@ -21,6 +21,17 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 
 计算器不管调用方登没登录，只看入参 `globalBuffMultiplier` 是否非 undefined：传了算、没传默认 1（`steadyStateScoring.ts` scoreFormation 内 `?? 1`）。是否传由调用方决定（UI 开关 / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile 的 blessing/favor**——blessing/favor 已由 `userProfileNormalizer` 保留进 profile（`blessings` / `favor` 字段），按约束③计算器不直接读，由适配层聚合成 `globalBuffMultiplier` 传入（生产侧接入 phased；oracle 度量回路已建，见 `damageReferenceVerification`）。
 
+### 加成建模正确性原则
+
+planner 对伤害加成的建模遵循以下硬约束（用户决策，2026-08-01）：
+
+1. **精确优先**：每个已建模的加成来源必须按 IC 真实叠加语义算对——同 effect key（如 `global_dps_multiplier_mult` / `hero_dps_multiplier_mult`）的所有来源（技能 / 装备 / patron / blessing…）加法叠加，不独立相乘。
+2. **不接受负负得正**：一个高估 bug 与一个低估缺口互相抵消、让数值「看起来接近」不可接受——修 bug 后即使总偏差变大（暴露真实缺口），也优于错误抵消。
+3. **宁可不准，不可错**：未建模的来源明确标注「没算」（不准确，可接受）；错误建模（如把条件加成剥成无条件 = 过度生效）不可接受。带未解析条件的 effect 一律保守丢弃，不臆断。
+4. **劣后分类**：条件性攻击加成（种族 / 年龄 / 性别 / 小队等）属锦上添花，待主体加成正确性收敛后再做。
+
+背景调研与修复路径：`docs/research/data/planner/damage-bonus-sources.md`（A1）。
+
 ### Hermetic 边界（审计结论）
 
 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
