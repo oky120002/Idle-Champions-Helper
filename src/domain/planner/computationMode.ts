@@ -19,12 +19,13 @@ export const MODE_FRACTION: Record<ComputationMode, number> = {
 }
 
 /**
- * 各优化目标参与复合排序的维度。
- * - carry-dps：carryDps = baseDps × damagePool × crit × vulnerability × globalBuff，故取这四维。
+ * 各优化目标参与复合排序（英雄 gainProfile）的维度。
+ * - carry-dps：英雄 ability 驱动的 damage/crit/vulnerability 三维（外部 patron/blessing/装备加成非英雄
+ *   gainProfile，由 globalBuffMultiplier/equipmentAdjustmentByHero 入参注入，A1 同 key 加法合并，不在此）。
  * - team-gold：只看 gold。
  */
 export const OBJECTIVE_DIMENSIONS: Record<ScoringMode, HeroAbilityDimension[]> = {
-  'carry-dps': ['damage', 'crit', 'vulnerability', 'global-buff'],
+  'carry-dps': ['damage', 'crit', 'vulnerability'],
   'team-gold': ['gold'],
 }
 

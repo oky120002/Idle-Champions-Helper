@@ -50,23 +50,16 @@ repair: rebuild
     - 当前死码（?? 1 默认）已活，非阻塞；近似后果（支持位 loot 未调整）未在 docs/research/data/planner/equipment-and-abilities.md 显式记录
     - 处置：待 owned 装备精化时再评估是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）；当前降低优先级
 
-- global-buffs.json 死产物（build 生产、无运行时消费，删否待决） <!-- auto-todo:id=atd_7b9e1f4c2a -->
-  - 记录时间: `2026-08-01T16:05:00+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/build-models.ts:128`
-  - 备注: D2 审计发现 global-buffs.json（`{buffsByPatron}`，从 patron-perk signals 派生）只被 build-models.ts:128 写出；src/scripts/tests 全量扫描无任何运行时 fetch（仅 recommendationEngine.ts / steadyStateScoring.ts 2 条注释引用「从 global-buffs.json 经 computeGlobalBuffMultiplier 解析」，已在 D2 修正为实际来源）。运行时全局加成走 patron-perks.json + blessings → computeActualPatronPerkGlobalBuff / computeActualBlessingGlobalBuff（combineGlobalBuffMultipliers 合成）。architecture.md 仍标其「consumed（已落盘）」失效。
-    - 关联：[[A1 外部加成池分裂]]——global-buffs.json 是被 runtime 重算路径取代的预算产物，删除须与 A1 大工程（补全未建模源时重整 globalBuff 通道）协同
-    - 处置：删 global-buffs.json + build-models.ts 写出 + architecture.md 标注；破坏性 + 跨集群，非 D2 单独删
+- global-buffs.json 死产物 ✅ 已收口（2026-08-01，A1 Phase A Commit 2）：删 global-buffs.json + build-models.ts 写出 + 死管线 patron-perk-signals.ts(含 computeGlobalBuffMultiplier) + architecture.md 标注；运行时全局加成走 patron-perks.json + blessings → computeActualPatronPerkGlobalBuff/computeActualBlessingGlobalBuff。 <!-- auto-todo:id=atd_7b9e1f4c2a resolved -->
 
-- 4 个 HeroAbilityKind 死代码（定义但零产出，可清理） <!-- auto-todo:id=atd_5ea037c4a6 -->
+- adjacentBuff / taggedChampionBuff 死代码 kind 待删（patronPerkMult/heroGoldMultiplier 已收口） <!-- auto-todo:id=atd_5ea037c4a6 -->
   - 记录时间: `2026-08-01T18:02:25+08:00`
   - 类型: follow-up
-  - 位置: `src/domain/abilities/abilityModel.ts`
-  - 备注: 加成机制全量调研（docs/research/data/planner/damage-mechanic-inventory.md §5B）发现 4 个 HeroAbilityKind 在 DIMENSION_BY_KIND/POOL_SCOPE_BY_KIND 定义但游戏数据零产出，对应 resolver 是死代码
-    - patronPerkMult：patron 加成走 patronPerkGlobalBuff.ts 独立通道，此 kind 零产出（patron-perk-signals.ts 产出占位 n）
-    - heroGoldMultiplier：goldResolver 无 hero_gold_* effect 映射，零产出
-    - adjacentBuff：游戏数据 0 个 adjacent_* 前缀 effect，adjacentResolver 死代码
-    - taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码
-    - 处置：A1 加成重整后确认无消费方再删 kind+resolver+DIMENSION/POOL_SCOPE 条目，须先验证 scoring 无引用
+  - 位置: `src/domain/abilities/abilityModel.ts` + `scripts/data/effect-resolvers/{adjacentResolver,tagResolver}.ts`
+  - 备注: 加成机制全量调研（docs/research/data/planner/damage-mechanic-inventory.md §5B）发现 4 个 HeroAbilityKind 在 DIMENSION_BY_KIND/POOL_SCOPE_BY_KIND 定义但游戏数据零产出。
+    - ✅ patronPerkMult + heroGoldMultiplier 已删（A1 Phase A Commit 2，2026-08-01）：连带删 'global-buff' dimension + computationMode OBJECTIVE_DIMENSIONS 条目 + PlannerBreakdown 标签。
+    - ⏳ adjacentBuff：0 个 adjacent_* 前缀 effect，adjacentResolver 死代码；额外触及运行时 placementSlotRelation.ts:171（`signal.kind === 'adjacentBuff'` 分支）+ plannerNarrative.ts hasAdjacentSignal + 多测试 fixture（steadyStateScoring/placementFit.*/recommendationEngine/plannerModel/plannerNarrative.test）。
+    - ⏳ taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码；额外触及运行时 placementFit.ts:77-96（tag/stat 限定节点检查）+ plannerNarrative.ts hasTagSignal + 多测试（placementFit.gating/signalSemantics/plannerModel.test）。
+    - 处置：删 kind+resolver+resolverDispatch 注册+运行时分支+测试 fixture（adjacency/tag 机制由 heroDpsMultiplier+positionQualifier/tagQualifier 覆盖，改测试用真实 kind）；独立大子任务，需逐项验证 scoring 无引用。
 
 <!-- auto-todo:end -->

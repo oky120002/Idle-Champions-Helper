@@ -61,7 +61,6 @@ planner 对伤害加成的建模遵循以下硬约束（用户决策，2026-08-0
 |---|---|
 | `variants` / `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
 | signal 解锁等级 `required_level` | consumed（已烘进 `HeroAbilitySignal.requiredLevel`，消费侧 evaluatePlacementFit 按 supportLevel 过滤） |
-| `global-buffs.json`（patron perk 定义） | consumed（已落盘） |
 | loot-catalog / 专长定义 / 怪物·BUD 曲线 | consumed（组件在） |
 
 **B. 动态状态（per-call 入参 PlannerEvaluateInput）**

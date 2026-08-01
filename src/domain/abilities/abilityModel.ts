@@ -11,7 +11,6 @@ export type HeroAbilityKind =
   | 'adjacentBuff'
   | 'taggedChampionBuff'
   | 'globalGoldMultiplier'
-  | 'heroGoldMultiplier'
   | 'globalCritChance'
   | 'heroCritChance'
   | 'globalCritDamage'
@@ -22,7 +21,6 @@ export type HeroAbilityKind =
   | 'enemyVulnerability'
   | 'attackSpeedMult'
   | 'cooldownReduction'
-  | 'patronPerkMult'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -204,7 +202,6 @@ export type HeroAbilityDimension =
   | 'cooldown'
   | 'ultimate'
   | 'utility'
-  | 'global-buff'
 
 export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = {
   globalDpsMultiplier: 'damage',
@@ -212,7 +209,6 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   adjacentBuff: 'damage',
   taggedChampionBuff: 'damage',
   globalGoldMultiplier: 'gold',
-  heroGoldMultiplier: 'gold',
   globalCritChance: 'crit',
   heroCritChance: 'crit',
   globalCritDamage: 'crit',
@@ -223,7 +219,6 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   enemyVulnerability: 'vulnerability',
   attackSpeedMult: 'speed',
   cooldownReduction: 'cooldown',
-  patronPerkMult: 'global-buff',
 }
 
 /**
@@ -240,7 +235,6 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   adjacentBuff: 'hero',
   taggedChampionBuff: 'hero',
   globalGoldMultiplier: 'global',
-  heroGoldMultiplier: 'hero',
   globalCritChance: 'global',
   heroCritChance: 'hero',
   globalCritDamage: 'global',
@@ -251,7 +245,6 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   enemyVulnerability: 'global',
   attackSpeedMult: 'hero',
   cooldownReduction: 'global',
-  patronPerkMult: 'global',
 }
 
 /**

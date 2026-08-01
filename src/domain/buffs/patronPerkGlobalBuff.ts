@@ -7,7 +7,7 @@
  * 只接 `global_dps_multiplier_mult`（无条件全局 DPS）：裸 `,$replace` 与 `effect_def,<id>` 引用
  * （后者解引用 effect-definitions.json template 筛 global_dps kind；hero_dps kind 不计入 globalBuff，
  * 由 externalHeroDpsMult per-carry 处理）。value = perLevel × actualLevel（$replace）或固定值；
- * globalBuff = 1 + Σ(value)/100（add 语义，与 patron-perk-signals.ts 的 computeGlobalBuffMultiplier 同构）。
+ * globalBuff = 1 + Σ(value)/100（add 语义，与 blessingGlobalBuff 同构——两者同属 global_dps add pool）。
  * 未购买（level=0/缺）或非 global_dps effect → 不计。
  * 未导入存档（actualLevels=null/空）→ 1（无加成，向后兼容）。
  *

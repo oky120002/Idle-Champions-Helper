@@ -90,7 +90,7 @@ crit（A2）、vulnerability（已修累乘）、baseDamage / levelCurve：口�
 - 效果：已建模来源变精确；整体偏差由「负负得正的接近」转为「纯低估」（未建模缺口显现）——明斯克参照偏差 l1 含加成 -32.7→-33.2（见 ADR 0015 变更）。
 - 符合核心原则：已建模的全对，未建模的明确标注。
 - 连带已处置：golden（ADR 0015）方向断言 + formation-buff CI 门控均仍通过（偏差记录基线随之更新，无需重定位）；simulator.md 公式 + steadyStateScoring.test.ts + breakdown.factors 契约已同步。
-- D2 协同：删死产物 global-buffs.json（TODO `atd_7b9e1f4c2a`，Phase A 收口一并处置）。
+- D2 协同：✅ 已删死产物 global-buffs.json + 死管线 patron-perk-signals.ts（A1 Phase A Commit 2，2026-08-01；TODO `atd_7b9e1f4c2a` 收口）。
 
 **选项 B：A + 同步补全未建模源**
 - 在 A 基础上逐类补建模（vulnerability 条件 / modron / feat / legendary…）。

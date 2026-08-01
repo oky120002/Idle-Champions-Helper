@@ -17,7 +17,7 @@ function formatFactor(value: number): string {
 const SIGNAL_SHOW_LIMIT = 3
 
 /**
- * HeroAbilityKind → 友好标签（双语）。Record 强制 17 种全覆盖，
+ * HeroAbilityKind → 友好标签（双语）。Record 强制全覆盖，
  * 新增 kind 时 TS 报错提醒补标签，避免技术名直出。
  */
 const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
@@ -26,7 +26,6 @@ const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
   adjacentBuff: { zh: '邻位加成', en: 'Adjacent buff' },
   taggedChampionBuff: { zh: '标签加成', en: 'Tagged buff' },
   globalGoldMultiplier: { zh: '全局金币', en: 'Global gold' },
-  heroGoldMultiplier: { zh: '英雄金币', en: 'Hero gold' },
   globalCritChance: { zh: '全局暴击率', en: 'Global crit chance' },
   heroCritChance: { zh: '英雄暴击率', en: 'Hero crit chance' },
   globalCritDamage: { zh: '全局暴击伤', en: 'Global crit dmg' },
@@ -37,7 +36,6 @@ const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
   enemyVulnerability: { zh: '易伤', en: 'Vulnerability' },
   attackSpeedMult: { zh: '攻速', en: 'Attack speed' },
   cooldownReduction: { zh: '冷却缩减', en: 'Cooldown' },
-  patronPerkMult: { zh: '保卫者特权', en: 'Patron perk' },
 }
 
 interface PlannerBreakdownProps {

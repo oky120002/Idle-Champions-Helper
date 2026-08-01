@@ -22,7 +22,6 @@ describe('HeroAbilityKind 维度与 pool 归属映射', () => {
       'adjacentBuff',
       'taggedChampionBuff',
       'globalGoldMultiplier',
-      'heroGoldMultiplier',
       'globalCritChance',
       'heroCritChance',
       'globalCritDamage',
@@ -37,9 +36,7 @@ describe('HeroAbilityKind 维度与 pool 归属映射', () => {
 
   it('gold kind 映射到 gold 维度', () => {
     const globalDim: HeroAbilityDimension = DIMENSION_BY_KIND.globalGoldMultiplier
-    const heroDim: HeroAbilityDimension = DIMENSION_BY_KIND.heroGoldMultiplier
     expect(globalDim).toBe('gold')
-    expect(heroDim).toBe('gold')
   })
 
   it('crit kind 映射到 crit 维度（chance/damage 各 global/hero）', () => {
@@ -53,11 +50,9 @@ describe('HeroAbilityKind 维度与 pool 归属映射', () => {
     expect(POOL_SCOPE_BY_KIND.heroCritDamage).toBe('hero')
   })
 
-  it('gold pool scope：global/hero 区分', () => {
+  it('gold pool scope：global 区分', () => {
     const globalScope: HeroAbilityPoolScope = POOL_SCOPE_BY_KIND.globalGoldMultiplier
-    const heroScope: HeroAbilityPoolScope = POOL_SCOPE_BY_KIND.heroGoldMultiplier
     expect(globalScope).toBe('global')
-    expect(heroScope).toBe('hero')
   })
 
   it('damage kind 仍映射 damage 维度（回归）', () => {

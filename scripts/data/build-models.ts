@@ -2,12 +2,11 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { asArray, asRecord, readJson, readJsonIfExists, writeJson } from './io-utils.ts'
 import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './resource-sync-policy.ts'
-import { parsePatronPerkSignals } from './patron-perk-signals.ts'
 import { buildOfficialHeroModel } from './buildHeroModels.ts'
 import { buildOfficialScenarioModel } from './buildScenarioModels.ts'
 import { normalizeSemanticOverrides } from './buildSemanticOverrides.ts'
 import { buildSpecializationEntries, type SpecializationEntry } from './specialization-catalog.ts'
-import type { HeroAbilityProfile, HeroAbilitySignal } from '../../src/domain/abilities/abilityModel'
+import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'
@@ -111,24 +110,6 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     updatedAt,
   })
 
-  // patron-perk 全局加成 → global-buffs.json（per-patron patronPerkMult signals）
-  const patronPerksRaw = await readJson(path.join(versionDir, 'patron-perks.json')).catch(() => ({ perks: [] }))
-  const patronPerksRecord = asRecord(patronPerksRaw) ?? {}
-  const patronPerkItems = asArray(patronPerksRecord.perks) as Array<Record<string, unknown>>
-  const patronPerkSignals = parsePatronPerkSignals(patronPerkItems)
-  const globalBuffsByPatron: Record<string, HeroAbilitySignal[]> = {}
-  for (const entry of patronPerkSignals) {
-    const list = globalBuffsByPatron[entry.patronId]
-    if (list) {
-      list.push(entry.signal)
-    } else {
-      globalBuffsByPatron[entry.patronId] = [entry.signal]
-    }
-  }
-  await writeJson(path.join(versionDir, 'global-buffs.json'), {
-    buffsByPatron: globalBuffsByPatron,
-    updatedAt,
-  })
   await writeJson(
     path.join(versionDir, 'semantic-overrides.json'),
     normalizeSemanticOverrides(semanticOverrides, updatedAt),
