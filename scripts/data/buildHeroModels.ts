@@ -54,7 +54,12 @@ export function buildOfficialHeroModel(
       const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)
       // 等级解锁门控：普通 entry 从 EffectEntry.requiredLevel 补；preset/derived signal 已带
       // （preset spread targetSignal，target 的 requiredLevel 经 resolveEntrySignal 写入）。
-      const signal = { ...semanticSignal, requiredLevel: semanticSignal.requiredLevel ?? entry.requiredLevel }
+      // upgradeId 透传源 upgrade id（runtime 装备 buff_upgrade 按 target upgradeId 反查 direct base）。
+      const signal = {
+        ...semanticSignal,
+        requiredLevel: semanticSignal.requiredLevel ?? entry.requiredLevel,
+        upgradeId: entry.upgradeId || null,
+      }
       if (parsed.bucket === 'carrySignals') {
         carrySignals.push(signal)
       } else {

@@ -20,7 +20,8 @@ interface HeroSignal {
   positionQualifier?: unknown
   targetQualifier?: unknown
   monsterTags?: string[] | undefined
-  bonusScaleOfSignal?: { rawEffect: string } | undefined
+  bonusScaleOfSignal?: { rawEffect: string; upgradeId?: string | null } | undefined
+  upgradeId?: string | null | undefined
 }
 
 interface HeroAbilityItem {
@@ -610,6 +611,39 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
       .map((signal) => signal.rawEffect)
       .filter((rawEffect) => rawEffect !== 'effect_def'),
   ).toEqual(['pre_stack_amount', 'pre_stack_amount', 'pre_stack_amount'])
+})
+
+it('signal 透传 upgradeId（runtime 装备 buff_upgrade 反查 base 的基建）', async () => {
+  // upgradeId 烘进每个 signal：direct signal（bonusScaleOfSignal==null）带其源 upgrade id；
+  // wrapper signal（bonusScaleOfSignal!=null）带 wrapper 源 upgrade id（非 target）。
+  // runtime 装备 buff_upgrade 注入按 target upgradeId 反查 direct base signal，构建 wrapper 挂上去。
+  const { heroAbilities } = await setupBuildModelsOutputs()
+  const first = heroAbilities.items[0]
+  const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
+
+  // direct signal 带其源 upgrade id（upgrade-base-plain → hero_dps_multiplier_mult,80）。
+  const plainBase = allSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,80')
+  expect(plainBase?.upgradeId).toBe('upgrade-base-plain')
+  expect(plainBase?.bonusScaleOfSignal).toBeUndefined()
+
+  // wrapper signal 带 wrapper 源 upgrade id（upgrade-buff-tagged），非 target（upgrade-base-tagged）。
+  const taggedBuff = allSignals.find(
+    (signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil',
+  )
+  expect(taggedBuff?.upgradeId).toBe('upgrade-buff-tagged')
+  expect(taggedBuff?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,100')
+
+  // 按 target upgradeId 反查 direct base signal（runtime 注入前提）：upgrade-base-tagged
+  // → hero_dps_multiplier_mult,100；wrapper 自身因 bonusScaleOfSignal!=null 不被命中。
+  const baseForTagged = allSignals.filter(
+    (signal) => signal.upgradeId === 'upgrade-base-tagged' && signal.bonusScaleOfSignal == null,
+  )
+  expect(baseForTagged.some((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,100')).toBe(true)
+  expect(
+    baseForTagged.some(
+      (signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil',
+    ),
+  ).toBe(false)
 })
 
 it('buildModels 产出 scenarios（阵型布局 + slot_escort 锁槽 + 警告）', async () => {

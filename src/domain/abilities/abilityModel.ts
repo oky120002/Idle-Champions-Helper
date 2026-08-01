@@ -119,6 +119,13 @@ export interface HeroAbilitySignal {
    * null/undefined = 无等级限制（向后兼容）；消费侧 evaluatePlacementFit 按 supportLevel 过滤。
    */
   requiredLevel?: number | null
+  /**
+   * 源 upgrade id（champion-details upgrades[].id）：产生该 signal 的 upgrade。
+   * direct signal（bonusScaleOfSignal==null）= 其源 upgrade；wrapper signal = wrapper 自身源 upgrade（非 target）。
+   * null/undefined = 非 upgrade 源（loot/feat/legendary）或无 id upgrade。runtime 装备 buff_upgrade 注入按
+   * target upgradeId 反查 direct base signal，构建 wrapper 挂上去（Phase B 方向 A 阶段 2）。
+   */
+  upgradeId?: string | null
 }
 
 export interface HeroUnsupportedSignal {
