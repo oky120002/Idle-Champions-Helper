@@ -58,4 +58,15 @@ repair: rebuild
     - 关联：[[A1 外部加成池分裂]]——global-buffs.json 是被 runtime 重算路径取代的预算产物，删除须与 A1 大工程（补全未建模源时重整 globalBuff 通道）协同
     - 处置：删 global-buffs.json + build-models.ts 写出 + architecture.md 标注；破坏性 + 跨集群，非 D2 单独删
 
+- 4 个 HeroAbilityKind 死代码（定义但零产出，可清理） <!-- auto-todo:id=atd_5ea037c4a6 -->
+  - 记录时间: `2026-08-01T18:02:25+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/abilityModel.ts`
+  - 备注: 加成机制全量调研（docs/research/data/planner/damage-mechanic-inventory.md §5B）发现 4 个 HeroAbilityKind 在 DIMENSION_BY_KIND/POOL_SCOPE_BY_KIND 定义但游戏数据零产出，对应 resolver 是死代码
+    - patronPerkMult：patron 加成走 patronPerkGlobalBuff.ts 独立通道，此 kind 零产出（patron-perk-signals.ts 产出占位 n）
+    - heroGoldMultiplier：goldResolver 无 hero_gold_* effect 映射，零产出
+    - adjacentBuff：游戏数据 0 个 adjacent_* 前缀 effect，adjacentResolver 死代码
+    - taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码
+    - 处置：A1 加成重整后确认无消费方再删 kind+resolver+DIMENSION/POOL_SCOPE 条目，须先验证 scoring 无引用
+
 <!-- auto-todo:end -->
