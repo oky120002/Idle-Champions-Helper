@@ -3,7 +3,7 @@ import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
-import { APP_DATABASE_NAME } from '../localDatabase'
+import { APP_DATABASE_NAME, APP_STORE_NAMES, openAppDatabase } from '../localDatabase'
 import {
   deleteUserProfileData,
   readCredentialVault,
@@ -28,6 +28,21 @@ async function resetDatabase(): Promise<void> {
       resolve()
     }
   })
+}
+
+/** 直接写原始 snapshot（绕过 save 的类型保证），用于腐蚀测试。 */
+async function writeRawSnapshot(value: unknown): Promise<void> {
+  const database = await openAppDatabase()
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const transaction = database.transaction(APP_STORE_NAMES.userProfileSnapshots, 'readwrite')
+      transaction.objectStore(APP_STORE_NAMES.userProfileSnapshots).put(value, 'current')
+      transaction.oncomplete = () => resolve()
+      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
+    })
+  } finally {
+    database.close()
+  }
 }
 
 beforeEach(async () => {
@@ -75,5 +90,26 @@ describe('user profile store', () => {
 
     const vault = await readCredentialVault()
     expect(vault).toEqual({ userId: '12345678', hash: 'abc123' })
+  })
+})
+
+describe('stored-record 腐蚀校验（C1，#4 NaN 静默零分根因）', () => {
+  it('OwnedHero.level=NaN → 读出拒绝（不再裸 cast 进 scoreFormation 致零分）', async () => {
+    await writeRawSnapshot({
+      schemaVersion: 1,
+      ownedHeroes: [{ heroId: '1', level: Number.NaN, isOwned: true }],
+      updatedAt: '2026-05-03T00:00:00.000Z',
+    })
+
+    await expect(readUserProfileSnapshot()).rejects.toThrow(/存储数据校验失败.*level/)
+  })
+
+  it('缺 schemaVersion → 读出拒绝（跨版本/腐蚀检出，不再静默按旧 shape 消费）', async () => {
+    await writeRawSnapshot({
+      ownedHeroes: [],
+      updatedAt: '2026-05-03T00:00:00.000Z',
+    })
+
+    await expect(readUserProfileSnapshot()).rejects.toThrow(/存储数据校验失败.*schemaVersion/)
   })
 })

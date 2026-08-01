@@ -56,6 +56,21 @@ async function resetDatabase(): Promise<void> {
   })
 }
 
+/** 直接写原始记录（绕过 save 函数的类型保证），用于腐蚀测试。 */
+async function writeRawRecord(storeName: string, key: string, value: unknown): Promise<void> {
+  const database = await openAppDatabase()
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const transaction = database.transaction(storeName, 'readwrite')
+      transaction.objectStore(storeName).put(value, key)
+      transaction.oncomplete = () => resolve()
+      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
+    })
+  } finally {
+    database.close()
+  }
+}
+
 beforeEach(async () => {
   await resetDatabase()
 })
@@ -99,5 +114,32 @@ describe('formation draft and preset stores', () => {
     await deleteFormationPreset(newer.id)
 
     await expect(listFormationPresets()).resolves.toEqual([older])
+  })
+})
+
+describe('stored-record 腐蚀校验（C1）', () => {
+  it('草稿缺 layoutId → 读出拒绝（不静默返回坏数据）', async () => {
+    await writeRawRecord(APP_STORE_NAMES.formationDrafts, 'recent', {
+      schemaVersion: 1,
+      dataVersion: 'v1',
+      placements: {},
+      updatedAt: '2026-04-13T10:00:00.000Z',
+    })
+
+    await expect(readRecentFormationDraft()).rejects.toThrow(/存储数据校验失败.*layoutId/)
+  })
+
+  it('方案列表含一条缺 id 的腐蚀记录 → 整表读出拒绝', async () => {
+    await writeRawRecord(APP_STORE_NAMES.formationPresets, 'good', createPreset('good', '2026-04-13T09:00:00.000Z'))
+    await writeRawRecord(APP_STORE_NAMES.formationPresets, 'bad', {
+      schemaVersion: 1,
+      name: '腐蚀方案',
+      layoutId: 'layout-a',
+      placements: {},
+      priority: 'medium',
+      updatedAt: '2026-04-13T09:00:00.000Z',
+    })
+
+    await expect(listFormationPresets()).rejects.toThrow(/存储数据校验失败.*id/)
   })
 })

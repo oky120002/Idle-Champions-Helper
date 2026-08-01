@@ -29,6 +29,21 @@ async function resetDatabase(): Promise<void> {
   })
 }
 
+/** 直接写原始 override（绕过 save 的类型保证），用于腐蚀测试。 */
+async function writeRawOverride(heroId: string, value: unknown): Promise<void> {
+  const database = await openAppDatabase()
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const transaction = database.transaction(APP_STORE_NAMES.heroAbilityOverrides, 'readwrite')
+      transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides).put(value, heroId)
+      transaction.oncomplete = () => resolve()
+      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
+    })
+  } finally {
+    database.close()
+  }
+}
+
 beforeEach(async () => {
   await resetDatabase()
 })
@@ -74,5 +89,19 @@ describe('planner hero overrides store', () => {
 
     await clearPlannerHeroOverrides()
     await expect(listPlannerHeroOverrides()).resolves.toEqual([])
+  })
+})
+
+describe('stored-record 腐蚀校验（C1）', () => {
+  it('override 缺 heroId → 列表读出拒绝', async () => {
+    await writeRawOverride('bad', { carrySignals: [] })
+
+    await expect(listPlannerHeroOverrides()).rejects.toThrow(/存储数据校验失败.*heroId/)
+  })
+
+  it('override 缺 heroId → 单条读出拒绝', async () => {
+    await writeRawOverride('bad', { carrySignals: [] })
+
+    await expect(readPlannerHeroOverride('bad')).rejects.toThrow(/存储数据校验失败.*heroId/)
   })
 })

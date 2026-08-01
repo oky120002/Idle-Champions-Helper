@@ -1,4 +1,5 @@
 import type { FormationDraft } from '../domain/types'
+import { formationDraftSchema, parseStoredRecord } from '../domain/types/stored-record-schemas'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from './localDatabase'
 
 const RECENT_DRAFT_KEY = 'recent'
@@ -9,9 +10,9 @@ export async function readRecentFormationDraft(): Promise<FormationDraft | null>
   try {
     const transaction = database.transaction(APP_STORE_NAMES.formationDrafts, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.formationDrafts)
-    const draft = await requestToPromise(store.get(RECENT_DRAFT_KEY) as IDBRequest<FormationDraft | undefined>)
+    const raw = await requestToPromise(store.get(RECENT_DRAFT_KEY) as IDBRequest<unknown>)
     await waitForTransaction(transaction)
-    return draft ?? null
+    return raw ? parseStoredRecord<FormationDraft>(raw, formationDraftSchema, 'formation draft') : null
   } finally {
     database.close()
   }

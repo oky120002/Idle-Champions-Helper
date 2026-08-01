@@ -1,4 +1,5 @@
 import type { FormationPreset } from '../domain/types'
+import { formationPresetArraySchema, parseStoredRecord } from '../domain/types/stored-record-schemas'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from './localDatabase'
 
 function sortByUpdatedAtDescending(items: FormationPreset[]): FormationPreset[] {
@@ -20,8 +21,9 @@ export async function listFormationPresets(): Promise<FormationPreset[]> {
   try {
     const transaction = database.transaction(APP_STORE_NAMES.formationPresets, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.formationPresets)
-    const presets = await requestToPromise(store.getAll() as IDBRequest<FormationPreset[]>)
+    const raw = await requestToPromise(store.getAll() as IDBRequest<unknown[]>)
     await waitForTransaction(transaction)
+    const presets = parseStoredRecord<FormationPreset[]>(raw, formationPresetArraySchema, 'formation presets')
     return sortByUpdatedAtDescending(presets)
   } finally {
     database.close()

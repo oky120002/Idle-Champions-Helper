@@ -24,7 +24,7 @@
 | 1 | 某 collection 404/网络中断 | `Promise.all` reject → `loadState='error'` → `role="alert"` 可见文案（`PlannerEvaluatePage.tsx:239`） | route 测间接 | 可见报错，无重试按钮（需手动刷新） | 健康（P2：可加重试） |
 | 2 | version.json 加载失败 | `loadVersion` reject（在 Promise.all 前）→ error 态同上 | 同上 | 同上 | 健康 |
 | 3 | profile 快照 IndexedDB 读失败 | `resolveUserProfileSnapshot` 内部 catch → `snapshot:null`+`errorMessage`；`errorMessage` 被 `usePlannerCollections:89` 丢弃 | ✗ | planner 继续运行（owned-only→missing-profile blocker；all-hypothetical→正常） | **P2：错误信息静默丢弃** |
-| 4 | profile 快照腐蚀（NaN level / wrong shape） | IndexedDB 裸 cast 无校验；scoreFormation 不崩溃，NaN dps 与 ZERO 比较恒 false→`bestCarryHeroId=null`、`objectiveValue='0'`（静默零分） | ✗（本轮补测） | DPS 显示 0 无诊断 | **P1：IndexedDB 读出无 schema 校验** |
+| 4 | profile 快照腐蚀（NaN level / wrong shape） | ~~IndexedDB 裸 cast 无校验~~→ 读出处 zod 校验失败即 throw（消费方 catch→null）；scoreFormation 不崩溃，NaN dps 与 ZERO 比较恒 false→`bestCarryHeroId=null`、`objectiveValue='0'`（静默零分） | ✗（本轮补测）+ C1 腐蚀测试 | DPS 显示 0 无诊断 | **✅ 已收口（C1，2026-08-01）**：stored-record-schemas 读出校验，level=NaN 直击拒绝 |
 | 5 | semantic-overrides fetch reject | `.catch(()=>EMPTY_OVERRIDE_COLLECTION)`（`plannerModel.ts:23`）静默降级 | ✗ | 无 repo override，评分照常 | 健康（静默但安全） |
 | 6 | semantic-overrides valid-JSON-wrong-shape | `.catch` 不触发（非 reject）；`resolveHeroAbilityProfiles` 消费——缺 heroId 条目在 map 建键时不匹配任何英雄，静默忽略 | ✗（本轮补测） | 无影响 | 健康 |
 | 7 | effect_def 引用缺失 template | `resolveEffectDefinitionKeys` 返回 null；globalBuff 路径因 `parseEffectKind('effect_def,X')≠global_dps` 跳过，externalHeroDps 路径 `if(!keys) continue` 丢弃——均低估不误用 | ✗ | 当前数据 0 悬空，不可触发 | 健康 |
@@ -74,9 +74,9 @@
 
 > ✅ `bannedHeroes` 死代码已收口（2026-08-01，详见 §5）——全链路删除后原行移出本表。
 
-| 项 | 动作 | ROI | 影响面 | 决策点 |
+| 项 | 动作 | ROI | 影响面 | 进度 |
 |---|---|---|---|---|
-| IndexedDB 读出无 schema 校验 | 仿 `collection-schemas` 给 4 store 读出（profileSnapshot/formationPreset/formationDraft/heroAbilityOverride）加 zod 校验，腐蚀时 reject 或 coerce | 中（防御性；跨版本 shape 升级时受益；当前 normalizer 防 NaN，仅 stale 快照可致腐） | 4 store + 消费方 | 校验层级（store 读出 vs 消费方）+ 失败策略（reject 报错 vs coerce 兜底） |
+| IndexedDB 读出无 schema 校验 | 仿 `collection-schemas` 给 4 store 读出（profileSnapshot/formationPreset/formationDraft/heroAbilityOverride）加 zod 校验，腐蚀时 reject | 中（防御性；跨版本 shape 升级时受益；当前 normalizer 防 NaN，仅 stale 快照可致腐） | 4 store + 消费方 | **✅ 收口（2026-08-01）**：新增 `stored-record-schemas.ts`（4 记录 passthrough schema + `parseStoredRecord` helper），store 读出处统一校验、失败 throw（消费方现有 catch 兜住：profile→null→missing-profile blocker；preset/override 各自 catch）。决策：**store 读出统一 + reject**（审计推荐）。zod4 `z.number()` 拒 NaN 直击 #4（level=NaN 不再裸 cast 进 scoreFormation）。类型层 sync 守护 + 6 腐蚀测试（profile NaN/跨版本、draft/preset/override 缺核心字段）|
 
 ### P2（顺手，低 ROI）
 

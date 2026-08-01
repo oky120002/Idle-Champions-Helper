@@ -1,4 +1,9 @@
 import type { HeroAbilityOverridePatch } from '../domain/abilities/abilityModel'
+import {
+  heroAbilityOverridePatchArraySchema,
+  heroAbilityOverridePatchSchema,
+  parseStoredRecord,
+} from '../domain/types/stored-record-schemas'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from './localDatabase'
 
 export async function listPlannerHeroOverrides(): Promise<HeroAbilityOverridePatch[]> {
@@ -7,9 +12,9 @@ export async function listPlannerHeroOverrides(): Promise<HeroAbilityOverridePat
   try {
     const transaction = database.transaction(APP_STORE_NAMES.heroAbilityOverrides, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides)
-    const items = await requestToPromise(store.getAll() as IDBRequest<HeroAbilityOverridePatch[]>)
+    const raw = await requestToPromise(store.getAll() as IDBRequest<unknown[]>)
     await waitForTransaction(transaction)
-    return items
+    return parseStoredRecord<HeroAbilityOverridePatch[]>(raw, heroAbilityOverridePatchArraySchema, 'planner hero overrides')
   } finally {
     database.close()
   }
@@ -21,11 +26,9 @@ export async function readPlannerHeroOverride(heroId: string): Promise<HeroAbili
   try {
     const transaction = database.transaction(APP_STORE_NAMES.heroAbilityOverrides, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides)
-    const override = await requestToPromise(
-      store.get(heroId) as IDBRequest<HeroAbilityOverridePatch | undefined>,
-    )
+    const raw = await requestToPromise(store.get(heroId) as IDBRequest<unknown>)
     await waitForTransaction(transaction)
-    return override ?? null
+    return raw ? parseStoredRecord<HeroAbilityOverridePatch>(raw, heroAbilityOverridePatchSchema, 'planner hero override') : null
   } finally {
     database.close()
   }

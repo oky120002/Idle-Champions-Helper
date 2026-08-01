@@ -1,4 +1,5 @@
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
+import { parseStoredRecord, userProfileSnapshotSchema } from '../../domain/types/stored-record-schemas'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from '../localDatabase'
 
 const SNAPSHOT_KEY = 'current'
@@ -10,11 +11,11 @@ export async function readUserProfileSnapshot(): Promise<UserProfileSnapshot | n
   try {
     const transaction = database.transaction(APP_STORE_NAMES.userProfileSnapshots, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.userProfileSnapshots)
-    const snapshot = await requestToPromise(
-      store.get(SNAPSHOT_KEY) as IDBRequest<UserProfileSnapshot | undefined>,
-    )
+    const raw = await requestToPromise(store.get(SNAPSHOT_KEY) as IDBRequest<unknown>)
     await waitForTransaction(transaction)
-    return snapshot ?? null
+    // 腐蚀校验：stale 跨版本快照或 IDB 腐蚀（如 OwnedHero.level=NaN）会让 scoreFormation 静默零分（#4），
+    // 读出处统一校验失败即 throw，由 resolveUserProfileSnapshot 内部 catch 降级为 null。
+    return raw ? parseStoredRecord<UserProfileSnapshot>(raw, userProfileSnapshotSchema, 'user profile snapshot') : null
   } finally {
     database.close()
   }
