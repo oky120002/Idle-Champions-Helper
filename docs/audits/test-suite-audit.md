@@ -152,3 +152,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 
 vitest **1297**（批 5 后 1235 + feedback 34 + hook 15 + browser-codec 4 + walk-selection 9）/ **221** 文件，全绿；typecheck ✅。e2e 30 不变。
 
+## 9. 测试深度审计（轮 5）
+
+行为覆盖与断言强度透镜（非组织整改），见独立文件 `test-depth-audit.md`（结论：深度健康，P0/P1 新增 0；澄清 `steadyStateScoring.test.ts:495` 非乘法模型编码；§2 回归用例跟随修复；交叉引用 signal-coverage 假门）。
+
