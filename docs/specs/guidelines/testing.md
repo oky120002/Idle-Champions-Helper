@@ -26,6 +26,8 @@
 
 新增测试目录必须同步扩展对应运行器 glob；测试存在但不被任何运行器扫到 = 游离，禁止。
 
+接入 `test` / `test:xxx` 链的脚本步骤必须真 gate：有断言 + 失败时非零退出码。只打印报告不断言（如 `signal-coverage` 假门：`main()` 只 `JSON.stringify`、恒 exit 0）不构成 gate——要么加阈值/快照断言（真实数据 gate），要么移出测试链。详见 `docs/audits/scripts-audit.md` §2 #1。
+
 ## 4. 配置约束
 
 - `tsconfig.app.json` exclude `src/**/*.test.*`、`src/**/*.spec.*`：测试不进生产类型检查与构建产物。
