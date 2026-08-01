@@ -10,6 +10,14 @@ import {
   patronsCollectionSchema,
   variantsCollectionSchema,
 } from '../src/domain/types/collection-schemas.ts'
+import {
+  effectDefinitionsSchema,
+  featCatalogSchema,
+  heroAbilitiesSchema,
+  lootCatalogSchema,
+  scenariosSchema,
+  specializationCatalogSchema,
+} from '../src/domain/types/build-product-schemas.ts'
 
 const DEFAULT_DATA_DIR = 'public/data/v1'
 
@@ -34,6 +42,12 @@ const collectionChecks: readonly CollectionCheck[] = [
   { name: 'adventures.json', schema: adventuresCollectionSchema },
   { name: 'variants.json', schema: variantsCollectionSchema },
   { name: 'patrons.json', schema: patronsCollectionSchema },
+  { name: 'hero-abilities.json', schema: heroAbilitiesSchema },
+  { name: 'scenarios.json', schema: scenariosSchema },
+  { name: 'loot-catalog.json', schema: lootCatalogSchema },
+  { name: 'effect-definitions.json', schema: effectDefinitionsSchema },
+  { name: 'feat-catalog.json', schema: featCatalogSchema },
+  { name: 'specialization-catalog.json', schema: specializationCatalogSchema },
 ]
 
 function formatIssues(result: SafeParseError): string {
@@ -48,6 +62,8 @@ function toErrorMessage(error: unknown): string {
  * CI 校验：所有 normalize 输出契约必须通过对应 zod schema。
  * - champion-details/*.json → championDetailsSchema（planner/simulator 核心字段）
  * - champions/adventures/variants/patrons.json → collection schema（与 src/domain/types 对齐）
+ * - hero-abilities/scenarios/loot-catalog/effect-definitions/feat-catalog/specialization-catalog →
+ *   build-product schema（planner 核心消费产物，passthrough 钉消费方核心字段）
  * 防止 normalize 层或上游 definitions 字段漂移破坏消费方依赖的核心字段。
  * 失败时非零退出，列出每个目标的字段错误。
  */

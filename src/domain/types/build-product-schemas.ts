@@ -1,0 +1,118 @@
+import { z } from 'zod'
+
+import { localizedTextSchema } from './common.ts'
+
+/**
+ * build 派生产物输出契约 schema（planner 核心消费的 6 个产物）。
+ *
+ * 与 collection-schemas.ts 同哲学：对象 passthrough 放行非核心字段（不耦合上游字段增减），
+ * 只钉消费方（planner/simulator/buffs）依赖的核心字段类型与必填性，拦截 build 逻辑 `as` /
+ * optional-but-expected 字段导致的形状偏差。CI：scripts/validate-data-schemas.ts。
+ *
+ * envelope 两类：
+ * - `{items, updatedAt}`（hero-abilities 另带 pipelineHash，passthrough 放行）：hero-abilities /
+ *   scenarios / loot-catalog / effect-definitions
+ * - `{catalog, updatedAt}`（catalog = Record<heroId, Entry[]>）：feat-catalog / specialization-catalog
+ *
+ * 同步守护见 build-product-schema-sync.test.ts（schema 钉死字段 ⊆ 消费 interface，typecheck 层防漂移）。
+ */
+
+const localizedText = localizedTextSchema
+
+/**
+ * hero-abilities.json item：英雄能力 profile（planner 评分核心数据源）。
+ * 钉 identity + 座位 + DPS/暴击 base + signal 列表存在性；signal 元素结构由 HeroAbilitySignal 类型管。
+ */
+export const heroAbilityProfileItemSchema = z
+  .object({
+    heroId: z.string(),
+    name: localizedText,
+    seat: z.number(),
+    tags: z.array(z.string()),
+    baseDamage: z.number(),
+    baseHealth: z.number(),
+    baseCritChancePercent: z.number().nullable().optional(),
+    carrySignals: z.array(z.unknown()),
+    supportSignals: z.array(z.unknown()),
+  })
+  .passthrough()
+
+/**
+ * scenarios.json item：场景阵型拓扑 + 限制。
+ * 钉 variantId + 布局 id + 槽位拓扑核心（slotId/row/column）+ forced/locked/allowed 名单 + 占格数。
+ */
+const plannerScenarioSlotSchema = z
+  .object({
+    slotId: z.string(),
+    row: z.number(),
+    column: z.number(),
+  })
+  .passthrough()
+
+export const plannerScenarioItemSchema = z
+  .object({
+    variantId: z.string(),
+    name: localizedText,
+    formationLayoutId: z.string().nullable(),
+    slotTopology: z.array(plannerScenarioSlotSchema),
+    forcedHeroes: z.array(z.string()),
+    lockedSlots: z.array(z.string()),
+    allowedHeroes: z.array(z.string()),
+    allowedTags: z.array(z.string()),
+    occupiedSlotCount: z.number(),
+  })
+  .passthrough()
+
+/** loot-catalog.json item：装备定义（per-slot effect_string，装备加成解析源）。 */
+export const lootCatalogItemSchema = z
+  .object({
+    heroId: z.string(),
+    slotId: z.string(),
+    rarity: z.string(),
+    effectString: z.string(),
+  })
+  .passthrough()
+
+/** effect-definitions.json item：effect_def template（effect_def,<id> 解引用源）。钉 id + effectKeys。 */
+const effectDefinitionKeySchema = z
+  .object({
+    effectString: z.string(),
+  })
+  .passthrough()
+
+export const effectDefinitionItemSchema = z
+  .object({
+    id: z.string(),
+    effectKeys: z.array(effectDefinitionKeySchema),
+  })
+  .passthrough()
+
+/** feat-catalog.json catalog 值：feat 定义（id + rarity + signals 列表）。 */
+export const featCatalogItemSchema = z
+  .object({
+    id: z.string(),
+    rarity: z.number(),
+    signals: z.array(z.unknown()),
+  })
+  .passthrough()
+
+/** specialization-catalog.json catalog 值：专精 upgrade（upgradeId + signals 列表）。 */
+export const specializationCatalogItemSchema = z
+  .object({
+    upgradeId: z.string(),
+    signals: z.array(z.unknown()),
+  })
+  .passthrough()
+
+const itemCollection = (itemSchema: z.ZodTypeAny) =>
+  z.object({ items: z.array(itemSchema), updatedAt: z.string() }).passthrough()
+
+const catalogCollection = (entrySchema: z.ZodTypeAny) =>
+  z.object({ catalog: z.record(z.string(), z.array(entrySchema)), updatedAt: z.string() }).passthrough()
+
+export const heroAbilitiesSchema = itemCollection(heroAbilityProfileItemSchema)
+export const scenariosSchema = itemCollection(plannerScenarioItemSchema)
+export const lootCatalogSchema = itemCollection(lootCatalogItemSchema)
+export const effectDefinitionsSchema = itemCollection(effectDefinitionItemSchema)
+export const featCatalogSchema = catalogCollection(featCatalogItemSchema)
+export const specializationCatalogSchema = catalogCollection(specializationCatalogItemSchema)

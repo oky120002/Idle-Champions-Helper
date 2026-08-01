@@ -110,8 +110,8 @@ export interface PlannerRecommendationOptions {
   lockedSlots?: Record<string, string>
   /**
    * 全局 buff pool 乘数。
-   * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入；
-   * 默认 1（无全局加成）。patron 选择由 UI 接入。
+   * 由调用方从 patron-perks + blessings 经 computeActual*GlobalBuff 解析后传入（combineGlobalBuffMultipliers 合成）；
+   * 默认 1（无全局加成）。
    */
   globalBuffMultiplier?: number
   /**

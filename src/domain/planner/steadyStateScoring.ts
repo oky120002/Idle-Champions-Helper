@@ -46,7 +46,7 @@ export interface ScoringInput {
   scoringMode?: ScoringMode
   /**
    * 全局 buff pool 乘数。
-   * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入。
+   * 由调用方从 patron-perks + blessings 经 computeActual*GlobalBuff 解析后传入（combineGlobalBuffMultipliers 合成）。
    * 默认 1（无全局加成）；乘进 carryDps：baseDps × levelCurve × damagePool × crit × vuln × globalBuff。
    */
   globalBuffMultiplier?: number | undefined
