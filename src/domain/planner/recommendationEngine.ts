@@ -255,6 +255,35 @@ function applyActiveSpecializations(
   }
 }
 
+/**
+ * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评分上下文 + options 对称透传。
+ * 抽成单一来源，结构性锁定两入口透传一致——否则新增透传字段（如 aggregateProjection）漏改一处，
+ * evaluate 与 recommend 会对同一阵型算出不同 DPS 且无诊断。
+ */
+function scorePlannerFormation(
+  placements: Record<string, string>,
+  heroesById: Map<string, ResolvedHeroAbilityProfile>,
+  scenario: ResolvedPlannerScenarioModel,
+  heroLevels: Map<string, number>,
+  scoringMode: ScoringMode,
+  options: PlannerRecommendationOptions,
+) {
+  return scoreFormation({
+    placements,
+    heroesById,
+    scenario,
+    heroLevels,
+    scoringMode,
+    lockedCarryHeroId: options.lockedCarryHeroId ?? undefined,
+    // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
+    globalBuffMultiplier: options.globalBuffMultiplier,
+    equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+    externalHeroDpsContributions: options.externalHeroDpsContributions,
+    manualStackCount: options.manualStackCount,
+    aggregateProjection: options.aggregateProjection,
+  })
+}
+
 export function evaluateFormation({
   variant: selectedVariant,
   collections,
@@ -328,20 +357,7 @@ export function evaluateFormation({
     }
   }
 
-  const scoring = scoreFormation({
-    placements,
-    heroesById: heroById,
-    scenario,
-    heroLevels,
-    scoringMode,
-    lockedCarryHeroId: options.lockedCarryHeroId ?? undefined,
-    // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
-    globalBuffMultiplier: options.globalBuffMultiplier,
-    equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
-    externalHeroDpsContributions: options.externalHeroDpsContributions,
-    manualStackCount: options.manualStackCount,
-    aggregateProjection: options.aggregateProjection,
-  })
+  const scoring = scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
 
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
   const result: PlannerResult = {
@@ -487,20 +503,7 @@ export function buildPlannerRecommendation({
         }
       }
 
-      return scoreFormation({
-        placements,
-        heroesById: heroById,
-        scenario,
-        heroLevels,
-        scoringMode,
-        lockedCarryHeroId: options.lockedCarryHeroId ?? undefined,
-        // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
-        globalBuffMultiplier: options.globalBuffMultiplier,
-        equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
-        externalHeroDpsContributions: options.externalHeroDpsContributions,
-        manualStackCount: options.manualStackCount,
-        aggregateProjection: options.aggregateProjection,
-      })
+      return scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
     },
   })
 

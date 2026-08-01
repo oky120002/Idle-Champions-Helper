@@ -20,8 +20,8 @@
 
 | 文件 | 行 | 类别 | 动作 | ROI | 影响面 | 进度 |
 |------|----|------|------|-----|--------|------|
-| `src/domain/planner/recommendationEngine.ts` | 582 | .ts >480 必须拆 | 输入/评估类型（`PlannerInput`/`PlannerEvaluateInput`/`PlannerRecommendInput`/`FormationEvaluation`/`PlannerRecommendationOptions`）下沉到已有的 `recommendationTypes.ts`（现仅放 collections/result 类型，二者本就同族）；编排逻辑（`evaluateFormation`/`buildPlannerRecommendation`/`resolvePlannerScenario`）与 feat/专精注入 wrapper 留原文件 | 中（582→~430，类型查询一跳命中、读逻辑不再过类型噪音；纯类型搬迁零行为改动） | recommendationEngine.ts + recommendationTypes.ts + 少量 import | **未启动** |
-| `src/pages/PlannerEvaluatePage.tsx` | 501 | 页面入口 >420 必须拆 | 数据加载已抽（`usePlannerCollections`/`usePlannerEvaluation`），501 行主要是单组件 JSX+handlers；评估把结果卡/自配面板/stack-count 输入等区块抽 sub-component | 中（页面入口降至阈值内，区块可独立测/复用）；但页面交互密集，拆分须保证 props 不爆炸 | PlannerEvaluatePage.tsx + 新 sub-component 文件 | **未启动**，需 3-metric 评估拆完是否真减打开数 |
+| `src/domain/planner/recommendationEngine.ts` | 578 | .ts >480 必须拆 | ~~类型下沉 recommendationTypes.ts~~ | **✅ 不拆（3-metric 否决）** | — | 5 类型块共 ~87 行，搬走后 578→491 仍超 480 阈值（非审计预估 ~430）；`PlannerRecommendationOptions` 每字段被 evaluate/recommend 直接消费，「新增 option」常见任务会 1→2 文件。**顺手收**：`evaluateFormation`/`buildPlannerRecommendation` 两处 `scoreFormation` 选项透传逐字重复（含同一注释），抽 `scorePlannerFormation` helper 锁定两入口透传一致不变量（否则漏改一处 → 同一阵型静默算出不同 DPS，无诊断）；581 行，279 测试全过 |
+| `src/pages/PlannerEvaluatePage.tsx` | 501 | 页面入口 >420 必须拆 | ~~结果卡/自配面板抽 sub-component~~ | **✅ 不拆（3-metric 否决）** | — | 状态高度内聚（placements/lockedSlots/scoringMode/evaluation 交叉耦合）：FormationBoardCanvas 的 slotExtras 锁/选交互需透传 ~11 个 prop，结果卡需 evaluation/t/heroNameById/scoreLabel；抽 sub-component 会让任何跨区块改动从 1 文件变多文件且 props 爆炸。数据加载 hook 已抽（`usePlannerCollections`/`usePlannerEvaluation`），剩余是内聚页面逻辑，charter「拆完让常见修改多开文件则保留」直接适用 |
 
 ## 3. P2 — 超「应拆」阈值（各需 3-metric 评估，内聚则保留）
 
@@ -52,6 +52,6 @@ scripts 侧大文件（`normalize-adventures.ts` 1288、`sync-idle-champions-pet
 ## 6. 轮 2 收口
 
 - **P0 清零**：本轮无 P0（结构问题无「明确 bug」性质）。
-- **P1 登记**：2 个超必须拆阈值生产文件（§2），带动作 + ROI + 影响面。
+- **P1 登记**：2 个超必须拆阈值生产文件（§2），带动作 + ROI + 影响面。**均经 3-metric 评估后 ✅ 不拆**（recommendationEngine 顺手收 scoreFormation 透传重复为不变量守护），详见 §2 进度列。
 - **P2 登记**：5 个超应拆阈值文件 + scripts 大文件留轮 4。
 - **验证健康**：§4 五项结构气味核查无问题。
