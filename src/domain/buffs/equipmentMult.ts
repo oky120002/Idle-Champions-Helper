@@ -152,7 +152,8 @@ function computeAddPercentByHero(
 
 /**
  * 玩家 owned 装备的 per-carry base DPS multiplier = `1 + Σ(base × (1 + enchant/250))/100`。
- * 作 equipmentAdjustment 乘进 carryDps（loot 未进 damagePool，scoreFormation 补全进 damage:hero 池）。
+ * scoreFormation 把 `(multiplier-1)×100` 并入 damage:hero 池 addPercent（与 ability hero_dps 同 key 加法，
+ * unified 池语义 A1；见 simulator.md hero_dps_pool），非独立乘进 carryDps。hero-scope 仅 carry 计。
  *
  * - 无 owned loot（未导入存档）→ 1（无加成，向后兼容）。
  * - enchant 缺省 0 → base 无缩放。

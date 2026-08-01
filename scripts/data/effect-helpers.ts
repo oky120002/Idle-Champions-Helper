@@ -795,12 +795,15 @@ export function collectEffectEntries(detail: unknown): {
         // 只生效一次（首条保留）；不同 upgrade 的 wrapper upgradeId 不同，各自独立。
         const key = `${rarityGroupKey(preset)}@${entry.upgradeId ?? '?'}`
         // 派生信号靶向专精 → 路由到 catalog（附到 target spec），不进 base；其余进 base derivedByKey。
+        // sourceBucket 透传原始 wrapper 来源（upgrade-effect-key/loot/legendary），不用统一别名——
+        // buildHeroModels 的源过滤据此拦截外部装备源（loot/legendary）不进 scored profile
+        // （加成源唯一性不变式，见 simulator.md + modeling-pitfalls.md）。
         const buffedEntry = buildEffectEntry({
           effectString: entry.effectString,
           effect: entry.effect,
           effectPayload: entry.effectPayload,
           effectPayloads: entry.effectPayloads,
-          sourceBucket: 'upgrade-buffed-signal',
+          sourceBucket: entry.sourceBucket,
           upgradeId: entry.upgradeId,
           bucketOverride: targetSignalResult.bucket,
           signalPreset: preset,

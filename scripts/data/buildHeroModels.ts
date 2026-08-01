@@ -24,10 +24,15 @@ export function buildOfficialHeroModel(
   let baseCritChancePercent: number | null = null
 
   for (const entry of collectEffectEntries(detail).entries) {
-    // feat 外部化（与专精同构，ADR 0017）：feat effect 不进 base，由 feat-catalog + runtime
-    // 按玩家选择（OwnedHero.feats）注入。否则 base 含全 feat（理论最大），runtime 再注入会双计；
-    // 旧实现误用替换式注入还抹掉了 base 支援信号。signal-coverage 仍计 feat（entries 未过滤）。
-    if (entry.sourceBucket === 'feat') {
+    // 外部源（feat/loot/legendary）不进 base scored profile——加成源唯一性不变式
+    // （见 simulator.md + modeling-pitfalls.md）：feat 外部化（ADR 0017，feat-catalog + runtime 注入）；
+    // loot/legendary 同构——装备只走 owned-aware 通道（equipmentMult.ts），build 管线 bake 装备源
+    // 会与 owned 通道双重计数。signal-coverage 仍计这些源（entries 未过滤，collectEffectEntries 保留）。
+    if (
+      entry.sourceBucket === 'feat'
+      || entry.sourceBucket === 'loot'
+      || entry.sourceBucket === 'legendary'
+    ) {
       continue
     }
     const split = splitEffectString(entry.effectString)

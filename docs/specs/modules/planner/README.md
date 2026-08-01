@@ -34,6 +34,7 @@
 - `dps-mechanic-abstraction.md`：机制抽象四条阈值（≥2 抽象 / 孤儿特化+预警 / 孤儿→≥2 立刻抽象 / >10 升级策略注册表）。
 - `mechanic-isolation.md`：加成机制隔离架构——四种同构隔离模式（EffectResolver / MechanicResolver / DimensionFactor / BonusProvider），模式 1（effect→signal 解析层）已实现。
 - `champion-reference-verification.md`：英雄实测参照数据统一 schema（机制倍率 + 伤害快照）、校准口径与测试两组。
+- `modeling-pitfalls.md`：加成建模陷阱与验证纪律（补建前证伪「未建模」、golden 对叠加错误的盲区、wrapper 派生 signal 来源穿透）。补建任何加成/机制前先读。
 
 ## 关联入口
 

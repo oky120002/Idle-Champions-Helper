@@ -535,14 +535,12 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
   expect(perTargetPrebonusSupport?.targetQualifier).toEqual({
     predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 15 },
   })
-  expect(globalSupport?.kind).toBe('globalDpsMultiplier')
-  expect(taggedSupport?.amountFunc).toBe('add')
-  expect(taggedSupport?.targetQualifier).toEqual({
-    predicate: { op: 'tag', tag: 'female' },
-  })
-  expect(statCountSupport?.formationCountQualifier).toEqual({
-    predicate: { op: 'stat', stat: 'str', operator: '>=', value: 15 },
-  })
+  // 装备源（loot/legendary）不进 base profile 的 scored signals——加成源唯一性不变式
+  // （见 simulator.md + modeling-pitfalls.md）：装备只走 owned-aware 通道（equipmentMult.ts），
+  // build 管线不得 bake 装备源信号，否则与 owned 通道双重计数。
+  expect(globalSupport).toBeUndefined()
+  expect(taggedSupport).toBeUndefined()
+  expect(statCountSupport).toBeUndefined()
   expect(targetedHeroSupport?.kind).toBe('heroDpsMultiplier')
   expect(targetedHeroSupport?.value).toBe(100)
   expect(targetedHeroSupport?.stackFunc).toBe('per_upgrade_targets')
@@ -701,11 +699,12 @@ it('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSigna
   expect(allSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,80')?.kind).toBe('heroDpsMultiplier')
 })
 
-it('loot buff_upgrade 派生 target base 信号（外部装备源运行时修饰，不在 ability snapshot 内）', async () => {
-  // ability 源（upgrade effectReference / effect_keys）静态 buff_upgrade 已烘进 base snapshot，
-  // 不再派生（见 collectEffectEntries buff-upgrade-progression-exclusion）。外部源 loot（装备）/
-  // feat / legendary 是运行时修饰，不在 ability snapshot 内，仍须派生。
-  // 此处验证 loot buff_upgrade → target base 派生链路 + bonusScaleOfSignal 链接。
+it('loot buff_upgrade 派生不进 scored profile（装备源不 bake，防双重计数）', async () => {
+  // 装备源 buff_upgrade 是 wrapper（放大 base upgrade 效果）。collectEffectEntries 层仍派生
+  // （保留 wrapper 语义链路），但 buildHeroModels 过滤装备源不进 scored profile——加成源唯一性
+  // 不变式（见 simulator.md + modeling-pitfalls.md）：装备只走 owned-aware 通道（equipmentMult.ts），
+  // build 管线不得 bake 装备源信号，否则与 owned 通道双重计数。
+  // 派生链路（bonusScale 指向 base）在 collectEffectEntries 层验证（见「多 rarity」test）。
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-loot-buff-upgrade-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
@@ -746,12 +745,11 @@ it('loot buff_upgrade 派生 target base 信号（外部装备源运行时修饰
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
   const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
-  // loot buff_upgrade 派生：bonusScaleOfSignal 指向 base ability signal。
+  // loot buff_upgrade 派生不进 scored profile——装备源不 bake（加成源唯一性不变式）。
   const first = heroAbilities.items[0]
   const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
-  expect(derived?.kind).toBe('heroDpsMultiplier')
-  expect(derived?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
+  expect(derived).toBeUndefined()
 })
 
 it('collectEffectEntries loot buff_upgrade 多 rarity 同信号位取最高 magnitude', () => {
@@ -777,13 +775,17 @@ it('collectEffectEntries loot buff_upgrade 多 rarity 同信号位取最高 magn
     feats: [],
   }
   const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
+  // 装备源 wrapper 派生透传原始 sourceBucket='loot'（非统一别名），保证 buildHeroModels 源过滤能拦截。
+  // signalPreset!=null 区分派生 wrapper 与原始 loot entry（后者无 preset）。
   const derived = entries.filter(
-    (entry) => entry.sourceBucket === 'upgrade-buffed-signal' && entry.effectString.startsWith('buff_upgrade,'),
+    (entry) => entry.sourceBucket === 'loot' && entry.signalPreset != null && entry.effectString.startsWith('buff_upgrade,'),
   )
   // 三 rarity 同信号位去重为 1 条，且保留最高 magnitude（157.8）。
   expect(derived).toHaveLength(1)
   expect(derived[0]?.effectString).toBe('buff_upgrade,157.8,4')
   expect(derived[0]?.signalPreset.value).toBe(157.8)
+  // 派生 wrapper 的 bonusScaleOfSignal 指向 base ability signal（保留 wrapper 语义链路）。
+  expect(derived[0]?.signalPreset?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
 })
 
 it('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前 upgrade）', async () => {
@@ -859,50 +861,25 @@ it('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前
   expect(crossRefSignal?.value).toBe(200)
 })
 
-it('loot buff_upgrades wrapper 派生多 target base 信号（外部装备源）', async () => {
-  // ability 源 buff_upgrades 不再派生（snapshot 已含）。外部源 loot 仍派生；此处验证
-  // buff_upgrades 多 target id（4,5）→ 派生 2 个信号，各指向对应 base。
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-loot-buff-upgrades-multi-'))
-  const versionDir = path.join(tempDir, 'data')
-  const detailDir = path.join(versionDir, 'champion-details')
-
-  await mkdir(detailDir, { recursive: true })
-  await writeFile(
-    path.join(versionDir, 'champions.json'),
-    JSON.stringify({
-      updatedAt: '2026-06-04',
-      items: [{ id: '1', name: { original: 'Bruenor', display: '布鲁诺' }, seat: 1, roles: ['support'], tags: ['dwarf'] }],
-    }),
+it('loot buff_upgrades wrapper 派生多 target base 信号（collectEffectEntries 层）', () => {
+  // loot buff_upgrades（带 s）多 target id（4,5）→ 派生 2 个信号各指向对应 base。
+  // 装备源派生在 collectEffectEntries 层产出（保留 wrapper 语义链路），buildHeroModels 过滤不进
+  // scored profile（加成源唯一性不变式，见 simulator.md + modeling-pitfalls.md）。
+  const detail = {
+    upgrades: [
+      { id: '4', effectReference: 'effect_def,b4', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,80' }] } } } },
+      { id: '5', effectReference: 'effect_def,b5', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,50' }] } } } },
+    ],
+    loot: [{ effects: [{ effect_string: 'buff_upgrades,100,4,5' }] }],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
+  const derived = entries.filter(
+    (entry) => entry.sourceBucket === 'loot' && entry.signalPreset != null && entry.effectString === 'buff_upgrades,100,4,5',
   )
-  await writeFile(
-    path.join(versionDir, 'variants.json'),
-    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
-  )
-  await writeFile(
-    path.join(versionDir, 'formations.json'),
-    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
-  )
-  await writeFile(
-    path.join(detailDir, '1.json'),
-    JSON.stringify({
-      upgrades: [
-        { id: '4', effectReference: 'effect_def,b4', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,80' }] } } } },
-        { id: '5', effectReference: 'effect_def,b5', effectDefinition: { snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,50' }] } } } },
-      ],
-      loot: [{ id: '9001', slotId: 1, rarity: '1', effects: [{ effect_string: 'buff_upgrades,100,4,5' }] }],
-      legendaryEffects: [],
-    }),
-  )
-
-  await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
-  const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
-
-  // loot buff_upgrades wrapper（target ids 4,5）派生 2 个信号，各指向对应 base。
-  const first = heroAbilities.items[0]
-  const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
-  const derived = allSignals.filter((signal) => signal.rawEffect === 'buff_upgrades,100,4,5')
-  expect(derived.length).toBe(2)
-  const baseRawEffects = derived.map((signal) => signal.bonusScaleOfSignal?.rawEffect).sort()
+  expect(derived).toHaveLength(2)
+  const baseRawEffects = derived.map((entry) => entry.signalPreset?.bonusScaleOfSignal?.rawEffect).sort()
   expect(baseRawEffects).toEqual(['hero_dps_multiplier_mult,50', 'hero_dps_multiplier_mult,80'])
 })
 
@@ -1003,8 +980,13 @@ it('collectEffectEntries ability 源静态 buff_upgrade 不派生（贡献已在
     feats: [],
   }
   const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
-  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
   // ability 源静态 buff_upgrade 全部不派生（不论 required_level、magnitude、单复数）。
+  // 透传后派生 sourceBucket=原始 wrapper 来源；ability 源 buff_upgrade 静态被排除，无派生 wrapper。
+  const derived = entries.filter((entry) =>
+    (entry.sourceBucket === 'upgrade' || entry.sourceBucket === 'upgrade-effect-key')
+    && entry.signalPreset != null
+    && entry.effectString.startsWith('buff_upgrade'),
+  )
   expect(derived).toHaveLength(0)
   // base signal 仍正常派生：
   expect(entries.some((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')).toBe(true)
@@ -1078,7 +1060,8 @@ it('collectEffectEntries loot buff_upgrade wrapper 合并 wrapper 自身 filter_
     feats: [],
   }
   const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
-  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
+  // loot 源 wrapper 派生透传 sourceBucket='loot'；signalPreset 区分派生与原始 entry。
+  const derived = entries.filter((entry) => entry.sourceBucket === 'loot' && entry.signalPreset != null)
   expect(derived.length).toBe(1)
   // wrapper 的 hero_ids 限定合并到 derived signal 的 targetQualifier（base 无 filter → 直接取 wrapper 限定）。
   expect(derived[0]?.signalPreset.targetQualifier).toEqual({

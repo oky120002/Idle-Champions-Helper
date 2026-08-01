@@ -150,11 +150,16 @@ describe('formation-buff 模式（结构正确性，CI 门控）', () => {
     const scenario = cursedFarmerScenario()
 
     // 仅明斯克：明斯克自身 signal 聚合。
+    // heroLevels 全解锁：测瓦罗真实 ability 加成。装备源已移出 base profile（加成源唯一性不变式，
+    // 见 modeling-pitfalls.md），不再有 requiredLevel=null 的 baked loot 常驻信号；supportLevel=1
+    // 会门控瓦罗 requiredLevel=40+ 的 ability signals，故须传 level 解锁才能验证交叉/全局加成结构。
+    const heroLevels = new Map([['7', 9999], ['159', 9999]])
     const soloMinsc = scoreFormation({
       placements: { minsc: '7' },
       heroesById: new Map([['7', minsc]]),
       scenario,
       aggregateProjection: 'formation-buff',
+      heroLevels,
     })
     // 明斯克 + 瓦罗：瓦罗 support signal（战斗指南/全局 buff）并入 damage pool。
     const withVaro = scoreFormation({
@@ -165,6 +170,7 @@ describe('formation-buff 模式（结构正确性，CI 门控）', () => {
       ]),
       scenario,
       aggregateProjection: 'formation-buff',
+      heroLevels,
     })
 
     // 瓦罗入阵 → 明斯克 damage pool 上升（瓦罗至少有 globalDpsMultiplier 类全位置 buff 生效）。
