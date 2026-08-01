@@ -641,6 +641,37 @@ describe('steady state scoring', () => {
     })
   })
 
+  describe('装备 health_mult → survival 维度（B1-b）', () => {
+    it('装备 health 并入 carry survival:hero 池 → survivableArea 上升（effectiveHealth↑）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const placements = { s1: 'carry' }
+      const base = scoreFormation({ placements, heroesById, scenario })
+      const withHealth = scoreFormation({
+        placements,
+        heroesById,
+        scenario,
+        equipmentHealthByHero: new Map([['carry', 11]]), // +1000% health
+      })
+      expect(base.areaEstimate).not.toBeNull()
+      // health ↑ → survival:hero 池↑ → effectiveHealth↑ → survival 约束放宽 → survivableArea 上升
+      expect(withHealth.areaEstimate!.survivableArea).toBeGreaterThan(base.areaEstimate!.survivableArea)
+    })
+
+    it('未导入存档（equipmentHealthByHero 空/缺省）→ survival 不变（?? 1，向后兼容）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const without = scoreFormation({ placements: { s1: 'carry' }, heroesById, scenario })
+      const emptyMap = scoreFormation({
+        placements: { s1: 'carry' },
+        heroesById,
+        scenario,
+        equipmentHealthByHero: new Map(),
+      })
+      expect(emptyMap.areaEstimate!.survivableArea).toBe(without.areaEstimate!.survivableArea)
+    })
+  })
+
   describe('A1 同 key 跨源加法（外部加成与 ability 同池，非相乘）', () => {
     it('ability global_dps 与外部 globalBuff 同 key 加法（修复前跨源相乘高估）', () => {
       // A1 核心（correctness-audit.md §2）：global_dps_multiplier_mult 的 ability 源与

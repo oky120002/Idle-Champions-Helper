@@ -60,6 +60,12 @@ export interface ScoringInput {
    */
   equipmentAdjustmentByHero?: Map<string, number> | undefined
   /**
+   * 装备 per-carry health multiplier（ownedHeroes health_mult，hero-scoped 生命加成，1+Σ/100）。
+   * survival 段把 carry 的 health 并入 survival:hero 池（影响 effectiveHealth/推图层数，非 carryDps）。
+   * 默认无（=1，无生命加成）。absolute-dps 专用（formation-buff 跳过 survival）。
+   */
+  equipmentHealthByHero?: Map<string, number> | undefined
+  /**
    * 外部 hero_dps per-carry 贡献（patron_perk + blessing 的 effect_def hero_dps，带 filter 限定）。
    * scoreFormation 内按 carry 属性匹配 qualifier；absolute-dps 下与装备 + ability hero_dps 同 key 加法
    * 合并进 unified hero 池（IC hero_dps_multiplier_mult 同英雄 base DPS，A1 同 key 全源加法）。
@@ -387,6 +393,12 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
         })
         mergePools(survivalPools, fit.pools)
+      }
+      // 装备 health_mult（per-carry，hero-scoped）并入 carry 的 survival:hero 池（外部加成，同 ability survival 池加法）。
+      const equipmentHealthMult = input.equipmentHealthByHero?.get(bestCarryHeroId) ?? 1
+      const equipmentHealthAddPercent = (equipmentHealthMult - 1) * 100
+      if (equipmentHealthAddPercent !== 0) {
+        mergePools(survivalPools, [{ dimension: 'survival', scope: 'hero', addPercent: equipmentHealthAddPercent, multFactor: 1, poolMultiplier: 1 }])
       }
       const carryLevel = input.heroLevels?.get(bestCarryHeroId) ?? DEFAULT_CARRY_LEVEL
       const effectiveHealth = computeEffectiveHealth(

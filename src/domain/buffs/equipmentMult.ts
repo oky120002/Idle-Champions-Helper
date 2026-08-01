@@ -1,5 +1,5 @@
 /**
- * 装备加成计算（per-carry base DPS + 全队 global_dps）。
+ * 装备加成计算（per-carry base DPS + per-carry health + 全队 global_dps）。
  *
  * 数据源：`loot-catalog.json`（normalize 从 raw loot_defines 提取，保留 slot/rarity/effect_string）。
  * 数据源确认：`docs/specs/modules/planner/data-source-confirmations.md` §13.1。
@@ -10,12 +10,14 @@
  * 250 的游戏常量来源未在 definitions 找到（可能客户端硬编码），作校准 knob 保留，待官方公式确认后微调。
  *
  * 已接入 effect（单参数 `kind,value` 格式，enchant 同规则缩放）：
- * - `hero_dps_multiplier_mult`（per-carry base DPS，如明斯克 slot1/2）→ per-hero equipmentAdjustment 乘 carryDps
- *   （loot 未进 damagePool，由 scoreFormation 补全进 damage:hero 池）。
+ * - `hero_dps_multiplier_mult`（per-carry base DPS，如明斯克 slot1/2）→ per-hero equipmentAdjustment，
+ *   scoreFormation 补全进 damage:hero 池。
+ * - `health_mult`（per-carry 生命，heroHealthMultiplier）→ per-hero multiplier，
+ *   scoreFormation 补全进 survival:hero 池（影响 effectiveHealth / 推图层数，非 carryDps）。
  * - `global_dps_multiplier_mult`（阵型级全队 DPS，scope=global）→ 全队聚合 multiplier，
  *   由 scoringBonusInputs 并入 global_dps add pool（damage:global，与 patron/blessing 同池加法）。
  *
- * 未接（留后续 B1）：`health_mult`（survival）、`gold_multiplier_mult`（gold）、
+ * 未接（留后续 B1）：`gold_multiplier_mult`（gold，team-gold 模式）、
  * `buff_base_crit_*`（crit，mult 语义走 critFactor 独立通道）、
  * `buff_upgrade`（元加成，放大另一 upgrade 效果值，需先 resolve 被放大对象）。
  *
@@ -101,6 +103,26 @@ function scaledOwnedEffect(
 }
 
 /**
+ * 一个英雄所有 owned loot 对指定 kind 的加性百分比和（Σ base × (1 + enchant/250)）。
+ * ownedLootBySlot null/空 → 0。供 per-hero 与全队聚合 batch 函数共用（单次建索引复用）。
+ */
+function sumHeroOwnedByKind(
+  index: ReadonlyMap<string, ParsedLootEffect>,
+  heroId: string,
+  ownedLootBySlot: Readonly<Record<string, OwnedLootSlot>> | null,
+  kind: string,
+): number {
+  if (!ownedLootBySlot) {
+    return 0
+  }
+  let sum = 0
+  for (const [slotId, owned] of Object.entries(ownedLootBySlot)) {
+    sum += scaledOwnedEffect(index, heroId, slotId, owned, kind)
+  }
+  return sum
+}
+
+/**
  * 玩家 owned 装备的 per-carry base DPS multiplier = `1 + Σ(base × (1 + enchant/250))/100`。
  * 作 equipmentAdjustment 乘进 carryDps（loot 未进 damagePool，scoreFormation 补全进 damage:hero 池）。
  *
@@ -117,11 +139,7 @@ export function computeEquipmentMult(
     return 1
   }
   const index = indexCatalog(catalog)
-  let addPercent = 0
-  for (const [slotId, owned] of Object.entries(ownedLootBySlot)) {
-    addPercent += scaledOwnedEffect(index, heroId, slotId, owned, 'hero_dps_multiplier_mult')
-  }
-  return 1 + addPercent / 100
+  return 1 + sumHeroOwnedByKind(index, heroId, ownedLootBySlot, 'hero_dps_multiplier_mult') / 100
 }
 
 /**
@@ -138,11 +156,37 @@ export function computeEquipmentAdjustmentByHero(
   }>,
   catalog: readonly LootCatalogEntry[],
 ): Map<string, number> {
-  const result = new Map<string, number>
+  const index = indexCatalog(catalog)
+  const result = new Map<string, number>()
   for (const hero of heroes) {
-    const mult = computeEquipmentMult(hero.heroId, hero.lootBySlot, catalog)
-    if (mult !== 1) {
-      result.set(hero.heroId, mult)
+    const addPercent = sumHeroOwnedByKind(index, hero.heroId, hero.lootBySlot, 'hero_dps_multiplier_mult')
+    if (addPercent !== 0) {
+      result.set(hero.heroId, 1 + addPercent / 100)
+    }
+  }
+  return result
+}
+
+/**
+ * 批量算每英雄的 health multiplier = `1 + Σ(base × (1 + enchant/250))/100`，供 options.equipmentHealthByHero。
+ * `health_mult` 是 hero-scoped（heroHealthMultiplier）：只 boost 装备者自身生命，故 per-carry。
+ * scoreFormation 在 survival 段把 carry 的 health 并入 survival:hero 池（影响 effectiveHealth/推图层数）。
+ *
+ * mult=1（无 owned loot 或 catalog 无匹配）不进 map（scoreFormation 缺省 ?? 1，省载荷）。
+ */
+export function computeEquipmentHealthByHero(
+  heroes: ReadonlyArray<{
+    heroId: string
+    lootBySlot: Readonly<Record<string, OwnedLootSlot>>
+  }>,
+  catalog: readonly LootCatalogEntry[],
+): Map<string, number> {
+  const index = indexCatalog(catalog)
+  const result = new Map<string, number>()
+  for (const hero of heroes) {
+    const addPercent = sumHeroOwnedByKind(index, hero.heroId, hero.lootBySlot, 'health_mult')
+    if (addPercent !== 0) {
+      result.set(hero.heroId, 1 + addPercent / 100)
     }
   }
   return result
@@ -167,12 +211,7 @@ export function computeEquipmentGlobalDpsMult(
   const index = indexCatalog(catalog)
   let addPercent = 0
   for (const hero of heroes) {
-    if (!hero.lootBySlot) {
-      continue
-    }
-    for (const [slotId, owned] of Object.entries(hero.lootBySlot)) {
-      addPercent += scaledOwnedEffect(index, hero.heroId, slotId, owned, 'global_dps_multiplier_mult')
-    }
+    addPercent += sumHeroOwnedByKind(index, hero.heroId, hero.lootBySlot, 'global_dps_multiplier_mult')
   }
   return 1 + addPercent / 100
 }

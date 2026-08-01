@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   computeEquipmentAdjustmentByHero,
   computeEquipmentGlobalDpsMult,
+  computeEquipmentHealthByHero,
   computeEquipmentMult,
   parseLootEffect,
 } from './equipmentMult'
@@ -119,6 +120,39 @@ describe('computeEquipmentGlobalDpsMult', () => {
   it('无 owned loot（未导入存档）→ 1', () => {
     expect(computeEquipmentGlobalDpsMult([], MINSC_CATALOG)).toBe(1)
     expect(computeEquipmentGlobalDpsMult([{ heroId: '1', lootBySlot: {} }], MINSC_CATALOG)).toBe(1)
+  })
+})
+
+describe('computeEquipmentHealthByHero', () => {
+  it('per-hero health（hero 3 slot2 r4=100、hero 10 slot1 r4=100，enchant=0 取 base）', () => {
+    const catalog = [
+      cat('3', '2', '4', 'health_mult,100'),
+      cat('10', '1', '4', 'health_mult,100'),
+    ]
+    const heroes = [
+      { heroId: '3', lootBySlot: { '2': { rarity: 4 } } },
+      { heroId: '10', lootBySlot: { '1': { rarity: 4 } } },
+    ]
+    const map = computeEquipmentHealthByHero(heroes, catalog)
+    expect(map.get('3')).toBeCloseTo(1 + 100 / 100, 5)
+    expect(map.get('10')).toBeCloseTo(1 + 100 / 100, 5)
+  })
+
+  it('enchant 缩放同 hero_dps（base × (1+enchant/250)，hero 3 slot2 r4=100 enchant750 → ×5）', () => {
+    // 100 × (1 + 750/250) = 100 × 4 = 400% → 1 + 4 = 5.0
+    const catalog = [cat('3', '2', '4', 'health_mult,100')]
+    const heroes = [{ heroId: '3', lootBySlot: { '2': { rarity: 4, enchant: 750 } } }]
+    expect(computeEquipmentHealthByHero(heroes, catalog).get('3')).toBeCloseTo(5.0, 1)
+  })
+
+  it('只计 health_mult，hero_dps/global_dps 装备不计入（明斯克 slot1 是 hero_dps）', () => {
+    const heroes = [{ heroId: '7', lootBySlot: { '1': { rarity: 4, enchant: 734 } } }]
+    expect(computeEquipmentHealthByHero(heroes, MINSC_CATALOG).has('7')).toBe(false)
+  })
+
+  it('无 health 装备 → 空 map（不进 map，scoreFormation 缺省 ?? 1）', () => {
+    expect(computeEquipmentHealthByHero([], MINSC_CATALOG).size).toBe(0)
+    expect(computeEquipmentHealthByHero([{ heroId: '7', lootBySlot: {} }], MINSC_CATALOG).size).toBe(0)
   })
 })
 

@@ -55,10 +55,10 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 | gold | 独立模式 | `team_gold_find = base_gold × global_gold_pool × hero_gold_pool`，全队聚合（非单一 carry），走 `team-gold` scoringMode 分支。 |
 | crit | 是 | `crit_factor = 1 + total_chance × (total_damage_mult − 1)`；默认 chance=2.5%/damage=100% 来自 `default_crit_info`。BUD 机制下期望值低估，MVP 可接受。 |
 | vulnerability | 是 | 按场景怪物 tag 条件性匹配（`scenario.enemyTypes`）；add/mult 分流聚合，与 damage pool 一致。 |
-| survival | 推图约束 | `effectiveHealth = baseHealth × health_pool`；`damage_reduction_mult` 玩家侧减伤。不进 carryDps，作为推图预估的存活约束。 |
+| survival | 推图约束 | `effectiveHealth = baseHealth × health_pool`；ability health + 装备 `health_mult`（hero-scoped per-carry，B1-b）+ `damage_reduction_mult` 玩家侧减伤并入 health_pool。不进 carryDps，作为推图预估的存活约束。 |
 | speed | 否 | `attack_speed_mult`/`reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown）。 |
-| global-buff | 是 | patron-perks 的 `global_dps_multiplier_mult`（无条件全局 DPS，`computeActualPatronPerkGlobalBuff`）+ blessings（`computeActualBlessingGlobalBuff`），`combineGlobalBuffMultipliers` 合成外部 global_dps 池；与 ability 源同 key 加法合并进 unified global_dps_pool（A1）。 |
-| equipment | 是 | 装备 `hero_dps_multiplier_mult`（loot-catalog，enchant 缩放 `base×(1+enchant/250)`，`computeEquipmentMult`）+ patron/blessing 的 hero_dps effect_def，与 ability 源同 key 加法合并进 unified hero_dps_pool（A1：IC 同 key 全源加法，`correctness-audit.md` §2）。 |
+| global-buff | 是 | patron-perks（`computeActualPatronPerkGlobalBuff`）+ blessings（`computeActualBlessingGlobalBuff`）+ 装备 global_dps（`computeEquipmentGlobalDpsMult`，B1-a，跨英雄全队聚合）的 `global_dps_multiplier_mult`，`combineGlobalBuffMultipliers` 合成外部 global_dps 池；与 ability 源同 key 加法合并进 unified global_dps_pool（A1）。 |
+| equipment | 是 | 装备 `hero_dps_multiplier_mult`（per-carry，`computeEquipmentAdjustmentByHero`）+ `health_mult`（per-carry survival:hero 池，`computeEquipmentHealthByHero`，B1-b）+ `global_dps_multiplier_mult`（全队，B1-a，见 global-buff 行）；loot-catalog enchant 缩放 `base×(1+enchant/250)`；hero_dps 与 patron/blessing hero_dps effect_def 同 key 加法合并进 unified hero_dps_pool（A1）。 |
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 

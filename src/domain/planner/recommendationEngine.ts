@@ -120,6 +120,8 @@ export interface PlannerRecommendationOptions {
    * 默认无（=1，保持 理论 loot 基线）。UI 接入（owned 装备读取）在
    */
   equipmentAdjustmentByHero?: Map<string, number>
+  /** 装备 per-carry health multiplier（health_mult，hero-scoped 生命）；透传 scoreFormation survival 段。默认无（=1）。 */
+  equipmentHealthByHero?: Map<string, number>
   /**
    * 外部 hero_dps per-carry 贡献（patron/blessing effect_def hero_dps，带 filter）。
    * 由调用方从 effect-definitions.json + active patron/blessing effect_def 经 collectHeroDpsContributions 算后传入；
@@ -278,6 +280,7 @@ function scorePlannerFormation(
     // globalBuff/equipment 对称透传 options；默认值兜底统一在 steadyStateScoring（?? 1）。
     globalBuffMultiplier: options.globalBuffMultiplier,
     equipmentAdjustmentByHero: options.equipmentAdjustmentByHero,
+    equipmentHealthByHero: options.equipmentHealthByHero,
     externalHeroDpsContributions: options.externalHeroDpsContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,
