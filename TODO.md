@@ -50,8 +50,6 @@ repair: rebuild
     - 当前死码（?? 1 默认）已活，非阻塞；近似后果（支持位 loot 未调整）未在 docs/research/data/planner/equipment-and-abilities.md 显式记录
     - 处置：待 owned 装备精化时再评估是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）；当前降低优先级
 
-- global-buffs.json 死产物 ✅ 已收口（2026-08-01，A1 Phase A Commit 2）：删 global-buffs.json + build-models.ts 写出 + 死管线 patron-perk-signals.ts(含 computeGlobalBuffMultiplier) + architecture.md 标注；运行时全局加成走 patron-perks.json + blessings → computeActualPatronPerkGlobalBuff/computeActualBlessingGlobalBuff。 <!-- auto-todo:id=atd_7b9e1f4c2a resolved -->
-
 - adjacentBuff / taggedChampionBuff 死代码 kind 待删（patronPerkMult/heroGoldMultiplier 已收口） <!-- auto-todo:id=atd_5ea037c4a6 -->
   - 记录时间: `2026-08-01T18:02:25+08:00`
   - 类型: follow-up
@@ -61,5 +59,16 @@ repair: rebuild
     - ⏳ adjacentBuff：0 个 adjacent_* 前缀 effect，adjacentResolver 死代码；额外触及运行时 placementSlotRelation.ts:171（`signal.kind === 'adjacentBuff'` 分支）+ plannerNarrative.ts hasAdjacentSignal + 多测试 fixture（steadyStateScoring/placementFit.*/recommendationEngine/plannerModel/plannerNarrative.test）。
     - ⏳ taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码；额外触及运行时 placementFit.ts:77-96（tag/stat 限定节点检查）+ plannerNarrative.ts hasTagSignal + 多测试（placementFit.gating/signalSemantics/plannerModel.test）。
     - 处置：删 kind+resolver+resolverDispatch 注册+运行时分支+测试 fixture（adjacency/tag 机制由 heroDpsMultiplier+positionQualifier/tagQualifier 覆盖，改测试用真实 kind）；独立大子任务，需逐项验证 scoring 无引用。
+
+- 装备 buff_upgrade target 专精的 ownership 泄漏：spec catalog 无 sourceBucket 过滤，选专精时无条件注入 loot/feat 源 wrapper <!-- auto-todo:id=atd_b1e5f3a2c7 -->
+  - 记录时间: `2026-08-01T21:36:00+08:00`
+  - 严重级别: P1
+  - 类型: bug
+  - 位置: `scripts/data/specialization-catalog.ts:108`
+  - 备注: specialization-catalog.ts:108-122 把 specializationDerived 全部（含 loot/legendary/feat 源 wrapper）烘进 spec catalog，runtime 选专精时无条件注入（不查 loot/feat owned）。spec catalog 实测 100 个 buff_upgrade wrapper（32 spec）全是 plain，按 effect-helpers.ts:753-755 排除逻辑，plain wrapper 进 specializationDerived 的只可能是 loot/legendary/feat 源（ability 源 plain 已被排除）。
+    - 影响：例 hero 6 选 spec 90 即得 buff_upgrades,275,90,91,92,975,976,977 的 +275% hero_dps 放大，无需拥有该 loot（overcount）
+    - 证据：specialization-catalog.ts:108-122 无 sourceBucket 过滤；collectEffectEntries 把 target spec 的 wrapper 路由到 specializationDerived；stage 1 e053b759 只过滤 base profile loot/legendary 源，没覆盖 spec catalog 路径
+    - 修复需：(a) specialization-catalog build 按 sourceBucket 过滤 specializationDerived（只留 ability 源 dynamic wrapper，loot/feat 源移出）；(b) 给 spec catalog signal 加 upgradeId（当前无，runtime 反查不到 spec base）；(c) loot 源 spec-targeting wrapper 路由到 owned-aware applyEquipmentBuffs（engine 顺序已保证 spec 注入在 equipment 之前）
+    - 与阶段 2 不相交：loot buff_upgrade target 非 spec 走 applyEquipmentBuffs（owned-aware ✅），target spec 走 spec catalog（本问题），二者互斥无双重计数
 
 <!-- auto-todo:end -->
