@@ -79,7 +79,7 @@
 **结论**：
 - **gzip 传输仅 1.0MB**（结构化重复数据压缩比极高）——网络成本对零预算站完全可接受，典型连接 <1s。
 - 真实成本是 `JSON.parse(17.8MB)` + `resolveHeroAbilityProfiles` 主线程处理（一次性，~数百 ms 量级）。
-- `memoryCache`（Map，`client.ts:4`）保证**会话内不重复加载**；但**刷新 = 全量重下重解析**（无 IndexedDB 持久缓存）。
+- `memoryCache`（Map，`client.ts:4`）保证**会话内不重复加载**；刷新后由 IndexedDB 持久缓存命中（C2，`loadCollectionAtVersion` 按 `${version}:${name}` key 缓存 raw collection，省网络重下 + 17.8MB 重 parse；resolve 仍每次执行，见 §6#1）。
 - `version.json` `cache:'no-store'`（`client.ts:42`）被 memoryCache 架空：会话内不重查版本（轮 7 已记 P2；实为合理设计——每次完整页面加载仍 honor no-store，会话内一致用旧版本+旧 collection）。
 - bundle 健康：hero-abilities 不进任何 chunk；`vite.config.ts` `manualChunks` 分割 vendor/share；路由级 `React.lazy`。
 
@@ -97,7 +97,7 @@
 
 | # | 项 | 动作 / ROI / 影响面 / 决策点 |
 |---|---|---|
-| 1 | collection 无 IndexedDB 持久缓存 | **动作**：仿 user-profile-store 把 resolved collection 写 IndexedDB，按 `version.json.current` 作 key。**ROI**：省刷新时的 `JSON.parse(17.8MB)` + resolve + 1.0MB 传输（~数百 ms 主线程 + 网络）。**影响面**：`client.ts` loadCollection 链 + 新 store + 失效策略。**决策点**：缓存粒度（整 collection vs per-hero 子集）、失效（version current 变更触发整批失效）、**校验层级**——须与轮 7 IndexedDB schema 校验 P1 协同（同样的 store-reads-bare-cast 腐蚀→静默零分风险，见 [[runtime-edge-audit]] §2 #4）。版本更新低频（周级），ROI 中等。 |
+| 1 | ✅ collection IndexedDB 持久缓存（C2，2026-08-01 收口） | **已落地**：`loadCollectionAtVersion`（`client.ts`）在 memoryCache 与 fetch 间插 IDB 层（新 `dataCollections` store，DB v5→v6），按 `${version}:${name}` key 缓存**raw** `DataCollection<T>`（fetchJson 后、resolve 前，plain JSON 可结构化克隆）。读出走 zod 校验（具名 champions/adventures/variants/patrons 深校验 + 其余信封校验，复用 D2 schema 与 C1 `parseStoredRecord` 哲学）；腐蚀当 miss 回退 fetch 并清坏键；IDB 不可用自动降级 fetch（零回归）。**失效**：version.current 变更 → key 变 → 天然失效（旧 key 惰性忽略）。**未做**：缓存 resolved（可另省 resolve ~数百 ms，但 hero-abilities resolve 产物含 Decimal 实例，结构化克隆丢原型方法，需另设计序列化，ROI 不抵复杂度，暂缓）。 |
 
 ### P2（当轮处置）
 
@@ -117,4 +117,4 @@
 | 重渲染失控？ | options/placements 全 memoize + debounce + requestId | 健康 |
 | decimal.js 慢操作在热路径？ | log10 生产 0 调用 | 健康 |
 
-**总判**：无 P0。唯一真实 P1 是 collection 缺 IndexedDB 持久缓存（刷新重解析 17.8MB），ROI 中等且须与轮 7 schema 校验协同，不当轮动手。bundle / 路由分割 / memo / Worker 卸载 / debounce 均已就位，符合零预算静态站约束。
+**总判**：无 P0。P1 collection IndexedDB 持久缓存已收口（C2，§6#1）：raw 缓存省网络 + 17.8MB 重 parse，resolve 仍每次执行（resolved 缓存暂缓）。bundle / 路由分割 / memo / Worker 卸载 / debounce 均已就位，符合零预算静态站约束。

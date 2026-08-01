@@ -114,3 +114,26 @@ export const championsCollectionSchema = collection(championSchema)
 export const adventuresCollectionSchema = collection(adventureSchema)
 export const variantsCollectionSchema = collection(variantSchema)
 export const patronsCollectionSchema = collection(patronSchema)
+
+/**
+ * collection 信封（DataCollection<T> 契约）：items 必为数组、updatedAt 必为字符串。
+ * 用于无具名 schema 的 collection 读出校验——只拦信封级腐蚀，item 内部由 TS 类型管。
+ */
+export const collectionEnvelopeSchema = collection(z.unknown())
+
+/**
+ * 具名深校验 collection：planner/限制筛选/展示核心输入，复用 D2 既有 schema。
+ * 读出 IDB 持久缓存时，具名者走 item 级深校验拦腐蚀，其余走信封校验（C2）。
+ * 新增 collection schema 时在此登记即可。
+ */
+const collectionSchemaByName: Record<string, z.ZodTypeAny> = {
+  champions: championsCollectionSchema,
+  adventures: adventuresCollectionSchema,
+  variants: variantsCollectionSchema,
+  patrons: patronsCollectionSchema,
+}
+
+/** 具名 collection → 深校验 schema；未登记 → 信封校验 schema。 */
+export function getCollectionReadSchema(name: string): z.ZodTypeAny {
+  return collectionSchemaByName[name] ?? collectionEnvelopeSchema
+}
