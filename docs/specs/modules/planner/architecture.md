@@ -6,95 +6,110 @@ planner 是个人成长导向阵型决策台的核心模块：在用户当前拥
 
 ## 计算原则
 
-planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最优配置，最大化 DPS 队 / 金币队 / 速度队三种效益（见根 `README.md`「根本目标」）。以下原则是所有 planner 开发的硬约束，不准偏离。
+planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最优配置，最大化输出（carry-dps）/ 金币（team-gold）效益。以下原则是所有 planner 开发的硬约束。
 
 ### 投影模式（约束②）
 
-阵型模拟器本质是「阵型内 signal 聚合器」，外部全局加成（恩赐祝福 / 赞助者）不属于阵型。因游戏只给全量数据、无纯阵型数据，加入参开关 `aggregateProjection`：
+阵型模拟器本质是「阵型内 signal 聚合器」，外部全局加成（祝福 / 赞助者）不属于阵型。加入参开关 `aggregateProjection`：
 
-- `'absolute-dps'`（默认）：`objectiveValue` = baseDamage × levelCurve × globalBuff × heroDpsPool × damagePool × crit × vuln。globalBuff/heroDpsPool 是 ability 池与外部加成（patron/blessing/装备）同 key 加法合并后的 unified 池（A1：IC 同 key 全源加法，非跨源相乘）；damagePool 为残余非 global/hero 池。绝对量未校准（baseDamage / BUD 未校准），仅作 BUD 校准回归基线。
-- `'formation-buff'`：`objectiveValue` = 阵型内 ability 聚合因子（globalBuff × heroDpsPool × damagePool × crit × vuln，池为 ability-only 不含外部加成），**不含** baseDamage / levelCurve / 外部加成。对照止于阵型倍率；外部加成注入只发生在 absolute-dps（约束②）。
+- `'absolute-dps'`（默认）：`objectiveValue` = baseDamage × levelCurve × globalBuff × heroDpsPool × damagePool × crit × vuln。globalBuff / heroDpsPool 是 ability 池与外部加成（patron / blessing / 装备）同 key 加法合并后的 unified 池；damagePool 为残余非 global / hero 池。绝对量未校准，作 BUD 校准回归基线。
+- `'formation-buff'`：`objectiveValue` = 阵型内 ability 聚合因子（globalBuff × heroDpsPool × damagePool × crit × vuln，池为 ability-only 不含外部加成），**不含** baseDamage / levelCurve / 外部加成。外部加成注入只发生在 absolute-dps。
 
 命名锁：**禁止复用 `ComputationMode`**——该名已用于 beam-search 候选裁剪（`computationMode.ts`，`full|p90|…|p50`），两者正交。
 
 ### 外部加成入参契约（约束③）
 
-计算器不管调用方登没登录，只看入参 `globalBuffMultiplier` 是否非 undefined：传了算、没传默认 1（`steadyStateScoring.ts` scoreFormation 内 `?? 1`）。是否传由调用方决定（UI 开关 / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile 的 blessing/favor**——blessing/favor 已由 `userProfileNormalizer` 保留进 profile（`blessings` / `favor` 字段），按约束③计算器不直接读，由适配层聚合成 `globalBuffMultiplier` 传入（生产侧接入 phased；oracle 度量回路已建，见 `damageReferenceVerification`）。
+计算器不管调用方登没登录，只看入参是否传入。**未传的加成入参按其语义的数学单位元回退，贡献 0 加成（等价跳过该能力）**，绝不臆造数值：
+
+| 语义 | 入参 | 未传时回退 | 为何是此值 |
+|---|---|---|---|
+| multiplier（1+Σ/100） | `globalBuffMultiplier` / `equipmentAdjustmentByHero` / `equipmentHealthByHero` | **1** | 乘法单位元；`steadyStateScoring.ts` 内 `(mult−1)×100` 折算为 0% addPercent |
+| addPercent（Σ%） | `equipmentGlobalDpsByHero` / `equipmentGoldByHero` | **0** | 加法单位元；`sumPlacedEquipmentAddPercent` 空 map → 返回 0 |
+| 列表 / 对象 | `externalHeroDpsContributions` / `equipmentCritByHero` / `equipmentBuffsByHero` | **空** | 空数组 / undefined → 循环不执行 / 判空跳过 |
+
+multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100` 折算成 addPercent，1 折算为 0%；addPercent 类回退 0；列表类回退空。三者殊途同归：**未传 = 0 贡献 = 不进 pool = 跳过该能力加成**。
+
+是否传由调用方决定（UI / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile**——祝福 / favor / patron 已由 `userProfileNormalizer` 保留进 `UserProfileSnapshot`，由适配层 `buildScoringBonusInputs`（`scoringBonusInputs.ts`）聚合成各加成入参传入。
+
+> 非加成数值的特殊默认（近似 / 模式选择，非「跳过」）：`heroLevels ?? 1`（未拥有英雄按 1 级保守估算，levelCurve=rate^1，保留英雄间增长率差异）、`manualStackCount ?? 1000`（动态层数假设，area≈100 上限，UI 可覆盖）、`aggregateProjection ?? 'absolute-dps'`（主模式）。依据见 `simulator.md`。
 
 ### 加成建模正确性原则
 
-planner 对伤害加成的建模遵循以下硬约束（用户决策，2026-08-01）：
-
-1. **精确优先**：每个已建模的加成来源必须按 IC 真实叠加语义算对——同 effect key（如 `global_dps_multiplier_mult` / `hero_dps_multiplier_mult`）的所有来源（技能 / 装备 / patron / blessing…）加法叠加，不独立相乘。
-2. **不接受负负得正**：一个高估 bug 与一个低估缺口互相抵消、让数值「看起来接近」不可接受——修 bug 后即使总偏差变大（暴露真实缺口），也优于错误抵消。
-3. **宁可不准，不可错**：未建模的来源明确标注「没算」（不准确，可接受）；错误建模（如把条件加成剥成无条件 = 过度生效）不可接受。带未解析条件的 effect 一律保守丢弃，不臆断。
+1. **精确优先**：每个已建模的加成来源按 IC 真实叠加语义算对——同 effect key（如 `global_dps_multiplier_mult` / `hero_dps_multiplier_mult`）的所有来源（技能 / 装备 / patron / blessing）加法叠加（unified 池），不独立相乘。
+2. **不接受负负得正**：高估 bug 与低估缺口互相抵消不可接受——修 bug 后即使总偏差变大（暴露真实缺口），也优于错误抵消。
+3. **宁可不准，不可错**：未建模来源明确标注「没算」（可接受）；错误建模（如条件加成剥成无条件 = 过度生效）不可接受。带未解析条件的 effect 一律保守丢弃，不臆断。
 4. **劣后分类**：条件性攻击加成（种族 / 年龄 / 性别 / 小队等）属锦上添花，待主体加成正确性收敛后再做。
 
-背景调研与修复路径：`docs/research/data/planner/damage-bonus-sources.md`（A1）。原则 1（同 key 加法）已由 A1 落地（2026-08-01）：`scoreFormation` 把外部加成注入 ability 池副本实现同 key 全源加法，偏差由「负负得正的接近」转为「纯低估」（未建模缺口显现，见 ADR 0015 变更）。
-
-### Hermetic 边界（审计结论）
+### Hermetic 边界
 
 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
 
-- **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`（域不向外层依赖）。
-- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection` / `loadVersion`）。唯一非域依赖是 `decimal.js`。
+- **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`。
+- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection`）。唯一非域依赖是 `decimal.js`。
 - 所有数据经适配层 `usePlannerCollections`（唯一调 `loadCollection` 处）→ 装入 `PlannerCollections` → 经 `runner.updateCollections()` 喂入。
 
 由 `src/domain/planner/hermeticBoundary.test.ts` 守护，违规即 CI fail。
 
 ### 数据分类铁律
 
-计算器消费的数据严格分两类，决定「加载方式」vs「入参方式」：
+计算器消费的数据严格分两类：
 
-- **系统基础数据**（不可变游戏规则：技能解锁等级、buff 机制定义、英雄基础属性 / cost 曲线、patron perk 定义、专长定义、装备目录、怪物 / BUD 曲线…）：**不是 per-call 入参**。启动时一次性加载或用到时按需缓存，进 `PlannerCollections` 数据供给通道。适配层（`usePlannerCollections` / data-client）负责加载与缓存。
-- **动态状态**（随游戏开展变动：当前英雄等级、当前阵型、当前场景 / 层数、patron 选择、祝福量、专长 / feat / familiar 选择、manualStackCount…）：**才是 per-call 入参**（`PlannerEvaluateInput`）。
+- **系统基础数据**（不可变游戏规则：技能解锁等级、buff 机制定义、英雄基础属性 / cost 曲线、patron perk 定义、feat / 专精定义、装备目录、怪物 / BUD 曲线）：**不是 per-call 入参**。启动时加载进 `PlannerCollections`（`usePlannerCollections` 负责加载与缓存）。
+- **动态状态**（随游戏开展变动：当前英雄等级、当前阵型、场景 / 层数、patron 选择、祝福量、feat / 专精选择、manualStackCount）：**才是 per-call 入参**。
 
-例如「等级解锁门控」：解锁等级是**基础数据**（build 把 `required_level` 烘进 `HeroAbilitySignal`），英雄当前等级是**动态入参**（`heroLevels`，已有）；计算器按 `requiredLevel <= heroLevel` 过滤 signal，**不引入新入参**。
+例如「等级解锁门控」：解锁等级是基础数据（build 把 `required_level` 烘进 `HeroAbilitySignal.requiredLevel`），英雄当前等级是动态入参（`heroLevels`）；计算器按 `requiredLevel <= heroLevel` 过滤 signal。
 
-### 入参契约（冻结清单）
+## 入参契约
 
-下表一次性登记全部入参，避免每次开发都「发现某参数没传」。`consumed`=已消费；`phased`=已登记待实现；nullable→可不传，非空→设默认。
+下表登记全部入参的代码消费状态。`consumed` = 已接入评分链路。
 
-**A. 基础数据（加载 / 缓存进 PlannerCollections，非 per-call 入参）**
-
-| 字段 | 状态 |
-|---|---|
-| `variants` / `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
-| signal 解锁等级 `required_level` | consumed（已烘进 `HeroAbilitySignal.requiredLevel`，消费侧 evaluatePlacementFit 按 supportLevel 过滤） |
-| loot-catalog / 专长定义 / 怪物·BUD 曲线 | consumed（组件在） |
-
-**B. 动态状态（per-call 入参 PlannerEvaluateInput）**
+**A. 基础数据（`PlannerCollections`，启动加载 / 缓存，非 per-call）**
 
 | 字段 | 状态 |
 |---|---|
-| `placements`（当前阵型）/ `variant`（场景 / objectiveArea / topology）/ `heroLevels`（每英雄当前等级） | consumed |
-| `scoringMode` / `candidateMode` / `computationMode` / `beamWidth` / `lockedCarryHeroId` / `lockedSlots` | consumed |
-| `manualStackCount`（当前层数假设） | consumed |
-| `globalBuffMultiplier`（外部加成）/ `equipmentAdjustmentByHero` | domain consumed、**phased** UI 接入 |
-| `aggregateProjection`（模式开关） | consumed（本轮新增） |
-| patron 选择 / blessing·favor 量 | **phased**（适配层聚合成 `globalBuffMultiplier` 传入，非直接入参） |
-| `perHeroSpecialization` / feat·familiar / modron 状态 | **phased**（待接入评分） |
+| `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
+| `featCatalog` / `specializationCatalog` | consumed（`applyActiveFeats` / `applyActiveSpecializations` 按玩家选择注入 profile） |
+| signal 解锁等级 `required_level` | consumed（烘进 `HeroAbilitySignal.requiredLevel`） |
+| loot-catalog / effect-definitions / patron-perks catalog | consumed（`buildScoringBonusInputs` 装配外部加成） |
+| 怪物 / BUD 曲线 | consumed（`monsterStats.ts` 内联全局常量） |
 
-**后续目标**（服务根本目标但尚未实现，登记在此防重复发现）：speed `ScoringMode`；绝对伤害 BUD 校准；`globalBuffMultiplier` 生产侧聚合接入（patron 选择 + blessing/favor 量 → 适配层算乘数；oracle 度量回路已建，见 `damageReferenceVerification`）+ UI 透传；`equipmentAdjustmentByHero` UI 接入；perHeroSpecialization / feat / familiar / modron 动态状态接入评分。
+**B. 动态状态（per-call `PlannerEvaluateInput` / `options`）**
+
+| 字段 | 状态 |
+|---|---|
+| `placements` / `variant` / `heroLevels`（取自 `ownedHeroes.level`，未拥有按 `DEFAULT_CARRY_LEVEL=1`） | consumed |
+| `scoringMode` / `candidateMode` / `computationMode` / `beamWidth` | consumed |
+| `lockedCarryHeroId` / `lockedSlots` | consumed |
+| `manualStackCount`（动态层数假设） | consumed |
+| `aggregateProjection`（投影模式开关） | consumed |
+| `globalBuffMultiplier`（patron + blessing 账号级 global_dps） | consumed（`buildScoringBonusInputs` 合成） |
+| `equipmentAdjustmentByHero`（hero_dps） / `equipmentHealthByHero` / `equipmentGlobalDpsByHero` / `equipmentGoldByHero` / `equipmentCritByHero` | consumed（装备五通道，placement-aware / per-carry） |
+| `equipmentBuffsByHero`（buff_upgrade wrapper，按 target upgradeId 反查 base 注入 profile） | consumed |
+| `externalHeroDpsContributions`（patron / blessing 的 effect_def hero_dps） | consumed |
+| `profileSnapshot.activeContext`（patronId / deity，过滤 type1 patron / 地图 blessing） | consumed |
+
+## 未接入能力
+
+架构层当前未接入评分的能力边界（细节见各专题文档）：等级基线估算（`simulator.md`）、familiar / modron 状态（入参契约表登记，未消费）。其余按主题归位：ult / click / modron 辅助指标（`computation-runtime.md`）、数值表达式（`expression-evaluator.md`）、speed 评分模式（`simulator.md`）、尚不支持的 carry / 计数条件（`recommendation.md`）、孤儿机制扫描（`dps-mechanic-abstraction.md`）。
 
 ## 决策记录（ADR）
 
-计算原则与下列 ADR 互为依据（决策 why 在 ADR，最终态在此与各专题 spec）：
+决策 why 在 ADR，最终态在本目录各专题 spec。ADR 位于 `docs/decisions/`：
 
-- `0008` 加成机制按自然形态隔离（不引入统一接口/注册表）
-- `0009` 真实目标量 carryDps + pool 聚合 + beam search（淘汰启发式/黑盒）
-- `0010` hermetic 入参契约（纯函数，永不读登录态/数据源）
+- `0008` 加成机制按自然形态隔离（不引入统一接口 / 注册表）
+- `0009` 真实目标量 carryDps + pool 聚合 + beam search（淘汰启发式 / 黑盒）
+- `0010` hermetic 入参契约（纯函数，永不读登录态 / 数据源）
 - `0011` 投影模式 aggregateProjection（阵型倍率 vs 绝对 DPS 双模）
 - `0012` BUD vs DPS（相对比较用 DPS，绝对推图用 BUD）
 - `0013` DPS 机制抽象阈值（≥2 通用路径，>10 升级注册表）
 - `0014` GameNumber 用 decimal.js
-- `0015` 明斯克参照作重构回归守护（非绝对精度标尺）
-- `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量评分/降 beam）
+- `0015` 英雄参照作重构回归守护（非绝对精度标尺）
+- `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量评分 / 降 beam）
 - `0017` 专精外部选择（build catalog + runtime 按玩家选择注入）
 
 ## 三层架构
 
-能力表达、加成聚合、优化目标分层是 planner 的核心设计原则：
+能力表达、加成聚合、优化目标分层是 planner 的核心设计：
 
 ```text
 能力表达层（HeroAbility）    统一英雄能力模型，hero-agnostic；把官方散落 effect 解析为结构化 signal
@@ -106,10 +121,8 @@ planner 对伤害加成的建模遵循以下硬约束（用户决策，2026-08-0
 搜索层（beamSearch）          按 objective 最大化做 deterministic beam search
 ```
 
-关键约束：
-
-- placementFit 是 pool 聚合器，不产出启发式「评分」；旧 `score` / `heuristicRoleMultiplier` / `isCarryViable` 已淘汰。
-- 每种模式用真实目标量：carry-dps 模式 = `carryDps`；team-gold 模式 = `teamGoldFind`。
+- placementFit 是 pool 聚合器，不产出启发式「评分」。
+- 每种模式用真实目标量：carry-dps = `carryDps`；team-gold = `teamGoldFind`。
 - 算法与英雄的握手点唯一：`HeroAbilityProfile`。
 - 任何无法静态计算的变量进入 `warnings`，不静默计入 `objectiveValue`。
 
@@ -121,7 +134,9 @@ public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json  推荐专用�
 browser credential input       用户手动输入的凭证，只在前端内存中使用
 IndexedDB user snapshot        归一化私人账号快照
 IndexedDB planner overrides    浏览器本地 planner 语义覆盖
-src/domain/simulator/*         数字层、基线、effect、稳态 DPS
+src/domain/abilities/*         能力表达层（HeroAbilitySignal / ResolvedHeroAbilityProfile）
+src/domain/simulator/*         数字层、基线、effect、稳态 DPS 公式
+src/domain/buffs/*             外部加成 provider（装备 / patron / blessing / effect_def 解引用）
 src/domain/planner/*           场景、候选池、合法性、搜索和排序
 src/pages/planner/*            自动计划工作台 UI
 scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
@@ -129,48 +144,36 @@ scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 
 页面层只编排状态和展示。凭证解析、官方只读 client、用户快照、模拟器和 planner 搜索都放在邻近领域模块，避免把长规则写进 JSX。
 
-目录职责：
-
-- `src/data/user-sync/`：官方只读 client、allowlist、同步状态、payload normalizer。
-- `src/data/user-profile-store/`：IndexedDB snapshot store 与可选 credential vault。
-- `public/data/v1/{hero-abilities,scenarios,semantic-overrides}.json`：推荐引擎直接消费的归一化模型。
-- `scripts/data/semantic-overrides.json`：仓库跟踪的推荐语义补丁。
-- `src/domain/user-profile/`：`UserProfileSnapshot`、`OwnedChampionState`、`ImportedFormationSave`、装备、feat、传奇和 warning 类型。
-- `src/domain/abilities/`：能力表达层——`HeroAbilitySignal`、`ResolvedHeroAbilityProfile`、build→JSON→runtime 边界类型。
-- `src/domain/simulator/`：`GameNumber`、最后专精基线、金币预算基线、`baseDps`/`BUD`/`survival` 计算、稳态 DPS 模拟。
-- `src/domain/planner/`：变体限制投影（`variantConstraints`）、候选池、假设英雄公平基线、阵型合法性、beam search 和结果模型。
-- `src/pages/planner/`：profile 状态面板、场景选择、候选模式、基线输入、专精选择（per-hero session override，ADR 0017 UI 输入源）、结果卡和保存 preset 操作。
-- `scripts/private-user-data/`：敏感扫描、私有 env loader、私有快照 manifest。
-
 ## 命名约定
 
 通用符号（英雄能力、数据产物）去除 `Planner` 前缀，专属推荐引擎模块保留：
 
-- 能力层类型与函数去前缀：`HeroAbilitySignal`、`matchesHeroQualifier`、`attachSignalSemantics`、`normalizeEffectSignal`、`buildOfficialHeroModel`、`resolveHeroAbilityProfiles`。
+- 能力层类型与函数去前缀：`HeroAbilitySignal`、`matchesHeroQualifier`、`attachSignalSemantics`、`resolveHeroAbilityProfiles`。
 - JSON 产物与 IndexedDB key 按通用性命名：`hero-abilities.json`、`scenarios.json`、`semantic-overrides.json`；IndexedDB store `heroAbilityOverrides`。
-- 推荐引擎模块保留 `planner` 命名（`src/domain/planner/`：recommendationEngine / beamSearch / steadyStateScoring / candidatePool / placementFit），「阵型推荐引擎」职责在此命名准确。
+- 推荐引擎模块保留 `planner` 命名（`src/domain/planner/`：recommendationEngine / beamSearch / steadyStateScoring / candidatePool / placementFit）。
 
 ## BUD 与 DPS 的取舍
 
 BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。
 
 - 阵型推荐（相对比较）：DPS 足够，planner 用 `carryDps` 近似优化。
-- 推图层数预估（绝对值）：IC 怪物血量按 BUD 缩放；用 DPS 近似会偏差，BUD 更准。
+- 推图层数预估（绝对值）：IC 怪物血量按 BUD 缩放；用 DPS 近似会偏差。
 
-两者都计算、都展示。BUD 公式与绝对值校准证据见 `docs/research/data/planner/bud-calibration.md`；推图层数预估算法见 `computation-runtime.md`。
+两者都计算、都展示。当前 BUD 用 best carry 的单次伤害近似（`budCalculation.ts`，carry 通常设 BUD）；绝对值未校准，推图层数预估依赖校准才闭环。BUD 公式与校准证据见 `docs/research/data/planner/bud-calibration.md`；推图层数预估算法见 `computation-runtime.md`。
 
-## 模拟/UI 分离
+## 模拟 / UI 分离
 
-模拟引擎全部在 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/`，零 React/UI 依赖。两个纯函数入口共享 `resolvePlannerScenario` 做 variant→scenario 与 blocker 解析：
+模拟引擎全部在 `src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/`，零 React / UI 依赖。两个纯函数入口共享 `resolvePlannerScenario` 做 variant → scenario 与 blocker 解析，入参统一为 `PlannerInput`（`variant` / `collections` / `profileSnapshot` / `placements` / `options`）：
 
-- `buildPlannerRecommendation(variant, collections, profile, options)`：beam search 找 Top K 最佳阵型。
-- `evaluateFormation(variant, collections, profile, placements, options)`：评估用户指定的单一阵型（不搜索），输出完整拆解。
+- `buildPlannerRecommendation(input)`：beam search 找 Top K 最佳阵型。
+- `evaluateFormation(input)`：评估用户指定的单一阵型（不搜索），输出完整拆解。
+
+两入口共用 `scorePlannerFormation`（`recommendationEngine.ts`）调 `scoreFormation`，结构性锁定透传一致。
 
 CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（`scripts/simulator/simulate.ts`）读 `public/data/v1/*.json` → 引擎 → stdout JSON。无 `--profile` 时合成「全英雄已拥有（level 1）」快照演示完整链路。
 
 ## 深入阅读
 
 - 数据、隐私、目录与存储：`data-and-privacy.md`
-- 推荐英雄、站位、模型字段与 merge 策略：`recommendation.md`
-- 数字层、基线、加成聚合与计算模式：`simulator.md`
-- Web Worker、推图预估、输出合同与 UI：`computation-runtime.md`
+- 推荐英雄、站位、模型字段与条件匹配：`recommendation.md`
+- 数字层、加成聚合与评分维度 / Web Worker、推图预估、输出合同与 UI：`simulator.md` / `computation-runtime.md`
