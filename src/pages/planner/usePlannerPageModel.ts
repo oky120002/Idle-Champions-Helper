@@ -40,6 +40,10 @@ export function usePlannerPageModel() {
   const [computationMode, setComputationMode] = useState<ComputationMode>('p50')
   // 动态层数假设（dynamic-stack-multiply，如蔚出言不逊）；默认与引擎 DEFAULT_MANUAL_STACK_COUNT 同源。
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
+  // 假设装备配置（未导入存档时的 UI what-if）：默认毕业 = 稀有度 4（传说）+ 附魔 2000。
+  // 有存档时按存档 per-slot 实际，此配置仅无存档分支生效（buildScoringBonusInputs 内部判优先级）。
+  const [equipmentRarity, setEquipmentRarity] = useState(4)
+  const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
@@ -59,8 +63,18 @@ export function usePlannerPageModel() {
   // 外部加成装配（装备 + patron perk + blessing → scoring 三项入参）下沉纯函数 buildScoringBonusInputs；hook 只 memoize。
   // 未导入存档（profileSnapshot=null）→ 空 map / globalBuff 1 / hero_dps 空（scoreFormation 缺省，向后兼容）。
   const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
-    () => buildScoringBonusInputs({ profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog }),
-    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog],
+    () => buildScoringBonusInputs({
+      profileSnapshot,
+      lootCatalog,
+      effectDefinitions,
+      patronPerkCatalog,
+      hypotheticalEquipment: {
+        heroIds: collections.plannerHeroes.map((hero) => hero.heroId),
+        rarity: equipmentRarity,
+        enchant: equipmentEnchant,
+      },
+    }),
+    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, equipmentRarity, equipmentEnchant],
   )
   // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(
@@ -117,6 +131,14 @@ export function usePlannerPageModel() {
     setManualStackCount(count)
     setSelectedResultIndex(0)
   }, [])
+  const selectEquipmentRarity = useCallback((rarity: number) => {
+    setEquipmentRarity(rarity)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectEquipmentEnchant = useCallback((enchant: number) => {
+    setEquipmentEnchant(enchant)
+    setSelectedResultIndex(0)
+  }, [])
   const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
     setLockedCarryHeroId(heroId)
   }, [])
@@ -150,6 +172,8 @@ export function usePlannerPageModel() {
     championById,
     collections,
     computationMode,
+    equipmentEnchant,
+    equipmentRarity,
     lockedCarryHeroId,
     lockedSlots,
     loadError,
@@ -167,6 +191,8 @@ export function usePlannerPageModel() {
     clearSlotLock,
     selectCandidateMode,
     selectComputationMode,
+    selectEquipmentEnchant,
+    selectEquipmentRarity,
     selectManualStackCount,
     selectLockedCarryHeroId,
     selectResultIndex,

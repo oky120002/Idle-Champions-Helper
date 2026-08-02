@@ -18,6 +18,7 @@ import { PlannerBreakdown } from './planner/PlannerBreakdown'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerStackCount } from './planner/PlannerStackCount'
+import { PlannerHypotheticalEquipment } from './planner/PlannerHypotheticalEquipment'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import {
   patchEvaluatePlacements,
@@ -65,6 +66,9 @@ export function PlannerEvaluatePage() {
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
+  // 假设装备配置（未导入存档时 UI what-if）：默认毕业 = 稀有度 4 + 附魔 2000。
+  const [equipmentRarity, setEquipmentRarity] = useState(4)
+  const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
 
   // 切场景 = 换阵型拓扑，旧 slotId 失效；清锁与已摆阵型，避免 stale slotId 复活（fill-remaining 会回填 lockedSlots）。
   const selectVariantId = useCallback((variantId: string | null) => {
@@ -86,8 +90,18 @@ export function PlannerEvaluatePage() {
   // 外部加成（装备 + patron + blessing）单一来源：buildScoringBonusInputs 纯函数装配，与主 planner 页同源。
   // 未导入存档（profileSnapshot=null）→ 各源缺省（无加成，向后兼容）。
   const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
-    () => buildScoringBonusInputs({ profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog }),
-    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog],
+    () => buildScoringBonusInputs({
+      profileSnapshot,
+      lootCatalog,
+      effectDefinitions,
+      patronPerkCatalog,
+      hypotheticalEquipment: {
+        heroIds: collections.plannerHeroes.map((hero) => hero.heroId),
+        rarity: equipmentRarity,
+        enchant: equipmentEnchant,
+      },
+    }),
+    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, equipmentRarity, equipmentEnchant],
   )
   const evaluateOptions = useMemo(
     () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions }),
@@ -241,6 +255,14 @@ export function PlannerEvaluatePage() {
                 <PlannerScoringMode value={scoringMode} onChange={setScoringMode} />
                 <PlannerCandidateMode value={candidateMode} onChange={setCandidateMode} />
                 <PlannerStackCount value={manualStackCount} onChange={setManualStackCount} />
+                {!profileSnapshot ? (
+                  <PlannerHypotheticalEquipment
+                    rarity={equipmentRarity}
+                    enchant={equipmentEnchant}
+                    onRarityChange={setEquipmentRarity}
+                    onEnchantChange={setEquipmentEnchant}
+                  />
+                ) : null}
               </div>
             </section>
 

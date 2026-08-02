@@ -61,6 +61,52 @@ describe('buildScoringBonusInputs', () => {
     expect(r.externalHeroDpsContributions).toEqual([])
   })
 
+  it('未导入存档 + hypotheticalEquipment → 按假设装备（统一稀有度+附魔）算装备加成', () => {
+    const lootCatalog: LootCatalogEntry[] = [
+      { heroId: '1', slotId: '1', rarity: '4', effectString: 'hero_dps_multiplier_mult,100' },
+      { heroId: '1', slotId: '2', rarity: '4', effectString: 'hero_dps_multiplier_mult,50' },
+    ]
+    const r = buildScoringBonusInputs({
+      profileSnapshot: null,
+      lootCatalog,
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      hypotheticalEquipment: { heroIds: ['1'], rarity: 4, enchant: 2000 },
+    })
+    // 两槽 hero_dps base 100+50=150，enchant 2000 → ×(1+2000/250)=×9 → 1350 addPercent → multiplier 14.5
+    expect(r.equipmentAdjustmentByHero.get('1')).toBeCloseTo(14.5, 5)
+    expect(r.equipmentBuffsByHero.size).toBe(0) // 该 catalog 无 buff_upgrade 条目
+  })
+
+  it('有存档时 hypotheticalEquipment 被忽略（按存档 per-slot 实际）', () => {
+    const lootCatalog: LootCatalogEntry[] = [
+      { heroId: '1', slotId: '1', rarity: '1', effectString: 'hero_dps_multiplier_mult,10' },
+      { heroId: '1', slotId: '1', rarity: '4', effectString: 'hero_dps_multiplier_mult,40' },
+    ]
+    const snap = makeSnapshot({
+      ownedHeroes: [makeOwnedHero('1', { '1': { slotId: '1', rarity: 1, gild: 0, enchant: 0, pigment: 0, found: {} } })],
+    })
+    const r = buildScoringBonusInputs({
+      profileSnapshot: snap,
+      lootCatalog,
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      hypotheticalEquipment: { heroIds: ['1'], rarity: 4, enchant: 2000 }, // 应被忽略
+    })
+    // 存档 rarity 1 hero_dps=10，enchant 0 → ×1 = 10 → multiplier 1.1（假设 rarity4+enchant2000 不生效）
+    expect(r.equipmentAdjustmentByHero.get('1')).toBeCloseTo(1.1, 5)
+  })
+
+  it('未导入存档且无 hypotheticalEquipment → 空 map（向后兼容）', () => {
+    const r = buildScoringBonusInputs({
+      profileSnapshot: null,
+      lootCatalog: [{ heroId: '1', slotId: '1', rarity: '4', effectString: 'hero_dps_multiplier_mult,100' }],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+    })
+    expect(r.equipmentAdjustmentByHero.size).toBe(0)
+  })
+
   it('patron global_dps perk → globalBuffMultiplier = 1 + Σ(value)/100', () => {
     const perks: PatronPerkCatalogEntry[] = [
       { id: '1', patronId: '1', typeId: 2, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },

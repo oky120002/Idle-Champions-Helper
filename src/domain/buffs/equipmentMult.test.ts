@@ -10,6 +10,7 @@ import {
   computeEquipmentMult,
   parseBuffUpgradeEffect,
   parseLootEffect,
+  synthesizeHypotheticalLootByHero,
 } from './equipmentMult'
 import type { LootCatalogEntry } from './equipmentMult'
 
@@ -309,5 +310,40 @@ describe('collectEquipmentBuffsByHero', () => {
     const catalog = [cat('1', '3', '4', 'buff_upgrade,275,4')]
     expect(collectEquipmentBuffsByHero([{ heroId: '1', lootBySlot: {} }], catalog).has('1')).toBe(false)
     expect(collectEquipmentBuffsByHero([], catalog).size).toBe(0)
+  })
+})
+
+describe('synthesizeHypotheticalLootByHero', () => {
+  const catalog: LootCatalogEntry[] = [
+    { heroId: '1', slotId: '1', rarity: '1', effectString: 'hero_dps_multiplier_mult,10' },
+    { heroId: '1', slotId: '1', rarity: '4', effectString: 'hero_dps_multiplier_mult,40' },
+    { heroId: '1', slotId: '2', rarity: '4', effectString: 'hero_dps_multiplier_mult,20' },
+    { heroId: '2', slotId: '1', rarity: '4', effectString: 'hero_dps_multiplier_mult,15' },
+  ]
+
+  it('每英雄每 slot（catalog 推断）统一 {rarity, enchant}；catalog 无该英雄 → 不产出', () => {
+    const result = synthesizeHypotheticalLootByHero(
+      { heroIds: ['1', '2', '999'], rarity: 4, enchant: 2000 },
+      catalog,
+    )
+    const byHero = new Map(result.map((entry) => [entry.heroId, entry.lootBySlot]))
+    expect(byHero.has('999')).toBe(false) // catalog 无 hero 999 → 跳过
+    expect(Object.keys(byHero.get('1')!).sort()).toEqual(['1', '2']) // hero 1 两 slot
+    expect(byHero.get('1')!['1']).toEqual({ rarity: 4, enchant: 2000 })
+    expect(byHero.get('1')!['2']).toEqual({ rarity: 4, enchant: 2000 })
+    expect(byHero.get('2')!['1']).toEqual({ rarity: 4, enchant: 2000 })
+  })
+
+  it('稀有度可调：rarity=1 套到每槽（查询时按 catalog 该 rarity 条目命中或落空）', () => {
+    const result = synthesizeHypotheticalLootByHero(
+      { heroIds: ['1'], rarity: 1, enchant: 0 },
+      catalog,
+    )
+    expect(result[0]!.lootBySlot['1']).toEqual({ rarity: 1, enchant: 0 })
+    expect(result[0]!.lootBySlot['2']).toEqual({ rarity: 1, enchant: 0 })
+  })
+
+  it('config heroIds 为空 → 空', () => {
+    expect(synthesizeHypotheticalLootByHero({ heroIds: [], rarity: 4, enchant: 2000 }, catalog)).toEqual([])
   })
 })

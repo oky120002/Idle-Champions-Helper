@@ -10,6 +10,7 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerComputationMode } from './planner/PlannerComputationMode'
 import { PlannerStackCount } from './planner/PlannerStackCount'
+import { PlannerHypotheticalEquipment } from './planner/PlannerHypotheticalEquipment'
 import { PlannerSpecializationPanel } from './planner/PlannerSpecializationPanel'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerImportFormation } from './planner/PlannerImportFormation'
@@ -66,6 +67,8 @@ export function PlannerPage() {
     championById,
     collections,
     computationMode,
+    equipmentEnchant,
+    equipmentRarity,
     lockedCarryHeroId,
     lockedSlots,
     loadError,
@@ -83,6 +86,8 @@ export function PlannerPage() {
     clearSlotLock,
     selectCandidateMode,
     selectComputationMode,
+    selectEquipmentEnchant,
+    selectEquipmentRarity,
     selectManualStackCount,
     selectLockedCarryHeroId,
     selectResultIndex,
@@ -200,6 +205,14 @@ export function PlannerPage() {
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                   <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
                   <PlannerStackCount value={manualStackCount} onChange={selectManualStackCount} />
+                  {!profileSnapshot ? (
+                    <PlannerHypotheticalEquipment
+                      rarity={equipmentRarity}
+                      enchant={equipmentEnchant}
+                      onRarityChange={selectEquipmentRarity}
+                      onEnchantChange={selectEquipmentEnchant}
+                    />
+                  ) : null}
                   <PlannerSpecializationPanel
                     ownedHeroes={profileSnapshot?.ownedHeroes ?? []}
                     catalog={collections.specializationCatalog ?? {}}

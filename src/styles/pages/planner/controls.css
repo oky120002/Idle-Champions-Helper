@@ -66,4 +66,18 @@
     outline: none;
     border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
   }
+
+  .planner-hypothetical-equipment__field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .planner-hypothetical-equipment__field > span {
+    color: color-mix(in oklch, var(--color-copper) 74%, transparent);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
 }

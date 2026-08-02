@@ -353,3 +353,49 @@ export function collectEquipmentBuffsByHero(
   }
   return result
 }
+
+/**
+ * 「假设装备」配置（未导入存档时的 UI what-if）：统一稀有度 + 附魔等级，套到每个英雄每个槽。
+ * 默认毕业 = 稀有度 4（传说）+ 等级 2000；二者 UI 可调，跟 manualStackCount 同性质（标量假设入参）。
+ */
+export interface HypotheticalEquipmentConfig {
+  /** 要算装备加成的英雄 id（未导入存档时从 plannerHeroes 传全量）。 */
+  heroIds: readonly string[]
+  /** 假设稀有度（1-4）；某 (hero,slot,rarity) 在 catalog 缺失 → 该槽查不到 → 0（自然跳过）。 */
+  rarity: number
+  /** 假设附魔等级（item level）；缩放同 owned：base × (1 + enchant/250)。 */
+  enchant: number
+}
+
+/**
+ * 未导入存档时合成每英雄的假设 owned loot：从 catalog 推断每英雄的 slot 集合，每槽统一 {rarity, enchant}。
+ * 供 buildScoringBonusInputs 在无存档分支算装备加成（尤其速度/速推，达阈值可跳 N 层地图）。
+ * 有存档时不走此路径（按存档 per-slot 实际 rarity + enchant）。catalog 无该英雄 → 不产出（无装备数据源）。
+ */
+export function synthesizeHypotheticalLootByHero(
+  config: HypotheticalEquipmentConfig,
+  catalog: readonly LootCatalogEntry[],
+): Array<{ heroId: string; lootBySlot: Record<string, OwnedLootSlot> }> {
+  const slotsByHero = new Map<string, Set<string>>()
+  for (const entry of catalog) {
+    const slots = slotsByHero.get(entry.heroId)
+    if (slots) {
+      slots.add(entry.slotId)
+    } else {
+      slotsByHero.set(entry.heroId, new Set([entry.slotId]))
+    }
+  }
+  const result: Array<{ heroId: string; lootBySlot: Record<string, OwnedLootSlot> }> = []
+  for (const heroId of config.heroIds) {
+    const slots = slotsByHero.get(heroId)
+    if (!slots || slots.size === 0) {
+      continue
+    }
+    const lootBySlot: Record<string, OwnedLootSlot> = {}
+    for (const slotId of slots) {
+      lootBySlot[slotId] = { rarity: config.rarity, enchant: config.enchant }
+    }
+    result.push({ heroId, lootBySlot })
+  }
+  return result
+}

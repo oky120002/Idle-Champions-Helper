@@ -5,6 +5,10 @@
  * 解锁 React 外单测。三项分别由 simulator 的 equipment/globalBuff provider 与
  * buffs 的 externalHeroDpsMult provider 计算（#4 加成来源装配下沉）。
  *
+ * 装备分支：有存档按 owned per-slot 实际（rarity + enchant）；未导入存档时若传 hypotheticalEquipment
+ *（UI what-if：统一稀有度 + 附魔等级，默认毕业=4+2000），按「假设装备」估装备加成（尤其速度/速推），
+ * 否则空 map（向后兼容）。有存档优先，假设装备仅无存档分支生效。
+ *
  * - equipmentAdjustmentByHero：ownedHeroes.lootBySlot + loot-catalog → per-hero 装备调整比；
  *   未导入存档或 lootCatalog 空 → 空 map（scoreFormation 缺省 ?? 1，向后兼容）。
  * - equipmentHealthByHero：per-hero health_mult multiplier（hero-scoped 生命）；scoreFormation survival 段
@@ -26,9 +30,9 @@ import { collectHeroDpsContributions } from '../buffs/externalHeroDpsMult'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../buffs/blessingGlobalBuff'
-import { computeEquipmentAdjustmentByHero, computeEquipmentCritByHero, computeEquipmentGlobalDpsByHero, computeEquipmentGoldByHero, computeEquipmentHealthByHero, collectEquipmentBuffsByHero } from '../buffs/equipmentMult'
+import { computeEquipmentAdjustmentByHero, computeEquipmentCritByHero, computeEquipmentGlobalDpsByHero, computeEquipmentGoldByHero, computeEquipmentHealthByHero, collectEquipmentBuffsByHero, synthesizeHypotheticalLootByHero } from '../buffs/equipmentMult'
 import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../buffs/patronPerkGlobalBuff'
-import type { EquipmentBuff, EquipmentCritBonus, LootCatalogEntry } from '../buffs/equipmentMult'
+import type { EquipmentBuff, EquipmentCritBonus, HypotheticalEquipmentConfig, LootCatalogEntry } from '../buffs/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
 import type { UserProfileSnapshot } from '../user-profile/types'
 
@@ -49,10 +53,15 @@ export interface BuildScoringBonusInputsInput {
   lootCatalog: readonly LootCatalogEntry[]
   effectDefinitions: readonly EffectDefinitionEntry[]
   patronPerkCatalog: readonly PatronPerkCatalogEntry[]
+  /**
+   * 未导入存档时的「假设装备」配置（UI what-if：稀有度 + 附魔等级）。有存档时忽略（按存档 per-slot 实际）。
+   * null/undefined = 不假设（维持现状，装备加成 0，向后兼容）。heroIds 没存档时从 plannerHeroes 传全量。
+   */
+  hypotheticalEquipment?: HypotheticalEquipmentConfig | null
 }
 
 export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): ScoringBonusInputs {
-  const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog } = input
+  const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment } = input
 
   let equipmentAdjustmentByHero = new Map<string, number>()
   let equipmentHealthByHero = new Map<string, number>()
@@ -60,13 +69,20 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   let equipmentGoldByHero = new Map<string, number>()
   let equipmentCritByHero = new Map<string, EquipmentCritBonus>()
   let equipmentBuffsByHero = new Map<string, EquipmentBuff[]>()
-  if (profileSnapshot && lootCatalog.length > 0) {
-    equipmentAdjustmentByHero = computeEquipmentAdjustmentByHero(profileSnapshot.ownedHeroes, lootCatalog)
-    equipmentHealthByHero = computeEquipmentHealthByHero(profileSnapshot.ownedHeroes, lootCatalog)
-    equipmentGlobalDpsByHero = computeEquipmentGlobalDpsByHero(profileSnapshot.ownedHeroes, lootCatalog)
-    equipmentGoldByHero = computeEquipmentGoldByHero(profileSnapshot.ownedHeroes, lootCatalog)
-    equipmentCritByHero = computeEquipmentCritByHero(profileSnapshot.ownedHeroes, lootCatalog)
-    equipmentBuffsByHero = collectEquipmentBuffsByHero(profileSnapshot.ownedHeroes, lootCatalog)
+  // 有存档用 owned 实际；无存档用假设装备（UI what-if，全英雄统一稀有度+附魔）；否则空（向后兼容）。
+  const hasOwnedHeroes = !!profileSnapshot && profileSnapshot.ownedHeroes.length > 0
+  const equipmentHeroes = hasOwnedHeroes
+    ? profileSnapshot!.ownedHeroes
+    : hypotheticalEquipment && lootCatalog.length > 0
+      ? synthesizeHypotheticalLootByHero(hypotheticalEquipment, lootCatalog)
+      : []
+  if (equipmentHeroes.length > 0 && lootCatalog.length > 0) {
+    equipmentAdjustmentByHero = computeEquipmentAdjustmentByHero(equipmentHeroes, lootCatalog)
+    equipmentHealthByHero = computeEquipmentHealthByHero(equipmentHeroes, lootCatalog)
+    equipmentGlobalDpsByHero = computeEquipmentGlobalDpsByHero(equipmentHeroes, lootCatalog)
+    equipmentGoldByHero = computeEquipmentGoldByHero(equipmentHeroes, lootCatalog)
+    equipmentCritByHero = computeEquipmentCritByHero(equipmentHeroes, lootCatalog)
+    equipmentBuffsByHero = collectEquipmentBuffsByHero(equipmentHeroes, lootCatalog)
   }
 
   const effectDefTemplates = new Map(effectDefinitions.map((entry) => [entry.id, entry]))
