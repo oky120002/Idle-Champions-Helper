@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   deleteUserProfileData,
   resolveUserProfileSnapshot,
@@ -33,9 +33,16 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     persisted: true,
   })
 
+  // syncState 写入令牌 + resolution 请求版本：与 dev 版（useUserSyncModel.ts）同构，丢弃过时 async 结果，
+  // 消除 mount 的慢 async 覆盖用户操作结果的竞态（详见 dev 版注释）。
+  const syncWriteToken = useRef(0)
   const loadSnapshot = useCallback(async () => {
+    const token = syncWriteToken.current
     try {
       const snapshot = await readUserProfileSnapshot()
+      if (syncWriteToken.current !== token) {
+        return
+      }
       if (!snapshot) {
         setSyncState({ status: 'no-snapshot' })
         return
@@ -45,12 +52,20 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
       const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24))
       setSyncState({ status: 'loaded', snapshot, ageDays })
     } catch {
+      if (syncWriteToken.current !== token) {
+        return
+      }
       setSyncState({ status: 'error', message: '读取本地数据失败' })
     }
   }, [])
 
+  const resolveRequestId = useRef(0)
   const loadProfileResolution = useCallback(async () => {
+    const requestId = ++resolveRequestId.current
     const resolution = await resolveUserProfileSnapshot()
+    if (resolveRequestId.current !== requestId) {
+      return
+    }
     setProfileResolution(resolution)
   }, [])
 
@@ -60,7 +75,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [loadSnapshot])
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount，所有 setState 均在 await 之后，非同步
+    // fetch-on-mount：setState 在 await + 竞态守卫之后，非 effect 内同步 set。
     void loadProfileResolution()
   }, [loadProfileResolution])
 
@@ -70,6 +85,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
       return
     }
 
+    syncWriteToken.current += 1
     setBusy(true)
     try {
       const payloads = await fetchUserProfilePayloads(credentials)
@@ -90,6 +106,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [credentials, loadProfileResolution, loadSnapshot])
 
   const handleDelete = useCallback(async (clearOverrides: boolean) => {
+    syncWriteToken.current += 1
     setBusy(true)
     try {
       await deleteUserProfileData()
