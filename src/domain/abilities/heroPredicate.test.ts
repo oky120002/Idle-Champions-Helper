@@ -25,6 +25,7 @@ function createHero(overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityPro
     unsupportedSignals: [],
     sourceBreakdown: { carrySignals: [], supportSignals: [], unsupportedSignals: [] },
     ...(overrides.ownedSaveContext ? { ownedSaveContext: overrides.ownedSaveContext } : {}),
+    ...(overrides.eligiblePatronIds ? { eligiblePatronIds: overrides.eligiblePatronIds } : {}),
   }
 }
 
@@ -238,6 +239,16 @@ describe('parseHeroPredicate · functional dialect（per_hero_expr）', () => {
     expect(predicateHasNode(ast, 'upgradePurchased')).toBe(true)
     expect(predicateHasNode(ast, 'featEquipped')).toBe(true)
   })
+
+  it('is_alive / EligibleForPatron(var) → 对应节点', () => {
+    expect(parseHeroPredicate('is_alive', 'functional')).toEqual({ op: 'isAlive' })
+    expect(parseHeroPredicate('EligibleForPatron(aeon_current_patron_id)', 'functional')).toEqual({ op: 'eligibleForPatron' })
+  })
+
+  it('hero 119 !is_alive 复合式 + hero 150 EligibleForPatron 可解析', () => {
+    expect(parseHeroPredicate('!is_alive || is_undead || HasTag(`undead`)', 'functional')).not.toBeNull()
+    expect(parseHeroPredicate('EligibleForPatron(aeon_current_patron_id)', 'functional')).not.toBeNull()
+  })
 })
 
 describe('evalHeroPredicate', () => {
@@ -294,7 +305,7 @@ describe('evalHeroPredicate', () => {
     // build 期 enrichment 后的完整节点（ownerHeroId + requiredLevel 已烘进）
     const node = { op: 'upgradeUnlocked' as const, upgradeId: '17492', ownerHeroId: '165', requiredLevel: 70 }
     const ctx = (levels: Record<string, number>) =>
-      createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map(Object.entries(levels)), ownedSpecializations: new Map(), equippedFeatIds: new Set() } })
+      createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map(Object.entries(levels)), ownedSpecializations: new Map(), equippedFeatIds: new Set(), currentPatronId: null } })
     expect(evalHeroPredicate(node, ctx({ '165': 500 }))).toBe(true)
     expect(evalHeroPredicate(node, ctx({ '165': 50 }))).toBe(false) // 等级不足
     expect(evalHeroPredicate(node, ctx({}))).toBe(false) // owner 未拥有
@@ -310,6 +321,7 @@ describe('evalHeroPredicate', () => {
           ownedLevels: new Map(Object.entries(opts.levels ?? {})),
           ownedSpecializations: new Map(Object.entries(opts.specs ?? {}).map(([k, v]) => [k, new Set(v)])),
           equippedFeatIds: new Set(),
+          currentPatronId: null,
         },
       })
     // spec 节点（19680 崇善之书，owner=119）
@@ -326,12 +338,37 @@ describe('evalHeroPredicate', () => {
   it('featEquipped：被评估英雄 equippedFeatIds 命中 → true，未命中/缺省 → false', () => {
     const heroWithFeat = createHero({
       heroId: '119',
-      ownedSaveContext: { ownedLevels: new Map(), ownedSpecializations: new Map(), equippedFeatIds: new Set(['2628', '1065']) },
+      ownedSaveContext: { ownedLevels: new Map(), ownedSpecializations: new Map(), equippedFeatIds: new Set(['2628', '1065']), currentPatronId: null },
     })
     expect(evalHeroPredicate({ op: 'featEquipped', featId: '2628' }, heroWithFeat)).toBe(true)
     expect(evalHeroPredicate({ op: 'featEquipped', featId: '9999' }, heroWithFeat)).toBe(false)
     // 无 ownedSaveContext（未导入存档）→ false，不抛错
     expect(evalHeroPredicate({ op: 'featEquipped', featId: '2628' }, hero)).toBe(false)
+  })
+
+  it('is_alive 恒 true（稳态模型不建模战斗死亡）；!is_alive 恒 false', () => {
+    expect(evalHeroPredicate({ op: 'isAlive' }, hero)).toBe(true)
+    expect(evalHeroPredicate({ op: 'not', child: { op: 'isAlive' } }, hero)).toBe(false)
+    // hero 119 样本：!is_alive || is_undead || HasTag(undead) → false || ... || ...（稳态化简）
+    const undeadHero = createHero({ tags: ['undead'] })
+    expect(evalHeroPredicate({ op: 'or', children: [
+      { op: 'not', child: { op: 'isAlive' } },
+      { op: 'tag', tag: 'undead' },
+    ] }, undeadHero)).toBe(true)
+  })
+
+  it('eligibleForPatron：currentPatronId 在 eligiblePatronIds → true；自由玩(0)→全 true；未导入→false', () => {
+    const ctx = (currentPatronId: number | null, eligiblePatronIds: string[] | null) =>
+      createHero({
+        heroId: '150',
+        ...(eligiblePatronIds ? { eligiblePatronIds } : {}),
+        ownedSaveContext: { ownedLevels: new Map(), ownedSpecializations: new Map(), equippedFeatIds: new Set(), currentPatronId },
+      })
+    expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(3, ['1', '3', '4', '5']))).toBe(true) // 当前 patron 3 eligible
+    expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(2, ['1', '3', '4', '5']))).toBe(false) // patron 2 不在列表
+    expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(0, ['1', '3']))).toBe(true) // 自由玩全 eligible
+    expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(null, ['1', '3']))).toBe(false) // 未导入存档
+    expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(3, null))).toBe(false) // 无 eligiblePatronIds 数据
   })
 })
 

@@ -150,6 +150,14 @@ export function buildOfficialHeroModel(
   const base = asRecord(attacks.base) ?? {}
   const characterSheet = asRecord(detail.characterSheet) ?? {}
 
+  // patron 资格列表（summary.patronEligibility.eligiblePatronIds），EligibleForPatron 查。
+  const summary = asRecord(detail.summary) ?? {}
+  const patronEligibility = asRecord(summary.patronEligibility) ?? {}
+  const eligiblePatronIdsRaw = Array.isArray(patronEligibility.eligiblePatronIds) ? patronEligibility.eligiblePatronIds : null
+  const eligiblePatronIds = eligiblePatronIdsRaw
+    ? eligiblePatronIdsRaw.filter((id): id is string => typeof id === 'string' || typeof id === 'number').map(String)
+    : null
+
   return {
     heroId: champion.id as string,
     name: champion.name as HeroAbilityProfile['name'],
@@ -165,6 +173,7 @@ export function buildOfficialHeroModel(
     costCurves,
     baseHealth,
     healthCurves,
+    eligiblePatronIds,
     carrySignals,
     supportSignals,
     unsupportedSignals,

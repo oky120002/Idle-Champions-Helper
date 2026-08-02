@@ -129,6 +129,18 @@ function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
     return { op: 'tag', tag: 'undead' }
   }
 
+  // is_alive：稳态模型恒 true（planner 不建模战斗死亡）；!is_alive 恒 false。
+  if (expr === 'is_alive') {
+    return { op: 'isAlive' }
+  }
+
+  // EligibleForPatron(<var>)：参数恒为「当前 patron」变量（如 aeon_current_patron_id），不解析参数；
+  // runtime 查 hero.eligiblePatronIds 是否含 ownedSaveContext.currentPatronId。
+  const eligibleForPatronMatch = expr.match(/^EligibleForPatron\([^)]+\)$/)
+  if (eligibleForPatronMatch) {
+    return { op: 'eligibleForPatron' }
+  }
+
   // GetUpgradeUnlocked(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
   // build 期 enrichUpgradeUnlockNodes 解析 ownerHeroId(self) + requiredLevel 烘进节点。
   const upgradeUnlockedMatch = expr.match(/^GetUpgradeUnlocked\((\d+)\)$/)
@@ -330,6 +342,19 @@ function evalNode(
     case 'featEquipped':
       // 被评估英雄是否装备 feat N；无存档上下文 → false（未拥有/未装备不可能命中）。
       return hero.ownedSaveContext?.equippedFeatIds.has(ast.featId) ?? false
+    case 'isAlive':
+      // 稳态模型：所有英雄存活（planner 不建模战斗死亡）。
+      return true
+    case 'eligibleForPatron': {
+      const patronId = hero.ownedSaveContext?.currentPatronId
+      if (patronId === undefined || patronId === null) {
+        return false // 未导入存档 → 无 patron 上下文，保守 false
+      }
+      if (patronId === 0) {
+        return true // 自由玩（无 patron 限制）→ 全 eligible
+      }
+      return hero.eligiblePatronIds?.includes(String(patronId)) ?? false
+    }
     case 'true':
       return true
     default:

@@ -89,6 +89,12 @@ export type HeroPredicateAST =
   // GetFeatEquipped(N)：存档依赖 per-hero 谓词——被评估英雄是否装备 feat N。runtime 查 equippedFeatIds。
   // feat 是 hero-specific（N 属唯一英雄），只有 owner 英雄能装；未装备/无存档 → false。
   | { op: 'featEquipped'; featId: string }
+  // is_alive：runtime 战斗状态（英雄是否存活）。planner 是稳态模型（不建模战斗死亡）→ eval 恒 true；
+  // !is_alive 恒 false。hero 119 `!is_alive || is_undead || HasTag(undead)` 化简为 is_undead || undead。
+  | { op: 'isAlive' }
+  // EligibleForPatron(current)：per-hero 账号状态——被评估英雄是否符合当前 patron 资格。
+  // runtime 查 hero.eligiblePatronIds 是否含 ownedSaveContext.currentPatronId（0=自由玩，全 eligible）。
+  | { op: 'eligibleForPatron' }
 
 export interface HeroQualifier {
   predicate: HeroPredicateAST
@@ -188,6 +194,11 @@ export interface HeroAbilityProfile {
    */
   gainProfile?: HeroGainProfile
   /**
+   * 该英雄符合资格的 patron id 列表（来自 champion-details summary.patronEligibility.eligiblePatronIds）。
+   * EligibleForPatron(current) 查此列表；null/undefined = 无数据（保守视为不符合）。
+   */
+  eligiblePatronIds?: string[] | null
+  /**
    * 运行时注入的存档上下文（OwnedHero 派生）；build 期 undefined（不进 hero-abilities.json）。
    * evaluateFormation/buildPlannerRecommendation 从 profileSnapshot 注入，供存档依赖谓词
    *（GetUpgradeUnlocked 等）求值。缺省 = 未拥有/未导入存档 → 谓词恒 false。
@@ -205,6 +216,8 @@ export interface HeroOwnedSaveContext {
   ownedLevels: Map<string, number>
   ownedSpecializations: Map<string, Set<string>>
   equippedFeatIds: Set<string>
+  /** 当前 patron id（profileSnapshot.activeContext.patronId；0=自由玩，null=未导入存档）。EligibleForPatron 查。 */
+  currentPatronId: number | null
 }
 
 export interface HeroAbilityOverridePatch {

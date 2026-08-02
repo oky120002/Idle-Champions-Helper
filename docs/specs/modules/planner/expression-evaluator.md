@@ -24,13 +24,14 @@ IC 的 `per_hero_expr` 字段承载两类语义，求值域不同，分别处理
 - **`GetUpgradeUnlocked(N)`**——global 谓词：upgrade N 属唯一 owner 英雄，解锁 = owner 等级 ≥ `requiredLevel`。build 期 `enrichUpgradePredicateNodes`（buildHeroModels）从 champion-details upgrades 解析 `ownerHeroId`(=self，布尔引用均 self-ref) + `requiredLevel` 烘进 AST 节点；runtime `evalHeroPredicate` 按 `ownerHeroId` 查 `ownedLevels`。点亮 hero 165（巴尔德里克阵营）/66（Lazaapz 小体型）等纯 GetUpgradeUnlocked 表达式的 formationCountQualifier。
 - **`GetUpgradePurchased(N)`**——global 谓词：N 是否购买。build 期解析 `ownerHeroId` + `requiredLevel` + `isSpecialization`（`specializationName` 非空）。specialization → `N ∈ owner.specializations`（玩家手选专精）；regular → owner 等级 ≥ reqLvl（同 GetUpgradeUnlocked，owned 英雄升级即自动购买）。点亮 hero 119（乌利亚修士黑骰髅会成员资格 `hero_dps_multiplier_mult,1000`）。
 - **`GetFeatEquipped(N)`**——per-hero 谓词：被评估英雄是否装备 feat N（feat hero-specific，N 属唯一英雄）。runtime 查 `equippedFeatIds`（OwnedHero.feats）。与 GetUpgradePurchased 同落解锁 hero 119 BDS 共存式。
+- **`is_alive`**——稳态模型恒 true（planner 不建模战斗死亡）；`!is_alive` 恒 false。hero 119 `!is_alive || is_undead || HasTag(undead)` 化简为 is_undead（注：唯一实例在 buff_upgrade wrapper 上，待 wrapper 语义评估）。
+- **`EligibleForPatron(current)`**——per-hero 账号状态：被评估英雄是否符合当前 patron 资格。build 期从 `summary.patronEligibility.eligiblePatronIds` 烘 `eligiblePatronIds` 进 profile；runtime 查 `ownedSaveContext.currentPatronId`（profileSnapshot.activeContext.patronId；0=自由玩全 eligible，null=未导入→false）。点亮 hero 150。
 
 仍未实现（`parseHeroPredicate` 返回 null，含它们的复合式整体丢弃）：
 
-- `HasEffect(name)` / `HasEffectByID(N)`——effect 是否激活，依赖阵型 effect 作用图（可能由他英雄施加，如 `celeste_heal`/`alyndra_portented`），属阵型运行时状态。真 buff 样本：hero 77/169/153/166/82/176。
-- `is_alive`——runtime 战斗状态；`EligibleForPatron`——patron 进度（存档另一域）。
+- `HasEffect(name)` / `HasEffectByID(N)`——effect 是否激活，依赖阵型 effect 作用图（可能由他英雄施加，如 `celeste_heal`/`alyndra_portented`），属阵型运行时状态。self-case（自身升级授予，如 hero 153 vampire_spawn/176 trixie）可作 save 谓词；cross-case（如 hero 82 celeste_heal 由 hero 2 授予）需阵型 composition。真 buff 样本：hero 77/169/153/166/82。
 
-`HeroAbilityProfile.ownedSaveContext`（runtime 注入，build 期 undefined）混合 global + per-hero 数据：`ownedLevels`/`ownedSpecializations`（formation-global，按 ownerHeroId 查，所有 profile 共享同一 ref）、`equippedFeatIds`（per-hero，被评估英雄的 feats）。`attachOwnedSaveContext`（recommendationEngine 两入口对称）从 OwnedHero 派生。
+`HeroAbilityProfile.eligiblePatronIds`（build 期烘）+ `ownedSaveContext`（runtime 注入，build 期 undefined）混合 global + per-hero 数据：`ownedLevels`/`ownedSpecializations`/`currentPatronId`（formation-global，按 ownerHeroId 查 / 全局，所有 profile 共享同一 ref）、`equippedFeatIds`（per-hero，被评估英雄的 feats）。`attachOwnedSaveContext`（recommendationEngine 两入口对称）从 OwnedHero + activeContext 派生。
 
 ## 数值表达式散落点
 

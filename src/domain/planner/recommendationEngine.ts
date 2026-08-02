@@ -288,14 +288,15 @@ function applyEquipmentBuffs(
   }
 }
 
-// 注入存档派生的上下文，供存档依赖谓词（GetUpgradeUnlocked/GetUpgradePurchased/GetFeatEquipped）在
-// matchesHeroQualifier→evalHeroPredicate 求值。必须在 feat/专精/装备注入之后（追加 ownedSaveContext 到已
-// 改写的 profile）。ownedLevels + ownedSpecializations 是 formation-global（所有 profile 共享同一 ref）——
-// GetUpgradeUnlocked/Purchased 是 global 谓词（upgrade 属唯一 owner，与被评估英雄无关）。equippedFeatIds 是
-// per-hero（被评估英雄的 feats，GetFeatEquipped 查此）。无存档（未导入）→ 空 map/集，谓词恒 false。
+// 注入存档派生的上下文，供存档依赖谓词（GetUpgradeUnlocked/GetUpgradePurchased/GetFeatEquipped/
+// EligibleForPatron）在 matchesHeroQualifier→evalHeroPredicate 求值。必须在 feat/专精/装备注入之后（追加
+// ownedSaveContext 到已改写的 profile）。ownedLevels + ownedSpecializations + currentPatronId 是
+// formation-global（所有 profile 共享同一 ref）——upgrade 谓词按 ownerHeroId 查、patron 全局。equippedFeatIds
+// 是 per-hero（被评估英雄的 feats）。无存档（未导入）→ 空 map/集 + patronId null，谓词恒 false。
 function attachOwnedSaveContext(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   ownedHeroes: readonly OwnedHero[],
+  currentPatronId: number | null,
 ): void {
   const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
   const ownedLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
@@ -305,7 +306,10 @@ function attachOwnedSaveContext(
   for (const [heroId, profile] of heroById) {
     const owned = ownedById.get(heroId)
     const equippedFeatIds = new Set((owned?.feats ?? []).map(String))
-    heroById.set(heroId, { ...profile, ownedSaveContext: { ownedLevels, ownedSpecializations, equippedFeatIds } })
+    heroById.set(heroId, {
+      ...profile,
+      ownedSaveContext: { ownedLevels, ownedSpecializations, equippedFeatIds, currentPatronId },
+    })
   }
 }
 
@@ -365,7 +369,7 @@ export function evaluateFormation({
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
-  attachOwnedSaveContext(heroById, ownedHeroes)
+  attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
   const candidateIds = new Set(
     buildCandidatePool({
       mode: candidateMode,
@@ -528,7 +532,7 @@ export function buildPlannerRecommendation({
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
-  attachOwnedSaveContext(heroById, ownedHeroes)
+  attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {
