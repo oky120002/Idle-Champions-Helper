@@ -31,19 +31,6 @@ describe('formation legality checks', () => {
     expect(missingForce!.heroIds).toContain('12')
   })
 
-  it('检测 locked 或被占用 slot', () => {
-    const result = checkFormationLegality({
-      placements: { s1: '1' },
-      heroSeats: { '1': 1 },
-      variantRules: { constraints: [], warnings: [] },
-      lockedSlots: ['s1'],
-    })
-
-    const lockedViolation = result.violations.find((v) => v.kind === 'lockedSlot')
-    expect(lockedViolation).toBeDefined()
-    expect(lockedViolation!.slotId).toBe('s1')
-  })
-
   it('合法阵型不产生违规', () => {
     const result = checkFormationLegality({
       placements: { s1: '1', s2: '5' },

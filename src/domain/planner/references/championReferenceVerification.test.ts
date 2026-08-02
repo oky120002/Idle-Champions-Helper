@@ -54,7 +54,6 @@ const scenario: OfficialPlannerScenarioModel = {
     { slotId: 's7', row: 2, column: 4, x: 30, y: 30, adjacentSlotIds: ['s6'] },
   ],
   forcedHeroes: [],
-  lockedSlots: [],
   enemyTypes: [],
   allowedHeroes: [],
   allowedTags: [],

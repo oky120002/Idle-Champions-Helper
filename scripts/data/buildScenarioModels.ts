@@ -18,7 +18,6 @@ interface ScenarioModel {
   objectiveArea: unknown
   slotTopology: SlotTopologyEntry[]
   forcedHeroes: unknown[]
-  lockedSlots: unknown[]
   enemyTypes: unknown[]
   allowedHeroes: unknown[]
   allowedTags: unknown[]
@@ -69,31 +68,15 @@ function findFormationForVariant(
 
 function projectMechanicsToScenario(
   variant: Record<string, unknown>,
-  slotTopology: SlotTopologyEntry[],
-): { lockedSlots: unknown[]; mechanicWarnings: string[] } {
+): { mechanicWarnings: string[] } {
   const mechanics = new Set<unknown>(asArray(variant.mechanics))
-  const lockedSlots: unknown[] = []
   const mechanicWarnings: string[] = []
-
-  const hasEscort = mechanics.has('slot_escort')
-    || mechanics.has('slot_escort_by_area')
-    || mechanics.has('slot_escort_wandering')
-
-  if (hasEscort) {
-    // ponytail: 官方数据未标注护送占用的具体槽位；按 column 降序锁前排首槽。
-    // 精确槽位需官方 formation 元数据或人工校准后替换此启发式。
-    const frontSlot = [...slotTopology].sort((a, b) => b.column - a.column || a.row - b.row)[0]
-    if (frontSlot) {
-      lockedSlots.push(frontSlot.slotId)
-    }
-    mechanicWarnings.push('当前场景含护送任务，护送目标占据前排一个槽位且不参与英雄占位；其能力贡献未计入阵型评分，若护送目标是英雄（如 v80 Drizzt），推荐评分可能偏低。')
-  }
 
   if (mechanics.has('time_out') || mechanics.has('click_damage_area_limit')) {
     mechanicWarnings.push('当前场景含计时或点击限制，攻速与持续输出价值提升。')
   }
 
-  return { lockedSlots, mechanicWarnings }
+  return { mechanicWarnings }
 }
 
 export function buildOfficialScenarioModel(
@@ -114,7 +97,7 @@ export function buildOfficialScenarioModel(
         }
       })
     : []
-  const { lockedSlots, mechanicWarnings } = projectMechanicsToScenario(variant, slotTopology)
+  const { mechanicWarnings } = projectMechanicsToScenario(variant)
 
   const restrictions = asArray(variant.restrictions)
   const allowedHeroIds = asArray(variant.allowedHeroIds)
@@ -146,7 +129,6 @@ export function buildOfficialScenarioModel(
     objectiveArea: variant.objectiveArea ?? null,
     slotTopology,
     forcedHeroes: asArray(variant.forcedHeroIds),
-    lockedSlots,
     enemyTypes: asArray(variant.enemyTypes),
     allowedHeroes: allowedHeroIds,
     allowedTags,

@@ -51,7 +51,6 @@ interface ScenarioItem {
     y: number
     adjacentSlotIds: string[]
   }>
-  lockedSlots: string[]
   scenarioWarnings: string[]
 }
 
@@ -635,18 +634,17 @@ it('signal 透传 upgradeId（runtime 装备 buff_upgrade 反查 base 的基建�
   ).toBe(false)
 })
 
-it('buildModels 产出 scenarios（阵型布局 + slot_escort 锁槽 + 警告）', async () => {
+it('buildModels 产出 scenarios（阵型布局）', async () => {
   const { scenarioModels } = await setupBuildModelsOutputs()
   expect(scenarioModels.items[0]?.formationLayoutId).toBe('layout-a')
   expect(scenarioModels.items[0]?.slotTopology).toEqual([
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },
     { slotId: 's2', row: 1, column: 2, x: 20, y: 10, adjacentSlotIds: ['s1'] },
   ])
-  // 9.1: slot_escort mechanic 锁定前排槽位（column 降序首槽 = s2）。
-  expect(scenarioModels.items[0]?.lockedSlots).toEqual(['s2'])
-  expect(
-    scenarioModels.items[0]?.scenarioWarnings.some((w) => w.includes('护送任务')),
-  ).toBeTruthy()
+  // slot_escort mechanic 不再锁槽——护送占位按全槽可用处理（见 docs/specs/product/future-features.md）。
+  // 不产 lockedSlots 字段、不产护送 warning（slot_escort 在 projectMechanicsToScenario 是 no-op）。
+  expect(scenarioModels.items[0]).not.toHaveProperty('lockedSlots')
+  expect(scenarioModels.items[0]?.scenarioWarnings.some((w) => w.includes('护送'))).toBe(false)
 })
 
 it('buildModels 透传 semantic overrides', async () => {

@@ -4,13 +4,11 @@ export interface LegalityCheckInput {
   placements: Record<string, string>
   heroSeats: Record<string, number>
   variantRules: VariantRuleResult
-  lockedSlots?: string[]
 }
 
 export type LegalityViolation =
   | { kind: 'seatConflict'; seat: number; heroes: string[] }
   | { kind: 'missingForced'; heroIds: string[] }
-  | { kind: 'lockedSlot'; slotId: string }
 
 export interface LegalityResult {
   legal: boolean
@@ -19,7 +17,7 @@ export interface LegalityResult {
 
 export function checkFormationLegality(input: LegalityCheckInput): LegalityResult {
   const violations: LegalityViolation[] = []
-  const { placements, heroSeats, variantRules, lockedSlots } = input
+  const { placements, heroSeats, variantRules } = input
 
   // Check seat conflicts
   const seatMap = new Map<number, string[]>()
@@ -45,15 +43,6 @@ export function checkFormationLegality(input: LegalityCheckInput): LegalityResul
     const missing = forceInclude.heroIds.filter((id) => !placedHeroes.has(id))
     if (missing.length > 0) {
       violations.push({ kind: 'missingForced', heroIds: missing })
-    }
-  }
-
-  // Check locked slots
-  if (lockedSlots) {
-    for (const slotId of lockedSlots) {
-      if (placements[slotId]) {
-        violations.push({ kind: 'lockedSlot', slotId })
-      }
     }
   }
 

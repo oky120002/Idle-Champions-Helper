@@ -28,7 +28,6 @@ export interface OfficialPlannerScenarioModel {
   objectiveArea: number | null
   slotTopology: PlannerScenarioSlot[]
   forcedHeroes: string[]
-  lockedSlots: string[]
   scenarioWarnings: string[]
   /** 场景怪物类型（来自 variant.enemyTypes），供 vulnerability 条件性匹配。 */
   enemyTypes: string[]
@@ -37,9 +36,8 @@ export interface OfficialPlannerScenarioModel {
   /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=不限）。 */
   allowedTags: string[]
   /**
-   * 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 文本解析）。
-   * 与 mechanics lockedSlots 是两个来源描述同一批被占格子；formation 搜索可用容量 =
-   * slotTopology.length − max(occupiedSlotCount, lockedSlots.length)（见 recommendationEngine）。
+   * 被非英雄实体（小鸡/小鬼等）占据的格数（restrictions 文本解析）。
+   * formation 搜索可用容量 = slotTopology.length − occupiedSlotCount（见 recommendationEngine）。
    */
   occupiedSlotCount: number
 }

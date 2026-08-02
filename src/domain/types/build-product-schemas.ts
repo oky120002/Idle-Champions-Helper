@@ -56,7 +56,6 @@ export const plannerScenarioItemSchema = z
     formationLayoutId: z.string().nullable(),
     slotTopology: z.array(plannerScenarioSlotSchema),
     forcedHeroes: z.array(z.string()),
-    lockedSlots: z.array(z.string()),
     allowedHeroes: z.array(z.string()),
     allowedTags: z.array(z.string()),
     occupiedSlotCount: z.number(),

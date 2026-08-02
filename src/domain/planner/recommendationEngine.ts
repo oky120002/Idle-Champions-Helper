@@ -57,8 +57,6 @@ function formatLegalityViolation(violation: LegalityViolation): string {
       return `seat ${violation.seat} 冲突：${violation.heroes.join(', ')}`
     case 'missingForced':
       return `缺少强制英雄：${violation.heroIds.join(', ')}`
-    case 'lockedSlot':
-      return `槽位 ${violation.slotId} 已锁定`
   }
 }
 
@@ -368,7 +366,6 @@ export function evaluateFormation({
     placements,
     heroSeats,
     variantRules,
-    lockedSlots: scenario.lockedSlots,
   })
   const legalityWarnings = legality.legal ? [] : legality.violations.map(formatLegalityViolation)
 
@@ -478,19 +475,16 @@ export function buildPlannerRecommendation({
     })
     .sort((left, right) => left.seat - right.seat || left.heroId.localeCompare(right.heroId))
 
-  const lockedSlotSet = new Set(scenario.lockedSlots)
-  // 可用容量扣减被占格 = slotTopology.length − max(occupiedSlotCount, lockedSlots.length)。
-  // lockedSlots（mechanics slot_escort 等锁的具体槽位）与 occupiedSlotCount（restrictions
-  // 解析的被占格数）描述同一批被占格子，取 max 作更完整估计：restrictions 可能漏解析
-  // （occupiedSlotCount=0 但 mechanics 锁了）；反之 restrictions 给完整数而 mechanics 只锁 1 格。
+  // 可用容量扣减被占格 = slotTopology.length − occupiedSlotCount − 用户锁槽数。
+  // occupiedSlotCount 来自 restrictions 文本解析（小鸡/小鬼等非英雄实体占格数）；
   // 被占格具体位置不可知（诅咒「每 15 秒换格」等动态场景），无法精确过滤 slotId，
   // 取 sortSlots 前 availableCapacity 个近似——英雄数量正确，避免多填被占格高估 carryDps。
   const availableCapacity = Math.max(
     0,
-    scenario.slotTopology.length - Math.max(scenario.occupiedSlotCount, scenario.lockedSlots.length) - userLockedSlotSet.size,
+    scenario.slotTopology.length - scenario.occupiedSlotCount - userLockedSlotSet.size,
   )
   const slots = sortSlots(scenario)
-    .filter((slotId) => !lockedSlotSet.has(slotId) && !userLockedSlotSet.has(slotId))
+    .filter((slotId) => !userLockedSlotSet.has(slotId))
     .slice(0, availableCapacity)
   if (heroes.length < slots.length) {
     return {
@@ -531,7 +525,6 @@ export function buildPlannerRecommendation({
         placements,
         heroSeats,
         variantRules: scenarioVariantRules,
-        lockedSlots: scenario.lockedSlots,
       })
 
       if (!legality.legal) {

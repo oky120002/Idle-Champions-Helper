@@ -147,7 +147,6 @@ describe('findPlannerScenarioForVariant', () => {
         objectiveArea: 125,
         slotTopology: [],
         forcedHeroes: [],
-        lockedSlots: [],
         enemyTypes: [],
         allowedHeroes: [],
         allowedTags: [],

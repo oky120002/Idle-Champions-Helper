@@ -37,7 +37,6 @@ export const scenario: OfficialPlannerScenarioModel = {
     { slotId: 's3', row: 1, column: 3, x: 20, y: 10, adjacentSlotIds: ['s2'] },
   ],
   forcedHeroes: [],
-  lockedSlots: [],
   enemyTypes: [],
   allowedHeroes: [],
   allowedTags: [],

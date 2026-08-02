@@ -144,7 +144,6 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
         { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
       ],
       forcedHeroes: [],
-      lockedSlots: [],
       enemyTypes: [],
       allowedHeroes: [],
       allowedTags: [],

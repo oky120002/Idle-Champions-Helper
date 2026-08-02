@@ -84,7 +84,6 @@ function buildScenario(
       { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1'] },
     ],
     forcedHeroes: [],
-    lockedSlots: [],
     scenarioWarnings: [],
     enemyTypes: [],
     allowedHeroes: [],

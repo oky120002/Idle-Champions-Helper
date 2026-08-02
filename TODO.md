@@ -8,13 +8,6 @@ repair: rebuild
 -->
 ## Auto Todo
 
-- 9.1 escort 锁槽按 column 降序启发式，官方未标注具体槽位 <!-- auto-todo:id=atd_492b5b61bd -->
-  - 记录时间: `2026-07-20T11:43:52+08:00`
-  - 类型: issue
-  - 位置: `scripts/data/build-models.mjs`
-  - 备注: projectMechanicsToScenario 对 slot_escort* mechanic 按 column 降序锁前排首槽（启发式，官方未标注护送具体槽位）
-    - 处置：精确槽位需官方 formation 元数据或人工校准后替换
-
 - per_hero_expr 存档依赖布尔谓词 17 个被整体丢弃（数据流缺口） <!-- auto-todo:id=atd_d957df0b59 -->
   - 记录时间: `2026-07-21T10:17:41+08:00`
   - 类型: follow-up
