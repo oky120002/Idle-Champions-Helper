@@ -5,6 +5,7 @@ import {
   type ResolvedHeroAbilityProfile,
   type SignalBucket,
 } from './abilityModel'
+import type { EquipmentBuff } from '../buffs/equipmentMult'
 
 /**
  * feat（专长）运行时信号注入。
@@ -29,6 +30,13 @@ export interface FeatEntry {
   id: string
   rarity: number
   signals: FeatSignalEntry[]
+  /**
+   * feat 源 buff_upgrade wrapper（放大英雄自身 upgrade 效果），owned-aware 接入。
+   * runtime 经 collectFeatBuffWrappers 合并进 equipmentBuffsByHero，复用 applyEquipmentBuffsToProfile
+   * 按 targetUpgradeId 反查 base signal 构造 wrapper（与 loot 源同通道，spec 之后注入）。
+   * 结构同 EquipmentBuff（targetUpgradeId/value/rawEffect）；feat 无 enchant 缩放。undefined 兼容旧 catalog。
+   */
+  buffWrappers?: EquipmentBuff[]
 }
 
 export type FeatCatalog = Record<string, FeatEntry[]>

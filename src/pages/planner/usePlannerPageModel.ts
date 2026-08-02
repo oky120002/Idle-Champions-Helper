@@ -73,8 +73,9 @@ export function usePlannerPageModel() {
         rarity: equipmentRarity,
         enchant: equipmentEnchant,
       },
+      featCatalog: collections.featCatalog ?? null,
     }),
-    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, equipmentRarity, equipmentEnchant],
+    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
   )
   // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(

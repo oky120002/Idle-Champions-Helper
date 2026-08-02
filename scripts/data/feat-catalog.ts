@@ -6,6 +6,7 @@ import {
 } from '../../src/domain/abilities/abilityModel'
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics'
 import { parseEffectPayload } from '../../src/domain/effects/effect-string'
+import { parseBuffUpgradeEffect } from '../../src/domain/buffs/equipmentMult'
 import type { SignalBucket } from './effect-resolvers/resolverShared'
 
 /**
@@ -31,6 +32,20 @@ export interface FeatEntry {
   id: string
   rarity: number
   signals: FeatSignalEntry[]
+  /**
+   * feat 源 buff_upgrade wrapper（放大英雄自身 upgrade 效果），owned-aware 接入。
+   * runtime 经 collectFeatBuffWrappers 合并进 equipmentBuffsByHero，复用 applyEquipmentBuffsToProfile
+   * 按 targetUpgradeId 反查 base signal 构造 wrapper（与 loot 源同通道，spec 之后注入）。
+   * feat 无 enchant 缩放（非装备），value=base。复杂变体（per_tagged 等）不收，与 loot plain 同口径。
+   */
+  buffWrappers: FeatBuffWrapper[]
+}
+
+/** feat 源 buff_upgrade wrapper 元数据（owned-aware，放大 target upgrade 的 base signal）。 */
+export interface FeatBuffWrapper {
+  targetUpgradeId: string
+  value: number
+  rawEffect: string
 }
 
 type RawFeat = Record<string, unknown>
@@ -43,6 +58,7 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
   const rarity = typeof feat.rarity === 'number' ? feat.rarity : 0
   const effects = Array.isArray(feat.effects) ? feat.effects : []
   const signals: FeatSignalEntry[] = []
+  const buffWrappers: FeatBuffWrapper[] = []
 
   for (const effect of effects) {
     if (!effect || typeof effect !== 'object') {
@@ -51,6 +67,17 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
     const effectString = (effect as Record<string, unknown>).effect_string
     if (typeof effectString !== 'string') {
       continue
+    }
+    // buff_upgrade wrapper（放大英雄自身 upgrade）：独立于 direct signal 收集（normalizeEffectSignal 不解析
+    // wrapper kind），owned-aware 接入（runtime 合并进 equipmentBuffsByHero，复用装备反查通道）。
+    // 只收 plain buff_upgrade/buff_upgrades（parseBuffUpgradeEffect 的 PLAIN_BUFF_UPGRADE_KINDS），
+    // 复杂变体（per_tagged/flat_amount 等）不收——与 loot plain 同口径，避免半接。
+    const buffParsed = parseBuffUpgradeEffect(effectString)
+    if (buffParsed) {
+      for (const targetUpgradeId of buffParsed.targetUpgradeIds) {
+        buffWrappers.push({ targetUpgradeId, value: buffParsed.value, rawEffect: effectString })
+      }
+      continue // buff_upgrade wrapper 非 direct signal，不进 signal 收集
     }
     const split = splitEffectString(effectString)
     if (!split) {
@@ -71,10 +98,11 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
     signals.push({ dimension, bucket: result.bucket, signal })
   }
 
-  if (signals.length === 0) {
+  // 既无 direct scoring signal 也无 buff_upgrade wrapper → 不进 catalog（同既有 signals 兜底）。
+  if (signals.length === 0 && buffWrappers.length === 0) {
     return null
   }
-  return { id: String(id), rarity, signals }
+  return { id: String(id), rarity, signals, buffWrappers }
 }
 
 export function buildFeatCatalog(

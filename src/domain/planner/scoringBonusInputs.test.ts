@@ -4,6 +4,7 @@ import { buildScoringBonusInputs } from './scoringBonusInputs'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
 import type { LootCatalogEntry } from '../buffs/equipmentMult'
+import type { FeatCatalog } from '../abilities/featSignals'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 
 function makeSnapshot(over: Partial<UserProfileSnapshot> = {}): UserProfileSnapshot {
@@ -105,6 +106,39 @@ describe('buildScoringBonusInputs', () => {
       patronPerkCatalog: [],
     })
     expect(r.equipmentAdjustmentByHero.size).toBe(0)
+  })
+
+  it('owned feat 的 buff_upgrade wrapper → 合并 equipmentBuffsByHero（owned-aware，复用装备反查通道）', () => {
+    const featCatalog: FeatCatalog = {
+      '7': [{ id: '100', rarity: 3, signals: [], buffWrappers: [{ targetUpgradeId: '1234', value: 40, rawEffect: 'buff_upgrade,40,1234' }] }],
+    }
+    const hero = makeOwnedHero('7', {})
+    hero.feats = ['100']
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [hero] }),
+      lootCatalog: [],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      featCatalog,
+    })
+    expect(r.equipmentBuffsByHero.get('7')).toEqual([
+      { targetUpgradeId: '1234', value: 40, rawEffect: 'buff_upgrade,40,1234' },
+    ])
+  })
+
+  it('未装备该 feat → wrapper 不接入（owned-aware）', () => {
+    const featCatalog: FeatCatalog = {
+      '7': [{ id: '100', rarity: 3, signals: [], buffWrappers: [{ targetUpgradeId: '1234', value: 40, rawEffect: 'buff_upgrade,40,1234' }] }],
+    }
+    const hero = makeOwnedHero('7', {}) // feats: []
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [hero] }),
+      lootCatalog: [],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      featCatalog,
+    })
+    expect(r.equipmentBuffsByHero.has('7')).toBe(false)
   })
 
   it('patron global_dps perk → globalBuffMultiplier = 1 + Σ(value)/100', () => {

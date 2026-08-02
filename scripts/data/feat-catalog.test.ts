@@ -44,6 +44,36 @@ describe('normalizeFeatEntry', () => {
     expect(normalizeFeatEntry({ effects: [] })).toBeNull()
     expect(normalizeFeatEntry({ id: 1 })).toBeNull()
   })
+
+  it('buff_upgrade wrapper（放大英雄 upgrade）→ buffWrappers 收集，不进 direct signals', () => {
+    const e = normalizeFeatEntry({
+      id: 100, hero_id: 7, rarity: 3,
+      effects: [{ effect_string: 'buff_upgrade,40,1234' }],
+    })
+    expect(e?.signals).toEqual([])
+    expect(e?.buffWrappers).toEqual([
+      { targetUpgradeId: '1234', value: 40, rawEffect: 'buff_upgrade,40,1234' },
+    ])
+  })
+
+  it('buff_upgrades 多 target → 每 target 一个 wrapper', () => {
+    const e = normalizeFeatEntry({
+      id: 101, hero_id: 7, rarity: 3,
+      effects: [{ effect_string: 'buff_upgrades,25,111,112' }],
+    })
+    expect(e?.buffWrappers?.map((w) => w.targetUpgradeId).sort()).toEqual(['111', '112'])
+    expect(e?.buffWrappers?.every((w) => w.value === 25)).toBe(true)
+  })
+
+  it('仅 buff_upgrade（无 direct scoring signal）→ 保留（buffWrappers 非空不 null）', () => {
+    const e = normalizeFeatEntry({
+      id: 102, hero_id: 7, rarity: 3,
+      effects: [{ effect_string: 'buff_upgrade,30,9999' }],
+    })
+    expect(e).not.toBeNull()
+    expect(e?.signals).toEqual([])
+    expect(e?.buffWrappers).toHaveLength(1)
+  })
 })
 
 describe('buildFeatCatalog', () => {

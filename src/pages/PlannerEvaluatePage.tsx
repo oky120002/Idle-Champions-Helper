@@ -100,8 +100,9 @@ export function PlannerEvaluatePage() {
         rarity: equipmentRarity,
         enchant: equipmentEnchant,
       },
+      featCatalog: collections.featCatalog ?? null,
     }),
-    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, equipmentRarity, equipmentEnchant],
+    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
   )
   const evaluateOptions = useMemo(
     () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions }),

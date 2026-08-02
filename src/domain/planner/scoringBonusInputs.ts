@@ -34,7 +34,8 @@ import { computeEquipmentAdjustmentByHero, computeEquipmentCritByHero, computeEq
 import { collectActivePatronPerkEffects, computeActualPatronPerkGlobalBuff } from '../buffs/patronPerkGlobalBuff'
 import type { EquipmentBuff, EquipmentCritBonus, HypotheticalEquipmentConfig, LootCatalogEntry } from '../buffs/equipmentMult'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
-import type { UserProfileSnapshot } from '../user-profile/types'
+import type { FeatCatalog } from '../abilities/featSignals'
+import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 
 export interface ScoringBonusInputs {
   equipmentAdjustmentByHero: Map<string, number>
@@ -58,10 +59,45 @@ export interface BuildScoringBonusInputsInput {
    * null/undefined = 不假设（维持现状，装备加成 0，向后兼容）。heroIds 没存档时从 plannerHeroes 传全量。
    */
   hypotheticalEquipment?: HypotheticalEquipmentConfig | null
+  /** feat-catalog（feat 源 buff_upgrade wrapper owned-aware 接入）；null/undefined = 不接 feat wrapper。 */
+  featCatalog?: FeatCatalog | null
+}
+
+/**
+ * 收集 owned feat 的 buff_upgrade wrapper（每英雄），合并进 equipmentBuffsByHero 复用 applyEquipmentBuffsToProfile
+ * 反查通道。与 applyActiveFeats 同源（owned.feats 决定哪些 feat 生效）；feat 无 enchant 缩放，value=base。
+ * feat wrapper target 普通升级节点（反查 base profile signal）；owned feat 装备才放大——owned-aware。
+ */
+function collectFeatBuffWrappersByHero(
+  ownedHeroes: readonly OwnedHero[],
+  featCatalog: FeatCatalog | null | undefined,
+): Map<string, EquipmentBuff[]> {
+  const result = new Map<string, EquipmentBuff[]>()
+  if (!featCatalog) {
+    return result
+  }
+  for (const hero of ownedHeroes) {
+    const heroFeats = featCatalog[hero.heroId]
+    if (!heroFeats || hero.feats.length === 0) {
+      continue
+    }
+    const active = new Set(hero.feats.map(String))
+    const buffs: EquipmentBuff[] = []
+    for (const feat of heroFeats) {
+      if (!active.has(feat.id) || !feat.buffWrappers || feat.buffWrappers.length === 0) {
+        continue
+      }
+      buffs.push(...feat.buffWrappers)
+    }
+    if (buffs.length > 0) {
+      result.set(hero.heroId, buffs)
+    }
+  }
+  return result
 }
 
 export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): ScoringBonusInputs {
-  const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment } = input
+  const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment, featCatalog } = input
 
   let equipmentAdjustmentByHero = new Map<string, number>()
   let equipmentHealthByHero = new Map<string, number>()
@@ -83,6 +119,19 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
     equipmentGoldByHero = computeEquipmentGoldByHero(equipmentHeroes, lootCatalog)
     equipmentCritByHero = computeEquipmentCritByHero(equipmentHeroes, lootCatalog)
     equipmentBuffsByHero = collectEquipmentBuffsByHero(equipmentHeroes, lootCatalog)
+  }
+  // feat 源 buff_upgrade wrapper（owned-aware，独立 of lootCatalog/装备路径）：合并进 equipmentBuffsByHero
+  // 复用 applyEquipmentBuffsToProfile 反查通道（target 普通升级的 base signal）。仅 owned feat 装备才放大。
+  if (hasOwnedHeroes) {
+    const featBuffs = collectFeatBuffWrappersByHero(profileSnapshot!.ownedHeroes, featCatalog)
+    for (const [heroId, buffs] of featBuffs) {
+      const existing = equipmentBuffsByHero.get(heroId)
+      if (existing) {
+        existing.push(...buffs)
+      } else {
+        equipmentBuffsByHero.set(heroId, [...buffs])
+      }
+    }
   }
 
   const effectDefTemplates = new Map(effectDefinitions.map((entry) => [entry.id, entry]))
