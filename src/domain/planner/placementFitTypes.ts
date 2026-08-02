@@ -49,7 +49,6 @@ export interface PlacementFitScorePart {
     | 'tag-mismatch'
     | 'stat-mismatch'
     | 'position-mismatch'
-    | 'missing-target-qualifier'
     | 'unsupported-composition'
     | 'level-locked'
   source: HeroAbilitySource

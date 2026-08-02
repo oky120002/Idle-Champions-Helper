@@ -25,13 +25,11 @@ scripts/data/effect-resolvers/
                           + 共享 helper（makeUnsupported / buildSimplePoolSignal / resolveBucket /
                           resolveCountRelation / parseTagQualifierFromArg / resolveNumericValue）
   dpsResolver.ts          DPS 池（global_dps_multiplier_mult / hero_dps_* per-target/per-tagged/per-crusader/per-col-behind）
-  adjacentResolver.ts     adjacent_* 邻位 buff
   goldResolver.ts         金币池（gold_multiplier_mult / gold_mult_per_tagged_crusader_mult）
   critResolver.ts         暴击池（chance/damage × global/hero，表驱动）
   survivalResolver.ts     生存池（health/healing/damage_reduction，表驱动）
   vulnerabilityResolver.ts 易伤池（动态 monster tag + 条件性 tag 表）
   speedResolver.ts        速度/冷却池（attack_speed/cooldown，表驱动）
-  tagResolver.ts          tag_* 标签 buff
   resolverDispatch.ts     normalizeEffectSignal + 派发表
 ```
 

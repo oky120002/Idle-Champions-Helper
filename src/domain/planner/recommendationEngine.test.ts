@@ -92,7 +92,7 @@ const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
       : [],
   supportSignals: champion.id === 'bruenor'
     ? [
-        { kind: 'adjacentBuff', value: 100, rawEffect: 'adjacent_buff,100', source: 'official-parsed' },
+        { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_multiplier_mult,100', source: 'official-parsed' },
       ]
     : champion.id === 'celeste'
       ? [

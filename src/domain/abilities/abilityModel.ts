@@ -8,8 +8,6 @@ import type { AbilityScoreKey, DataCollection, LocalizedText } from '../types'
 export type HeroAbilityKind =
   | 'globalDpsMultiplier'
   | 'heroDpsMultiplier'
-  | 'adjacentBuff'
-  | 'taggedChampionBuff'
   | 'globalGoldMultiplier'
   | 'globalCritChance'
   | 'heroCritChance'
@@ -213,8 +211,6 @@ export type HeroAbilityDimension =
 export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = {
   globalDpsMultiplier: 'damage',
   heroDpsMultiplier: 'damage',
-  adjacentBuff: 'damage',
-  taggedChampionBuff: 'damage',
   globalGoldMultiplier: 'gold',
   globalCritChance: 'crit',
   heroCritChance: 'crit',
@@ -239,8 +235,6 @@ export type HeroAbilityPoolScope = 'global' | 'hero'
 export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> = {
   globalDpsMultiplier: 'global',
   heroDpsMultiplier: 'hero',
-  adjacentBuff: 'hero',
-  taggedChampionBuff: 'hero',
   globalGoldMultiplier: 'global',
   globalCritChance: 'global',
   heroCritChance: 'hero',

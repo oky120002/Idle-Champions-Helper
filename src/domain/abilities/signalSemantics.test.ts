@@ -308,7 +308,7 @@ describe('matchesHeroQualifier', () => {
 describe('attachSignalSemantics', () => {
   it('统一挂接 target 与 formation count qualifier', () => {
     const taggedSignal = attachSignalSemantics(
-      { kind: 'taggedChampionBuff', value: 40, rawEffect: 'tag_dps,40', source: 'official-parsed' },
+      { kind: 'heroDpsMultiplier', value: 40, rawEffect: 'hero_dps_multiplier_mult,40', source: 'official-parsed' },
       { filter_targets: [{ type: 'by_tags', tags: 'female' }], amount_func: 'add' },
     )
     expect(taggedSignal.targetQualifier).toEqual({ predicate: { op: 'tag', tag: 'female' } })

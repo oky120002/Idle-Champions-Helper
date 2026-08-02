@@ -50,16 +50,6 @@ repair: rebuild
     - 当前死码（?? 1 默认）已活，非阻塞；近似后果（支持位 loot 未调整）未在 docs/research/data/planner/equipment-and-abilities.md 显式记录
     - 处置：待 owned 装备精化时再评估是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）；当前降低优先级
 
-- adjacentBuff / taggedChampionBuff 死代码 kind 待删（patronPerkMult/heroGoldMultiplier 已收口） <!-- auto-todo:id=atd_5ea037c4a6 -->
-  - 记录时间: `2026-08-01T18:02:25+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/abilityModel.ts` + `scripts/data/effect-resolvers/{adjacentResolver,tagResolver}.ts`
-  - 备注: 加成机制全量调研（docs/research/data/planner/damage-mechanic-inventory.md §5B）发现 4 个 HeroAbilityKind 在 DIMENSION_BY_KIND/POOL_SCOPE_BY_KIND 定义但游戏数据零产出。
-    - ✅ patronPerkMult + heroGoldMultiplier 已删（A1 Phase A Commit 2，2026-08-01）：连带删 'global-buff' dimension + computationMode OBJECTIVE_DIMENSIONS 条目 + PlannerBreakdown 标签。
-    - ⏳ adjacentBuff：0 个 adjacent_* 前缀 effect，adjacentResolver 死代码；额外触及运行时 placementSlotRelation.ts:171（`signal.kind === 'adjacentBuff'` 分支）+ plannerNarrative.ts hasAdjacentSignal + 多测试 fixture（steadyStateScoring/placementFit.*/recommendationEngine/plannerModel/plannerNarrative.test）。
-    - ⏳ taggedChampionBuff：0 个 tag_* 前缀 effect，tagResolver 死代码；额外触及运行时 placementFit.ts:77-96（tag/stat 限定节点检查）+ plannerNarrative.ts hasTagSignal + 多测试（placementFit.gating/signalSemantics/plannerModel.test）。
-    - 处置：删 kind+resolver+resolverDispatch 注册+运行时分支+测试 fixture（adjacency/tag 机制由 heroDpsMultiplier+positionQualifier/tagQualifier 覆盖，改测试用真实 kind）；独立大子任务，需逐项验证 scoring 无引用。
-
 - loot/feat 源 buff_upgrade target 专精的 owned-aware 接入（a ✅ + b ✅ + c-loot ✅；剩余 c-feat + vulnerability 扩展） <!-- auto-todo:id=atd_b1e5f3a2c7 -->
   - 记录时间: `2026-08-01T23:55:00+08:00`
   - 类型: follow-up

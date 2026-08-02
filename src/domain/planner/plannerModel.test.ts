@@ -86,7 +86,7 @@ describe('planner model merge', () => {
             { kind: 'heroDpsMultiplier', value: 50, rawEffect: 'hero_dps_mult,50' },
           ],
           supportSignals: [
-            { kind: 'adjacentBuff', value: 120, rawEffect: 'adjacent_buff,120' },
+            { kind: 'globalDpsMultiplier', value: 120, rawEffect: 'global_dps_multiplier_mult,120' },
           ],
         },
       ],
@@ -94,7 +94,7 @@ describe('planner model merge', () => {
         {
           heroId: 'bruenor',
           supportSignals: [
-            { kind: 'taggedChampionBuff', value: 240, rawEffect: 'tag_dps,240' },
+            { kind: 'globalDpsMultiplier', value: 240, rawEffect: 'global_dps_multiplier_mult,240' },
           ],
           unsupportedSignals: [
             { rawEffect: 'mystery_effect', rawValue: '1', note: 'manual note' },
@@ -116,9 +116,9 @@ describe('planner model merge', () => {
     expect(resolved.heroes[0]?.sourceBreakdown.carrySignals).toEqual(['repo-semantic-patch'])
     expect(resolved.heroes[0]?.supportSignals).toEqual([
       {
-        kind: 'taggedChampionBuff',
+        kind: 'globalDpsMultiplier',
         value: 240,
-        rawEffect: 'tag_dps,240',
+        rawEffect: 'global_dps_multiplier_mult,240',
         source: 'browser-local-override',
       },
     ])

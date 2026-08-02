@@ -465,7 +465,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
     const baseDps = new Decimal(baseDamage).mul(levelCurve)
     // factors 从 pools 提取：damage:global/hero 池各外露为 globalBuff/heroDpsPool（unified = ability + 外部同 key 加法）；
-    // damagePool 为残余（非 global/hero 的 damage 池；adjacentBuff/taggedChampionBuff 死代码移除后结构性 =1）。
+    // damagePool 为残余（非 global/hero 的 damage 池，当前结构性 =1）。
     const globalBuff = pools.get('damage:global')?.poolMultiplier ?? 1
     const heroDpsPool = pools.get('damage:hero')?.poolMultiplier ?? 1
     let damagePool = 1

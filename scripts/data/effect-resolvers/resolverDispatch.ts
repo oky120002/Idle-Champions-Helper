@@ -8,25 +8,21 @@ import {
   type EffectSignalResult,
 } from './resolverShared.ts'
 import { resolveDpsSignal } from './dpsResolver.ts'
-import { resolveAdjacentSignal } from './adjacentResolver.ts'
 import { resolveGoldSignal } from './goldResolver.ts'
 import { resolveCritSignal } from './critResolver.ts'
 import { resolveSurvivalSignal } from './survivalResolver.ts'
 import { resolveVulnerabilitySignal } from './vulnerabilityResolver.ts'
 import { resolveSpeedSignal } from './speedResolver.ts'
-import { resolveTagSignal } from './tagResolver.ts'
 
-// effect resolver 派发表：首匹配生效。各 resolver 处理的 effect 名族互斥（dps/adjacent/gold/crit/
-// survival/vulnerability/speed/tag），顺序不改变结果；新增机制在此登记一行即可。
+// effect resolver 派发表：首匹配生效。各 resolver 处理的 effect 名族互斥（dps/gold/crit/
+// survival/vulnerability/speed），顺序不改变结果；新增机制在此登记一行即可。
 const EFFECT_RESOLVERS: ReadonlyArray<(ctx: EffectResolveContext) => EffectSignalResult | null> = [
   resolveDpsSignal,
-  resolveAdjacentSignal,
   resolveGoldSignal,
   resolveCritSignal,
   resolveSurvivalSignal,
   resolveVulnerabilitySignal,
   resolveSpeedSignal,
-  resolveTagSignal,
 ]
 
 function dispatchEffectResolvers(ctx: EffectResolveContext): EffectSignalResult | null {

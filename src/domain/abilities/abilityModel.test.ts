@@ -19,8 +19,6 @@ describe('HeroAbilityKind 维度与 pool 归属映射', () => {
     const kinds: HeroAbilityKind[] = [
       'globalDpsMultiplier',
       'heroDpsMultiplier',
-      'adjacentBuff',
-      'taggedChampionBuff',
       'globalGoldMultiplier',
       'globalCritChance',
       'heroCritChance',

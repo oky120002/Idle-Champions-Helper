@@ -28,9 +28,7 @@ export function buildPlannerExplanations(
     .slice(0, 4)
     .map((hero) => hero.name.display)
 
-  const hasAdjacentSignal = activeSignalKinds.has('adjacentBuff')
   const hasHeroSignal = activeSignalKinds.has('heroDpsMultiplier')
-  const hasTagSignal = activeSignalKinds.has('taggedChampionBuff')
 
   const explanations: PlannerNarrativeLine[] = [
     {
@@ -57,15 +55,10 @@ export function buildPlannerExplanations(
     })
   }
 
-  if (hasAdjacentSignal || hasHeroSignal) {
+  if (hasHeroSignal) {
     explanations.push({
-      zh: '这条推荐已经计入相邻增益与英雄自带倍率，carryDps 由 baseDamage × levelCurve × 加成聚合得出。',
-      en: 'This recommendation accounts for adjacency buffs and hero-specific multipliers; carryDps = baseDamage × levelCurve × aggregated buffs.',
-    })
-  } else if (hasTagSignal) {
-    explanations.push({
-      zh: '这条推荐已经开始区分部分 carry 目标标签，但标签语义仍依赖补丁或后续解析补全。',
-      en: 'This recommendation now distinguishes some carry target tags, though that tag semantics still depend on overrides or later parsing work.',
+      zh: '这条推荐已经计入英雄自带倍率，carryDps 由 baseDamage × levelCurve × 加成聚合得出。',
+      en: 'This recommendation accounts for hero-specific multipliers; carryDps = baseDamage × levelCurve × aggregated buffs.',
     })
   } else {
     explanations.push({

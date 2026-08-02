@@ -435,15 +435,6 @@ async function setupBuildModelsOutputs(): Promise<{
         {
           effects: [
             {
-              effect_string: 'tag_dps,40',
-              filter_targets: [{ type: 'by_tags', tags: 'female' }],
-              amount_func: 'add',
-            },
-          ],
-        },
-        {
-          effects: [
-            {
               effect_string: 'global_dps_multiplier_mult,20',
               amount_func: 'add',
               stack_func: 'per_crusader',
@@ -460,7 +451,7 @@ async function setupBuildModelsOutputs(): Promise<{
       heroOverrides: {
         '1': {
           supportSignals: [
-            { kind: 'adjacentBuff', value: 150, rawEffect: 'adjacent_buff,150' },
+            { kind: 'globalDpsMultiplier', value: 150, rawEffect: 'global_dps_multiplier_mult,150' },
           ],
         },
       },
@@ -495,7 +486,6 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
   const perTaggedBeforeCarry = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult_amount_before,150,wafflecrew')
   const perTargetPrebonusSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_prebonus_mult,100,adj')
   const globalSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,65')
-  const taggedSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'tag_dps,40')
   const statCountSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,20')
   const targetedHeroSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
   const attackTypeSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_crusader_mult,100')
@@ -540,7 +530,6 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
   // （见 simulator.md + modeling-pitfalls.md）：装备只走 owned-aware 通道（equipmentMult.ts），
   // build 管线不得 bake 装备源信号，否则与 owned 通道双重计数。
   expect(globalSupport).toBeUndefined()
-  expect(taggedSupport).toBeUndefined()
   expect(statCountSupport).toBeUndefined()
   expect(targetedHeroSupport?.kind).toBe('heroDpsMultiplier')
   expect(targetedHeroSupport?.value).toBe(100)
@@ -666,7 +655,7 @@ it('buildModels 透传 semantic overrides', async () => {
     {
       heroId: '1',
       supportSignals: [
-        { kind: 'adjacentBuff', value: 150, rawEffect: 'adjacent_buff,150' },
+        { kind: 'globalDpsMultiplier', value: 150, rawEffect: 'global_dps_multiplier_mult,150' },
       ],
     },
   ])

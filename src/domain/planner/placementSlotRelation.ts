@@ -168,10 +168,6 @@ export function resolvePositionRelation(signal: HeroAbilitySignal): HeroPosition
     return signal.positionQualifier.relation
   }
 
-  if (signal.kind === 'adjacentBuff') {
-    return 'adjacent'
-  }
-
   if (signal.kind === 'heroDpsMultiplier') {
     return 'self'
   }

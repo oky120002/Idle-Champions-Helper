@@ -23,8 +23,6 @@ const SIGNAL_SHOW_LIMIT = 3
 const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
   globalDpsMultiplier: { zh: '全局 DPS', en: 'Global DPS' },
   heroDpsMultiplier: { zh: '英雄 DPS', en: 'Hero DPS' },
-  adjacentBuff: { zh: '邻位加成', en: 'Adjacent buff' },
-  taggedChampionBuff: { zh: '标签加成', en: 'Tagged buff' },
   globalGoldMultiplier: { zh: '全局金币', en: 'Global gold' },
   globalCritChance: { zh: '全局暴击率', en: 'Global crit chance' },
   heroCritChance: { zh: '英雄暴击率', en: 'Hero crit chance' },

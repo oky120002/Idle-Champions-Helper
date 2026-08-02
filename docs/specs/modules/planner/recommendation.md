@@ -50,8 +50,6 @@
 ### 3.3 已支持的条件
 - `globalDpsMultiplier`：默认对 carry 生效。
 - `heroDpsMultiplier`：默认只对 carry 自身生效。
-- `adjacentBuff`：默认要求 support 与 carry 相邻。
-- `taggedChampionBuff`：只有在 planner model 明确提供 `targetQualifier.requiredTags` 或 `requiredStats` 时才计分；否则只给 warning。
 - carry 目标限定已支持：`requiredTags`、`excludedTags`、`requiredStats`。
 - formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`、`per_slot_distance_from_source`。
 - 计数限定现在不再只支持“按整队英雄事实计数”；也支持“按某个相对站位子集计数”，例如“每个相邻英雄”“每个非相邻英雄”。

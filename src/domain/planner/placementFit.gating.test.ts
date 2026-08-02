@@ -67,17 +67,18 @@ describe('placement fit — gating', () => {
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('carry-self-match')
   })
 
-  it('taggedChampionBuff 标签命中时计分', () => {
+  it('relation=any 的 signal 标签命中时计分（tag-match）', () => {
     const fit = evaluatePlacementFit({
       carryHero: createHero('carry', { tags: ['female', 'elf'] }),
       carrySlotId: 's2',
       supportHero: createHero('support', {
         supportSignals: [
           {
-            kind: 'taggedChampionBuff',
+            kind: 'heroDpsMultiplier',
             value: 50,
-            rawEffect: 'tag_dps,50',
-            source: 'repo-semantic-patch',
+            rawEffect: 'hero_dps_multiplier_mult,50',
+            source: 'official-parsed',
+            positionQualifier: { relation: 'any' },
             targetQualifier: { predicate: { op: 'tag', tag: 'female' } },
           },
         ],
@@ -88,24 +89,6 @@ describe('placement fit — gating', () => {
 
     expect(fit.totalMultiplier).toBe(1.5)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('tag-match')
-  })
-
-  it('taggedChampionBuff 缺少目标语义时只出 warning', () => {
-    const fit = evaluatePlacementFit({
-      carryHero: createHero('carry', { tags: ['female'] }),
-      carrySlotId: 's2',
-      supportHero: createHero('support', {
-        supportSignals: [
-          { kind: 'taggedChampionBuff', value: 50, rawEffect: 'tag_dps,50', source: 'official-parsed' },
-        ],
-      }),
-      supportSlotId: 's1',
-      scenario,
-    })
-
-    expect(fit.totalMultiplier).toBe(1)
-    expect(fit.warnings[0]).toContain('缺少 carry 目标标签')
-    expect(fit.scoreBreakdown[0]?.reasonCode).toBe('missing-target-qualifier')
   })
 
   it('manual stacking 先降级为 warning，不计分', () => {
@@ -131,7 +114,7 @@ describe('placement fit — gating', () => {
     expect(fit.warnings[0]).toContain('手动触发')
   })
 
-  it('stat qualifier 命中时可以作为 carry 目标条件计分', () => {
+  it('stat qualifier 命中时可以作为 carry 目标条件计分（relation=any，stat-match）', () => {
     const fit = evaluatePlacementFit({
       carryHero: createHero('carry', {
         abilityScores: { cha: 13 },
@@ -140,10 +123,11 @@ describe('placement fit — gating', () => {
       supportHero: createHero('support', {
         supportSignals: [
           {
-            kind: 'taggedChampionBuff',
+            kind: 'heroDpsMultiplier',
             value: 40,
-            rawEffect: 'tag_dps,40',
+            rawEffect: 'hero_dps_multiplier_mult,40',
             source: 'official-parsed',
+            positionQualifier: { relation: 'any' },
             targetQualifier: {
               predicate: { op: 'stat', stat: 'cha', operator: '>=', value: 11 },
             },

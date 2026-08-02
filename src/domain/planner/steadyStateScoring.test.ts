@@ -49,7 +49,7 @@ const scenario: OfficialPlannerScenarioModel = {
 }
 
 describe('steady state scoring', () => {
-  it('相邻增益支持位靠近 carry 时评分更高', () => {
+  it('relation=adjacent 支持位靠近 carry 时评分更高', () => {
     const carry = createHero('carry', {
       seat: 1,
       roles: ['dps'],
@@ -60,7 +60,7 @@ describe('steady state scoring', () => {
     const support = createHero('bruenor', {
       seat: 2,
       supportSignals: [
-        { kind: 'adjacentBuff', value: 100, rawEffect: 'adjacent_buff,100', source: 'official-parsed' },
+        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed', positionQualifier: { relation: 'adjacent' } },
       ],
     })
     const heroesById = new Map([
@@ -147,35 +147,6 @@ describe('steady state scoring', () => {
 
     // global pool addPercent = 200 → poolMultiplier = 3；carryDps = baseDamage(1) × levelCurve(1, 1.06) × 3 = 3.18
     expect(result.objectiveValue.toNumber()).toBeCloseTo(1.06 * 3, 5)
-  })
-
-  it('缺少 tagged target qualifier 时只进入 warning，不计分', () => {
-    const carry = createHero('carry', {
-      seat: 1,
-      roles: ['dps'],
-      tags: ['female'],
-    })
-    const support = createHero('tag-buffer', {
-      seat: 2,
-      supportSignals: [
-        { kind: 'taggedChampionBuff', value: 100, rawEffect: 'tag_dps,100', source: 'official-parsed' },
-      ],
-    })
-    const heroesById = new Map([
-      ['carry', carry],
-      ['tag-buffer', support],
-    ])
-
-    const result = scoreFormation({
-      placements: { s1: 'carry', s2: 'tag-buffer' },
-      heroesById,
-      scenario,
-    })
-
-    expect(result.warnings.length).toBeGreaterThan(0)
-    expect(result.warnings[0]).toContain('缺少 carry 目标标签')
-    // carryDps = baseDamage(1) × levelCurve(1, 1.06) × aggregate(1，tagged buff 未计分)
-    expect(result.objectiveValue.toNumber()).toBeCloseTo(1.06, 5)
   })
 
   it('gold 维度 signal 不泄漏进 carryDps（dimension 过滤）', () => {

@@ -47,14 +47,14 @@ describe('placement fit — pools', () => {
         supportSignals: [
           { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_mult_a,100', source: 'official-parsed' },
           { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_mult_b,100', source: 'official-parsed' },
-          { kind: 'adjacentBuff', value: 100, rawEffect: 'adjacent_buff,100', source: 'official-parsed' },
+          { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_mult,100', source: 'official-parsed', positionQualifier: { relation: 'any' } },
         ],
       }),
       supportSlotId: 's1',
       scenario,
     })
 
-    // global pool: 1+(100+100)/100=3；hero pool(adjacentBuff): 1+100/100=2；pool 间乘法 = 6
+    // global pool: 1+(100+100)/100=3；hero pool: 1+100/100=2；pool 间乘法 = 6
     // 旧纯累乘为 2*2*2=8；lumped Σ 为 1+300/100=4——本断言区分两者
     expect(fit.totalMultiplier).toBe(6)
   })
@@ -66,7 +66,7 @@ describe('placement fit — pools', () => {
       supportHero: createHero('support', {
         supportSignals: [
           { kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_mult_a,50', source: 'official-parsed' },
-          { kind: 'adjacentBuff', value: 200, rawEffect: 'adjacent_buff,200', source: 'official-parsed', amountFunc: 'mult' },
+          { kind: 'heroDpsMultiplier', value: 200, rawEffect: 'hero_dps_mult,200', source: 'official-parsed', positionQualifier: { relation: 'any' }, amountFunc: 'mult' },
         ],
       }),
       supportSlotId: 's1',

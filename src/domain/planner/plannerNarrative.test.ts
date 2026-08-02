@@ -26,7 +26,7 @@ describe('buildPlannerExplanations', () => {
       heroById,
       'h1',
       new Decimal('1.50e92'),
-      new Set<HeroAbilityKind>(['adjacentBuff', 'heroDpsMultiplier']),
+      new Set<HeroAbilityKind>(['globalDpsMultiplier', 'heroDpsMultiplier']),
       'team-gold',
     )
 
@@ -35,7 +35,7 @@ describe('buildPlannerExplanations', () => {
     expect(lines.some((line) => line.zh.includes('Minsc'))).toBe(false)
   })
 
-  it('carry-dps + carry + adjacent 信号：3 行，carry 行含英雄名、objectiveValue 与支援名', () => {
+  it('carry-dps + carry + hero 信号：3 行，carry 行含英雄名、objectiveValue 与支援名', () => {
     const heroById = new Map([
       ['carry', makeHero('carry', 'Minsc', 7)],
       ['support', makeHero('support', 'Birdsong', 3)],
@@ -46,7 +46,7 @@ describe('buildPlannerExplanations', () => {
       heroById,
       'carry',
       new Decimal('1.50e92'),
-      new Set<HeroAbilityKind>(['adjacentBuff']),
+      new Set<HeroAbilityKind>(['heroDpsMultiplier']),
       'carry-dps',
     )
 
@@ -71,21 +71,5 @@ describe('buildPlannerExplanations', () => {
 
     expect(lines).toHaveLength(2)
     expect(lines.some((line) => line.zh.includes('核心输出位'))).toBe(false)
-  })
-
-  it('carry-dps + 仅 tag 信号（无 adjacent/hero）：走 tag 分支，3 行', () => {
-    const heroById = new Map([['carry', makeHero('carry', 'Minsc', 7)]])
-    const lines = buildPlannerExplanations(
-      scenario,
-      [makePlacement('carry')],
-      heroById,
-      'carry',
-      new Decimal('1e10'),
-      new Set<HeroAbilityKind>(['taggedChampionBuff']),
-      'carry-dps',
-    )
-
-    expect(lines).toHaveLength(3)
-    expect(lines.some((line) => line.zh.includes('目标标签'))).toBe(true)
   })
 })

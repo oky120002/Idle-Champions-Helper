@@ -18,7 +18,7 @@
 carryDps = baseDps × levelCurve × damagePool × crit × vuln × globalBuff × heroDpsPool
 ```
 
-- `damagePool`（`productOfPoolMultipliers(sharedPools)`）含 ability 源 `damage:global`（globalDpsMultiplier 信号）+ `damage:hero`（heroDpsMultiplier / adjacentBuff / taggedChampionBuff 信号）。
+- `damagePool`（`productOfPoolMultipliers(sharedPools)`）含 ability 源 `damage:global`（globalDpsMultiplier 信号）+ `damage:hero`（heroDpsMultiplier 信号）。
 - `globalBuff`（外部 patron/blessing 的 `global_dps_multiplier_mult`，`scoringBonusInputs.ts` 装配）单独相乘。
 - `heroDpsPool`（`equipmentAdjustment + externalHeroDpsAddPercent/100`，装备 + patron/blessing 的 `hero_dps_multiplier_mult`）单独相乘。
 

@@ -4,10 +4,10 @@ import { evaluatePlacementFit } from './placementFit'
 import { createHero, extendedScenario, graphScenario, scenario } from './placementFitTestFixtures'
 
 describe('placement fit — relations', () => {
-  it('adjacentBuff 只在相邻时生效', () => {
+  it('relation=adjacent 的 signal 只在相邻时生效', () => {
     const supportHero = createHero('support', {
       supportSignals: [
-        { kind: 'adjacentBuff', value: 100, rawEffect: 'adjacent_buff,100', source: 'official-parsed' },
+        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed', positionQualifier: { relation: 'adjacent' } },
       ],
     })
 
