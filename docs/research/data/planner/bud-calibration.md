@@ -18,14 +18,14 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 
 - `budCalculation.ts` 只导出 `computeSingleHitDamage(heroDps, attackCooldown)`——单英雄单次伤害；缺 cooldown 时回退默认 1 秒。
 - 阵型级 BUD（`max` 各英雄单次伤害）**不在此计算**——`steadyStateScoring` 直接用 carry 的单次伤害近似阵型 BUD（carry 通常设 BUD）。formation-max 精确化（考虑非 carry 高 cooldown 英雄）留待 BUD 实测校准后按需立项。
-- ult_damage 派生（`ultimate_damage_params.dps_based:true`）由 ult uptime 折算路径处理，见 `docs/specs/modules/planner/simulator.md`。
+- ult_damage 派生（`ultimate_damage_params.dps_based:true`）的 uptime 折算模块（`ultUptime.ts`）已实现但**未接入评分**，见 `docs/specs/modules/planner/simulator.md`。
 
 ## MVP 近似与局限
 
 - carryDps 当前不含攻速（`baseDps.ts` 未除 cooldown），用作 heroDps 时与「真·每秒」存在系统性偏差；speed 暂不进 carryDps，BUD 作为 speed 感知辅助指标并行计算。
 - `computeSingleHitDamage` 未含 BUD 专属放大（click damage、ult 对单次、BUD-setter 标签加成），绝对值偏低；相对比较（谁设 BUD）保序。
 
-## 绝对伤害偏差根因分析（2026-07-28 诊断）
+## 绝对伤害偏差根因分析
 
 明斯克（hero_id=7）absolute-dps 偏差量化（`damageReferenceVerification` 度量，含外部加成 ×500 + 等级门控后）：
 
@@ -37,9 +37,9 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 - 明斯克 baseDamage = 1e7；`baseDamage × formationAggregate × globalBuff(500)` = 10^12.3（l1）/ 10^11（l722 归一）。
 - **偏差主因不是 baseDamage/levelCurve**：l1 漏 ~10^33 的全局放大。这是**玩家账号累积的全局加成**（favor/modron 等），未进 calc（calc 只含英雄 baseDamage × 阵型 signal × 外部加成）。
 - levelCurve 用 costCurves['1']=1.12 高估（实测伤害增长率 ~1.058），**恰好部分抵消**全局放大缺失——这是 l722 偏差（-13.5）比 l1（-32.7）小的原因。若修正 levelCurve（1.058）但不建模全局放大，偏差暴露至 ~-31.5。
-- **结论**：absolute-dps 偏差收敛依赖**全局放大建模**（favor/modron/blessing，即 architecture.md 后续目标的「外部加成生产侧 + modron 接入」），不是 baseDamage/levelCurve 微调。BUD 校准（baseDamage/官方曲线精确化）是次要项（相对比较保序，绝对值靠全局放大）。
+- **结论**：absolute-dps 偏差收敛依赖**全局放大建模**（favor/modron/blessing，即 `architecture.md`「未接入能力」登记的外部加成与 modron 接入），不是 baseDamage/levelCurve 微调。BUD 校准（baseDamage/官方曲线精确化）是次要项（相对比较保序，绝对值靠全局放大）。
 
-## 全局放大源调研（2026-07-28 raw 分析）
+## 全局放大源调研
 
 偏差主因 ~10^33 全局放大的来源（`tmp/idle-champions-api/definitions-*-lang-1-source.json` 深挖）：
 
@@ -53,7 +53,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 1. **blessing 接入（大头）**：`UserProfileSnapshot` 加 `blessings` 字段（`userProfileNormalizer:254-255` 已保留 `normalizeNumberRecord(c.blessings)`，但未进最终 snapshot）+ 归一化 global blessing 乘数定义（raw `effect_defines` / `patron_perk_defines` 的 global_dps blessing）+ 适配层聚合进 `globalBuffMultiplier`。
 2. **modron 接入**：核心配置 → buff 链解析（复杂，单独工程）。
 
-结论（2026-07-29 翻案）：blessing **不是数据死路**——blessing = `reset_upgrade`（IC 内部名），定义在 `userdetails.defines.reset_upgrade_defines`（200 条），actual 在 `userdetails.details.reset_upgrade_levels`（142 已购）；旧「3 端点无」结论因搜 "blessing" 搜不到（字段名 reset_upgrade）。23 条无条件 global_dps actual Σ=26800 → ×269（log10=2.43，迄今最大 globalBuff 单项）；patron + blessing 合并 add pool ×324。10^32 偏差大头仍在 effect_def tag 限定（142 条）+ per_X 计数 + modron + 成就等（详见 patron-perks-and-blessings.md）。
+结论：blessing **不是数据死路**——blessing = `reset_upgrade`（IC 内部名），定义在 `userdetails.defines.reset_upgrade_defines`（200 条），actual 在 `userdetails.details.reset_upgrade_levels`。23 条无条件 global_dps actual Σ=26800 → ×269（log10=2.43，迄今最大 globalBuff 单项）；patron + blessing 合并 add pool ×324。10^32 偏差大头仍在 effect_def tag 限定（142 条）+ per_X 计数 + modron + 成就等（详见 patron-perks-and-blessings.md）。
 
 **10^33 真凶**：参照数据 incomingBuffs 严重不完整——明斯克 l1 单英雄 obs 10^45 需 10^38 放大，参照只记 4 条（×500=10^2.7），差 10^35.3 是账号未记录的全局放大（modron + hero-static 装备 ≈×68=10^1.8 + 更多 blessing/patron perk）。
 

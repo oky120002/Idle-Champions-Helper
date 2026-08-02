@@ -1,4 +1,4 @@
-# planner 模拟器、搜索与性能
+# planner 数字层、加成聚合与评分维度
 
 ## GameNumber
 
@@ -11,17 +11,11 @@
 - 显示层默认 `1.50e92` 风格；不用 JS `number` 承载最终伤害。
 - 核心数值类型必须覆盖超过 `Number.MAX_VALUE` 的游戏数值范围。
 
-## 基线算法
+## 英雄等级
 
-默认基线是「最后专精 + 金币预算」：
+英雄等级取自存档 `ownedHeroes.level`（`recommendationEngine.ts` 构造 `heroLevels` 传入 `scoreFormation`）。未拥有英雄（all-hypothetical 候选）按 `DEFAULT_CARRY_LEVEL = 1`，`levelCurve = rate^1`（英雄自身 costCurve rate），保留英雄间增长率差异但无法反映高等级 scale。
 
-```text
-extractLastSpecializationUnlockLevel(champion upgrades)
-estimateAffordableLevel(cost curve, gold budget, favor/blessing context)
-baselineLevel = max(lastSpecializationLevel, affordableLevel if affordable)
-```
-
-金币预算不足以达到最后专精时，结果标记 `below-baseline`，UI 显示为不可靠候选。固定 1 级只用于 parser 与 fixture smoke test；不提供默认 100 级模式。
+等级基线估算（`goldBudgetBaseline.ts` + `specializationBaseline.ts`，cost curve + 金币预算 → 可负担等级 + below-baseline 标记）模块已实现但未接入评分链路——当前不估算未拥有英雄可达成等级、不标记 below-baseline。
 
 ## 加成聚合与 DPS 公式
 
@@ -37,13 +31,13 @@ hero_final_dps = base_dps × level_curve
   × vulnerability_pool        // 按怪物 tag 条件匹配，Σ(add) → Π(mult)
 ```
 
-`global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron/blessing/装备）同属一个 IC effect key（`global_dps_multiplier_mult` / `hero_dps_multiplier_mult`），按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。修复前二者分列相乘是 A1 bug（`docs/audits/correctness-audit.md` §2）：同 key 跨源该加法却相乘，高估 carryDps 并与未建模源「负负得正」。scoreFormation 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
+`global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron / blessing / 装备）同属一个 IC effect key，按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。`scoreFormation` 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
 
-**加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot/legendary）只走 owned-aware 通道：加性 kind（hero_dps/global_dps/gold/health/crit，`equipmentMult.ts` B1-a/b/c/d）+ `buff_upgrade` wrapper（B1-e，`equipmentBuffSignals.ts` applyEquipmentBuffsToProfile：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 bonusScaleOfSignal wrapper 注入 profile，与 feat/专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals **或 spec catalog**——`buildHeroModels` 过滤 loot/legendary/feat 不进 base（e053b759），`specialization-catalog` build 同构过滤 `specializationDerived` 的 loot/legendary/feat 源（atd_b1e5f3a2c7 修复 a，wrapper 100→16）；spec catalog signal 带 upgradeId（修复 b），owned loot buff_upgrade target spec 经 `applyEquipmentBuffsToProfile` 反查 spec base 接入（c-loot，engine 顺序 spec→equipment）。所有 wrapper 消费路径都必须接 sourceBucket 过滤。违反此不变式 → 双重计数（实测案例与防范纪律见 `modeling-pitfalls.md` 陷阱 3）。
+**加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot / legendary）只走 owned-aware 通道：加性 kind（hero_dps / global_dps / gold / health / crit，`equipmentMult.ts`）+ `buff_upgrade` wrapper（`equipmentBuffSignals.ts` `applyEquipmentBuffsToProfile`：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 wrapper 注入 profile，与 feat / 专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals **或 spec catalog**——`buildHeroModels` 过滤 loot / legendary / feat 不进 base（`e053b759`），`specialization-catalog` build 同构过滤 `specializationDerived` 的 loot / legendary / feat 源。所有 wrapper 消费路径都必须接 sourceBucket 过滤。违反此不变式 → 双重计数（陷阱与防范纪律见 `modeling-pitfalls.md`）。
 
 `HeroAbilitySignal.unit: 'percent'|'flat'|'boolean'`（默认 percent；`buff_upgrade_add_flat_amount` 是 flat）。
 
-特殊 pool（不进常规 add/mult 聚合）：`formation_effect`、`static_dps_only`、`manual_bonus_calc`、`not_buffable`。
+特殊 pool（不进常规 add / mult 聚合）：`formation_effect`、`static_dps_only`、`manual_bonus_calc`、`not_buffable`。
 
 `static_dps_mult` fallback：`upgrade.static_dps_mult`（CNE 静态 dps 乘数近似 1.25–5）由 `collectRawEffectEntries` 读取；其 effect 未产出可解析 signal（复杂机制如 `target_attacking_monsters_hero_dps_mult`）的 upgrade，fallback 生成 `heroDpsMultiplier` mult signal（`value=(staticDpsMult−1)×100`，carrySignals self-buff）。upgrade 已有可解析 signal 时不 fallback，防重复。
 
@@ -53,14 +47,12 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 
 | 维度 | 进 carryDps | 说明 |
 |------|:-----------:|------|
-| damage | 是 | global/hero DPS multiplier、adjacent support、tagged champion multiplier。主评分载体。 |
-| gold | 独立模式 | `team_gold_find = BASE_GOLD × global_gold_pool × hero_gold_pool`，全队聚合（非单一 carry），走 `team-gold` scoringMode 分支；装备 `gold_multiplier_mult`（placement-aware per-hero，B1-c）并入 gold:global 池。 |
-| crit | 是 | `crit_factor = 1 + total_chance × (total_damage_mult − 1)`；默认 chance=2.5%/damage=100% 来自 `default_crit_info`。装备 `buff_base_crit_*_mult`（hero-scope mult，per-carry，B1-d）经 computeCritFactor 第三参注入（非池聚合）。BUD 机制下期望值低估，MVP 可接受。 |
-| vulnerability | 是 | 按场景怪物 tag 条件性匹配（`scenario.enemyTypes`）；add/mult 分流聚合，与 damage pool 一致。 |
-| survival | 推图约束 | `effectiveHealth = baseHealth × health_pool`；ability health + 装备 `health_mult`（hero-scoped per-carry，B1-b）+ `damage_reduction_mult` 玩家侧减伤并入 health_pool。不进 carryDps，作为推图预估的存活约束。 |
-| speed | 否 | `attack_speed_mult`/`reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown）。 |
-| global-buff | 是 | patron-perks（`computeActualPatronPerkGlobalBuff`）+ blessings（`computeActualBlessingGlobalBuff`）的账号级 `global_dps_multiplier_mult`，`combineGlobalBuffMultipliers` 合成 globalBuffMultiplier；与 ability 源 + 装备 global_dps 同 key 加法合并进 unified global_dps_pool（A1）。装备 global_dps 英雄绑定（placement-aware，见 equipment 行），不预并入 globalBuffMultiplier。 |
-| equipment | 是 | 装备 `hero_dps_multiplier_mult`（hero-scope per-carry，`computeEquipmentAdjustmentByHero`）+ `health_mult`（hero-scope per-carry survival:hero 池，`computeEquipmentHealthByHero`，B1-b）+ `global_dps_multiplier_mult`/`gold_multiplier_mult`（global-scope，placement-aware per-hero `computeEquipmentGlobalDpsByHero`/`computeEquipmentGoldByHero`，B1-a/B1-c）+ `buff_base_crit_*_mult`（hero-scope mult per-carry `computeEquipmentCritByHero`，经 critFactor 独立通道，B1-d）；loot-catalog enchant 缩放 `base×(1+enchant/250)`；hero_dps 与 patron/blessing hero_dps effect_def 同 key 加法合并进 unified hero_dps_pool（A1）。 |
+| damage | 是 | global / hero DPS multiplier、adjacent support、tagged champion multiplier。主评分载体。 |
+| gold | 独立模式 | `team_gold_find = BASE_GOLD × global_gold_pool × hero_gold_pool`，全队聚合（非单一 carry），走 `team-gold` scoringMode 分支；装备 `gold_multiplier_mult`（placement-aware per-hero）并入 gold:global 池。 |
+| crit | 是 | `crit_factor = 1 + total_chance × (total_damage_mult − 1)`；默认 chance=2.5% / damage=100% 来自 `default_crit_info`，per-hero 可被 `set_base_crit_chance` 覆盖（归一基线）。装备 `buff_base_crit_*_mult`（hero-scope mult，per-carry）经 computeCritFactor 第三参注入（非池聚合）。 |
+| vulnerability | 是 | 按场景怪物 tag 条件性匹配（`scenario.enemyTypes`）；add / mult 分流聚合，与 damage pool 一致。 |
+| survival | 推图约束 | `effectiveHealth = baseHealth × healthLevelCurve × health_pool`；ability health + 装备 `health_mult`（hero-scoped per-carry）+ `damage_reduction_mult` 玩家侧减伤并入 health_pool。不进 carryDps，作为推图预估的存活约束。 |
+| speed | 否 | `attack_speed_mult` / `reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD / cooldown）。 |
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
@@ -75,11 +67,11 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 - `owned-only`：只使用账号快照中已拥有英雄，按真实装备、feat、传奇、专精和已保存阵型信息计算。
 - `all-hypothetical`：包含未拥有英雄，默认使用公平投影假设。
 
-未拥有英雄公平基线：同 seat 已拥有英雄足够时用同 seat 中位装备/feat/传奇假设；同 seat 不足时用账号全局中位数；空账号或数据不足时退回 `no-equipment/no-feat`，并强制显示 assumption。
+未拥有英雄公平基线：同 seat 已拥有英雄足够时用同 seat 中位装备 / feat / 传奇假设；同 seat 不足时用账号全局中位数；空账号或数据不足时退回 `no-equipment/no-feat`，并强制显示 assumption。
 
 ## 搜索和评分
 
-合法性先于评分：seat 冲突、banned champions、forced champions、locked/occupied slots、formation layout mismatch。
+合法性先于评分：seat 冲突、banned champions、forced champions、locked / occupied slots、formation layout mismatch。
 
 deterministic beam search。默认参数由领域常量集中管理（不写死 UI）：每个 seat 保留 Top N、主 DPS Top N、beam width、result count。结果排序稳定，同分用 deterministic tie-breaker。
 
@@ -97,8 +89,8 @@ beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评�
 
 **运行时裁剪**（`applyComputationMode`，pure function）：
 
-- 按席位分组，每组按 `compositeGain = max(self 复合, support 复合)` 降序（`OBJECTIVE_DIMENSIONS`：carry-dps 取 damage/crit/vulnerability/global-buff，team-gold 取 gold）。
-- 取前 `MODE_FRACTION` 比例（`full`/`p90`/`p50` = 1.0/0.9/0.5），每席位至少 1 个；forced 英雄（场景强制 + 用户锁 carry + 用户锁槽）无条件保留；保留原始顺序保证确定性。
+- 按席位分组，每组按 `compositeGain = max(self 复合, support 复合)` 降序（`OBJECTIVE_DIMENSIONS`：carry-dps 取 damage / crit / vulnerability，team-gold 取 gold）。
+- 取前 `MODE_FRACTION` 比例（`full` / `p90` / `p50` = 1.0 / 0.9 / 0.5），每席位至少 1 个；forced 英雄（场景强制 + 用户锁 carry + 用户锁槽）无条件保留；保留原始顺序保证确定性。
 - 挂在 `buildPlannerRecommendation` 候选过滤后、`beamSearch` 前；`evaluateFormation` 不裁剪（用户已显式指定阵型）。
 
 选项：`PlannerRecommendationOptions.computationMode`（默认 `p50`）；UI `PlannerComputationMode` 选择器三档切换。
@@ -107,4 +99,4 @@ beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评�
 
 降搜索宽度不是可靠加速——benchmark 实测 `beamWidth=4` 多数 variant 无损但偶发 objectiveValue 塌方、`≤3` 候选多的 variant 直接崩溃。默认保守留 8，可经 `PlannerRecommendationOptions.beamWidth` 覆盖。
 
-增量评分经深入调研确认**严格等价下不可行**：632 个 count-dependent signal（`per_crusader`/`per_hero_attribute`/`per_tagged_crusader_mult`/`per_target_crusader`/`per_upgrade_targets`，分布在 96% 英雄）的 multiplier 依赖整队计数，加入英雄会改变已有 `(carry,support)` 对结果——严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)，与全量同级。性能优化改走下方 Web Worker 卸载。
+增量评分经深入调研确认**严格等价下不可行**：632 个 count-dependent signal（`per_crusader` / `per_hero_attribute` / `per_tagged_crusader_mult` / `per_target_crusader` / `per_upgrade_targets`，分布在 96% 英雄）的 multiplier 依赖整队计数，加入英雄会改变已有 `(carry,support)` 对结果——严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)，与全量同级。性能优化改走 Web Worker 卸载（见 `computation-runtime.md`）。

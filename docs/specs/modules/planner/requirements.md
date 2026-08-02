@@ -35,19 +35,13 @@ planner 用 `npm run data:signal-coverage` 审计 definitions 中对模拟器有
 
 底层使用大数库，业务只接触 `GameNumber` wrapper。支持 parse、format、multiply、divide、pow、log10、compare、sort，以及带阈值的 add。显示默认游戏记数法。
 
-### 等级基线
+### 英雄等级
 
-默认基线是金币预算 + 最后专精：
-
-- 从英雄 upgrades 中提取最高专精所需等级。
-- 根据 cost curve 和目标金币预算估算可负担等级。
-- 可负担等级低于最后专精时标记 `below-baseline`。
-- 固定 1 级只作为调试模式。
-- 不提供默认 100 级模式。
+英雄等级取自存档 `ownedHeroes.level`；未拥有英雄（all-hypothetical 候选）按 level 1（`levelCurve = rate^1`，保留英雄间增长率差异但无法反映高等级 scale）。等级基线估算（cost curve + 金币预算 → 可负担等级 + below-baseline 标记）模块已实现但未接入评分链路，见 `simulator.md`。
 
 ### 评分
 
-只计算可预计算的稳态 DPS 类加成：global DPS、hero DPS、adjacent support、tagged champion multiplier、可识别的 positional hints。各维度公式与聚合方式见 `simulator.md`。
+只计算可预计算的稳态加成：global / hero DPS multiplier、adjacent support、tagged champion multiplier、位置关系、crit、vulnerability、gold（team-gold 模式）、health（survival 约束）。各维度公式与聚合方式见 `simulator.md`。
 
 未知 effect、事件变量、随机触发和复杂条件进入 warnings。
 

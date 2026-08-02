@@ -1,6 +1,6 @@
 # 英雄实测参照：统一数据口径
 
-用户游戏内观察到的英雄数据是计算器的 **oracle**——用真实英雄/阵型/等级跑计算器，对得上才算对，对不上就是计算器缺口（须修或在 architecture.md「后续目标」登记）。一英雄一份 `<heroId>ReferenceData.ts`（`satisfies ChampionReference`），含一份或多份观测快照。无论「机制倍率参照」（蔚式）还是「伤害快照参照」（明斯克/瓦罗式），都进**同一 schema**，杜绝每批入库造新口径。
+用户游戏内观察到的英雄数据是计算器的 **oracle**——用真实英雄 / 阵型 / 等级跑计算器，对得上才算对，对不上就是计算器缺口（须修，或属未建模能力时在各专题文档登记边界）。一英雄一份 `<heroId>ReferenceData.ts`（`satisfies ChampionReference`），含一份或多份观测快照。无论「机制倍率参照」（蔚式）还是「伤害快照参照」（明斯克 / 瓦罗式），都进**同一 schema**，杜绝每批入库造新口径。
 
 ## 数据结构（`references/championReferenceTypes.ts`）
 
@@ -22,7 +22,7 @@
 ## 校准口径（与 architecture.md「投影模式」一致）
 
 - **formation-buff 模式（自动化，CI 门控）**：`objectiveValue` = 阵型内 signal 聚合（damagePool×crit×vuln）。断言交叉位置 buff 命中、计数、乘算堆叠、signal 齐全——确定性结构正确性，不依赖绝对校准。机制倍率逐项对照（`multiplierChecks`）偏差 < 30% 相对容差（游戏显示取整近似）。
-- **absolute-dps 模式（记录不门控）**：`objectiveValue` = baseDamage×levelCurve×全因子。绝对量未校准（外部加成未建模 + 技能无等级门控 + cost 曲线 ≠ 伤害曲线），当前与实测差几十个数量级；`damageReferenceVerification.test.ts` 度量并打印 log10 偏差作 BUD 校准回归基线，驱动收敛，不阻塞 CI。绝对量对照待 architecture.md「后续目标」补全后落地为断言。
+- **absolute-dps 模式（记录不门控）**：`objectiveValue` = baseDamage×levelCurve×全因子。绝对量未校准（外部加成未建模 + 技能无等级门控 + cost 曲线 ≠ 伤害曲线），当前与实测差几十个数量级；`damageReferenceVerification.test.ts` 度量并打印 log10 偏差作 BUD 校准回归基线，驱动收敛，不阻塞 CI。绝对量对照待 architecture.md「未接入能力」补全后落地为断言。
 
 ## 测试两组（`references/*.test.ts`，`import.meta.glob` 真自动发现）
 

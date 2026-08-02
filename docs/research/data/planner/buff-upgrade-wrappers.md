@@ -49,18 +49,17 @@ base-unresolved 绝大多数是**非 stat 触发器/stack/no-op**（前 5 名 ~2
 
 ## 覆盖率结论
 
-> 本节为 progression 排除修复（见下节）前的统计快照；排除 ability 源静态 buff_upgrade 后，resolved 数与分布已变，重跑 `npm run data:signal-coverage` 可得新值。下方结论的历史语境仍有效（base-effect 性质决定天花板）。
+> 统计快照；排除 ability 源静态 buff_upgrade 后 resolved 数与分布已变，重跑 `npm run data:signal-coverage` 可得新值。结论由 base-effect 性质决定的天花板仍有效。
 
 - wrapper resolved 370（65.5%）、family-unsupported 21。
 - **resolved 率 65.5%，未达 80%**：天花板由 base-effect 性质决定（174 base-unresolved 多为非 stat 触发器）。强行解析非 stat base 会引入语义错误，违反「不把控制流当 buff」。
 - 80% 目标在当前 base-effect 分布下不可达；正确路径是 targeting 精细化（解锁 hero_dps 等 stat base 的 unsupported targeting）+ step simulation（effect_stacks / attacking_monster 计数）。
-- progression 排除（移除 ability 源静态 buff_upgrade 的双重计数）是**正确性提升**——修复前 ability 源静态 wrapper 被错误派生为独立计分信号（22× 高估），修复后不再进入 resolved 统计。
 
-## ability 源静态 buff_upgrade 排除（2026-07-28 修正）
+## ability 源静态 buff_upgrade 排除
 
-IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自身 upgrade 树的全部静态 buff_upgrade 贡献。`collectEffectEntries` 派生循环跳过 **ability 源（`sourceBucket ∈ {upgrade, upgrade-effect-key}`）+ plain kind（`buff_upgrade`/`buff_upgrades`）+ 非 `stacks_multiply`** 的 wrapper——否则每条叠 `base.value×X/100` 进 addPercent 会产生 22× 级 pool 高估（蔚 damage:hero pool 6.4e8 vs 游戏 2.92e7，影响 162/164 英雄，4727 条 ability 源静态 entry）。
+IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自身 upgrade 树的全部静态 buff_upgrade 贡献。`collectEffectEntries` 派生循环跳过 **ability 源（`sourceBucket ∈ {upgrade, upgrade-effect-key}`）+ plain kind（`buff_upgrade`/`buff_upgrades`）+ 非 `stacks_multiply`** 的 wrapper——否则每条叠 `base.value×X/100` 进 addPercent 会产生数十倍级 pool 高估（蔚 damage:hero pool 6.4e8 vs 游戏 2.92e7，影响绝大多数英雄）。
 
-证据：蔚善良榜样 `effect_string=300` 含 20 条 ranked `buff_upgrade,100,12312` + 劝人向善 `buff_upgrade,200,12312`，游戏显示 per-stack 恰好 +300%（4^7=16384）。旧代码按 `required_level` 区分 sentinel（去重取最高）/ 真升级（全部叠加），假设「真升级全部叠加」——此假设错误，已移除整个 sentinel/真升级分流。
+证据：蔚善良榜样 `effect_string=300` 含 20 条 ranked `buff_upgrade,100,12312` + 劝人向善 `buff_upgrade,200,12312`，游戏显示 per-stack 恰好 +300%（4^7=16384）。
 
 保留三类运行时 wrapper（仍派生）：
 
@@ -68,10 +67,10 @@ IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自�
 - 复杂 wrapper（`buff_upgrade_per_tagged_crusader_mult` / `buff_upgrade_mult_by_distance_*` 等，阵型依赖）
 - 外部源 loot/feat/legendary（装备/专长/feat，不在 ability snapshot 内）
 
-> 上方「变体频率」与「base 未解析根因」表为 progression 排除修复前的统计快照；排除后 plain `buff_upgrade`/`buff_upgrades` 的 ability 源部分不再派生（外部源部分仍派生），重跑 `npm run data:signal-coverage` 可得新分布。
+> 「变体频率」与「base 未解析根因」表为排除 ability 源静态 buff_upgrade 前的统计快照；排除后 plain `buff_upgrade`/`buff_upgrades` 的 ability 源部分不再派生（外部源部分仍派生），重跑 `npm run data:signal-coverage` 可得新分布。
 
 ## 派生去重 + bonusScale targeting
 
 - **派生去重**：`rarityGroupKey` 按 (kind, base target, targetQualifier, formationCountQualifier, position, amountFunc, stackFunc) 分组（排除 magnitude/value），key 追加 `@upgradeId`，同 key 首条保留。不同 upgrade 的 wrapper 各自独立。
-- **loot rarity 选择局限**：loot 来源 `upgradeId=null`，同槽多 rarity tier 共享 key `rarityGroupKey@?` → 首条（低 rarity）保留，非最高 rarity。IC 装备每槽只装备一件（最高 rarity），应取最高；这是已知 follow-up（见 TODO.md atd_5f6e7d8c9b），非本次修复范围。
+- **loot rarity 选择局限**：loot 来源 `upgradeId=null`，同槽多 rarity tier 共享 key `rarityGroupKey@?` → 首条（低 rarity）保留，非最高 rarity。IC 装备每槽只装备一件（最高 rarity），应取最高；这是已知 follow-up（见 TODO.md atd_5f6e7d8c9b）。
 - **bonusScale targeting 复用**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时取 base 的 multiplier 折算（`(basePercent × wrapperMag)/100`），不重新校验 base 的 `positionQualifier` / `targetQualifier`。wrapper 自身 filter_targets 已 AND 合并到 base targetQualifier（`mergeHeroQualifiers`）；base 与外层 targeting 不一致的场景当前进入 warning（保守安全）。

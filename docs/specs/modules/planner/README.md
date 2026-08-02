@@ -1,7 +1,7 @@
 # planner 模块文档入口
 
 - 作用：自动阵型计划器的产品范围、架构、数据、推荐评分与运行时合同。
-- 边界：本目录是功能与设计事实源；历史 Ralph 任务包（含旧路径引用）见 `.ralph/tasks/planner/`，仅作存档，不反映当前结构。
+- 边界：本目录是功能与设计事实源；历史任务包见 `.ralph/tasks/planner/`，仅作存档，不反映当前结构。
 
 ## 文档导览
 
@@ -15,26 +15,26 @@
 ### 推荐与评分
 
 - `recommendation.md`：推荐英雄、站位规则、模型字段、条件匹配语义与 merge 策略。
-- `search-and-ranking.md`：搜索、排序、输出合同与验收场景。
-- `simulator.md`：GameNumber、等级基线、加成聚合、评分维度、搜索与计算模式。
+- `search-and-ranking.md`：搜索、排序与输出合同。
+- `simulator.md`：GameNumber、英雄等级、加成聚合与 DPS 公式、评分维度、计算模式。
 - `computation-runtime.md`：Web Worker、推图预估、输出合同、UI 与测试覆盖。
 
-### 数据核实
+### 专题
 
-- `docs/research/data/planner/README.md`：怪物、Patron、场景限制、装备、能力、BUD 与信号覆盖证据。
+- `expression-evaluator.md`：布尔 / 数值表达式求值边界与职责分界。
+- `dps-mechanics.md`：DPS 机制注册表（id / 识别字段 / 代码处理点 / 使用英雄），机制 id 三处一致的锚点。
+- `dps-mechanic-abstraction.md`：机制抽象四条阈值（≥2 抽象 / 孤儿特化+预警 / 孤儿→≥2 立刻抽象 / >10 升级策略注册表）。
+- `mechanic-isolation.md`：加成机制隔离架构——四种同构隔离模式（EffectResolver / MechanicResolver / DimensionFactor / BonusProvider）。
+- `champion-reference-verification.md`：英雄实测参照数据统一 schema（机制倍率 + 伤害快照）、校准口径与测试两组。
+- `modeling-pitfalls.md`：加成建模陷阱与验证纪律（补建前证伪「未建模」、golden 对叠加错误的盲区、wrapper 派生 signal 来源穿透）。补建任何加成 / 机制前先读。
 
 ### 验收
 
 - `acceptance.md`：整体 DoD 与关键验收指针。
 
-### 专题
+### 数据核实
 
-- `expression-evaluator.md`：当前布尔表达式求值边界，以及其他表达式域的职责分界。
-- `dps-mechanics.md`：DPS 机制注册表（id / 识别字段 / 代码处理点 / 使用英雄），机制 id 三处一致的锚点。
-- `dps-mechanic-abstraction.md`：机制抽象四条阈值（≥2 抽象 / 孤儿特化+预警 / 孤儿→≥2 立刻抽象 / >10 升级策略注册表）。
-- `mechanic-isolation.md`：加成机制隔离架构——四种同构隔离模式（EffectResolver / MechanicResolver / DimensionFactor / BonusProvider），模式 1（effect→signal 解析层）已实现。
-- `champion-reference-verification.md`：英雄实测参照数据统一 schema（机制倍率 + 伤害快照）、校准口径与测试两组。
-- `modeling-pitfalls.md`：加成建模陷阱与验证纪律（补建前证伪「未建模」、golden 对叠加错误的盲区、wrapper 派生 signal 来源穿透）。补建任何加成/机制前先读。
+- `docs/research/data/planner/README.md`：怪物、Patron、场景限制、装备、能力、BUD 与信号覆盖证据。
 
 ## 关联入口
 

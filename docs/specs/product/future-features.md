@@ -31,15 +31,15 @@
 
 - **是什么**：对特定**种族 / 年龄 / 性别 / 小队**的攻击加成（effect_def tag 限定、favored_foe 等）目前保守丢弃（带 filter 未解析 → 不生效）。
 - **为何暂缓**：条件性、实现复杂、收益边际，属锦上添花。当前姿态已符合「精确优先」原则（宁可不算，不要错算成无条件过度生效）。
-- **关联**：[damage-bonus-sources.md §5](../../research/data/planner/damage-bonus-sources.md)
+- **关联**：[damage-bonus-sources.md「劣后项」](../../research/data/planner/damage-bonus-sources.md)
 - **优先级**：劣后。主体加成正确性收敛后再做。
 
-### 未建模加成源补建（A1 后续）
+### 未建模加成源补建
 
 - **是什么**：vulnerability 条件生效 / modron（齿轮）/ 成就 / 药水 / gem / feat（专长）/ legendary（传奇装备）等伤害加成来源尚未接入评分。
-- **为何暂缓**：A1 主体（同 key 跨源加法 bug）修复后，这些才暴露为真实正向偏差来源；逐类需核定 amount 与生效条件。vulnerability 条件生效 ROI 可能最高（生产 enemyTypes 含种族，数据已具备）。
-- **关联**：[damage-bonus-sources.md §4、§7 选项 B](../../research/data/planner/damage-bonus-sources.md)
-- **优先级**：待评。待 A1 主体决策后排序。
+- **为何暂缓**：主体加成（同 key 跨源加法）已正确建模后，这些暴露为真实正向偏差来源；逐类需核定 amount 与生效条件。vulnerability 条件生效 ROI 可能最高（生产 enemyTypes 含种族，数据已具备）。
+- **关联**：[damage-bonus-sources.md「未建模来源」「未建模补建方向」](../../research/data/planner/damage-bonus-sources.md)
+- **优先级**：待评。按价值与成本排序。
 
 ### per-hero 叠层默认值（A5）
 

@@ -40,7 +40,7 @@ carryDps = baseDps × levelCurve × damagePool × crit × vuln × globalBuff × 
 2. `steadyStateScoring.test.ts:495-566`（乘法模型被编码进测试，须改加法断言）。
 3. `breakdown.factors` 契约（heroDpsPool/globalBuff 不再独立因子，并入 damagePool；UI `PlannerBreakdown` 消费须同步）。
 
-**关键约束——不可单独修**：乘法分裂当前**部分补偿** 10^31 欠估；单独改加法会让 golden 偏差更负（移除补偿误差）。必须与「补全未建模来源」（vulnerability 生效口径 / modron grid / 成就 / legendary 等，见 architecture.md「后续目标」）**协同推进**——先有未建模源补足欠估，再改池分裂防爆过冲。
+**关键约束——不可单独修**：乘法分裂当前**部分补偿** 10^31 欠估；单独改加法会让 golden 偏差更负（移除补偿误差）。必须与「补全未建模来源」（vulnerability 生效口径 / modron grid / 成就 / legendary 等，见 architecture.md「未接入能力」）**协同推进**——先有未建模源补足欠估，再改池分裂防爆过冲。
 
 | 项 | 动作 | ROI | 影响面 | 进度 |
 |----|------|-----|--------|------|

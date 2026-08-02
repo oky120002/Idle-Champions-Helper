@@ -32,27 +32,32 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 
 ## 核心数据契约
 
-`UserProfileSnapshot`：
+`UserProfileSnapshot`（`src/domain/user-profile/types.ts`）：
 
-- `id`、`schemaVersion`、`updatedAt`、`sourceSummary`
-- `ownedChampions[]`：hero id、seat、level hints、owned state
-- `equipment[]`：slot、rarity、item level、shiny/golden 标记
-- `feats[]`、`specializations[]`、`legendaryEffects[]`、`pigments[]`
-- `favorByCampaign[]`、`blessings[]`、`patronProgress[]`
-- `formationSaves[]`：layout id、slot placements、specializations、feats、familiars、scenario relation
-- `warnings[]`：缺字段、未知字段、无法映射的阵型或效果
+- `schemaVersion`、`updatedAt`、`warnings`
+- `ownedHeroes`：`OwnedHero[]`（每英雄 `heroId` / `level` / `equipment` / `feats` / `legendaryEffects` / `unlockedFeats` / `lootBySlot`）
+- `importedFormationSaves`：`ImportedFormationSave[]`（layout id、slot placements、specializations、feats、familiars、scenario relation）
+- `campaigns?`：各战役 favor / blessings
+- `patronPerks?`：patron perk 已购等级（perk_id → level）
+- `blessings?`：`{ catalog, levels }`（blessing 定义 + 已购等级）
+- `activeContext?`：`{ patronId, deity }`（active instance 的赞助者 / 战役上下文，patron type1 / 地图 blessing 过滤用）
+- `legendaryLevelCap`
+
+旧 snapshot 缺 `campaigns` / `patronPerks` / `blessings` / `activeContext` 字段时，消费侧以 `?? []` / `?? {}` / `?` 兼容。
+
+`OwnedHeroLootSlot`：`slotId` / `rarity` / `gild` / `enchant` / `pigment` / `found`（enchant = item level，装备加成缩放用）。
 
 `ResolvedHeroAbilityProfile`（`src/domain/abilities/abilityModel.ts`）：
 
 - `heroId`、`name`、`seat`、`roles`、`tags`、`abilityScores`、`baseAttackDamageTypes`、`baseAttackCooldown`、`age`
-- `baseDamage`、`costCurves`、`baseHealth`、`healthCurves`（DPS/生存计算输入）
+- `baseDamage`、`costCurves`、`baseHealth`、`healthCurves`（DPS / 生存计算输入）
 - `carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`（能力信号与来源）
 
 `ResolvedPlannerScenarioModel`（`src/domain/planner/plannerModel.ts`）：
 
 - `variantId`、`scenarioRef`、`name`、`formationLayoutId`、`objectiveArea`
-- `slotTopology`（槽位 id/row/column/adjacentSlotIds）、`forcedHeroes`、`lockedSlots`、`occupiedSlotCount`
-- `allowedHeroes`/`allowedTags`（白名单）、`enemyTypes`（vulnerability 条件匹配）、`scenarioWarnings`
+- `slotTopology`（槽位 id / row / column / adjacentSlotIds）、`forcedHeroes`、`lockedSlots`、`occupiedSlotCount`
+- `allowedHeroes` / `allowedTags`（白名单）、`enemyTypes`（vulnerability 条件匹配）、`scenarioWarnings`
 
 `PlannerResult`（`src/domain/planner/recommendationTypes.ts`）：
 
@@ -71,7 +76,7 @@ fetch 参数必须固定：
 - `cache: "no-store"`
 - `referrerPolicy: "no-referrer"`
 
-错误对象只允许包含接口名、状态码、脱敏 message 和 retry hint，不允许包含完整 user id/hash。
+错误对象只允许包含接口名、状态码、脱敏 message 和 retry hint，不允许包含完整 user id / hash。
 
 ## IndexedDB 设计
 
@@ -81,12 +86,12 @@ fetch 参数必须固定：
 - `credentialVault`：仅在显式 opt-in 时保存；默认为空。
 - `heroAbilityOverrides`：浏览器本地能力语义覆盖（按英雄全局存储）。
 
-下游读用户画像须经显式数据源选择层（`userProfileSourceResolver`）：生产只走 `browser-sync`（读 IndexedDB `'current'` 快照）；本地开发可切 `local-dev-snapshot`（从 `tmp/private-user-data/` 实时构建，`persisted: false`，不写 IndexedDB、不覆盖生产 current key）。删除私人数据必须同时清理 snapshot、vault、sync status cache 和 planner 派生状态。页面应显示“当前私人数据存在 X 天”，不自动刷新。
+下游读用户画像须经显式数据源选择层（`userProfileSourceResolver`）：生产只走 `browser-sync`（读 IndexedDB `'current'` 快照）；本地开发可切 `local-dev-snapshot`（从 `tmp/private-user-data/` 实时构建，`persisted: false`，不写 IndexedDB、不覆盖生产 current key）。删除私人数据必须同时清理 snapshot、vault、sync status cache 和 planner 派生状态。页面应显示「当前私人数据存在 X 天」，不自动刷新。
 
 ## 隐私测试
 
 - scanner 命中 fake secret 和 `tmp/private-user-data` 引用。
 - scanner 不因 `user_id` / `hash` 普通占位符误报。
 - env loader 缺失凭证时不打印 secret。
-- manifest 只输出脱敏 user id/hash。
+- manifest 只输出脱敏 user id / hash。
 - `dist` 存在时也纳入 `privacy:scan`。

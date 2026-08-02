@@ -29,7 +29,7 @@
 
 - 明斯克自身 signal 丰富（built hero-abilities.json：55 carry + 27 support），含 heroDpsMultiplier / globalDpsMultiplier 类自增益与全队 buff。
 - 「偏好敌人:兽类」是 vulnerability 类（monsterTags: 野兽），仅当场景 enemyTypes 含野兽时计入——`evaluatePlacementFit` 按 monsterTags 条件匹配。
-- 「直吹自擂」是刷怪/速度机制，**不直接进 DPS pool**（非伤害倍率），属速度队组建语义，当前评分不消费（speed 维度未接 ScoringMode，见 architecture.md 后续目标）。
+- 「直吹自擂」是刷怪/速度机制，**不直接进 DPS pool**（非伤害倍率），属速度队组建语义，当前评分不消费（speed 维度未接 ScoringMode，见 architecture.md 未接入能力）。
 - 即将生效的 5 条外部加成是 blessing/patron 给的，**不在 hero-abilities.json**（那只有英雄自身技能 signal），是绝对伤害偏差的主因。
 
 ## 推导与偏差
@@ -37,7 +37,7 @@
 - **绝对伤害偏差（`damageReferenceVerification` 度量，2026-07-28）**：
   - level 1：计算器 2.03e11 vs 实测 1.25e45，**log10 偏差 −33.8**（低 33.8 个数量级）。
   - level 722：计算器 6.23e46 vs 实测 5.02e62，**log10 偏差 −15.9**。
-  - 根因：外部加成（blessing/patron）未建模（1 级实测 1.25e45 主要由它们撑起）+ 英雄技能无等级解锁门控（1 级也算全部 signal）。登记在 architecture.md「后续目标」。
+  - 根因：外部加成（blessing/patron）未建模（1 级实测 1.25e45 主要由它们撑起）+ 英雄技能无等级解锁门控（1 级也算全部 signal）。登记在 architecture.md「未接入能力」。
 - **cost 曲线 ≠ 伤害曲线**：1→722 级顺势斩比值 = 5.02e62/1.25e45 ≈ 4.0e17，反推真实伤害增长率 ≈ **1.058**；而 built `costCurves['1']=1.12`，1.12^721 ≈ 3.4e35（高 18 个数量级）。即用金币 cost 曲线代理伤害曲线是上界近似（`baseDps.ts` 注释自承），真实伤害增长慢得多。注：比值含 722 级偏好敌人（若野兽在场）的额外加成，1.058 为近似。
 - **阵型交叉 buff**：瓦罗战斗指南（前面两列 +2.03e15%）在 cursed-farmer 阵型对明斯克 active（明斯克在瓦罗前列），`damageReferenceVerification` 断言瓦罗入阵提升明斯克阵型聚合——交叉位置 buff 是现有 mock 阵型测不到的核心用例。
 

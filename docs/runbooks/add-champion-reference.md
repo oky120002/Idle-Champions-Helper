@@ -16,7 +16,7 @@
 5. **跑对照**：`npm run test:simulator`。
    - 伤害参照走 `damageReferenceVerification.test.ts`（`import.meta.glob('./*ReferenceData.ts')` **真自动发现**，零注册）。
    - 机制参照走 `championReferenceVerification.test.ts`（显式 import + `refs` 数组列举——机制四组测试需显式接入）。
-6. **偏差修正**：formation-buff 模式断言不过 → 沿 signal/位置定位评分 bug 修复；absolute-dps 偏差大 → 多为已知缺口（外部加成未建模等，见 architecture.md「后续目标」），在 research「推导与偏差」记录 log10 偏差作回归基线，驱动后续收敛。
+6. **偏差修正**：formation-buff 模式断言不过 → 沿 signal/位置定位评分 bug 修复；absolute-dps 偏差大 → 多为已知缺口（外部加成未建模等，见 architecture.md「未接入能力」），在 research「推导与偏差」记录 log10 偏差作回归基线，驱动后续收敛。
 
 ## 关联
 

@@ -20,18 +20,16 @@
 
 damageReferenceVerification 的 singleSlot dev=-31.71（l1）/ -12.59（l722）是**测试简化**（见下），不反映生产。
 
-## 大头定位（vulnerability 未建模 → 已接入）
+## 大头定位（vulnerability）
 
-明斯克 unsupportedSignals 含 `monster_with_tag_more_damage`（偏好敌人兽类等，effect `monster_with_tag_more_damage,300,<tag>`），build 期 `resolveVulnerabilitySignal` 漏接（只接 `increase_damage_against_monster_tag`）。calc vuln=1.00。
-
-**接入**（commit 32ae5e72）：`resolveVulnerabilitySignal` 加 `monster_with_tag_more_damage`（tag 动态 args[1]，同构）。明斯克 enemyVulnerability +10（5×+300% + 5×+25%，monsterTags humanoid/beast/undead/fey/monstrosity），unsupportedSignals 21→16。
+明斯克 unsupportedSignals 原含 `monster_with_tag_more_damage`（偏好敌人兽类等，effect `monster_with_tag_more_damage,300,<tag>`）。`resolveVulnerabilitySignal` 接该 kind（tag 动态 args[1]，与 `increase_damage_against_monster_tag` 同构）后，明斯克 enemyVulnerability +10（5×+300% + 5×+25%，monsterTags humanoid/beast/undead/fey/monstrosity）。
 
 ## calc 加成口径（已确认对，非大头）
 
-明斯克 level 722 calc 加成 10^7.58 = damagePool 8468（自增益满级，signal value 200-500% hero_dps，requiredLevel 40-585）+ globalBuff 91（#9：patron active 25.7 + blessing active 66.34）+ heroDpsPool 49.2（equipment 28.2 + externalHeroDps 22，#9 hero_dps effect_def）。
+明斯克 level 722 calc 加成 10^7.58 = damagePool 8468（自增益满级，signal value 200-500% hero_dps，requiredLevel 40-585）+ globalBuff 91（patron active 25.7 + blessing active 66.34）+ heroDpsPool 49.2（equipment 28.2 + externalHeroDps 22，hero_dps effect_def）。
 
 - **baseDamage 真实 10^7**（非 damageReferenceVerification fixture 1.06e1——fixture 是测试占位）。
-- #9（globalBuff/equipment/externalHeroDps）口径对。
+- globalBuff / equipment / externalHeroDps 口径对。
 - obs 加成推算 10^36（同 level 722）>> calc 10^7.58，差 10^28。
 
 ## damageReferenceVerification 测试简化（偏离生产）
