@@ -134,6 +134,37 @@ describe('computeHeroGainProfile', () => {
     const gain = computeHeroGainProfile([base, wrapper], [])
     expect(gain.self.damage).toBe(6)
   })
+
+  it('stacksMultiply（无 stackFunc）走 multFactor，count=1 上界 = 1+value/100（与 pool 路由对称）', () => {
+    // 实际评分 placementFit：stacksMultiply→multFactor，multiplier=(1+value/100)^count。
+    // gain count=1：value=50 → multFactor ×= 1.5。旧实现走 addPercent += 50（单信号巧合等价，混池见下）。
+    const gain = computeHeroGainProfile([{ ...signal('heroDpsMultiplier', 50), stacksMultiply: true }], [])
+    expect(gain.self.damage).toBe(1.5)
+  })
+
+  it('stacksMultiply 与 add 信号同维度：(1+add/100)×multFactor（混池路由对称）', () => {
+    // add +100% (×2) × stacksMultiply +50% (×1.5) = 3.0。
+    // 旧实现 stacksMultiply 误走 addPercent → 合 +150% (×2.5)：混池路由错误（实际评分走 multFactor）。
+    const gain = computeHeroGainProfile(
+      [signal('globalDpsMultiplier', 100), { ...signal('heroDpsMultiplier', 50), stacksMultiply: true }],
+      [],
+    )
+    expect(gain.self.damage).toBe(3.0)
+  })
+
+  it('stacksMultiply wrapper（bonusScaleOfSignal）用 value 而非 base.value×value/100（短路分支 base 仅门控）', () => {
+    // base +300% + wrapper stacksMultiply 50%：短路分支 multiplier=(1+50/100)^count，base 仅依赖门控不参与数值。
+    // gain count=1：wrapper multFactor ×= 1.5；base addPercent +300% → (1+3)×1.5=6.0。
+    // 旧实现 wrapper 走 addPercent += base.value×50/100=150 → 合 +450% (×5.5)：误用 base.value。
+    const base = signal('heroDpsMultiplier', 300)
+    const wrapper: HeroAbilitySignal = {
+      ...signal('heroDpsMultiplier', 50),
+      stacksMultiply: true,
+      bonusScaleOfSignal: base,
+    }
+    const gain = computeHeroGainProfile([base, wrapper], [])
+    expect(gain.self.damage).toBe(6)
+  })
 })
 
 describe('applyHeroAbilityPatch 重算 gainProfile', () => {

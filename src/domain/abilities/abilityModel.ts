@@ -325,14 +325,14 @@ function aggregateGainByDimension(
     const dimension = DIMENSION_BY_KIND[signal.kind]
     if (!dimension) continue
     const entry = byDim.get(dimension) ?? { addPercent: 0, multFactor: 1 }
-    // buff_upgrade wrapper（bonusScaleOfSignal）实际评分贡献按 base.value×value/100 折算
-    //（signalMultiplier.ts applySignalPercent：(multiplier−1)×100 = basePercent×value/100 进 addPercent，
-    // mult 通道 multFactor ×= 1+basePercent×value/10000）。gain 须与 pool 聚合一致，否则 base.value≠100
-    // 时误估（>100 低估致 computationMode 误裁强候选；<100 高估保弱候选）。
-    const effectiveValue = signal.bonusScaleOfSignal
-      ? (signal.bonusScaleOfSignal.value * signal.value) / 100
-      : signal.value
-    if (signal.amountFunc === 'mult') {
+    // stacksMultiply + 无 stackFunc（短路分支）：实际评分走 multFactor (1+value/100)^count，base 仅依赖门控
+    // 不参与数值 → gain 用 signal.value（非 base.value×value/100），路由须与 pool 对称走 multFactor。
+    const isDynStackShortcut = signal.stacksMultiply === true && !signal.stackFunc
+    // 非 dyn-stack：buff_upgrade wrapper 按 base.value×value/100 折算（applySignalPercent），否则用 value。
+    const effectiveValue = isDynStackShortcut || !signal.bonusScaleOfSignal
+      ? signal.value
+      : (signal.bonusScaleOfSignal.value * signal.value) / 100
+    if (isDynStackShortcut || signal.amountFunc === 'mult') {
       entry.multFactor *= 1 + effectiveValue / 100
     } else {
       entry.addPercent += effectiveValue
