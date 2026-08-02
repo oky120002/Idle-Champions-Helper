@@ -8,14 +8,14 @@ repair: rebuild
 -->
 ## Auto Todo
 
-- per_hero_expr 存档依赖布尔谓词 17 个被整体丢弃（数据流缺口） <!-- auto-todo:id=atd_d957df0b59 -->
-  - 记录时间: `2026-07-21T10:17:41+08:00`
+- HasEffect 布尔谓词未解析，含它的 per_hero_expr 整体保守丢弃（数据流缺口） <!-- auto-todo:id=atd_d957df0b59 -->
+  - 记录时间: `2026-07-21T10:17:41+08:00`（2026-08-02 核验更新：A①②③ 已收口其余 5 族）
   - 类型: follow-up
-  - 位置: `src/domain/abilities/heroPredicate.ts:114`
-  - 备注: parseHeroPredicate 对 HasEffect/GetUpgradeUnlocked/GetFeatEquipped/GetUpgradePurchased/NumEffectKey/EligibleForPatron/is_alive/DefHasTag 等存档依赖布尔谓词返回 null，含它们的 per_hero_expr 整体保守丢弃。
-    - 影响：这些 signal 的 formationCountQualifier 退化为 null/filterQualifier，stack 数量可能高估；raw 164 个去重 per_hero_expr 中 17 个（10.4%）受影响
-    - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
-    - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
+  - 位置: `src/domain/abilities/heroPredicate.ts:123`（matchFunctionalLeaf，HasEffect 无匹配分支）
+  - 备注: A①②③（`53ad9a6b`/`5ac32e4f`/`ea117797`）已落地 GetUpgradeUnlocked/GetUpgradePurchased/GetFeatEquipped/is_alive/EligibleForPatron 五族。当前唯一未解析的存档依赖**布尔**谓词 = HasEffect（NumEffectKey/DefHasTag 真实数据 0 实例）。signal-coverage 实测：85 个去重 per_hero_expr，50 已解析、35 未解析；35 中仅 HasEffect 约 4 实例（`!HasEffect(vampire_spawn)`×2、`HasEffect(alyndra_portented_v2)`、`HasEffect(celeste_heal)&&hero_id==82`）属布尔谓词丢弃，其余全为数值表达式（dex/cha/int/floor/min/GetUpgradeAmount 等，stage 7 叠层计算，本不解析为谓词）。
+    - 影响：含 HasEffect 的 per_hero_expr 整体 null → formationCountQualifier 退化为 null/filterQualifier，stack 数量可能高估（仅 4 实例，影响面小）
+    - 关联：expression-evaluator.md；HasEffect 属阵型运行时另案（effect 跨英雄共享，count qualifier 对全阵型求值致 cross，需 effect 作用图 + 迭代求值，非 numericExpression 能覆盖）
+    - 处置：effect 作用图基建后补 HasEffect 节点 + profile context 求值
 
 - buff_upgrade wrapper per_hero_expr 是否需传播到 base qualifier（B 域 wrapper 语义） <!-- auto-todo:id=atd_36c2b3111c -->
   - 记录时间: `2026-08-02T16:45:10+08:00`

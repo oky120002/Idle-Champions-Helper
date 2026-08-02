@@ -126,7 +126,9 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   // 只保留能力源（ability/upgrade/upgrade-effect-key）wrapper——英雄自带，随专精注入合理（ADR 0017）。
   // 外部装备/feat 源（loot/legendary/feat）移出：spec catalog 选专精时无条件注入不查 owned → overcount
   //（与 buildHeroModels 过滤 loot/legendary 不进 base profile 同构，e053b759）。loot/feat 源 target 专精的
-  // owned 接入需 spec signal 带 upgradeId + runtime applyEquipmentBuffs 扩展（TODO atd_b1e5f3a2c7 方案 b/c）。
+  // owned 加成走 runtime 装备/feat wrapper 通道——spec signal 已带 upgradeId，applyEquipmentBuffsToProfile
+  // 按 target upgradeId 反查 spec base signal 构造 wrapper（玩家选了 spec 才有 base，owned-aware）。
+  // 真实数据中 loot/feat buff_upgrade target 专精 = 0 实例（B① 已证伪），此处过滤为防御性守卫。
   const externalSourceBuckets = new Set(['loot', 'legendary', 'feat'])
   const { specializationDerived } = collectEffectEntries(detail)
   for (const [specUpgradeId, derivedEntries] of specializationDerived) {
