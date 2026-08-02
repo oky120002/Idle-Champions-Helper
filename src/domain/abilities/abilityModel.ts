@@ -325,10 +325,17 @@ function aggregateGainByDimension(
     const dimension = DIMENSION_BY_KIND[signal.kind]
     if (!dimension) continue
     const entry = byDim.get(dimension) ?? { addPercent: 0, multFactor: 1 }
+    // buff_upgrade wrapper（bonusScaleOfSignal）实际评分贡献按 base.value×value/100 折算
+    //（signalMultiplier.ts applySignalPercent：(multiplier−1)×100 = basePercent×value/100 进 addPercent，
+    // mult 通道 multFactor ×= 1+basePercent×value/10000）。gain 须与 pool 聚合一致，否则 base.value≠100
+    // 时误估（>100 低估致 computationMode 误裁强候选；<100 高估保弱候选）。
+    const effectiveValue = signal.bonusScaleOfSignal
+      ? (signal.bonusScaleOfSignal.value * signal.value) / 100
+      : signal.value
     if (signal.amountFunc === 'mult') {
-      entry.multFactor *= 1 + signal.value / 100
+      entry.multFactor *= 1 + effectiveValue / 100
     } else {
-      entry.addPercent += signal.value
+      entry.addPercent += effectiveValue
     }
     byDim.set(dimension, entry)
   }

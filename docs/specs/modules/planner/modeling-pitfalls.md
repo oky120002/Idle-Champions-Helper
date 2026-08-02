@@ -73,3 +73,22 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 - **短路分支须精确限定适用集**：`stacksMultiply` 短路只对「无 stackFunc 的纯 dynamic-stack 信号」（manual_stacking 类）生效；带 stackFunc 的必须落 stackFunc 路径（注册按阵型计数、未注册 honest 不计分）。`signal-coverage.classifyScoringSupport` 须对称收紧。
 - **wrapper 构造须显式切断 base 的机制语义**：`{...base}` 派生 wrapper 时，stacksMultiply / applyManually 这类「信号自身如何 scale/激活」的字段必须显式重置（wrapper 是固定百分比放大，非堆叠/手动信号）；amountFunc/stackFunc 按 wrapper 自身语义（loot/feat 全 plain → null）。只重置一部分会漏。
 - **判「已计分」前看数值合理性**：coverage 分类标 supported 不等于「计分正确」——对 stacksMultiply/stackFunc 组合信号，须核对 resolve 路径产出的 multiplier 量级是否合理（(1+value/100)^count，count 来源明确），而非仅看「进了评分分支」。
+
+## 陷阱 5：gain profile 预算与实际评分池路由漂移
+
+`computeHeroGainProfile`（`abilityModel.ts` 的 `aggregateGainByDimension`）预计算英雄各维度收益，供 `applyComputationMode`（`computationMode.ts`）按席位排序裁剪候选（默认 p50 每席位取前 50%）。它是实际评分（`placementFit.ts` signal→pool 路由 + `signalMultiplier.ts` 折算）的**镜像预算**——文档化不变量要求「数学须与 pool 聚合一致」。
+
+但新增 signal 机制时容易只改实际评分、漏改 gain profile 镜像：`bonusScaleOfSignal`（buff_upgrade wrapper 联动）实际评分贡献 = `base.value × wrapper.value / 100`（`applySignalPercent` 折算后 `(multiplier−1)×100` 进 addPercent）；gain profile 旧实现直接 `+= signal.value`（wrapper 百分比），忽略 base。base.value>100 时严重低估（base=300、wrapper=100：实际 +300%，旧 gain +100%，3× 低估）→ 强候选被 p50 误裁，beam search 永不试到。实测重建后部分英雄 damage gain 46→69、32→56（之前被大幅低估）。
+
+### 为什么难发现
+
+1. gain profile 是**预算**（非最终评分），不改 `scoreFormation` 输出 → 方向性 golden / breakdown 不受影响，全绿。
+2. 影响是「裁掉谁」而非「算成多少」——被误裁的英雄不出现在结果里，无对照无感知。
+3. 只有 base.value≠100 的 wrapper 受影响（base=100 时巧合一致：100×value/100 = value），随机性掩盖系统性。
+4. 增量审计（轮 4–9）聚焦数据盲区 / 运行时边界 / 性能，未逐 signal 对比 gain profile 与实际评分的路由。
+
+### 防范纪律（可执行）
+
+- **新增 signal 机制须同步 gain profile 镜像**：任何改变 signal→pool 折算的字段（amountFunc / stacksMultiply / bonusScaleOfSignal / stackFunc）在 `placementFit.ts` + `signalMultiplier.ts` 改完后，必须检查 `aggregateGainByDimension` 是否对称处理。三处是同一不变量的三个落点。
+- **gain profile 测试须覆盖与评分一致的逐 signal 案例**：不只在 gain profile 孤立测加法 / 乘法，还要对 wrapper 等机制断言「gain = 实际评分单 signal 贡献」（见 `abilityModel.test.ts` bonusScaleOfSignal 用例）。
+- **改 gain profile 折算后强制重建数据**：gainProfile 烘进 `hero-abilities.json`（build 期 `computeHeroGainProfile`），代码改完须 `FORCE_DATA_REBUILD=1` 重跑 `buildModels`，否则 build-time 烘值仍是旧的（runtime wrapper 注入会重算，但 `applyComputationMode` 裁剪用的是 build-time 值——wrapper 在裁剪之后才注入）。

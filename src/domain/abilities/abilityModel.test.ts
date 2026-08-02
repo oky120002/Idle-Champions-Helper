@@ -111,6 +111,29 @@ describe('computeHeroGainProfile', () => {
     expect(gain.self).toEqual({})
     expect(gain.support).toEqual({})
   })
+
+  it('buff_upgrade wrapper（bonusScaleOfSignal）按 base.value×value/100 折算 addPercent（与评分池聚合一致）', () => {
+    // base +300% (×4) + wrapper 100% 放大 base → 实际贡献 base.value×100/100=300% → 合 +600% (×7)。
+    // 旧实现直接 += wrapper.value(100) → 合 +400% (×5)：base.value≠100 时低估，致 computationMode 误裁强候选。
+    const base = signal('heroDpsMultiplier', 300)
+    const wrapper: HeroAbilitySignal = {
+      ...signal('heroDpsMultiplier', 100),
+      bonusScaleOfSignal: base,
+    }
+    const gain = computeHeroGainProfile([base, wrapper], [])
+    expect(gain.self.damage).toBe(7)
+  })
+
+  it('buff_upgrade wrapper amountFunc=mult 按 base.value×value/100 折算 multFactor', () => {
+    // base +200% (×3) + wrapper mult 50%：multFactor ×= 1+200×50/10000=2.0 → 3×2=6.0
+    const base = signal('heroDpsMultiplier', 200)
+    const wrapper: HeroAbilitySignal = {
+      ...signal('heroDpsMultiplier', 50, 'mult'),
+      bonusScaleOfSignal: base,
+    }
+    const gain = computeHeroGainProfile([base, wrapper], [])
+    expect(gain.self.damage).toBe(6)
+  })
 })
 
 describe('applyHeroAbilityPatch 重算 gainProfile', () => {
