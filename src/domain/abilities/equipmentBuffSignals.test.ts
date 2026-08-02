@@ -61,11 +61,35 @@ describe('applyEquipmentBuffsToProfile', () => {
     expect(profile.carrySignals.map((s) => s.rawEffect)).toContain('hero_dps_multiplier_mult,100')
   })
 
-  it('【step④】非 DPS/gold/crit/health kind 的 base 不被放大（enemyVulnerability → 没算）', () => {
-    const base = baseSignal({ rawEffect: 'monster_vulnerability,50', kind: 'enemyVulnerability', upgradeId: '5' })
-    const original = makeProfile([], [base])
-    const profile = applyEquipmentBuffsToProfile(original, [buff('5', 275)])
-    expect(profile).toBe(original) // 无 wrapper → 原样返回
+  it('enemyVulnerability base → 构造 wrapper（vulnFactor addPercent 累加，wrapper 放大 base.value；继承 monsterTags）', () => {
+    const base = baseSignal({
+      rawEffect: 'monster_with_tag_more_damage,300,beast',
+      kind: 'enemyVulnerability',
+      value: 300,
+      upgradeId: '5',
+      monsterTags: ['beast'],
+    })
+    const profile = applyEquipmentBuffsToProfile(makeProfile([], [base]), [buff('5', 40)])
+    expect(profile.supportSignals).toHaveLength(2) // base + wrapper
+    const wrapper = profile.supportSignals[1]!
+    expect(wrapper.kind).toBe('enemyVulnerability')
+    expect(wrapper.value).toBe(40)
+    expect(wrapper.bonusScaleOfSignal).toBe(base)
+    expect(wrapper.monsterTags).toEqual(['beast']) // 继承 base monsterTags（条件匹配用）
+  })
+
+  it('damageReduction base → 构造 wrapper（survival 池 addPercent 累加，影响 effectiveHealth/推图层数）', () => {
+    const base = baseSignal({ rawEffect: 'damage_reduction,30', kind: 'damageReduction', value: 30, upgradeId: '7' })
+    const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('7', 50)])
+    expect(profile.carrySignals).toHaveLength(2)
+    expect(profile.carrySignals[1]!.kind).toBe('damageReduction')
+    expect(profile.carrySignals[1]!.bonusScaleOfSignal).toBe(base)
+  })
+
+  it('attackSpeed/cooldown base 暂不收（base 不进评分，注入 wrapper 也无效，需先让 speed 进评分）', () => {
+    const speedBase = baseSignal({ rawEffect: 'attack_speed_mult,20', kind: 'attackSpeedMult', upgradeId: '8' })
+    const original = makeProfile([speedBase])
+    expect(applyEquipmentBuffsToProfile(original, [buff('8', 40)])).toBe(original)
   })
 
   it('【防递归】wrapper signal（bonusScaleOfSignal!=null）不作 base，即使 upgradeId 匹配', () => {
