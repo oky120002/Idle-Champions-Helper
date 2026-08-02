@@ -24,6 +24,7 @@ function createHero(overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityPro
     supportSignals: [],
     unsupportedSignals: [],
     sourceBreakdown: { carrySignals: [], supportSignals: [], unsupportedSignals: [] },
+    ...(overrides.ownedSaveContext ? { ownedSaveContext: overrides.ownedSaveContext } : {}),
   }
 }
 
@@ -211,6 +212,30 @@ describe('parseHeroPredicate · functional dialect（per_hero_expr）', () => {
     // has_tag_X 在数值表达式（stack 数量）内作 0/1 变量，顶层 floor 仍归 stage 7 numericExpression
     expect(parseHeroPredicate('floor(max(has_tag_acqinc,has_tag_cteam)*min(hero_level,hero_softcap))', 'functional')).toBeNull()
   })
+
+  it('GetUpgradeUnlocked(N) → upgradeUnlocked 节点（owner/reqLvl 由 build 期 enrichment 补）', () => {
+    expect(parseHeroPredicate('GetUpgradeUnlocked(17492)', 'functional')).toEqual({
+      op: 'upgradeUnlocked', upgradeId: '17492',
+    })
+  })
+
+  it('含 GetUpgradeUnlocked 的复合谓词不再整体丢弃（hero 165 Baldric 阵营样本）', () => {
+    // raw：GetStat(cha)>=15 || HasTag(fallbacks) || ((GetUpgradeUnlocked(17492)||...) && HasTag(dwarf))
+    const ast = parseHeroPredicate(
+      'GetStat(`cha`) >= 15 || HasTag(`fallbacks`) || ((GetUpgradeUnlocked(17492) || GetUpgradeUnlocked(17497)) && HasTag(`dwarf`))',
+      'functional',
+    )
+    expect(ast).not.toBeNull()
+    expect(predicateHasNode(ast, 'upgradeUnlocked')).toBe(true)
+  })
+
+  it('GetUpgradeUnlocked 与未实现存档谓词（GetFeatEquipped）共存 → 仍 null（OR 任一子句 null）', () => {
+    // raw hero 175 完整式含 GetFeatEquipped（未实现）→ 整体仍丢弃，待后续谓词解锁
+    expect(parseHeroPredicate(
+      'HasTag(`heroeslance`) || (GetUpgradeUnlocked(19357) && HasTag(`dps`)) || (GetFeatEquipped(2578) && HasTag(`elf`))',
+      'functional',
+    )).toBeNull()
+  })
 })
 
 describe('evalHeroPredicate', () => {
@@ -261,6 +286,23 @@ describe('evalHeroPredicate', () => {
     }, hero)).toBe(true)
     expect(evalHeroPredicate({ op: 'or', children: [{ op: 'tag', tag: 'good' }, { op: 'true' }] }, hero)).toBe(true)
     expect(evalHeroPredicate({ op: 'true' }, hero)).toBe(true)
+  })
+
+  it('upgradeUnlocked：owner 等级 >= requiredLevel → true；未达/缺省 → false', () => {
+    // build 期 enrichment 后的完整节点（ownerHeroId + requiredLevel 已烘进）
+    const node = { op: 'upgradeUnlocked' as const, upgradeId: '17492', ownerHeroId: '165', requiredLevel: 70 }
+    const heroOwned = createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map([['165', 500]]) } })
+    expect(evalHeroPredicate(node, heroOwned)).toBe(true)
+    // owner 等级不足
+    const heroLow = createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map([['165', 50]]) } })
+    expect(evalHeroPredicate(node, heroLow)).toBe(false)
+    // owner 未拥有（不在 ownedLevels）→ false
+    const heroMissing = createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map() } })
+    expect(evalHeroPredicate(node, heroMissing)).toBe(false)
+    // 无 ownedSaveContext（未导入存档）→ false，不抛错
+    expect(evalHeroPredicate(node, hero)).toBe(false)
+    // build 未解析节点（ownerHeroId/requiredLevel 缺）→ false
+    expect(evalHeroPredicate({ op: 'upgradeUnlocked', upgradeId: '9999' }, heroOwned)).toBe(false)
   })
 })
 

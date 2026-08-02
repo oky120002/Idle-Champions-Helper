@@ -129,6 +129,13 @@ function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
     return { op: 'tag', tag: 'undead' }
   }
 
+  // GetUpgradeUnlocked(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
+  // build 期 enrichUpgradeUnlockNodes 解析 ownerHeroId(self) + requiredLevel 烘进节点。
+  const upgradeUnlockedMatch = expr.match(/^GetUpgradeUnlocked\((\d+)\)$/)
+  if (upgradeUnlockedMatch) {
+    return { op: 'upgradeUnlocked', upgradeId: upgradeUnlockedMatch[1]! }
+  }
+
   const asIntMatch = expr.match(/^as_int\((.+)\)$/)
   if (asIntMatch) {
     return parseHeroPredicate(asIntMatch[1]!, 'functional')
@@ -284,6 +291,14 @@ function evalNode(
     }
     case 'baseAttackCooldown':
       return compareNumber(hero.baseAttackCooldown, ast.operator, ast.value)
+    case 'upgradeUnlocked': {
+      // build 未解析（ownerHeroId/requiredLevel 缺）或无存档上下文 → false（保守）。
+      if (ast.requiredLevel === undefined || ast.ownerHeroId === undefined) {
+        return false
+      }
+      const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
+      return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
+    }
     case 'true':
       return true
     default:

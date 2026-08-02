@@ -10,9 +10,49 @@ import { asRecord } from './io-utils.ts'
 import type {
   HeroAbilityProfile,
   HeroAbilitySignal,
+  HeroPredicateAST,
+  HeroQualifier,
   HeroUnsupportedSignal,
 } from '../../src/domain/abilities/abilityModel'
 import { computeHeroGainProfile } from '../../src/domain/abilities/abilityModel'
+
+// GetUpgradeUnlocked(N) 节点 build 期解析：upgrade N 属本英雄（self，62/62 布尔引用均 self-ref），
+// 从 detail.upgrades 取 requiredLevel + ownerHeroId=self 烘进节点。runtime evalHeroPredicate 按 ownerHeroId
+// 查 ownedLevels。本英雄 upgrades 查不到（跨英雄引用）→ 节点留 undefined → eval false（保守）。
+function enrichUpgradeUnlockNodes(
+  signals: readonly HeroAbilitySignal[],
+  ownerHeroId: string,
+  upgradeRequiredLevel: Map<string, number>,
+): void {
+  for (const signal of signals) {
+    enrichQualifier(signal.targetQualifier, ownerHeroId, upgradeRequiredLevel)
+    enrichQualifier(signal.formationCountQualifier, ownerHeroId, upgradeRequiredLevel)
+  }
+}
+
+function enrichQualifier(
+  qualifier: HeroQualifier | null | undefined,
+  ownerHeroId: string,
+  upgradeRequiredLevel: Map<string, number>,
+): void {
+  if (!qualifier) return
+  walk(qualifier.predicate)
+  function walk(node: HeroPredicateAST): void {
+    if (node.op === 'upgradeUnlocked') {
+      const requiredLevel = upgradeRequiredLevel.get(node.upgradeId)
+      if (requiredLevel !== undefined) {
+        node.ownerHeroId = ownerHeroId
+        node.requiredLevel = requiredLevel
+      }
+      return
+    }
+    if (node.op === 'or' || node.op === 'and') {
+      node.children.forEach(walk)
+    } else if (node.op === 'not') {
+      walk(node.child)
+    }
+  }
+}
 
 export function buildOfficialHeroModel(
   champion: Record<string, unknown>,
@@ -70,6 +110,25 @@ export function buildOfficialHeroModel(
         unsupportedSignals.push(parsed.unsupported)
       }
     }
+  }
+
+  // GetUpgradeUnlocked(N) 解析：本英雄 upgrades → upgradeId→requiredLevel，烘进 qualifier AST 节点。
+  const upgradeRequiredLevel = new Map<string, number>()
+  const upgradesRaw = detail.upgrades as unknown
+  if (Array.isArray(upgradesRaw)) {
+    for (const up of upgradesRaw) {
+      if (!up || typeof up !== 'object') continue
+      const id = (up as { id?: unknown }).id
+      const requiredLevel = (up as { requiredLevel?: unknown }).requiredLevel
+      const idStr = typeof id === 'string' || typeof id === 'number' ? String(id) : null
+      if (idStr && typeof requiredLevel === 'number') {
+        upgradeRequiredLevel.set(idStr, requiredLevel)
+      }
+    }
+  }
+  if (upgradeRequiredLevel.size > 0) {
+    enrichUpgradeUnlockNodes(carrySignals, champion.id as string, upgradeRequiredLevel)
+    enrichUpgradeUnlockNodes(supportSignals, champion.id as string, upgradeRequiredLevel)
   }
 
   const rawBaseDamage = Number(detail.baseDamage)

@@ -288,6 +288,22 @@ function applyEquipmentBuffs(
   }
 }
 
+// 注入存档派生的上下文（OwnedHero.level → ownedLevels），供存档依赖谓词（GetUpgradeUnlocked 等）
+// 在 matchesHeroQualifier→evalHeroPredicate 求值。必须在 feat/专精/装备注入之后（追加 ownedSaveContext
+// 到已改写的 profile）。ownedLevels 是 formation-global 映射（所有 profile 共享同一 ref）——GetUpgradeUnlocked
+// 是 global 谓词（upgrade 属唯一 owner，解锁 = owner 等级 >= reqLvl，与被评估英雄无关），存 per-profile
+// 仅作 threading 载体避免 eval 链签名穿透。无存档（未导入）→ 空 map，谓词恒 false。
+function attachOwnedSaveContext(
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  ownedHeroes: readonly OwnedHero[],
+): void {
+  const ownedLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
+  const ctx = { ownedLevels }
+  for (const [heroId, profile] of heroById) {
+    heroById.set(heroId, { ...profile, ownedSaveContext: ctx })
+  }
+}
+
 /**
  * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评分上下文 + options 对称透传。
  * 抽成单一来源，结构性锁定两入口透传一致——否则新增透传字段（如 aggregateProjection）漏改一处，
@@ -344,6 +360,7 @@ export function evaluateFormation({
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
+  attachOwnedSaveContext(heroById, ownedHeroes)
   const candidateIds = new Set(
     buildCandidatePool({
       mode: candidateMode,
@@ -506,6 +523,7 @@ export function buildPlannerRecommendation({
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
   applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
   applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
+  attachOwnedSaveContext(heroById, ownedHeroes)
   // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
   const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {

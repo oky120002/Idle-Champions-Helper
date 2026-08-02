@@ -79,6 +79,10 @@ export type HeroPredicateAST =
   | { op: 'attackType'; attackType: string; negate: boolean }
   | { op: 'baseAttackCooldown'; operator: HeroComparisonOperator; value: number }
   | { op: 'true' }
+  // GetUpgradeUnlocked(N)：存档依赖 global 谓词——upgrade N 属唯一 owner 英雄，解锁 = owner 等级 >= requiredLevel。
+  // build 期从 champion-details upgrades 解析 ownerHeroId(=self) + requiredLevel 烘进节点；runtime 查 ownedLevels。
+  // ownerHeroId/requiredLevel undefined = build 未解析（跨英雄引用/缺数据）→ eval false。
+  | { op: 'upgradeUnlocked'; upgradeId: string; ownerHeroId?: string; requiredLevel?: number }
 
 export interface HeroQualifier {
   predicate: HeroPredicateAST
@@ -177,6 +181,21 @@ export interface HeroAbilityProfile {
    * 应用 override 后重算。稀疏：只列英雄实际有信号的维度，缺省复合时视为 1.0（无加成）。
    */
   gainProfile?: HeroGainProfile
+  /**
+   * 运行时注入的存档上下文（OwnedHero 派生）；build 期 undefined（不进 hero-abilities.json）。
+   * evaluateFormation/buildPlannerRecommendation 从 profileSnapshot 注入，供存档依赖谓词
+   *（GetUpgradeUnlocked 等）求值。缺省 = 未拥有/未导入存档 → 谓词恒 false。
+   */
+  ownedSaveContext?: HeroOwnedSaveContext
+}
+
+/**
+ * 存档派生的上下文（runtime 注入，非 build 期数据）。
+ * ownedLevels：heroId → OwnedHero.level 全局映射（formation-scoped，所有 profile 共享同一 ref）。
+ * GetUpgradeUnlocked 等 global 存档谓词按 ownerHeroId 查此映射。
+ */
+export interface HeroOwnedSaveContext {
+  ownedLevels: Map<string, number>
 }
 
 export interface HeroAbilityOverridePatch {

@@ -150,11 +150,12 @@ describe('normalizeTargetQualifier', () => {
   })
 
   it('hero_expr 不可解析（运行时变量）→ 保守丢弃该 filter，不影响其他 filter', () => {
-    // GetUpgradeUnlocked 等运行时叶子 parseHeroPredicate 返回 null，该 filter 不进 predicate。
+    // HasEffect 等运行时叶子 parseHeroPredicate 返回 null，该 filter 不进 predicate。
+    //（GetUpgradeUnlocked 已可解析，故改用 HasEffect 作「不可解析」样本。）
     const qualifier = normalizeTargetQualifier({
       filter_targets: [
         { type: 'by_tags', tags: 'female' },
-        { type: 'hero_expr', hero_expr: 'GetUpgradeUnlocked(19357)' },
+        { type: 'hero_expr', hero_expr: 'HasEffect(`vampire_spawn`)' },
       ],
     })
     expect(qualifier?.predicate).toEqual({ op: 'tag', tag: 'female' })
