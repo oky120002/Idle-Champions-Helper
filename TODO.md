@@ -17,13 +17,8 @@ repair: rebuild
     - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- loot/feat 源 buff_upgrade target 专精的 owned-aware 接入（a ✅ + b ✅ + c-loot ✅；剩余 c-feat + vulnerability 扩展） <!-- auto-todo:id=atd_b1e5f3a2c7 -->
-  - 记录时间: `2026-08-01T23:55:00+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/equipmentBuffSignals.ts` + `scripts/data/specialization-catalog.ts`
-  - 备注: a 止血 overcount（78820cfb，wrapper 100→16）；b 给 spec catalog signal 加 upgradeId（collectSpecializationEffectEntries 路径，125 direct signal）；c-loot 自动——owned loot buff_upgrade target spec（heroDps/crit/health/gold）经 collectEquipmentBuffsByHero + applyEquipmentBuffsToProfile 反查 spec base 接入（engine 顺序 spec→equipment 保证 spec signal 先注入；反查逻辑单测覆盖）。
-    - 剩余：①feat 源 target spec 无通道（featCatalog 按 DIMENSION_BY_KIND 过滤不收 buff_upgrade wrapper），需 feat wrapper 通道（更大工程）；②vulnerability/damageReduction/attackSpeed/cooldown spec 的 loot wrapper 不接入（SUPPORTED_BUFF_TARGET_KINDS 只含 DPS/gold/crit/health），需扩展 SUPPORTED。Minsc spec 109 vulnerability +275 即属此类（仍「没算」）。
-    - 验证：384 planner/buffs/abilities + 11 specialization-catalog 测试全绿；signal-coverage gate + schema 校验通过。
-    - 原分析订正：ability 源 sourceBucket='ability' 不被 progression-exclusion 排除（isAbilitySource 只含 upgrade/upgrade-effect-key），保留进 catalog 正确（ADR 0017）；Minsc(7) 实测 upgrade 源 +200% 被排除（IC snapshot 已含）、loot/feat 源移出。
+- buff_upgrade wrapper per_hero_expr 是否需传播到 base qualifier（B 域 wrapper 语义） <!-- auto-todo:id=atd_36c2b3111c -->
+  - 记录时间: `2026-08-02T16:45:10+08:00`
+  - 备注: A①②③ 期间发现：hero 119 (buff_upgrade,25,19676 is_alive) / hero 175 (buff_upgrades 英雄之兰) 的 per_hero_expr 已可解析，但 buff_upgrade wrapper 设计上 formationCountQualifier=null（buildEquipmentBuffWrapper equipmentBuffSignals.ts:64 + build 期 preset effect-helpers.ts:777-792），wrapper 放大 base 时继承 base targeting、自身不携带 count qualifier。需确认 wrapper 自身 per_hero_expr 是否应覆盖/扩展 base targeting（base upgrade 19676/19356 的 targeting 是否充分）。属 B 域 wrapper 语义，非谓词解析问题。
 
 <!-- auto-todo:end -->
