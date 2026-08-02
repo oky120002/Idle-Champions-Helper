@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   deleteUserProfileData,
   readPreferredUserProfileSource,
@@ -52,9 +52,17 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     }
   })
 
+  // syncState 写入令牌：loadSnapshot 读取当前令牌，await 后核对——被用户操作（handleSync/handleDelete）接管则丢弃。
+  // 消除竞态：mount 的 loadSnapshot（读 IndexedDB 偶发慢）与用户手动同步/删除并发时，前者后完成会覆盖后者
+  // 的 error/success 状态（line 394 flaky 根因：mount 的 no-snapshot 覆盖 handleSync 的 error，alert 消失）。
+  const syncWriteToken = useRef(0)
   const loadSnapshot = useCallback(async () => {
+    const token = syncWriteToken.current
     try {
       const snapshot = await readUserProfileSnapshot()
+      if (syncWriteToken.current !== token) {
+        return
+      }
       if (!snapshot) {
         setSyncState({ status: 'no-snapshot' })
         return
@@ -64,12 +72,23 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
       const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24))
       setSyncState({ status: 'loaded', snapshot, ageDays })
     } catch {
+      if (syncWriteToken.current !== token) {
+        return
+      }
       setSyncState({ status: 'error', message: '读取本地数据失败' })
     }
   }, [])
 
+  // 解析请求版本：每次 loadProfileResolution 递增，async 完成后核对——过时则丢弃 resolution。
+  // 消除竞态：mount 的初始解析（browser-sync，读 IndexedDB 偶发慢）与用户切换 source 后的解析
+  //（local-dev，fetch 快）并发时，前者后完成会覆盖后者，UI 显示错误 source 的结果。
+  const resolveRequestId = useRef(0)
   const loadProfileResolution = useCallback(async (preferredSource: UserProfileSourceKind) => {
+    const requestId = ++resolveRequestId.current
     const resolution = await resolveUserProfileSnapshot(preferredSource)
+    if (resolveRequestId.current !== requestId) {
+      return
+    }
     setProfileResolution(resolution)
   }, [])
 
@@ -79,7 +98,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [loadSnapshot])
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount，所有 setState 均在 await 之后，非同步
+    // fetch-on-mount：setState 在 await + 竞态守卫之后，非 effect 内同步 set。
     void loadProfileResolution(selectedProfileSource)
   }, [loadProfileResolution, selectedProfileSource])
 
@@ -89,6 +108,8 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
       return
     }
 
+    // 接管 syncState：作废 mount 的 pending loadSnapshot，其过时的 no-snapshot/loaded 不覆盖本次结果。
+    syncWriteToken.current += 1
     setBusy(true)
     try {
       const payloads = await fetchUserProfilePayloads(credentials)
@@ -119,6 +140,8 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [handleSelectProfileSource])
 
   const handleDelete = useCallback(async (clearOverrides: boolean) => {
+    // 接管 syncState：作废 mount 的 pending loadSnapshot（同 handleSync）。
+    syncWriteToken.current += 1
     setBusy(true)
     try {
       await deleteUserProfileData()
