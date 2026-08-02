@@ -17,14 +17,6 @@ repair: rebuild
     - 关联：expression-evaluator.md，需 profile context（装备/专长/effect 状态）
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- planner.css 剩余交织块未完全拆分（scenario-selection + result-card + save-preset） <!-- auto-todo:id=atd_7a3f1c9d2e -->
-  - 记录时间: `2026-07-30T15:40:00+08:00`
-  - 类型: optimization
-  - 位置: `src/styles/pages/planner.css`
-  - 备注: 双主题 CSS 审计（ff92e425..69323cad）发现 planner.css 633 行超 pages 体量预算「>520 必须拆」。本次已拆出自包含的 breakdown / scoring-mode / stack-count 到 pages/planner/{breakdown,controls}.css，planner.css 降到 445 行（仍处「应拆」381-520）。
-    - 剩余 scenario-selection + result-card + save-preset 三块约 400 行，经 13 组跨块共享逗号选择器深度交织，且有 8 个跨范围重复选择器（如 .planner-result-card__placement 在 67/181/367），级联顺序敏感，强拆会改级联。
-    - 处置：低优先级，当前 445 行可接受；待 scenario-selection 或 result-card 单块演进显著时，先抽 12 组跨块共享原语（panel 背景、muted 文本、label/pill/list 样式）到 pages/planner/panels.css，再按块拆 scenario-selection.css / result-card.css / save-preset.css。
-
 - 专精选择面板对级联型专精树不尊重依赖链（hero 165/55/81 what-if 可能产生游戏不可能组合） <!-- auto-todo:id=atd_7c4a2e9b01 -->
   - 记录时间: `2026-07-30T13:30:00+08:00`
   - 类型: follow-up
