@@ -136,6 +136,19 @@ function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
     return { op: 'upgradeUnlocked', upgradeId: upgradeUnlockedMatch[1]! }
   }
 
+  // GetUpgradePurchased(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
+  // build 期 enrichment 补 ownerHeroId(self) + requiredLevel + isSpecialization。
+  const upgradePurchasedMatch = expr.match(/^GetUpgradePurchased\((\d+)\)$/)
+  if (upgradePurchasedMatch) {
+    return { op: 'upgradePurchased', upgradeId: upgradePurchasedMatch[1]! }
+  }
+
+  // GetFeatEquipped(N)：存档依赖 per-hero 谓词。runtime 查 equippedFeatIds（被评估英雄的 feats）。
+  const featEquippedMatch = expr.match(/^GetFeatEquipped\((\d+)\)$/)
+  if (featEquippedMatch) {
+    return { op: 'featEquipped', featId: featEquippedMatch[1]! }
+  }
+
   const asIntMatch = expr.match(/^as_int\((.+)\)$/)
   if (asIntMatch) {
     return parseHeroPredicate(asIntMatch[1]!, 'functional')
@@ -299,6 +312,24 @@ function evalNode(
       const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
       return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
     }
+    case 'upgradePurchased': {
+      if (ast.ownerHeroId === undefined) {
+        return false
+      }
+      // specialization → 玩家是否选了这个专精（owner.specializations 含 N）。
+      if (ast.isSpecialization) {
+        return hero.ownedSaveContext?.ownedSpecializations.get(ast.ownerHeroId)?.has(ast.upgradeId) ?? false
+      }
+      // regular → owner 等级 >= requiredLevel（同 GetUpgradeUnlocked，owned 英雄升级即自动购买）。
+      if (ast.requiredLevel === undefined) {
+        return false
+      }
+      const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
+      return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
+    }
+    case 'featEquipped':
+      // 被评估英雄是否装备 feat N；无存档上下文 → false（未拥有/未装备不可能命中）。
+      return hero.ownedSaveContext?.equippedFeatIds.has(ast.featId) ?? false
     case 'true':
       return true
     default:

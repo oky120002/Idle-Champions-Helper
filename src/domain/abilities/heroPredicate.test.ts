@@ -219,22 +219,24 @@ describe('parseHeroPredicate · functional dialect（per_hero_expr）', () => {
     })
   })
 
-  it('含 GetUpgradeUnlocked 的复合谓词不再整体丢弃（hero 165 Baldric 阵营样本）', () => {
-    // raw：GetStat(cha)>=15 || HasTag(fallbacks) || ((GetUpgradeUnlocked(17492)||...) && HasTag(dwarf))
+  it('GetUpgradePurchased(N) / GetFeatEquipped(N) → 对应节点', () => {
+    expect(parseHeroPredicate('GetUpgradePurchased(19680)', 'functional')).toEqual({
+      op: 'upgradePurchased', upgradeId: '19680',
+    })
+    expect(parseHeroPredicate('GetFeatEquipped(2628)', 'functional')).toEqual({
+      op: 'featEquipped', featId: '2628',
+    })
+  })
+
+  it('含 GetUpgradePurchased + GetFeatEquipped 的复合式不再整体丢弃（hero 119 BDS 样本）', () => {
+    // raw：HasTag(blackdicesociety) || (GetUpgradePurchased(19680)&&HasTag(good)) || (GetFeatEquipped(2628)&&GetStat(int)>=13)
     const ast = parseHeroPredicate(
-      'GetStat(`cha`) >= 15 || HasTag(`fallbacks`) || ((GetUpgradeUnlocked(17492) || GetUpgradeUnlocked(17497)) && HasTag(`dwarf`))',
+      'HasTag(`blackdicesociety`) || (GetUpgradePurchased(19680) && HasTag(`good`)) || (GetFeatEquipped(2628) && GetStat(`int`)>=13)',
       'functional',
     )
     expect(ast).not.toBeNull()
-    expect(predicateHasNode(ast, 'upgradeUnlocked')).toBe(true)
-  })
-
-  it('GetUpgradeUnlocked 与未实现存档谓词（GetFeatEquipped）共存 → 仍 null（OR 任一子句 null）', () => {
-    // raw hero 175 完整式含 GetFeatEquipped（未实现）→ 整体仍丢弃，待后续谓词解锁
-    expect(parseHeroPredicate(
-      'HasTag(`heroeslance`) || (GetUpgradeUnlocked(19357) && HasTag(`dps`)) || (GetFeatEquipped(2578) && HasTag(`elf`))',
-      'functional',
-    )).toBeNull()
+    expect(predicateHasNode(ast, 'upgradePurchased')).toBe(true)
+    expect(predicateHasNode(ast, 'featEquipped')).toBe(true)
   })
 })
 
@@ -291,18 +293,45 @@ describe('evalHeroPredicate', () => {
   it('upgradeUnlocked：owner 等级 >= requiredLevel → true；未达/缺省 → false', () => {
     // build 期 enrichment 后的完整节点（ownerHeroId + requiredLevel 已烘进）
     const node = { op: 'upgradeUnlocked' as const, upgradeId: '17492', ownerHeroId: '165', requiredLevel: 70 }
-    const heroOwned = createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map([['165', 500]]) } })
-    expect(evalHeroPredicate(node, heroOwned)).toBe(true)
-    // owner 等级不足
-    const heroLow = createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map([['165', 50]]) } })
-    expect(evalHeroPredicate(node, heroLow)).toBe(false)
-    // owner 未拥有（不在 ownedLevels）→ false
-    const heroMissing = createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map() } })
-    expect(evalHeroPredicate(node, heroMissing)).toBe(false)
+    const ctx = (levels: Record<string, number>) =>
+      createHero({ heroId: 'y', ownedSaveContext: { ownedLevels: new Map(Object.entries(levels)), ownedSpecializations: new Map(), equippedFeatIds: new Set() } })
+    expect(evalHeroPredicate(node, ctx({ '165': 500 }))).toBe(true)
+    expect(evalHeroPredicate(node, ctx({ '165': 50 }))).toBe(false) // 等级不足
+    expect(evalHeroPredicate(node, ctx({}))).toBe(false) // owner 未拥有
+    expect(evalHeroPredicate(node, hero)).toBe(false) // 无 ownedSaveContext（未导入存档）
+    expect(evalHeroPredicate({ op: 'upgradeUnlocked', upgradeId: '9999' }, ctx({ '165': 500 }))).toBe(false) // build 未解析
+  })
+
+  it('upgradePurchased：spec 查 owner.specializations；regular 查 owner 等级 >= reqLvl', () => {
+    const ctx = (opts: { specs?: Record<string, string[]>; levels?: Record<string, number> }) =>
+      createHero({
+        heroId: 'y',
+        ownedSaveContext: {
+          ownedLevels: new Map(Object.entries(opts.levels ?? {})),
+          ownedSpecializations: new Map(Object.entries(opts.specs ?? {}).map(([k, v]) => [k, new Set(v)])),
+          equippedFeatIds: new Set(),
+        },
+      })
+    // spec 节点（19680 崇善之书，owner=119）
+    const specNode = { op: 'upgradePurchased' as const, upgradeId: '19680', ownerHeroId: '119', requiredLevel: 120, isSpecialization: true }
+    expect(evalHeroPredicate(specNode, ctx({ specs: { '119': ['19680'] } }))).toBe(true)
+    expect(evalHeroPredicate(specNode, ctx({ specs: { '119': ['19681'] } }))).toBe(false) // 选了 evil 不是 good
+    expect(evalHeroPredicate(specNode, ctx({}))).toBe(false) // owner 无专精记录
+    // regular 节点（owner 等级门）
+    const regNode = { op: 'upgradePurchased' as const, upgradeId: '9999', ownerHeroId: '165', requiredLevel: 70, isSpecialization: false }
+    expect(evalHeroPredicate(regNode, ctx({ levels: { '165': 500 } }))).toBe(true)
+    expect(evalHeroPredicate(regNode, ctx({ levels: { '165': 50 } }))).toBe(false)
+  })
+
+  it('featEquipped：被评估英雄 equippedFeatIds 命中 → true，未命中/缺省 → false', () => {
+    const heroWithFeat = createHero({
+      heroId: '119',
+      ownedSaveContext: { ownedLevels: new Map(), ownedSpecializations: new Map(), equippedFeatIds: new Set(['2628', '1065']) },
+    })
+    expect(evalHeroPredicate({ op: 'featEquipped', featId: '2628' }, heroWithFeat)).toBe(true)
+    expect(evalHeroPredicate({ op: 'featEquipped', featId: '9999' }, heroWithFeat)).toBe(false)
     // 无 ownedSaveContext（未导入存档）→ false，不抛错
-    expect(evalHeroPredicate(node, hero)).toBe(false)
-    // build 未解析节点（ownerHeroId/requiredLevel 缺）→ false
-    expect(evalHeroPredicate({ op: 'upgradeUnlocked', upgradeId: '9999' }, heroOwned)).toBe(false)
+    expect(evalHeroPredicate({ op: 'featEquipped', featId: '2628' }, hero)).toBe(false)
   })
 })
 

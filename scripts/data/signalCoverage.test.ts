@@ -314,7 +314,7 @@ describe('signal coverage report', () => {
     })
   })
 
-  it('把 total_ability_score 比较表达式计入已解析，但复杂 feat/upgrade 组合仍保持未解析', () => {
+  it('把 total_ability_score 比较表达式计入已解析，但含 HasEffect 等运行时谓词的组合仍保持未解析', () => {
     const report = generateSignalCoverageReport([
       {
         upgrades: [
@@ -328,7 +328,7 @@ describe('signal coverage report', () => {
             effectReference: 'global_dps_multiplier_mult,20',
             amount_func: 'mult',
             stack_func: 'per_hero_attribute',
-            per_hero_expr: 'HasTag(`heroeslance`) || (GetFeatEquipped(2579) && GetStat(`total_ability_score`) >= 85)',
+            per_hero_expr: 'HasTag(`good`) && HasEffect(`celeste_heal`)',
           },
         ],
         loot: [],
@@ -341,7 +341,7 @@ describe('signal coverage report', () => {
     expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
     expect(report.totals.signalsWithStatCountQualifier).toBe(1)
     expect(report.topUnparsedPerHeroExpr[0]).toEqual({
-      key: 'HasTag(`heroeslance`) || (GetFeatEquipped(2579) && GetStat(`total_ability_score`) >= 85)',
+      key: 'HasTag(`good`) && HasEffect(`celeste_heal`)',
       count: 1,
     })
   })

@@ -288,19 +288,24 @@ function applyEquipmentBuffs(
   }
 }
 
-// 注入存档派生的上下文（OwnedHero.level → ownedLevels），供存档依赖谓词（GetUpgradeUnlocked 等）
-// 在 matchesHeroQualifier→evalHeroPredicate 求值。必须在 feat/专精/装备注入之后（追加 ownedSaveContext
-// 到已改写的 profile）。ownedLevels 是 formation-global 映射（所有 profile 共享同一 ref）——GetUpgradeUnlocked
-// 是 global 谓词（upgrade 属唯一 owner，解锁 = owner 等级 >= reqLvl，与被评估英雄无关），存 per-profile
-// 仅作 threading 载体避免 eval 链签名穿透。无存档（未导入）→ 空 map，谓词恒 false。
+// 注入存档派生的上下文，供存档依赖谓词（GetUpgradeUnlocked/GetUpgradePurchased/GetFeatEquipped）在
+// matchesHeroQualifier→evalHeroPredicate 求值。必须在 feat/专精/装备注入之后（追加 ownedSaveContext 到已
+// 改写的 profile）。ownedLevels + ownedSpecializations 是 formation-global（所有 profile 共享同一 ref）——
+// GetUpgradeUnlocked/Purchased 是 global 谓词（upgrade 属唯一 owner，与被评估英雄无关）。equippedFeatIds 是
+// per-hero（被评估英雄的 feats，GetFeatEquipped 查此）。无存档（未导入）→ 空 map/集，谓词恒 false。
 function attachOwnedSaveContext(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   ownedHeroes: readonly OwnedHero[],
 ): void {
+  const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
   const ownedLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
-  const ctx = { ownedLevels }
+  const ownedSpecializations = new Map(
+    ownedHeroes.map((owned) => [owned.heroId, new Set(owned.specializations.map(String))]),
+  )
   for (const [heroId, profile] of heroById) {
-    heroById.set(heroId, { ...profile, ownedSaveContext: ctx })
+    const owned = ownedById.get(heroId)
+    const equippedFeatIds = new Set((owned?.feats ?? []).map(String))
+    heroById.set(heroId, { ...profile, ownedSaveContext: { ownedLevels, ownedSpecializations, equippedFeatIds } })
   }
 }
 

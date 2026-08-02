@@ -21,14 +21,16 @@ IC 的 `per_hero_expr` 字段承载两类语义，求值域不同，分别处理
 
 已实现：
 
-- **`GetUpgradeUnlocked(N)`**——global 谓词：upgrade N 属唯一 owner 英雄，解锁 = owner 等级 ≥ `requiredLevel`。build 期 `enrichUpgradeUnlockNodes`（buildHeroModels）从 champion-details upgrades 解析 `ownerHeroId`(=self，62/62 布尔引用均 self-ref) + `requiredLevel` 烘进 AST 节点；runtime `evalHeroPredicate` 按 `ownerHeroId` 查 `ownedLevels`。点亮 hero 165（巴尔德里克阵营）/66（Lazaapz 小体型）等纯 GetUpgradeUnlocked 表达式的 formationCountQualifier。
+- **`GetUpgradeUnlocked(N)`**——global 谓词：upgrade N 属唯一 owner 英雄，解锁 = owner 等级 ≥ `requiredLevel`。build 期 `enrichUpgradePredicateNodes`（buildHeroModels）从 champion-details upgrades 解析 `ownerHeroId`(=self，布尔引用均 self-ref) + `requiredLevel` 烘进 AST 节点；runtime `evalHeroPredicate` 按 `ownerHeroId` 查 `ownedLevels`。点亮 hero 165（巴尔德里克阵营）/66（Lazaapz 小体型）等纯 GetUpgradeUnlocked 表达式的 formationCountQualifier。
+- **`GetUpgradePurchased(N)`**——global 谓词：N 是否购买。build 期解析 `ownerHeroId` + `requiredLevel` + `isSpecialization`（`specializationName` 非空）。specialization → `N ∈ owner.specializations`（玩家手选专精）；regular → owner 等级 ≥ reqLvl（同 GetUpgradeUnlocked，owned 英雄升级即自动购买）。点亮 hero 119（乌利亚修士黑骰髅会成员资格 `hero_dps_multiplier_mult,1000`）。
+- **`GetFeatEquipped(N)`**——per-hero 谓词：被评估英雄是否装备 feat N（feat hero-specific，N 属唯一英雄）。runtime 查 `equippedFeatIds`（OwnedHero.feats）。与 GetUpgradePurchased 同落解锁 hero 119 BDS 共存式。
 
 仍未实现（`parseHeroPredicate` 返回 null，含它们的复合式整体丢弃）：
 
-- `GetFeatEquipped(N)`——per-hero（OwnedHero.feats 直接可得），但真实样本全在 `do_nothing` 计数 helper（不出 signal）或与 `GetUpgradePurchased` 共存；独立价值待 `GetUpgradePurchased` 落地后随同解锁。
-- `GetUpgradePurchased(N)`——purchase 状态，需区分 regular/specialization upgrade 类型（specialization = `OwnedHero.specializations` 含 N，非等级门），建模待定。
-- `HasEffect(name)` / `HasEffectByID(N)`——effect 是否激活，依赖阵型 effect 作用图（可能由他英雄施加），属阵型运行时状态。
+- `HasEffect(name)` / `HasEffectByID(N)`——effect 是否激活，依赖阵型 effect 作用图（可能由他英雄施加，如 `celeste_heal`/`alyndra_portented`），属阵型运行时状态。真 buff 样本：hero 77/169/153/166/82/176。
 - `is_alive`——runtime 战斗状态；`EligibleForPatron`——patron 进度（存档另一域）。
+
+`HeroAbilityProfile.ownedSaveContext`（runtime 注入，build 期 undefined）混合 global + per-hero 数据：`ownedLevels`/`ownedSpecializations`（formation-global，按 ownerHeroId 查，所有 profile 共享同一 ref）、`equippedFeatIds`（per-hero，被评估英雄的 feats）。`attachOwnedSaveContext`（recommendationEngine 两入口对称）从 OwnedHero 派生。
 
 ## 数值表达式散落点
 

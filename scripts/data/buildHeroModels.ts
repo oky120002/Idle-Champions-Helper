@@ -16,33 +16,37 @@ import type {
 } from '../../src/domain/abilities/abilityModel'
 import { computeHeroGainProfile } from '../../src/domain/abilities/abilityModel'
 
-// GetUpgradeUnlocked(N) 节点 build 期解析：upgrade N 属本英雄（self，62/62 布尔引用均 self-ref），
-// 从 detail.upgrades 取 requiredLevel + ownerHeroId=self 烘进节点。runtime evalHeroPredicate 按 ownerHeroId
-// 查 ownedLevels。本英雄 upgrades 查不到（跨英雄引用）→ 节点留 undefined → eval false（保守）。
-function enrichUpgradeUnlockNodes(
+// GetUpgradeUnlocked(N) / GetUpgradePurchased(N) 节点 build 期解析：upgrade N 属本英雄（self，布尔引用均
+// self-ref），从 detail.upgrades 取 requiredLevel + isSpecialization(specializationName 非空) + ownerHeroId=self
+// 烘进节点。runtime evalHeroPredicate 按 ownerHeroId 查 ownedLevels/ownedSpecializations。本英雄 upgrades 查不到
+//（跨英雄引用）→ 节点留 undefined → eval false（保守）。
+function enrichUpgradePredicateNodes(
   signals: readonly HeroAbilitySignal[],
   ownerHeroId: string,
-  upgradeRequiredLevel: Map<string, number>,
+  upgradeMeta: Map<string, { requiredLevel: number; isSpecialization: boolean }>,
 ): void {
   for (const signal of signals) {
-    enrichQualifier(signal.targetQualifier, ownerHeroId, upgradeRequiredLevel)
-    enrichQualifier(signal.formationCountQualifier, ownerHeroId, upgradeRequiredLevel)
+    enrichQualifier(signal.targetQualifier, ownerHeroId, upgradeMeta)
+    enrichQualifier(signal.formationCountQualifier, ownerHeroId, upgradeMeta)
   }
 }
 
 function enrichQualifier(
   qualifier: HeroQualifier | null | undefined,
   ownerHeroId: string,
-  upgradeRequiredLevel: Map<string, number>,
+  upgradeMeta: Map<string, { requiredLevel: number; isSpecialization: boolean }>,
 ): void {
   if (!qualifier) return
   walk(qualifier.predicate)
   function walk(node: HeroPredicateAST): void {
-    if (node.op === 'upgradeUnlocked') {
-      const requiredLevel = upgradeRequiredLevel.get(node.upgradeId)
-      if (requiredLevel !== undefined) {
+    if (node.op === 'upgradeUnlocked' || node.op === 'upgradePurchased') {
+      const meta = upgradeMeta.get(node.upgradeId)
+      if (meta !== undefined) {
         node.ownerHeroId = ownerHeroId
-        node.requiredLevel = requiredLevel
+        node.requiredLevel = meta.requiredLevel
+        if (node.op === 'upgradePurchased') {
+          node.isSpecialization = meta.isSpecialization
+        }
       }
       return
     }
@@ -112,23 +116,25 @@ export function buildOfficialHeroModel(
     }
   }
 
-  // GetUpgradeUnlocked(N) 解析：本英雄 upgrades → upgradeId→requiredLevel，烘进 qualifier AST 节点。
-  const upgradeRequiredLevel = new Map<string, number>()
+  // GetUpgradeUnlocked/GetUpgradePurchased(N) 解析：本英雄 upgrades → upgradeId→{requiredLevel, isSpecialization}，
+  // 烘进 qualifier AST 节点。isSpecialization = specializationName 非空（专精选项，玩家手选；regular 随等级自动生效）。
+  const upgradeMeta = new Map<string, { requiredLevel: number; isSpecialization: boolean }>()
   const upgradesRaw = detail.upgrades as unknown
   if (Array.isArray(upgradesRaw)) {
     for (const up of upgradesRaw) {
       if (!up || typeof up !== 'object') continue
-      const id = (up as { id?: unknown }).id
-      const requiredLevel = (up as { requiredLevel?: unknown }).requiredLevel
-      const idStr = typeof id === 'string' || typeof id === 'number' ? String(id) : null
-      if (idStr && typeof requiredLevel === 'number') {
-        upgradeRequiredLevel.set(idStr, requiredLevel)
+      const u = up as { id?: unknown; requiredLevel?: unknown; specializationName?: unknown }
+      const idStr = typeof u.id === 'string' || typeof u.id === 'number' ? String(u.id) : null
+      if (idStr && typeof u.requiredLevel === 'number') {
+        const specName = u.specializationName
+        const isSpecialization = !!specName && typeof specName === 'object'
+        upgradeMeta.set(idStr, { requiredLevel: u.requiredLevel, isSpecialization })
       }
     }
   }
-  if (upgradeRequiredLevel.size > 0) {
-    enrichUpgradeUnlockNodes(carrySignals, champion.id as string, upgradeRequiredLevel)
-    enrichUpgradeUnlockNodes(supportSignals, champion.id as string, upgradeRequiredLevel)
+  if (upgradeMeta.size > 0) {
+    enrichUpgradePredicateNodes(carrySignals, champion.id as string, upgradeMeta)
+    enrichUpgradePredicateNodes(supportSignals, champion.id as string, upgradeMeta)
   }
 
   const rawBaseDamage = Number(detail.baseDamage)

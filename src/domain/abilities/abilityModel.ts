@@ -83,6 +83,12 @@ export type HeroPredicateAST =
   // build 期从 champion-details upgrades 解析 ownerHeroId(=self) + requiredLevel 烘进节点；runtime 查 ownedLevels。
   // ownerHeroId/requiredLevel undefined = build 未解析（跨英雄引用/缺数据）→ eval false。
   | { op: 'upgradeUnlocked'; upgradeId: string; ownerHeroId?: string; requiredLevel?: number }
+  // GetUpgradePurchased(N)：存档依赖 global 谓词——N 是否购买。build 期解析 ownerHeroId(self) + requiredLevel +
+  // isSpecialization（specializationName 非空）。spec → N ∈ owner.specializations；regular → owner 等级 >= reqLvl。
+  | { op: 'upgradePurchased'; upgradeId: string; ownerHeroId?: string; requiredLevel?: number; isSpecialization?: boolean }
+  // GetFeatEquipped(N)：存档依赖 per-hero 谓词——被评估英雄是否装备 feat N。runtime 查 equippedFeatIds。
+  // feat 是 hero-specific（N 属唯一英雄），只有 owner 英雄能装；未装备/无存档 → false。
+  | { op: 'featEquipped'; featId: string }
 
 export interface HeroQualifier {
   predicate: HeroPredicateAST
@@ -190,12 +196,15 @@ export interface HeroAbilityProfile {
 }
 
 /**
- * 存档派生的上下文（runtime 注入，非 build 期数据）。
- * ownedLevels：heroId → OwnedHero.level 全局映射（formation-scoped，所有 profile 共享同一 ref）。
- * GetUpgradeUnlocked 等 global 存档谓词按 ownerHeroId 查此映射。
+ * 存档派生的上下文（runtime 注入，非 build 期数据）。混合 global + per-hero 数据：
+ * - ownedLevels / ownedSpecializations：formation-global（所有 profile 共享同一 ref），按 ownerHeroId 查。
+ *   GetUpgradeUnlocked / GetUpgradePurchased 是 global 谓词（upgrade 属唯一 owner，与被评估英雄无关）。
+ * - equippedFeatIds：per-hero（被评估英雄的 feats），GetFeatEquipped 查此集。
  */
 export interface HeroOwnedSaveContext {
   ownedLevels: Map<string, number>
+  ownedSpecializations: Map<string, Set<string>>
+  equippedFeatIds: Set<string>
 }
 
 export interface HeroAbilityOverridePatch {
