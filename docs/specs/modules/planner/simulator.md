@@ -56,7 +56,7 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
-`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` 的 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。仅影响动态层数类 signal；formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
+`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` **且无 stackFunc** 的纯动态层数 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。`stacksMultiply=true` **带 stackFunc** 的 signal（如 hero32 `per_mithral_hall_stacks`）层数源是 stackFunc 而非 area-based manual——走 stackFunc 计数路径（注册的按阵型计数、未注册的不计分），不再短路 manualStackCount（旧实现 (1+value/100)^1000 灾难高估）。formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
 
 未进评分、只标记的效果：随机触发、击杀过程、逐区时间线、敌人实时状态、临时 buff、同时期互斥或无法静态判断的效果。未知 effect 必须进入 `warnings` 和 `unsupportedSignals`，不静默忽略。
 

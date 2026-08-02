@@ -40,9 +40,13 @@ export function resolveSignalMultiplier(
     }
   }
 
-  // 机制: dynamic-stack-multiply（stacksMultiply=true + 无 stackFunc；如蔚出言不逊）
+  // 机制: dynamic-stack-multiply（stacksMultiply=true + 无 stackFunc；如蔚出言不逊 manual_stacking）
   // 层数来自数值表达式（当前 unsupported），用 manualStackCount 提供假设值（默认 1000）。
-  if (signal.stacksMultiply === true) {
+  // 须排除「有 stackFunc」的信号——它们的层数源是 stackFunc（per_tagged/per_crusader/per_mithral_hall_stacks
+  // 等），非 area-based manual 层数。旧实现无条件短路致这类信号（如 hero32 buff_upgrade,100,11503
+  // stackFunc=per_mithral_hall_stacks）被 (1+value/100)^1000 灾难高估（2^1000≈10^301）；改走 stackFunc
+  // 路径后，注册的 stackFunc 按真实阵型计数、未注册的（per_mithral_hall_stacks）安全不计分。
+  if (signal.stacksMultiply === true && !signal.stackFunc) {
     const stackCount = input.manualStackCount ?? DEFAULT_MANUAL_STACK_COUNT
     const mult = percentToMultiplier(signal.value) ** stackCount
     if (!Number.isFinite(mult)) {

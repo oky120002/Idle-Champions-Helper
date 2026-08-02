@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { applyEquipmentBuffsToProfile } from './equipmentBuffSignals'
+import { resolveSignalMultiplier } from '../planner/mechanics/signalMultiplier'
+import { buildInput, createHero } from '../planner/mechanics/mechanicTestFixtures'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
 import type { HeroAbilitySignal, ResolvedHeroAbilityProfile } from './abilityModel'
 
@@ -139,5 +141,49 @@ describe('applyEquipmentBuffsToProfile', () => {
     expect(profile.supportSignals).toHaveLength(2) // baseB + wrapperB
     expect(profile.carrySignals[1]!.value).toBe(87.5)
     expect(profile.supportSignals[1]!.value).toBe(87.5)
+  })
+
+  it('【stacksMultiply base】wrapper 不继承 base 的 stacksMultiply/applyManually（防 (1+buff/100)^N 灾难高估）', () => {
+    // 真实场景：118 个 stacksMultiply base signal（如蔚出言不逊/善良榜样）带 upgradeId，156 条 loot
+    // buff_upgrade 命中。wrapper 若继承 stacksMultiply → 走 resolveSignalMultiplier 的 stacking 分支，
+    // 被 (1+25/100)^1000 ≈ 10^97 灾难高估。applySignalPercent 已为 stacksMultiply base 按 base.value×buff/100
+    // 折算（见 signalMultiplier.test.ts「bonusScaleOfSignal 折叠」），wrapper 须显式落回该路径。
+    const base = baseSignal({
+      rawEffect: 'hero_dps_mult_per_tagged_crusader_mult,50',
+      value: 50,
+      upgradeId: '42',
+      stacksMultiply: true,
+      applyManually: true,
+    })
+    const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('42', 25)])
+    const wrapper = profile.carrySignals[1]!
+    expect(wrapper.bonusScaleOfSignal).toBe(base)
+    // 不得继承 stacksMultiply/applyManually——wrapper 是固定百分比放大，非堆叠/手动信号。
+    expect(wrapper.stacksMultiply).toBeFalsy()
+    expect(wrapper.applyManually).toBeFalsy()
+  })
+
+  it('【stacksMultiply base 集成】wrapper 经 applySignalPercent 折算为 base.value×buff/100，非 (1+buff/100)^N', () => {
+    // base = stacksMultiply value=50，manualStackCount=2 → base 聚合 (1.5)^2=2.25（>1，生效）。
+    // wrapper 经 applySignalPercent：percentToMultiplier(base.value × buff / 100) = 1 + 50×25/100/100 = 1.125。
+    // 旧 bug（继承 stacksMultiply）：(1+25/100)^2 = 1.5625（且 count=1000 时 10^97 灾难）。
+    const base = baseSignal({
+      rawEffect: 'hero_dps_mult_per_tagged_crusader_mult,50',
+      value: 50,
+      upgradeId: '42',
+      stacksMultiply: true,
+    })
+    const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('42', 25)])
+    const wrapper = profile.carrySignals[1]!
+    const r = resolveSignalMultiplier(
+      buildInput({
+        carryHero: createHero('carry'),
+        supportHero: createHero('support'),
+        manualStackCount: 2,
+      }),
+      wrapper,
+    )
+    expect(r.ok).toBe(true)
+    if (r.ok) expect(r.multiplier).toBeCloseTo(1.125, 10)
   })
 })

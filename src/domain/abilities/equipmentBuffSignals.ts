@@ -51,6 +51,12 @@ const SUPPORTED_BUFF_TARGET_KINDS = new Set<HeroAbilityKind>([
 /**
  * 构造装备 buff_upgrade wrapper signal（镜像 build 期 plain loot preset 形态）。
  * bonusScaleOfSignal=base（live），value=enchant 缩放后 wrapper 百分比；走 applySignalPercent 路径。
+ *
+ * 必须重置 stacksMultiply/applyManually：wrapper 是固定百分比放大（base.value×buff/100，见
+ * resolveSignalMultiplier applySignalPercent），非堆叠/手动信号。若继承 base.stacksMultiply=true，
+ * 会错走进 resolveSignalMultiplier 的 stacking 分支，被 (1+buff/100)^N 灾难高估（118 个 stacksMultiply
+ * base + 156 条 loot buff_upgrade 命中的真实路径）。applyManually 同理——owned 装备应在 base 生效时
+ * 自动放大，而非继承 base 的手动/专精门控被直接跳过。
  */
 function buildEquipmentBuffWrapper(base: HeroAbilitySignal, buff: EquipmentBuff): HeroAbilitySignal {
   return {
@@ -58,11 +64,13 @@ function buildEquipmentBuffWrapper(base: HeroAbilitySignal, buff: EquipmentBuff)
     rawEffect: buff.rawEffect,
     value: buff.value,
     bonusScaleOfSignal: base,
-    // plain loot wrapper：不继承 base 的 stack/count 语义（与 build 期 buffSeed=null 一致）。
+    // plain loot wrapper：不继承 base 的 stack/count/manual 语义（与 build 期 buffSeed=null 一致）。
     amountFunc: null,
     stackFunc: null,
     formationCountQualifier: null,
     formationCountPositionQualifier: null,
+    stacksMultiply: false,
+    applyManually: false,
   }
 }
 

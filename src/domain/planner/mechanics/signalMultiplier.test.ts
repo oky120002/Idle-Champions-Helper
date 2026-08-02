@@ -58,6 +58,39 @@ describe('resolveSignalMultiplier · dynamic-stack-multiply', () => {
     )
     expect(r.ok).toBe(false)
   })
+
+  it('【stacksMultiply + stackFunc】不短路 manualStackCount，改走 stackFunc 计数路径', () => {
+    // hero32 真实回归：buff_upgrade,100,11503 stacksMultiply=true + stackFunc=per_mithral_hall_stacks。
+    // 旧实现 stacksMultiply 分支无条件短路 → (1+100/100)^1000 = 2^1000≈10^301 灾难高估。
+    // 现 stacksMultiply 分支排除有 stackFunc 的信号 → 落 stackFunc 路径，未注册 → 不计分（安全）。
+    const r = resolveSignalMultiplier(
+      buildInput({ ...baseInput, manualStackCount: 1000 }),
+      buildSignal({ value: 100, stacksMultiply: true, stackFunc: 'per_mithral_hall_stacks', amountFunc: 'mult' }),
+    )
+    expect(r.ok).toBe(false) // per_mithral_hall_stacks 未注册 → 不计分（非 2^1000 灾难高估）
+  })
+
+  it('【stacksMultiply + 注册 stackFunc】按 stackFunc 真实阵型计数（非 manualStackCount）', () => {
+    // stacksMultiply + per_crusader（注册）：count=阵型 qualifying 英雄数，非 manualStackCount(1000)。
+    // 旧 stacksMultiply 短路会给 (1+100/100)^1000 = 2^1000 灾难；现走 stackFunc 路径，2 英雄 → count=2 → 2^2=4。
+    const carryHero = createHero('carry')
+    const supportHero = createHero('support')
+    const r = resolveSignalMultiplier(
+      buildInput({
+        carryHero,
+        supportHero,
+        placements: { s1: 'carry', s2: 'support' },
+        heroesById: new Map([
+          ['carry', carryHero],
+          ['support', supportHero],
+        ]),
+        manualStackCount: 1000,
+      }),
+      buildSignal({ value: 100, stacksMultiply: true, stackFunc: 'per_crusader', amountFunc: 'mult' }),
+    )
+    expect(r.ok).toBe(true)
+    if (r.ok) expect(r.multiplier).toBe(4) // 2 英雄 → 2^2 = 4（非 2^1000）
+  })
 })
 
 describe('resolveSignalMultiplier · bonusScaleOfSignal 折叠（22× 高估回归）', () => {

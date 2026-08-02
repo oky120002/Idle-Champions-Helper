@@ -23,7 +23,8 @@
  * global-scope（global_dps/gold）影响全队但装备者必须在阵型内 → scoreFormation/scoreTeamGold 按 placed 求和
  * （与 patron/blessing 账号级 globalBuff 分列——后者不依赖 placed）。
  *
- * 未接（留后续 B1）：`buff_upgrade`（元加成，放大另一 upgrade 效果值，需先 resolve 被放大对象）。
+ * `buff_upgrade`（元加成，放大另一 upgrade 效果值）已接：`collectEquipmentBuffsByHero` 收集 →
+ * `equipmentBuffSignals.ts` runtime 注入 wrapper（见下方 ParsedBuffUpgrade / EquipmentBuff）。
  *
  * 未传入 owned loot（未导入存档）→ 无加成（向后兼容）。
  */

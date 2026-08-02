@@ -16,13 +16,20 @@ describe('classifyScoringSupport', () => {
     expect(classifyScoringSupport({ applyManually: true, stackFunc: 'per_hero', amountFunc: 'mult' })).toBe('manual')
   })
 
-  it('stacksMultiply=true 先短路 → supported，即使 stackFunc 不在白名单（与 scorer 短路一致）', () => {
-    // 回归：placementFit.resolveSignalMultiplier 对 stacksMultiply===true 先短路计分（manualStackCount），
-    // 忽略 stackFunc。分类器须对称——否则 per_mithral_hall_stacks / get_stat 等 stacksMultiply
-    // 叠未白名单 stackFunc 的 signal 被误报 unsupported-composition（实际已计分）。
-    expect(classifyScoringSupport({ stacksMultiply: true, stackFunc: 'per_mithral_hall_stacks', amountFunc: 'mult' })).toBe('supported')
-    expect(classifyScoringSupport({ stacksMultiply: true, stackFunc: 'get_stat', amountFunc: 'mult' })).toBe('supported')
+  it('stacksMultiply=true **无 stackFunc** → supported（scorer 走 manualStackCount 短路，如出言不逊 manual_stacking）', () => {
+    // 回归：resolveSignalMultiplier 对 stacksMultiply===true 且无 stackFunc 的纯 dynamic-stack 信号
+    // 走 manualStackCount 短路计分。分类器须对称——这类 signal supported。
     expect(classifyScoringSupport({ stacksMultiply: true, stackFunc: null, amountFunc: null })).toBe('supported')
+  })
+
+  it('stacksMultiply=true + stackFunc → 落 stackFunc 白名单判定（scorer 改走 stackFunc 路径，非 manualStackCount 短路）', () => {
+    // 回归：stacksMultiply + stackFunc 的信号层数源是 stackFunc（非 area-based manual）。
+    // 旧 scorer 无条件 stacksMultiply 短路 + manualStackCount 致 hero32 per_mithral_hall_stacks 灾难高估
+    // ((1+value/100)^1000)；现 scorer 改走 stackFunc 路径，分类器须对称——注册 stackFunc supported，
+    // 未注册（per_mithral_hall_stacks/get_stat）unsupported-composition（honest 不计分，非假 supported）。
+    expect(classifyScoringSupport({ stacksMultiply: true, stackFunc: 'per_tagged_crusader_mult', amountFunc: 'mult' })).toBe('supported')
+    expect(classifyScoringSupport({ stacksMultiply: true, stackFunc: 'per_mithral_hall_stacks', amountFunc: 'mult' })).toBe('unsupported-composition')
+    expect(classifyScoringSupport({ stacksMultiply: true, stackFunc: 'get_stat', amountFunc: 'mult' })).toBe('unsupported-composition')
   })
 
   it('无 stackFunc 的普通 signal → supported（scorer applySignalPercent 计分）', () => {
