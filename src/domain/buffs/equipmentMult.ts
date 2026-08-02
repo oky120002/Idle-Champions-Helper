@@ -79,8 +79,16 @@ export function parseLootEffect(effectString: string): ParsedLootEffect | null {
 /** enchant→effect 放大系数 = 1/250（反推自明斯克实测，见模块注释）。 */
 const ENCHANT_SCALE = 1 / 250
 
+/** catalog 索引缓存：按 catalog 引用复用。buildScoringBonusInputs 传同一 catalog 给 6 个 compute 函数，
+ * 不缓存会 6× 重复 parseLootEffect（~4044 条目/次）。catalog 不可变（build 产物），同引用结果稳定。 */
+const catalogIndexCache = new WeakMap<readonly LootCatalogEntry[], Map<string, ParsedLootEffect>>()
+
 /** 全 catalog 索引：`heroId:slotId:rarity` → parsed effect（每 loot item 单 effect；三元组唯一）。 */
 function indexCatalog(catalog: readonly LootCatalogEntry[]): Map<string, ParsedLootEffect> {
+  const cached = catalogIndexCache.get(catalog)
+  if (cached) {
+    return cached
+  }
   const index = new Map<string, ParsedLootEffect>()
   for (const entry of catalog) {
     const parsed = parseLootEffect(entry.effectString)
@@ -88,6 +96,7 @@ function indexCatalog(catalog: readonly LootCatalogEntry[]): Map<string, ParsedL
       index.set(`${entry.heroId}:${entry.slotId}:${entry.rarity}`, parsed)
     }
   }
+  catalogIndexCache.set(catalog, index)
   return index
 }
 
