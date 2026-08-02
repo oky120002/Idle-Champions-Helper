@@ -83,3 +83,49 @@ export function applyTierSelection(
   }
   return next
 }
+
+/**
+ * 过滤出当前可选的专精条目：无前置（requiredUpgradeId 为 null/undefined）或前置已选中。
+ * 指向非 catalog 选项的前置（普通升级 gate 或哨兵）视为恒满足——结构 gate 节点已进 catalog，
+ * 故 catalog 内的前置才是真正的专精互斥依赖。供 UI 每层渲染前裁剪不可选项（级联型专精树
+ * 仅显示与已选上层匹配的依赖层分支）。
+ */
+export function availableSpecializations(
+  entries: readonly SpecializationEntry[],
+  selected: readonly string[],
+): SpecializationEntry[] {
+  const entryById = new Map(entries.map((entry) => [entry.upgradeId, entry]))
+  const selectedSet = new Set(selected)
+  return entries.filter((entry) => {
+    const prereq = entry.requiredUpgradeId
+    if (!prereq) return true
+    if (!entryById.has(prereq)) return true
+    return selectedSet.has(prereq)
+  })
+}
+
+/**
+ * 级联清理：从选择中移除所有「前置不满足」的孤立选项，迭代到稳定（A→B→C 传递依赖）。
+ * 改上层后下层可能留下游戏不可能的组合（如 hero 81 选「秘银皮肤」tier-1 + 「秘银皮肤」tier-2，
+ * 但 tier-2 的 gate 是另一个互斥的 tier-1）；此函数在每次 override 选择后调用，清掉孤立下游。
+ * 前置指向非 catalog 选项（普通升级 gate）不视为孤立。catalog 外的选中 id 原样保留（不归此函数管）。
+ */
+export function pruneOrphanedSpecializations(
+  current: readonly string[],
+  entries: readonly SpecializationEntry[],
+): string[] {
+  const entryById = new Map(entries.map((entry) => [entry.upgradeId, entry]))
+  const selected = new Set(current)
+  let changed = true
+  while (changed) {
+    changed = false
+    for (const id of [...selected]) {
+      const prereq = entryById.get(id)?.requiredUpgradeId
+      if (prereq && entryById.has(prereq) && !selected.has(prereq)) {
+        selected.delete(id)
+        changed = true
+      }
+    }
+  }
+  return [...selected]
+}

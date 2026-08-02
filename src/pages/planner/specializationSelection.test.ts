@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { applyTierSelection, groupSpecializationsByTier, mergeSpecializationOverrides } from './specializationSelection'
+import {
+  applyTierSelection,
+  availableSpecializations,
+  groupSpecializationsByTier,
+  mergeSpecializationOverrides,
+  pruneOrphanedSpecializations,
+} from './specializationSelection'
 import type { SpecializationEntry } from '../../domain/abilities/specializationSignals'
 import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 
@@ -7,11 +13,17 @@ function specOf(snapshot: { ownedHeroes: { heroId: string; specializations: stri
   return snapshot.ownedHeroes.find((hero) => hero.heroId === heroId)?.specializations
 }
 
-function makeEntry(upgradeId: string, requiredLevel: number | null, display = upgradeId): SpecializationEntry {
+function makeEntry(
+  upgradeId: string,
+  requiredLevel: number | null,
+  display = upgradeId,
+  requiredUpgradeId: string | null = null,
+): SpecializationEntry {
   return {
     upgradeId,
     specializationName: { original: display, display },
     requiredLevel,
+    requiredUpgradeId,
     signals: [{
       dimension: 'damage',
       bucket: 'carrySignals',
@@ -112,5 +124,55 @@ describe('applyTierSelection', () => {
 
   it('selected 不在本层 id 集合内（防御）→ 仍加入', () => {
     expect(applyTierSelection(['200'], tier, '999')).toEqual(['200', '999'])
+  })
+})
+
+describe('availableSpecializations', () => {
+  it('过滤掉前置未选中的依赖层选项；顶层（无 prereq）始终可用', () => {
+    const entries = [
+      makeEntry('100', 50),
+      makeEntry('200', 120, '200', '100'),
+      makeEntry('201', 120, '201', '100'),
+      makeEntry('300', 120, '300', '999'), // 999 非 catalog 选项 → 视为恒满足
+    ]
+    // 选中 100 → 依赖 100 的 200/201 可用；300 的 gate 999 非 catalog → 恒可用
+    expect(availableSpecializations(entries, ['100']).map((e) => e.upgradeId).sort()).toEqual(['100', '200', '201', '300'])
+    // 未选任何 → 200/201（gate 100 未选）不可用；100、300 可用
+    expect(availableSpecializations(entries, []).map((e) => e.upgradeId).sort()).toEqual(['100', '300'])
+  })
+
+  it('空 entries → 空', () => {
+    expect(availableSpecializations([], ['100'])).toEqual([])
+  })
+})
+
+describe('pruneOrphanedSpecializations', () => {
+  it('移除前置不在选择中的孤立选项（含 A→B→C 传递依赖）', () => {
+    const entries = [
+      makeEntry('1', 50),
+      makeEntry('2', 80, '2', '1'),
+      makeEntry('3', 120, '3', '2'),
+    ]
+    // 全链完整 → 全保留
+    expect(pruneOrphanedSpecializations(['1', '2', '3'], entries).sort()).toEqual(['1', '2', '3'])
+    // 缺 1 → 2 孤立移除 → 3 随之孤立移除（迭代到稳定）
+    expect(pruneOrphanedSpecializations(['2', '3'], entries)).toEqual([])
+    // 缺 2（但 1 在）→ 3 孤立移除，1/2 保留
+    expect(pruneOrphanedSpecializations(['1', '3'], entries).sort()).toEqual(['1'])
+  })
+
+  it('前置指向非 catalog 选项（普通升级 gate）→ 不视为孤立', () => {
+    const entries = [makeEntry('200', 120, '200', '999')]
+    expect(pruneOrphanedSpecializations(['200'], entries)).toEqual(['200'])
+  })
+
+  it('catalog 外的选中 id 原样保留（存档值/engine 语义，不归此函数管）', () => {
+    const entries = [makeEntry('100', 50)]
+    expect(pruneOrphanedSpecializations(['100', 'legacy-id'], entries).sort()).toEqual(['100', 'legacy-id'])
+  })
+
+  it('无依赖（全顶层）→ 原样返回', () => {
+    const entries = [makeEntry('100', 50), makeEntry('200', 50)]
+    expect(pruneOrphanedSpecializations(['100', '200'], entries).sort()).toEqual(['100', '200'])
   })
 })

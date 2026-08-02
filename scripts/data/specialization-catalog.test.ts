@@ -106,7 +106,7 @@ describe('buildSpecializationEntries', () => {
     expect(buildSpecializationEntries(detail)).toHaveLength(0)
   })
 
-  it('非 scoring 维度的专精 effect → 跳过；无 scoring signal → 整条不进 catalog', () => {
+  it('非 scoring 维度的专精 effect → 跳过；无 scoring signal 且未被引用为 prereq → 整条不进 catalog', () => {
     const detail = {
       upgrades: [
         {
@@ -118,6 +118,51 @@ describe('buildSpecializationEntries', () => {
       ],
     }
     expect(buildSpecializationEntries(detail)).toHaveLength(0)
+  })
+
+  it('requiredUpgradeId 透传到 entry（UI 按依赖链过滤/级联清下层）', () => {
+    const detail = {
+      upgrades: [
+        { id: '100', requiredLevel: 50, requiredUpgradeId: null, specializationName: { original: 'A', display: 'A' }, effectReference: 'hero_dps_multiplier_mult,40' },
+        { id: '200', requiredLevel: 120, requiredUpgradeId: '100', specializationName: { original: 'B', display: 'B' }, effectReference: 'hero_dps_multiplier_mult,40' },
+      ],
+    }
+    const byId = new Map(buildSpecializationEntries(detail).map((e) => [e.upgradeId, e]))
+    expect(byId.get('100')?.requiredUpgradeId).toBeNull()
+    expect(byId.get('200')?.requiredUpgradeId).toBe('100')
+  })
+
+  it('结构 gate 节点（无 scoring signal 但被引用为 prereq）保留进 catalog，使级联依赖链完整', () => {
+    // 复刻 hero 165/81 级联型专精树：tier-1 gate（unlock_ability，无 scoring signal）被 tier-2 依赖
+    const detail = {
+      upgrades: [
+        { id: '100', requiredLevel: 50, requiredUpgradeId: null, specializationName: { original: '神A', display: '神A' }, upgradeType: 'unlock_ability' },
+        { id: '101', requiredLevel: 50, requiredUpgradeId: null, specializationName: { original: '神B', display: '神B' }, upgradeType: 'unlock_ability' },
+        { id: '200', requiredLevel: 120, requiredUpgradeId: '100', specializationName: { original: '分支A', display: '分支A' }, effectReference: 'hero_dps_multiplier_mult,40' },
+      ],
+    }
+    const byId = new Map(buildSpecializationEntries(detail).map((e) => [e.upgradeId, e]))
+    // gate 100 被引用 → 保留为结构节点（signals=[]），engine 遍历空 signals 不注入
+    expect(byId.has('100')).toBe(true)
+    expect(byId.get('100')?.signals).toEqual([])
+    expect(byId.get('100')?.requiredUpgradeId).toBeNull()
+    // gate 101 未被引用且无 signal → 不进 catalog
+    expect(byId.has('101')).toBe(false)
+    // 依赖节点 200 有 signal，prereq 指向 100
+    expect(byId.get('200')?.signals).toHaveLength(1)
+    expect(byId.get('200')?.requiredUpgradeId).toBe('100')
+  })
+
+  it('多级依赖链：C(有signal) → B(无signal gate) → A(无signal gate) 全链递归保留', () => {
+    const detail = {
+      upgrades: [
+        { id: '1', requiredLevel: 50, requiredUpgradeId: null, specializationName: { original: 'A', display: 'A' }, upgradeType: 'unlock_ability' },
+        { id: '2', requiredLevel: 80, requiredUpgradeId: '1', specializationName: { original: 'B', display: 'B' }, upgradeType: 'unlock_ability' },
+        { id: '3', requiredLevel: 120, requiredUpgradeId: '2', specializationName: { original: 'C', display: 'C' }, effectReference: 'hero_dps_multiplier_mult,40' },
+      ],
+    }
+    const ids = new Set(buildSpecializationEntries(detail).map((e) => e.upgradeId))
+    expect(ids).toEqual(new Set(['1', '2', '3']))
   })
 
   it('多专精 upgrade → 多 entry（按 upgradeId）', () => {

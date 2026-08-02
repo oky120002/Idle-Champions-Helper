@@ -37,6 +37,13 @@ export interface SpecializationEntry {
    * undefined/null = 无等级信息或旧 catalog（向后兼容）。engine 不消费此字段。
    */
   requiredLevel?: number | null
+  /**
+   * 前置专精 upgrade id（champion-details upgrade.required_upgrade_id）：级联型专精树的依赖层选项
+   * 指向上层选择（如 hero 165「与诸神交涉」→ 分支）。UI 据此过滤 prereq 未满足的选项 + 改上层时
+   * 级联清下层孤立选择。null/undefined = 无前置（顶层）；指向非 catalog 选项（普通升级 gate 或哨兵）
+   * = 视为恒满足。engine 不消费此字段。undefined 兼容旧 catalog。
+   */
+  requiredUpgradeId?: string | null
   signals: SpecializationSignalEntry[]
 }
 

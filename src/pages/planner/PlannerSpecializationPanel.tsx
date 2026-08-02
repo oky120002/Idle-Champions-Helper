@@ -5,7 +5,9 @@ import type { OwnedHero } from '../../domain/user-profile/types'
 import type { SpecializationCatalog, SpecializationEntry } from '../../domain/abilities/specializationSignals'
 import {
   applyTierSelection,
+  availableSpecializations,
   groupSpecializationsByTier,
+  pruneOrphanedSpecializations,
   type SpecializationOverrideMap,
   type SpecializationTier,
 } from './specializationSelection'
@@ -26,9 +28,10 @@ interface PlannerSpecializationPanelProps {
  * 选择写入 session 级 override（不写回存档），经 usePlannerPageModel 合并进有效 snapshot 喂 engine。
  * 多层英雄（如 hero 88 的 6 层）每层各选一个；单层英雄（多数）即一组单选。
  *
- * 已知限制（级联型专精树，hero 165/55/81）：依赖层选项各自 requiredUpgradeId 指向上层某个选择，
- * 但 catalog 只按 requiredLevel 分层（不含依赖链），UI 把依赖层全部选项平铺成单选、且改上层后不重置下层。
- * 故 what-if 改上层可能保留一个游戏不可能的下层组合。仅影响本面板的 override 探索（核心推荐用存档数据，不受影响）。
+ * 级联型专精树（hero 165/81）：依赖层选项 requiredUpgradeId 指向上层某个选择。每层渲染前用
+ * availableSpecializations 过滤掉前置未满足的选项（仅显示与已选上层匹配的分支），且每次选择后用
+ * pruneOrphanedSpecializations 级联清掉因改上层而孤立的下层——杜绝游戏不可能的组合（DPS 虚高）。
+ * catalog 保留无 signal 的结构 gate 节点，使依赖链完整、上层可选择。
  *
  * 折叠用原生 <details>（默认收起，避免长列表挤占工作台）。
  */
@@ -86,7 +89,7 @@ export function PlannerSpecializationPanel({
                   </button>
                 ) : null}
               </div>
-              {groupSpecializationsByTier(entries).map((tier, tierIndex) => (
+              {groupSpecializationsByTier(availableSpecializations(entries, effective)).map((tier, tierIndex) => (
                 <SpecializationTierRadios
                   key={tier.requiredLevel ?? `tier-${tierIndex}`}
                   heroId={hero.heroId}
@@ -94,15 +97,14 @@ export function PlannerSpecializationPanel({
                   tierIndex={tierIndex}
                   effective={effective}
                   t={t}
-                  onSelect={(selected) =>
-                    onSetOverride(
-                      hero.heroId,
-                      applyTierSelection(
-                        effective,
-                        tier.entries.map((entry) => entry.upgradeId),
-                        selected,
-                      ),
-                    )}
+                  onSelect={(selected) => {
+                    const afterTier = applyTierSelection(
+                      effective,
+                      tier.entries.map((entry) => entry.upgradeId),
+                      selected,
+                    )
+                    onSetOverride(hero.heroId, pruneOrphanedSpecializations(afterTier, entries))
+                  }}
                 />
               ))}
             </div>
