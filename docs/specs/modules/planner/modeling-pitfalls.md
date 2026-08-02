@@ -54,3 +54,22 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 
 - 装备源 effect（loot / legendary）只走 owned-aware 通道（`equipmentMult.ts` 或 catalog + runtime 注入），build 管线**不得**把装备源信号烘进 base profile 的 scored signals 或 spec catalog。
 - feat 源已外部化（`buildHeroModels` 过滤 + `feat-catalog.json`），loot / legendary 同构处理。
+
+## 陷阱 4：stacksMultiply 短路与 stackFunc / wrapper 继承的灾难高估
+
+`resolveSignalMultiplier` 的 dynamic-stack-multiply 短路分支曾对**任意** `stacksMultiply===true` 信号无条件用 `manualStackCount`（默认 1000）乘方，产生两类灾难高估：
+
+1. **stacksMultiply + stackFunc 共存**：hero32 `buff_upgrade,100,11503`（stacksMultiply=true + stackFunc=per_mithral_hall_stacks）被 (1+100/100)^1000 = 2^1000≈10^301 放大进 damage 池。同类 23 条未注册 stackFunc + 23 条注册 stackFunc 信号全受影响（注册的如 hero1 `per_tagged_crusader_mult,100` 旧也 2^1000，应按阵型真实计数 2^dwarf数）。根因：短路分支忽略 stackFunc——层数源本应是 stackFunc（阵型计数），却被当成 area-based manual 层数。
+2. **runtime wrapper 继承 base 的 stacksMultiply**：`buildEquipmentBuffWrapper` 用 `{...base}` 构造 loot/feat wrapper，只重置 amountFunc/stackFunc，漏掉 stacksMultiply/applyManually——wrapper 继承 stacksMultiply base 的 `stacksMultiply=true`，又无 stackFunc 可回落，走短路分支 → (1+buff%/100)^1000 灾难。
+
+### 为什么难发现
+
+1. 出言不逊（stacksMultiply + manual_stacking，**无** stackFunc）是合法的 dynamic-stack 信号，1.0033^N≈576 正确——掩盖了「stacksMultiply 短路」对带 stackFunc 者的错误。
+2. 高 value 信号在 manualStackCount=1000 下溢出 → ok:false（被 overflow 守卫静默吞掉），低/中 value 有限但灾难——前者隐藏问题，后者制造污染。
+3. `signal-coverage` 的对称分类曾把所有 stacksMultiply 信号判 supported（注释「实际已计分」），给了「已覆盖」假象，实际是灾难高估而非正确计分。
+
+### 防范纪律（可执行）
+
+- **短路分支须精确限定适用集**：`stacksMultiply` 短路只对「无 stackFunc 的纯 dynamic-stack 信号」（manual_stacking 类）生效；带 stackFunc 的必须落 stackFunc 路径（注册按阵型计数、未注册 honest 不计分）。`signal-coverage.classifyScoringSupport` 须对称收紧。
+- **wrapper 构造须显式切断 base 的机制语义**：`{...base}` 派生 wrapper 时，stacksMultiply / applyManually 这类「信号自身如何 scale/激活」的字段必须显式重置（wrapper 是固定百分比放大，非堆叠/手动信号）；amountFunc/stackFunc 按 wrapper 自身语义（loot/feat 全 plain → null）。只重置一部分会漏。
+- **判「已计分」前看数值合理性**：coverage 分类标 supported 不等于「计分正确」——对 stacksMultiply/stackFunc 组合信号，须核对 resolve 路径产出的 multiplier 量级是否合理（(1+value/100)^count，count 来源明确），而非仅看「进了评分分支」。
