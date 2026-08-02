@@ -119,7 +119,7 @@ export function buildOfficialHeroModel(
   // GetUpgradeUnlocked/GetUpgradePurchased(N) 解析：本英雄 upgrades → upgradeId→{requiredLevel, isSpecialization}，
   // 烘进 qualifier AST 节点。isSpecialization = specializationName 非空（专精选项，玩家手选；regular 随等级自动生效）。
   const upgradeMeta = new Map<string, { requiredLevel: number; isSpecialization: boolean }>()
-  const upgradesRaw = detail.upgrades as unknown
+  const upgradesRaw = detail.upgrades
   if (Array.isArray(upgradesRaw)) {
     for (const up of upgradesRaw) {
       if (!up || typeof up !== 'object') continue

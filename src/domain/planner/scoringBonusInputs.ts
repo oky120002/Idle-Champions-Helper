@@ -108,7 +108,7 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   // 有存档用 owned 实际；无存档用假设装备（UI what-if，全英雄统一稀有度+附魔）；否则空（向后兼容）。
   const hasOwnedHeroes = !!profileSnapshot && profileSnapshot.ownedHeroes.length > 0
   const equipmentHeroes = hasOwnedHeroes
-    ? profileSnapshot!.ownedHeroes
+    ? profileSnapshot.ownedHeroes
     : hypotheticalEquipment && lootCatalog.length > 0
       ? synthesizeHypotheticalLootByHero(hypotheticalEquipment, lootCatalog)
       : []
@@ -123,7 +123,7 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   // feat 源 buff_upgrade wrapper（owned-aware，独立 of lootCatalog/装备路径）：合并进 equipmentBuffsByHero
   // 复用 applyEquipmentBuffsToProfile 反查通道（target 普通升级的 base signal）。仅 owned feat 装备才放大。
   if (hasOwnedHeroes) {
-    const featBuffs = collectFeatBuffWrappersByHero(profileSnapshot!.ownedHeroes, featCatalog)
+    const featBuffs = collectFeatBuffWrappersByHero(profileSnapshot.ownedHeroes, featCatalog)
     for (const [heroId, buffs] of featBuffs) {
       const existing = equipmentBuffsByHero.get(heroId)
       if (existing) {
