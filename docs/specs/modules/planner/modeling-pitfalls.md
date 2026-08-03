@@ -80,6 +80,13 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 
 但新增 signal 机制时容易只改实际评分、漏改 gain profile 镜像：`bonusScaleOfSignal`（buff_upgrade wrapper 联动）实际评分贡献 = `base.value × wrapper.value / 100`（`applySignalPercent` 折算后 `(multiplier−1)×100` 进 addPercent）；gain profile 旧实现直接 `+= signal.value`（wrapper 百分比），忽略 base。base.value>100 时严重低估（base=300、wrapper=100：实际 +300%，旧 gain +100%，3× 低估）→ 强候选被 p50 误裁，beam search 永不试到。实测重建后部分英雄 damage gain 46→69、32→56（之前被大幅低估）。
 
+该不变量有**两维度**——路由（add/mult/stacksMultiply 走 addPercent 还是 multFactor，上方 bonusScaleOfSignal 案例）与**丢弃条件**（实际评分 `resolveSignalMultiplier` 返回 `ok:false` 恒不计分的信号，gain 须对称跳过，否则幻影增益挤掉同席位真实候选）：
+
+- `applyManually`（手动触发/专精门控）：`resolveSignalMultiplier` 首分支 `ok:false`，稳态永不触发。
+- 未注册 `stackFunc`（`per_mithral_hall_stacks` / `get_stat` 等，不在 `STACK_COUNT_RESOLVERS`）：走 stackFunc 路径找不到 resolver → `ok:false`。注册名集合 `REGISTERED_STACK_FUNCS`（`Object.keys(STACK_COUNT_RESOLVERS)` 派生）从 `planner/mechanics` 导入到 `abilityModel`——`stackFunc` 是本层字段但「哪些已注册」是 scorer 能力，此导入是 gain 镜像评分的必要依赖。
+
+实测补这两道守卫后部分英雄 damage gain 被对半砍（72→36、80→40），表观强度约一半来自幻影信号。
+
 ### 为什么难发现
 
 1. gain profile 是**预算**（非最终评分），不改 `scoreFormation` 输出 → 方向性 golden / breakdown 不受影响，全绿。

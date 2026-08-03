@@ -112,6 +112,24 @@ describe('computeHeroGainProfile', () => {
     expect(gain.support).toEqual({})
   })
 
+  it('applyManually 信号不计入 gain（实际评分恒丢弃，幻影增益会挤掉同席位真实候选）', () => {
+    // applyManually（手动触发/专精门控）在 resolveSignalMultiplier 首分支返回 ok:false 永不计分；
+    // gain 须对称跳过，否则 p50 裁剪可能误留 phantom 强、误裁真强。
+    const manual = { ...signal('heroDpsMultiplier', 999), applyManually: true }
+    const real = signal('globalDpsMultiplier', 100)
+    const gain = computeHeroGainProfile([manual, real], [])
+    expect(gain.self.damage).toBe(2) // 仅 real 的 +100%，manual 999% 不计入
+  })
+
+  it('未注册 stackFunc 信号不计入 gain（resolveSignalMultiplier 找不到 resolver 恒丢弃）', () => {
+    // per_mithral_hall_stacks 等 stackFunc 不在 STACK_COUNT_RESOLVERS → 实际评分走 stackFunc 路径
+    // 无 resolver 返回 ok:false；gain 须对称跳过，否则 stacksMultiply+未注册 stackFunc 幻影高增益挤掉真候选。
+    const unregistered = { ...signal('heroDpsMultiplier', 999), stacksMultiply: true, stackFunc: 'per_mithral_hall_stacks' }
+    const real = signal('globalDpsMultiplier', 100)
+    const gain = computeHeroGainProfile([unregistered, real], [])
+    expect(gain.self.damage).toBe(2) // 仅 real 计入；unregistered 999% stacksMultiply 幻影不计
+  })
+
   it('buff_upgrade wrapper（bonusScaleOfSignal）按 base.value×value/100 折算 addPercent（与评分池聚合一致）', () => {
     // base +300% (×4) + wrapper 100% 放大 base → 实际贡献 base.value×100/100=300% → 合 +600% (×7)。
     // 旧实现直接 += wrapper.value(100) → 合 +400% (×5)：base.value≠100 时低估，致 computationMode 误裁强候选。
