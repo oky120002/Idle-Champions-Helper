@@ -80,15 +80,18 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 
 但新增 signal 机制时容易只改实际评分、漏改 gain profile 镜像：`bonusScaleOfSignal`（buff_upgrade wrapper 联动）实际评分贡献 = `base.value × wrapper.value / 100`（`applySignalPercent` 折算后 `(multiplier−1)×100` 进 addPercent）；gain profile 旧实现直接 `+= signal.value`（wrapper 百分比），忽略 base。base.value>100 时严重低估（base=300、wrapper=100：实际 +300%，旧 gain +100%，3× 低估）→ 强候选被 p50 误裁，beam search 永不试到。实测重建后部分英雄 damage gain 46→69、32→56（之前被大幅低估）。
 
+同一不变量的第二表现——**丢弃条件不对称**（路由对了但该丢的没丢）：实际评分 `resolveSignalMultiplier` 对 `applyManually===true`（手动触发/专精门控，稳态不触发）首分支恒返回 `ok:false` 永不计分；gain profile 旧实现却照计入上界。带 applyManually 强信号的英雄 gain 虚高（实测 34 信号/22 英雄），p50 裁剪时可能在**同席位挤掉真实增益更强的候选**（误留 phantom 强、误裁真强）——非纯效率，影响推荐质量。修复：`aggregateGainByDimension` 循环首加 `applyManually===true` 守卫跳过。
+
 ### 为什么难发现
 
 1. gain profile 是**预算**（非最终评分），不改 `scoreFormation` 输出 → 方向性 golden / breakdown 不受影响，全绿。
 2. 影响是「裁掉谁」而非「算成多少」——被误裁的英雄不出现在结果里，无对照无感知。
-3. 只有 base.value≠100 的 wrapper 受影响（base=100 时巧合一致：100×value/100 = value），随机性掩盖系统性。
+3. 只有 base.value≠100 的 wrapper 受影响（base=100 时巧合一致：100×value/100 = value），随机性掩盖系统性。applyManually 变体同理：只有当 phantom 强英雄与真强候选**同席位且贴近 p50 边界**时才可见损，窄条件掩盖系统性。
 4. 增量审计（轮 4–9）聚焦数据盲区 / 运行时边界 / 性能，未逐 signal 对比 gain profile 与实际评分的路由。
 
 ### 防范纪律（可执行）
 
 - **新增 signal 机制须同步 gain profile 镜像**：任何改变 signal→pool 折算的字段（amountFunc / stacksMultiply / bonusScaleOfSignal / stackFunc）在 `placementFit.ts` + `signalMultiplier.ts` 改完后，必须检查 `aggregateGainByDimension` 是否对称处理。三处是同一不变量的三个落点。
-- **gain profile 测试须覆盖与评分一致的逐 signal 案例**：不只在 gain profile 孤立测加法 / 乘法，还要对 wrapper 等机制断言「gain = 实际评分单 signal 贡献」（见 `abilityModel.test.ts` bonusScaleOfSignal 用例）。
-- **改 gain profile 折算后强制重建数据**：gainProfile 烘进 `hero-abilities.json`（build 期 `computeHeroGainProfile`），代码改完须 `FORCE_DATA_REBUILD=1` 重跑 `buildModels`，否则 build-time 烘值仍是旧的（runtime wrapper 注入会重算，但 `applyComputationMode` 裁剪用的是 build-time 值——wrapper 在裁剪之后才注入）。
+- **gain profile 须镜像评分的「丢弃条件」而非仅「路由」**：实际评分 `resolveSignalMultiplier` 恒丢弃的信号（applyManually、未注册 stackFunc）不计入 gain 上界，否则幻影增益挤掉真实候选。已修 applyManually；**未注册 stackFunc（per_mithral_hall_stacks 等，40 信号/33 英雄）仍残留**——修需引入 `STACK_COUNT_RESOLVERS` keys（planner 层 scorer 注册表），与 `abilityModel.ts` abilities 边界冲突；efficiency-only，待解。
+- **gain profile 测试须覆盖与评分一致的逐 signal 案例**：不只在 gain profile 孤立测加法 / 乘法，还要对 wrapper 等机制断言「gain = 实际评分单 signal 贡献」（见 `abilityModel.test.ts` bonusScaleOfSignal 用例），以及「恒丢弃信号（applyManually）不计入」。
+- **改 gain profile 折算后强制重建数据**：gainProfile 烘进 `hero-abilities.json`（build 期 `computeHeroGainProfile`），代码改完须 `FORCE_DATA_REBUILD=1` 重跑 `buildModels`（或改 `abilityModel.ts` 触发 `computePipelineHash` 变化自动重跑），否则 build-time 烘值仍是旧的（runtime wrapper 注入会重算，但 `applyComputationMode` 裁剪用的是 build-time 值——wrapper 在裁剪之后才注入）。
