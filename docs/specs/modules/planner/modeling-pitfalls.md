@@ -92,6 +92,6 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 ### 防范纪律（可执行）
 
 - **新增 signal 机制须同步 gain profile 镜像**：任何改变 signal→pool 折算的字段（amountFunc / stacksMultiply / bonusScaleOfSignal / stackFunc）在 `placementFit.ts` + `signalMultiplier.ts` 改完后，必须检查 `aggregateGainByDimension` 是否对称处理。三处是同一不变量的三个落点。
-- **gain profile 须镜像评分的「丢弃条件」而非仅「路由」**：实际评分 `resolveSignalMultiplier` 恒丢弃的信号（applyManually、未注册 stackFunc）不计入 gain 上界，否则幻影增益挤掉真实候选。已修 applyManually；**未注册 stackFunc（per_mithral_hall_stacks 等，40 信号/33 英雄）仍残留**——修需引入 `STACK_COUNT_RESOLVERS` keys（planner 层 scorer 注册表），与 `abilityModel.ts` abilities 边界冲突；efficiency-only，待解。
+- **gain profile 须镜像评分的「丢弃条件」而非仅「路由」**：实际评分 `resolveSignalMultiplier` 恒丢弃的信号（applyManually、未注册 stackFunc）不计入 gain 上界，否则幻影增益挤掉真实候选。两类均已修：applyManually（`91c839b9`，信号自身字段，abilities 层内守卫）；未注册 stackFunc（`8448f65a`，`REGISTERED_STACK_FUNCS` = `Object.keys(STACK_COUNT_RESOLVERS)` 派生，从 planner/mechanics 导入 abilities——`computeHeroGainProfile` 本就含评分语义，此导入是镜像评分的必要依赖）。实测部分英雄 damage gain 被对半砍（72→36、80→40），表观强度约一半来自幻影。
 - **gain profile 测试须覆盖与评分一致的逐 signal 案例**：不只在 gain profile 孤立测加法 / 乘法，还要对 wrapper 等机制断言「gain = 实际评分单 signal 贡献」（见 `abilityModel.test.ts` bonusScaleOfSignal 用例），以及「恒丢弃信号（applyManually）不计入」。
 - **改 gain profile 折算后强制重建数据**：gainProfile 烘进 `hero-abilities.json`（build 期 `computeHeroGainProfile`），代码改完须 `FORCE_DATA_REBUILD=1` 重跑 `buildModels`（或改 `abilityModel.ts` 触发 `computePipelineHash` 变化自动重跑），否则 build-time 烘值仍是旧的（runtime wrapper 注入会重算，但 `applyComputationMode` 裁剪用的是 build-time 值——wrapper 在裁剪之后才注入）。
