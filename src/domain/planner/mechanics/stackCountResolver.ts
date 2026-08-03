@@ -96,3 +96,10 @@ export const STACK_COUNT_RESOLVERS: Record<string, {
   per_col_behind: { count: (input) => countColumnsCarryBehindSupport(input), contextLabel: '阵型列拓扑' },
   per_slot_distance_from_source: { count: (input) => countSlotDistanceFromSource(input), contextLabel: '阵型槽位距离' },
 }
+
+/**
+ * scorer 已注册的 stackFunc 名集合（STACK_COUNT_RESOLVERS keys 的派生视图，单一源无重复）。
+ * 供 gain profile（abilityModel.aggregateGainByDimension）跳过未注册 stackFunc 信号——实际评分
+ * resolveSignalMultiplier 走 stackFunc 路径找不到 resolver 恒丢弃，gain 须对称不计入。
+ */
+export const REGISTERED_STACK_FUNCS: ReadonlySet<string> = new Set(Object.keys(STACK_COUNT_RESOLVERS))

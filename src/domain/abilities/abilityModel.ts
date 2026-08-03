@@ -1,4 +1,5 @@
 import type { AbilityScoreKey, DataCollection, LocalizedText } from '../types'
+import { REGISTERED_STACK_FUNCS } from '../planner/mechanics/stackCountResolver'
 
 /**
  * 英雄能力表达层（hero-agnostic）。算法-英雄握手点唯一：HeroAbilityProfile。
@@ -308,10 +309,11 @@ export type HeroGainProfile = {
  * 精确限制匹配仍在 scoreFormation 做——裁剪决定「试不试谁」，不决定「算成多少」。
  *
  * 跳过实际评分恒丢弃的信号（resolveSignalMultiplier 返回 ok:false，永不计分），避免幻影增益在
- * 同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）：applyManually（手动/专精门控，稳态不触发）。
- * 已知残留过估：未注册 stackFunc（per_mithral_hall_stacks 等，resolveSignalMultiplier 走 stackFunc 路径
- * 找不到 resolver → 丢弃）仍被 gain 计入——修需引入 scorer 注册表（STACK_COUNT_RESOLVERS keys，在 planner
- * 层），与本文件 abilities 边界冲突；efficiency-only，登记 modeling-pitfalls 待解。
+ * 同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）：
+ * - applyManually（手动/专精门控，稳态不触发，首分支 ok:false）；
+ * - 未注册 stackFunc（per_mithral_hall_stacks 等，走 stackFunc 路径找不到 resolver → 丢弃）。
+ * 注册名集合 REGISTERED_STACK_FUNCS 从 scorer（planner/mechanics）派生导入——stackFunc 是本层字段，
+ * 但「哪些已注册」是 scorer 能力（STACK_COUNT_RESOLVERS keys 唯一源）；此导入是 gain 镜像评分的必要依赖。
  */
 export function computeHeroGainProfile(
   carrySignals: HeroAbilitySignal[],
@@ -333,6 +335,8 @@ function aggregateGainByDimension(
     // applyManually 信号实际评分恒丢弃（resolveSignalMultiplier 首分支 ok:false）——不计入 gain 上界，
     // 否则幻影增益可能在同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）。
     if (signal.applyManually === true) continue
+    // 未注册 stackFunc 信号实际评分走 stackFunc 路径找不到 resolver 恒丢弃——同上不计入（止幻影增益）。
+    if (signal.stackFunc && !REGISTERED_STACK_FUNCS.has(signal.stackFunc)) continue
     const entry = byDim.get(dimension) ?? { addPercent: 0, multFactor: 1 }
     // stacksMultiply + 无 stackFunc（短路分支）：实际评分走 multFactor (1+value/100)^count，base 仅依赖门控
     // 不参与数值 → gain 用 signal.value（非 base.value×value/100），路由须与 pool 对称走 multFactor。
