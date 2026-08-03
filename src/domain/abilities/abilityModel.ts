@@ -301,8 +301,10 @@ export type HeroGainProfile = {
 }
 
 /**
- * 预计算英雄各维度收益（上界：假设所有 signal 命中、stack count=1、忽略 qualifier）。
- * 用于 computationMode 按收益排序裁剪候选，减少 beam search 评分次数。
+ * 预计算英雄各维度收益（评分镜像预算，非界：假设所有 signal 命中、stack count=1、忽略 qualifier）。
+ * count=1 使 add/mult/stacksMultiply 信号倾向低估真实评分；高 value stacksMultiply 实际溢出被丢、
+ * gain 仍计值则反向高估——故非上界亦非下界。供 computationMode 按收益相对排序裁剪候选（减少 beam search
+ * 评分次数）；详见 modeling-pitfalls.md 陷阱 5。
  * 数学须与 placementFit.ts 的 pool 聚合一致：add/默认 → addPercent 相加，
  * mult → multFactor 相乘，poolMultiplier = (1+addPercent/100)×multFactor。
  * 精确限制匹配仍在 scoreFormation 做——裁剪决定「试不试谁」，不决定「算成多少」。
