@@ -302,18 +302,18 @@ export type HeroGainProfile = {
 }
 
 /**
- * 预计算英雄各维度收益（上界：假设所有 signal 命中、stack count=1、忽略 qualifier）。
- * 用于 computationMode 按收益排序裁剪候选，减少 beam search 评分次数。
+ * 预计算英雄各维度收益（评分镜像预算，非界：假设所有 signal 命中、stack count=1、忽略 qualifier）。
+ * count=1 使 add/mult/stacksMultiply 信号倾向低估真实评分；高 value stacksMultiply 实际溢出被丢、
+ * gain 仍计值则反向高估——故非上界亦非下界。供 computationMode 按收益相对排序裁剪候选（减少 beam search
+ * 评分次数）；详见 modeling-pitfalls.md 陷阱 5。
  * 数学须与 placementFit.ts 的 pool 聚合一致：add/默认 → addPercent 相加，
  * mult → multFactor 相乘，poolMultiplier = (1+addPercent/100)×multFactor。
+ * 跳过实际评分恒丢弃的信号（resolveSignalMultiplier 返回 ok:false）避免幻影增益挤掉真实候选
+ * （p50 裁剪误留 phantom 强、误裁真强）：applyManually（手动/专精门控，稳态不触发，首分支 ok:false）
+ * 与未注册 stackFunc（per_mithral_hall_stacks 等，走 stackFunc 路径找不到 resolver → 丢弃）。注册名集合
+ * REGISTERED_STACK_FUNCS 从 scorer（planner/mechanics）派生——stackFunc 是本层字段但「哪些已注册」
+ * 是 scorer 能力（STACK_COUNT_RESOLVERS keys 唯一源），此导入是 gain 镜像评分的必要依赖。
  * 精确限制匹配仍在 scoreFormation 做——裁剪决定「试不试谁」，不决定「算成多少」。
- *
- * 跳过实际评分恒丢弃的信号（resolveSignalMultiplier 返回 ok:false，永不计分），避免幻影增益在
- * 同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）：
- * - applyManually（手动/专精门控，稳态不触发，首分支 ok:false）；
- * - 未注册 stackFunc（per_mithral_hall_stacks 等，走 stackFunc 路径找不到 resolver → 丢弃）。
- * 注册名集合 REGISTERED_STACK_FUNCS 从 scorer（planner/mechanics）派生导入——stackFunc 是本层字段，
- * 但「哪些已注册」是 scorer 能力（STACK_COUNT_RESOLVERS keys 唯一源）；此导入是 gain 镜像评分的必要依赖。
  */
 export function computeHeroGainProfile(
   carrySignals: HeroAbilitySignal[],
@@ -332,7 +332,7 @@ function aggregateGainByDimension(
   for (const signal of signals) {
     const dimension = DIMENSION_BY_KIND[signal.kind]
     if (!dimension) continue
-    // applyManually 信号实际评分恒丢弃（resolveSignalMultiplier 首分支 ok:false）——不计入 gain 上界，
+    // applyManually 信号实际评分恒丢弃（resolveSignalMultiplier 首分支 ok:false）——不计入 gain，
     // 否则幻影增益可能在同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）。
     if (signal.applyManually === true) continue
     // 未注册 stackFunc 信号实际评分走 stackFunc 路径找不到 resolver 恒丢弃——同上不计入（止幻影增益）。
