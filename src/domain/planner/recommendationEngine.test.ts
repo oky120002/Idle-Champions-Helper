@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
 import type { Champion, LocalizedOption, LocalizedText, Variant } from '../types'
-import type { HeroAbilityProfile } from '../abilities/abilityModel'
-import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
 import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
+import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 import type { PlannerCollections } from './recommendationTypes'
+import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
 
 function text(original: string, display = original): LocalizedText {
   return { original, display }
@@ -61,18 +61,6 @@ const champions: Champion[] = [
   { id: 'jarlaxle', name: text('Jarlaxle', '贾拉索'), seat: 4, roles: ['dps', 'gold'], affiliations: [], tags: [] },
 ]
 
-function carrySignalsFor(heroId: string) {
-  if (heroId === 'asharra') return [{ kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' }] as const
-  if (heroId === 'jarlaxle') return [{ kind: 'heroDpsMultiplier', value: 25, rawEffect: 'hero_dps_multiplier_mult,25', source: 'official-parsed' }] as const
-  return [] as const
-}
-
-function supportSignalsFor(heroId: string) {
-  if (heroId === 'bruenor') return [{ kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_multiplier_mult,100', source: 'official-parsed' }] as const
-  if (heroId === 'celeste') return [{ kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_multiplier_mult,50', source: 'official-parsed' }] as const
-  return [] as const
-}
-
 const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
   heroId: champion.id,
   name: champion.name,
@@ -85,8 +73,24 @@ const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
   abilityScores: {},
   baseDamage: 1,
   baseHealth: 1,
-  carrySignals: [...carrySignalsFor(champion.id)],
-  supportSignals: [...supportSignalsFor(champion.id)],
+  carrySignals: champion.id === 'asharra'
+    ? [
+        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      ]
+    : champion.id === 'jarlaxle'
+      ? [
+          { kind: 'heroDpsMultiplier', value: 25, rawEffect: 'hero_dps_multiplier_mult,25', source: 'official-parsed' },
+        ]
+      : [],
+  supportSignals: champion.id === 'bruenor'
+    ? [
+        { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_multiplier_mult,100', source: 'official-parsed' },
+      ]
+    : champion.id === 'celeste'
+      ? [
+          { kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_multiplier_mult,50', source: 'official-parsed' },
+        ]
+      : [],
   unsupportedSignals: [],
   sourceBreakdown: {
     carrySignals: [],
@@ -125,7 +129,7 @@ const collections: PlannerCollections = {
 
 describe('planner recommendation engine', () => {
   it('无用户快照时返回 missing-profile blocker', () => {
-    const recommendation = buildPlannerRecommendation({ variant: selectedVariant, profileSnapshot: null, collections })
+    const recommendation = buildPlannerRecommendation({ variant: selectedVariant, collections, profileSnapshot: null })
 
     expect(recommendation.blocker).toBe('missing-profile')
     expect(recommendation.result).toBeNull()
@@ -136,9 +140,9 @@ describe('planner recommendation engine', () => {
   it('all-hypothetical 模式无个人快照也能生成推荐（DPS 模拟不依赖个人数据）', () => {
     const recommendation = buildPlannerRecommendation({
       variant: selectedVariant,
+      collections,
       profileSnapshot: null,
       options: { candidateMode: 'all-hypothetical' },
-      collections,
     })
 
     expect(recommendation.blocker).not.toBe('missing-profile')
@@ -149,10 +153,10 @@ describe('planner recommendation engine', () => {
   it('evaluateFormation 在 all-hypothetical 模式无个人快照也能评估指定阵型', () => {
     const evaluation = evaluateFormation({
       variant: selectedVariant,
+      collections,
       profileSnapshot: null,
       placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
       options: { candidateMode: 'all-hypothetical' },
-      collections,
     })
 
     expect(evaluation.blocker).not.toBe('missing-profile')
@@ -178,9 +182,9 @@ describe('planner recommendation engine', () => {
 
     const recommendation = buildPlannerRecommendation({
       variant: selectedVariant,
+      collections,
       profileSnapshot: snapshot,
       options: { computationMode: 'full' },
-      collections,
     })
 
     expect(recommendation.blocker).toBeNull()
@@ -208,10 +212,10 @@ describe('planner recommendation engine', () => {
 
     const evaluation = evaluateFormation({
       variant: selectedVariant,
+      collections,
       profileSnapshot: snapshot,
       placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
       options: { scoringMode: 'team-gold' },
-      collections,
     })
 
     expect(evaluation.result).not.toBeNull()
@@ -250,8 +254,8 @@ describe('planner recommendation engine', () => {
     }
     const occupiedCollections: PlannerCollections = {
       variants: [occupiedVariant],
-      plannerScenarios: [occupiedScenario],
       plannerHeroes,
+      plannerScenarios: [occupiedScenario],
     }
     const snapshot = createUserProfileSnapshot({
       ownedHeroes: [
@@ -304,8 +308,8 @@ describe('planner recommendation engine', () => {
     }
     const allowedCollections: PlannerCollections = {
       variants: [allowedVariant],
-      plannerScenarios: [allowedScenario],
       plannerHeroes,
+      plannerScenarios: [allowedScenario],
     }
     const snapshot = createUserProfileSnapshot({
       ownedHeroes: [
@@ -362,8 +366,8 @@ describe('planner recommendation engine', () => {
     }
     const forcedCollections: PlannerCollections = {
       variants: [forcedVariant],
-      plannerScenarios: [forcedScenario],
       plannerHeroes,
+      plannerScenarios: [forcedScenario],
     }
     // 用户未拥有 nayeli，但 force_use_heroes 强制纳入
     const snapshot = createUserProfileSnapshot({
@@ -400,7 +404,7 @@ describe('evaluateFormation 指定阵型评估', () => {
   })
 
   it('无快照时返回 missing-profile blocker', () => {
-    const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: null, placements: { s1: 'bruenor' }, collections })
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: null, placements: { s1: 'bruenor' } })
     expect(evaluation.blocker).toBe('missing-profile')
     expect(evaluation.result).toBeNull()
     expect(evaluation.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
@@ -410,7 +414,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // 刻意放一个非最优阵型：验证 evaluateFormation 不改成搜索结果。
     const placements = { s1: 'bruenor', s2: 'asharra', s3: 'celeste', s4: 'nayeli' }
 
-    const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: snapshot, collections, placements })
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: snapshot, placements })
 
     expect(evaluation.blocker).toBeNull()
     expect(evaluation.layoutId).toBe('layout-catacombs')
@@ -435,7 +439,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // bruenor 与 asharra 同属 seat 1，放不同槽位 → seat 冲突（evaluate 不搜索、不丢弃用户阵型）。
     const placements = { s1: 'bruenor', s2: 'asharra' }
 
-    const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: snapshot, collections, placements })
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: snapshot, placements })
 
     expect(evaluation.blocker).toBeNull()
     expect(evaluation.result?.warnings.some((warning) => warning.includes('冲突'))).toBe(true)
@@ -471,8 +475,8 @@ describe('evaluateFormation 指定阵型评估', () => {
     }
     const allowedCollections: PlannerCollections = {
       variants: [allowedVariant],
-      plannerScenarios: [allowedScenario],
       plannerHeroes,
+      plannerScenarios: [allowedScenario],
     }
     // asharra 不在白名单
     const evaluation = evaluateFormation({ variant: allowedVariant, collections: allowedCollections, profileSnapshot: snapshot, placements: { s1: 'asharra' } })
@@ -488,7 +492,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
     })
     // asharra 未在快照中（snapshot 只拥有 bruenor）→ 按 level 1 估算
-    const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: smallSnapshot, placements: { s1: 'asharra' }, collections })
+    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: smallSnapshot, placements: { s1: 'asharra' } })
 
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(true)
   })
@@ -499,10 +503,10 @@ describe('evaluateFormation 指定阵型评估', () => {
     })
     const evaluation = evaluateFormation({
       variant: selectedVariant,
+      collections,
       profileSnapshot: smallSnapshot,
       placements: { s1: 'asharra' },
       options: { candidateMode: 'all-hypothetical' },
-      collections,
     })
 
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(false)

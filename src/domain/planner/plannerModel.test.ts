@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
-import type { HeroAbilityProfile } from '../abilities/abilityModel'
-import type { LocalizedOption, LocalizedText, Variant } from '../types'
 import {
   findPlannerScenarioForVariant,
   resolvePlannerModel,
   type OfficialPlannerScenarioModel,
 } from './plannerModel'
+import type { HeroAbilityProfile } from '../abilities/abilityModel'
+import type { LocalizedOption, LocalizedText, Variant } from '../types'
 
 function text(original: string, display = original): LocalizedText {
   return { original, display }

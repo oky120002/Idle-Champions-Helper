@@ -1,17 +1,15 @@
-import { Buffer } from 'node:buffer'
-import process from 'node:process'
 import { mkdir, writeFile } from 'node:fs/promises'
-import path from 'node:path'
-import { parseArgs } from 'node:util'
-import { pathToFileURL } from 'node:url'
-import { PNG } from 'pngjs'
-import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.ts'
-import { findOpaqueBounds } from './data/png-image-helpers.ts'
 import {
   readJson,
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
+import { findOpaqueBounds } from './data/png-image-helpers.ts'
+import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.ts'
+import path from 'node:path'
+import { parseArgs } from 'node:util'
+import { pathToFileURL } from 'node:url'
+import { PNG } from 'pngjs'
 import {
   CHAMPION_PORTRAIT_DIR_NAME,
   DEFAULT_MASTER_API_URL,
@@ -391,8 +389,7 @@ async function main(): Promise<void> {
   )
 }
 
-const entryPoint = process.argv[1]
-if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
   main().catch((error: unknown) => {
     console.error(`同步英雄头像失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

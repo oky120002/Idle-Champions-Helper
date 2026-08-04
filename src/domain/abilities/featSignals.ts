@@ -1,4 +1,3 @@
-import type { EquipmentBuff } from '../buffs/equipmentMult'
 import {
   appendHeroAbilitySignals,
   type HeroAbilityDimension,
@@ -6,6 +5,7 @@ import {
   type ResolvedHeroAbilityProfile,
   type SignalBucket,
 } from './abilityModel'
+import type { EquipmentBuff } from '../buffs/equipmentMult'
 
 /**
  * feat（专长）运行时信号注入。

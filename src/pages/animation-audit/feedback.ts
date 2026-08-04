@@ -178,9 +178,9 @@ export function buildAnimationAuditFeedbackPayload({
 
   return {
     version: 1,
-    totalSelected: feedbackEntries.length,
-    entries: feedbackEntries,
     generatedAt,
     sourceHref,
+    totalSelected: feedbackEntries.length,
+    entries: feedbackEntries,
   }
 }

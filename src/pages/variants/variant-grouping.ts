@@ -52,7 +52,7 @@ function getFormationForAdventureGroup(options: {
 }): FormationLayout | null {
   const { adventureId, campaignId, variantId, formationLookup } = options
 
-  if (adventureId !== null) {
+  if (adventureId) {
     const adventureFormation = formationLookup.byAdventureId.get(adventureId)
     if (adventureFormation) {
       return adventureFormation
@@ -128,6 +128,7 @@ export function groupVariantsByCampaign(options: {
       adventureGroup = {
         id: `${variant.campaign.id}:${adventureId}`,
         campaign: variant.campaign,
+        adventureId,
         adventure: adventureName,
         scene: variant.scene,
         objectiveAreas: [],
@@ -148,7 +149,6 @@ export function groupVariantsByCampaign(options: {
         specialEnemyMax: Number.NEGATIVE_INFINITY,
         areaMilestones: [],
         variants: [],
-        adventureId,
       }
       campaignGroup.adventures.push(adventureGroup)
     }

@@ -112,7 +112,7 @@ function scaledOwnedEffect(
   kind: string,
 ): number {
   const parsed = index.get(`${heroId}:${slotId}:${owned.rarity}`)
-  if (parsed?.kind !== kind) {
+  if (!parsed || parsed.kind !== kind) {
     return 0
   }
   return parsed.value * (1 + (owned.enchant ?? 0) * ENCHANT_SCALE)

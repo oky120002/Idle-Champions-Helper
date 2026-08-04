@@ -1,6 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import type { SpecializationEntry } from '../../domain/abilities/specializationSignals'
-import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 import {
   applyTierSelection,
   availableSpecializations,
@@ -8,6 +6,8 @@ import {
   mergeSpecializationOverrides,
   pruneOrphanedSpecializations,
 } from './specializationSelection'
+import type { SpecializationEntry } from '../../domain/abilities/specializationSignals'
+import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 
 function specOf(snapshot: { ownedHeroes: { heroId: string; specializations: string[] }[] }, heroId: string) {
   return snapshot.ownedHeroes.find((hero) => hero.heroId === heroId)?.specializations

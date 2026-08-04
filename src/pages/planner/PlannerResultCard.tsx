@@ -11,15 +11,6 @@ export type PlannerResultCardProps = PlannerResult & {
   championById: Map<string, Champion>
 }
 
-type BoundLabeler = (text: { zh: string; en: string }) => string
-
-function resolveBoundLabel(areaEstimate: PlannerResult['areaEstimate'], t: BoundLabeler): string {
-  const boundBy = areaEstimate?.boundBy
-  if (boundBy === 'survival') return t({ zh: '存活受限', en: 'survival-bound' })
-  if (boundBy === 'bud') return t({ zh: '伤害受限', en: 'BUD-bound' })
-  return t({ zh: '已达上限', en: 'max-area' })
-}
-
 export function PlannerResultCard({
   objectiveValue,
   carryHeroId,
@@ -38,11 +29,11 @@ export function PlannerResultCard({
     ? t({ zh: '金币收益', en: 'Team gold find' })
     : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
   const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
+    slotId,
     slotLabel: slotId,
+    heroId,
     heroName: heroId,
     seat: null,
-    slotId,
-    heroId,
   }))
   const displayPlacementEntries = placementEntries && placementEntries.length > 0
     ? placementEntries
@@ -50,10 +41,14 @@ export function PlannerResultCard({
   const heroNameById = new Map<string, string>(
     displayPlacementEntries.map((entry) => [entry.heroId, entry.heroName]),
   )
-  const carrySlotId = carryHeroId !== null
+  const carrySlotId = carryHeroId
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
-  const boundLabel = resolveBoundLabel(areaEstimate, t)
+  const boundLabel = areaEstimate?.boundBy === 'survival'
+    ? t({ zh: '存活受限', en: 'survival-bound' })
+    : areaEstimate?.boundBy === 'bud'
+      ? t({ zh: '伤害受限', en: 'BUD-bound' })
+      : t({ zh: '已达上限', en: 'max-area' })
 
   return (
     <article

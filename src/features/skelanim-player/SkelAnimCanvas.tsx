@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Dispatch, SetStateAction } from 'react'
 import { prepareSkelAnim, readReducedMotionPreference } from './asset-loader'
-import { findNextRenderableFrameIndex, listVisiblePieces } from './model'
 import {
   buildSkelAnimRootClassName,
   buildSkelAnimStatusText,
@@ -11,187 +9,14 @@ import {
   resolveSequenceSelection,
   resolveSkelAnimPlayback,
   resolveSkelAnimViewportLayout,
-  type SkelAnimDisplaySize,
-  type SkelAnimSequenceSelection,
-  type SkelAnimViewportLayout,
 } from './skelanim-canvas-model'
+import { findNextRenderableFrameIndex, listVisiblePieces } from './model'
 import type {
-  PreparedSkelAnimData,
   PreparedSkelAnimEntry,
-  SkelAnimBounds,
   SkelAnimCanvasProps,
   SkelAnimLoadErrorEntry,
-  SkelAnimSequence,
 } from './types'
 import { useReducedMotionPreference } from './useReducedMotionPreference'
-
-function paintSkelAnimFrame(
-  context: CanvasRenderingContext2D,
-  textureById: Map<number, CanvasImageSource>,
-  sequence: SkelAnimSequence,
-  viewportLayout: SkelAnimViewportLayout,
-  frameIndex: number,
-  transformScale: number,
-  clearWidth: number,
-  clearHeight: number,
-) {
-  context.setTransform(transformScale, 0, 0, transformScale, 0, 0)
-  context.clearRect(0, 0, clearWidth, clearHeight)
-
-  for (const { piece, frame } of listVisiblePieces(sequence, frameIndex)) {
-    const image = textureById.get(piece.textureId)
-
-    if (image === undefined) {
-      continue
-    }
-
-    context.save()
-    context.translate(viewportLayout.offsetX, viewportLayout.offsetY)
-    context.scale(viewportLayout.contentScale, viewportLayout.contentScale)
-    context.translate(
-      frame.x - viewportLayout.contentBounds.minX,
-      frame.y - viewportLayout.contentBounds.minY,
-    )
-    context.scale(frame.scaleX, frame.scaleY)
-    context.rotate(frame.rotation)
-    context.drawImage(
-      image,
-      piece.sourceX,
-      piece.sourceY,
-      piece.sourceWidth,
-      piece.sourceHeight,
-      -piece.centerX,
-      -piece.centerY,
-      piece.sourceWidth,
-      piece.sourceHeight,
-    )
-    context.restore()
-  }
-}
-
-interface DrawLoopParams {
-  canvas: HTMLCanvasElement
-  prepared: PreparedSkelAnimData
-  sequenceSelection: SkelAnimSequenceSelection
-  fps: number
-  viewportBounds: SkelAnimBounds | null | undefined
-  displaySize: SkelAnimDisplaySize | null
-  isPlaying: boolean
-  onError: () => void
-}
-
-function startSkelAnimDrawLoop(params: DrawLoopParams): () => void {
-  const { canvas, prepared, sequenceSelection, fps, viewportBounds, displaySize, isPlaying, onError } = params
-  const context = canvas.getContext('2d')
-
-  if (context === null) {
-    queueMicrotask(onError)
-    return () => {}
-  }
-
-  context.imageSmoothingEnabled = false
-
-  const viewportLayout = resolveSkelAnimViewportLayout(sequenceSelection.bounds, viewportBounds ?? null)
-  const { width, height } = getBoundsSize(viewportLayout.renderBounds)
-  const rasterScale = resolveCanvasRasterScale(viewportLayout.renderBounds, displaySize)
-  const textureById = new Map(prepared.textures.map((texture) => [texture.textureId, texture.image]))
-  const frameDuration = 1000 / Math.max(1, fps)
-  const pixelRatio = Math.max(1, typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1)
-  const transformScale = pixelRatio * rasterScale
-  let currentFrameIndex = sequenceSelection.startFrameIndex
-  let lastTick = 0
-  let frameHandle = 0
-
-  canvas.width = Math.round(width * rasterScale * pixelRatio)
-  canvas.height = Math.round(height * rasterScale * pixelRatio)
-
-  const drawFrame = (frameIndex: number) => {
-    paintSkelAnimFrame(context, textureById, sequenceSelection.sequence, viewportLayout, frameIndex, transformScale, width, height)
-  }
-
-  const tick = (timestamp: number) => {
-    if (lastTick === 0) {
-      lastTick = timestamp
-    }
-
-    if (isPlaying && timestamp - lastTick >= frameDuration) {
-      currentFrameIndex = findNextRenderableFrameIndex(sequenceSelection.sequence, currentFrameIndex)
-      lastTick = timestamp
-    }
-
-    drawFrame(currentFrameIndex)
-    frameHandle = window.requestAnimationFrame(tick)
-  }
-
-  drawFrame(currentFrameIndex)
-
-  if (isPlaying) {
-    frameHandle = window.requestAnimationFrame(tick)
-  }
-
-  return () => {
-    if (frameHandle !== 0) {
-      window.cancelAnimationFrame(frameHandle)
-    }
-  }
-}
-
-function setupCanvasDisplaySizeObserver(
-  canvasElement: HTMLCanvasElement,
-  setDisplaySize: Dispatch<SetStateAction<SkelAnimDisplaySize | null>>,
-): () => void {
-  const updateDisplaySize = () => {
-    setDisplaySize((current) => {
-      const next = { width: canvasElement.clientWidth, height: canvasElement.clientHeight }
-      if (
-        current !== null &&
-        Math.abs(current.width - next.width) < 0.5 &&
-        Math.abs(current.height - next.height) < 0.5
-      ) {
-        return current
-      }
-      return next
-    })
-  }
-
-  updateDisplaySize()
-
-  if (typeof ResizeObserver !== 'function') {
-    return () => {}
-  }
-
-  const observer = new ResizeObserver(() => { updateDisplaySize() })
-  observer.observe(canvasElement)
-  return () => { observer.disconnect() }
-}
-
-function renderSkelAnimToolbar(params: {
-  showStatus: boolean
-  showControls: boolean
-  showCanvas: boolean
-  playbackMode: 'manual' | 'play' | 'pause'
-  isPlaying: boolean
-  statusText: string
-  playLabel: string
-  pauseLabel: string
-  onTogglePlayback: () => void
-}) {
-  const { showStatus, showControls, showCanvas, playbackMode, isPlaying, statusText, playLabel, pauseLabel, onTogglePlayback } = params
-  if (!showStatus && !(showControls && showCanvas)) {
-    return null
-  }
-
-  return (
-    <div className="skelanim-player__toolbar">
-      {showStatus ? <span className="skelanim-player__status">{statusText}</span> : <span />}
-      {showControls && showCanvas && playbackMode === 'manual' ? (
-        <button type="button" className="skelanim-player__button" onClick={onTogglePlayback}>
-          {isPlaying ? pauseLabel : playLabel}
-        </button>
-      ) : null}
-    </div>
-  )
-}
 
 export function SkelAnimCanvas({
   animation,
@@ -214,7 +39,7 @@ export function SkelAnimCanvas({
   const [isPlaybackEnabled, setIsPlaybackEnabled] = useState(() => !readReducedMotionPreference())
 
   useEffect(() => {
-    if (assetPath === null) {
+    if (!assetPath) {
       return undefined
     }
 
@@ -256,7 +81,7 @@ export function SkelAnimCanvas({
     prefersReducedMotion,
     isPlaybackEnabled,
   )
-  const showCanvas = animation !== null && prepared !== null && sequenceSelection !== null && loadError === null
+  const showCanvas = Boolean(animation && prepared && sequenceSelection && !loadError)
   const statusText = buildSkelAnimStatusText({
     loadError,
     showCanvas,
@@ -266,28 +91,139 @@ export function SkelAnimCanvas({
   const rootClassName = buildSkelAnimRootClassName(className)
 
   useEffect(() => {
-    if (!showCanvas || canvasRef.current === null) {
+    if (!showCanvas || !canvasRef.current) {
       return undefined
     }
 
-    return setupCanvasDisplaySizeObserver(canvasRef.current, setDisplaySize)
+    const canvasElement = canvasRef.current
+    const updateDisplaySize = () => {
+      const nextDisplaySize = {
+        width: canvasElement.clientWidth,
+        height: canvasElement.clientHeight,
+      }
+
+      setDisplaySize((currentSize) => {
+        if (
+          currentSize &&
+          Math.abs(currentSize.width - nextDisplaySize.width) < 0.5 &&
+          Math.abs(currentSize.height - nextDisplaySize.height) < 0.5
+        ) {
+          return currentSize
+        }
+
+        return nextDisplaySize
+      })
+    }
+
+    updateDisplaySize()
+
+    if (typeof ResizeObserver !== 'function') {
+      return undefined
+    }
+
+    const observer = new ResizeObserver(() => {
+      updateDisplaySize()
+    })
+
+    observer.observe(canvasElement)
+
+    return () => {
+      observer.disconnect()
+    }
   }, [assetPath, showCanvas])
 
   useEffect(() => {
-    if (assetPath === null || prepared === null || sequenceSelection === null || canvasRef.current === null) {
+    if (!assetPath || !prepared || !sequenceSelection || !canvasRef.current) {
       return undefined
     }
 
-    return startSkelAnimDrawLoop({
-      prepared,
-      sequenceSelection,
-      viewportBounds,
-      displaySize,
-      isPlaying,
-      canvas: canvasRef.current,
-      fps: animation?.fps ?? 1,
-      onError: () => { setLoadErrorEntry({ assetPath, message: labels.error }) },
-    })
+    const context = canvasRef.current.getContext('2d')
+
+    if (!context) {
+      queueMicrotask(() => {
+        setLoadErrorEntry({
+          assetPath,
+          message: labels.error,
+        })
+      })
+      return undefined
+    }
+
+    context.imageSmoothingEnabled = false
+
+    const viewportLayout = resolveSkelAnimViewportLayout(sequenceSelection.bounds, viewportBounds)
+    const { width, height } = getBoundsSize(viewportLayout.renderBounds)
+    const rasterScale = resolveCanvasRasterScale(viewportLayout.renderBounds, displaySize)
+    const textureById = new Map(prepared.textures.map((texture) => [texture.textureId, texture.image]))
+    const frameDuration = 1000 / Math.max(1, animation?.fps ?? 1)
+    const pixelRatio = Math.max(1, typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1)
+    let currentFrameIndex = sequenceSelection.startFrameIndex
+    let lastTick = 0
+    let frameHandle = 0
+
+    canvasRef.current.width = Math.round(width * rasterScale * pixelRatio)
+    canvasRef.current.height = Math.round(height * rasterScale * pixelRatio)
+
+    const drawFrame = (frameIndex: number) => {
+      context.setTransform(pixelRatio * rasterScale, 0, 0, pixelRatio * rasterScale, 0, 0)
+      context.clearRect(0, 0, width, height)
+
+      for (const { piece, frame } of listVisiblePieces(sequenceSelection.sequence, frameIndex)) {
+        const image = textureById.get(piece.textureId)
+
+        if (!image) {
+          continue
+        }
+
+        context.save()
+        context.translate(viewportLayout.offsetX, viewportLayout.offsetY)
+        context.scale(viewportLayout.contentScale, viewportLayout.contentScale)
+        context.translate(
+          frame.x - viewportLayout.contentBounds.minX,
+          frame.y - viewportLayout.contentBounds.minY,
+        )
+        context.scale(frame.scaleX, frame.scaleY)
+        context.rotate(frame.rotation)
+        context.drawImage(
+          image,
+          piece.sourceX,
+          piece.sourceY,
+          piece.sourceWidth,
+          piece.sourceHeight,
+          -piece.centerX,
+          -piece.centerY,
+          piece.sourceWidth,
+          piece.sourceHeight,
+        )
+        context.restore()
+      }
+    }
+
+    const tick = (timestamp: number) => {
+      if (!lastTick) {
+        lastTick = timestamp
+      }
+
+      if (isPlaying && timestamp - lastTick >= frameDuration) {
+        currentFrameIndex = findNextRenderableFrameIndex(sequenceSelection.sequence, currentFrameIndex)
+        lastTick = timestamp
+      }
+
+      drawFrame(currentFrameIndex)
+      frameHandle = window.requestAnimationFrame(tick)
+    }
+
+    drawFrame(currentFrameIndex)
+
+    if (isPlaying) {
+      frameHandle = window.requestAnimationFrame(tick)
+    }
+
+    return () => {
+      if (frameHandle) {
+        window.cancelAnimationFrame(frameHandle)
+      }
+    }
   }, [
     animation?.fps,
     assetPath,
@@ -300,39 +236,38 @@ export function SkelAnimCanvas({
     viewportBounds,
   ])
 
-  let stageContent
-  if (showCanvas) {
-    stageContent = <canvas ref={canvasRef} className="skelanim-player__canvas" role="img" aria-label={alt} />
-  } else if (fallbackSrc !== null) {
-    stageContent = (
-      <img
-        className="skelanim-player__fallback-image skin-artwork-dialog__image"
-        src={fallbackSrc}
-        alt={alt}
-        loading="eager"
-      />
-    )
-  } else {
-    stageContent = <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
-  }
-
   return (
     <div className={rootClassName}>
       <div className="skelanim-player__stage">
-        {stageContent}
+        {showCanvas ? (
+          <canvas ref={canvasRef} className="skelanim-player__canvas" role="img" aria-label={alt} />
+        ) : fallbackSrc ? (
+          <img
+            className="skelanim-player__fallback-image skin-artwork-dialog__image"
+            src={fallbackSrc}
+            alt={alt}
+            loading="eager"
+          />
+        ) : (
+          <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
+        )}
+
       </div>
 
-      {renderSkelAnimToolbar({
-        showStatus,
-        showControls,
-        showCanvas,
-        playbackMode,
-        isPlaying,
-        statusText,
-        playLabel: labels.play,
-        pauseLabel: labels.pause,
-        onTogglePlayback: () => { setIsPlaybackEnabled((value) => !value); },
-      })}
+      {showStatus || (showControls && showCanvas) ? (
+        <div className="skelanim-player__toolbar">
+          {showStatus ? <span className="skelanim-player__status">{statusText}</span> : <span />}
+          {showControls && showCanvas && playbackMode === 'manual' ? (
+            <button
+              type="button"
+              className="skelanim-player__button"
+              onClick={() => setIsPlaybackEnabled((value) => !value)}
+            >
+              {isPlaying ? labels.pause : labels.play}
+            </button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   )
 }

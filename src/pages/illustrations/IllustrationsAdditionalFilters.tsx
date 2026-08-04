@@ -6,7 +6,7 @@ import {
 import type { IllustrationsPageModel } from './types'
 
 type IllustrationsAdditionalFiltersProps = {
-  readonly model: IllustrationsPageModel
+  model: IllustrationsPageModel
 }
 
 const illustrationsAdditionalFilterCopy: ChampionAdditionalFilterCopy = {

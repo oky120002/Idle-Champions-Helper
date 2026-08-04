@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type Dispatch, type SetStateAction } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { createPlannerComputeRunner } from '../../domain/planner/compute/plannerCompute'
 import type { CandidateMode } from '../../domain/planner/candidatePool'
@@ -24,157 +24,182 @@ const EMPTY_RECOMMENDATION: PlannerRecommendation = {
 
 export function usePlannerPageModel() {
   const {
-    collections, profileSnapshot, lootCatalog, patronPerkCatalog, effectDefinitions,
-    championById, selectedVariantId, loadState, loadError, selectVariantId: selectVariantIdBase,
+    collections,
+    profileSnapshot,
+    lootCatalog,
+    patronPerkCatalog,
+    effectDefinitions,
+    championById,
+    selectedVariantId,
+    loadState,
+    loadError,
+    selectVariantId: selectVariantIdBase,
   } = usePlannerCollections()
   const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [candidateMode, setCandidateMode] = useState<CandidateMode>('owned-only')
   const [computationMode, setComputationMode] = useState<ComputationMode>('p50')
+  // 动态层数假设（dynamic-stack-multiply，如蔚出言不逊）；默认与引擎 DEFAULT_MANUAL_STACK_COUNT 同源。
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
+  // 假设装备配置（未导入存档时的 UI what-if）：默认毕业 = 稀有度 4（传说）+ 附魔 2000。
+  // 有存档时按存档 per-slot 实际，此配置仅无存档分支生效（buildScoringBonusInputs 内部判优先级）。
   const [equipmentRarity, setEquipmentRarity] = useState(4)
   const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
+  // 专精选择 override（session 级 working copy，不写回 IndexedDB）：heroId → 选中的 upgradeId 列表。
   const [specializationOverrides, setSpecializationOverrides] = useState<SpecializationOverrideMap>({})
 
-  const { result, recommendLoading, recommendError } = usePlannerRecommendationFlow({
-    collections, profileSnapshot, lootCatalog, patronPerkCatalog, effectDefinitions,
-    selectedVariantId, scoringMode, candidateMode, computationMode, manualStackCount,
-    equipmentRarity, equipmentEnchant, lockedCarryHeroId, lockedSlots, specializationOverrides,
-  })
-  const selectors = usePlannerPageSelectors({
-    selectVariantIdBase, setSelectedResultIndex, setLockedSlots, setLockedCarryHeroId,
-    setScoringMode, setCandidateMode, setComputationMode, setManualStackCount,
-    setEquipmentRarity, setEquipmentEnchant, setSpecializationOverrides,
-  })
-
-  return {
-    candidateMode, championById, collections, computationMode, equipmentEnchant, equipmentRarity,
-    lockedCarryHeroId, lockedSlots, loadError, loadState, manualStackCount,
-    profileSnapshot, recommendLoading, recommendError, scoringMode, selectedResultIndex,
-    selectedVariantId, specializationOverrides,
-    plannerRecommendation: result ?? EMPTY_RECOMMENDATION,
-    ...selectors,
-  }
-}
-
-function usePlannerRecommendationFlow(params: {
-  collections: ReturnType<typeof usePlannerCollections>['collections']
-  profileSnapshot: ReturnType<typeof usePlannerCollections>['profileSnapshot']
-  lootCatalog: ReturnType<typeof usePlannerCollections>['lootCatalog']
-  patronPerkCatalog: ReturnType<typeof usePlannerCollections>['patronPerkCatalog']
-  effectDefinitions: ReturnType<typeof usePlannerCollections>['effectDefinitions']
-  selectedVariantId: string | null
-  scoringMode: ScoringMode
-  candidateMode: CandidateMode
-  computationMode: ComputationMode
-  manualStackCount: number
-  equipmentRarity: number
-  equipmentEnchant: number
-  lockedCarryHeroId: string | null
-  lockedSlots: Record<string, string>
-  specializationOverrides: SpecializationOverrideMap
-}) {
+  // runner 单例：浏览器用 worker 卸载 beam search（UI 不冻）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
-  useEffect(() => () => { runner.dispose(); }, [runner])
+  useEffect(() => () => runner.dispose(), [runner])
+
+  // 切换场景时锁槽/指定 carry 失效（slotId 随场景变）；模式/候选变化只 reset Top K 选中。
+  // reset 放事件回调（非 effect），避免 setState-in-effect 级联渲染。
   const selectedVariant = useMemo(
-    () => params.collections.variants.find((v) => v.id === params.selectedVariantId) ?? null,
-    [params.collections.variants, params.selectedVariantId],
+    () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
+    [collections.variants, selectedVariantId],
   )
-  const scoringInputs = useMemo(
+  // 外部加成装配（装备 + patron perk + blessing → scoring 三项入参）下沉纯函数 buildScoringBonusInputs；hook 只 memoize。
+  // 未导入存档（profileSnapshot=null）→ 空 map / globalBuff 1 / hero_dps 空（scoreFormation 缺省，向后兼容）。
+  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
     () => buildScoringBonusInputs({
-      profileSnapshot: params.profileSnapshot, lootCatalog: params.lootCatalog,
-      effectDefinitions: params.effectDefinitions, patronPerkCatalog: params.patronPerkCatalog,
-      hypotheticalEquipment: { heroIds: params.collections.plannerHeroes.map((h) => h.heroId), rarity: params.equipmentRarity, enchant: params.equipmentEnchant },
-      featCatalog: params.collections.featCatalog ?? null,
+      profileSnapshot,
+      lootCatalog,
+      effectDefinitions,
+      patronPerkCatalog,
+      hypotheticalEquipment: {
+        heroIds: collections.plannerHeroes.map((hero) => hero.heroId),
+        rarity: equipmentRarity,
+        enchant: equipmentEnchant,
+      },
+      featCatalog: collections.featCatalog ?? null,
     }),
-    [params.profileSnapshot, params.lootCatalog, params.effectDefinitions, params.patronPerkCatalog, params.collections.plannerHeroes, params.collections.featCatalog, params.equipmentRarity, params.equipmentEnchant],
+    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
   )
+  // options 必须 memoize：usePlannerRecommendation 把 options 作为依赖，引用不稳会每次触发重算。
   const options = useMemo<PlannerRecommendationOptions>(
-    () => ({ scoringMode: params.scoringMode, candidateMode: params.candidateMode, computationMode: params.computationMode, manualStackCount: params.manualStackCount, lockedCarryHeroId: params.lockedCarryHeroId, lockedSlots: params.lockedSlots, ...scoringInputs }),
-    [params.scoringMode, params.candidateMode, params.computationMode, params.manualStackCount, params.lockedCarryHeroId, params.lockedSlots, scoringInputs],
+    () => ({
+      scoringMode,
+      candidateMode,
+      computationMode,
+      manualStackCount,
+      lockedCarryHeroId,
+      lockedSlots,
+      equipmentAdjustmentByHero,
+      equipmentHealthByHero,
+      equipmentGlobalDpsByHero,
+      equipmentGoldByHero,
+      equipmentCritByHero,
+      equipmentBuffsByHero,
+      globalBuffMultiplier,
+      externalHeroDpsContributions,
+    }),
+    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
+  // 有效 snapshot = 存档 + 专精 override；engine 按 OwnedHero.specializations 注入 signal（ADR 0017）。
+  // 无 override 时同引用返回，避免 usePlannerRecommendation 无谓重算。
   const effectiveProfileSnapshot = useMemo(
-    () => mergeSpecializationOverrides(params.profileSnapshot, params.specializationOverrides),
-    [params.profileSnapshot, params.specializationOverrides],
+    () => mergeSpecializationOverrides(profileSnapshot, specializationOverrides),
+    [profileSnapshot, specializationOverrides],
   )
   const { result, loading: recommendLoading, error: recommendError } = usePlannerRecommendation(
-    runner, params.collections, selectedVariant, effectiveProfileSnapshot, options,
+    runner,
+    collections,
+    selectedVariant,
+    effectiveProfileSnapshot,
+    options,
   )
-  return { result, recommendLoading, recommendError }
-}
-
-function usePlannerPageSelectors(params: {
-  selectVariantIdBase: (variantId: string | null) => void
-  setSelectedResultIndex: Dispatch<SetStateAction<number>>
-  setLockedSlots: Dispatch<SetStateAction<Record<string, string>>>
-  setLockedCarryHeroId: Dispatch<SetStateAction<string | null>>
-  setScoringMode: Dispatch<SetStateAction<ScoringMode>>
-  setCandidateMode: Dispatch<SetStateAction<CandidateMode>>
-  setComputationMode: Dispatch<SetStateAction<ComputationMode>>
-  setManualStackCount: Dispatch<SetStateAction<number>>
-  setEquipmentRarity: Dispatch<SetStateAction<number>>
-  setEquipmentEnchant: Dispatch<SetStateAction<number>>
-  setSpecializationOverrides: Dispatch<SetStateAction<SpecializationOverrideMap>>
-}) {
-  const modeSelectors = usePlannerModeSelectors(params)
-  const slotSelectors = usePlannerSlotSelectors(params)
-  return { ...modeSelectors, ...slotSelectors }
-}
-
-function usePlannerModeSelectors({
-  selectVariantIdBase, setSelectedResultIndex, setLockedSlots, setLockedCarryHeroId,
-  setScoringMode, setCandidateMode, setComputationMode, setManualStackCount,
-  setEquipmentRarity, setEquipmentEnchant,
-}: {
-  selectVariantIdBase: (variantId: string | null) => void
-  setSelectedResultIndex: Dispatch<SetStateAction<number>>
-  setLockedSlots: Dispatch<SetStateAction<Record<string, string>>>
-  setLockedCarryHeroId: Dispatch<SetStateAction<string | null>>
-  setScoringMode: Dispatch<SetStateAction<ScoringMode>>
-  setCandidateMode: Dispatch<SetStateAction<CandidateMode>>
-  setComputationMode: Dispatch<SetStateAction<ComputationMode>>
-  setManualStackCount: Dispatch<SetStateAction<number>>
-  setEquipmentRarity: Dispatch<SetStateAction<number>>
-  setEquipmentEnchant: Dispatch<SetStateAction<number>>
-}) {
   const selectVariantId = useCallback((variantId: string | null) => {
-    selectVariantIdBase(variantId); setSelectedResultIndex(0); setLockedSlots({}); setLockedCarryHeroId(null)
-  }, [selectVariantIdBase, setSelectedResultIndex, setLockedSlots, setLockedCarryHeroId])
-  const selectScoringMode = useCallback((mode: ScoringMode) => { setScoringMode(mode); setSelectedResultIndex(0) }, [setScoringMode, setSelectedResultIndex])
-  const selectCandidateMode = useCallback((mode: CandidateMode) => { setCandidateMode(mode); setSelectedResultIndex(0) }, [setCandidateMode, setSelectedResultIndex])
-  const selectComputationMode = useCallback((mode: ComputationMode) => { setComputationMode(mode); setSelectedResultIndex(0) }, [setComputationMode, setSelectedResultIndex])
-  const selectManualStackCount = useCallback((count: number) => { setManualStackCount(count); setSelectedResultIndex(0) }, [setManualStackCount, setSelectedResultIndex])
-  const selectEquipmentRarity = useCallback((rarity: number) => { setEquipmentRarity(rarity); setSelectedResultIndex(0) }, [setEquipmentRarity, setSelectedResultIndex])
-  const selectEquipmentEnchant = useCallback((enchant: number) => { setEquipmentEnchant(enchant); setSelectedResultIndex(0) }, [setEquipmentEnchant, setSelectedResultIndex])
-  return { selectVariantId, selectScoringMode, selectCandidateMode, selectComputationMode, selectManualStackCount, selectEquipmentRarity, selectEquipmentEnchant }
-}
-
-function usePlannerSlotSelectors({
-  setSelectedResultIndex, setLockedSlots, setLockedCarryHeroId, setSpecializationOverrides,
-}: {
-  setSelectedResultIndex: Dispatch<SetStateAction<number>>
-  setLockedSlots: Dispatch<SetStateAction<Record<string, string>>>
-  setLockedCarryHeroId: Dispatch<SetStateAction<string | null>>
-  setSpecializationOverrides: Dispatch<SetStateAction<SpecializationOverrideMap>>
-}) {
-  const selectLockedCarryHeroId = useCallback((heroId: string | null) => { setLockedCarryHeroId(heroId) }, [setLockedCarryHeroId])
+    selectVariantIdBase(variantId)
+    setSelectedResultIndex(0)
+    setLockedSlots({})
+    setLockedCarryHeroId(null)
+  }, [selectVariantIdBase])
+  const selectScoringMode = useCallback((mode: ScoringMode) => {
+    setScoringMode(mode)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectCandidateMode = useCallback((mode: CandidateMode) => {
+    setCandidateMode(mode)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectComputationMode = useCallback((mode: ComputationMode) => {
+    setComputationMode(mode)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectManualStackCount = useCallback((count: number) => {
+    setManualStackCount(count)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectEquipmentRarity = useCallback((rarity: number) => {
+    setEquipmentRarity(rarity)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectEquipmentEnchant = useCallback((enchant: number) => {
+    setEquipmentEnchant(enchant)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
+    setLockedCarryHeroId(heroId)
+  }, [])
   const lockSlot = useCallback((slotId: string, heroId: string) => {
     setLockedSlots((current) => ({ ...current, [slotId]: heroId }))
-  }, [setLockedSlots])
+  }, [])
   const clearSlotLock = useCallback((slotId: string) => {
-    setLockedSlots((current) => { const next = { ...current }; delete next[slotId]; return next })
-  }, [setLockedSlots])
-  const selectResultIndex = useCallback((index: number) => { setSelectedResultIndex(index) }, [setSelectedResultIndex])
+    setLockedSlots((current) => {
+      const next = { ...current }
+      delete next[slotId]
+      return next
+    })
+  }, [])
+  const selectResultIndex = useCallback((index: number) => {
+    setSelectedResultIndex(index)
+  }, [])
   const setHeroSpecializationOverride = useCallback((heroId: string, upgradeIds: string[]) => {
     setSpecializationOverrides((current) => ({ ...current, [heroId]: upgradeIds }))
-  }, [setSpecializationOverrides])
+  }, [])
   const clearHeroSpecializationOverride = useCallback((heroId: string) => {
     setSpecializationOverrides((current) => {
       if (!Object.prototype.hasOwnProperty.call(current, heroId)) return current
-      const next = { ...current }; delete next[heroId]; return next
+      const next = { ...current }
+      delete next[heroId]
+      return next
     })
-  }, [setSpecializationOverrides])
-  return { clearHeroSpecializationOverride, clearSlotLock, selectLockedCarryHeroId, selectResultIndex, setHeroSpecializationOverride, lockSlot }
+  }, [])
+
+  return {
+    candidateMode,
+    championById,
+    collections,
+    computationMode,
+    equipmentEnchant,
+    equipmentRarity,
+    lockedCarryHeroId,
+    lockedSlots,
+    loadError,
+    loadState,
+    manualStackCount,
+    plannerRecommendation: result ?? EMPTY_RECOMMENDATION,
+    profileSnapshot,
+    recommendLoading,
+    recommendError,
+    scoringMode,
+    selectedResultIndex,
+    selectedVariantId,
+    specializationOverrides,
+    clearHeroSpecializationOverride,
+    clearSlotLock,
+    selectCandidateMode,
+    selectComputationMode,
+    selectEquipmentEnchant,
+    selectEquipmentRarity,
+    selectManualStackCount,
+    selectLockedCarryHeroId,
+    selectResultIndex,
+    selectVariantId,
+    selectScoringMode,
+    setHeroSpecializationOverride,
+    lockSlot,
+  }
 }

@@ -6,10 +6,10 @@ import type { ReactNode } from 'react'
  * title 走 aria-label 供屏阅读器；正文与按钮区由调用方经 children 自由组织。
  */
 interface ConfirmDialogProps {
-  readonly open: boolean
-  readonly title: string
-  readonly onClose: () => void
-  readonly children: ReactNode
+  open: boolean
+  title: string
+  onClose: () => void
+  children: ReactNode
 }
 
 export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogProps) {
@@ -23,14 +23,10 @@ export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogP
       role="dialog"
       aria-modal="true"
       aria-label={title}
+      onClick={onClose}
     >
-      <button
-        type="button"
-        className="confirm-dialog__backdrop"
-        aria-label="关闭"
-        onClick={onClose}
-      />
-      <div className="confirm-dialog__panel">
+      <div className="confirm-dialog__backdrop" aria-hidden="true" />
+      <div className="confirm-dialog__panel" onClick={(event) => event.stopPropagation()}>
         <h2 className="confirm-dialog__title">{title}</h2>
         {children}
       </div>

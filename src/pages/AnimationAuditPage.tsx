@@ -209,7 +209,7 @@ export function AnimationAuditPage() {
                 <button
                   type="button"
                   className="animation-audit-results__show-more"
-                  onClick={() => { model.setShowAll((value) => !value); }}
+                  onClick={() => model.setShowAll((value) => !value)}
                 >
                   {model.showAll ? <EyeOff aria-hidden="true" strokeWidth={1.9} /> : <Eye aria-hidden="true" strokeWidth={1.9} />}
                   {model.showAll ? t({ zh: '收回短名单', en: 'Collapse shortlist' }) : t({ zh: '展开全部结果', en: 'Show all results' })}

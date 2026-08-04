@@ -107,8 +107,8 @@ export function buildIllustrationCardTitle(
 
   return {
     primary: illustrationName,
-    text: secondary ? `${illustrationName} · ${secondary}` : illustrationName,
     secondary,
+    text: secondary ? `${illustrationName} · ${secondary}` : illustrationName,
   }
 }
 

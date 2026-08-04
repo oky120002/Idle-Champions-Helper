@@ -2,9 +2,9 @@ import { ArrowUpToLine } from 'lucide-react'
 import { useI18n } from '../../app/i18n'
 
 interface WorkbenchFloatingTopButtonProps {
-  readonly onClick: () => void
-  readonly ariaLabel?: string
-  readonly detailLabel?: string
+  onClick: () => void
+  ariaLabel?: string
+  detailLabel?: string
 }
 
 export function WorkbenchFloatingTopButton({

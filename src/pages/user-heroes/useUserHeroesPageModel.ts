@@ -1,26 +1,63 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { resolveUserProfileSnapshot, type UserProfileResolution } from '../../data/user-profile-store'
 import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../../components/workbench/useWorkbenchResultsMotion'
 import { useWorkbenchShareLink } from '../../components/workbench/useWorkbenchShareLink'
 import { useI18n } from '../../app/i18n'
 import { getMechanicCategoryHint } from '../../features/champion-filters/mechanicHints'
-import type { MechanicOptionGroup } from '../../features/champion-filters/types'
 import { buildChampionFilterActions } from '../champions/champion-filter-actions'
 import { useChampionCollectionState } from '../champions/useChampionCollectionState'
 import { useChampionsFilterState } from '../champions/useChampionsFilterState'
 import type { UserHeroesPageModel, UserHeroesRosterMetricFilterId } from './types'
 import { useUserHeroesPageDerived } from './useUserHeroesPageDerived'
 
-type FilterState = ReturnType<typeof useChampionsFilterState>
-type Motion = ReturnType<typeof useWorkbenchResultsMotion>
-type RosterMetricSetter = Dispatch<SetStateAction<UserHeroesRosterMetricFilterId | null>>
+export function useUserHeroesPageModel(): UserHeroesPageModel {
+  const { locale, t } = useI18n()
+  const location = useLocation()
+  const state = useChampionCollectionState()
+  const filterState = useChampionsFilterState()
+  const [profileResolution, setProfileResolution] = useState<UserProfileResolution | null>(null)
+  const [activeRosterMetricFilterId, setActiveRosterMetricFilterId] = useState<UserHeroesRosterMetricFilterId | null>(null)
 
-function buildUserHeroesFilterActions(
-  filterState: FilterState,
-  motion: Motion,
-  setActiveRosterMetricFilterId: RosterMetricSetter,
-) {
+  useEffect(() => {
+    let active = true
+
+    resolveUserProfileSnapshot()
+      .then((resolution) => {
+        if (active) {
+          setProfileResolution(resolution)
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setProfileResolution(null)
+        }
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
+
+  const derived = useUserHeroesPageDerived({
+    locale,
+    t,
+    state,
+    filters: filterState.filters,
+    ownedHeroes: profileResolution?.snapshot?.ownedHeroes ?? [],
+    activeRosterMetricFilterId,
+  })
+  const motion = useWorkbenchResultsMotion({
+    storageKey: 'user-heroes',
+    locationSearch: filterState.locationSearch,
+    stateStatus: state.status,
+    filteredCount: derived.filteredChampions.length,
+    visibleCount: state.status === 'ready' ? state.champions.length : 0,
+    showAllResults: true,
+    transitionKey: filterState.transitionKey,
+  })
+  const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
+
   function runFilterMutation(mutation: () => void) {
     motion.prepareResultsViewportTransition('filters')
     mutation()
@@ -38,30 +75,23 @@ function buildUserHeroesFilterActions(
     setSelectedProfessions: filterState.setSelectedProfessions,
     setSelectedAcquisitions: filterState.setSelectedAcquisitions,
     setSelectedMechanics: filterState.setSelectedMechanics,
-    resetExtraFilters: () => { setActiveRosterMetricFilterId(null) },
-    extraChipMutations: { 'roster-metric': () => { setActiveRosterMetricFilterId(null) } },
+    resetExtraFilters: () => setActiveRosterMetricFilterId(null),
+    extraChipMutations: {
+      'roster-metric': () => setActiveRosterMetricFilterId(null),
+    },
   })
 
-  return { runFilterMutation, filterActions }
-}
+  function toggleRosterMetricFilter(id: UserHeroesRosterMetricFilterId) {
+    runFilterMutation(() => {
+      setActiveRosterMetricFilterId((current) => (current === id ? null : id))
+    })
+  }
 
-type UserHeroesPageModelParts = {
-  readonly locale: ReturnType<typeof useI18n>['locale']
-  readonly t: ReturnType<typeof useI18n>['t']
-  readonly state: ReturnType<typeof useChampionCollectionState>
-  readonly filterState: FilterState
-  readonly profileResolution: UserProfileResolution | null
-  readonly activeRosterMetricFilterId: UserHeroesRosterMetricFilterId | null
-  readonly motion: Motion
-  readonly shareLinkState: ReturnType<typeof useWorkbenchShareLink>['shareLinkState']
-  readonly copyCurrentLink: ReturnType<typeof useWorkbenchShareLink>['copyCurrentLink']
-  readonly derived: ReturnType<typeof useUserHeroesPageDerived>
-  readonly toggleRosterMetricFilter: (id: UserHeroesRosterMetricFilterId) => void
-  readonly filterActions: ReturnType<typeof buildChampionFilterActions>
-}
-
-function mapFilterStateToProps(filterState: FilterState) {
   return {
+    locale,
+    t,
+    state,
+    profileResolution,
     search: filterState.search,
     selectedSeats: filterState.selectedSeats,
     selectedRoles: filterState.selectedRoles,
@@ -74,14 +104,6 @@ function mapFilterStateToProps(filterState: FilterState) {
     selectedMechanics: filterState.selectedMechanics,
     isIdentityFiltersExpanded: filterState.isIdentityFiltersExpanded,
     isMetaFiltersExpanded: filterState.isMetaFiltersExpanded,
-    setIdentityFiltersExpanded: filterState.setIdentityFiltersExpanded,
-    setMetaFiltersExpanded: filterState.setMetaFiltersExpanded,
-    locationSearch: filterState.locationSearch,
-  }
-}
-
-function mapDerivedToProps(derived: UserHeroesPageModelParts['derived']) {
-  return {
     activeFilterChips: derived.activeFilterChips,
     activeFilters: derived.activeFilters,
     hasActiveFilters: derived.hasActiveFilters,
@@ -89,8 +111,15 @@ function mapDerivedToProps(derived: UserHeroesPageModelParts['derived']) {
     visibleChampions: derived.filteredChampions,
     heroIllustrationByChampionId: derived.heroIllustrationByChampionId,
     matchedSeats: derived.matchedSeats,
+    canToggleResultVisibility: false,
+    showAllResults: true,
+    hasRandomOrder: false,
     rosterSeatColumns: derived.rosterSeatColumns,
     rosterSummary: derived.rosterSummary,
+    activeRosterMetricFilterId,
+    shareLinkState,
+    showResultsQuickNavTop: motion.showResultsQuickNavTop,
+    resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,
     affiliations: derived.affiliations,
     raceOptions: derived.raceOptions,
@@ -102,74 +131,18 @@ function mapDerivedToProps(derived: UserHeroesPageModelParts['derived']) {
     mechanicOptionGroups: derived.mechanicOptionGroups,
     identityFiltersSelectedCount: derived.identityFiltersSelectedCount,
     metaFiltersSelectedCount: derived.metaFiltersSelectedCount,
-  }
-}
-
-function buildUserHeroesPageModel(p: UserHeroesPageModelParts): UserHeroesPageModel {
-  const { locale, t, state, filterState, profileResolution, activeRosterMetricFilterId, motion, shareLinkState, copyCurrentLink, derived, toggleRosterMetricFilter, filterActions } = p
-
-  return {
-    locale, t, state, profileResolution, activeRosterMetricFilterId,
-    ...mapFilterStateToProps(filterState),
-    ...mapDerivedToProps(derived),
-    canToggleResultVisibility: false,
-    showAllResults: true,
-    hasRandomOrder: false,
-    shareLinkState,
-    showResultsQuickNavTop: motion.showResultsQuickNavTop,
-    resultsPaneRef: motion.resultsPaneRef,
+    setIdentityFiltersExpanded: filterState.setIdentityFiltersExpanded,
+    setMetaFiltersExpanded: filterState.setMetaFiltersExpanded,
+    ...filterActions,
     toggleRosterMetricFilter,
     toggleResultVisibility: () => undefined,
     randomizeResultOrder: () => undefined,
     scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,
-    getMechanicCategoryHint: (groupId: MechanicOptionGroup['id']) => getMechanicCategoryHint(groupId, t),
+    getMechanicCategoryHint: (groupId) => getMechanicCategoryHint(groupId, t),
     saveListScroll: () => {
       saveWorkbenchResultsPaneScroll('user-heroes', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0)
     },
-    ...filterActions,
-  }
-}
-
-export function useUserHeroesPageModel(): UserHeroesPageModel {
-  const { locale, t } = useI18n()
-  const location = useLocation()
-  const state = useChampionCollectionState()
-  const filterState = useChampionsFilterState()
-  const [profileResolution, setProfileResolution] = useState<UserProfileResolution | null>(null)
-  const [activeRosterMetricFilterId, setActiveRosterMetricFilterId] = useState<UserHeroesRosterMetricFilterId | null>(null)
-
-  useEffect(() => {
-    let active = true
-    resolveUserProfileSnapshot()
-      .then((resolution) => { if (active) setProfileResolution(resolution) })
-      .catch(() => { if (active) setProfileResolution(null) })
-    return () => { active = false }
-  }, [])
-
-  const derived = useUserHeroesPageDerived({
-    locale, t, state, activeRosterMetricFilterId,
-    filters: filterState.filters,
-    ownedHeroes: profileResolution?.snapshot?.ownedHeroes ?? [],
-  })
-  const motion = useWorkbenchResultsMotion({
-    storageKey: 'user-heroes',
     locationSearch: filterState.locationSearch,
-    stateStatus: state.status,
-    filteredCount: derived.filteredChampions.length,
-    visibleCount: state.status === 'ready' ? state.champions.length : 0,
-    showAllResults: true,
-    transitionKey: filterState.transitionKey,
-  })
-  const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const { runFilterMutation, filterActions } = buildUserHeroesFilterActions(filterState, motion, setActiveRosterMetricFilterId)
-
-  function toggleRosterMetricFilter(id: UserHeroesRosterMetricFilterId) {
-    runFilterMutation(() => { setActiveRosterMetricFilterId((current) => (current === id ? null : id)) })
   }
-
-  return buildUserHeroesPageModel({
-    locale, t, state, filterState, profileResolution, activeRosterMetricFilterId,
-    motion, shareLinkState, copyCurrentLink, derived, toggleRosterMetricFilter, filterActions,
-  })
 }

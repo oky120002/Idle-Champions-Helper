@@ -1,3 +1,4 @@
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type {
   HeroAbilityAmountFunc,
   HeroAbilityDimension,
@@ -6,7 +7,6 @@ import type {
   HeroAbilitySource,
   ResolvedHeroAbilityProfile,
 } from '../abilities/abilityModel'
-import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 export interface PlacementFitScorePart {
   signalKind: HeroAbilitySignal['kind']

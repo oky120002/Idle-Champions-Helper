@@ -50,8 +50,8 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
 
   const filters = useMemo<IllustrationsFilterState>(
     () => ({
-      scope: viewFilter,
       search,
+      scope: viewFilter,
       selectedSeats,
       selectedRoles,
       selectedAffiliations,
@@ -158,7 +158,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     setSelectedAcquisitions,
     setSelectedMechanics,
     setShowAllResults,
-    toggleIdentityFiltersExpanded: () => { setIdentityFiltersExpanded((current) => !current); },
-    toggleMetaFiltersExpanded: () => { setMetaFiltersExpanded((current) => !current); },
+    toggleIdentityFiltersExpanded: () => setIdentityFiltersExpanded((current) => !current),
+    toggleMetaFiltersExpanded: () => setMetaFiltersExpanded((current) => !current),
   }
 }

@@ -7,7 +7,7 @@ import { UserImportResultPanel } from './UserImportResultPanel'
 import type { UserDataPageModel } from './types'
 
 type UserDataWorkbenchProps = {
-  readonly model: UserDataPageModel
+  model: UserDataPageModel
 }
 
 export function UserDataWorkbench({ model }: UserDataWorkbenchProps) {

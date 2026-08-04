@@ -1,10 +1,9 @@
-import { Buffer } from 'node:buffer'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
-import { it, expect } from 'vitest'
-import { PNG } from 'pngjs'
 import { readJson, writeJson } from './data/io-utils.ts'
+import { PNG } from 'pngjs'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.ts'
 
 interface TestHooks {
@@ -70,8 +69,8 @@ it('syncChampionPortraits 会生成头像文件与同步 manifest', async (ctx) 
 
   const result = await syncChampionPortraits({
     input: inputFile,
-    masterApiUrl: 'https://example.test/',
     outputDir,
+    masterApiUrl: 'https://example.test/',
   })
 
   expect(result.count).toBe(1)
@@ -178,8 +177,8 @@ it('syncChampionPortraits 在单头像 source 未变化时复用已有 PNG', asy
 
   const result = await syncChampionPortraits({
     input: inputFile,
-    masterApiUrl: 'https://example.test/',
     outputDir,
+    masterApiUrl: 'https://example.test/',
   })
 
   expect(result.count).toBe(1)

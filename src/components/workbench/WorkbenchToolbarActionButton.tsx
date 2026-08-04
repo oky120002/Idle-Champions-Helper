@@ -3,20 +3,20 @@ import { ActionButton } from '../ActionButton'
 import type { WorkbenchShareState } from './WorkbenchScaffold'
 
 interface WorkbenchToolbarActionButtonProps {
-  readonly children: ReactNode
-  readonly onClick: () => void | Promise<void>
-  readonly icon?: ReactNode
-  readonly iconOnly?: boolean
-  readonly isActive?: boolean
-  readonly ariaPressed?: boolean
-  readonly ariaExpanded?: boolean
-  readonly ariaControls?: string
-  readonly ariaLabel?: string
-  readonly variant?: 'default' | 'prominent'
-  readonly tone?: 'default' | 'share'
-  readonly state?: WorkbenchShareState
-  readonly title?: string
-  readonly className?: string
+  children: ReactNode
+  onClick: () => void | Promise<void>
+  icon?: ReactNode
+  iconOnly?: boolean
+  isActive?: boolean
+  ariaPressed?: boolean
+  ariaExpanded?: boolean
+  ariaControls?: string
+  ariaLabel?: string
+  variant?: 'default' | 'prominent'
+  tone?: 'default' | 'share'
+  state?: WorkbenchShareState
+  title?: string
+  className?: string
 }
 
 function joinClasses(...classNames: Array<string | undefined | false>) {
@@ -39,8 +39,6 @@ export function WorkbenchToolbarActionButton({
   title,
   className,
 }: WorkbenchToolbarActionButtonProps) {
-  const resolvedTitle = title ?? ariaLabel
-
   return (
     <ActionButton
       tone="ghost"
@@ -59,7 +57,7 @@ export function WorkbenchToolbarActionButton({
       ariaExpanded={ariaExpanded}
       ariaControls={ariaControls}
       {...(ariaLabel !== undefined ? { ariaLabel } : {})}
-      {...(resolvedTitle !== undefined ? { title: resolvedTitle } : {})}
+      {...(title !== undefined ? { title } : ariaLabel !== undefined ? { title: ariaLabel } : {})}
       icon={icon}
       onClick={onClick}
     >

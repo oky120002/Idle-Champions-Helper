@@ -1,5 +1,5 @@
-import type { HeroAbilitySignal, HeroPositionRelation } from '../abilities/abilityModel'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
+import type { HeroAbilitySignal, HeroPositionRelation } from '../abilities/abilityModel'
 import type { EvaluatePlacementFitInput } from './placementFitTypes'
 
 export function findScenarioSlot(scenario: ResolvedPlannerScenarioModel, slotId: string) {

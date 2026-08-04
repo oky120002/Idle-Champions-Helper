@@ -6,9 +6,9 @@ export interface PageHeaderMetricItem {
 }
 
 interface PageHeaderMetricsProps {
-  readonly items: PageHeaderMetricItem[]
-  readonly className?: string
-  readonly variant?: 'default' | 'compact'
+  items: PageHeaderMetricItem[]
+  className?: string
+  variant?: 'default' | 'compact'
 }
 
 export function PageHeaderMetrics({ items, className, variant = 'default' }: PageHeaderMetricsProps) {

@@ -108,7 +108,9 @@ export function buildOfficialScenarioModel(
     const item = asRecord(raw) ?? {}
     const original = typeof item.original === 'string' ? item.original : ''
     const localized = asRecord(item.display) ?? {}
-    const display = [item.display, localized.display].find((v): v is string => typeof v === 'string') ?? ''
+    const display = typeof item.display === 'string'
+      ? item.display
+      : (typeof localized.display === 'string' ? localized.display : '')
     return { original, display }
   })
   const parsedRestrictions = parseRestrictions(restrictionTexts)
@@ -125,9 +127,11 @@ export function buildOfficialScenarioModel(
     name: variant.name,
     formationLayoutId: formation?.id ?? null,
     objectiveArea: variant.objectiveArea ?? null,
+    slotTopology,
     forcedHeroes: asArray(variant.forcedHeroIds),
     enemyTypes: asArray(variant.enemyTypes),
     allowedHeroes: allowedHeroIds,
+    allowedTags,
     occupiedSlotCount: parsedRestrictions.lockedSlotCount,
     scenarioWarnings: [
       ...mechanicWarnings,
@@ -137,7 +141,5 @@ export function buildOfficialScenarioModel(
         ? ['当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。']
         : []),
     ],
-    slotTopology,
-    allowedTags,
   }
 }

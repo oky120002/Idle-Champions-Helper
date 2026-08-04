@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { useI18n } from '../../app/i18n'
 
 export interface PlannerHypotheticalEquipmentProps {
-  readonly rarity: number
-  readonly enchant: number
-  readonly onRarityChange: (rarity: number) => void
-  readonly onEnchantChange: (enchant: number) => void
+  rarity: number
+  enchant: number
+  onRarityChange: (rarity: number) => void
+  onEnchantChange: (enchant: number) => void
 }
 
 const RARITY_OPTIONS: ReadonlyArray<{ value: number; zh: string; en: string }> = [

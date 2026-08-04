@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react'
 
 interface FieldGroupProps {
-  readonly label: ReactNode
-  readonly children: ReactNode
-  readonly hint?: ReactNode
-  readonly as?: 'div' | 'label'
-  readonly className?: string
-  readonly labelFor?: string
+  label: ReactNode
+  children: ReactNode
+  hint?: ReactNode
+  as?: 'div' | 'label'
+  className?: string
+  labelFor?: string
 }
 
 export function FieldGroup({

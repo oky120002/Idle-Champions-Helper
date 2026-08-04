@@ -37,8 +37,8 @@ async function writeRawSnapshot(value: unknown): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       const transaction = database.transaction(APP_STORE_NAMES.userProfileSnapshots, 'readwrite')
       transaction.objectStore(APP_STORE_NAMES.userProfileSnapshots).put(value, 'current')
-      transaction.oncomplete = () => { resolve(); }
-      transaction.onerror = () => { reject(transaction.error ?? new Error('写入失败')); }
+      transaction.oncomplete = () => resolve()
+      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
     })
   } finally {
     database.close()

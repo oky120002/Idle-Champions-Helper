@@ -13,11 +13,11 @@ export interface StatusBannerStackItem {
 }
 
 interface StatusBannerStackProps {
-  readonly items: StatusBannerStackItem[]
+  items: StatusBannerStackItem[]
 }
 
 export function StatusBannerStack({ items }: StatusBannerStackProps) {
-  const visibleItems = items.filter((item) => item.hidden !== true)
+  const visibleItems = items.filter((item) => !item.hidden)
 
   if (visibleItems.length === 0) {
     return null

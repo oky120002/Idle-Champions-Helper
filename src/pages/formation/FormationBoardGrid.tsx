@@ -1,14 +1,11 @@
 import { Plus } from 'lucide-react'
-import type { ReactNode } from 'react'
-
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { getLocalizedTextPair, getPrimaryLocalizedText } from '../../domain/localizedText'
-import type { Champion, FormationSlot } from '../../domain/types'
 import { FormationBoardCanvas } from './FormationBoardCanvas'
 import type { FormationPageModel } from './types'
 
 interface FormationBoardGridProps {
-  readonly model: FormationPageModel
+  model: FormationPageModel
 }
 
 /**
@@ -20,11 +17,14 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
     selectedLayout,
     selectedChampions,
     championById,
+    getAvailableChampionsForSlot,
     activeMobileSlot,
     conflictingSeats,
     formationBoardStyle,
     locale,
     t,
+    getChampionOptionLabel,
+    setActiveMobileSlotId,
     handleAssignChampion,
   } = model
 
@@ -43,7 +43,7 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
       championById={championById}
       boardStyle={formationBoardStyle}
       onSlotDrop={(slotId, event) => {
-        const heroId = event.dataTransfer.getData('text/plain')
+        const heroId = event.dataTransfer?.getData('text/plain')
         if (heroId) {
           handleAssignChampion(slotId, heroId)
         }
@@ -65,85 +65,65 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
             .join(' ') || undefined
         )
       }}
-      slotExtras={(slot, champion) => renderSlotExtras(slot, champion, model, locale, t)}
+      slotExtras={(slot, champion) => {
+        const selectedChampionId = champion?.id ?? ''
+        const isMobileSlotActive = activeMobileSlot?.id === slot.id
+        const slotAriaLabel = champion
+          ? t({
+              zh: `编辑槽位 ${slot.id}，当前为 ${getPrimaryLocalizedText(champion.name, locale)}`,
+              en: `Edit slot ${slot.id}, current champion ${getPrimaryLocalizedText(champion.name, locale)}`,
+            })
+          : t({
+              zh: `编辑槽位 ${slot.id}，当前未放置`,
+              en: `Edit slot ${slot.id}, currently empty`,
+            })
+
+        return (
+          <>
+            <button
+              type="button"
+              className="formation-slot__tap-target"
+              data-testid={`formation-mobile-slot-${slot.id}`}
+              aria-label={slotAriaLabel}
+              aria-pressed={isMobileSlotActive}
+              onClick={() => setActiveMobileSlotId(slot.id)}
+            />
+            <div className="formation-slot__controls">
+              <select
+                className="slot-select"
+                aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
+                value={selectedChampionId}
+                onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
+              >
+                <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
+                {getAvailableChampionsForSlot(slot.id).map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {getChampionOptionLabel(item)}
+                  </option>
+                ))}
+              </select>
+              {champion ? (
+                <div className="formation-slot__current">
+                  <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot" />
+                  <span className="formation-slot__hint">
+                    {t({
+                      zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
+                      en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
+                    })}
+                  </span>
+                </div>
+              ) : (
+                <span className="formation-slot__hint">
+                  {t({
+                    zh: `坐标 ${slot.row}-${slot.column}`,
+                    en: `Position ${slot.row}-${slot.column}`,
+                  })}
+                </span>
+              )}
+            </div>
+          </>
+        )
+      }}
     />
-  )
-}
-
-function renderSlotExtras(slot: FormationSlot, champion: Champion | null, model: FormationPageModel, locale: FormationPageModel['locale'], t: FormationPageModel['t']): ReactNode {
-  const { activeMobileSlot, setActiveMobileSlotId } = model
-  const isMobileSlotActive = activeMobileSlot?.id === slot.id
-  const slotAriaLabel = buildSlotAriaLabel(slot, champion, locale, t)
-
-  return (
-    <>
-      <button
-        type="button"
-        className="formation-slot__tap-target"
-        data-testid={`formation-mobile-slot-${slot.id}`}
-        aria-label={slotAriaLabel}
-        aria-pressed={isMobileSlotActive}
-        onClick={() => { setActiveMobileSlotId(slot.id); }}
-      />
-      <div className="formation-slot__controls">
-        {renderSlotSelect(slot, champion, model, t)}
-        {renderSlotCurrentInfo(slot, champion, locale, t)}
-      </div>
-    </>
-  )
-}
-
-function buildSlotAriaLabel(slot: FormationSlot, champion: Champion | null, locale: FormationPageModel['locale'], t: FormationPageModel['t']): string {
-  return champion
-    ? t({
-        zh: `编辑槽位 ${slot.id}，当前为 ${getPrimaryLocalizedText(champion.name, locale)}`,
-        en: `Edit slot ${slot.id}, current champion ${getPrimaryLocalizedText(champion.name, locale)}`,
-      })
-    : t({
-        zh: `编辑槽位 ${slot.id}，当前未放置`,
-        en: `Edit slot ${slot.id}, currently empty`,
-      })
-}
-
-function renderSlotSelect(slot: FormationSlot, champion: Champion | null, model: FormationPageModel, t: FormationPageModel['t']): ReactNode {
-  const { getAvailableChampionsForSlot, getChampionOptionLabel, handleAssignChampion } = model
-  return (
-    <select
-      className="slot-select"
-      aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
-      value={champion?.id ?? ''}
-      onChange={(event) => { handleAssignChampion(slot.id, event.target.value); }}
-    >
-      <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
-      {getAvailableChampionsForSlot(slot.id).map((item) => (
-        <option key={item.id} value={item.id}>
-          {getChampionOptionLabel(item)}
-        </option>
-      ))}
-    </select>
-  )
-}
-
-function renderSlotCurrentInfo(slot: FormationSlot, champion: Champion | null, locale: FormationPageModel['locale'], t: FormationPageModel['t']): ReactNode {
-  if (champion) {
-    return (
-      <div className="formation-slot__current">
-        <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot" />
-        <span className="formation-slot__hint">
-          {t({
-            zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
-            en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
-          })}
-        </span>
-      </div>
-    )
-  }
-  return (
-    <span className="formation-slot__hint">
-      {t({
-        zh: `坐标 ${slot.row}-${slot.column}`,
-        en: `Position ${slot.row}-${slot.column}`,
-      })}
-    </span>
   )
 }

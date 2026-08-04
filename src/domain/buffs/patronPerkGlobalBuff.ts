@@ -46,7 +46,7 @@ export function collectActivePatronPerkEffects(
   if (!actualLevels) {
     return []
   }
-  const active = activePatronId !== null && activePatronId !== undefined && activePatronId !== '' ? String(activePatronId) : null
+  const active = activePatronId != null && activePatronId !== '' ? String(activePatronId) : null
   const out: ActiveCatalogEffect[] = []
   for (const perk of perks) {
     if (perk.typeId === 1 && active !== null && perk.patronId !== active) {

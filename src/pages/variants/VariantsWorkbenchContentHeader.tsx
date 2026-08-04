@@ -3,7 +3,7 @@ import { createWorkbenchShowingMetricItem } from '../../components/workbench/wor
 import type { VariantsPageModel } from './types'
 
 interface VariantsWorkbenchContentHeaderProps {
-  readonly model: VariantsPageModel
+  model: VariantsPageModel
 }
 
 export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchContentHeaderProps) {

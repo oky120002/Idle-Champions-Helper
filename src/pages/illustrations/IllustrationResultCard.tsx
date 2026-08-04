@@ -10,11 +10,11 @@ import { buildIllustrationAlt, buildIllustrationCardTitle, buildKindLabel } from
 import type { IllustrationsPageTranslator } from './types'
 
 type IllustrationResultCardProps = {
-  readonly entry: FilterableIllustration
-  readonly animation: ChampionAnimation | null
-  readonly locale: AppLocale
-  readonly t: IllustrationsPageTranslator
-  readonly onOpenChampion: () => void
+  entry: FilterableIllustration
+  animation: ChampionAnimation | null
+  locale: AppLocale
+  t: IllustrationsPageTranslator
+  onOpenChampion: () => void
 }
 
 function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampion }: IllustrationResultCardProps) {
@@ -52,9 +52,9 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
         en: `Open champion: ${championPrimaryName} (${title.primary})`,
       })}
       onMouseEnter={activatePreview}
-      onMouseLeave={() => { setPreviewActive(false); }}
+      onMouseLeave={() => setPreviewActive(false)}
       onFocus={activatePreview}
-      onBlur={() => { setPreviewActive(false); }}
+      onBlur={() => setPreviewActive(false)}
       onClick={onOpenChampion}
     >
       <div className="illustration-card__image-shell">
@@ -93,7 +93,7 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
       <div className="illustration-card__body">
         <h3 className="illustration-card__title" title={title.text}>
           <span className="illustration-card__title-primary">{title.primary}</span>
-          {title.secondary !== null ? (
+          {title.secondary ? (
             <>
               <span className="illustration-card__title-divider" aria-hidden="true">
                 ·
@@ -117,7 +117,7 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
           ))}
         </div>
 
-        {champion !== null && champion.affiliations.length > 0 ? (
+        {champion?.affiliations.length ? (
           <p className="illustration-card__supporting">
             {champion.affiliations.map((affiliation) => getPrimaryLocalizedText(affiliation, locale)).join(' / ')}
           </p>

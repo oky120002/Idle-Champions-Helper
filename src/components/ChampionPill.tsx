@@ -4,9 +4,9 @@ import type { Champion } from '../domain/types'
 import { ChampionAvatar } from './ChampionAvatar'
 
 interface ChampionPillProps {
-  readonly champion: Champion
-  readonly locale: AppLocale
-  readonly label?: string
+  champion: Champion
+  locale: AppLocale
+  label?: string
 }
 
 function buildDefaultLabel(champion: Champion, locale: AppLocale) {

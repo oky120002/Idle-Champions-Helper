@@ -87,8 +87,8 @@ describe('placement fit — pools', () => {
         ],
       }),
       supportSlotId: 's1',
-      aggregatePools: false,
       scenario,
+      aggregatePools: false,
     })
 
     // scoreBreakdown 照常产出（crit/vulnerability 维度消费它算 factor）

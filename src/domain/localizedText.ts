@@ -30,7 +30,7 @@ export function getLocalizedTextPair(value: LocalizedText, locale: AppLocale, se
   const primary = getPrimaryLocalizedText(value, locale)
   const secondary = getSecondaryLocalizedText(value, locale)
 
-  return secondary !== '' ? `${primary}${separator}${secondary}` : primary
+  return secondary ? `${primary}${separator}${secondary}` : primary
 }
 
 export function formatSeatLabel(seat: number, locale: AppLocale): string {

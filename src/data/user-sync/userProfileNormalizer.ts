@@ -138,10 +138,10 @@ function normalizeBlessingCatalog(value: unknown): BlessingCatalogEntry[] {
       perLevel: toNumberValue(effect.per_level),
     }))
     result.push({
+      id,
       type: toNumberValue(item.type),
       currencyId: toNumberValue(item.reset_currency_id),
       effects,
-      id,
     })
   }
   return result
@@ -257,10 +257,14 @@ function normalizeLegendaryByHeroId(value: unknown): Map<string, Record<string, 
   return legendaryByHeroId
 }
 
-const SCENARIO_KINDS: readonly string[] = ['campaign', 'adventure', 'variant', 'trial', 'timeGate']
-
 function isScenarioKind(value: unknown): value is ScenarioKind {
-  return typeof value === 'string' && SCENARIO_KINDS.includes(value)
+  return (
+    value === 'campaign' ||
+    value === 'adventure' ||
+    value === 'variant' ||
+    value === 'trial' ||
+    value === 'timeGate'
+  )
 }
 
 function normalizeScenarioRef(save: FormationSavePayload, warnings: string[]): ScenarioRef {
@@ -271,15 +275,15 @@ function normalizeScenarioRef(save: FormationSavePayload, warnings: string[]): S
     }
   }
 
-  if (save.variant_id !== undefined && save.variant_id !== '') {
+  if (save.variant_id !== null && save.variant_id !== undefined && save.variant_id !== '') {
     return { kind: 'variant', id: String(save.variant_id) }
   }
 
-  if (save.adventure_id !== undefined && save.adventure_id !== '') {
+  if (save.adventure_id !== null && save.adventure_id !== undefined && save.adventure_id !== '') {
     return { kind: 'adventure', id: String(save.adventure_id) }
   }
 
-  if (save.campaign_id !== undefined && save.campaign_id !== '') {
+  if (save.campaign_id !== null && save.campaign_id !== undefined && save.campaign_id !== '') {
     return { kind: 'campaign', id: String(save.campaign_id) }
   }
 
@@ -311,6 +315,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
       )
 
       return {
+        heroId,
         level: toNumberValue(hero.level),
         equipment: Object.keys(equipmentFromLoot).length > 0
           ? equipmentFromLoot
@@ -325,21 +330,14 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
           hero.gildable_slot_id === null || hero.gildable_slot_id === undefined || hero.gildable_slot_id === ''
             ? null
             : toStringValue(hero.gildable_slot_id),
+        lootBySlot,
         legendaryBySlot: legendaryByHeroId.get(heroId) ?? {},
         specializations: normalizeIdArray(hero.specialization_choices),
-        lootBySlot,
-        heroId,
       }
     })
     .filter((hero) => hero.isOwned)
 
-  return {
-    patronPerks,
-    blessings: { catalog: blessingCatalog, levels: blessingLevels },
-    warnings,
-    ownedHeroes,
-    activeContext,
-  }
+  return { ownedHeroes, patronPerks, blessings: { catalog: blessingCatalog, levels: blessingLevels }, activeContext, warnings }
 }
 
 export function normalizeCampaignDetails(

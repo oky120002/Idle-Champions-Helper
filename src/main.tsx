@@ -6,12 +6,7 @@ import { I18nProvider } from './app/i18n'
 import { ThemeProvider } from './app/theme'
 import './styles/global.css'
 
-const rootElement = document.getElementById('root')
-if (rootElement === null) {
-  throw new Error('Root element #root not found')
-}
-
-createRoot(rootElement).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nProvider>
       <ThemeProvider>

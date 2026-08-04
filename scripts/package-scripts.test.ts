@@ -1,7 +1,7 @@
+import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { describe, it, expect } from 'vitest';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8')) as {
@@ -17,7 +17,7 @@ for (const [name, cmd] of Object.entries(pkg.scripts ?? {})) {
   let m: RegExpExecArray | null;
   while ((m = re.exec(cmd)) !== null) {
     const target = m[1];
-    if (target !== undefined) nodeTargets.push({ name, target });
+    if (target) nodeTargets.push({ name, target });
   }
 }
 

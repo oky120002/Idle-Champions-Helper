@@ -37,7 +37,7 @@ function getResultsPaneTargetBottom(pane: HTMLElement): number {
 
 function scrollPaneTo(pane: HTMLElement, targetTop: number, onComplete?: () => void) {
   if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    pane.scrollTo({ top: targetTop, behavior: 'auto' })
+    pane.scrollTo?.({ top: targetTop, behavior: 'auto' })
     pane.scrollTop = targetTop
     onComplete?.()
     return () => undefined
@@ -56,12 +56,14 @@ function scrollPaneTo(pane: HTMLElement, targetTop: number, onComplete?: () => v
   const easeOutQuart = (progress: number) => 1 - (1 - progress) ** 4
 
   const step = (now: number) => {
-    startTime ??= now
+    if (startTime === null) {
+      startTime = now
+    }
 
     const progress = Math.min((now - startTime) / RESULTS_SCROLL_DURATION_MS, 1)
     const nextTop = startTop + distance * easeOutQuart(progress)
 
-    pane.scrollTo({ top: nextTop, behavior: 'auto' })
+    pane.scrollTo?.({ top: nextTop, behavior: 'auto' })
     pane.scrollTop = nextTop
 
     if (progress < 1) {
@@ -90,79 +92,26 @@ export function saveWorkbenchResultsPaneScroll(storageKey: string, search: strin
   window.sessionStorage.setItem(buildWorkbenchScrollRestoreKey(storageKey, search), String(scrollTop))
 }
 
-function scheduleScrollRestore(
-  resultsPaneRef: RefObject<HTMLDivElement | null>,
-  scrollTop: number,
-  storageRestoreKey: string,
-): () => void {
-  let frameId: number | null = null
-  let attemptCount = 0
-  const maxAttempts = 60
-  let cancelled = false
-
-  const restorePaneScrollTop = () => {
-    if (cancelled) {
-      return
-    }
-
-    attemptCount += 1
-    const pane = resultsPaneRef.current
-
-    if (!pane) {
-      if (attemptCount < maxAttempts) {
-        frameId = window.requestAnimationFrame(restorePaneScrollTop)
-      } else {
-        window.sessionStorage.removeItem(storageRestoreKey)
-      }
-      return
-    }
-
-    pane.scrollTo({ top: scrollTop, behavior: 'auto' })
-    pane.scrollTop = scrollTop
-
-    if (Math.abs(pane.scrollTop - scrollTop) <= 2 || attemptCount >= maxAttempts) {
-      window.sessionStorage.removeItem(storageRestoreKey)
-      return
-    }
-
-    frameId = window.requestAnimationFrame(restorePaneScrollTop)
-  }
-
-  frameId = window.requestAnimationFrame(() => {
-    frameId = window.requestAnimationFrame(restorePaneScrollTop)
-  })
-
-  return () => {
-    cancelled = true
-
-    if (frameId !== null) {
-      window.cancelAnimationFrame(frameId)
-    }
-  }
-}
-
-function restoreResultsScroll(
-  resultsPaneRef: RefObject<HTMLDivElement | null>,
-  storageRestoreKey: string,
-): (() => void) | undefined {
-  const stored = window.sessionStorage.getItem(storageRestoreKey)
-
-  if (stored === null) {
-    return undefined
-  }
-
-  const scrollTop = Number.parseFloat(stored)
-
-  if (!Number.isFinite(scrollTop)) {
-    window.sessionStorage.removeItem(storageRestoreKey)
-    return undefined
-  }
-
-  return scheduleScrollRestore(resultsPaneRef, scrollTop, storageRestoreKey)
-}
-
-function useScrollAnimationController(resultsPaneRef: RefObject<HTMLDivElement | null>) {
+export function useWorkbenchResultsMotion({
+  storageKey,
+  locationSearch,
+  stateStatus,
+  filteredCount,
+  visibleCount,
+  showAllResults,
+  transitionKey,
+}: WorkbenchResultsMotionOptions) {
+  const resultsPaneRef = useRef<HTMLDivElement | null>(null)
+  const hasAttemptedScrollRestoreRef = useRef(false)
+  const pendingResultsTransitionRef = useRef<PendingResultsTransition | null>(null)
+  const lastTransitionKeyRef = useRef(transitionKey)
   const cancelScrollAnimationRef = useRef<(() => void) | null>(null)
+  const [showResultsQuickNavTop, setShowResultsQuickNavTop] = useState(false)
+
+  const storageRestoreKey = useMemo(
+    () => buildWorkbenchScrollRestoreKey(storageKey, locationSearch),
+    [locationSearch, storageKey],
+  )
 
   const cancelScrollAnimation = useCallback(() => {
     cancelScrollAnimationRef.current?.()
@@ -186,112 +135,138 @@ function useScrollAnimationController(resultsPaneRef: RefObject<HTMLDivElement |
     [cancelScrollAnimation],
   )
 
-  useEffect(() => cancelScrollAnimation, [cancelScrollAnimation])
-
-  return { animatePaneScroll }
-}
-
-function applyResultsTransition(
-  lastTransitionKeyRef: RefObject<string>,
-  pendingResultsTransitionRef: RefObject<PendingResultsTransition | null>,
-  transitionKey: string,
-  animatePaneScroll: (targetTop: number) => void,
-): void {
-  if (lastTransitionKeyRef.current === transitionKey) {
-    return
-  }
-
-  lastTransitionKeyRef.current = transitionKey
-  const pendingTransition = pendingResultsTransitionRef.current
-
-  if (!pendingTransition) {
-    return
-  }
-
-  pendingResultsTransitionRef.current = null
-
-  if (!pendingTransition.shouldRelocate) {
-    return
-  }
-
-  animatePaneScroll(getResultsPaneTargetTop())
-}
-
-function attachResultsQuickNav(
-  resultsPaneRef: RefObject<HTMLDivElement | null>,
-  visibleCount: number,
-  filteredCount: number,
-  setShowResultsQuickNavTop: (value: boolean) => void,
-): () => void {
-  const updateResultsQuickNav = () => {
-    const pane = resultsPaneRef.current
-    const hasEnoughVisibleResults = visibleCount >= RESULTS_QUICK_NAV_THRESHOLD && filteredCount >= visibleCount
-
-    if (!pane || !hasEnoughVisibleResults) {
-      setShowResultsQuickNavTop(false)
-      return
-    }
-
-    const bottomTarget = getResultsPaneTargetBottom(pane)
-    const canScrollTop = pane.scrollTop > 80
-    const isVisible = bottomTarget > 240 && canScrollTop
-    setShowResultsQuickNavTop(isVisible)
-  }
-
-  updateResultsQuickNav()
-  const pane = resultsPaneRef.current
-  pane?.addEventListener('scroll', updateResultsQuickNav, { passive: true })
-  window.addEventListener('resize', updateResultsQuickNav)
-
-  return () => {
-    pane?.removeEventListener('scroll', updateResultsQuickNav)
-    window.removeEventListener('resize', updateResultsQuickNav)
-  }
-}
-
-export function useWorkbenchResultsMotion({
-  storageKey,
-  locationSearch,
-  stateStatus,
-  filteredCount,
-  visibleCount,
-  showAllResults,
-  transitionKey,
-}: WorkbenchResultsMotionOptions) {
-  const resultsPaneRef = useRef<HTMLDivElement | null>(null)
-  const hasAttemptedScrollRestoreRef = useRef(false)
-  const pendingResultsTransitionRef = useRef<PendingResultsTransition | null>(null)
-  const lastTransitionKeyRef = useRef(transitionKey)
-  const [showResultsQuickNavTop, setShowResultsQuickNavTop] = useState(false)
-  const storageRestoreKey = useMemo(
-    () => buildWorkbenchScrollRestoreKey(storageKey, locationSearch),
-    [locationSearch, storageKey],
-  )
-  const { animatePaneScroll } = useScrollAnimationController(resultsPaneRef)
   const prepareResultsViewportTransition = useCallback((reason: ResultsTransitionReason = 'filters') => {
     const pane = resultsPaneRef.current
+
     if (!pane) {
       return
     }
+
     pendingResultsTransitionRef.current = {
       shouldRelocate: pane.scrollTop > 8,
       reason,
     }
   }, [])
+
   const scrollResultsToTop = useCallback(() => {
     animatePaneScroll(getResultsPaneTargetTop())
   }, [animatePaneScroll])
+
   useEffect(() => {
     if (stateStatus !== 'ready' || hasAttemptedScrollRestoreRef.current || typeof window === 'undefined') {
-      return undefined
+      return
     }
+
     hasAttemptedScrollRestoreRef.current = true
-    return restoreResultsScroll(resultsPaneRef, storageRestoreKey)
+    const stored = window.sessionStorage.getItem(storageRestoreKey)
+
+    if (!stored) {
+      return
+    }
+
+    const scrollTop = Number.parseFloat(stored)
+
+    if (!Number.isFinite(scrollTop)) {
+      window.sessionStorage.removeItem(storageRestoreKey)
+      return
+    }
+
+    let frameId: number | null = null
+    let attemptCount = 0
+    const maxAttempts = 60
+    let cancelled = false
+
+    const restorePaneScrollTop = () => {
+      if (cancelled) {
+        return
+      }
+
+      attemptCount += 1
+      const pane = resultsPaneRef.current
+
+      if (!pane) {
+        if (attemptCount < maxAttempts) {
+          frameId = window.requestAnimationFrame(restorePaneScrollTop)
+        } else {
+          window.sessionStorage.removeItem(storageRestoreKey)
+        }
+        return
+      }
+
+      pane.scrollTo?.({ top: scrollTop, behavior: 'auto' })
+      pane.scrollTop = scrollTop
+
+      if (Math.abs(pane.scrollTop - scrollTop) <= 2 || attemptCount >= maxAttempts) {
+        window.sessionStorage.removeItem(storageRestoreKey)
+        return
+      }
+
+      frameId = window.requestAnimationFrame(restorePaneScrollTop)
+    }
+
+    frameId = window.requestAnimationFrame(() => {
+      frameId = window.requestAnimationFrame(restorePaneScrollTop)
+    })
+
+    return () => {
+      cancelled = true
+
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+    }
   }, [locationSearch, resultsPaneRef, showAllResults, stateStatus, storageRestoreKey, visibleCount])
+
   useLayoutEffect(() => {
-    applyResultsTransition(lastTransitionKeyRef, pendingResultsTransitionRef, transitionKey, animatePaneScroll)
+    if (lastTransitionKeyRef.current === transitionKey) {
+      return
+    }
+
+    lastTransitionKeyRef.current = transitionKey
+    const pendingTransition = pendingResultsTransitionRef.current
+
+    if (!pendingTransition) {
+      return
+    }
+
+    pendingResultsTransitionRef.current = null
+
+    if (!pendingTransition.shouldRelocate) {
+      return
+    }
+
+    animatePaneScroll(getResultsPaneTargetTop())
   }, [animatePaneScroll, transitionKey])
-  useEffect(() => attachResultsQuickNav(resultsPaneRef, visibleCount, filteredCount, setShowResultsQuickNavTop), [filteredCount, transitionKey, visibleCount])
+
+  useEffect(() => {
+    const updateResultsQuickNav = () => {
+      const pane = resultsPaneRef.current
+      const hasEnoughVisibleResults = visibleCount >= RESULTS_QUICK_NAV_THRESHOLD && filteredCount >= visibleCount
+
+      if (!pane || !hasEnoughVisibleResults) {
+        setShowResultsQuickNavTop(false)
+        return
+      }
+
+      const bottomTarget = getResultsPaneTargetBottom(pane)
+      const canScrollTop = pane.scrollTop > 80
+      const isVisible = bottomTarget > 240 && canScrollTop
+      setShowResultsQuickNavTop(isVisible)
+    }
+
+    updateResultsQuickNav()
+    const pane = resultsPaneRef.current
+    pane?.addEventListener('scroll', updateResultsQuickNav, { passive: true })
+    window.addEventListener('resize', updateResultsQuickNav)
+
+    return () => {
+      pane?.removeEventListener('scroll', updateResultsQuickNav)
+      window.removeEventListener('resize', updateResultsQuickNav)
+    }
+  }, [filteredCount, transitionKey, visibleCount])
+
+  useEffect(() => cancelScrollAnimation, [cancelScrollAnimation])
+
   return {
     resultsPaneRef,
     showResultsQuickNavTop,

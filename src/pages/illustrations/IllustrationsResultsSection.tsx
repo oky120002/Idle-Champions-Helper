@@ -3,7 +3,7 @@ import { IllustrationResultCard } from './IllustrationResultCard'
 import type { IllustrationsPageModel } from './types'
 
 type IllustrationsResultsSectionProps = {
-  readonly model: IllustrationsPageModel
+  model: IllustrationsPageModel
 }
 
 export function IllustrationsResultsSection({ model }: IllustrationsResultsSectionProps) {

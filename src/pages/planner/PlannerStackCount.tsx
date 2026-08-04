@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { useI18n } from '../../app/i18n'
 
 export interface PlannerStackCountProps {
-  readonly value: number
-  readonly onChange: (count: number) => void
+  value: number
+  onChange: (count: number) => void
 }
 
 /**

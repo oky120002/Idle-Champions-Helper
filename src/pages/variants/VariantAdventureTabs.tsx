@@ -3,7 +3,7 @@ import type { VariantDetailTabId, VariantsPageModel } from './types'
 import { VariantResultCard } from './VariantResultCard'
 
 type VariantAdventureTabsProps = {
-  readonly model: VariantsPageModel
+  model: VariantsPageModel
 }
 
 const TAB_IDS: VariantDetailTabId[] = ['variants', 'areas', 'story']
@@ -43,7 +43,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
                 ? 'variant-detail-tabs__button variant-detail-tabs__button--active'
                 : 'variant-detail-tabs__button'
             }
-            onClick={() => { selectDetailTab(tabId); }}
+            onClick={() => selectDetailTab(tabId)}
           >
             {getTabLabel(tabId, locale)}
           </button>

@@ -4,7 +4,7 @@ import { getDeliveryLabel } from './asset-model'
 import type { ChampionVisualWorkbenchModel } from './types'
 
 type ChampionVisualWorkbenchConsoleProps = {
-  readonly model: ChampionVisualWorkbenchModel
+  model: ChampionVisualWorkbenchModel
 }
 
 export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenchConsoleProps) {
@@ -36,7 +36,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
                 aria-label={option.label}
                 aria-pressed={isActive}
                 disabled={!isAvailable}
-                onClick={() => { setSelectedAssetId(option.id); }}
+                onClick={() => setSelectedAssetId(option.id)}
               >
                 <span className="visual-workbench__resource-label">{option.label}</span>
                 <span className="visual-workbench__resource-meta">
@@ -72,11 +72,11 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
                   type="button"
                   className={isActive ? 'visual-workbench__skin-button visual-workbench__skin-button--active' : 'visual-workbench__skin-button'}
                   aria-pressed={isActive}
-                  onClick={() => { setSelectedSkinId(skin.id); }}
+                  onClick={() => setSelectedSkinId(skin.id)}
                 >
                   <span className="visual-workbench__skin-kicker">skin #{skin.id}</span>
                   <strong className="visual-workbench__skin-name">{skinPrimaryName}</strong>
-                  {skinSecondaryName !== null && skinSecondaryName !== '' ? <span className="visual-workbench__skin-secondary">{skinSecondaryName}</span> : null}
+                  {skinSecondaryName ? <span className="visual-workbench__skin-secondary">{skinSecondaryName}</span> : null}
                   <span className="visual-workbench__skin-meta">
                     {pickLocaleText(locale, {
                       zh: `已登记 ${availableCount} 个资源槽位`,

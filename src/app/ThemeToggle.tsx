@@ -31,7 +31,7 @@ export function ThemeToggle() {
             aria-label={t(label)}
             title={t(label)}
             className={isActive ? 'theme-toggle__option theme-toggle__option--active' : 'theme-toggle__option'}
-            onClick={() => { setPreference(value); }}
+            onClick={() => setPreference(value)}
           >
             <Icon className="theme-toggle__icon" aria-hidden="true" strokeWidth={1.8} />
           </button>

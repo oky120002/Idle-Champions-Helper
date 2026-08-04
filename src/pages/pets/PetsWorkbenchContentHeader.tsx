@@ -3,7 +3,7 @@ import { createWorkbenchShowingMetricItem } from '../../components/workbench/wor
 import type { PetsPageModel } from './types'
 
 interface PetsWorkbenchContentHeaderProps {
-  readonly model: PetsPageModel
+  model: PetsPageModel
 }
 
 export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeaderProps) {

@@ -20,32 +20,6 @@ import { createExclusiveStatusBannerItems } from '../components/statusBannerStac
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetCard } from './presets/PresetCard'
 import { usePresetsPageModel } from './presets/usePresetsPageModel'
-import type { PresetsPageModel } from './presets/types'
-
-type Translator = PresetsPageModel['t']
-
-function buildManagementScopeSections(t: Translator): SurfaceCardContentSection[] {
-  return [
-    {
-      id: 'what-works-now',
-      title: t({ zh: '当前范围', en: 'What works now' }),
-      items: [
-        { id: 'browse-presets', content: t({ zh: '查看命名方案列表', en: 'Browse named presets' }) },
-        { id: 'edit-presets', content: t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' }) },
-        { id: 'delete-presets', content: t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' }) },
-        { id: 'restore-presets', content: t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' }) },
-      ],
-    },
-    {
-      id: 'current-boundary',
-      title: t({ zh: '当前边界', en: 'Current boundary' }),
-      detail: t({
-        zh: '最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。',
-        en: 'Recent drafts remain on the formation page for auto-save; this page manages only named presets. To add one, go back to the formation page and choose “Save as preset.”',
-      }),
-    },
-  ]
-}
 
 export function PresetsPage() {
   const model = usePresetsPageModel()
@@ -57,15 +31,68 @@ export function PresetsPage() {
   const contentStatusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
     status: state.status,
     items: [
-      { id: 'loading', when: 'loading', tone: 'info', children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }) },
-      { id: 'error', when: 'error', tone: 'error', title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }), ...(state.status === 'error' ? { detail: state.message } : {}) },
+      {
+        id: 'loading',
+        when: 'loading',
+        tone: 'info',
+        children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }),
+      },
+      {
+        id: 'error',
+        when: 'error',
+        tone: 'error',
+        title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
+        ...(state.status === 'error' ? { detail: state.message } : {}),
+      },
     ],
   })
-  const managementScopeSections = buildManagementScopeSections(t)
+  const managementScopeSections: SurfaceCardContentSection[] = [
+    {
+      id: 'what-works-now',
+      title: t({ zh: '当前范围', en: 'What works now' }),
+      items: [
+        {
+          id: 'browse-presets',
+          content: t({ zh: '查看命名方案列表', en: 'Browse named presets' }),
+        },
+        {
+          id: 'edit-presets',
+          content: t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' }),
+        },
+        {
+          id: 'delete-presets',
+          content: t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' }),
+        },
+        {
+          id: 'restore-presets',
+          content: t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' }),
+        },
+      ],
+    },
+    {
+      id: 'current-boundary',
+      title: t({ zh: '当前边界', en: 'Current boundary' }),
+      detail: t({
+        zh: '最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。',
+        en: 'Recent drafts remain on the formation page for auto-save; this page manages only named presets. To add one, go back to the formation page and choose “Save as preset.”',
+      }),
+    },
+  ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchBadgeItem({ id: 'preset-total', label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }) }),
-    createWorkbenchBadgeItem({ id: 'preset-recoverable', tone: 'muted', label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }) }),
-    createWorkbenchShareItem({ t, state: shareLinkState, onCopy: copyCurrentLink }),
+    createWorkbenchBadgeItem({
+      id: 'preset-total',
+      label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }),
+    }),
+    createWorkbenchBadgeItem({
+      id: 'preset-recoverable',
+      tone: 'muted',
+      label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }),
+    }),
+    createWorkbenchShareItem({
+      t,
+      state: shareLinkState,
+      onCopy: copyCurrentLink,
+    }),
   ]
 
   return (

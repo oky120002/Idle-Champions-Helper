@@ -12,7 +12,6 @@ import { DEFAULT_MANUAL_STACK_COUNT } from '../domain/planner/placementFit'
 import type { ScoringMode } from '../domain/planner/steadyStateScoring'
 import { formatSeatLabel, getLocalizedTextPair } from '../domain/localizedText'
 import type { Champion } from '../domain/types'
-import { buildScoringBonusInputs } from '../domain/planner/scoringBonusInputs'
 import { FormationBoardCanvas } from './formation/FormationBoardCanvas'
 import { HeroPicker } from './formation/HeroPicker'
 import { PlannerBreakdown } from './planner/PlannerBreakdown'
@@ -26,6 +25,7 @@ import {
   removeEvaluatePlacement,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
+import { buildScoringBonusInputs } from '../domain/planner/scoringBonusInputs'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 
@@ -86,7 +86,7 @@ export function PlannerEvaluatePage() {
   )
   // runner 单例：浏览器用 worker 卸载评分（拖拽重算不冻 UI）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
-  useEffect(() => () => { runner.dispose(); }, [runner])
+  useEffect(() => () => runner.dispose(), [runner])
   // 外部加成（装备 + patron + blessing）单一来源：buildScoringBonusInputs 纯函数装配，与主 planner 页同源。
   // 未导入存档（profileSnapshot=null）→ 各源缺省（无加成，向后兼容）。
   const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
@@ -473,7 +473,7 @@ export function PlannerEvaluatePage() {
                 <div
                   className="formation-remove-zone"
                   data-testid="planner-evaluate-remove-zone"
-                  onDragOver={(event) => { event.preventDefault(); }}
+                  onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault()
                     const heroId = event.dataTransfer?.getData('text/plain')

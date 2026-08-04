@@ -2,11 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
-import { I18nProvider } from '../../app/i18n'
-import { loadCollection } from '../../data/client'
-import { ChampionsPage } from '../ChampionsPage'
-import type { Champion, ChampionVisual, DataCollection, LocalizedText } from '../../domain/types'
-
 vi.mock('../../data/client', async () => {
   const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
 
@@ -15,6 +10,11 @@ vi.mock('../../data/client', async () => {
     loadCollection: vi.fn(),
   }
 })
+
+import { I18nProvider } from '../../app/i18n'
+import { loadCollection } from '../../data/client'
+import { ChampionsPage } from '../ChampionsPage'
+import type { Champion, ChampionVisual, DataCollection, LocalizedText } from '../../domain/types'
 
 interface StringEnumGroup {
   id: string

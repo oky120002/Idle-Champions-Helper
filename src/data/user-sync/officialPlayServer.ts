@@ -42,7 +42,7 @@ export function normalizeOfficialPlayServerBaseUrl(value: string): string {
 }
 
 export function readSwitchPlayServer(payload: unknown): string | null {
-  if (typeof payload !== 'object' || payload === null) {
+  if (!payload || typeof payload !== 'object') {
     return null
   }
 
@@ -73,7 +73,7 @@ export async function discoverOfficialPlayServer(
   }
 
   const payload: unknown = await response.json()
-  const playServer = typeof payload === 'object' && payload !== null
+  const playServer = payload && typeof payload === 'object'
     ? (payload as Record<string, unknown>).play_server
     : null
 
@@ -98,7 +98,7 @@ export async function resolveOfficialPlayServerBaseUrls(options: {
 } = {}): Promise<string[]> {
   const fetchImpl = options.fetchImpl ?? fetch
 
-  if (options.baseUrl !== undefined && options.baseUrl !== '') {
+  if (options.baseUrl) {
     return [normalizeOfficialPlayServerBaseUrl(options.baseUrl)]
   }
 

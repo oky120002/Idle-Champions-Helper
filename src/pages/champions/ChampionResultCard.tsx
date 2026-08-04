@@ -10,8 +10,8 @@ import { buildChampionCardAttributePills } from './champion-card-model'
 import type { ChampionsPageModel } from './types'
 
 interface ChampionResultCardProps {
-  readonly champion: Champion
-  readonly model: ChampionsPageModel
+  champion: Champion
+  model: ChampionsPageModel
 }
 
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
@@ -226,7 +226,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
             eyebrow={seatLabel}
             avatarClassName="champion-avatar--spotlight"
             supporting={
-              affiliationText !== null ? (
+              affiliationText ? (
                 <ChampionCardAffiliationText
                   text={affiliationText}
                   title={affiliationTitle ?? affiliationText}

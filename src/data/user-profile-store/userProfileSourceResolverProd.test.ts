@@ -3,8 +3,8 @@ import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { APP_DATABASE_NAME } from '../localDatabase'
-import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 import { saveUserProfileSnapshot } from './userProfileStore'
+import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 import {
   isLocalDevUserProfileSourceEnabled,
   readPreferredUserProfileSource,

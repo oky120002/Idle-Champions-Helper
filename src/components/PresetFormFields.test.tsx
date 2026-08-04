@@ -2,8 +2,8 @@ import type { ComponentProps } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import type { PresetPriority } from '../domain/types'
 import { PresetFormFields, type PresetFormFieldValue } from './PresetFormFields'
+import type { PresetPriority } from '../domain/types'
 
 const defaultValue: PresetFormFieldValue = {
   name: '推图常用队',
@@ -28,11 +28,9 @@ function renderPresetFormFields(
       descriptionLabel="方案备注"
       tagsLabel="场景标签"
       priorityLabel="优先级"
-      getPriorityOptionLabel={(option: PresetPriority) => {
-        if (option === 'high') return '高优先'
-        if (option === 'low') return '备用'
-        return '常用'
-      }}
+      getPriorityOptionLabel={(option: PresetPriority) =>
+        option === 'high' ? '高优先' : option === 'low' ? '备用' : '常用'
+      }
       onChange={onChange}
       {...overrides}
     />,

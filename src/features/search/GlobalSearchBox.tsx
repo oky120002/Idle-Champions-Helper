@@ -26,13 +26,13 @@ export function GlobalSearchBox() {
 
   useEffect(() => {
     if (!engine || !trimmed) {
-      return undefined
+      return
     }
     const handle = window.setTimeout(() => {
       setDebouncedHits(engine.search(trimmed, DROPDOWN_LIMIT))
       setActiveIndex(0)
     }, DEBOUNCE_MS)
-    return () => { window.clearTimeout(handle); }
+    return () => window.clearTimeout(handle)
   }, [engine, trimmed])
 
   const close = () => {
@@ -102,8 +102,8 @@ export function GlobalSearchBox() {
           aria-controls="global-search-listbox"
           aria-autocomplete="list"
           autoComplete="off"
-          onFocus={() => { setIsFocused(true); }}
-          onChange={(event) => { setQuery(event.target.value); }}
+          onFocus={() => setIsFocused(true)}
+          onChange={(event) => setQuery(event.target.value)}
           onKeyDown={onKeyDown}
         />
       </span>
@@ -126,8 +126,8 @@ export function GlobalSearchBox() {
                   ? 'global-search__option global-search__option--active'
                   : 'global-search__option'
               }
-              onMouseEnter={() => { setActiveIndex(index); }}
-              onClick={() => { goToHero(hit); }}
+              onMouseEnter={() => setActiveIndex(index)}
+              onClick={() => goToHero(hit)}
             >
               <SearchResultItem hit={hit} locale={locale} variant="compact" />
             </button>
@@ -139,7 +139,7 @@ export function GlobalSearchBox() {
                 ? 'global-search__all global-search__all--active'
                 : 'global-search__all'
             }
-            onMouseEnter={() => { setActiveIndex(results.length); }}
+            onMouseEnter={() => setActiveIndex(results.length)}
             onClick={goToAll}
           >
             {t({ zh: '查看全部结果', en: 'View all results' })}

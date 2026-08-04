@@ -2,8 +2,8 @@ import { useI18n } from '../../app/i18n'
 import type { ComputationMode } from '../../domain/planner/computationMode'
 
 export interface PlannerComputationModeProps {
-  readonly value: ComputationMode
-  readonly onChange: (mode: ComputationMode) => void
+  value: ComputationMode
+  onChange: (mode: ComputationMode) => void
 }
 
 const MODES: Array<{ id: ComputationMode; zh: string; en: string }> = [

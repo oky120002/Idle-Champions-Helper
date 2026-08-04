@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { createHash } from 'node:crypto'
 import { access, readdir, readFile, rm } from 'node:fs/promises'
 import type { Dirent } from 'node:fs'

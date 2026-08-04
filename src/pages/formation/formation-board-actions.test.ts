@@ -15,11 +15,11 @@ function buildActions(initialPlacements: Record<string, string>) {
     state: readyState,
     setSelectedLayoutId: vi.fn(),
     setActiveMobileSlotId: vi.fn(),
+    setPlacements,
     setScenarioRef: vi.fn(),
     setDraftStatus: vi.fn(),
     setPresetStatus: vi.fn(),
     bumpEditRevision: vi.fn(),
-    setPlacements,
   })
 
   return { actions, getPlacements: () => placements }

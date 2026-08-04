@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.ts'
@@ -210,8 +209,7 @@ async function main(): Promise<void> {
   console.log(`- resource sync state: ${resourceSyncStateFile}`)
 }
 
-const entryPoint = process.argv[1]
-if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
   main().catch((error: unknown) => {
     console.error(`构建公共数据失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

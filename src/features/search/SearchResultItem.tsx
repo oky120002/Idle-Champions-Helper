@@ -10,9 +10,9 @@ const BUCKET_LABELS_EN: Record<string, string> = {
 }
 
 interface SearchResultItemProps {
-  readonly hit: SearchHit
-  readonly locale: AppLocale
-  readonly variant: 'compact' | 'full'
+  hit: SearchHit
+  locale: AppLocale
+  variant: 'compact' | 'full'
 }
 
 function pickName(hit: SearchHit, locale: AppLocale): string {
@@ -20,7 +20,7 @@ function pickName(hit: SearchHit, locale: AppLocale): string {
   return locale === 'zh-CN' ? display || original : original || display
 }
 
-function HighlightedSnippet({ hit, locale }: { readonly hit: SearchHit; readonly locale: AppLocale }) {
+function HighlightedSnippet({ hit, locale }: { hit: SearchHit; locale: AppLocale }) {
   const text = pickBucketText(hit.doc, hit.bucket, hit.terms, locale)
   if (!text) {
     return null
@@ -44,11 +44,10 @@ export function SearchResultItem({ hit, locale, variant }: SearchResultItemProps
   const bucketLabel =
     locale === 'zh-CN' ? BUCKET_LABELS_ZH[hit.bucket] : (BUCKET_LABELS_EN[hit.bucket] ?? hit.bucket)
   const portraitPath = hit.doc.portrait?.path
-  const hasPortrait = portraitPath !== undefined && portraitPath !== ''
 
   return (
     <div className="search-result">
-      {hasPortrait ? (
+      {portraitPath ? (
         <img className="search-result__avatar" src={resolveDataUrl(portraitPath)} alt="" loading="lazy" />
       ) : (
         <span className="search-result__avatar search-result__avatar--fallback" aria-hidden="true">

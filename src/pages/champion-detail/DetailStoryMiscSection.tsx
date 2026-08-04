@@ -5,10 +5,10 @@ import { DetailCharacterSection } from './DetailCharacterSection'
 import type { DetailFieldProps } from './types'
 
 type DetailStoryMiscSectionProps = {
-  readonly detail: ChampionDetail
-  readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
-  readonly overviewFields: DetailFieldProps[]
+  detail: ChampionDetail
+  locale: 'zh-CN' | 'en-US'
+  t: (text: { zh: string; en: string }) => string
+  overviewFields: DetailFieldProps[]
 }
 
 function dedupeFields(fields: DetailFieldProps[]): DetailFieldProps[] {

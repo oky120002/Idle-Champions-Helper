@@ -14,7 +14,7 @@ export function tokenize(text: string): string[] {
   if (segmenter) {
     const terms: string[] = []
     for (const segment of segmenter.segment(text)) {
-      if (segment.isWordLike === true) {
+      if (segment.isWordLike) {
         terms.push(segment.segment.toLowerCase())
       }
     }

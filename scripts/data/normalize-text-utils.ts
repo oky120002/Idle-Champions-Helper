@@ -75,7 +75,7 @@ export function uniqueLocalizedTexts(values: readonly (LocalizedText | null)[]):
   const unique = new Map<string, LocalizedText>()
 
   for (const value of values) {
-    if (!value?.original || !value.display) {
+    if (!value || !value.original || !value.display) {
       continue
     }
 

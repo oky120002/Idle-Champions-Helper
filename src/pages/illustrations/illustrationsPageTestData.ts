@@ -34,6 +34,8 @@ export function createIllustration(
     skinId: overrides.skinId ?? null,
     kind: overrides.kind,
     seat: overrides.seat,
+    championName,
+    illustrationName,
     portraitPath: overrides.portraitPath ?? 'v1/champion-portraits/default.png',
     sourceSlot: overrides.sourceSlot ?? (overrides.kind === 'hero-base' ? 'base' : 'large'),
     sourceGraphicId: overrides.sourceGraphicId ?? `graphic-${overrides.id}`,
@@ -64,8 +66,6 @@ export function createIllustration(
         bytes: 65760,
         format: 'png',
       },
-    championName,
-    illustrationName,
   }
 }
 
@@ -83,6 +83,8 @@ export function createAnimation(
     skinId: overrides.skinId ?? null,
     kind: overrides.kind,
     seat: overrides.seat,
+    championName,
+    illustrationName,
     sourceSlot: overrides.sourceSlot ?? (overrides.kind === 'hero-base' ? 'base' : 'large'),
     sourceGraphicId: overrides.sourceGraphicId ?? `graphic-${overrides.id}`,
     sourceGraphic: overrides.sourceGraphic ?? `Characters/${overrides.id}`,
@@ -113,8 +115,6 @@ export function createAnimation(
           },
         },
       ],
-    championName,
-    illustrationName,
   }
 }
 

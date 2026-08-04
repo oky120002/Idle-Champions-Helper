@@ -4,10 +4,10 @@ import { getPrimaryLocalizedText } from '../domain/localizedText'
 import type { Champion } from '../domain/types'
 
 interface ChampionAvatarProps {
-  readonly champion: Champion
-  readonly locale: AppLocale
-  readonly className?: string
-  readonly loading?: 'eager' | 'lazy'
+  champion: Champion
+  locale: AppLocale
+  className?: string
+  loading?: 'eager' | 'lazy'
 }
 
 function buildAvatarAlt(champion: Champion, locale: AppLocale) {
@@ -16,7 +16,7 @@ function buildAvatarAlt(champion: Champion, locale: AppLocale) {
 }
 
 function buildClassName(className?: string) {
-  return className !== undefined && className !== '' ? `champion-avatar ${className}` : 'champion-avatar'
+  return className ? `champion-avatar ${className}` : 'champion-avatar'
 }
 
 export function ChampionAvatar({
@@ -25,8 +25,7 @@ export function ChampionAvatar({
   className,
   loading = 'lazy',
 }: ChampionAvatarProps) {
-  const path = champion.portrait?.path
-  if (path === undefined || path === '') {
+  if (!champion.portrait?.path) {
     return (
       <span className={`${buildClassName(className)} champion-avatar--fallback`} aria-hidden="true">
         {getPrimaryLocalizedText(champion.name, locale).slice(0, 1).toUpperCase()}
@@ -37,7 +36,7 @@ export function ChampionAvatar({
   return (
     <img
       className={buildClassName(className)}
-      src={resolveDataUrl(path)}
+      src={resolveDataUrl(champion.portrait.path)}
       alt={buildAvatarAlt(champion, locale)}
       loading={loading}
       width={256}

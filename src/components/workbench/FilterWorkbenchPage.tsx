@@ -14,34 +14,34 @@ import {
 } from './workbenchToolbarConfig'
 
 interface FilterWorkbenchPageFloatingTopButtonConfig {
-  readonly onClick: () => void
+  onClick: () => void
 }
 
 interface FilterWorkbenchPageSidebarHeaderConfig {
-  readonly kicker: ReactNode
-  readonly title?: ReactNode
-  readonly description?: ReactNode
-  readonly statusLabel: string
-  readonly activeCount: number
-  readonly clearLabel: string
-  readonly onClear?: (() => void) | undefined
+  kicker: ReactNode
+  title?: ReactNode
+  description?: ReactNode
+  statusLabel: string
+  activeCount: number
+  clearLabel: string
+  onClear?: (() => void) | undefined
 }
 
 interface FilterWorkbenchPageProps {
-  readonly pageClassName: string
-  readonly storageKey: string
-  readonly ariaLabel: string
-  readonly shellClassName: string
-  readonly contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
-  readonly contentOverlay?: ReactNode | undefined
-  readonly floatingTopButton?: FilterWorkbenchPageFloatingTopButtonConfig | undefined
-  readonly toolbar: WorkbenchToolbarConfig
-  readonly sidebarHeader: FilterWorkbenchPageSidebarHeaderConfig
-  readonly isReady: boolean
-  readonly sidebar: ReactNode
-  readonly contentHeader?: ReactNode | undefined
-  readonly statusItems: StatusBannerStackItem[]
-  readonly children: ReactNode
+  pageClassName: string
+  storageKey: string
+  ariaLabel: string
+  shellClassName: string
+  contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
+  contentOverlay?: ReactNode | undefined
+  floatingTopButton?: FilterWorkbenchPageFloatingTopButtonConfig | undefined
+  toolbar: WorkbenchToolbarConfig
+  sidebarHeader: FilterWorkbenchPageSidebarHeaderConfig
+  isReady: boolean
+  sidebar: ReactNode
+  contentHeader?: ReactNode | undefined
+  statusItems: StatusBannerStackItem[]
+  children: ReactNode
 }
 
 export function FilterWorkbenchPage({

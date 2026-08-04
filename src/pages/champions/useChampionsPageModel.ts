@@ -18,10 +18,10 @@ export function useChampionsPageModel(): ChampionsPageModel {
   const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
 
   const derived = useChampionsPageDerived({
-    filters: filterState.filters,
     locale,
     t,
     state,
+    filters: filterState.filters,
     randomOrderSeed,
   })
   const motion = useWorkbenchResultsMotion({

@@ -35,44 +35,39 @@ export function buildAssetOptions(
       asset: visual?.portrait?.remote ?? null,
       stageVariant: 'portrait',
     },
-    ...buildSkinAssetOptions(selectedSkin, locale),
-  ]
-}
-
-function buildSkinAssetOptions(
-  selectedSkin: ChampionSkinVisual | null,
-  locale: AppLocale,
-): AssetOption[] {
-  const skinHint = selectedSkin !== null
-    ? getPrimaryLocalizedText(selectedSkin.name, locale)
-    : pickLocaleText(locale, { zh: '选择一套皮肤后可查看', en: 'Pick a skin to inspect this slot' })
-
-  return [
     {
       id: 'skin-base',
       label: pickLocaleText(locale, { zh: '皮肤立绘', en: 'Skin art' }),
-      hint: skinHint,
+      hint: selectedSkin
+        ? getPrimaryLocalizedText(selectedSkin.name, locale)
+        : pickLocaleText(locale, { zh: '选择一套皮肤后可查看', en: 'Pick a skin to inspect this slot' }),
       asset: selectedSkin?.base ?? null,
       stageVariant: 'art',
     },
     {
       id: 'skin-large',
       label: pickLocaleText(locale, { zh: '皮肤 large', en: 'Skin large' }),
-      hint: skinHint,
+      hint: selectedSkin
+        ? getPrimaryLocalizedText(selectedSkin.name, locale)
+        : pickLocaleText(locale, { zh: '选择一套皮肤后可查看', en: 'Pick a skin to inspect this slot' }),
       asset: selectedSkin?.large ?? null,
       stageVariant: 'art',
     },
     {
       id: 'skin-xl',
       label: pickLocaleText(locale, { zh: '皮肤 xl', en: 'Skin xl' }),
-      hint: skinHint,
+      hint: selectedSkin
+        ? getPrimaryLocalizedText(selectedSkin.name, locale)
+        : pickLocaleText(locale, { zh: '选择一套皮肤后可查看', en: 'Pick a skin to inspect this slot' }),
       asset: selectedSkin?.xl ?? null,
       stageVariant: 'xl',
     },
     {
       id: 'skin-portrait',
       label: pickLocaleText(locale, { zh: '皮肤头像', en: 'Skin portrait' }),
-      hint: skinHint,
+      hint: selectedSkin
+        ? getPrimaryLocalizedText(selectedSkin.name, locale)
+        : pickLocaleText(locale, { zh: '选择一套皮肤后可查看', en: 'Pick a skin to inspect this slot' }),
       asset: selectedSkin?.portrait ?? null,
       stageVariant: 'portrait',
     },

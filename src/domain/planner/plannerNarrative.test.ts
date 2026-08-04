@@ -1,8 +1,8 @@
 import Decimal from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 
-import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { buildPlannerExplanations } from './plannerNarrative'
+import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { PlannerPlacementEntry } from './recommendationTypes'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 

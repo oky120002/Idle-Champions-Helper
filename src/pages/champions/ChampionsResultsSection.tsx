@@ -5,7 +5,7 @@ import type { ChampionsPageModel } from './types'
 import { useGridWidthReflowAnimation } from './useGridWidthReflowAnimation'
 
 interface ChampionsResultsSectionProps {
-  readonly model: ChampionsPageModel
+  model: ChampionsPageModel
 }
 
 export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps) {

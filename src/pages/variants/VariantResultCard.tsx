@@ -1,11 +1,11 @@
 import { LocalizedText } from '../../components/LocalizedText'
-import type { Variant } from '../../domain/types'
 import { getAreaHighlightLabel, getMechanicLabel } from './variant-labels'
+import type { Variant } from '../../domain/types'
 import type { VariantsPageModel } from './types'
 
 type VariantResultCardProps = {
-  readonly model: Pick<VariantsPageModel, 'locale' | 't'>
-  readonly variant: Variant
+  model: Pick<VariantsPageModel, 'locale' | 't'>
+  variant: Variant
 }
 
 export function VariantResultCard({ model, variant }: VariantResultCardProps) {

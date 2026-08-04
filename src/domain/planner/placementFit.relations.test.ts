@@ -14,15 +14,15 @@ describe('placement fit — relations', () => {
     const activeFit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportSlotId: 's1',
       supportHero,
+      supportSlotId: 's1',
       scenario,
     })
     const inactiveFit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's3',
-      supportSlotId: 's1',
       supportHero,
+      supportSlotId: 's1',
       scenario,
     })
 
@@ -47,15 +47,15 @@ describe('placement fit — relations', () => {
     const activeFit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's3',
-      supportSlotId: 's1',
       supportHero,
+      supportSlotId: 's1',
       scenario,
     })
     const inactiveFit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportSlotId: 's1',
       supportHero,
+      supportSlotId: 's1',
       scenario,
     })
 
@@ -81,15 +81,15 @@ describe('placement fit — relations', () => {
     const activeFit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportSlotId: 's2',
       supportHero,
+      supportSlotId: 's2',
       scenario,
     })
     const inactiveFit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's3',
-      supportSlotId: 's2',
       supportHero,
+      supportSlotId: 's2',
       scenario,
     })
 
@@ -549,9 +549,9 @@ describe('placement fit — relations', () => {
       carrySlotId: 's1',
       supportHero: support,
       supportSlotId: 's3',
+      scenario,
       placements: { s1: 'carry', s3: 'support' },
       heroesById: new Map([['carry', carry], ['support', support]]),
-      scenario,
     })
 
     const activeEntry = fit.scoreBreakdown.find((r) => r.rawEffect === 'hero_dps_multiplier_mult,100' && r.active)

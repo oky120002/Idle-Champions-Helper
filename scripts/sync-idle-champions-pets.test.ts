@@ -1,11 +1,10 @@
-import { Buffer } from 'node:buffer'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
-import { it, expect } from 'vitest'
-import { PNG } from 'pngjs'
 import { readJson, writeJson } from './data/io-utils.ts'
+import { PNG } from 'pngjs'
 import { syncPetsCatalog } from './sync-idle-champions-pets.ts'
 
 interface TestHooks {
@@ -434,13 +433,13 @@ it('输出宠物目录、获取方式与本地图像', async (ctx) => {
   const flashSalePet = byId.get('4')
   expect(flashSalePet?.acquisition.kind).toBe('premium')
   expect(flashSalePet?.acquisition.sourceType).toBe('flash_sale')
-  expect(flashSalePet?.acquisition.premiumPackName).toBeNull()
+  expect(flashSalePet?.acquisition.premiumPackName).toBe(null)
 
   const unreleasedPet = byId.get('5')
   expect(unreleasedPet?.isAvailable).toBe(false)
   expect(unreleasedPet?.acquisition.kind).toBe('not-yet-available')
-  expect(unreleasedPet?.icon).toBeNull()
-  expect(unreleasedPet?.illustration).toBeNull()
+  expect(unreleasedPet?.icon).toBe(null)
+  expect(unreleasedPet?.illustration).toBe(null)
 })
 
 it('会把 type=3 的宠物分件资源离线合成为单张 PNG', async (ctx) => {

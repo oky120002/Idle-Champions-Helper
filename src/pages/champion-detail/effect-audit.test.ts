@@ -1,6 +1,6 @@
+import { describe, expect, it } from 'vitest'
 import { readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
-import { describe, expect, it } from 'vitest'
 import type { ChampionDetail } from '../../domain/types'
 import { buildAttackLabelById, buildEffectContext, buildUpgradeLabelById } from './detail-derived-context'
 import { buildUpgradePresentation } from './effect-model'

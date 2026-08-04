@@ -18,10 +18,10 @@ export type AssetOption = {
 }
 
 export type ChampionVisualWorkbenchProps = {
-  readonly champion: Champion
-  readonly visual: ChampionVisual | null
-  readonly locale: AppLocale
-  readonly onClose: () => void
+  champion: Champion
+  visual: ChampionVisual | null
+  locale: AppLocale
+  onClose: () => void
 }
 
 export type ChampionVisualWorkbenchModel = {

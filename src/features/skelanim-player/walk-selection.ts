@@ -1,6 +1,6 @@
 import type { SkelAnimManifest } from '../../domain/types'
 import { computeFrameBounds, resolveRenderableFrameIndex } from './model'
-import type { PreparedSkelAnimData, SkelAnimBounds, SkelAnimFrame, SkelAnimPiece, SkelAnimSequence } from './types'
+import type { PreparedSkelAnimData, SkelAnimBounds, SkelAnimSequence } from './types'
 
 interface WalkSequenceMetrics {
   sequence: SkelAnimSequence
@@ -58,33 +58,6 @@ function buildWalkMotionScore(motionRatio: number) {
   return Math.max(0, 1 - distance / 0.4)
 }
 
-function computeFrameMotion(piece: SkelAnimPiece) {
-  let visibleCount = 0
-  let motionTotal = 0
-  let previousFrame: SkelAnimFrame | null = null
-
-  for (const frame of piece.frames) {
-    if (frame === null) {
-      continue
-    }
-
-    visibleCount += 1
-
-    if (previousFrame !== null) {
-      motionTotal +=
-        Math.abs(frame.x - previousFrame.x) +
-        Math.abs(frame.y - previousFrame.y) +
-        Math.abs(frame.rotation - previousFrame.rotation) * 12 +
-        Math.abs(frame.scaleX - previousFrame.scaleX) * 40 +
-        Math.abs(frame.scaleY - previousFrame.scaleY) * 40
-    }
-
-    previousFrame = frame
-  }
-
-  return { visibleCount, motionTotal, motionPairCount: visibleCount > 1 ? visibleCount - 1 : 0 }
-}
-
 function summarizeWalkSequenceMetrics(sequence: SkelAnimSequence): WalkSequenceMetrics {
   const frameCount = Math.max(1, sequence.length)
   const pieceCount = Math.max(1, sequence.pieces.length)
@@ -107,14 +80,38 @@ function summarizeWalkSequenceMetrics(sequence: SkelAnimSequence): WalkSequenceM
     renderableFrameCount += 1
     bounds = mergeBounds(bounds, frameBounds)
 
-    firstRenderableFrameIndex ??= frameIndex
+    if (firstRenderableFrameIndex === null) {
+      firstRenderableFrameIndex = frameIndex
+    }
   }
 
   for (const piece of sequence.pieces) {
-    const { visibleCount, motionTotal: pieceMotion, motionPairCount: piecePairs } = computeFrameMotion(piece)
+    let visibleCount = 0
+    let previousFrame = null
 
-    motionTotal += pieceMotion
-    motionPairCount += piecePairs
+    for (const frame of piece.frames) {
+      if (!frame) {
+        continue
+      }
+
+      visibleCount += 1
+
+      if (previousFrame) {
+        motionTotal +=
+          Math.abs(frame.x - previousFrame.x) +
+          Math.abs(frame.y - previousFrame.y) +
+          Math.abs(frame.rotation - previousFrame.rotation) * 12 +
+          Math.abs(frame.scaleX - previousFrame.scaleX) * 40 +
+          Math.abs(frame.scaleY - previousFrame.scaleY) * 40
+      }
+
+      previousFrame = frame
+    }
+
+    if (visibleCount > 1) {
+      motionPairCount += visibleCount - 1
+    }
+
     totalVisibleFrames += visibleCount
 
     if (visibleCount === frameCount) {
@@ -178,21 +175,16 @@ function buildWalkCandidateScore(
   )
 }
 
-type WalkMetrics = ReturnType<typeof resolveRenderableMetrics>[number]
-
-function meetsWalkVisibilityThresholds(candidate: WalkMetrics, current: WalkMetrics) {
-  return (
-    candidate.averageVisiblePieceRatio >= Math.max(0.58, current.averageVisiblePieceRatio - 0.18) &&
-    candidate.persistentPieceRatio >= Math.max(0.52, current.persistentPieceRatio - 0.22) &&
-    candidate.singleFramePieceRatio <= 0.28
-  )
-}
-
-function isWalkCandidate(candidate: WalkMetrics, current: WalkMetrics) {
+function isWalkCandidate(
+  candidate: ReturnType<typeof resolveRenderableMetrics>[number],
+  current: ReturnType<typeof resolveRenderableMetrics>[number],
+) {
   return (
     candidate.sequence.sequenceIndex !== current.sequence.sequenceIndex &&
     candidate.frameCount > 1 &&
-    meetsWalkVisibilityThresholds(candidate, current) &&
+    candidate.averageVisiblePieceRatio >= Math.max(0.58, current.averageVisiblePieceRatio - 0.18) &&
+    candidate.persistentPieceRatio >= Math.max(0.52, current.persistentPieceRatio - 0.22) &&
+    candidate.singleFramePieceRatio <= 0.28 &&
     candidate.averageMotion > current.averageMotion
   )
 }
@@ -243,29 +235,6 @@ function resolveWalkFallbackFrameIndex(
   return resolveRenderableFrameIndex(sequence, manifest.defaultFrameIndex) ?? firstRenderableFrameIndex
 }
 
-function resolveBestWalkCandidate(metrics: WalkMetrics[], current: WalkMetrics) {
-  return metrics
-    .filter((item) => isWalkCandidate(item, current))
-    .map((item) => ({
-      ...item,
-      walkCandidateScore: buildWalkCandidateScore(item, current),
-    }))
-    .sort(
-      (left, right) =>
-        right.walkCandidateScore - left.walkCandidateScore ||
-        left.sequence.sequenceIndex - right.sequence.sequenceIndex,
-    )[0] ?? null
-}
-
-function hasWalkRenderInfo(
-  metrics: WalkMetrics | null,
-): metrics is WalkMetrics & { firstRenderableFrameIndex: number; bounds: SkelAnimBounds } {
-  if (metrics === null) {
-    return false
-  }
-  return metrics.firstRenderableFrameIndex !== null && metrics.bounds !== null
-}
-
 export function resolveWalkSequenceSelection(
   manifest: SkelAnimManifest,
   prepared: PreparedSkelAnimData,
@@ -276,13 +245,24 @@ export function resolveWalkSequenceSelection(
     renderableMetrics[0] ??
     null
 
-  if (!hasWalkRenderInfo(current)) {
+  if (!current || current.firstRenderableFrameIndex === null || !current.bounds) {
     return null
   }
 
-  const candidate = resolveBestWalkCandidate(renderableMetrics, current)
+  const candidate =
+    renderableMetrics
+      .filter((item) => isWalkCandidate(item, current))
+      .map((item) => ({
+        ...item,
+        walkCandidateScore: buildWalkCandidateScore(item, current),
+      }))
+      .sort(
+        (left, right) =>
+          right.walkCandidateScore - left.walkCandidateScore ||
+          left.sequence.sequenceIndex - right.sequence.sequenceIndex,
+      )[0] ?? null
 
-  if (!hasWalkRenderInfo(candidate)) {
+  if (!candidate || candidate.firstRenderableFrameIndex === null || !candidate.bounds) {
     const fallbackFrameIndex = resolveWalkFallbackFrameIndex(
       manifest,
       current.sequence,

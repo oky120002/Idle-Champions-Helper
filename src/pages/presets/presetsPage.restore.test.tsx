@@ -5,6 +5,12 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
+vi.mock('../../data/client', () => ({
+  loadCollection: vi.fn(),
+  loadCollectionAtVersion: vi.fn(),
+  loadVersion: vi.fn(),
+}))
+
 import { I18nProvider } from '../../app/i18n'
 import { readRecentFormationDraft } from '../../data/formationDraftStore'
 import { saveFormationPreset } from '../../data/formationPresetStore'
@@ -13,12 +19,6 @@ import { loadCollection, loadCollectionAtVersion, loadVersion } from '../../data
 import { FormationPage } from '../FormationPage'
 import { PresetsPage } from '../PresetsPage'
 import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
-
-vi.mock('../../data/client', () => ({
-  loadCollection: vi.fn(),
-  loadCollectionAtVersion: vi.fn(),
-  loadVersion: vi.fn(),
-}))
 
 const versionFixture: DataVersion = {
   current: 'v1',

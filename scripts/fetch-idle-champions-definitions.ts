@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
@@ -204,8 +203,7 @@ async function main(): Promise<void> {
   console.log(`- Play server: ${result.playServer}`)
 }
 
-const entryPoint = process.argv[1]
-if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
   main().catch((error: unknown) => {
     console.error(`抓取 definitions 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

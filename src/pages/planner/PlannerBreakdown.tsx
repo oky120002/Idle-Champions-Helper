@@ -37,9 +37,9 @@ const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
 }
 
 interface PlannerBreakdownProps {
-  readonly breakdown: SimulationBreakdown | null
+  breakdown: SimulationBreakdown | null
   /** heroId → 展示名（由调用方从 placementEntries 构造）。 */
-  readonly heroNameById: Map<string, string>
+  heroNameById: Map<string, string>
 }
 
 /**

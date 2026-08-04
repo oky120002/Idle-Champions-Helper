@@ -61,8 +61,8 @@ describe('normalizeFeatEntry', () => {
       id: 101, hero_id: 7, rarity: 3,
       effects: [{ effect_string: 'buff_upgrades,25,111,112' }],
     })
-    expect(e?.buffWrappers.map((w) => w.targetUpgradeId).sort()).toEqual(['111', '112'])
-    expect(e?.buffWrappers.every((w) => w.value === 25)).toBe(true)
+    expect(e?.buffWrappers?.map((w) => w.targetUpgradeId).sort()).toEqual(['111', '112'])
+    expect(e?.buffWrappers?.every((w) => w.value === 25)).toBe(true)
   })
 
   it('仅 buff_upgrade（无 direct scoring signal）→ 保留（buffWrappers 非空不 null）', () => {
@@ -83,7 +83,7 @@ describe('buildFeatCatalog', () => {
       { id: 270, hero_id: 7, rarity: 4, effects: [{ effect_string: 'increase_ability_score,cha,2' }] }, // null
       { id: 1, hero_id: 4, rarity: 3, effects: [{ effect_string: 'gold_multiplier_mult,25' }] },
     ])
-    expect(Object.keys(catalog).sort((a, b) => a.localeCompare(b))).toEqual(['4', '7'])
+    expect(Object.keys(catalog).sort()).toEqual(['4', '7'])
     expect(catalog['7']).toHaveLength(1) // 270 过滤
     expect(catalog['7']?.[0]?.id).toBe('35')
   })

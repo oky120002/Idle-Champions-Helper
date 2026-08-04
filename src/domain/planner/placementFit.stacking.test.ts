@@ -23,10 +23,10 @@ describe('placement fit — stacking', () => {
     const fit = evaluatePlacementFit({
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportSlotId: 's2',
-      manualStackCount: 10,
       supportHero,
+      supportSlotId: 's2',
       scenario,
+      manualStackCount: 10,
     })
 
     // percentToMultiplier(100)=2 → 2^10 = 1024（乘算堆叠，非线性累加）
@@ -51,10 +51,10 @@ describe('placement fit — stacking', () => {
     const fit = evaluatePlacementFit({
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportSlotId: 's2',
-      manualStackCount: 1000,
       supportHero,
+      supportSlotId: 's2',
       scenario,
+      manualStackCount: 1000,
     })
     expect(fit.totalMultiplier).toBe(1)
     expect(fit.warnings.some((w) => w.includes('溢出'))).toBe(true)
@@ -88,12 +88,12 @@ describe('placement fit — stacking', () => {
     const fit = evaluatePlacementFit({
       carryHero: supportHero,
       carrySlotId: 's2',
+      supportHero,
       supportSlotId: 's2',
+      scenario,
       placements: { s2: 'support' },
       heroesById: new Map([['support', supportHero]]),
       manualStackCount: 5,
-      supportHero,
-      scenario,
     })
     expect(fit.totalMultiplier).toBe(1)
     expect(fit.scoreBreakdown.find((r) => r.rawEffect === 'buff_upgrade,10,1')?.active).toBe(false)
@@ -114,8 +114,8 @@ describe('placement fit — stacking', () => {
     const baseInput = {
       carryHero: supportHero,
       carrySlotId: 's2' as const,
-      supportSlotId: 's2' as const,
       supportHero,
+      supportSlotId: 's2' as const,
       scenario,
     }
 

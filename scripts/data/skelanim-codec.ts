@@ -1,4 +1,3 @@
-import type { Buffer } from 'node:buffer'
 import zlib from 'node:zlib'
 
 interface OffsetRef {

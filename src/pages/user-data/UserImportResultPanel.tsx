@@ -4,7 +4,7 @@ import { createExclusiveStatusBannerItems } from '../../components/statusBannerS
 import type { UserDataPageModel } from './types'
 
 type UserImportResultPanelProps = {
-  readonly model: UserDataPageModel
+  model: UserDataPageModel
 }
 
 export function UserImportResultPanel({ model }: UserImportResultPanelProps) {

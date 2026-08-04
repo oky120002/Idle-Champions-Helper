@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { computeCarryDps, computeLevelCurve } from './baseDps'
+import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 
 function hero(overrides: Partial<ResolvedHeroAbilityProfile> = {}): ResolvedHeroAbilityProfile {
   return {

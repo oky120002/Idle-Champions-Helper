@@ -2,10 +2,10 @@ import type { AppLocale } from './i18n'
 import type { TranslationFn } from './appNavigation'
 
 interface LocaleSwitcherProps {
-  readonly locale: AppLocale
-  readonly onSelect: (locale: AppLocale) => void
-  readonly t: TranslationFn
-  readonly surface: 'toolbar' | 'panel'
+  locale: AppLocale
+  onSelect: (locale: AppLocale) => void
+  t: TranslationFn
+  surface: 'toolbar' | 'panel'
 }
 
 function buildNextLocale(locale: AppLocale): AppLocale {
@@ -37,7 +37,7 @@ function LocaleSwitcher({ locale, onSelect, t, surface }: LocaleSwitcherProps) {
           aria-checked={isEnglish}
           aria-label={switchLabel}
           title={switchHint}
-          onClick={() => { onSelect(nextLocale); }}
+          onClick={() => onSelect(nextLocale)}
         >
           <span className="locale-switcher__toggle-track" aria-hidden="true">
             <span className="locale-switcher__toggle-option locale-switcher__toggle-option--zh">中</span>
@@ -51,9 +51,9 @@ function LocaleSwitcher({ locale, onSelect, t, surface }: LocaleSwitcherProps) {
 }
 
 interface ToolbarLocaleSwitcherProps {
-  readonly locale: AppLocale
-  readonly onSelect: (locale: AppLocale) => void
-  readonly t: TranslationFn
+  locale: AppLocale
+  onSelect: (locale: AppLocale) => void
+  t: TranslationFn
 }
 
 export function ToolbarLocaleSwitcher(props: ToolbarLocaleSwitcherProps) {
@@ -61,9 +61,9 @@ export function ToolbarLocaleSwitcher(props: ToolbarLocaleSwitcherProps) {
 }
 
 interface PanelLocaleSwitcherProps {
-  readonly locale: AppLocale
-  readonly onSelect: (locale: AppLocale) => void
-  readonly t: TranslationFn
+  locale: AppLocale
+  onSelect: (locale: AppLocale) => void
+  t: TranslationFn
 }
 
 export function PanelLocaleSwitcher(props: PanelLocaleSwitcherProps) {

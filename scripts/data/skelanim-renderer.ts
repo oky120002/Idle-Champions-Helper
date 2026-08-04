@@ -1,4 +1,3 @@
-import type { Buffer } from 'node:buffer'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
 import type {
   SkelAnimCharacter,

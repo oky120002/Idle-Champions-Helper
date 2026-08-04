@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import type { JsonValue, ChampionDetail, ChampionRawEntry, ChampionUpgradeDetail  } from '../../domain/types'
+import type { JsonValue } from '../../domain/types'
 import { buildAttackLabelById, buildEffectContext, buildUpgradeLabelById } from './detail-derived-context'
 import { buildEffectDefinitionPresentation, buildUpgradePresentation } from './effect-model'
 import { championDetailBaseFixture } from './championDetailBaseFixture'
 import { championDetailCatalogFixture } from './championDetailCatalogFixture'
+import type { ChampionDetail, ChampionRawEntry, ChampionUpgradeDetail } from '../../domain/types'
 
 function createDetail(overrides?: Partial<ChampionDetail>): ChampionDetail {
   return {

@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer'
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -103,7 +102,7 @@ export function createChampionGraphicResourceCache(
   let cacheDirPromise: Promise<unknown> | null = null
 
   async function ensureCacheDir(): Promise<void> {
-    if (cacheDirPromise === null) {
+    if (!cacheDirPromise) {
       cacheDirPromise = mkdir(cacheDir, { recursive: true })
     }
 

@@ -13,7 +13,6 @@ import {
   saveUserProfileSnapshot,
 } from '../../data/user-profile-store'
 import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
-import { unwrap } from '../../../tests/utils/dom-assertions'
 import { PlannerProfileState } from './PlannerProfileState'
 
 async function resetDatabase(): Promise<void> {
@@ -81,6 +80,6 @@ describe('PlannerProfileState', () => {
     // Data should still be the old snapshot (no auto-refresh)
     const snapshot = await readUserProfileSnapshot()
     expect(snapshot).not.toBeNull()
-    expect(new Date(unwrap(snapshot, 'snapshot should not be null').updatedAt).getDate()).toBe(oldSnapshot.getDate())
+    expect(new Date(snapshot!.updatedAt).getDate()).toBe(oldSnapshot.getDate())
   })
 })

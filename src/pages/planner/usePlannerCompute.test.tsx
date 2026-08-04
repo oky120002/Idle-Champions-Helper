@@ -3,8 +3,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { PlannerComputeRunner } from '../../domain/planner/compute/plannerCompute'
 import type { FormationEvaluation, PlannerRecommendationOptions } from '../../domain/planner/recommendationEngine'
-import { unwrap } from '../../../tests/utils/dom-assertions'
-
 import type { PlannerCollections, PlannerRecommendation } from '../../domain/planner/recommendationTypes'
 import { usePlannerEvaluation, usePlannerRecommendation } from './usePlannerCompute'
 
@@ -41,7 +39,7 @@ function createControllableRunner(): ControllableRunner {
   }
   return {
     runner,
-    resolveRecommend: (index, value) => { unwrap(recommendResolvers.at(index), `recommendResolvers[${index}] not set`)(value); },
+    resolveRecommend: (index, value) => recommendResolvers.at(index)!(value),
   }
 }
 

@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
 import type { SkelAnimManifest } from '../../domain/types'
-import { unwrap } from '../../../tests/utils/dom-assertions'
 import { resolveWalkSequenceSelection } from './walk-selection'
 import type { PreparedSkelAnimData, SkelAnimFrame, SkelAnimPiece, SkelAnimSequence } from './types'
 
@@ -25,7 +24,7 @@ function buildPiece(frames: Array<SkelAnimFrame | null>, overrides: Partial<Skel
 }
 
 function buildSequence(sequenceIndex: number, pieces: SkelAnimPiece[]): SkelAnimSequence {
-  return { sequenceIndex, pieces, length: pieces[0]?.frames.length ?? 1 }
+  return { sequenceIndex, length: pieces[0]?.frames.length ?? 1, pieces }
 }
 
 function buildPrepared(sequences: SkelAnimSequence[]): PreparedSkelAnimData {
@@ -46,12 +45,12 @@ function buildManifest(
   sequenceCount: number,
 ): SkelAnimManifest {
   return {
-    defaultSequenceIndex,
-    defaultFrameIndex,
     sourceGraphicId: 'g',
     sourceGraphic: 'g',
     sourceVersion: 1,
     fps: 30,
+    defaultSequenceIndex,
+    defaultFrameIndex,
     asset: { path: 'a', bytes: 0, format: 'skelanim-zlib' },
     sequences: Array.from({ length: sequenceCount }, (_, index) => ({
       sequenceIndex: index,
@@ -88,9 +87,8 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 1), prepared)
 
     expect(result).not.toBeNull()
-    const selection = unwrap(result, 'walk selection should not be null')
-    expect(selection.sequence.sequenceIndex).toBe(0)
-    expect(selection.startFrameIndex).toBe(0)
+    expect(result!.sequence.sequenceIndex).toBe(0)
+    expect(result!.startFrameIndex).toBe(0)
   })
 
   it('viewport bounds 被 pad 向外但不超出 manifest 声明的 fallback bounds（clamp 生效）', () => {
@@ -101,13 +99,12 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 1), prepared)
 
     expect(result).not.toBeNull()
-    const { bounds } = unwrap(result, 'walk selection should not be null')
-    expect(bounds.minX).toBeGreaterThanOrEqual(0)
-    expect(bounds.minY).toBeGreaterThanOrEqual(0)
-    expect(bounds.maxX).toBeGreaterThan(2)
-    expect(bounds.maxX).toBeLessThan(10)
-    expect(bounds.maxY).toBeGreaterThan(2)
-    expect(bounds.maxY).toBeLessThan(10)
+    expect(result!.bounds.minX).toBeGreaterThanOrEqual(0)
+    expect(result!.bounds.minY).toBeGreaterThanOrEqual(0)
+    expect(result!.bounds.maxX).toBeGreaterThan(2)
+    expect(result!.bounds.maxX).toBeLessThan(10)
+    expect(result!.bounds.maxY).toBeGreaterThan(2)
+    expect(result!.bounds.maxY).toBeLessThan(10)
   })
 
   it('defaultFrameIndex 指向非 0 的可渲染帧时，fallback 取该帧索引', () => {
@@ -119,9 +116,8 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(0, 1, 1), prepared)
 
     expect(result).not.toBeNull()
-    const selection = unwrap(result, 'walk selection should not be null')
-    expect(selection.sequence.sequenceIndex).toBe(0)
-    expect(selection.startFrameIndex).toBe(1)
+    expect(result!.sequence.sequenceIndex).toBe(0)
+    expect(result!.startFrameIndex).toBe(1)
   })
 
   it('default 序列不在可渲染集合时，current 回退到首个可渲染序列', () => {
@@ -131,7 +127,7 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(9, 0, 1), prepared)
 
     expect(result).not.toBeNull()
-    expect(unwrap(result, 'walk selection should not be null').sequence.sequenceIndex).toBe(0)
+    expect(result!.sequence.sequenceIndex).toBe(0)
   })
 })
 
@@ -147,7 +143,7 @@ describe('resolveWalkSequenceSelection · 候选选择路径', () => {
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 2), prepared)
 
     expect(result).not.toBeNull()
-    expect(unwrap(result, 'walk selection should not be null').sequence.sequenceIndex).toBe(1)
+    expect(result!.sequence.sequenceIndex).toBe(1)
   })
 
   it('候选 motion 不高于 current 时不入选，回落 fallback 返回 default', () => {
@@ -160,7 +156,7 @@ describe('resolveWalkSequenceSelection · 候选选择路径', () => {
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 2), prepared)
 
     expect(result).not.toBeNull()
-    expect(unwrap(result, 'walk selection should not be null').sequence.sequenceIndex).toBe(0)
+    expect(result!.sequence.sequenceIndex).toBe(0)
   })
 
   it('候选帧数<=1 时不满足 frameCount>1，回落 fallback', () => {
@@ -173,6 +169,6 @@ describe('resolveWalkSequenceSelection · 候选选择路径', () => {
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 2), prepared)
 
     expect(result).not.toBeNull()
-    expect(unwrap(result, 'walk selection should not be null').sequence.sequenceIndex).toBe(0)
+    expect(result!.sequence.sequenceIndex).toBe(0)
   })
 })

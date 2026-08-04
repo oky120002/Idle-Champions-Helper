@@ -28,8 +28,8 @@ export function useVariantCollectionState(): VariantState {
         setState({
           status: 'ready',
           variants: variantCollection.items,
-          formations: formationCollection.items,
           campaigns,
+          formations: formationCollection.items,
         })
       })
       .catch((error: unknown) => {

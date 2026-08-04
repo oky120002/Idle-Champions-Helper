@@ -15,7 +15,7 @@ function collectEffectStrings(value: unknown, effectStrings: string[], depth = 0
   }
 
   if (Array.isArray(value)) {
-    value.forEach((item) => { collectEffectStrings(item, effectStrings, depth + 1); })
+    value.forEach((item) => collectEffectStrings(item, effectStrings, depth + 1))
     return
   }
 
@@ -27,7 +27,7 @@ function collectEffectStrings(value: unknown, effectStrings: string[], depth = 0
     effectStrings.push(value.effect_string)
   }
 
-  Object.values(value).forEach((item) => { collectEffectStrings(item, effectStrings, depth + 1); })
+  Object.values(value).forEach((item) => collectEffectStrings(item, effectStrings, depth + 1))
 }
 
 function buildUpgradeTargetIdMap(detail: ChampionDetail): Map<string, Set<string>> {

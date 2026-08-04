@@ -13,74 +13,70 @@ import {
 } from './formatting'
 
 interface PetResultCardProps {
-  readonly pet: Pet
-  readonly animation: PetAnimation | null
-}
-
-type I18nT = ReturnType<typeof useI18n>['t']
-
-const SKEL_ANIM_LABELS = (t: I18nT) => ({
-  play: t({ zh: '播放动画', en: 'Play animation' }),
-  pause: t({ zh: '暂停动画', en: 'Pause animation' }),
-  reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),
-  error: t({ zh: '动态预览加载失败', en: 'Animated preview failed to load' }),
-  animated: t({ zh: '动态预览已启用', en: 'Animated preview enabled' }),
-  fallback: t({ zh: '当前显示静态立绘', en: 'Showing static illustration' }),
-})
-
-function renderPetIllustration(
-  pet: Pet,
-  animation: PetAnimation | null,
-  shouldShowAnimatedPreview: boolean,
-  fallbackSrc: string | null,
-  illustrationAlt: string,
-  t: I18nT,
-) {
-  if (pet.illustration === null) {
-    return (
-      <div className="pet-card__stage-empty">
-        <strong>{t({ zh: '暂无立绘', en: 'No illustration yet' })}</strong>
-        <span>{t({ zh: '当前 definitions 里没有可用的 XL 图像槽位。', en: 'The current definitions do not expose a usable XL art slot yet.' })}</span>
-      </div>
-    )
-  }
-
-  if (shouldShowAnimatedPreview && animation !== null) {
-    return (
-      <SkelAnimCanvas className="pet-card__preview" animation={animation} fallbackSrc={fallbackSrc} alt={illustrationAlt}
-        labels={SKEL_ANIM_LABELS(t)} playbackMode="play" showControls={false} showStatus={false} />
-    )
-  }
-
-  return (
-    <img className="pet-card__illustration" src={fallbackSrc ?? undefined} alt={illustrationAlt}
-      loading="lazy" width={pet.illustration.width} height={pet.illustration.height} />
-  )
+  pet: Pet
+  animation: PetAnimation | null
 }
 
 export function PetResultCard({ pet, animation }: PetResultCardProps) {
   const { locale, t } = useI18n()
   const [isPreviewActive, setPreviewActive] = useState(false)
   const primaryName = getPrimaryLocalizedText(pet.name, locale)
-  const primaryDescription = pet.description !== null ? getPrimaryLocalizedText(pet.description, locale) : null
+  const primaryDescription = pet.description ? getPrimaryLocalizedText(pet.description, locale) : null
   const acquisitionLabel = buildAcquisitionLabel(pet.acquisition, locale)
   const acquisitionDetail = buildAcquisitionDetail(pet.acquisition, locale)
   const acquisitionNotes = buildAcquisitionNotes(pet.acquisition, locale)
   const illustrationAlt = buildIllustrationAlt(pet, locale)
   const fallbackSrc = pet.illustration ? resolveDataUrl(pet.illustration.path) : null
   const shouldShowAnimatedPreview = Boolean(animation && isPreviewActive && fallbackSrc)
-  const previewHandlers = animation !== null
-    ? { onMouseEnter: () => { setPreviewActive(true) }, onMouseLeave: () => { setPreviewActive(false) } }
-    : {}
 
   return (
     <article
-      className={animation !== null ? 'pet-card pet-card--animated' : 'pet-card'}
-      {...previewHandlers}
+      className={animation ? 'pet-card pet-card--animated' : 'pet-card'}
+      onMouseEnter={animation ? () => setPreviewActive(true) : undefined}
+      onMouseLeave={animation ? () => setPreviewActive(false) : undefined}
     >
       <div className="pet-card__stage">
         <div className="pet-card__stage-grid" aria-hidden="true" />
-        {renderPetIllustration(pet, animation, shouldShowAnimatedPreview, fallbackSrc, illustrationAlt, t)}
+        {pet.illustration ? (
+          shouldShowAnimatedPreview ? (
+            <SkelAnimCanvas
+              className="pet-card__preview"
+              animation={animation}
+              fallbackSrc={fallbackSrc}
+              alt={illustrationAlt}
+              labels={{
+                play: t({ zh: '播放动画', en: 'Play animation' }),
+                pause: t({ zh: '暂停动画', en: 'Pause animation' }),
+                reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),
+                error: t({ zh: '动态预览加载失败', en: 'Animated preview failed to load' }),
+                animated: t({ zh: '动态预览已启用', en: 'Animated preview enabled' }),
+                fallback: t({ zh: '当前显示静态立绘', en: 'Showing static illustration' }),
+              }}
+              playbackMode="play"
+              showControls={false}
+              showStatus={false}
+            />
+          ) : (
+            <img
+              className="pet-card__illustration"
+              src={fallbackSrc ?? undefined}
+              alt={illustrationAlt}
+              loading="lazy"
+              width={pet.illustration.width}
+              height={pet.illustration.height}
+            />
+          )
+        ) : (
+          <div className="pet-card__stage-empty">
+            <strong>{t({ zh: '暂无立绘', en: 'No illustration yet' })}</strong>
+            <span>
+              {t({
+                zh: '当前 definitions 里没有可用的 XL 图像槽位。',
+                en: 'The current definitions do not expose a usable XL art slot yet.',
+              })}
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="pet-card__body">
@@ -92,7 +88,7 @@ export function PetResultCard({ pet, animation }: PetResultCardProps) {
         </div>
 
         <h3 className="pet-card__title">{primaryName}</h3>
-        {primaryDescription !== null ? <p className="pet-card__description">{primaryDescription}</p> : null}
+        {primaryDescription ? <p className="pet-card__description">{primaryDescription}</p> : null}
 
         <div className="pet-card__acquisition">
           <span className="pet-card__acquisition-label">{t({ zh: '获取方式', en: 'How to get' })}</span>

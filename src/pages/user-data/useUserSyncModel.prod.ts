@@ -123,19 +123,19 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [loadProfileResolution])
 
   return {
+    syncState,
+    busy,
     canSync: Boolean(credentials) && !busy,
     canLoadLocalDevSnapshot: false,
     showLocalDevSnapshotAction: false,
+    profileResolution,
     selectedProfileSource: 'browser-sync' as UserProfileSourceKind,
     localDevRefreshState: { status: 'idle' } as LocalDevRefreshState,
+    handleSync,
     handleSelectProfileSource: (_nextSource: UserProfileSourceKind) => {},
     handleSelectLocalDevSnapshot: () => {},
     handleRefreshLocalDevSnapshot: async () => {},
-    reload: loadSnapshot,
-    syncState,
-    busy,
-    profileResolution,
-    handleSync,
     handleDelete,
+    reload: loadSnapshot,
   }
 }

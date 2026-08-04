@@ -4,6 +4,17 @@ import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+vi.mock('../../data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
+
+  return {
+    ...actual,
+    loadCollection: vi.fn(),
+    loadCollectionAtVersion: vi.fn(),
+    loadVersion: vi.fn(),
+  }
+})
+
 import { readRecentFormationDraft } from '../../data/formationDraftStore'
 import { listFormationPresets } from '../../data/formationPresetStore'
 import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
@@ -15,17 +26,6 @@ import {
   renderFormationPage,
   resetFormationPageDatabase,
 } from './formationPageTestHarness'
-
-vi.mock('../../data/client', async () => {
-  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
-
-  return {
-    ...actual,
-    loadCollection: vi.fn(),
-    loadCollectionAtVersion: vi.fn(),
-    loadVersion: vi.fn(),
-  }
-})
 
 const versionFixture: DataVersion = {
   current: 'v1',

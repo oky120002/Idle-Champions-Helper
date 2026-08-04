@@ -16,19 +16,12 @@ function shouldCondenseHeader(pathname: string, isCurrentlyCondensed: boolean) {
   return isCurrentlyCondensed ? window.scrollY > HEADER_EXPAND_SCROLL_TOP : window.scrollY > HEADER_CONDENSE_SCROLL_TOP
 }
 
-function buildHeaderClassName(isHomeRoute: boolean, isHeaderCondensed: boolean, isMobileNavOpen: boolean): string {
-  return [
-    'site-header',
-    !isHomeRoute ? 'site-header--subpage' : '',
-    isHeaderCondensed ? 'site-header--condensed' : '',
-    isMobileNavOpen ? 'site-header--mobile-nav-open' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')
-}
-
-function useHeaderCondensedSync(pathname: string, initial: boolean) {
-  const [isHeaderCondensed, setIsHeaderCondensed] = useState(initial)
+export function useSiteHeaderState(pathname: string) {
+  const [mobileNavState, setMobileNavState] = useState(() => ({
+    isOpen: false,
+    pathname,
+  }))
+  const [isHeaderCondensed, setIsHeaderCondensed] = useState(() => shouldCondenseHeader(pathname, false))
   const isHeaderCondensedRef = useRef(isHeaderCondensed)
 
   useEffect(() => {
@@ -72,32 +65,29 @@ function useHeaderCondensedSync(pathname: string, initial: boolean) {
     }
   }, [pathname])
 
-  return isHeaderCondensed
-}
-
-export function useSiteHeaderState(pathname: string) {
-  const [mobileNavState, setMobileNavState] = useState(() => ({
-    isOpen: false,
-    pathname,
-  }))
-  const isHeaderCondensed = useHeaderCondensedSync(pathname, shouldCondenseHeader(pathname, false))
-
   const isHomeRoute = pathname === '/'
   const isMobileNavOpen = mobileNavState.isOpen && mobileNavState.pathname === pathname
-  const headerClassName = buildHeaderClassName(isHomeRoute, isHeaderCondensed, isMobileNavOpen)
+  const headerClassName = [
+    'site-header',
+    !isHomeRoute ? 'site-header--subpage' : '',
+    isHeaderCondensed ? 'site-header--condensed' : '',
+    isMobileNavOpen ? 'site-header--mobile-nav-open' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return {
     headerClassName,
     isMobileNavOpen,
     closeMobileNav: () =>
-      { setMobileNavState({
+      setMobileNavState({
         isOpen: false,
         pathname,
-      }); },
+      }),
     toggleMobileNav: () =>
-      { setMobileNavState((current) => ({
+      setMobileNavState((current) => ({
         isOpen: current.pathname === pathname ? !current.isOpen : true,
         pathname,
-      })); },
+      })),
   }
 }

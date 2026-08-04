@@ -6,14 +6,14 @@ import { describeEffectItem } from './summary-model'
 import type { EffectContext } from './types'
 
 type DetailLootSectionProps = {
-  readonly detail: ChampionDetail
-  readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
-  readonly effectContext: EffectContext
+  detail: ChampionDetail
+  locale: 'zh-CN' | 'en-US'
+  t: (text: { zh: string; en: string }) => string
+  effectContext: EffectContext
 }
 
 export function DetailLootSection({ detail, locale, t, effectContext }: DetailLootSectionProps) {
-  const loot = detail.loot
+  const loot = detail.loot ?? []
 
   return (
     <SurfaceCard className="detail-section detail-section--loot detail-section--headerless">

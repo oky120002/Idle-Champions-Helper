@@ -2,8 +2,8 @@ import { useI18n } from '../../app/i18n'
 import type { CandidateMode } from '../../domain/planner/candidatePool'
 
 export interface PlannerCandidateModeProps {
-  readonly value: CandidateMode
-  readonly onChange: (mode: CandidateMode) => void
+  value: CandidateMode
+  onChange: (mode: CandidateMode) => void
 }
 
 const MODES: Array<{ id: CandidateMode; zh: string; en: string }> = [

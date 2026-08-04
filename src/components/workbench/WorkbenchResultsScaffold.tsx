@@ -1,34 +1,18 @@
 import type { ReactNode } from 'react'
 import { StatusBanner } from '../StatusBanner'
 
-interface WorkbenchResultsScaffoldEmptyState {
-  readonly title?: ReactNode
-  readonly detail?: ReactNode
-  readonly children?: ReactNode
-}
-
 interface WorkbenchResultsScaffoldProps {
-  readonly ariaLabel: string
-  readonly sectionClassName: string
-  readonly isEmpty: boolean
-  readonly emptyState: WorkbenchResultsScaffoldEmptyState
-  readonly children: ReactNode
-  readonly shellClassName?: string
-  readonly panelClassName?: string
-}
-
-function renderEmptyState(emptyState: WorkbenchResultsScaffoldEmptyState): ReactNode {
-  return (
-    <div className="results-panel__empty">
-      <StatusBanner
-        tone="info"
-        {...(emptyState.title !== undefined ? { title: emptyState.title } : {})}
-        {...(emptyState.detail !== undefined ? { detail: emptyState.detail } : {})}
-      >
-        {emptyState.children}
-      </StatusBanner>
-    </div>
-  )
+  ariaLabel: string
+  sectionClassName: string
+  isEmpty: boolean
+  emptyState: {
+    title?: ReactNode
+    detail?: ReactNode
+    children?: ReactNode
+  }
+  children: ReactNode
+  shellClassName?: string
+  panelClassName?: string
 }
 
 export function WorkbenchResultsScaffold({
@@ -40,7 +24,17 @@ export function WorkbenchResultsScaffold({
   shellClassName,
   panelClassName,
 }: WorkbenchResultsScaffoldProps) {
-  const content = isEmpty ? renderEmptyState(emptyState) : children
+  const content = isEmpty ? (
+    <div className="results-panel__empty">
+      <StatusBanner
+        tone="info"
+        {...(emptyState.title !== undefined ? { title: emptyState.title } : {})}
+        {...(emptyState.detail !== undefined ? { detail: emptyState.detail } : {})}
+      >
+        {emptyState.children}
+      </StatusBanner>
+    </div>
+  ) : children
 
   const panelContent = panelClassName !== undefined ? <div className={panelClassName}>{content}</div> : content
   const sectionContent = shellClassName !== undefined ? <div className={shellClassName}>{panelContent}</div> : panelContent

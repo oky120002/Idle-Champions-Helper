@@ -1,16 +1,16 @@
-import { useDataVersionState } from '../data/useDataVersionState'
 import type { AppLocale } from './i18n'
 import type { AppNavigationItem } from './appNavigation'
 import { HeaderTopbar } from './HeaderTopbar'
 import { PrimaryNavigation } from './PrimaryNavigation'
 import { useSiteHeaderState } from './useSiteHeaderState'
+import { useDataVersionState } from '../data/useDataVersionState'
 
 interface SiteHeaderProps {
-  readonly activeNavigationItem: AppNavigationItem
-  readonly locale: AppLocale
-  readonly setLocale: (locale: AppLocale) => void
-  readonly pathname: string
-  readonly t: (text: { zh: string; en: string }) => string
+  activeNavigationItem: AppNavigationItem
+  locale: AppLocale
+  setLocale: (locale: AppLocale) => void
+  pathname: string
+  t: (text: { zh: string; en: string }) => string
 }
 
 export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, t }: SiteHeaderProps) {
@@ -18,7 +18,7 @@ export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, 
   const dataVersionState = useDataVersionState()
   const dataUpdatedAt = dataVersionState.status === 'ready' ? dataVersionState.data.updatedAt : null
 
-  const handleLocaleSelect = (nextLocale: AppLocale) => { setLocale(nextLocale); }
+  const handleLocaleSelect = (nextLocale: AppLocale) => setLocale(nextLocale)
 
   return (
     <header className={headerClassName}>

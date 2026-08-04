@@ -4,6 +4,29 @@ import type { RefObject } from 'react'
 const DESKTOP_SIDEBAR_ANIMATION_MS = 340
 const OPENING_WIDTH_LOCK_RELEASE_MS = 240
 
+interface SidebarAnimationRefs {
+  animationTimeoutRef: RefObject<number | null>
+  openingWidthReleaseTimeoutRef: RefObject<number | null>
+  animationFrameRef: RefObject<number | null>
+}
+
+function clearPendingSidebarAnimation(refs: SidebarAnimationRefs): void {
+  if (refs.animationTimeoutRef.current !== null) {
+    window.clearTimeout(refs.animationTimeoutRef.current)
+    refs.animationTimeoutRef.current = null
+  }
+
+  if (refs.openingWidthReleaseTimeoutRef.current !== null) {
+    window.clearTimeout(refs.openingWidthReleaseTimeoutRef.current)
+    refs.openingWidthReleaseTimeoutRef.current = null
+  }
+
+  if (refs.animationFrameRef.current !== null) {
+    window.cancelAnimationFrame(refs.animationFrameRef.current)
+    refs.animationFrameRef.current = null
+  }
+}
+
 function shouldAnimateSidebarLayout(): boolean {
   if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
     return false
@@ -78,20 +101,7 @@ export function useSidebarCollapseAnimation(
   const animationFrameRef = useRef<number | null>(null)
 
   const clearPendingAnimation = useCallback(() => {
-    if (animationTimeoutRef.current !== null) {
-      window.clearTimeout(animationTimeoutRef.current)
-      animationTimeoutRef.current = null
-    }
-
-    if (openingWidthReleaseTimeoutRef.current !== null) {
-      window.clearTimeout(openingWidthReleaseTimeoutRef.current)
-      openingWidthReleaseTimeoutRef.current = null
-    }
-
-    if (animationFrameRef.current !== null) {
-      window.cancelAnimationFrame(animationFrameRef.current)
-      animationFrameRef.current = null
-    }
+    clearPendingSidebarAnimation({ animationTimeoutRef, openingWidthReleaseTimeoutRef, animationFrameRef })
   }, [])
 
   useEffect(() => clearPendingAnimation, [clearPendingAnimation])

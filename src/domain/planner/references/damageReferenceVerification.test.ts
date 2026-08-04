@@ -14,12 +14,12 @@ import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import Decimal from 'decimal.js'
 
+import type { ChampionReference, ChampionReferenceSnapshot } from './championReferenceTypes'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
 import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
 import { scoreFormation } from '../steadyStateScoring'
 import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../buffs/equipmentMult'
 import { evaluatePlacementFit } from '../placementFit'
-import type { ChampionReference, ChampionReferenceSnapshot } from './championReferenceTypes'
 
 // 真自动发现：新 *ReferenceData.ts 文件零注册进流。
 const modules = import.meta.glob('./*ReferenceData.ts', { eager: true })

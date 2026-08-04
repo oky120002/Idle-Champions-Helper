@@ -47,13 +47,9 @@ function computeMedianEquipment(
 
     if (values.length > 0) {
       const mid = Math.floor(values.length / 2)
-      if (values.length % 2 === 0) {
-        const left = values[mid - 1] ?? 0
-        const right = values[mid] ?? 0
-        result[slot] = Math.round((left + right) / 2)
-      } else {
-        result[slot] = values[mid] ?? 0
-      }
+      result[slot] = values.length % 2 === 0
+        ? Math.round((values[mid - 1]! + values[mid]!) / 2)
+        : values[mid]!
     }
   }
 

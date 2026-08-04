@@ -112,8 +112,8 @@ export function parseUserImport({
   return {
     status: 'success',
     credentials: result.value,
-    network: method === 'supportUrl' ? getSupportUrlNetwork(supportUrl) : null,
     method,
+    network: method === 'supportUrl' ? getSupportUrlNetwork(supportUrl) : null,
   }
 }
 

@@ -7,11 +7,11 @@ import { collectStructuredSummaryTags } from './summary-model'
 import type { EffectContext } from './types'
 
 type DetailSkinSectionProps = {
-  readonly detail: ChampionDetail
-  readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
-  readonly effectContext: EffectContext
-  readonly openArtworkDialog: (skinId?: string) => void
+  detail: ChampionDetail
+  locale: 'zh-CN' | 'en-US'
+  t: (text: { zh: string; en: string }) => string
+  effectContext: EffectContext
+  openArtworkDialog: (skinId?: string) => void
 }
 
 export function DetailSkinSection({ detail, locale, t, effectContext, openArtworkDialog }: DetailSkinSectionProps) {
@@ -36,7 +36,7 @@ export function DetailSkinSection({ detail, locale, t, effectContext, openArtwor
                   <button
                     type="button"
                     className="skin-list-card__preview-button"
-                    onClick={() => { openArtworkDialog(skin.id); }}
+                    onClick={() => openArtworkDialog(skin.id)}
                   >
                     {t({ zh: '预览', en: 'Preview' })}
                   </button>

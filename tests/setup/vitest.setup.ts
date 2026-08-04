@@ -7,7 +7,9 @@ configure({ asyncUtilTimeout: 5000 })
 
 afterEach(() => {
   cleanup()
-  window.localStorage.clear()
+  if (window.localStorage && typeof window.localStorage.clear === 'function') {
+    window.localStorage.clear()
+  }
   document.documentElement.removeAttribute('lang')
   delete document.documentElement.dataset.uiLocale
 })

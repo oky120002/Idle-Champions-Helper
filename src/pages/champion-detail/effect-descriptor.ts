@@ -1,8 +1,8 @@
-import { TAG_LABELS } from '../../domain/champion-tags/labels'
 import type { ParsedEffectPayload, EffectContext, EffectDescriptor } from './types'
 import { containsCjkCharacters, localizeAbilityScore, localizeEffectKind } from './detail-localization'
 import { buildNotAvailableLabel, formatNumberishToken } from './detail-value-formatters'
 import { resolveEffectDescription, resolveEffectTargets, resolveEffectToken } from './effect-payload'
+import { TAG_LABELS } from '../../domain/champion-tags/labels'
 
 function localizeEffectTag(value: string | null | undefined, locale: 'zh-CN' | 'en-US'): string | null {
   if (!value) {

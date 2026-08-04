@@ -1,12 +1,12 @@
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, writeFile } from 'node:fs/promises'
-import { it, expect } from 'vitest'
-import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
 import { readJson } from './io-utils.ts'
 
 import { buildModels } from './build-models.ts'
 import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.ts'
+import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
 import { normalizeEffectReference } from './normalize-champions.ts'
 
 interface HeroSignal {
@@ -593,7 +593,7 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
   expect(distanceBuffSupport?.positionQualifier).toEqual({
     relation: 'nonAdjacent',
   })
-  expect(distanceBuffSupport?.targetQualifier ?? null).toBeNull()
+  expect(distanceBuffSupport?.targetQualifier ?? null).toBe(null)
   expect(
     first?.unsupportedSignals
       .map((signal) => signal.rawEffect)
@@ -913,7 +913,7 @@ it('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI �
     normalizeEffectReference('{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}'),
   ).toBe('buff_upgrades,100,4,5')
   expect(normalizeEffectReference('hero_dps_multiplier_mult,100')).toBe('hero_dps_multiplier_mult,100')
-  expect(normalizeEffectReference(null)).toBeNull()
+  expect(normalizeEffectReference(null)).toBe(null)
 })
 
 it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，理论最大基线）', () => {
@@ -1207,11 +1207,11 @@ it('normalizeEffectSignal 解析 vulnerability effect', () => {
   const di = normalizeEffectSignal('damage_increase', '50', 'official-parsed', {}) as EffectSignalResultLike
   expect(di.ok).toBe(true)
   expect(di.signal.kind).toBe('enemyVulnerability')
-  expect(di.signal.monsterTags ?? null).toBeNull()
+  expect(di.signal.monsterTags ?? null).toBe(null)
 
   const against = normalizeEffectSignal('increase_damage_against_monster', '30', 'official-parsed', {}) as EffectSignalResultLike
   expect(against.signal.kind).toBe('enemyVulnerability')
-  expect(against.signal.monsterTags ?? null).toBeNull()
+  expect(against.signal.monsterTags ?? null).toBe(null)
 
   // 按 monster tag（词表与 variant.enemyTypes 一致，| 为 OR）
   const tagPayload = parseEffectPayload('increase_damage_against_monster_tag,300,fiend')

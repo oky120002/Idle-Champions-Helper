@@ -3,8 +3,8 @@ import { DetailField } from './detail-cards'
 import type { DetailFieldProps } from './types'
 
 type DetailOverviewSectionProps = {
-  readonly t: (text: { zh: string; en: string }) => string
-  readonly overviewFields: DetailFieldProps[]
+  t: (text: { zh: string; en: string }) => string
+  overviewFields: DetailFieldProps[]
 }
 
 export function DetailOverviewSection({ t, overviewFields }: DetailOverviewSectionProps) {

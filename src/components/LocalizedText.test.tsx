@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { describe, expect, it } from 'vitest'
 import { I18nProvider, useI18n } from '../app/i18n'
-import type { LocalizedText as LocalizedTextValue } from '../domain/types'
 import { LocalizedText } from './LocalizedText'
+import type { LocalizedText as LocalizedTextValue } from '../domain/types'
 
 const briv: LocalizedTextValue = {
   original: 'Briv',
@@ -20,7 +20,7 @@ function LocaleSwitchHarness() {
 
   return (
     <>
-      <button type="button" onClick={() => { setLocale('en-US'); }}>
+      <button type="button" onClick={() => setLocale('en-US')}>
         切换到英文
       </button>
       <LocalizedText
@@ -42,7 +42,7 @@ function PrimaryModeHarness() {
 
   return (
     <>
-      <button type="button" onClick={() => { setLocale('en-US'); }}>
+      <button type="button" onClick={() => setLocale('en-US')}>
         切到英文主文本
       </button>
       <LocalizedText text={briv} mode="primary" as="span" className="localized-primary" />

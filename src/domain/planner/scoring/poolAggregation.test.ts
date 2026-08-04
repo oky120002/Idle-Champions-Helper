@@ -1,7 +1,4 @@
 import { describe, expect, it } from 'vitest'
-
-import { unwrap } from '../../../../tests/utils/dom-assertions'
-
 import type { AggregatedPool } from '../placementFit'
 import { mergePools, productOfPoolMultipliers } from './poolAggregation'
 
@@ -9,9 +6,9 @@ function makePool(dimension: string, scope: string, addPercent: number, multFact
   return {
     dimension: dimension as AggregatedPool['dimension'],
     scope: scope as AggregatedPool['scope'],
-    poolMultiplier: (1 + addPercent / 100) * multFactor,
     addPercent,
     multFactor,
+    poolMultiplier: (1 + addPercent / 100) * multFactor,
   }
 }
 
@@ -21,7 +18,7 @@ describe('mergePools', () => {
     mergePools(shared, [makePool('damage', 'global', 100, 2)])
     mergePools(shared, [makePool('damage', 'global', 50, 3)])
 
-    const merged = unwrap(shared.get('damage:global'), 'merged pool')
+    const merged = shared.get('damage:global')!
     expect(merged.addPercent).toBe(150)
     expect(merged.multFactor).toBe(6)
     // poolMultiplier = (1 + 150/100) × 6 = 15
@@ -45,11 +42,9 @@ describe('mergePools', () => {
     const order2 = new Map<string, AggregatedPool>()
     mergePools(order2, [b, a])
 
-    const o1 = unwrap(order1.get('damage:global'), 'order1 pool')
-    const o2 = unwrap(order2.get('damage:global'), 'order2 pool')
-    expect(o1.addPercent).toBe(o2.addPercent)
-    expect(o1.multFactor).toBe(o2.multFactor)
-    expect(o1.poolMultiplier).toBe(o2.poolMultiplier)
+    expect(order1.get('damage:global')!.addPercent).toBe(order2.get('damage:global')!.addPercent)
+    expect(order1.get('damage:global')!.multFactor).toBe(order2.get('damage:global')!.multFactor)
+    expect(order1.get('damage:global')!.poolMultiplier).toBe(order2.get('damage:global')!.poolMultiplier)
   })
 
   it('空池数组合并不改变 sharedPools', () => {

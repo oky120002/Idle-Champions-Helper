@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Search } from 'lucide-react'
 import { useI18n } from '../app/i18n'
@@ -14,15 +14,9 @@ export function SearchPage() {
   const navigate = useNavigate()
   const { query, setQuery, status, results, engineReady } = useSearchPageState()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
-  const searchInputRef = useRef<HTMLInputElement | null>(null)
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const trimmed = query.trim()
   const loading = status === 'loading'
-  const noResults = !loading && engineReady && trimmed.length > 0 && results.length === 0
-
-  useEffect(() => {
-    searchInputRef.current?.focus()
-  }, [])
 
   const toolbarItems: WorkbenchToolbarItemConfig[] =
     trimmed && results.length > 0
@@ -54,12 +48,12 @@ export function SearchPage() {
           <span className="text-input-shell text-input-shell--search">
             <Search className="text-input-shell__icon" aria-hidden="true" strokeWidth={1.8} />
             <input
-              ref={searchInputRef}
               className="text-input text-input--with-leading-icon"
               type="search"
               value={query}
               placeholder={t({ zh: '搜索英雄、技能、描述…', en: 'Search heroes, skills, text…' })}
-              onChange={(event) => { setQuery(event.target.value); }}
+              autoFocus
+              onChange={(event) => setQuery(event.target.value)}
             />
           </span>
         </div>
@@ -92,7 +86,7 @@ export function SearchPage() {
         {!loading && !trimmed && (
           <p className="search-page__hint">{t({ zh: '输入关键词开始搜索。', en: 'Type to start searching.' })}</p>
         )}
-        {noResults && (
+        {!loading && engineReady && trimmed && results.length === 0 && (
           <p className="search-page__hint">{t({ zh: '未找到匹配的英雄。', en: 'No matching heroes.' })}</p>
         )}
         {results.map((hit) => (

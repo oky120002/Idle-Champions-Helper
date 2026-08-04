@@ -62,11 +62,13 @@ export function buildAcquisitionDetail(acquisition: PetAcquisition, locale: AppL
 
   if (acquisition.kind === 'patron' && acquisition.patronName && acquisition.patronCost !== null) {
     const patronName = getPrimaryLocalizedText(acquisition.patronName, locale)
-    const currencyLabel = acquisition.patronCurrency !== null
+    const currency = acquisition.patronCurrency
       ? getPrimaryLocalizedText(acquisition.patronCurrency, locale)
-      : (locale === 'zh-CN' ? '赞助商货币' : 'patron currency')
+      : locale === 'zh-CN'
+        ? '赞助商货币'
+        : 'patron currency'
     const amount = formatNumber(acquisition.patronCost, locale)
-    return `${patronName} · ${amount} ${currencyLabel}`
+    return `${patronName} · ${amount} ${currency}`
   }
 
   if (acquisition.premiumPackName) {
@@ -77,7 +79,7 @@ export function buildAcquisitionDetail(acquisition: PetAcquisition, locale: AppL
     return locale === 'zh-CN' ? '官方 definitions 当前标记为未开放' : 'Marked as not yet available in current definitions'
   }
 
-  if (acquisition.kind === 'unknown' && acquisition.sourceType !== null) {
+  if (acquisition.kind === 'unknown' && acquisition.sourceType) {
     return `source=${acquisition.sourceType}`
   }
 
@@ -112,7 +114,7 @@ export function buildAcquisitionNotes(acquisition: PetAcquisition, locale: AppLo
     )
   }
 
-  if (acquisition.kind === 'unknown' && acquisition.sourceType === null) {
+  if (acquisition.kind === 'unknown' && !acquisition.sourceType) {
     notes.push(
       locale === 'zh-CN'
         ? '当前 definitions 里没有稳定来源标注。'
@@ -120,7 +122,7 @@ export function buildAcquisitionNotes(acquisition: PetAcquisition, locale: AppLo
     )
   }
 
-  if (acquisition.sourceType !== null && acquisition.kind !== 'gems' && acquisition.kind !== 'premium') {
+  if (acquisition.sourceType && acquisition.kind !== 'gems' && acquisition.kind !== 'premium') {
     notes.push(
       locale === 'zh-CN'
         ? `来源标记：${acquisition.sourceType}`
@@ -132,7 +134,11 @@ export function buildAcquisitionNotes(acquisition: PetAcquisition, locale: AppLo
 }
 
 export function buildStatusLabel(pet: Pet, locale: AppLocale) {
-  const zh = locale === 'zh-CN'
-  if (pet.isAvailable) return zh ? 'definitions 已启用' : 'Definitions enabled'
-  return zh ? 'definitions 未启用' : 'Definitions disabled'
+  return pet.isAvailable
+    ? locale === 'zh-CN'
+      ? 'definitions 已启用'
+      : 'Definitions enabled'
+    : locale === 'zh-CN'
+      ? 'definitions 未启用'
+      : 'Definitions disabled'
 }

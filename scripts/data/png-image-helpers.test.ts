@@ -29,7 +29,7 @@ it('findOpaqueBounds 返回非透明区域包围盒（含 right/bottom）', () =
 
 it('findOpaqueBounds 全透明返回 null', () => {
   const png = makePng(3, 3, () => [0, 0, 0, 0])
-  expect(findOpaqueBounds(png)).toBeNull()
+  expect(findOpaqueBounds(png)).toBe(null)
 })
 
 it('cropOpaqueBounds 裁剪到包围盒并标记 cropped', () => {

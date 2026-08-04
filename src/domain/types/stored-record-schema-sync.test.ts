@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest'
 
-import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
-import type { HeroAbilityOverridePatch } from '../abilities/abilityModel'
 import type {
   formationDraftSchema,
   formationPresetSchema,
@@ -9,7 +7,9 @@ import type {
   ownedHeroItemSchema,
   userProfileSnapshotSchema,
 } from './stored-record-schemas'
+import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { FormationDraft, FormationPreset } from './formation'
+import type { HeroAbilityOverridePatch } from '../abilities/abilityModel'
 
 /**
  * stored-record schema 钉死字段 ⊆ 消费 interface（passthrough 双源防漂移）。

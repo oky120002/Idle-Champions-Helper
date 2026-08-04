@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { LocalDevSnapshotSection } from '../../pages/user-data/LocalDevSnapshotSection.prod'
 import { createUserProfileSnapshot } from './fixtures'
+import { LocalDevSnapshotSection } from '../../pages/user-data/LocalDevSnapshotSection.prod'
 
 describe('production local dev snapshot section', () => {
   it('生产构建不渲染任何开发快照入口', () => {

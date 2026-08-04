@@ -2,7 +2,7 @@ import { FormFieldSchemaRenderer, type FormFieldSchema } from '../../components/
 import type { UserDataPageModel } from './types'
 
 type UserImportFieldsProps = {
-  readonly model: UserDataPageModel
+  model: UserDataPageModel
 }
 
 export function UserImportFields({ model }: UserImportFieldsProps) {

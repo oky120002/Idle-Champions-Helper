@@ -5,7 +5,6 @@ import { describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/i18n'
 import type { Champion } from '../../domain/types'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
-import { unwrap } from '../../../tests/utils/dom-assertions'
 import { PlannerTopLineups } from './PlannerTopLineups'
 
 const championById = new Map<string, Champion>([
@@ -22,7 +21,7 @@ describe('PlannerTopLineups', () => {
   it('results <= 1 时不渲染', () => {
     const { container } = render(
       <I18nProvider>
-        <PlannerTopLineups results={[unwrap(results[0], 'results[0] should exist')]} selectedIndex={0} championById={championById} onSelect={() => {}} />
+        <PlannerTopLineups results={[results[0]!]} selectedIndex={0} championById={championById} onSelect={() => {}} />
       </I18nProvider>,
     )
 

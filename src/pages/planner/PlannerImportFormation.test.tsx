@@ -6,15 +6,15 @@ import { describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/i18n'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 
-import { saveRecentFormationDraft } from '../../data/formationDraftStore'
-import { PlannerImportFormation } from './PlannerImportFormation'
-
 vi.mock('../../data/client', () => ({
   loadVersion: vi.fn(async () => ({ current: 'v1' })),
 }))
 vi.mock('../../data/formationDraftStore', () => ({
   saveRecentFormationDraft: vi.fn(async () => {}),
 }))
+
+import { saveRecentFormationDraft } from '../../data/formationDraftStore'
+import { PlannerImportFormation } from './PlannerImportFormation'
 
 const result = {
   objectiveValue: '1e10',

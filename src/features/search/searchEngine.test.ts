@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 
-import { unwrap } from '../../../tests/utils/dom-assertions'
 import { buildEngine } from './searchEngine'
 import type { SearchDocumentCollection } from './searchTypes'
 
@@ -20,21 +19,33 @@ const collection: SearchDocumentCollection = {
 }
 
 describe('buildEngine', () => {
-  it.each([
-    { query: '布鲁诺', expectedBucket: 'title', desc: '按中文名命中并归 title 桶' },
-    { query: 'Bruenor', expectedBucket: 'title', desc: '按英文名命中并归 title 桶' },
-    { query: 'dwarf', expectedBucket: 'meta', desc: '按关键字命中归 meta 桶' },
-    { query: '伤害', expectedBucket: 'body', desc: '按正文词命中归 body 桶' },
-  ])('$desc', ({ query, expectedBucket }) => {
-    const hits = buildEngine(collection).search(query, 5)
+  it('按中文名命中并归 title 桶', () => {
+    const engine = buildEngine(collection)
+    const hits = engine.search('布鲁诺', 5)
     expect(hits).toHaveLength(1)
-    expect(unwrap(hits[0], `expected a hit for "${query}"`).bucket).toBe(expectedBucket)
+    expect(hits[0]!.doc.championId).toBe('1')
+    expect(hits[0]!.bucket).toBe('title')
   })
 
-  it('中文命中时返回正确英雄 ID', () => {
-    const hits = buildEngine(collection).search('布鲁诺', 5)
+  it('按英文名命中并归 title 桶', () => {
+    const engine = buildEngine(collection)
+    const hits = engine.search('Bruenor', 5)
     expect(hits).toHaveLength(1)
-    expect(unwrap(hits[0], 'expected a hit for "布鲁诺"').doc.championId).toBe('1')
+    expect(hits[0]!.bucket).toBe('title')
+  })
+
+  it('按关键字命中归 meta 桶', () => {
+    const engine = buildEngine(collection)
+    const hits = engine.search('dwarf', 5)
+    expect(hits).toHaveLength(1)
+    expect(hits[0]!.bucket).toBe('meta')
+  })
+
+  it('按正文词命中归 body 桶', () => {
+    const engine = buildEngine(collection)
+    const hits = engine.search('伤害', 5)
+    expect(hits).toHaveLength(1)
+    expect(hits[0]!.bucket).toBe('body')
   })
 
   it('空查询返回空', () => {

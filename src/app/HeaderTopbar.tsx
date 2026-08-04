@@ -1,22 +1,22 @@
-import { GlobalSearchBox } from '../features/search/GlobalSearchBox'
 import type { AppLocale } from './i18n'
 import { MobileMenuIcon } from './AppIcons'
 import type { AppNavigationItem, TranslationFn } from './appNavigation'
 import { ThemeToggle } from './ThemeToggle'
 import { ToolbarLocaleSwitcher } from './LocaleSwitcher'
+import { GlobalSearchBox } from '../features/search/GlobalSearchBox'
 
 interface HeaderTopbarProps {
-  readonly activeNavigationItem: AppNavigationItem
-  readonly dataUpdatedAt: string | null
-  readonly isMobileNavOpen: boolean
-  readonly locale: AppLocale
-  readonly onLocaleSelect: (locale: AppLocale) => void
-  readonly onMobileNavToggle: () => void
-  readonly t: TranslationFn
+  activeNavigationItem: AppNavigationItem
+  dataUpdatedAt: string | null
+  isMobileNavOpen: boolean
+  locale: AppLocale
+  onLocaleSelect: (locale: AppLocale) => void
+  onMobileNavToggle: () => void
+  t: TranslationFn
 }
 
 function formatDataSyncDate(value: string | null, locale: AppLocale): string {
-  if (value === null || value === '') {
+  if (!value) {
     return locale === 'zh-CN' ? '待确认' : 'pending'
   }
 

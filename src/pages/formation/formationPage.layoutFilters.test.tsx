@@ -4,17 +4,6 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
-import { unwrap } from '../../../tests/utils/dom-assertions'
-import {
-  mockFormationPageCollections,
-  mockedLoadCollection,
-  mockedLoadCollectionAtVersion,
-  mockedLoadVersion,
-  renderFormationPage,
-  resetFormationPageDatabase,
-} from './formationPageTestHarness'
-
 vi.mock('../../data/client', async () => {
   const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
 
@@ -25,6 +14,16 @@ vi.mock('../../data/client', async () => {
     loadVersion: vi.fn(),
   }
 })
+
+import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
+import {
+  mockFormationPageCollections,
+  mockedLoadCollection,
+  mockedLoadCollectionAtVersion,
+  mockedLoadVersion,
+  renderFormationPage,
+  resetFormationPageDatabase,
+} from './formationPageTestHarness'
 
 const versionFixture: DataVersion = {
   current: 'v1',
@@ -210,7 +209,7 @@ describe('FormationPage layout filters', () => {
     renderFormationPage()
 
     await user.click(await screen.findByRole('button', { name: '变体网格' }))
-    await user.selectOptions(unwrap(screen.getAllByRole('combobox')[0], 'combobox should exist'), 'bruenor')
+    await user.selectOptions(screen.getAllByRole('combobox')[0]!, 'bruenor')
     await user.click(screen.getByRole('button', { name: '战役' }))
 
     expect(screen.getByText('当前正在编辑的布局不在筛选结果中')).toBeInTheDocument()

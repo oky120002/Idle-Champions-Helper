@@ -23,35 +23,38 @@ const SHORTHAND_AND = '^'
 const FUNCTIONAL_OR = '||'
 const FUNCTIONAL_AND = '&&'
 
-/** Extract a regex capture group; throws if missing (regex matched but group didn't — shouldn't happen). */
-function groupAt(match: RegExpExecArray, index: number): string {
-  const value = match[index]
-  if (value === undefined) throw new Error(`capture group ${index} missing`)
-  return value
-}
-
-/** Check whether the outermost parentheses wrap the entire expression. */
-function isFullyWrapped(expr: string): boolean {
-  if (!expr.startsWith('(') || !expr.endsWith(')')) return false
-  let depth = 0
-  for (let index = 0; index < expr.length; index += 1) {
-    const char = expr[index]
-    if (char === '(') {
-      depth += 1
-    } else if (char === ')') {
-      depth -= 1
-      if (depth === 0 && index < expr.length - 1) return false
-    }
-    if (depth < 0) return false
-  }
-  return depth === 0
-}
-
 function stripOuterParentheses(expr: string): string {
   let current = expr.trim()
-  while (isFullyWrapped(current)) {
+
+  while (current.startsWith('(') && current.endsWith(')')) {
+    let depth = 0
+    let wrapsWholeExpr = true
+
+    for (let index = 0; index < current.length; index += 1) {
+      const char = current[index]
+      if (char === '(') {
+        depth += 1
+      } else if (char === ')') {
+        depth -= 1
+        if (depth === 0 && index < current.length - 1) {
+          wrapsWholeExpr = false
+          break
+        }
+      }
+
+      if (depth < 0) {
+        wrapsWholeExpr = false
+        break
+      }
+    }
+
+    if (!wrapsWholeExpr || depth !== 0) {
+      break
+    }
+
     current = current.slice(1, -1).trim()
   }
+
   return current
 }
 
@@ -106,7 +109,7 @@ function compareNumber(left: number | null | undefined, operator: HeroComparison
 
 function getHeroStatValue(hero: ResolvedHeroAbilityProfile, stat: HeroStatKey): number | undefined {
   if (stat === 'total_ability_score') {
-    return Object.values(hero.abilityScores).reduce(
+    return Object.values(hero.abilityScores ?? {}).reduce(
       (sum, value) => sum + (typeof value === 'number' ? value : 0),
       0,
     )
@@ -117,173 +120,162 @@ function getHeroStatValue(hero: ResolvedHeroAbilityProfile, stat: HeroStatKey): 
 
 // functional 叶子：HasTag/GetStat/age/hero_id/HasAttackDamageType(+ has_base_attack_dmg_type_ 别名)/base_attack_cooldown/is_undead/true/as_int。
 // 非 boolean 叶子（min/max/floor 等数值表达式）返回 null。
+function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
+  if (expr === 'true') {
+    return { op: 'true' }
+  }
 
-function matchSaveDependentLeaf(expr: string): HeroPredicateAST | null {
+  if (expr === 'is_undead') {
+    return { op: 'tag', tag: 'undead' }
+  }
+
+  // is_alive：稳态模型恒 true（planner 不建模战斗死亡）；!is_alive 恒 false。
+  if (expr === 'is_alive') {
+    return { op: 'isAlive' }
+  }
+
   // EligibleForPatron(<var>)：参数恒为「当前 patron」变量（如 aeon_current_patron_id），不解析参数；
   // runtime 查 hero.eligiblePatronIds 是否含 ownedSaveContext.currentPatronId。
-  if (/^EligibleForPatron\([^)]+\)$/.exec(expr)) {
+  const eligibleForPatronMatch = expr.match(/^EligibleForPatron\([^)]+\)$/)
+  if (eligibleForPatronMatch) {
     return { op: 'eligibleForPatron' }
   }
 
   // GetUpgradeUnlocked(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
   // build 期 enrichUpgradeUnlockNodes 解析 ownerHeroId(self) + requiredLevel 烘进节点。
-  const upgradeUnlocked = /^GetUpgradeUnlocked\((\d+)\)$/.exec(expr)
-  if (upgradeUnlocked) {
-    return { op: 'upgradeUnlocked', upgradeId: groupAt(upgradeUnlocked, 1) }
+  const upgradeUnlockedMatch = expr.match(/^GetUpgradeUnlocked\((\d+)\)$/)
+  if (upgradeUnlockedMatch) {
+    return { op: 'upgradeUnlocked', upgradeId: upgradeUnlockedMatch[1]! }
   }
 
   // GetUpgradePurchased(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
   // build 期 enrichment 补 ownerHeroId(self) + requiredLevel + isSpecialization。
-  const upgradePurchased = /^GetUpgradePurchased\((\d+)\)$/.exec(expr)
-  if (upgradePurchased) {
-    return { op: 'upgradePurchased', upgradeId: groupAt(upgradePurchased, 1) }
+  const upgradePurchasedMatch = expr.match(/^GetUpgradePurchased\((\d+)\)$/)
+  if (upgradePurchasedMatch) {
+    return { op: 'upgradePurchased', upgradeId: upgradePurchasedMatch[1]! }
   }
 
   // GetFeatEquipped(N)：存档依赖 per-hero 谓词。runtime 查 equippedFeatIds（被评估英雄的 feats）。
-  const featEquipped = /^GetFeatEquipped\((\d+)\)$/.exec(expr)
-  if (featEquipped) {
-    return { op: 'featEquipped', featId: groupAt(featEquipped, 1) }
+  const featEquippedMatch = expr.match(/^GetFeatEquipped\((\d+)\)$/)
+  if (featEquippedMatch) {
+    return { op: 'featEquipped', featId: featEquippedMatch[1]! }
   }
 
-  return null
-}
+  const asIntMatch = expr.match(/^as_int\((.+)\)$/)
+  if (asIntMatch) {
+    return parseHeroPredicate(asIntMatch[1]!, 'functional')
+  }
 
-function matchTagLeaf(expr: string): HeroPredicateAST | null {
-  if (expr === 'is_undead') {
-    return { op: 'tag', tag: 'undead' }
+  const attackDamageTypeMatch = expr.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
+  if (attackDamageTypeMatch) {
+    return { op: 'attackType', attackType: attackDamageTypeMatch[1]!.toLowerCase(), negate: false }
   }
 
   // has_base_attack_dmg_type_X 是 HasAttackDamageType(`X`) 的裸标识符别名
   //（raw 23 处，magic/melee/ranged；泛化支持任意类型名，与 HasAttackDamageType 同语义）
-  const baseAttackDmgType = /^has_base_attack_dmg_type_([a-zA-Z_]+)$/.exec(expr)
-  if (baseAttackDmgType) {
-    return { op: 'attackType', attackType: groupAt(baseAttackDmgType, 1).toLowerCase(), negate: false }
+  const baseAttackDmgTypeMatch = expr.match(/^has_base_attack_dmg_type_([a-zA-Z_]+)$/)
+  if (baseAttackDmgTypeMatch) {
+    return { op: 'attackType', attackType: baseAttackDmgTypeMatch[1]!.toLowerCase(), negate: false }
   }
 
   // has_tag_X 是 HasTag(`X`) 的裸标识符别名（raw has_tag_rivalswaterdeep/speed/acqinc/cteam）。
-  const hasTagAlias = /^has_tag_([a-zA-Z_]+)$/.exec(expr)
-  if (hasTagAlias) {
-    return { op: 'tag', tag: groupAt(hasTagAlias, 1).toLowerCase() }
+  const hasTagAliasMatch = expr.match(/^has_tag_([a-zA-Z_]+)$/)
+  if (hasTagAliasMatch) {
+    return { op: 'tag', tag: hasTagAliasMatch[1]!.toLowerCase() }
   }
 
-  const tag = /^HasTag\(`([^`]+)`\)$/.exec(expr)
-  if (tag) {
-    return { op: 'tag', tag: groupAt(tag, 1).toLowerCase() }
+  const tagMatch = expr.match(/^HasTag\(`([^`]+)`\)$/)
+  if (tagMatch) {
+    return { op: 'tag', tag: tagMatch[1]!.toLowerCase() }
   }
 
-  const attackType = /^HasAttackDamageType\(`([^`]+)`\)$/.exec(expr)
-  if (attackType) {
-    return { op: 'attackType', attackType: groupAt(attackType, 1).toLowerCase(), negate: false }
-  }
-
-  return null
-}
-
-function matchStatLeaf(expr: string): HeroPredicateAST | null {
-  const stat = /^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/.exec(expr)
-  if (stat) {
+  const statMatch = expr.match(/^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/)
+  if (statMatch) {
     return {
       op: 'stat',
-      stat: groupAt(stat, 1).toLowerCase() as HeroStatKey,
-      operator: groupAt(stat, 2) as HeroComparisonOperator,
-      value: Number(groupAt(stat, 3)),
+      stat: statMatch[1]!.toLowerCase() as HeroStatKey,
+      operator: statMatch[2] as HeroComparisonOperator,
+      value: Number(statMatch[3]),
     }
   }
 
-  const cooldown = /^base_attack_cooldown\s*(>=|<=|>|<|==)\s*(\d+(?:\.\d+)?)$/.exec(expr)
-  if (cooldown) {
+  const baseAttackCooldownMatch = expr.match(/^base_attack_cooldown\s*(>=|<=|>|<|==)\s*(\d+(?:\.\d+)?)$/)
+  if (baseAttackCooldownMatch) {
     return {
       op: 'baseAttackCooldown',
-      operator: groupAt(cooldown, 1) as HeroComparisonOperator,
-      value: Number(groupAt(cooldown, 2)),
+      operator: baseAttackCooldownMatch[1] as HeroComparisonOperator,
+      value: Number(baseAttackCooldownMatch[2]),
     }
   }
 
-  const age = /^age\s*(>=|<=|>|<|==)\s*(\d+)$/.exec(expr)
-  if (age) {
-    return {
-      op: 'age',
-      operator: groupAt(age, 1) as HeroComparisonOperator,
-      value: Number(groupAt(age, 2)),
-    }
+  const ageMatch = expr.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)$/)
+  if (ageMatch) {
+    return { op: 'age', operator: ageMatch[1] as HeroComparisonOperator, value: Number(ageMatch[2]) }
   }
 
-  const heroIdEq = /^hero_id\s*==\s*(\d+)$/.exec(expr)
-  if (heroIdEq) {
-    return { op: 'heroId', heroId: groupAt(heroIdEq, 1), negate: false }
+  const heroIdEqMatch = expr.match(/^hero_id\s*==\s*([0-9]+)$/)
+  if (heroIdEqMatch) {
+    return { op: 'heroId', heroId: heroIdEqMatch[1]!, negate: false }
   }
 
-  const heroIdNeq = /^hero_id\s*!=\s*(\d+)$/.exec(expr)
-  if (heroIdNeq) {
-    return { op: 'heroId', heroId: groupAt(heroIdNeq, 1), negate: true }
+  const heroIdNeqMatch = expr.match(/^hero_id\s*!=\s*([0-9]+)$/)
+  if (heroIdNeqMatch) {
+    return { op: 'heroId', heroId: heroIdNeqMatch[1]!, negate: true }
   }
 
   return null
-}
-
-function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
-  if (expr === 'true') return { op: 'true' }
-
-  // is_alive：稳态模型恒 true（planner 不建模战斗死亡）；!is_alive 恒 false。
-  if (expr === 'is_alive') return { op: 'isAlive' }
-
-  const asInt = /^as_int\((.+)\)$/.exec(expr)
-  if (asInt) {
-    return parseHeroPredicate(groupAt(asInt, 1), 'functional')
-  }
-
-  return matchSaveDependentLeaf(expr) ?? matchTagLeaf(expr) ?? matchStatLeaf(expr)
-}
-
-/** Parse OR/AND composite; returns null if not a composite or any child unparseable. */
-function parseComposite(
-  expr: string,
-  dialect: HeroPredicateDialect,
-  delimiter: string,
-  op: 'or' | 'and',
-): HeroPredicateAST | null {
-  const parts = splitTopLevel(expr, delimiter)
-  if (parts.length <= 1) return null
-
-  const children = parts.map((part) => parseHeroPredicate(part, dialect))
-  if (children.some((node) => node === null)) return null
-
-  const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
-  if (nodes.length === 1) {
-    const [only] = nodes
-    return only ?? { op, children: nodes }
-  }
-  return { op, children: nodes }
 }
 
 export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect): HeroPredicateAST | null {
-  if (typeof expr !== 'string') return null
+  if (typeof expr !== 'string') {
+    return null
+  }
 
   const trimmed = expr.trim()
-  if (!trimmed) return null
+  if (!trimmed) {
+    return null
+  }
 
   const stripped = stripOuterParentheses(trimmed)
-  if (stripped !== trimmed) return parseHeroPredicate(stripped, dialect)
+  if (stripped !== trimmed) {
+    return parseHeroPredicate(stripped, dialect)
+  }
 
   if (dialect === 'functional') {
     const leaf = matchFunctionalLeaf(stripped)
-    if (leaf !== null) return leaf
+    if (leaf !== null) {
+      return leaf
+    }
   }
 
   // OR（低优先级先 split）。任一子句不可解析 → 整体 null（保守，避免部分解析导致语义偏移）。
   const orDelimiter = dialect === 'functional' ? FUNCTIONAL_OR : SHORTHAND_OR
-  const orNode = parseComposite(stripped, dialect, orDelimiter, 'or')
-  if (orNode !== null) return orNode
+  const orParts = splitTopLevel(stripped, orDelimiter)
+  if (orParts.length > 1) {
+    const children = orParts.map((part) => parseHeroPredicate(part, dialect))
+    if (children.some((node) => node === null)) {
+      return null
+    }
+    const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
+    return nodes.length === 1 ? nodes[0]! : { op: 'or', children: nodes }
+  }
 
   // AND。任一子句不可解析 → 整体 null（保守，避免丢弃导致放宽语义）。
   const andDelimiter = dialect === 'functional' ? FUNCTIONAL_AND : SHORTHAND_AND
-  const andNode = parseComposite(stripped, dialect, andDelimiter, 'and')
-  if (andNode !== null) return andNode
+  const andParts = splitTopLevel(stripped, andDelimiter)
+  if (andParts.length > 1) {
+    const children = andParts.map((part) => parseHeroPredicate(part, dialect))
+    if (children.some((node) => node === null)) {
+      return null
+    }
+    const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
+    return nodes.length === 1 ? nodes[0]! : { op: 'and', children: nodes }
+  }
 
   // NOT（前缀 !）
   if (stripped.startsWith('!')) {
     const child = parseHeroPredicate(stripped.slice(1), dialect)
-    return child !== null ? { op: 'not', child } : null
+    return child ? { op: 'not', child } : null
   }
 
   // shorthand：剩余整体视为单个 tag
@@ -293,34 +285,6 @@ export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect)
 
   // functional：未匹配叶子且非 OR/AND/NOT → 数值表达式等，返回 null
   return null
-}
-
-function evalUpgradeUnlocked(ast: HeroPredicateAST, hero: ResolvedHeroAbilityProfile): boolean {
-  if (ast.op !== 'upgradeUnlocked') return false
-  // build 未解析（ownerHeroId/requiredLevel 缺）或无存档上下文 → false（保守）。
-  if (ast.requiredLevel === undefined || ast.ownerHeroId === undefined) return false
-  const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
-  return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
-}
-
-function evalUpgradePurchased(ast: HeroPredicateAST, hero: ResolvedHeroAbilityProfile): boolean {
-  if (ast.op !== 'upgradePurchased') return false
-  if (ast.ownerHeroId === undefined) return false
-  // specialization → 玩家是否选了这个专精（owner.specializations 含 N）。
-  if (ast.isSpecialization === true) {
-    return hero.ownedSaveContext?.ownedSpecializations.get(ast.ownerHeroId)?.has(ast.upgradeId) ?? false
-  }
-  // regular → owner 等级 >= requiredLevel（同 GetUpgradeUnlocked，owned 英雄升级即自动购买）。
-  if (ast.requiredLevel === undefined) return false
-  const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
-  return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
-}
-
-function evalEligibleForPatron(hero: ResolvedHeroAbilityProfile): boolean {
-  const patronId = hero.ownedSaveContext?.currentPatronId
-  if (patronId === undefined || patronId === null) return false // 未导入存档 → 无 patron 上下文，保守 false
-  if (patronId === 0) return true // 自由玩（无 patron 限制）→ 全 eligible
-  return hero.eligiblePatronIds?.includes(String(patronId)) ?? false
 }
 
 function evalNode(
@@ -352,18 +316,45 @@ function evalNode(
     }
     case 'baseAttackCooldown':
       return compareNumber(hero.baseAttackCooldown, ast.operator, ast.value)
-    case 'upgradeUnlocked':
-      return evalUpgradeUnlocked(ast, hero)
-    case 'upgradePurchased':
-      return evalUpgradePurchased(ast, hero)
+    case 'upgradeUnlocked': {
+      // build 未解析（ownerHeroId/requiredLevel 缺）或无存档上下文 → false（保守）。
+      if (ast.requiredLevel === undefined || ast.ownerHeroId === undefined) {
+        return false
+      }
+      const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
+      return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
+    }
+    case 'upgradePurchased': {
+      if (ast.ownerHeroId === undefined) {
+        return false
+      }
+      // specialization → 玩家是否选了这个专精（owner.specializations 含 N）。
+      if (ast.isSpecialization) {
+        return hero.ownedSaveContext?.ownedSpecializations.get(ast.ownerHeroId)?.has(ast.upgradeId) ?? false
+      }
+      // regular → owner 等级 >= requiredLevel（同 GetUpgradeUnlocked，owned 英雄升级即自动购买）。
+      if (ast.requiredLevel === undefined) {
+        return false
+      }
+      const ownerLevel = hero.ownedSaveContext?.ownedLevels.get(ast.ownerHeroId)
+      return typeof ownerLevel === 'number' && ownerLevel >= ast.requiredLevel
+    }
     case 'featEquipped':
       // 被评估英雄是否装备 feat N；无存档上下文 → false（未拥有/未装备不可能命中）。
       return hero.ownedSaveContext?.equippedFeatIds.has(ast.featId) ?? false
     case 'isAlive':
       // 稳态模型：所有英雄存活（planner 不建模战斗死亡）。
       return true
-    case 'eligibleForPatron':
-      return evalEligibleForPatron(hero)
+    case 'eligibleForPatron': {
+      const patronId = hero.ownedSaveContext?.currentPatronId
+      if (patronId === undefined || patronId === null) {
+        return false // 未导入存档 → 无 patron 上下文，保守 false
+      }
+      if (patronId === 0) {
+        return true // 自由玩（无 patron 限制）→ 全 eligible
+      }
+      return hero.eligiblePatronIds?.includes(String(patronId)) ?? false
+    }
     case 'true':
       return true
     default:
@@ -373,13 +364,13 @@ function evalNode(
 
 export function evalHeroPredicate(ast: HeroPredicateAST, hero: ResolvedHeroAbilityProfile): boolean {
   const tags = new Set(
-    hero.tags
-      .filter((tag): tag is string => typeof tag === 'string')
+    (hero.tags ?? [])
+      .filter((tag) => typeof tag === 'string')
       .map((tag) => tag.toLowerCase()),
   )
   const attackTypes = new Set(
-    hero.baseAttackDamageTypes
-      .filter((value): value is string => typeof value === 'string')
+    (hero.baseAttackDamageTypes ?? [])
+      .filter((value) => typeof value === 'string')
       .map((value) => value.toLowerCase()),
   )
   return evalNode(ast, hero, tags, attackTypes)

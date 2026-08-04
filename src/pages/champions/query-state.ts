@@ -1,10 +1,4 @@
 import {
-  appendCommonFilterSearchParams,
-  readCommonFilterExpansion,
-  readCommonFilterState,
-  type CommonFilterSearchParamKeys,
-} from '../../features/champion-filters/query-state'
-import {
   DEFAULT_SCROLL_KEY,
   RESULTS_VIEW_ALL,
   SEARCH_PARAM_ACQUISITION,
@@ -20,6 +14,12 @@ import {
   SEARCH_PARAM_VIEW,
 } from './constants'
 import type { ChampionsFilterState } from './types'
+import {
+  appendCommonFilterSearchParams,
+  readCommonFilterExpansion,
+  readCommonFilterState,
+  type CommonFilterSearchParamKeys,
+} from '../../features/champion-filters/query-state'
 
 const CHAMPION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
   query: SEARCH_PARAM_QUERY,

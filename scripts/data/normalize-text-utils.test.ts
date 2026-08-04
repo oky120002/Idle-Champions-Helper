@@ -16,19 +16,19 @@ import {
 
 it('toText 字符串去空白，空串返回 null', () => {
   expect(toText('  x  ')).toBe('x')
-  expect(toText('   ')).toBeNull()
-  expect(toText('')).toBeNull()
+  expect(toText('   ')).toBe(null)
+  expect(toText('')).toBe(null)
 })
 
 it('toText 有限数转字符串，NaN/Infinity 返回 null（修复 normalize 缺 Number.isFinite 的缺陷）', () => {
   expect(toText(0)).toBe('0')
   expect(toText(42)).toBe('42')
-  expect(toText(NaN)).toBeNull()
-  expect(toText(Infinity)).toBeNull()
-  expect(toText(-Infinity)).toBeNull()
-  expect(toText(null)).toBeNull()
-  expect(toText(undefined)).toBeNull()
-  expect(toText({ x: 1 })).toBeNull()
+  expect(toText(NaN)).toBe(null)
+  expect(toText(Infinity)).toBe(null)
+  expect(toText(-Infinity)).toBe(null)
+  expect(toText(null)).toBe(null)
+  expect(toText(undefined)).toBe(null)
+  expect(toText({ x: 1 })).toBe(null)
 })
 
 it('compareLocalizedText 显式 en locale 确定性排序', () => {
@@ -44,7 +44,7 @@ it('compareLocalizedText 显式 en locale 确定性排序', () => {
 })
 
 it('normalizeLocalizedText 缺失返回 null，否则 {original, display}', () => {
-  expect(normalizeLocalizedText(null, null)).toBeNull()
+  expect(normalizeLocalizedText(null, null)).toBe(null)
   expect(normalizeLocalizedText('Bruenor', '布鲁诺')).toEqual({ original: 'Bruenor', display: '布鲁诺' })
   expect(normalizeLocalizedText(null, '布鲁诺', 'fb')).toEqual({ original: '布鲁诺', display: '布鲁诺' })
 })
@@ -106,8 +106,8 @@ it('toTextList 不做分隔拆分，只按元素', () => {
 })
 
 it('normalizeJsonValue 递归归一化，undefined→null', () => {
-  expect(normalizeJsonValue(undefined)).toBeNull()
-  expect(normalizeJsonValue(null)).toBeNull()
+  expect(normalizeJsonValue(undefined)).toBe(null)
+  expect(normalizeJsonValue(null)).toBe(null)
   expect(normalizeJsonValue({ a: undefined, b: [1, undefined] })).toEqual({ a: null, b: [1, null] })
   expect(normalizeJsonValue([1, 'x', true])).toEqual([1, 'x', true])
 })
@@ -115,7 +115,7 @@ it('normalizeJsonValue 递归归一化，undefined→null', () => {
 it('normalizeNumber 字符串解析、非数返回 null', () => {
   expect(normalizeNumber(42)).toBe(42)
   expect(normalizeNumber('3.5')).toBe(3.5)
-  expect(normalizeNumber(NaN)).toBeNull()
-  expect(normalizeNumber('abc')).toBeNull()
-  expect(normalizeNumber(null)).toBeNull()
+  expect(normalizeNumber(NaN)).toBe(null)
+  expect(normalizeNumber('abc')).toBe(null)
+  expect(normalizeNumber(null)).toBe(null)
 })

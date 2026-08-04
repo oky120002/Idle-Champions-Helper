@@ -4,12 +4,12 @@ import { CheckCircle2, CircleAlert, Info } from 'lucide-react'
 export type StatusTone = 'info' | 'success' | 'error'
 
 interface StatusBannerProps {
-  readonly tone: StatusTone
-  readonly title?: ReactNode
-  readonly detail?: ReactNode
-  readonly meta?: ReactNode
-  readonly actions?: ReactNode
-  readonly children?: ReactNode
+  tone: StatusTone
+  title?: ReactNode
+  detail?: ReactNode
+  meta?: ReactNode
+  actions?: ReactNode
+  children?: ReactNode
 }
 
 function getStatusBannerClassName(tone: StatusTone): string {
@@ -24,15 +24,9 @@ function getStatusBannerClassName(tone: StatusTone): string {
   return 'status-banner status-banner--info'
 }
 
-const STATUS_BANNER_ICONS: Record<StatusTone, typeof Info> = {
-  success: CheckCircle2,
-  error: CircleAlert,
-  info: Info,
-}
-
 export function StatusBanner({ tone, title, detail, meta, actions, children }: StatusBannerProps) {
   const hasContent = title !== undefined || detail !== undefined || meta !== undefined || children !== undefined
-  const Icon = STATUS_BANNER_ICONS[tone]
+  const Icon = tone === 'success' ? CheckCircle2 : tone === 'error' ? CircleAlert : Info
 
   return (
     <div className={getStatusBannerClassName(tone)}>

@@ -8,32 +8,23 @@ import {
 } from './workbenchToolbarConfig'
 
 interface ConfiguredWorkbenchPageFloatingTopButtonConfig {
-  readonly onClick: () => void
-  readonly detailLabel?: string
+  onClick: () => void
+  detailLabel?: string
 }
 
 interface ConfiguredWorkbenchPageProps {
-  readonly pageClassName: string
-  readonly storageKey: string
-  readonly ariaLabel: string
-  readonly shellClassName: string
-  readonly contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
-  readonly contentOverlay?: ReactNode | undefined
-  readonly floatingTopButton?: ConfiguredWorkbenchPageFloatingTopButtonConfig | undefined
-  readonly toolbar: WorkbenchToolbarConfig
-  readonly sidebarHeader?: ReactNode | undefined
-  readonly sidebar?: ReactNode | undefined
-  readonly contentHeader?: ReactNode | undefined
-  readonly children: ReactNode
-}
-
-function renderFloatingTopButton(config: ConfiguredWorkbenchPageFloatingTopButtonConfig): ReactNode {
-  return (
-    <WorkbenchFloatingTopButton
-      onClick={config.onClick}
-      {...(config.detailLabel !== undefined ? { detailLabel: config.detailLabel } : {})}
-    />
-  )
+  pageClassName: string
+  storageKey: string
+  ariaLabel: string
+  shellClassName: string
+  contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
+  contentOverlay?: ReactNode | undefined
+  floatingTopButton?: ConfiguredWorkbenchPageFloatingTopButtonConfig | undefined
+  toolbar: WorkbenchToolbarConfig
+  sidebarHeader?: ReactNode | undefined
+  sidebar?: ReactNode | undefined
+  contentHeader?: ReactNode | undefined
+  children: ReactNode
 }
 
 export function ConfiguredWorkbenchPage({
@@ -53,7 +44,14 @@ export function ConfiguredWorkbenchPage({
   const resolvedToolbarLead = renderWorkbenchToolbarSection(resolveWorkbenchToolbarSlotConfig(toolbar, 'lead'), 'lead')
   const resolvedToolbarPrimary = renderWorkbenchToolbarSection(resolveWorkbenchToolbarSlotConfig(toolbar, 'primary'), 'primary')
   const resolvedToolbarActions = renderWorkbenchToolbarSection(resolveWorkbenchToolbarSlotConfig(toolbar, 'actions'), 'actions')
-  const resolvedContentOverlay = contentOverlay ?? (floatingTopButton !== undefined ? renderFloatingTopButton(floatingTopButton) : null)
+  const resolvedContentOverlay = contentOverlay ?? (
+    floatingTopButton !== undefined ? (
+      <WorkbenchFloatingTopButton
+        onClick={floatingTopButton.onClick}
+        {...(floatingTopButton.detailLabel !== undefined ? { detailLabel: floatingTopButton.detailLabel } : {})}
+      />
+    ) : null
+  )
 
   return (
     <div className={`${pageClassName} workbench-page`}>

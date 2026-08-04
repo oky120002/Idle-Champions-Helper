@@ -98,7 +98,7 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
         data-testid="hero-picker-trigger"
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
-        onClick={() => { setOpen((current) => !current); }}
+        onClick={() => setOpen((current) => !current)}
       >
         {triggerLabel}
       </button>
@@ -118,7 +118,7 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
             aria-label={t({ zh: '搜索英雄', en: 'Search champions' })}
             placeholder={t({ zh: '搜索英雄', en: 'Search champions' })}
             value={query}
-            onChange={(event) => { setQuery(event.target.value); }}
+            onChange={(event) => setQuery(event.target.value)}
           />
 
           {filtered.length === 0 ? (
@@ -135,7 +135,7 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
                   data-hero-id=""
                   aria-pressed={value === ''}
                   className={value === '' ? 'is-selected' : ''}
-                  onClick={() => { commit(''); }}
+                  onClick={() => commit('')}
                 >
                   {t({ zh: '未放置', en: 'Empty' })}
                 </button>
@@ -165,7 +165,7 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
                             data-hero-id={champion.id}
                             aria-pressed={isSelected}
                             className={optionClassName}
-                            onClick={() => { commit(champion.id); }}
+                            onClick={() => commit(champion.id)}
                           >
                             {optionInner}
                           </button>
@@ -173,7 +173,7 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
                           <div
                             data-hero-id={champion.id}
                             draggable
-                            onDragStart={(event) => { event.dataTransfer?.setData('text/plain', champion.id); }}
+                            onDragStart={(event) => event.dataTransfer?.setData('text/plain', champion.id)}
                             className={optionClassName}
                           >
                             {optionInner}

@@ -1,7 +1,7 @@
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, writeFile } from 'node:fs/promises'
-import { it, expect } from 'vitest'
 import { readJson } from './io-utils.ts'
 
 import { buildSearchIndex, cleanText } from './build-search-index.ts'

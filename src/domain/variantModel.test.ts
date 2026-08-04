@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
+import type { FormationLayout, LocalizedOption, LocalizedText, Variant } from './types'
 import { groupVariantsByCampaign } from '../pages/variants/variant-grouping'
 import {
   filterVariants,
   getAttackProfileId,
   getSpecialEnemyRangeId,
 } from '../pages/variants/variant-model'
-import type { FormationLayout, LocalizedOption, LocalizedText, Variant } from './types'
 
 function localized(original: string, display = original): LocalizedText {
   return { original, display }

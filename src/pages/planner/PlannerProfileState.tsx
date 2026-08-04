@@ -10,9 +10,9 @@ export function PlannerProfileState() {
   const { profileResolution } = useUserSyncModel()
   const [snapshotNow] = useState(() => Date.now())
 
-  if (profileResolution.errorMessage !== '') {
+  if (profileResolution.errorMessage) {
     return (
-      <section aria-label="个人数据状态">
+      <section aria-label="个人数据状态" role="region">
         <p role="alert">
           {t({
             zh: `读取数据失败：${profileResolution.errorMessage}`,
@@ -31,7 +31,7 @@ export function PlannerProfileState() {
     )
 
     return (
-      <section aria-label="个人数据状态">
+      <section aria-label="个人数据状态" role="region">
         <p>
           {t({
             zh: `${sourceLabel}已于 ${ageDays} 天前更新。`,
@@ -51,7 +51,7 @@ export function PlannerProfileState() {
   }
 
   return (
-    <section aria-label="个人数据状态">
+    <section aria-label="个人数据状态" role="region">
       <p>
         {t({
           zh: '尚未导入个人数据。',

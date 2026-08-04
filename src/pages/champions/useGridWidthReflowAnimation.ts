@@ -24,7 +24,7 @@ function measureGridItems(grid: HTMLElement): Map<string, GridItemSnapshot> {
   grid.querySelectorAll<HTMLElement>('[data-grid-motion-key]').forEach((element) => {
     const key = element.dataset.gridMotionKey
 
-    if (key === undefined) {
+    if (!key) {
       return
     }
 
@@ -81,7 +81,7 @@ export function useGridWidthReflowAnimation(gridRef: RefObject<HTMLElement | nul
               return
             }
 
-            item.element.getAnimations().forEach((animation) => { animation.cancel(); })
+            item.element.getAnimations().forEach((animation) => animation.cancel())
             item.element.animate(
               [
                 { transform: `translate(${deltaX}px, ${deltaY}px)` },

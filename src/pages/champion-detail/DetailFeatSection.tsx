@@ -4,9 +4,9 @@ import { FeatCard } from './detail-cards'
 import type { EffectContext } from './types'
 
 type DetailFeatSectionProps = {
-  readonly detail: ChampionDetail
-  readonly locale: 'zh-CN' | 'en-US'
-  readonly effectContext: EffectContext
+  detail: ChampionDetail
+  locale: 'zh-CN' | 'en-US'
+  effectContext: EffectContext
 }
 
 export function DetailFeatSection({ detail, locale, effectContext }: DetailFeatSectionProps) {

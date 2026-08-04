@@ -47,7 +47,7 @@ export function isNavigationItemActive(pathname: string, to: string): boolean {
 }
 
 function findNavigationItemByTo(to: string | null): AppNavigationItem | null {
-  if (to === null || to === '') {
+  if (!to) {
     return null
   }
 

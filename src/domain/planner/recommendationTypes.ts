@@ -1,9 +1,9 @@
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { AreaEstimationResult } from '../simulator/areaEstimation'
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { FeatCatalog } from '../abilities/featSignals'
 import type { SpecializationCatalog } from '../abilities/specializationSignals'
-import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { SimulationBreakdown } from './steadyStateScoring'
 
 export interface PlannerNarrativeLine {

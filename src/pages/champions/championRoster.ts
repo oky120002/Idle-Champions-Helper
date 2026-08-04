@@ -9,11 +9,6 @@ export interface ChampionRosterTile {
   emphasis: 'match' | 'dim-owned' | 'dim-unowned'
 }
 
-function resolveRosterTileEmphasis(isOwned: boolean, matchesFilters: boolean): ChampionRosterTile['emphasis'] {
-  if (!isOwned) return 'dim-unowned'
-  return matchesFilters ? 'match' : 'dim-owned'
-}
-
 export interface ChampionRosterSeatColumn {
   seat: number
   champions: ChampionRosterTile[]
@@ -131,7 +126,7 @@ function buildEquipmentLevelCapsBySlot(detail: ChampionDetail | null): Map<strin
   for (const item of detail?.raw?.loot ?? []) {
     const slotId = extractSlotIdFromRawLootEntry(item)
 
-    if (slotId === null || capsBySlot.has(slotId)) {
+    if (!slotId || capsBySlot.has(slotId)) {
       continue
     }
 
@@ -182,7 +177,11 @@ export function buildChampionRosterSeatColumns(
           ownedHero,
           isOwned,
           matchesFilters,
-          emphasis: resolveRosterTileEmphasis(isOwned, matchesFilters),
+          emphasis: !isOwned
+            ? 'dim-unowned'
+            : matchesFilters
+              ? 'match'
+              : 'dim-owned',
         }
       }),
     }
@@ -291,8 +290,8 @@ function choosePreferredLootDetailBySlot(
 
     definitions.set(slotId, {
       slotId,
-      name: item.name.display,
-      description: item.description?.display ?? item.description?.original ?? null,
+      name: item.name.display || item.name.original,
+      description: item.description?.display || item.description?.original || null,
       rarity: nextRarity,
       maxLevel: normalizeEquipmentLevelCaps(item.maxLevel) ?? levelCapsBySlot.get(slotId) ?? null,
       graphicId: item.graphicId,
@@ -310,8 +309,8 @@ export function buildChampionEquipmentSlots(
   legendaryLevelCap: number,
 ): ChampionEquipmentSlotViewModel[] {
   const levelCapsBySlot = buildEquipmentLevelCapsBySlot(detail)
-  const detailDefinitions = detail !== null
-    ? choosePreferredLootDetailBySlot(detail.loot, levelCapsBySlot)
+  const detailDefinitions = detail
+    ? choosePreferredLootDetailBySlot(detail.loot ?? [], levelCapsBySlot)
     : new Map<string, ChampionEquipmentSlotDefinition>()
   const slotIds = new Set<string>([
     ...Object.keys(ownedHero?.lootBySlot ?? {}),
@@ -330,6 +329,7 @@ export function buildChampionEquipmentSlots(
       )
 
       return {
+        slotId,
         name: definition?.name ?? `槽位 ${slotId}`,
         description: definition?.description ?? null,
         rarity: slot?.rarity ?? definition?.rarity ?? 0,
@@ -339,10 +339,9 @@ export function buildChampionEquipmentSlots(
         found: slot?.found ?? {},
         hasIconBackground: Boolean(definition?.graphicId),
         graphicId: definition?.graphicId ?? null,
+        levelCap,
         legendaryLevel: legendary?.level ?? 0,
         legendaryCap: legendary ? legendaryLevelCap : 0,
-        slotId,
-        levelCap,
       }
     })
 }

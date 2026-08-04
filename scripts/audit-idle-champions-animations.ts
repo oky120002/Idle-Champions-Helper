@@ -1,10 +1,8 @@
-import process from 'node:process'
 import { readFile, writeFile } from 'node:fs/promises'
+import { readJson, readJsonIfExists } from './data/io-utils.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import type { LocalizedText } from '../src/domain/types/common.ts'
-import { readJson, readJsonIfExists } from './data/io-utils.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import {
   buildSuspicionLevel,
@@ -19,6 +17,7 @@ import {
   readChampionAnimationIdleOverrides,
 } from './data/champion-animation-idle-overrides.ts'
 import type { ChampionAnimationIdleOverride } from './data/champion-animation-idle-overrides.ts'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -330,8 +329,7 @@ async function main(): Promise<void> {
   console.log(`- low: ${result.lowCount}`)
 }
 
-const entryPoint = process.argv[1]
-if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
   main().catch((error: unknown) => {
     console.error(`生成动图审计失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

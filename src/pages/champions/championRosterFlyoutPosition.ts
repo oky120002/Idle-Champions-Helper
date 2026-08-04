@@ -1,10 +1,3 @@
-function resolveCompactPreferAbove(fitsAbove: boolean, fitsBelow: boolean, spaceAbove: number, spaceBelow: number): boolean {
-  if (fitsAbove && fitsBelow) return spaceAbove > spaceBelow
-  if (fitsAbove) return true
-  if (fitsBelow) return false
-  return spaceAbove >= spaceBelow
-}
-
 interface FlyoutAnchorRect {
   top: number
   bottom: number
@@ -67,15 +60,21 @@ export function calculateChampionRosterFlyoutPosition({
     const compactMaxHeight = Math.max(220, Math.max(spaceAbove, spaceBelow))
     const fitsAbove = spaceAbove >= flyoutHeight
     const fitsBelow = spaceBelow >= flyoutHeight
-    const preferAbove = resolveCompactPreferAbove(fitsAbove, fitsBelow, spaceAbove, spaceBelow)
+    const preferAbove = fitsAbove && fitsBelow
+      ? spaceAbove > spaceBelow
+      : fitsAbove
+        ? true
+        : fitsBelow
+          ? false
+          : spaceAbove >= spaceBelow
     const top = preferAbove
       ? clamp(anchorRect.top - Math.min(flyoutHeight, compactMaxHeight) - FLYOUT_ANCHOR_GAP, viewportGutter, maxTop)
       : clamp(anchorRect.bottom + FLYOUT_ANCHOR_GAP, viewportGutter, maxTop)
 
     return {
       left: clamp(left, minLeft, maxLeft),
-      maxHeight: compactMaxHeight,
       top,
+      maxHeight: compactMaxHeight,
     }
   }
 

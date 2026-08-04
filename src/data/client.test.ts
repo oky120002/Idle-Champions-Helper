@@ -37,9 +37,9 @@ function validChampion(id = 'a') {
 async function resetDatabase(): Promise<void> {
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-    request.onerror = () => { reject(request.error ?? new Error('删除测试数据库失败。')); }
-    request.onblocked = () => { reject(new Error('删除测试数据库被阻塞。')); }
-    request.onsuccess = () => { resolve(); }
+    request.onerror = () => reject(request.error ?? new Error('删除测试数据库失败。'))
+    request.onblocked = () => reject(new Error('删除测试数据库被阻塞。'))
+    request.onsuccess = () => resolve()
   })
 }
 
@@ -50,8 +50,8 @@ async function writeRawCollection(cacheKey: string, value: unknown): Promise<voi
     await new Promise<void>((resolve, reject) => {
       const transaction = database.transaction(APP_STORE_NAMES.dataCollections, 'readwrite')
       transaction.objectStore(APP_STORE_NAMES.dataCollections).put(value, cacheKey)
-      transaction.oncomplete = () => { resolve(); }
-      transaction.onerror = () => { reject(transaction.error ?? new Error('写入失败')); }
+      transaction.oncomplete = () => resolve()
+      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
     })
   } finally {
     database.close()

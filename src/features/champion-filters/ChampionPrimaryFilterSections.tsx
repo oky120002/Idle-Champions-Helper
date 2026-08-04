@@ -5,10 +5,10 @@ import {
   type FilterSidebarFieldSchema,
   type FilterSidebarGroupSchema,
 } from '../../components/filter-sidebar/FilterSidebarSchemaRenderer'
-import { formatSeatLabel, getRoleLabel } from '../../domain/localizedText'
-import type { LocalizedText } from '../../domain/types'
 import { ActiveFilterChipBar } from './ActiveFilterChipBar'
 import { seatOptions } from './options'
+import { formatSeatLabel, getRoleLabel } from '../../domain/localizedText'
+import type { LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip } from './types'
 
 export interface ChampionPrimaryFilterCopy {
@@ -44,16 +44,16 @@ interface ChampionPrimaryFilterActions {
 }
 
 interface ChampionPrimaryFilterSectionsProps {
-  readonly locale: AppLocale
-  readonly t: (text: LocaleText) => string
-  readonly copy: ChampionPrimaryFilterCopy
-  readonly values: ChampionPrimaryFilterValues
-  readonly options: ChampionPrimaryFilterOptions
-  readonly activeFilterChips: ActiveFilterChip[]
-  readonly actions: ChampionPrimaryFilterActions
-  readonly buildAffiliationLabel: (affiliation: LocalizedText) => ReactNode
-  readonly extraFields?: FilterSidebarFieldSchema[]
-  readonly searchType?: 'search' | 'text'
+  locale: AppLocale
+  t: (text: LocaleText) => string
+  copy: ChampionPrimaryFilterCopy
+  values: ChampionPrimaryFilterValues
+  options: ChampionPrimaryFilterOptions
+  activeFilterChips: ActiveFilterChip[]
+  actions: ChampionPrimaryFilterActions
+  buildAffiliationLabel: (affiliation: LocalizedText) => ReactNode
+  extraFields?: FilterSidebarFieldSchema[]
+  searchType?: 'search' | 'text'
 }
 
 export function ChampionPrimaryFilterSections({
@@ -97,7 +97,7 @@ export function ChampionPrimaryFilterSections({
           selectedValues: values.selectedSeats,
           allLabel: t({ zh: '全部', en: 'All' }),
           onReset: actions.resetSeats,
-          onToggle: (value) => { actions.toggleSeat(Number(value)); },
+          onToggle: (value) => actions.toggleSeat(Number(value)),
         },
         {
           kind: 'chip-multi',
@@ -111,7 +111,7 @@ export function ChampionPrimaryFilterSections({
           selectedValues: values.selectedRoles,
           allLabel: t({ zh: '全部', en: 'All' }),
           onReset: actions.resetRole,
-          onToggle: (value) => { actions.toggleRole(String(value)); },
+          onToggle: (value) => actions.toggleRole(String(value)),
         },
         {
           kind: 'chip-multi',
@@ -125,7 +125,7 @@ export function ChampionPrimaryFilterSections({
           selectedValues: values.selectedAffiliations,
           allLabel: t({ zh: '全部', en: 'All' }),
           onReset: actions.resetAffiliation,
-          onToggle: (value) => { actions.toggleAffiliation(String(value)); },
+          onToggle: (value) => actions.toggleAffiliation(String(value)),
         },
       ],
     },

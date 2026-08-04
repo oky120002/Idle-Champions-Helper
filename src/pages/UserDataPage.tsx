@@ -17,55 +17,6 @@ import { SurfaceCardContentSections, type SurfaceCardContentSection } from '../c
 import { UserDataWorkbench } from './user-data/UserDataWorkbench'
 import { UserSyncPanel } from './user-data/UserSyncPanel'
 import { useUserDataPageModel } from './user-data/useUserDataPageModel'
-import type { UserDataPageModel } from './user-data/types'
-
-type Translator = UserDataPageModel['t']
-
-function resolveParseStatusLabel(status: UserDataPageModel['parseState']['status'], t: Translator): string {
-  if (status === 'success') return t({ zh: '解析成功', en: 'Parsed' })
-  if (status === 'error') return t({ zh: '需要修正', en: 'Needs fixes' })
-  return t({ zh: '等待输入', en: 'Waiting for input' })
-}
-
-function buildImportBoundarySections(t: Translator): SurfaceCardContentSection[] {
-  return [
-    {
-      id: 'supported-foundations',
-      title: t({ zh: '当前已经支持的骨架', en: 'What already exists' }),
-      items: [
-        { id: 'support-url', content: t({ zh: 'Support URL 本地解析', en: 'Local Support URL parsing' }) },
-        { id: 'manual-input', content: t({ zh: '手动输入 User ID + Hash 校验', en: 'Manual User ID + Hash validation' }) },
-        { id: 'log-extract', content: t({ zh: '日志文本提取 user_id / hash', en: 'Extracting user_id / hash from log text' }) },
-        { id: 'masked-preview', content: t({ zh: '脱敏预览结果展示', en: 'Masked preview output' }) },
-      ],
-    },
-    {
-      id: 'explicit-boundaries',
-      title: t({ zh: '当前明确不做', en: 'What it explicitly does not do' }),
-      items: [
-        { id: 'no-live-api', content: t({ zh: '只在点击手动同步时调用官方只读接口', en: 'Only call official read-only endpoints after manual sync' }) },
-        { id: 'no-auto-persist', content: t({ zh: '不在页面自动持久化敏感凭证', en: 'No automatic persistence of sensitive credentials' }) },
-        { id: 'no-upload', content: t({ zh: '不上传到你的服务端', en: 'No upload to your server' }) },
-        { id: 'no-background-sync', content: t({ zh: '不做隐式后台同步', en: 'No implicit background sync' }) },
-      ],
-    },
-  ]
-}
-
-function buildNextStageSections(t: Translator): SurfaceCardContentSection[] {
-  return [
-    {
-      id: 'next-stage-steps',
-      listVariant: 'ordered' as const,
-      items: [
-        { id: 'parse-browser', content: t({ zh: '浏览器里解析 Support URL / 日志文本，拿到 `user_id + hash`', en: 'Parse the Support URL / log text in the browser to get `user_id + hash`' }) },
-        { id: 'expand-inputs', content: t({ zh: '用户点击手动同步后，浏览器请求官方只读接口，不经过本项目后端', en: 'After manual sync, the browser requests official read-only endpoints without passing through this project backend' }) },
-        { id: 'persist-indexeddb', content: t({ zh: '把已归一化的个人数据写入 `IndexedDB`，而不是上传到后端', en: 'Write normalized personal data to `IndexedDB` instead of uploading it to a backend' }) },
-        { id: 'consume-locally', content: t({ zh: '页面再消费本地画像做英雄可用性、拥有状态和阵型建议', en: 'Let the UI consume the local profile for availability, ownership state, and formation suggestions' }) },
-      ],
-    },
-  ]
-}
 
 export function UserDataPage() {
   const model = useUserDataPageModel()
@@ -74,12 +25,95 @@ export function UserDataPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchBadgeItem({ id: 'selected-method', label: model.selectedMethod.label }),
-    createWorkbenchBadgeItem({ id: 'parse-status', tone: 'muted', label: resolveParseStatusLabel(model.parseState.status, model.t) }),
-    createWorkbenchShareItem({ t: model.t, state: shareLinkState, onCopy: copyCurrentLink }),
+    createWorkbenchBadgeItem({
+      id: 'selected-method',
+      label: model.selectedMethod.label,
+    }),
+    createWorkbenchBadgeItem({
+      id: 'parse-status',
+      tone: 'muted',
+      label: model.parseState.status === 'success'
+        ? model.t({ zh: '解析成功', en: 'Parsed' })
+        : model.parseState.status === 'error'
+          ? model.t({ zh: '需要修正', en: 'Needs fixes' })
+          : model.t({ zh: '等待输入', en: 'Waiting for input' }),
+    }),
+    createWorkbenchShareItem({
+      t: model.t,
+      state: shareLinkState,
+      onCopy: copyCurrentLink,
+    }),
   ]
-  const importBoundarySections = buildImportBoundarySections(model.t)
-  const nextStageSections = buildNextStageSections(model.t)
+  const importBoundarySections: SurfaceCardContentSection[] = [
+    {
+      id: 'supported-foundations',
+      title: model.t({ zh: '当前已经支持的骨架', en: 'What already exists' }),
+      items: [
+        {
+          id: 'support-url',
+          content: model.t({ zh: 'Support URL 本地解析', en: 'Local Support URL parsing' }),
+        },
+        {
+          id: 'manual-input',
+          content: model.t({ zh: '手动输入 User ID + Hash 校验', en: 'Manual User ID + Hash validation' }),
+        },
+        {
+          id: 'log-extract',
+          content: model.t({ zh: '日志文本提取 user_id / hash', en: 'Extracting user_id / hash from log text' }),
+        },
+        {
+          id: 'masked-preview',
+          content: model.t({ zh: '脱敏预览结果展示', en: 'Masked preview output' }),
+        },
+      ],
+    },
+    {
+      id: 'explicit-boundaries',
+      title: model.t({ zh: '当前明确不做', en: 'What it explicitly does not do' }),
+      items: [
+        {
+          id: 'no-live-api',
+          content: model.t({ zh: '只在点击手动同步时调用官方只读接口', en: 'Only call official read-only endpoints after manual sync' }),
+        },
+        {
+          id: 'no-auto-persist',
+          content: model.t({ zh: '不在页面自动持久化敏感凭证', en: 'No automatic persistence of sensitive credentials' }),
+        },
+        {
+          id: 'no-upload',
+          content: model.t({ zh: '不上传到你的服务端', en: 'No upload to your server' }),
+        },
+        {
+          id: 'no-background-sync',
+          content: model.t({ zh: '不做隐式后台同步', en: 'No implicit background sync' }),
+        },
+      ],
+    },
+  ]
+  const nextStageSections: SurfaceCardContentSection[] = [
+    {
+      id: 'next-stage-steps',
+      listVariant: 'ordered' as const,
+      items: [
+        {
+          id: 'parse-browser',
+          content: model.t({ zh: '浏览器里解析 Support URL / 日志文本，拿到 `user_id + hash`', en: 'Parse the Support URL / log text in the browser to get `user_id + hash`' }),
+        },
+        {
+          id: 'expand-inputs',
+          content: model.t({ zh: '用户点击手动同步后，浏览器请求官方只读接口，不经过本项目后端', en: 'After manual sync, the browser requests official read-only endpoints without passing through this project backend' }),
+        },
+        {
+          id: 'persist-indexeddb',
+          content: model.t({ zh: '把已归一化的个人数据写入 `IndexedDB`，而不是上传到后端', en: 'Write normalized personal data to `IndexedDB` instead of uploading it to a backend' }),
+        },
+        {
+          id: 'consume-locally',
+          content: model.t({ zh: '页面再消费本地画像做英雄可用性、拥有状态和阵型建议', en: 'Let the UI consume the local profile for availability, ownership state, and formation suggestions' }),
+        },
+      ],
+    },
+  ]
   const parsedCredentials = model.parseState.status === 'success' ? model.parseState.credentials : null
 
   return (

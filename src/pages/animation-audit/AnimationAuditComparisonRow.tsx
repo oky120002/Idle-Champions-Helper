@@ -15,16 +15,16 @@ import type {
 } from './types'
 
 interface AnimationAuditComparisonRowProps {
-  readonly entry: AnimationAuditEntry
-  readonly animation: ChampionAnimation
-  readonly fallbackSrc: string | null
-  readonly locale: AppLocale
-  readonly t: (text: { zh: string; en: string }) => string
-  readonly feedback: AnimationAuditFeedbackDraft
-  readonly onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
-  readonly onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
-  readonly onNoteChange: (entryId: string, note: string) => void
-  readonly onClearFeedback: (entryId: string) => void
+  entry: AnimationAuditEntry
+  animation: ChampionAnimation
+  fallbackSrc: string | null
+  locale: AppLocale
+  t: (text: { zh: string; en: string }) => string
+  feedback: AnimationAuditFeedbackDraft
+  onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
+  onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
+  onNoteChange: (entryId: string, note: string) => void
+  onClearFeedback: (entryId: string) => void
 }
 
 function formatPercent(value: number) {
@@ -134,7 +134,7 @@ export function AnimationAuditComparisonRow({
         <button
           type="button"
           className="animation-audit-row__toggle"
-          onClick={() => { setIsPlaying((value) => !value); }}
+          onClick={() => setIsPlaying((value) => !value)}
         >
           {isPlaying ? <Pause aria-hidden="true" strokeWidth={1.9} /> : <Play aria-hidden="true" strokeWidth={1.9} />}
           {isPlaying ? t({ zh: '暂停这一行', en: 'Pause row' }) : t({ zh: '播放这一行', en: 'Play row' })}

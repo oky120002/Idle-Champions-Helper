@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
-import { queryOrFail } from '../../../tests/utils/dom-assertions'
 import { PlannerComputationMode } from './PlannerComputationMode'
 
 describe('PlannerComputationMode', () => {
@@ -29,7 +28,7 @@ describe('PlannerComputationMode', () => {
       </I18nProvider>,
     )
 
-    await user.click(queryOrFail(container, '[data-computation-mode="full"]'))
+    await user.click(container.querySelector('[data-computation-mode="full"]')!)
     expect(onChange).toHaveBeenCalledWith('full')
   })
 
@@ -42,7 +41,7 @@ describe('PlannerComputationMode', () => {
       </I18nProvider>,
     )
 
-    await user.click(queryOrFail(container, '[data-computation-mode="p50"]'))
+    await user.click(container.querySelector('[data-computation-mode="p50"]')!)
     expect(onChange).not.toHaveBeenCalled()
   })
 })

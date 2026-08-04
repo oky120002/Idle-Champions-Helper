@@ -55,7 +55,7 @@ export function normalizeEffectDefinitionTemplate(def: RawDefinition = {}): Effe
       }
       continue
     }
-    if (key === null || typeof key !== 'object') {
+    if (!key || typeof key !== 'object') {
       continue
     }
     const k = key as RawDefinition

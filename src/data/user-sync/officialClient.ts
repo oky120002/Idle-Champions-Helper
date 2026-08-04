@@ -8,13 +8,10 @@ import {
   readSwitchPlayServer,
   resolveOfficialPlayServerBaseUrls,
 } from './officialPlayServer'
-
 export {
   createReadonlyFetchOptions,
   OFFICIAL_PLAY_SERVER_FALLBACK_BASE_URLS,
 } from './officialPlayServer'
-
-export type OfficialParamValue = string | number | boolean | null | undefined
 
 export type ReadonlyOfficialEndpoint =
   | 'getuserdetails'
@@ -41,7 +38,7 @@ export interface BuildOfficialUrlOptions {
   endpoint: string
   credentials: UserCredentials
   baseUrl?: string
-  params?: Record<string, OfficialParamValue>
+  params?: Record<string, string | number | boolean | null | undefined>
 }
 
 export interface UserProfilePayloads {
@@ -99,7 +96,7 @@ async function fetchReadonlyJson(
   endpoint: ReadonlyOfficialEndpoint,
   credentials: UserCredentials,
   options: FetchUserProfilePayloadsOptions,
-  params?: Record<string, OfficialParamValue>,
+  params?: Record<string, string | number | boolean | null | undefined>,
 ): Promise<unknown> {
   const fetchImpl = options.fetchImpl ?? fetch
   const urlOptions: BuildOfficialUrlOptions = {
@@ -107,7 +104,7 @@ async function fetchReadonlyJson(
     credentials,
   }
 
-  if (options.baseUrl !== undefined && options.baseUrl !== '') {
+  if (options.baseUrl) {
     urlOptions.baseUrl = options.baseUrl
   }
 
@@ -126,7 +123,7 @@ async function fetchReadonlyJson(
 }
 
 function hasPayloadValue(payload: unknown, key: string): boolean {
-  return typeof payload === 'object' && payload !== null && key in payload
+  return Boolean(payload && typeof payload === 'object' && key in payload)
 }
 
 function isPayloadReady(
@@ -150,12 +147,12 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch(
   credentials: UserCredentials,
   options: FetchUserProfilePayloadsOptions,
   initialBaseUrl: string,
-  params?: Record<string, OfficialParamValue>,
+  params?: Record<string, string | number | boolean | null | undefined>,
 ): Promise<FetchReadonlyJsonResult> {
   let baseUrl = initialBaseUrl
   let switchCount = 0
 
-  for (;;) {
+  while (true) {
     const payload = await fetchReadonlyJson(
       endpoint,
       credentials,
@@ -164,7 +161,7 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch(
     )
     const switchPlayServer = readSwitchPlayServer(payload)
 
-    if (switchPlayServer !== null && !isPayloadReady(endpoint, payload)) {
+    if (switchPlayServer && !isPayloadReady(endpoint, payload)) {
       if (switchCount >= OFFICIAL_PLAY_SERVER_SWITCH_LIMIT) {
         throw new Error('Official endpoint requested too many play server switches.')
       }
@@ -186,12 +183,12 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch(
 }
 
 function readInstanceId(userDetails: unknown): string | null {
-  if (typeof userDetails !== 'object' || userDetails === null) {
+  if (!userDetails || typeof userDetails !== 'object') {
     return null
   }
 
   const root = userDetails as Record<string, unknown>
-  const details = typeof root.details === 'object' && root.details !== null
+  const details = root.details && typeof root.details === 'object'
     ? root.details as Record<string, unknown>
     : null
   const value = details?.instance_id ?? root.instance_id

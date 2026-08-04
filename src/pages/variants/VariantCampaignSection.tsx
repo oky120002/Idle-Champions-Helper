@@ -3,8 +3,8 @@ import type { VariantsPageModel, VariantCampaignGroup } from './types'
 import { VariantAdventureSection } from './VariantAdventureSection'
 
 type VariantCampaignSectionProps = {
-  readonly model: Pick<VariantsPageModel, 'locale' | 't'>
-  readonly group: VariantCampaignGroup
+  model: Pick<VariantsPageModel, 'locale' | 't'>
+  group: VariantCampaignGroup
 }
 
 export function VariantCampaignSection({ model, group }: VariantCampaignSectionProps) {

@@ -5,15 +5,15 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+vi.mock('../../data/client', () => ({
+  loadVersion: vi.fn(async () => ({ current: 'v1' })),
+}))
+
 import { I18nProvider } from '../../app/i18n'
 import { listFormationPresets } from '../../data/formationPresetStore'
 import { APP_DATABASE_NAME } from '../../data/localDatabase'
 import { deleteUserProfileData } from '../../data/user-profile-store'
 import { PlannerSavePreset } from './PlannerSavePreset'
-
-vi.mock('../../data/client', () => ({
-  loadVersion: vi.fn(async () => ({ current: 'v1' })),
-}))
 
 async function resetDatabase(): Promise<void> {
   await deleteUserProfileData().catch(() => {})

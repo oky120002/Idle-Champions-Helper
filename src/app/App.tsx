@@ -42,7 +42,7 @@ export function App() {
 
   useEffect(() => {
     if (typeof window === 'undefined') {
-      return undefined
+      return
     }
 
     const root = document.documentElement
@@ -54,8 +54,12 @@ export function App() {
             matches: false,
             addEventListener: undefined as ((type: 'change', listener: MediaQueryListener) => void) | undefined,
             removeEventListener: undefined as ((type: 'change', listener: MediaQueryListener) => void) | undefined,
-            addListener: (_listener: MediaQueryListener) => {},
-            removeListener: (_listener: MediaQueryListener) => {},
+            addListener: (listener: MediaQueryListener) => {
+              void listener
+            },
+            removeListener: (listener: MediaQueryListener) => {
+              void listener
+            },
           }
     const syncScrollLock = () => {
       const shouldLockScroll = isWorkbench && mediaQuery.matches

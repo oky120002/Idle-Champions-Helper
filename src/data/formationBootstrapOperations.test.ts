@@ -1,13 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { Champion, FormationLayout, FormationPreset } from '../domain/types'
-import {
-  loadStoredDraftPrompt,
-  restorePendingPreset,
-} from '../pages/formation/formation-bootstrap-operations'
-import { buildFormationSnapshotPrompt } from './formationPersistence'
-import { readRecentFormationDraft, saveRecentFormationDraft } from './formationDraftStore'
-
 vi.mock('./client', () => ({
   loadCollectionAtVersion: vi.fn(),
   loadVersion: vi.fn(),
@@ -23,16 +15,26 @@ vi.mock('./formationPersistence', () => ({
   buildRestoreStatusDetail: vi.fn(),
 }))
 
+import { buildFormationSnapshotPrompt } from './formationPersistence'
+import { readRecentFormationDraft, saveRecentFormationDraft } from './formationDraftStore'
+import type { Champion, FormationLayout, FormationPreset } from '../domain/types'
+import {
+  loadStoredDraftPrompt,
+  restorePendingPreset,
+} from '../pages/formation/formation-bootstrap-operations'
+
 const mockedBuildFormationSnapshotPrompt = vi.mocked(buildFormationSnapshotPrompt)
 const mockedReadRecentFormationDraft = vi.mocked(readRecentFormationDraft)
 const mockedSaveRecentFormationDraft = vi.mocked(saveRecentFormationDraft)
 
 function createChampion(id: string, seat: number): Champion {
   return {
+    id,
     name: {
       original: id,
       display: id,
     },
+    seat,
     roles: [],
     affiliations: [],
     tags: [],
@@ -42,8 +44,6 @@ function createChampion(id: string, seat: number): Champion {
       forcedEligiblePatronIds: [],
       unsupportedPatronIds: [],
     },
-    id,
-    seat,
   }
 }
 

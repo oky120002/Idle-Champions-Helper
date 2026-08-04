@@ -24,11 +24,11 @@ export function createDomRect(top: number): DOMRect {
     y: top,
     width: 0,
     height: 0,
+    top,
     right: 0,
     bottom: top,
     left: 0,
     toJSON: () => ({}),
-    top,
   }
 }
 

@@ -5,8 +5,8 @@ import {
   WorkbenchContentStack,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
+  WorkbenchToolbarBadge,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchToolbarBadge } from '../components/workbench/WorkbenchToolbarPrimitives'
 import {
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'

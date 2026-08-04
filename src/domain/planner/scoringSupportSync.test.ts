@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { SCORING_SUPPORTED_STACK_FUNCS } from '../../../scripts/data/signal-coverage.ts'
 import { STACK_COUNT_RESOLVERS } from './placementFit'
+import { SCORING_SUPPORTED_STACK_FUNCS } from '../../../scripts/data/signal-coverage.ts'
 
 describe('scoring support 同步守护', () => {
   it('signal-coverage 的 supported stackFunc 集与 placementFit scorer 的 resolver keys 完全一致', () => {

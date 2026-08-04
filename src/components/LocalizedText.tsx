@@ -43,7 +43,7 @@ export function LocalizedText({
 
   return createElement(wrapperTag, { className }, [
     createElement(primaryAs, { key: 'primary', className: primaryClassName }, primary),
-    secondary !== null && secondary !== ''
+    secondary
       ? createElement(secondaryAs, { key: 'secondary', className: secondaryClassName }, secondary)
       : null,
   ])

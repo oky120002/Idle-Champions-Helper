@@ -36,9 +36,9 @@ export function checkFormationLegality(input: LegalityCheckInput): LegalityResul
     }
   }
 
-  // Check forced champions (all constraints are 'forceInclude' per VariantConstraint type)
-  const forceInclude = variantRules.constraints[0]
-  if (forceInclude !== undefined) {
+  // Check forced champions
+  const forceInclude = variantRules.constraints.find((c) => c.kind === 'forceInclude')
+  if (forceInclude) {
     const placedHeroes = new Set(Object.values(placements))
     const missing = forceInclude.heroIds.filter((id) => !placedHeroes.has(id))
     if (missing.length > 0) {

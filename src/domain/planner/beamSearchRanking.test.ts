@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import Decimal from 'decimal.js'
-import { compareGameNumbers } from '../simulator/gameNumber'
-import type { HeroAbilityKind } from '../abilities/abilityModel'
 import { beamSearch } from './beamSearchRanking'
 import type { ScoringResult } from './steadyStateScoring'
+import { compareGameNumbers } from '../simulator/gameNumber'
+import type { HeroAbilityKind } from '../abilities/abilityModel'
 
 function makeResult(score: number, carryHeroId: string | null = null): ScoringResult {
   const value = new Decimal(score)

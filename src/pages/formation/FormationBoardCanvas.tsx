@@ -52,7 +52,7 @@ export function FormationBoardCanvas({
         className="formation-board"
         data-testid={testId}
         style={boardStyle}
-        onDragEnd={() => { setDragOverSlotId(null); }}
+        onDragEnd={() => setDragOverSlotId(null)}
       >
         {slots.map((slot) => {
           const championId = placements[slot.id]

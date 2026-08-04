@@ -3,7 +3,7 @@ import { StatusBanner } from './StatusBanner'
 import type { StatusMessage } from './statusMessage'
 
 interface StatusMessageBannerProps {
-  readonly message: StatusMessage | null
+  message: StatusMessage | null
 }
 
 export function StatusMessageBanner({ message }: StatusMessageBannerProps) {

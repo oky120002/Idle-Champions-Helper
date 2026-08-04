@@ -5,9 +5,9 @@ import { DetailField, LocalizedTextStack } from './detail-cards'
 import { formatNumber } from './detail-value-formatters'
 
 type DetailCharacterSectionProps = {
-  readonly detail: ChampionDetail
-  readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  detail: ChampionDetail
+  locale: 'zh-CN' | 'en-US'
+  t: (text: { zh: string; en: string }) => string
 }
 
 export function DetailCharacterSection({ detail, locale, t }: DetailCharacterSectionProps) {

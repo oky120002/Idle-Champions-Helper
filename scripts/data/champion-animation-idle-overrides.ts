@@ -1,5 +1,5 @@
-import path from 'node:path'
 import { readJson } from './io-utils.ts'
+import path from 'node:path'
 
 export const DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE = path.resolve(
   'scripts/data/champion-animation-idle-overrides.json',
@@ -25,7 +25,7 @@ function normalizeSequenceIndexes(value: unknown): number[] {
 }
 
 function normalizeEntry(entry: unknown): ChampionAnimationIdleOverride | null {
-  if (entry === null || typeof entry !== 'object') {
+  if (!entry || typeof entry !== 'object') {
     return null
   }
 
@@ -45,13 +45,13 @@ export async function readChampionAnimationIdleOverrides(
 ): Promise<Map<string, ChampionAnimationIdleOverride>> {
   const parsed = await readJson(path.resolve(filePath))
 
-  if (parsed === null || typeof parsed !== 'object') {
+  if (!parsed || typeof parsed !== 'object') {
     return new Map()
   }
 
   const rawEntries = (parsed as Record<string, unknown>).entries
 
-  if (rawEntries === null || typeof rawEntries !== 'object') {
+  if (!rawEntries || typeof rawEntries !== 'object') {
     return new Map()
   }
 

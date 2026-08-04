@@ -1,6 +1,5 @@
-import { Buffer } from 'node:buffer'
-import zlib from 'node:zlib'
 import { it, expect } from 'vitest'
+import zlib from 'node:zlib'
 import { PNG } from 'pngjs'
 import {
   decodeRemoteGraphicBuffer,
@@ -70,8 +69,8 @@ it('getPngDimensions 按偏移读取 wrapped PNG 尺寸，越界返回 null', ()
   const png = makePngBuffer()
   const wrapped = wrapWithPrefix(png, 6)
   expect(getPngDimensions(wrapped, 6)).toEqual({ width: 2, height: 2 })
-  expect(getPngDimensions(wrapped, -1)).toBeNull()
-  expect(getPngDimensions(wrapped, wrapped.length - 5)).toBeNull()
+  expect(getPngDimensions(wrapped, -1)).toBe(null)
+  expect(getPngDimensions(wrapped, wrapped.length - 5)).toBe(null)
 })
 
 it('decodeGraphicBufferWithFallback 标注正确时直接命中', () => {

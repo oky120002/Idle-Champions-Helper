@@ -766,7 +766,7 @@ export function collectEffectEntries(detail: unknown): {
       const targetEntries = upgradeEffectEntriesById.get(targetIdStr) ?? []
       for (const targetEntry of targetEntries) {
         const targetSignalResult = resolveEntrySignal(targetEntry)
-        if (!targetSignalResult?.ok) {
+        if (!targetSignalResult || !targetSignalResult.ok) {
           continue
         }
 

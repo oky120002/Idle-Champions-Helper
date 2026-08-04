@@ -72,7 +72,9 @@ describe('placement fit — upgrade', () => {
     const allyB = createHero('ally-b', { tags: ['evil'] })
 
     const fit = evaluatePlacementFit({
+      carryHero,
       carrySlotId: 's2',
+      supportHero,
       supportSlotId: 's1',
       scenario: extendedScenario,
       placements: {
@@ -87,8 +89,6 @@ describe('placement fit — upgrade', () => {
         ['ally-a', allyA],
         ['ally-b', allyB],
       ]),
-      carryHero,
-      supportHero,
     })
 
     expect(fit.totalMultiplier).toBeCloseTo(9, 6)
@@ -166,8 +166,8 @@ describe('placement fit — upgrade', () => {
       carrySlotId: 's2',
       supportHero: vi,
       supportSlotId: 's2',
-      placements: { s1: 'g1', s2: 'vi', s3: 'g2' },
       scenario,
+      placements: { s1: 'g1', s2: 'vi', s3: 'g2' },
       heroesById,
     })
 

@@ -19,7 +19,7 @@ const SCOPE_OPTIONS: ReadonlyArray<{
 ]
 
 type IllustrationsPrimaryFiltersProps = {
-  readonly model: IllustrationsPageModel
+  model: IllustrationsPageModel
 }
 
 const illustrationsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {
@@ -57,7 +57,7 @@ export function IllustrationsPrimaryFilters({ model }: IllustrationsPrimaryFilte
       id: 'scope',
       label: t({ zh: '范围', en: 'Scope' }),
       value: filters.scope,
-      onChange: (value) => { actions.updateScope(value as ViewFilter); },
+      onChange: (value) => actions.updateScope(value as ViewFilter),
       groupLabel: t({ zh: '立绘范围', en: 'Illustration scope' }),
       options: SCOPE_OPTIONS.map((option) => ({
         value: option.value,

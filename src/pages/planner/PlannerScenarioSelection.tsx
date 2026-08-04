@@ -245,7 +245,7 @@ export function PlannerScenarioSelection({
             <button
               type="button"
               className="action-button action-button--secondary planner-scenario-selection__toggle"
-              onClick={() => { setShowAllResults(true); }}
+              onClick={() => setShowAllResults(true)}
             >
               {t({ zh: '展开全部匹配项', en: 'Show all matches' })}
             </button>
@@ -255,7 +255,7 @@ export function PlannerScenarioSelection({
             <button
               type="button"
               className="action-button action-button--ghost planner-scenario-selection__toggle"
-              onClick={() => { setShowAllResults(false); }}
+              onClick={() => setShowAllResults(false)}
             >
               {t({ zh: '收起到精简视图', en: 'Collapse to compact view' })}
             </button>

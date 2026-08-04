@@ -17,7 +17,19 @@ interface Translation {
 }
 
 export function useChampionDetailDerived(detail: ChampionDetail | null, locale: AppLocale, t: Translation) {
-  const { effectContext, upgradePresentations } = useUpgradeContext(detail, locale)
+  const attackLabelById = useMemo(() => buildAttackLabelById(detail, locale), [detail, locale])
+  const upgradeLabelById = useMemo(
+    () => buildUpgradeLabelById(detail, locale, attackLabelById),
+    [attackLabelById, detail, locale],
+  )
+  const effectContext = useMemo(
+    () => buildEffectContext(detail, locale, attackLabelById, upgradeLabelById),
+    [attackLabelById, detail, locale, upgradeLabelById],
+  )
+  const upgradePresentations = useMemo(
+    () => buildUpgradePresentations(detail, effectContext),
+    [detail, effectContext],
+  )
   const spotlightUpgrades = useMemo(() => buildSpotlightUpgrades(detail), [detail])
   const specializationColumns = useMemo(
     () => buildSpecializationUpgradeColumns(detail, spotlightUpgrades, effectContext, upgradePresentations),
@@ -66,21 +78,4 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     resetLedgerFilters,
     enableAllLedgerFilters,
   }
-}
-
-function useUpgradeContext(detail: ChampionDetail | null, locale: AppLocale) {
-  const attackLabelById = useMemo(() => buildAttackLabelById(detail, locale), [detail, locale])
-  const upgradeLabelById = useMemo(
-    () => buildUpgradeLabelById(detail, locale, attackLabelById),
-    [attackLabelById, detail, locale],
-  )
-  const effectContext = useMemo(
-    () => buildEffectContext(detail, locale, attackLabelById, upgradeLabelById),
-    [attackLabelById, detail, locale, upgradeLabelById],
-  )
-  const upgradePresentations = useMemo(
-    () => buildUpgradePresentations(detail, effectContext),
-    [detail, effectContext],
-  )
-  return { effectContext, upgradePresentations }
 }

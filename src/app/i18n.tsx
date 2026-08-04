@@ -2,7 +2,7 @@
 
 import {
   createContext,
-  type ReactNode,
+  type PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
@@ -40,7 +40,7 @@ function getLocaleStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
 
   const storage = window.localStorage
 
-  if (typeof storage.getItem !== 'function' || typeof storage.setItem !== 'function') {
+  if (typeof storage?.getItem !== 'function' || typeof storage?.setItem !== 'function') {
     return null
   }
 
@@ -51,7 +51,7 @@ export function pickLocaleText(locale: AppLocale, text: LocaleText): string {
   return locale === 'zh-CN' ? text.zh : text.en
 }
 
-export function I18nProvider({ children }: { readonly children?: ReactNode }) {
+export function I18nProvider({ children }: PropsWithChildren) {
   const [locale, setLocale] = useState<AppLocale>(() => {
     return parseStoredLocale(getLocaleStorage()?.getItem(STORAGE_KEY) ?? null)
   })
@@ -69,8 +69,8 @@ export function I18nProvider({ children }: { readonly children?: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      isZh: locale === 'zh-CN',
       locale,
+      isZh: locale === 'zh-CN',
       setLocale,
       t,
     }),

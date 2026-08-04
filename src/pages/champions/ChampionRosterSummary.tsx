@@ -1,13 +1,13 @@
 import type { ChampionRosterSummary as ChampionRosterSummaryModel } from './championRoster'
 
 interface ChampionRosterSummaryProps {
-  readonly summary: ChampionRosterSummaryModel | null
-  readonly sourceLabel?: string
-  readonly eyebrow?: string
-  readonly title?: string
-  readonly highlightLabel?: string
-  readonly activeMetricId?: string | null
-  readonly onMetricToggle?: (metricId: string) => void
+  summary: ChampionRosterSummaryModel | null
+  sourceLabel?: string
+  eyebrow?: string
+  title?: string
+  highlightLabel?: string
+  activeMetricId?: string | null
+  onMetricToggle?: (metricId: string) => void
 }
 
 export function ChampionRosterSummary({
