@@ -151,7 +151,7 @@ const importXOn = {
   'import-x/no-dynamic-require': 'error',
   'import-x/no-nodejs-modules': 'error',
   'import-x/order': 'error',
-  'import-x/first': 'error',
+  // 不开 import-x/first：它会移动非 import 语句（如 vitest vi.mock），对 vitest 模式不友好
   'import-x/newline-after-import': 'error',
   'import-x/no-empty-named-blocks': 'error',
 }

@@ -1,6 +1,6 @@
+import type { Dispatch, SetStateAction } from 'react'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
 import { deleteRecentFormationDraft, saveRecentFormationDraft } from '../../data/formationDraftStore'
-import type { Dispatch, SetStateAction } from 'react'
 import {
   createErrorStatusMessage,
   createInfoStatusMessage,

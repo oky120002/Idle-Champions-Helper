@@ -12,6 +12,7 @@ import { DEFAULT_MANUAL_STACK_COUNT } from '../domain/planner/placementFit'
 import type { ScoringMode } from '../domain/planner/steadyStateScoring'
 import { formatSeatLabel, getLocalizedTextPair } from '../domain/localizedText'
 import type { Champion } from '../domain/types'
+import { buildScoringBonusInputs } from '../domain/planner/scoringBonusInputs'
 import { FormationBoardCanvas } from './formation/FormationBoardCanvas'
 import { HeroPicker } from './formation/HeroPicker'
 import { PlannerBreakdown } from './planner/PlannerBreakdown'
@@ -25,7 +26,6 @@ import {
   removeEvaluatePlacement,
   useEvaluatePlacements,
 } from './planner/evaluatePlacementsStore'
-import { buildScoringBonusInputs } from '../domain/planner/scoringBonusInputs'
 import { usePlannerCollections } from './planner/usePlannerCollections'
 import { usePlannerEvaluation } from './planner/usePlannerCompute'
 

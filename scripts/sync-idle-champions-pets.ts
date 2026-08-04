@@ -1,15 +1,18 @@
 import { execFile } from 'node:child_process'
-import {
-  compareLocalizedText,
-  normalizeLocalizedText,
-  toText,
-} from './data/normalize-text-utils.ts'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { inflateRawSync, inflateSync, unzipSync } from 'node:zlib'
 import { PNG } from 'pngjs'
+import type { LocalizedText } from '../src/domain/types/common.ts'
+import type { PetImage } from '../src/domain/types/assets.ts'
+import type { Pet, PetAcquisition, PetAcquisitionKind } from '../src/domain/types/champions.ts'
+import {
+  compareLocalizedText,
+  normalizeLocalizedText,
+  toText,
+} from './data/normalize-text-utils.ts'
 import {
   DEFAULT_MASTER_API_URL,
   buildRemoteGraphicAsset,
@@ -35,9 +38,6 @@ import {
   removeUnexpectedFiles,
   shouldSkipResourceSync,
 } from './data/resource-sync-policy.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
-import type { PetImage } from '../src/domain/types/assets.ts'
-import type { Pet, PetAcquisition, PetAcquisitionKind } from '../src/domain/types/champions.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

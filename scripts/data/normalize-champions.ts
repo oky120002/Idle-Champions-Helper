@@ -1,3 +1,4 @@
+import type { JsonValue, LocalizedText } from '../../src/domain/types/common.ts'
 import {
   compareLocalizedText,
   normalizeJsonValue,
@@ -13,7 +14,6 @@ import {
 } from './normalize-text-utils.ts'
 import { buildChampionPortraitPath, resolveGraphicAssetById } from './champion-asset-helpers.ts'
 import type { ChampionPortraitSource, RemoteGraphicAsset } from './champion-asset-helpers.ts'
-import type { JsonValue, LocalizedText } from '../../src/domain/types/common.ts'
 
 const ROLE_TAGS = new Set<string>([
   'breaking',

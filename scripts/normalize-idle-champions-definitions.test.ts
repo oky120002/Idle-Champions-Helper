@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, writeFile } from 'node:fs/promises'
+import { describe, expect, it } from 'vitest'
 import { readJson } from './data/io-utils.ts'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.ts'
 import { normalizeEffectReference } from './data/normalize-champions.ts'

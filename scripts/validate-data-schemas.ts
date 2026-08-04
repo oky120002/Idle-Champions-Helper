@@ -2,8 +2,6 @@ import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 import type { ZodTypeAny } from 'zod'
 
-import { readJson } from './data/io-utils.ts'
-import { championDetailsSchema } from './data/champion-details-schema.ts'
 import {
   adventuresCollectionSchema,
   championsCollectionSchema,
@@ -18,6 +16,8 @@ import {
   scenariosSchema,
   specializationCatalogSchema,
 } from '../src/domain/types/build-product-schemas.ts'
+import { readJson } from './data/io-utils.ts'
+import { championDetailsSchema } from './data/champion-details-schema.ts'
 
 const DEFAULT_DATA_DIR = 'public/data/v1'
 

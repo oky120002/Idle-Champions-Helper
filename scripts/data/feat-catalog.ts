@@ -1,4 +1,3 @@
-import { normalizeEffectSignal, splitEffectString } from './effect-helpers'
 import {
   DIMENSION_BY_KIND,
   type HeroAbilityDimension,
@@ -7,6 +6,7 @@ import {
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics'
 import { parseEffectPayload } from '../../src/domain/effects/effect-string'
 import { parseBuffUpgradeEffect } from '../../src/domain/buffs/equipmentMult'
+import { normalizeEffectSignal, splitEffectString } from './effect-helpers'
 import type { SignalBucket } from './effect-resolvers/resolverShared'
 
 /**

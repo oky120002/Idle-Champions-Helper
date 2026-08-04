@@ -1,10 +1,10 @@
 import 'fake-indexeddb/auto'
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import type { FormationDraft, FormationPreset } from '../domain/types'
 import { deleteRecentFormationDraft, readRecentFormationDraft, saveRecentFormationDraft } from './formationDraftStore'
 import { deleteFormationPreset, listFormationPresets, saveFormationPreset } from './formationPresetStore'
 import { APP_DATABASE_NAME, APP_STORE_NAMES, openAppDatabase } from './localDatabase'
-import type { FormationDraft, FormationPreset } from '../domain/types'
 
 function createDraft(updatedAt: string): FormationDraft {
   return {

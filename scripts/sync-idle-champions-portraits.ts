@@ -1,15 +1,15 @@
 import { mkdir, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { parseArgs } from 'node:util'
+import { pathToFileURL } from 'node:url'
+import { PNG } from 'pngjs'
+import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.ts'
+import { findOpaqueBounds } from './data/png-image-helpers.ts'
 import {
   readJson,
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { findOpaqueBounds } from './data/png-image-helpers.ts'
-import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.ts'
-import path from 'node:path'
-import { parseArgs } from 'node:util'
-import { pathToFileURL } from 'node:url'
-import { PNG } from 'pngjs'
 import {
   CHAMPION_PORTRAIT_DIR_NAME,
   DEFAULT_MASTER_API_URL,

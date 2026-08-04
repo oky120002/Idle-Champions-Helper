@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { scoreFormation } from './steadyStateScoring'
 import { compareGameNumbers } from '../simulator/gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
+import { scoreFormation } from './steadyStateScoring'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {

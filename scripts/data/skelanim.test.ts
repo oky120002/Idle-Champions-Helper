@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
 import zlib from 'node:zlib'
+import { expect, it } from 'vitest'
 import { PNG } from 'pngjs'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.ts'
 import {

@@ -1,12 +1,12 @@
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
 import { asArray, asRecord, readJson, readJsonIfExists, writeJson } from './io-utils.ts'
 import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './resource-sync-policy.ts'
 import { buildOfficialHeroModel } from './buildHeroModels.ts'
 import { buildOfficialScenarioModel } from './buildScenarioModels.ts'
 import { normalizeSemanticOverrides } from './buildSemanticOverrides.ts'
 import { buildSpecializationEntries, type SpecializationEntry } from './specialization-catalog.ts'
-import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'

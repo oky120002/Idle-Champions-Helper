@@ -1,21 +1,21 @@
 import Decimal from 'decimal.js'
 
-import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
-import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
-import { computeTeamGoldFind } from './goldObjective'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
 import { computeSingleHitDamage } from '../simulator/budCalculation'
 import { estimateMaxArea, type AreaEstimationResult } from '../simulator/areaEstimation'
 import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
+import type { EquipmentCritBonus } from '../buffs/equipmentMult'
 import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
-import type { EquipmentCritBonus } from '../buffs/equipmentMult'
+import { computeTeamGoldFind } from './goldObjective'
+import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 /**
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。

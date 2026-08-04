@@ -8,6 +8,7 @@ import {
   readSwitchPlayServer,
   resolveOfficialPlayServerBaseUrls,
 } from './officialPlayServer'
+
 export {
   createReadonlyFetchOptions,
   OFFICIAL_PLAY_SERVER_FALLBACK_BASE_URLS,

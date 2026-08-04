@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
+import type { HeroAbilityProfile } from '../abilities/abilityModel'
+import type { OfficialPlannerScenarioModel } from '../planner/plannerModel'
+import type { LootCatalogEntry } from '../buffs/equipmentMult'
+import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
+import type { FeatEntry } from '../abilities/featSignals'
+import type { SpecializationEntry } from '../abilities/specializationSignals'
 import type {
   effectDefinitionItemSchema,
   featCatalogItemSchema,
@@ -8,12 +14,6 @@ import type {
   plannerScenarioItemSchema,
   specializationCatalogItemSchema,
 } from './build-product-schemas'
-import type { HeroAbilityProfile } from '../abilities/abilityModel'
-import type { OfficialPlannerScenarioModel } from '../planner/plannerModel'
-import type { LootCatalogEntry } from '../buffs/equipmentMult'
-import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
-import type { FeatEntry } from '../abilities/featSignals'
-import type { SpecializationEntry } from '../abilities/specializationSignals'
 
 /**
  * build-product schema 钉死字段 ⊆ 消费 interface（passthrough 双源防漂移）。

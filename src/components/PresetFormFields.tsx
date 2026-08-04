@@ -1,6 +1,6 @@
+import type { PresetPriority } from '../domain/types'
 import { FieldGroup } from './FieldGroup'
 import { SegmentedButtonGroup } from './SegmentedButtonGroup'
-import type { PresetPriority } from '../domain/types'
 
 export interface PresetFormFieldValue {
   name: string

@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { manyChampionsFixture } from '../champions/championsPageTestData'
 import {
   mockUserHeroesPageCollections,
   mockUserHeroesProfile,
@@ -10,7 +11,6 @@ import {
   mockedResolveUserProfileSnapshot,
   renderUserHeroesPage,
 } from './userHeroesPageTestHarness'
-import { manyChampionsFixture } from '../champions/championsPageTestData'
 
 describe('UserHeroesPage roster matrix', () => {
   beforeEach(() => {

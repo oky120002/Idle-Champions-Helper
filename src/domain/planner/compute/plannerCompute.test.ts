@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import type { FormationEvaluation } from '../recommendationEngine'
+import type { PlannerCollections, PlannerRecommendation } from '../recommendationTypes'
 import {
   SyncPlannerComputeRunner,
   WorkerPlannerComputeRunner,
@@ -7,8 +9,6 @@ import {
   type PlannerComputeInbound,
   type PlannerComputeOutbound,
 } from './plannerCompute'
-import type { FormationEvaluation } from '../recommendationEngine'
-import type { PlannerCollections, PlannerRecommendation } from '../recommendationTypes'
 
 // Fake Worker：捕获 postMessage、暴露 emit 模拟 worker 回包、记录 terminate。
 // node 环境无真 Worker，runner 测试用此替身覆盖协议与路由逻辑。

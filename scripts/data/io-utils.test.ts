@@ -1,7 +1,7 @@
-import { it, expect } from 'vitest'
 import { mkdtemp, rm, readFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
+import { it, expect } from 'vitest'
 import {
   readJson,
   readJsonIfExists,

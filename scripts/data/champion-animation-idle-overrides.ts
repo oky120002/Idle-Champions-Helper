@@ -1,5 +1,5 @@
-import { readJson } from './io-utils.ts'
 import path from 'node:path'
+import { readJson } from './io-utils.ts'
 
 export const DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE = path.resolve(
   'scripts/data/champion-animation-idle-overrides.json',

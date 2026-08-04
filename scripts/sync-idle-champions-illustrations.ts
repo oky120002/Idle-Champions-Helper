@@ -1,13 +1,14 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { parseArgs } from 'node:util'
+import { pathToFileURL } from 'node:url'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 import {
   parseIdFilter,
   readJson,
   readJsonIfExists,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import path from 'node:path'
-import { parseArgs } from 'node:util'
-import { pathToFileURL } from 'node:url'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import { renderSkelAnimPoseToPngBuffer, type SkelAnimFrameBounds } from './data/skelanim-renderer.ts'
 import { resolveWalkPosterPose } from './data/skelanim-walk-selection.ts'
@@ -17,7 +18,6 @@ import {
   removeUnexpectedFiles,
   shouldSkipResourceSync,
 } from './data/resource-sync-policy.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

@@ -1,3 +1,4 @@
+import type { JsonValue, LocalizedText } from '../../src/domain/types/common.ts'
 import {
   compareLocalizedText,
   normalizeJsonValue,
@@ -5,7 +6,6 @@ import {
   normalizeNumber,
   toText,
 } from './normalize-text-utils.ts'
-import type { JsonValue, LocalizedText } from '../../src/domain/types/common.ts'
 
 type RawDefinition = Record<string, unknown>
 type LocalizedDefinition = RawDefinition

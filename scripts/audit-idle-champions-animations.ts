@@ -1,8 +1,9 @@
 import { readFile, writeFile } from 'node:fs/promises'
-import { readJson, readJsonIfExists } from './data/io-utils.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import type { LocalizedText } from '../src/domain/types/common.ts'
+import { readJson, readJsonIfExists } from './data/io-utils.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import {
   buildSuspicionLevel,
@@ -17,7 +18,6 @@ import {
   readChampionAnimationIdleOverrides,
 } from './data/champion-animation-idle-overrides.ts'
 import type { ChampionAnimationIdleOverride } from './data/champion-animation-idle-overrides.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

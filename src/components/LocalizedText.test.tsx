@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { describe, expect, it } from 'vitest'
 import { I18nProvider, useI18n } from '../app/i18n'
-import { LocalizedText } from './LocalizedText'
 import type { LocalizedText as LocalizedTextValue } from '../domain/types'
+import { LocalizedText } from './LocalizedText'
 
 const briv: LocalizedTextValue = {
   original: 'Briv',

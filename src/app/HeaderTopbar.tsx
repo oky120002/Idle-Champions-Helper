@@ -1,9 +1,9 @@
+import { GlobalSearchBox } from '../features/search/GlobalSearchBox'
 import type { AppLocale } from './i18n'
 import { MobileMenuIcon } from './AppIcons'
 import type { AppNavigationItem, TranslationFn } from './appNavigation'
 import { ThemeToggle } from './ThemeToggle'
 import { ToolbarLocaleSwitcher } from './LocaleSwitcher'
-import { GlobalSearchBox } from '../features/search/GlobalSearchBox'
 
 interface HeaderTopbarProps {
   activeNavigationItem: AppNavigationItem

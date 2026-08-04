@@ -1,7 +1,7 @@
-import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, readFile } from 'node:fs/promises'
+import { it, expect } from 'vitest'
 import {
   compareUpdatedAt,
   collectPipelineFiles,

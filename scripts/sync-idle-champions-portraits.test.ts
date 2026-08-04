@@ -1,9 +1,9 @@
-import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
-import { readJson, writeJson } from './data/io-utils.ts'
+import { it, expect } from 'vitest'
 import { PNG } from 'pngjs'
+import { readJson, writeJson } from './data/io-utils.ts'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.ts'
 
 interface TestHooks {

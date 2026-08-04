@@ -1,9 +1,9 @@
+import { useDataVersionState } from '../data/useDataVersionState'
 import type { AppLocale } from './i18n'
 import type { AppNavigationItem } from './appNavigation'
 import { HeaderTopbar } from './HeaderTopbar'
 import { PrimaryNavigation } from './PrimaryNavigation'
 import { useSiteHeaderState } from './useSiteHeaderState'
-import { useDataVersionState } from '../data/useDataVersionState'
 
 interface SiteHeaderProps {
   activeNavigationItem: AppNavigationItem

@@ -2,9 +2,9 @@
 // 详见 docs/specs/modules/planner/architecture.md「Hermetic 边界」。
 // 计算器是 hermetic 模块——所有数据经适配层（usePlannerCollections）→ PlannerCollections 喂入。
 // 本测试防回归：谁在域里加 `import { loadCollection }` 或读文件，CI 即 fail。
-import { describe, expect, it } from 'vitest'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
+import { describe, expect, it } from 'vitest'
 
 const DOMAIN_ROOT = path.resolve(__dirname, '..') // src/domain
 const SCANNED_DIRS = [

@@ -1,9 +1,8 @@
-import { Eye, EyeOff, Shuffle } from 'lucide-react'
+import { Eye, EyeOff, Shuffle, Link2  } from 'lucide-react'
 import { createElement } from 'react'
 import type { LocaleText } from '../../app/i18n'
 import type { WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from './useWorkbenchShareLink'
-import { Link2 } from 'lucide-react'
 
 type WorkbenchTranslate = (text: LocaleText) => string
 

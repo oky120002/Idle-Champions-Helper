@@ -15,13 +15,13 @@ vi.mock('./formationPersistence', () => ({
   buildRestoreStatusDetail: vi.fn(),
 }))
 
-import { buildFormationSnapshotPrompt } from './formationPersistence'
-import { readRecentFormationDraft, saveRecentFormationDraft } from './formationDraftStore'
 import type { Champion, FormationLayout, FormationPreset } from '../domain/types'
 import {
   loadStoredDraftPrompt,
   restorePendingPreset,
 } from '../pages/formation/formation-bootstrap-operations'
+import { buildFormationSnapshotPrompt } from './formationPersistence'
+import { readRecentFormationDraft, saveRecentFormationDraft } from './formationDraftStore'
 
 const mockedBuildFormationSnapshotPrompt = vi.mocked(buildFormationSnapshotPrompt)
 const mockedReadRecentFormationDraft = vi.mocked(readRecentFormationDraft)

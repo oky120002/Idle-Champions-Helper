@@ -2,6 +2,7 @@ import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
 import type { ChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
@@ -28,7 +29,6 @@ import {
   runWithConcurrency,
 } from './data/io-utils.ts'
 import type { RemoteGraphicAsset } from './data/champion-asset-helpers.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

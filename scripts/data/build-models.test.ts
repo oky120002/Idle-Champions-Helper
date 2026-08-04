@@ -1,12 +1,12 @@
-import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, writeFile } from 'node:fs/promises'
+import { it, expect } from 'vitest'
+import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
 import { readJson } from './io-utils.ts'
 
 import { buildModels } from './build-models.ts'
 import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.ts'
-import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
 import { normalizeEffectReference } from './normalize-champions.ts'
 
 interface HeroSignal {

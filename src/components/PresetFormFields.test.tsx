@@ -2,8 +2,8 @@ import type { ComponentProps } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import { PresetFormFields, type PresetFormFieldValue } from './PresetFormFields'
 import type { PresetPriority } from '../domain/types'
+import { PresetFormFields, type PresetFormFieldValue } from './PresetFormFields'
 
 const defaultValue: PresetFormFieldValue = {
   name: '推图常用队',

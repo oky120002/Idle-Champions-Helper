@@ -1,13 +1,13 @@
 import { mkdir, readdir, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { parseArgs } from 'node:util'
+import { pathToFileURL } from 'node:url'
+import { cropOpaqueBounds } from './data/png-image-helpers.ts'
 import {
   readJson,
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { cropOpaqueBounds } from './data/png-image-helpers.ts'
-import path from 'node:path'
-import { parseArgs } from 'node:util'
-import { pathToFileURL } from 'node:url'
 import {
   DEFAULT_MASTER_API_URL,
   buildGraphicMap,

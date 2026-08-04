@@ -1,6 +1,6 @@
 import { LocalizedText } from '../../components/LocalizedText'
-import { getAreaHighlightLabel, getMechanicLabel } from './variant-labels'
 import type { Variant } from '../../domain/types'
+import { getAreaHighlightLabel, getMechanicLabel } from './variant-labels'
 import type { VariantsPageModel } from './types'
 
 type VariantResultCardProps = {

@@ -1,8 +1,8 @@
-import { afterEach, expect, it } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdtemp, readFile, rm, writeFile, mkdir } from 'node:fs/promises'
+import { afterEach, expect, it } from 'vitest'
 import { writeJson } from './data/io-utils.ts'
 import { auditChampionAnimations } from './audit-idle-champions-animations.ts'
 

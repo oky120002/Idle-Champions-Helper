@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
 import type { Champion, LocalizedOption, LocalizedText, Variant } from '../types'
-import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
+import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
+import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 import type { PlannerCollections } from './recommendationTypes'
-import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
 
 function text(original: string, display = original): LocalizedText {
   return { original, display }

@@ -1,5 +1,5 @@
-import { it, expect } from 'vitest'
 import zlib from 'node:zlib'
+import { it, expect } from 'vitest'
 import { PNG } from 'pngjs'
 import {
   decodeRemoteGraphicBuffer,

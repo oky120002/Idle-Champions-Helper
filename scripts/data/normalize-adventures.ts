@@ -1,3 +1,4 @@
+import type { LocalizedText } from '../../src/domain/types/common.ts'
 import {
   compareLocalizedText,
   normalizeLocalizedText,
@@ -19,7 +20,6 @@ import {
   normalizePatronDefinition,
   normalizePatronObjectiveTiers,
 } from './official-rule-helpers.ts'
-import type { LocalizedText } from '../../src/domain/types/common.ts'
 
 /**
  * 场景/冒险域：affiliation/campaign/adventure/scene map + adventure/variant 归一化 +

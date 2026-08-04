@@ -5,10 +5,10 @@ import {
   type FilterSidebarFieldSchema,
   type FilterSidebarGroupSchema,
 } from '../../components/filter-sidebar/FilterSidebarSchemaRenderer'
-import { ActiveFilterChipBar } from './ActiveFilterChipBar'
-import { seatOptions } from './options'
 import { formatSeatLabel, getRoleLabel } from '../../domain/localizedText'
 import type { LocalizedText } from '../../domain/types'
+import { ActiveFilterChipBar } from './ActiveFilterChipBar'
+import { seatOptions } from './options'
 import type { ActiveFilterChip } from './types'
 
 export interface ChampionPrimaryFilterCopy {

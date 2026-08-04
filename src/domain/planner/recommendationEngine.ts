@@ -8,13 +8,13 @@ import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
+import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
 import { applyComputationMode, type ComputationMode } from './computationMode'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
 import { buildPlannerExplanations } from './plannerNarrative'
-import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import {
   type PlannerCollections,
   type PlannerPlacementEntry,

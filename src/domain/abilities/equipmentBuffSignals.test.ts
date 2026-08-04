@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { applyEquipmentBuffsToProfile } from './equipmentBuffSignals'
 import { resolveSignalMultiplier } from '../planner/mechanics/signalMultiplier'
 import { buildInput, createHero } from '../planner/mechanics/mechanicTestFixtures'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
+import { applyEquipmentBuffsToProfile } from './equipmentBuffSignals'
 import type { HeroAbilitySignal, ResolvedHeroAbilityProfile } from './abilityModel'
 
 const baseSignal = (overrides: Partial<HeroAbilitySignal> & { rawEffect: string }): HeroAbilitySignal => ({

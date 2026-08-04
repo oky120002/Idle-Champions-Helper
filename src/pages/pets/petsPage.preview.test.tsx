@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, render  } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -17,7 +17,6 @@ vi.mock('../../features/skelanim-player/SkelAnimCanvas', () => ({
   SkelAnimCanvas: ({ alt }: { alt: string }) => <div data-testid="skelanim-preview">{alt}</div>,
 }))
 
-import { render } from '@testing-library/react'
 import { I18nProvider } from '../../app/i18n'
 import { loadCollection, loadVersion } from '../../data/client'
 import type { DataCollection, Pet, PetAnimation } from '../../domain/types'

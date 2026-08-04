@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { filterChampions } from './championFilter'
 import type { Champion, LocalizedText } from '../domain/types'
+import { filterChampions } from './championFilter'
 
 function localized(original: string, display: string): LocalizedText {
   return { original, display }

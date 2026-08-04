@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
-import { buildChampionFilterActions } from './champion-filter-actions'
 import { buildIllustrationFilterActions } from '../illustrations/illustration-filter-actions'
 import type { ViewFilter } from '../illustrations/types'
+import { buildChampionFilterActions } from './champion-filter-actions'
 
 function createStateSetter<T>(initialValue: T) {
   let currentValue = initialValue
