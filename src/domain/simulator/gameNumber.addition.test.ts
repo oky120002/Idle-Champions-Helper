@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 import {
   addGameNumbers,
@@ -49,7 +49,7 @@ describe('game number addition threshold', () => {
   it('刚好在阈值边界上的加法被忽略', () => {
     const threshold = ADDITION_EXPONENT_THRESHOLD
     const a = gn('1e100')
-    const b = gn(`1e${100 - threshold}`)
+    const b = gn(`1e${String(100 - threshold)}`)
 
     const result = addGameNumbers(a, b)
 

@@ -21,7 +21,7 @@ export const ownedHeroItemSchema = z
     level: z.number(),
     isOwned: z.boolean(),
   })
-  .passthrough()
+  .loose()
 
 export const userProfileSnapshotSchema = z
   .object({
@@ -29,7 +29,7 @@ export const userProfileSnapshotSchema = z
     ownedHeroes: z.array(ownedHeroItemSchema),
     updatedAt: z.string(),
   })
-  .passthrough()
+  .loose()
 
 export const formationDraftSchema = z
   .object({
@@ -37,7 +37,7 @@ export const formationDraftSchema = z
     placements: z.record(z.string(), z.string()),
     updatedAt: z.string(),
   })
-  .passthrough()
+  .loose()
 
 export const formationPresetSchema = z
   .object({
@@ -48,13 +48,13 @@ export const formationPresetSchema = z
     priority: z.enum(['low', 'medium', 'high']),
     updatedAt: z.string(),
   })
-  .passthrough()
+  .loose()
 
 export const heroAbilityOverridePatchSchema = z
   .object({
     heroId: z.string(),
   })
-  .passthrough()
+  .loose()
 
 export const formationPresetArraySchema = z.array(formationPresetSchema)
 export const heroAbilityOverridePatchArraySchema = z.array(heroAbilityOverridePatchSchema)
@@ -63,13 +63,16 @@ export const heroAbilityOverridePatchArraySchema = z.array(heroAbilityOverridePa
  * 校验存储记录读出：失败即 throw（带字段路径诊断），由消费方 catch 兜底。
  * passthrough 保留非核心字段；返回值经 cast 还原为消费类型（核心字段已校验、其余原样透传）。
  */
-export function parseStoredRecord<T>(raw: unknown, schema: z.ZodTypeAny, label: string): T {
+export function parseStoredRecord(raw: unknown, schema: z.ZodType, label: string): unknown {
   const result = schema.safeParse(raw)
   if (!result.success) {
     const issues = result.error.issues
-      .map((issue) => `${issue.path.join('.') || '<root>'}: ${issue.message}`)
+      .map((issue) => {
+        const path = issue.path.join('.')
+        return `${path !== '' ? path : '<root>'}: ${issue.message}`
+      })
       .join('; ')
     throw new Error(`存储数据校验失败（${label}）: ${issues}`)
   }
-  return result.data as T
+  return result.data
 }

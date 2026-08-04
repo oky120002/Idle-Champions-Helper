@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../../../tests/utils/dom-assertions'
+
 import {
   collectEquipmentBuffsByHero,
   computeEquipmentAdjustmentByHero,
@@ -154,7 +156,7 @@ describe('computeEquipmentCritByHero', () => {
       cat('25', '4', '4', 'buff_base_crit_damage_mult,150'),
     ]
     const heroes = [{ heroId: '25', lootBySlot: { '3': { rarity: 4 }, '4': { rarity: 4 } } }]
-    const bonus = computeEquipmentCritByHero(heroes, catalog).get('25')!
+    const bonus = unwrap(computeEquipmentCritByHero(heroes, catalog).get('25'), 'hero 25 crit bonus missing')
     // chance: 1 + 275/100 = 3.75；damage: 1 + 150/100 = 2.5
     expect(bonus.chanceMult).toBeCloseTo(3.75, 5)
     expect(bonus.damageMult).toBeCloseTo(2.5, 5)
@@ -163,13 +165,13 @@ describe('computeEquipmentCritByHero', () => {
   it('enchant 缩放（base × (1+enchant/250)，chance base275 enchant250 → value550 → mult6.5）', () => {
     const catalog = [cat('25', '3', '4', 'buff_base_crit_chance_mult,275')]
     const heroes = [{ heroId: '25', lootBySlot: { '3': { rarity: 4, enchant: 250 } } }]
-    expect(computeEquipmentCritByHero(heroes, catalog).get('25')!.chanceMult).toBeCloseTo(6.5, 5)
+    expect(unwrap(computeEquipmentCritByHero(heroes, catalog).get('25'), 'hero 25 missing').chanceMult).toBeCloseTo(6.5, 5)
   })
 
   it('只 chance 无 damage → damageMult=1（反之亦然）', () => {
     const catalog = [cat('25', '3', '4', 'buff_base_crit_chance_mult,275')]
     const heroes = [{ heroId: '25', lootBySlot: { '3': { rarity: 4 } } }]
-    const bonus = computeEquipmentCritByHero(heroes, catalog).get('25')!
+    const bonus = unwrap(computeEquipmentCritByHero(heroes, catalog).get('25'), 'hero 25 crit bonus missing')
     expect(bonus.chanceMult).toBeCloseTo(3.75, 5)
     expect(bonus.damageMult).toBe(1)
   })
@@ -191,8 +193,9 @@ describe('computeEquipmentHealthByHero', () => {
       { heroId: '10', lootBySlot: { '1': { rarity: 4 } } },
     ]
     const map = computeEquipmentHealthByHero(heroes, catalog)
-    expect(map.get('3')).toBeCloseTo(1 + 100 / 100, 5)
-    expect(map.get('10')).toBeCloseTo(1 + 100 / 100, 5)
+    // health_mult,100 → +100% → multiplier 1 + 100/100 = 2
+    expect(map.get('3')).toBeCloseTo(2, 5)
+    expect(map.get('10')).toBeCloseTo(2, 5)
   })
 
   it('enchant 缩放同 hero_dps（base × (1+enchant/250)，hero 3 slot2 r4=100 enchant750 → ×5）', () => {
@@ -328,10 +331,11 @@ describe('synthesizeHypotheticalLootByHero', () => {
     )
     const byHero = new Map(result.map((entry) => [entry.heroId, entry.lootBySlot]))
     expect(byHero.has('999')).toBe(false) // catalog 无 hero 999 → 跳过
-    expect(Object.keys(byHero.get('1')!).sort()).toEqual(['1', '2']) // hero 1 两 slot
-    expect(byHero.get('1')!['1']).toEqual({ rarity: 4, enchant: 2000 })
-    expect(byHero.get('1')!['2']).toEqual({ rarity: 4, enchant: 2000 })
-    expect(byHero.get('2')!['1']).toEqual({ rarity: 4, enchant: 2000 })
+    const hero1Loot = unwrap(byHero.get('1'), 'hero 1 missing')
+    expect(Object.keys(hero1Loot).sort((a, b) => a.localeCompare(b))).toEqual(['1', '2']) // hero 1 两 slot
+    expect(hero1Loot['1']).toEqual({ rarity: 4, enchant: 2000 })
+    expect(hero1Loot['2']).toEqual({ rarity: 4, enchant: 2000 })
+    expect(unwrap(byHero.get('2'), 'hero 2 missing')['1']).toEqual({ rarity: 4, enchant: 2000 })
   })
 
   it('稀有度可调：rarity=1 套到每槽（查询时按 catalog 该 rarity 条目命中或落空）', () => {
@@ -339,8 +343,9 @@ describe('synthesizeHypotheticalLootByHero', () => {
       { heroIds: ['1'], rarity: 1, enchant: 0 },
       catalog,
     )
-    expect(result[0]!.lootBySlot['1']).toEqual({ rarity: 1, enchant: 0 })
-    expect(result[0]!.lootBySlot['2']).toEqual({ rarity: 1, enchant: 0 })
+    const hero1 = unwrap(result[0], 'result[0] missing')
+    expect(hero1.lootBySlot['1']).toEqual({ rarity: 1, enchant: 0 })
+    expect(hero1.lootBySlot['2']).toEqual({ rarity: 1, enchant: 0 })
   })
 
   it('config heroIds 为空 → 空', () => {

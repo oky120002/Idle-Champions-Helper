@@ -35,7 +35,7 @@ export const heroAbilityProfileItemSchema = z
     carrySignals: z.array(z.unknown()),
     supportSignals: z.array(z.unknown()),
   })
-  .passthrough()
+  .loose()
 
 /**
  * scenarios.json item：场景阵型拓扑 + 限制。
@@ -47,7 +47,7 @@ const plannerScenarioSlotSchema = z
     row: z.number(),
     column: z.number(),
   })
-  .passthrough()
+  .loose()
 
 export const plannerScenarioItemSchema = z
   .object({
@@ -60,7 +60,7 @@ export const plannerScenarioItemSchema = z
     allowedTags: z.array(z.string()),
     occupiedSlotCount: z.number(),
   })
-  .passthrough()
+  .loose()
 
 /** loot-catalog.json item：装备定义（per-slot effect_string，装备加成解析源）。 */
 export const lootCatalogItemSchema = z
@@ -70,21 +70,21 @@ export const lootCatalogItemSchema = z
     rarity: z.string(),
     effectString: z.string(),
   })
-  .passthrough()
+  .loose()
 
 /** effect-definitions.json item：effect_def template（effect_def,<id> 解引用源）。钉 id + effectKeys。 */
 const effectDefinitionKeySchema = z
   .object({
     effectString: z.string(),
   })
-  .passthrough()
+  .loose()
 
 export const effectDefinitionItemSchema = z
   .object({
     id: z.string(),
     effectKeys: z.array(effectDefinitionKeySchema),
   })
-  .passthrough()
+  .loose()
 
 /** feat-catalog.json catalog 值：feat 定义（id + rarity + signals 列表）。 */
 export const featCatalogItemSchema = z
@@ -93,7 +93,7 @@ export const featCatalogItemSchema = z
     rarity: z.number(),
     signals: z.array(z.unknown()),
   })
-  .passthrough()
+  .loose()
 
 /** specialization-catalog.json catalog 值：专精 upgrade（upgradeId + signals 列表）。 */
 export const specializationCatalogItemSchema = z
@@ -101,13 +101,13 @@ export const specializationCatalogItemSchema = z
     upgradeId: z.string(),
     signals: z.array(z.unknown()),
   })
-  .passthrough()
+  .loose()
 
-const itemCollection = (itemSchema: z.ZodTypeAny) =>
-  z.object({ items: z.array(itemSchema), updatedAt: z.string() }).passthrough()
+const itemCollection = (itemSchema: z.ZodType) =>
+  z.object({ items: z.array(itemSchema), updatedAt: z.string() }).loose()
 
-const catalogCollection = (entrySchema: z.ZodTypeAny) =>
-  z.object({ catalog: z.record(z.string(), z.array(entrySchema)), updatedAt: z.string() }).passthrough()
+const catalogCollection = (entrySchema: z.ZodType) =>
+  z.object({ catalog: z.record(z.string(), z.array(entrySchema)), updatedAt: z.string() }).loose()
 
 export const heroAbilitiesSchema = itemCollection(heroAbilityProfileItemSchema)
 export const scenariosSchema = itemCollection(plannerScenarioItemSchema)

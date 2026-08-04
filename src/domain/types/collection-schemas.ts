@@ -25,14 +25,14 @@ export const patronObjectiveTierSchema = z
     objectiveArea: z.number().nullable(),
     objectives: z.array(z.unknown()),
   })
-  .passthrough()
+  .loose()
 
 const patronEligibilityRule = z
   .object({
     type: z.string(),
     supported: z.boolean(),
   })
-  .passthrough()
+  .loose()
 
 export const championSchema = z
   .object({
@@ -44,11 +44,11 @@ export const championSchema = z
     tags: z.array(z.string()),
     patronEligibility: z
       .object({ eligiblePatronIds: z.array(z.string()) })
-      .passthrough()
+      .loose()
       .optional(),
-    portrait: z.object({ path: z.string() }).passthrough().nullable().optional(),
+    portrait: z.object({ path: z.string() }).loose().nullable().optional(),
   })
-  .passthrough()
+  .loose()
 
 export const adventureSchema = z
   .object({
@@ -70,7 +70,7 @@ export const adventureSchema = z
     modeTags: z.array(z.string()),
     mechanics: z.array(z.string()),
   })
-  .passthrough()
+  .loose()
 
 export const variantSchema = z
   .object({
@@ -89,7 +89,7 @@ export const variantSchema = z
     rewards: z.array(localizedText),
     repeatable: z.boolean().optional(),
   })
-  .passthrough()
+  .loose()
 
 export const patronSchema = z
   .object({
@@ -105,10 +105,10 @@ export const patronSchema = z
     eligibilityRules: z.array(patronEligibilityRule),
     evaluationStatus: z.enum(['complete', 'partial']),
   })
-  .passthrough()
+  .loose()
 
-const collection = (itemSchema: z.ZodTypeAny) =>
-  z.object({ items: z.array(itemSchema), updatedAt: z.string() }).passthrough()
+const collection = (itemSchema: z.ZodType) =>
+  z.object({ items: z.array(itemSchema), updatedAt: z.string() }).loose()
 
 export const championsCollectionSchema = collection(championSchema)
 export const adventuresCollectionSchema = collection(adventureSchema)
@@ -126,7 +126,7 @@ export const collectionEnvelopeSchema = collection(z.unknown())
  * 读出 IDB 持久缓存时，具名者走 item 级深校验拦腐蚀，其余走信封校验（C2）。
  * 新增 collection schema 时在此登记即可。
  */
-const collectionSchemaByName: Record<string, z.ZodTypeAny> = {
+const collectionSchemaByName: Record<string, z.ZodType> = {
   champions: championsCollectionSchema,
   adventures: adventuresCollectionSchema,
   variants: variantsCollectionSchema,
@@ -134,6 +134,6 @@ const collectionSchemaByName: Record<string, z.ZodTypeAny> = {
 }
 
 /** 具名 collection → 深校验 schema；未登记 → 信封校验 schema。 */
-export function getCollectionReadSchema(name: string): z.ZodTypeAny {
+export function getCollectionReadSchema(name: string): z.ZodType {
   return collectionSchemaByName[name] ?? collectionEnvelopeSchema
 }

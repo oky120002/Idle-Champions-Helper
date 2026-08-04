@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -119,7 +119,7 @@ export function formatGameNumber(
   // (value = mantissa × 10^e, mantissa ∈ [1,10)).
   const exponent = value.e
   const mantissa = value.div(new Decimal(10).pow(exponent))
-  return mantissa.toFixed(places) + 'e' + exponent
+  return mantissa.toFixed(places) + 'e' + String(exponent)
 }
 
 // ---------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 
 import { MODRON_AUTO_RESET_CAP } from './modronInfo'
@@ -21,8 +21,11 @@ const gameRules = JSON.parse(
   readFileSync('public/data/v1/game-rules.json', 'utf8'),
 ) as { items: Array<{ ruleName: string; rule: Record<string, unknown> }> }
 
-const rule = (name: string): Record<string, unknown> =>
-  gameRules.items.find((entry) => entry.ruleName === name)!.rule
+const rule = (name: string): Record<string, unknown> => {
+  const entry = gameRules.items.find((item) => item.ruleName === name)
+  if (entry === undefined) throw new Error(`game rule not found: ${name}`)
+  return entry.rule
+}
 
 /** monsterStat(A)/monsterStat(A-1)，用 Decimal 精确比值再收成 number（比值是小数，不溢出）。 */
 function growthRateBetween(

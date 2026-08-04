@@ -23,19 +23,33 @@ function getPrimaryAmountToken(payload: ParsedEffectPayload): string | null {
   return payload.args.find(isNumberishToken) ?? payload.args[0] ?? null
 }
 
+/** extractTargetIdsFromParsedEffectPayload 中走 args[1] ?? args[0] 取 target 的 kind 集合。 */
+const SINGLE_TARGET_UPGRADE_KINDS = new Set([
+  'buff_upgrade',
+  'buff_upgrade_add_flat_amount',
+  'buff_upgrade_effect_stacks_max_mult',
+  'buff_upgrade_per_any_tagged_crusader_mult',
+  'buff_upgrade_per_any_crusader_where_mult',
+  'buff_upgrade_by_distance_from_source',
+  'buff_upgrade_mult_by_distance_from_source',
+  'buff_upgrade_mult_by_distance_from_source_mult',
+  'change_upgrade_data',
+  'change_upgrade_targets',
+])
+
 // 解析 effect_string 标准串 'kind,arg1,arg2,...'。JSON 对象串（CNE upgrade_defines.effect
 // 伪 JSON）已由 normalize 层 normalizeEffectReference 提前提取为干净标准串（见 AGENTS.md
 // 「数据源格式追溯」），消费层不再处理 JSON——所有 effect 字段经 normalize 后均非 `{` 开头。
 export function parseEffectPayload(value: string): ParsedEffectPayload | null {
   const trimmed = value.trim()
 
-  if (!trimmed) {
+  if (trimmed === '') {
     return null
   }
 
-  const [kind, ...args] = trimmed.split(',')
+  const [kind = '', ...args] = trimmed.split(',')
 
-  if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
+  if (kind === '' || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
     return null
   }
 
@@ -51,7 +65,7 @@ export function parseEffectPayload(value: string): ParsedEffectPayload | null {
 }
 
 export function buildEffectKeyPayload(effectKey: Record<string, JsonValue>): ParsedEffectPayload | null {
-  if (typeof effectKey?.effect_string !== 'string') {
+  if (typeof effectKey.effect_string !== 'string') {
     return null
   }
 
@@ -81,17 +95,21 @@ export function resolveSimpleAmountExpr(
 ): string | null {
   const trimmed = expr.trim()
 
-  if (!trimmed) {
+  if (trimmed === '') {
     return null
   }
 
-  const match = trimmed.match(/^upgrade_amount\((\d+),\s*(\d+)\)$/)
+  const match = /^upgrade_amount\((\d+),\s*(\d+)\)$/.exec(trimmed)
 
   if (!match) {
     return null
   }
 
-  const sourcePayload = resolveSourcePayload(match[1]!, Number(match[2]!))
+  const [, upgradeId, effectIndex] = match
+  if (upgradeId === undefined || effectIndex === undefined) {
+    return null
+  }
+  const sourcePayload = resolveSourcePayload(upgradeId, Number(effectIndex))
 
   return sourcePayload ? getPrimaryAmountToken(sourcePayload) : null
 }
@@ -109,7 +127,7 @@ export function resolveEffectPayloadAmountToken(
         upgradePayloadsById?.get(upgradeId)?.[effectIndex] ?? payloads[effectIndex] ?? null)
       : null
 
-  if (fromExpr) {
+  if (fromExpr != null && fromExpr !== '') {
     return fromExpr
   }
 
@@ -119,18 +137,7 @@ export function resolveEffectPayloadAmountToken(
 export function extractTargetIdsFromParsedEffectPayload(payload: ParsedEffectPayload): string[] {
   const { kind, args } = payload
 
-  if (
-    kind === 'buff_upgrade'
-    || kind === 'buff_upgrade_add_flat_amount'
-    || kind === 'buff_upgrade_effect_stacks_max_mult'
-    || kind === 'buff_upgrade_per_any_tagged_crusader_mult'
-    || kind === 'buff_upgrade_per_any_crusader_where_mult'
-    || kind === 'buff_upgrade_by_distance_from_source'
-    || kind === 'buff_upgrade_mult_by_distance_from_source'
-    || kind === 'buff_upgrade_mult_by_distance_from_source_mult'
-    || kind === 'change_upgrade_data'
-    || kind === 'change_upgrade_targets'
-  ) {
+  if (SINGLE_TARGET_UPGRADE_KINDS.has(kind)) {
     return [args[1] ?? args[0]].filter((id): id is string => Boolean(id))
   }
 

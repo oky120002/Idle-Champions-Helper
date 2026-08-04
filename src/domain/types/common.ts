@@ -15,12 +15,12 @@ export interface DataCollection<T> {
 // schema 即类型单一来源：LocalizedText 经 z.infer 派生，scripts/ 归一化校验复用同一 schema。
 export const localizedTextSchema = z
   .object({ original: z.string(), display: z.string() })
-  .passthrough()
+  .loose()
 export type LocalizedText = z.infer<typeof localizedTextSchema>
 
 export const localizedOptionSchema = z
   .object({ id: z.string(), original: z.string(), display: z.string() })
-  .passthrough()
+  .loose()
 export type LocalizedOption = z.infer<typeof localizedOptionSchema>
 
 export type JsonPrimitive = string | number | boolean | null

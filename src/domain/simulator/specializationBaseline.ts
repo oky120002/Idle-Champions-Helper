@@ -31,7 +31,7 @@ export function extractSpecializationBaseline(
   const validLevels: number[] = []
   for (const level of specLevels) {
     if (!Number.isFinite(level) || level < 0 || !Number.isInteger(level)) {
-      warnings.push(`Ignoring invalid specialization level: ${level}`)
+      warnings.push(`Ignoring invalid specialization level: ${level.toString()}`)
       continue
     }
     validLevels.push(level)

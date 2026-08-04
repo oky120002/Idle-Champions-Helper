@@ -86,6 +86,7 @@ export interface Variant {
 }
 
 export interface ScenarioRef {
+  // eslint-disable-next-line sonarjs/max-union-size -- 场景类型领域枚举（campaign/adventure/variant/trial/timeGate），拆分丢失可穷举性与语义
   kind: 'campaign' | 'adventure' | 'variant' | 'trial' | 'timeGate'
   id: string
 }

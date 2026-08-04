@@ -28,6 +28,8 @@
  *
  * 未传入 owned loot（未导入存档）→ 无加成（向后兼容）。
  */
+/* eslint-disable max-lines -- 装备加成单文件聚合：5 通道 + buff_upgrade wrapper + 假设装备共享 ENCHANT_SCALE/catalogIndex，
+   拆分会让常见修改（新增通道/enchant 校准）跨多文件；CLAUDE.md 拆分判据：拆完常见修改多开文件即不拆 */
 
 import { extractTargetIdsFromParsedEffectPayload, parseEffectPayload } from '../effects/effect-string'
 
@@ -111,8 +113,8 @@ function scaledOwnedEffect(
   owned: OwnedLootSlot,
   kind: string,
 ): number {
-  const parsed = index.get(`${heroId}:${slotId}:${owned.rarity}`)
-  if (!parsed || parsed.kind !== kind) {
+  const parsed = index.get(`${heroId}:${slotId}:${owned.rarity.toString()}`)
+  if (parsed?.kind !== kind) {
     return 0
   }
   return parsed.value * (1 + (owned.enchant ?? 0) * ENCHANT_SCALE)
@@ -348,7 +350,7 @@ export function collectEquipmentBuffsByHero(
   for (const hero of heroes) {
     const buffs: EquipmentBuff[] = []
     for (const [slotId, owned] of Object.entries(hero.lootBySlot)) {
-      const indexed = index.get(`${hero.heroId}:${slotId}:${owned.rarity}`)
+      const indexed = index.get(`${hero.heroId}:${slotId}:${owned.rarity.toString()}`)
       if (!indexed) {
         continue
       }

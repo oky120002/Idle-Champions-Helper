@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { GameNumberValue } from './gameNumber'

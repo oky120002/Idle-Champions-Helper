@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 
 import type { GameNumberValue } from './gameNumber'
 
@@ -60,7 +60,11 @@ function buildDpsBossSpikes(): ReadonlyArray<{ area: number; mult: number }> {
 
 /** stepped curve lookup：返回 area 所在段的增长率。 */
 function healthGrowthRateAt(area: number): number {
-  let rate = HEALTH_GROWTH_SEGMENTS[0]!.rate
+  const firstSegment = HEALTH_GROWTH_SEGMENTS[0]
+  if (firstSegment === undefined) {
+    throw new Error('HEALTH_GROWTH_SEGMENTS must not be empty')
+  }
+  let rate = firstSegment.rate
   for (const seg of HEALTH_GROWTH_SEGMENTS) {
     if (area >= seg.fromArea) {
       rate = seg.rate
@@ -82,8 +86,7 @@ export function monsterHealthAt(area: number): GameNumberValue {
   }
 
   let health = new Decimal(BASE_HEALTH)
-  for (let i = 0; i < HEALTH_GROWTH_SEGMENTS.length; i++) {
-    const seg = HEALTH_GROWTH_SEGMENTS[i]!
+  for (const [i, seg] of HEALTH_GROWTH_SEGMENTS.entries()) {
     if (a < seg.fromArea) {
       break
     }

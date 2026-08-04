@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 import { describe, expect, test } from 'vitest'
 
 import {
