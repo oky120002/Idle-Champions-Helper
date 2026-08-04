@@ -1,5 +1,7 @@
+import { Buffer } from 'node:buffer'
 import { mkdir, readdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { cropOpaqueBounds } from './data/png-image-helpers.ts'
@@ -84,7 +86,13 @@ interface SpecializationSyncResult {
 }
 
 function sortByGraphicId(left: SpecializationGraphicItem, right: SpecializationGraphicItem): number {
-  return Number(left.graphicId) - Number(right.graphicId) || left.graphicId.localeCompare(right.graphicId)
+  const numericDiff = Number(left.graphicId) - Number(right.graphicId)
+
+  if (numericDiff !== 0) {
+    return numericDiff
+  }
+
+  return left.graphicId.localeCompare(right.graphicId)
 }
 
 function buildSpecializationGraphicPath(currentVersion: string, graphicId: string): string {
@@ -96,7 +104,7 @@ function collectGraphicId(ids: Set<string>, graphicId: unknown): void {
     ? String(graphicId).trim()
     : null
 
-  if (normalizedGraphicId && normalizedGraphicId !== '0') {
+  if (normalizedGraphicId != null && normalizedGraphicId !== '' && normalizedGraphicId !== '0') {
     ids.add(normalizedGraphicId)
   }
 }
@@ -125,7 +133,15 @@ async function collectSpecializationGraphicIds(detailDir: string): Promise<strin
     collectGraphicId(ids, ultimate?.graphicId)
   }
 
-  return Array.from(ids).sort((left, right) => Number(left) - Number(right) || left.localeCompare(right))
+  return Array.from(ids).sort((left, right) => {
+    const numericDiff = Number(left) - Number(right)
+
+    if (numericDiff !== 0) {
+      return numericDiff
+    }
+
+    return left.localeCompare(right)
+  })
 }
 
 async function downloadSpecializationGraphic(
@@ -138,21 +154,21 @@ async function downloadSpecializationGraphic(
   if (!asset) {
     return {
       status: 'missing',
-      graphicId,
       message: 'graphic_defines 未找到对应资源',
+      graphicId,
     }
   }
 
-  const existingItem = options.existingItemsByGraphicId.get(String(graphicId)) ?? null
+  const existingItem = options.existingItemsByGraphicId.get(graphicId) ?? null
   const nextImagePath = buildSpecializationGraphicPath(options.currentVersion, graphicId)
 
   if (
     existingItem
     && canReuseGeneratedImage({
       existingItem,
+      nextImagePath,
       nextSourceGraphic: asset.sourceGraphic,
       nextSourceVersion: asset.sourceVersion,
-      nextImagePath,
     })
   ) {
     const outputFile = path.join(options.outputDir, SPECIALIZATION_GRAPHICS_DIR_NAME, `${graphicId}.png`)
@@ -170,8 +186,8 @@ async function downloadSpecializationGraphic(
   if (!response.ok) {
     return {
       status: 'missing',
+      message: `下载失败：HTTP ${String(response.status)}`,
       graphicId,
-      message: `下载失败：HTTP ${response.status}`,
     }
   }
 
@@ -206,8 +222,8 @@ async function downloadSpecializationGraphic(
   } catch (error) {
     return {
       status: 'missing',
-      graphicId,
       message: error instanceof Error ? error.message : String(error),
+      graphicId,
     }
   }
 }
@@ -215,7 +231,7 @@ async function downloadSpecializationGraphic(
 export async function syncChampionSpecializationGraphics(
   options: SyncSpecializationGraphicsOptions = {},
 ): Promise<SpecializationSyncResult> {
-  if (!options.input) {
+  if (options.input == null || options.input === '') {
     throw new Error('缺少 --input，无法根据 definitions 快照同步专精图')
   }
 
@@ -252,7 +268,7 @@ export async function syncChampionSpecializationGraphics(
   const existingItemsByGraphicId = new Map<string, SpecializationGraphicItem>(
     (existingCollection?.items ?? []).map(
       (item): [string, SpecializationGraphicItem] => [
-        String((item as SpecializationGraphicItem).graphicId),
+        (item as SpecializationGraphicItem).graphicId,
         item as SpecializationGraphicItem,
       ],
     ),
@@ -265,8 +281,8 @@ export async function syncChampionSpecializationGraphics(
       downloadSpecializationGraphic(graphicId, graphicMap, {
         outputDir,
         currentVersion,
-        masterApiUrl: options.masterApiUrl,
         existingItemsByGraphicId,
+        masterApiUrl: options.masterApiUrl,
       }),
   )
 
@@ -289,7 +305,7 @@ export async function syncChampionSpecializationGraphics(
   })
 
   console.log(
-    `专精图同步完成：ready=${items.length}, missing=${missing.length}, dir=${assetDir}`,
+    `专精图同步完成：ready=${String(items.length)}, missing=${String(missing.length)}, dir=${assetDir}`,
   )
 
   if (missing.length > 0) {
@@ -321,7 +337,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     console.log(`用法：
   node scripts/sync-idle-champions-specialization-graphics.ts --input <definitions.json>
 
@@ -333,7 +349,7 @@ async function main(): Promise<void> {
   --outputDir <dir>      输出目录，默认 ${DEFAULT_OUTPUT_DIR}
   --currentVersion <v>   当前版本号，默认 ${DEFAULT_CURRENT_VERSION}
   --detailDir <dir>      champion-details 目录，默认 <outputDir>/champion-details
-  --concurrency <n>      并发数，默认 ${DEFAULT_CONCURRENCY}
+  --concurrency <n>      并发数，默认 ${String(DEFAULT_CONCURRENCY)}
 `)
     return
   }
@@ -341,7 +357,9 @@ async function main(): Promise<void> {
   await syncChampionSpecializationGraphics(values)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryPoint = process.argv[1]
+
+if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
   main().catch((error: unknown) => {
     console.error(`同步专精图失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -61,7 +62,14 @@ it('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId �
   const originalFetch = globalThis.fetch
 
   globalThis.fetch = async (input) => {
-    const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
+    let url: string
+    if (typeof input === 'string') {
+      url = input
+    } else if (input instanceof URL) {
+      url = input.href
+    } else {
+      url = input.url
+    }
     const body = rawByUrl.get(url)
 
     if (!body) {
@@ -96,11 +104,11 @@ it('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId �
 
   const result = await syncChampionEquipmentIcons({
     input: inputFile,
-    outputDir,
-    detailDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
     concurrency: '1',
+    outputDir,
+    detailDir,
   })
 
   expect(result.count).toBe(1)
@@ -158,8 +166,8 @@ it('syncChampionEquipmentIcons 在集合 updatedAt 未变新时整批跳过，�
 
   const result = await syncChampionEquipmentIcons({
     input: inputFile,
-    outputDir,
     detailDir: path.join(outputDir, 'missing-details'),
+    outputDir,
   })
 
   expect(result.skipped).toBe(true)
@@ -223,10 +231,10 @@ it('syncChampionEquipmentIcons 在 definitions 更新时间变新但单资源 so
 
   const result = await syncChampionEquipmentIcons({
     input: inputFile,
-    outputDir,
-    detailDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
+    outputDir,
+    detailDir,
   })
 
   expect(result.skipped).toBe(undefined)

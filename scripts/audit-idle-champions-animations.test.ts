@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -57,7 +58,7 @@ const createdTempDirs: string[] = []
 afterEach(async () => {
   while (createdTempDirs.length > 0) {
     const dir = createdTempDirs.pop()
-    if (dir) {
+    if (dir != null && dir !== '') {
       await rm(dir, { recursive: true, force: true })
     }
   }
@@ -297,7 +298,10 @@ it('auditChampionAnimations 为可疑默认 sequence 产出推荐候选', async 
       candidates: Array<{ sequenceIndex: number }>
     }>
   }
-  const entry = auditCollection.items[0]!
+  const entry = auditCollection.items[0]
+  if (entry === undefined) {
+    throw new Error('auditCollection.items[0] 不存在')
+  }
 
   expect(result.count).toBe(1)
   expect(result.reviewedCount).toBe(1)
@@ -307,7 +311,11 @@ it('auditChampionAnimations 为可疑默认 sequence 产出推荐候选', async 
   expect(entry.suspicionLevel).toBe('high')
   expect(entry.suspicionSignals.includes('visibility_gap')).toBe(true)
   expect(entry.suspicionSignals.includes('persistent_gap')).toBe(true)
-  expect(entry.candidates[0]!.sequenceIndex).toBe(1)
+  const firstCandidate = entry.candidates[0]
+  if (firstCandidate === undefined) {
+    throw new Error('entry.candidates[0] 不存在')
+  }
+  expect(firstCandidate.sequenceIndex).toBe(1)
 })
 
 it('auditChampionAnimations 在局部更新时保留未命中的既有条目', async () => {
@@ -432,5 +440,5 @@ it('auditChampionAnimations 在局部更新时保留未命中的既有条目', a
   }
   const ids = auditCollection.items.map((item) => item.id)
 
-  expect([...ids].sort()).toEqual(['hero:23', 'hero:99'])
+  expect([...ids].sort((a, b) => a.localeCompare(b))).toEqual(['hero:23', 'hero:99'])
 })

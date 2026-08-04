@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -76,9 +77,9 @@ it('syncChampionSpecializationGraphics 会输出专精图集合与裁剪后的 P
   })
 
   const result = await syncChampionSpecializationGraphics({
-    input: inputFile,
     outputDir,
     detailDir,
+    input: inputFile,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
   })
@@ -136,8 +137,8 @@ it('syncChampionSpecializationGraphics 在集合 updatedAt 未变新时整批跳
   })
 
   const result = await syncChampionSpecializationGraphics({
-    input: inputFile,
     outputDir,
+    input: inputFile,
     detailDir: path.join(outputDir, 'missing-details'),
   })
 
@@ -204,9 +205,9 @@ it('syncChampionSpecializationGraphics 在资源 source 未变化时复用已有
   })
 
   const result = await syncChampionSpecializationGraphics({
-    input: inputFile,
     outputDir,
     detailDir,
+    input: inputFile,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
   })

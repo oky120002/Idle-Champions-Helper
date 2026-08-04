@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import type { LocalizedText } from '../src/domain/types/common.ts'
@@ -101,7 +102,7 @@ interface AuditChampionAnimationsResult {
 }
 
 function parseIdFilter(rawValue: string | undefined | null): Set<string> | null {
-  if (!rawValue) {
+  if (rawValue == null || rawValue === '') {
     return null
   }
 
@@ -122,11 +123,11 @@ function buildAnimationFilter(
       return true
     }
 
-    if (championIds?.has(animation.championId)) {
+    if (championIds?.has(animation.championId) === true) {
       return true
     }
 
-    if (animation.kind === 'skin' && animation.skinId && skinIds?.has(animation.skinId)) {
+    if (animation.kind === 'skin' && animation.skinId != null && animation.skinId !== '' && skinIds?.has(animation.skinId) === true) {
       return true
     }
 
@@ -139,7 +140,7 @@ function resolvePublishedAssetFile(
   currentVersion: string,
   assetPath: string | undefined,
 ): string {
-  if (!assetPath) {
+  if (assetPath == null || assetPath === '') {
     throw new Error('动画资源缺少 asset.path')
   }
 
@@ -188,12 +189,12 @@ function buildAuditEntry(
     currentSequenceIndex: animation.defaultSequenceIndex,
     currentFrameIndex: animation.defaultFrameIndex,
     sequenceCount: scoredMetrics.length,
-    suspicionLevel,
-    suspicionScore,
-    suspicionSignals,
     current: currentMetrics,
     recommended: recommendedMetrics,
     candidates: candidateMetrics,
+    suspicionLevel,
+    suspicionScore,
+    suspicionSignals,
   }
 }
 
@@ -205,14 +206,32 @@ const SUSPICION_ORDER: Record<SuspicionLevel, number> = {
 }
 
 function sortAuditEntries(left: AuditEntry, right: AuditEntry): number {
-  return (
-    SUSPICION_ORDER[left.suspicionLevel] - SUSPICION_ORDER[right.suspicionLevel] ||
-    right.suspicionScore - left.suspicionScore ||
-    left.seat - right.seat ||
-    left.championName.display.localeCompare(right.championName.display) ||
-    left.illustrationName.display.localeCompare(right.illustrationName.display) ||
-    left.id.localeCompare(right.id)
-  )
+  const suspicionOrderDiff = SUSPICION_ORDER[left.suspicionLevel] - SUSPICION_ORDER[right.suspicionLevel]
+  if (suspicionOrderDiff !== 0) {
+    return suspicionOrderDiff
+  }
+
+  const suspicionScoreDiff = right.suspicionScore - left.suspicionScore
+  if (suspicionScoreDiff !== 0) {
+    return suspicionScoreDiff
+  }
+
+  const seatDiff = left.seat - right.seat
+  if (seatDiff !== 0) {
+    return seatDiff
+  }
+
+  const displayNameDiff = left.championName.display.localeCompare(right.championName.display)
+  if (displayNameDiff !== 0) {
+    return displayNameDiff
+  }
+
+  const displayIllustrationDiff = left.illustrationName.display.localeCompare(right.illustrationName.display)
+  if (displayIllustrationDiff !== 0) {
+    return displayIllustrationDiff
+  }
+
+  return left.id.localeCompare(right.id)
 }
 
 export async function auditChampionAnimations(
@@ -227,7 +246,7 @@ export async function auditChampionAnimations(
   )
   const championIds = parseIdFilter(options.championIds ?? null)
   const skinIds = parseIdFilter(options.skinIds ?? null)
-  const hasSelectionFilters = Boolean(championIds || skinIds)
+  const hasSelectionFilters = Boolean(championIds ?? skinIds)
   const animationCollection = (await readJson(animationsFile)) as AnimationCollection
   const idleOverrides = await readChampionAnimationIdleOverrides(idleOverridesFile)
   const filterAnimation = buildAnimationFilter(championIds, skinIds)
@@ -314,7 +333,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -322,14 +341,15 @@ async function main(): Promise<void> {
   const result = await auditChampionAnimations(values)
   console.log('动图审计完成：')
   console.log(`- audit file: ${result.auditFile}`)
-  console.log(`- total entries: ${result.count}`)
-  console.log(`- review entries: ${result.reviewedCount}`)
-  console.log(`- high: ${result.highCount}`)
-  console.log(`- medium: ${result.mediumCount}`)
-  console.log(`- low: ${result.lowCount}`)
+  console.log(`- total entries: ${String(result.count)}`)
+  console.log(`- review entries: ${String(result.reviewedCount)}`)
+  console.log(`- high: ${String(result.highCount)}`)
+  console.log(`- medium: ${String(result.mediumCount)}`)
+  console.log(`- low: ${String(result.lowCount)}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryScriptPath = process.argv[1]
+if (entryScriptPath !== undefined && import.meta.url === pathToFileURL(entryScriptPath).href) {
   main().catch((error: unknown) => {
     console.error(`生成动图审计失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

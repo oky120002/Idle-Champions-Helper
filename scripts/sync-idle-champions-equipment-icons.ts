@@ -1,5 +1,7 @@
+import { Buffer } from 'node:buffer'
 import { mkdir, readdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { cropOpaqueBounds } from './data/png-image-helpers.ts'
@@ -84,7 +86,11 @@ interface EquipmentSyncResult {
 }
 
 function sortByGraphicId(left: EquipmentGraphicItem, right: EquipmentGraphicItem): number {
-  return Number(left.graphicId) - Number(right.graphicId) || left.graphicId.localeCompare(right.graphicId)
+  const numericDiff = Number(left.graphicId) - Number(right.graphicId)
+  if (numericDiff === 0 || Number.isNaN(numericDiff)) {
+    return left.graphicId.localeCompare(right.graphicId)
+  }
+  return numericDiff
 }
 
 function buildChampionEquipmentIconPath(currentVersion: string, graphicId: string): string {
@@ -96,7 +102,7 @@ function collectGraphicId(ids: Set<string>, graphicId: unknown): void {
     ? String(graphicId).trim()
     : null
 
-  if (normalizedGraphicId && normalizedGraphicId !== '0') {
+  if (normalizedGraphicId != null && normalizedGraphicId !== '' && normalizedGraphicId !== '0') {
     ids.add(normalizedGraphicId)
   }
 }
@@ -120,7 +126,13 @@ async function collectEquipmentGraphicIds(detailDir: string): Promise<string[]> 
     }
   }
 
-  return Array.from(ids).sort((left, right) => Number(left) - Number(right) || left.localeCompare(right))
+  return Array.from(ids).sort((left, right) => {
+    const numericDiff = Number(left) - Number(right)
+    if (numericDiff === 0 || Number.isNaN(numericDiff)) {
+      return left.localeCompare(right)
+    }
+    return numericDiff
+  })
 }
 
 async function downloadEquipmentIcon(
@@ -133,20 +145,20 @@ async function downloadEquipmentIcon(
   if (!asset) {
     return {
       status: 'missing',
-      graphicId,
       message: 'graphic_defines 未找到对应资源',
+      graphicId,
     }
   }
 
-  const existingItem = options.existingItemsByGraphicId.get(String(graphicId)) ?? null
+  const existingItem = options.existingItemsByGraphicId.get(graphicId) ?? null
   const nextImagePath = buildChampionEquipmentIconPath(options.currentVersion, graphicId)
 
   if (
     existingItem
     && canReuseGeneratedImage({
-      existingItem,
       nextSourceGraphic: asset.sourceGraphic,
       nextSourceVersion: asset.sourceVersion,
+      existingItem,
       nextImagePath,
     })
   ) {
@@ -165,8 +177,8 @@ async function downloadEquipmentIcon(
   if (!response.ok) {
     return {
       status: 'missing',
+      message: `下载失败：HTTP ${String(response.status)}`,
       graphicId,
-      message: `下载失败：HTTP ${response.status}`,
     }
   }
 
@@ -201,8 +213,8 @@ async function downloadEquipmentIcon(
   } catch (error) {
     return {
       status: 'missing',
-      graphicId,
       message: error instanceof Error ? error.message : String(error),
+      graphicId,
     }
   }
 }
@@ -210,7 +222,7 @@ async function downloadEquipmentIcon(
 export async function syncChampionEquipmentIcons(
   options: SyncEquipmentIconsOptions = {},
 ): Promise<EquipmentSyncResult> {
-  if (!options.input) {
+  if (options.input == null || options.input === '') {
     throw new Error('缺少 --input，无法根据 definitions 快照同步装备 icon')
   }
 
@@ -234,9 +246,9 @@ export async function syncChampionEquipmentIcons(
   ) {
     return {
       count: existingCollection?.items.length ?? 0,
-      outputDir,
       missingCount: 0,
       skipped: true,
+      outputDir,
     }
   }
 
@@ -247,7 +259,7 @@ export async function syncChampionEquipmentIcons(
   const existingItemsByGraphicId = new Map<string, EquipmentGraphicItem>(
     (existingCollection?.items ?? []).map(
       (item): [string, EquipmentGraphicItem] => [
-        String((item as EquipmentGraphicItem).graphicId),
+        (item as EquipmentGraphicItem).graphicId,
         item as EquipmentGraphicItem,
       ],
     ),
@@ -258,9 +270,9 @@ export async function syncChampionEquipmentIcons(
     concurrency,
     (graphicId) =>
       downloadEquipmentIcon(graphicId, graphicMap, {
+        masterApiUrl: options.masterApiUrl,
         outputDir,
         currentVersion,
-        masterApiUrl: options.masterApiUrl,
         existingItemsByGraphicId,
       }),
   )
@@ -285,8 +297,8 @@ export async function syncChampionEquipmentIcons(
 
   return {
     count: items.length,
-    outputDir,
     missingCount: missing.length,
+    outputDir,
   }
 }
 
@@ -303,7 +315,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     console.log(`用法：
   node scripts/sync-idle-champions-equipment-icons.ts --input <definitions.json> [--outputDir <dir>]
 
@@ -316,10 +328,11 @@ async function main(): Promise<void> {
   }
 
   const result = await syncChampionEquipmentIcons(values)
-  console.log(`装备 icon 同步完成：${result.count} 项 -> ${result.outputDir}`)
+  console.log(`装备 icon 同步完成：${String(result.count)} 项 -> ${result.outputDir}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const argvEntry = process.argv[1]
+if (argvEntry != null && import.meta.url === pathToFileURL(argvEntry).href) {
   main().catch((error: unknown) => {
     console.error(`同步装备 icon 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

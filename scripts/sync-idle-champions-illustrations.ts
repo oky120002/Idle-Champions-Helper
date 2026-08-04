@@ -1,5 +1,7 @@
+import { Buffer } from 'node:buffer'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import type { LocalizedText } from '../src/domain/types/common.ts'
@@ -189,15 +191,41 @@ function buildIllustrationImagePath(currentVersion: string, group: string, id: s
 }
 
 function sortIllustrations(left: ChampionIllustrationEntry, right: ChampionIllustrationEntry): number {
-  return (
-    left.seat - right.seat ||
-    left.championName.display.localeCompare(right.championName.display) ||
-    left.championName.original.localeCompare(right.championName.original) ||
-    (left.kind === right.kind ? 0 : left.kind === 'hero-base' ? -1 : 1) ||
-    left.illustrationName.display.localeCompare(right.illustrationName.display) ||
-    left.illustrationName.original.localeCompare(right.illustrationName.original) ||
-    left.id.localeCompare(right.id)
-  )
+  const seatDiff = left.seat - right.seat
+
+  if (seatDiff !== 0) {
+    return seatDiff
+  }
+
+  const championDisplayDiff = left.championName.display.localeCompare(right.championName.display)
+
+  if (championDisplayDiff !== 0) {
+    return championDisplayDiff
+  }
+
+  const championOriginalDiff = left.championName.original.localeCompare(right.championName.original)
+
+  if (championOriginalDiff !== 0) {
+    return championOriginalDiff
+  }
+
+  if (left.kind !== right.kind) {
+    return left.kind === 'hero-base' ? -1 : 1
+  }
+
+  const illustrationDisplayDiff = left.illustrationName.display.localeCompare(right.illustrationName.display)
+
+  if (illustrationDisplayDiff !== 0) {
+    return illustrationDisplayDiff
+  }
+
+  const illustrationOriginalDiff = left.illustrationName.original.localeCompare(right.illustrationName.original)
+
+  if (illustrationOriginalDiff !== 0) {
+    return illustrationOriginalDiff
+  }
+
+  return left.id.localeCompare(right.id)
 }
 
 function buildAnimationMap(
@@ -305,7 +333,7 @@ function buildSkinIllustrationTasks(
 }
 
 function resolvePublishedAssetFile(outputDir: string, currentVersion: string, assetPath: string): string {
-  if (!assetPath) {
+  if (assetPath === '') {
     throw new Error('动画资源缺少 asset.path')
   }
 
@@ -322,8 +350,8 @@ function normalizeAnimationIndexes(animation: AnimationItem, taskId: string): {
   sequenceIndex: number
   frameIndex: number
 } {
-  const sequenceIndex = Number(animation.defaultSequenceIndex)
-  const frameIndex = Number(animation.defaultFrameIndex)
+  const sequenceIndex = animation.defaultSequenceIndex
+  const frameIndex = animation.defaultFrameIndex
 
   if (!Number.isInteger(sequenceIndex) || sequenceIndex < 0) {
     throw new Error(`${taskId} 的 defaultSequenceIndex 无效`)
@@ -353,6 +381,7 @@ async function renderAnimationIllustrationTask(
   outputDir: string,
   currentVersion: string,
 ): Promise<RenderedAnimation> {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- 运行时守卫：animation 来源于 readJson + as 断言，JSON 未校验，format 实际可为任意字符串
   if (task.animation.asset?.format !== 'skelanim-zlib') {
     throw new Error(`${task.id} 的动画资源格式不是 skelanim-zlib`)
   }
@@ -422,6 +451,7 @@ function canReuseIllustrationMetadata(
     existingIllustration.sourceGraphicId === task.animation.sourceGraphicId &&
     existingIllustration.sourceGraphic === task.animation.sourceGraphic &&
     (existingIllustration.sourceVersion ?? null) === (task.animation.sourceVersion ?? null) &&
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- 运行时守卫：existingIllustration 来源于 readJson + as 断言，image 可能缺失
     existingIllustration.image?.path ===
       buildIllustrationImagePath(
         currentVersion,
@@ -443,7 +473,7 @@ export async function syncChampionIllustrations(
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const championIdFilter = parseIdFilter(options.championIds ?? undefined)
   const skinIdFilter = parseIdFilter(options.skinIds ?? undefined)
-  const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
+  const hasSelectionFilters = Boolean(championIdFilter ?? skinIdFilter)
   const visuals = (await readJson(visualsFile)) as ChampionVisualsCollection
   const animations = (await readJsonIfExists(animationsFile)) as AnimationCollection | null
   const filteredVisuals: ChampionVisualsCollection = {
@@ -475,7 +505,11 @@ export async function syncChampionIllustrations(
       visualsFile,
       animationsFile,
       currentVersion,
-      totalBytes: existingItems.reduce((sum, item) => sum + (item.image?.bytes ?? 0), 0),
+      totalBytes: existingItems.reduce(
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- 运行时守卫：existingItems 来源于 readJson + as 断言，image 可能缺失
+        (sum, item) => sum + (item.image?.bytes ?? 0),
+        0,
+      ),
       counts: {
         heroIllustrations: existingItems.filter((item) => item.kind === 'hero-base').length,
         skinIllustrations: existingItems.filter((item) => item.kind === 'skin').length,
@@ -594,13 +628,13 @@ export async function syncChampionIllustrations(
     animationsFile,
     currentVersion,
     totalBytes,
+    renderedCount,
+    reusedCount,
     counts: {
       heroIllustrations: heroCount,
       skinIllustrations: skinCount,
       totalIllustrations: sortedIllustrations.length,
     },
-    renderedCount,
-    reusedCount,
   }
 }
 
@@ -627,7 +661,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -638,13 +672,15 @@ async function main(): Promise<void> {
   console.log(`- visuals file: ${result.visualsFile}`)
   console.log(`- animations file: ${result.animationsFile}`)
   console.log(`- output dir: ${result.outputDir}`)
-  console.log(`- hero illustrations: ${result.counts.heroIllustrations}`)
-  console.log(`- skin illustrations: ${result.counts.skinIllustrations}`)
-  console.log(`- total illustrations: ${result.counts.totalIllustrations}`)
-  console.log(`- total bytes: ${result.totalBytes}`)
+  console.log(`- hero illustrations: ${String(result.counts.heroIllustrations)}`)
+  console.log(`- skin illustrations: ${String(result.counts.skinIllustrations)}`)
+  console.log(`- total illustrations: ${String(result.counts.totalIllustrations)}`)
+  console.log(`- total bytes: ${String(result.totalBytes)}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryPoint = process.argv[1]
+
+if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
   main().catch((error: unknown) => {
     console.error(`同步立绘资源失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

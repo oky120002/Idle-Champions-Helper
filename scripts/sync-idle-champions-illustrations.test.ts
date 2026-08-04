@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -175,8 +176,8 @@ function createDecodedPngAsset({ graphicId, sourceGraphic, color, remotePath }: 
   return {
     graphicId,
     sourceGraphic,
-    sourceVersion: 1,
     remotePath,
+    sourceVersion: 1,
     remoteUrl: toDataUrl(zlib.deflateSync(png)),
     delivery: 'zlib-png',
     uses: [],
@@ -397,10 +398,8 @@ function createSkinAnimationManifestItem({
   assetBytes,
 }: CreateSkinAnimationManifestItemOptions): AnimationManifestItem {
   return {
-    id: `skin:${skinId}`,
     championId,
     skinId,
-    kind: 'skin',
     seat,
     championName,
     illustrationName,
@@ -408,9 +407,11 @@ function createSkinAnimationManifestItem({
     sourceGraphicId,
     sourceGraphic,
     sourceVersion,
-    fps: 24,
     defaultSequenceIndex,
     defaultFrameIndex,
+    id: `skin:${skinId}`,
+    kind: 'skin',
+    fps: 24,
     asset: {
       path: `v1/champion-animations/skins/${skinId}.bin`,
       bytes: assetBytes,
@@ -459,20 +460,20 @@ function createHeroAnimationManifestItem({
   assetBytes,
 }: CreateHeroAnimationManifestItemOptions): AnimationManifestItem {
   return {
-    id: `hero:${championId}`,
     championId,
-    skinId: null,
-    kind: 'hero-base',
     seat,
     championName,
-    illustrationName: championName,
-    sourceSlot: 'base',
     sourceGraphicId,
     sourceGraphic,
     sourceVersion,
-    fps: 24,
     defaultSequenceIndex,
     defaultFrameIndex,
+    id: `hero:${championId}`,
+    skinId: null,
+    kind: 'hero-base',
+    illustrationName: championName,
+    sourceSlot: 'base',
+    fps: 24,
     asset: {
       path: `v1/champion-animations/heroes/${championId}.bin`,
       bytes: assetBytes,
@@ -555,9 +556,9 @@ it('皮肤与 hero-base 静态图会复用动画链路生成 poster', async (ctx
   const championName = { original: 'Animation Hero', display: '动画像英雄' }
   const skinName = { original: 'Preferred Animation Frame', display: '动画默认帧' }
   const heroItem = createHeroAnimationManifestItem({
+    championName,
     championId: '101',
     seat: 1,
-    championName,
     sourceGraphicId: 'hero-101-anim',
     sourceGraphic: 'Hero_101_Anim',
     defaultSequenceIndex: 1,
@@ -565,10 +566,10 @@ it('皮肤与 hero-base 静态图会复用动画链路生成 poster', async (ctx
     assetBytes: 0,
   })
   const skinItem = createSkinAnimationManifestItem({
+    championName,
     championId: '101',
     skinId: '501',
     seat: 1,
-    championName,
     illustrationName: skinName,
     sourceSlot: 'xl',
     sourceGraphicId: 'g-xl',
@@ -647,9 +648,9 @@ it('会把 walk-like 动效首帧渲染成与 hover 一致的 poster', async (ct
   const championName = { original: 'Walk Poster Hero', display: '步行动效海报' }
   const rawBuffer = createWalkPosterRawBuffer()
   const heroItem = createHeroAnimationManifestItem({
+    championName,
     championId: '301',
     seat: 3,
-    championName,
     sourceGraphicId: 'hero-301-anim',
     sourceGraphic: 'Hero_301_Anim',
     defaultSequenceIndex: 0,
@@ -812,9 +813,9 @@ it('在源动画未变化且输出 PNG 相同时复用已有文件', async (ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const championName = { original: 'Reuse Hero', display: '复用英雄' }
   const heroItem = createHeroAnimationManifestItem({
+    championName,
     championId: '101',
     seat: 1,
-    championName,
     sourceGraphicId: 'hero-101-anim',
     sourceGraphic: 'Hero_101_Anim',
     defaultSequenceIndex: 1,
@@ -857,12 +858,12 @@ it('在源动画未变化且输出 PNG 相同时复用已有文件', async (ctx)
     updatedAt: '2026-04-16',
     items: [
       {
+        championName,
         id: 'hero:101',
         championId: '101',
         skinId: null,
         kind: 'hero-base',
         seat: 1,
-        championName,
         illustrationName: championName,
         portraitPath: null,
         sourceSlot: 'base',

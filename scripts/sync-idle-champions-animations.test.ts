@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -270,9 +271,9 @@ it('syncChampionAnimations 输出 hero-base 与 skin 原始动画包和清单', 
 
   const result = await syncChampionAnimations({
     input: definitionsFile,
-    visualsFile,
     outputDir: tempDir,
     currentVersion: 'v1',
+    visualsFile,
   })
 
   const collection = (await JSON.parse(
@@ -463,9 +464,9 @@ it('命中同版本已发布 bin 时直接复用本地 hero-base 与 skin 资源
 
   const result = await syncChampionAnimations({
     input: definitionsFile,
-    visualsFile,
     outputDir: tempDir,
     currentVersion: 'v1',
+    visualsFile,
   })
 
   expect(fetchCalled).toBe(false)

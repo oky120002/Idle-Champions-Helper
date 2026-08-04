@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
@@ -69,8 +70,8 @@ it('syncChampionConsolePortraits 会生成正面图文件与同步 manifest', as
 
   const result = await syncChampionConsolePortraits({
     input: inputFile,
-    outputDir,
     masterApiUrl: 'https://example.test/',
+    outputDir,
   })
 
   expect(result.count).toBe(1)
@@ -181,8 +182,8 @@ it('syncChampionConsolePortraits 在单资源 source 未变化时复用已有 PN
 
   const result = await syncChampionConsolePortraits({
     input: inputFile,
-    outputDir,
     masterApiUrl: 'https://example.test/',
+    outputDir,
   })
 
   expect(result.count).toBe(1)

@@ -1,5 +1,7 @@
+import type { Buffer } from 'node:buffer'
 import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import type { LocalizedText } from '../src/domain/types/common.ts'
@@ -160,20 +162,41 @@ function isSkelAnimGraphicDefinition(graphicDefinition: Record<string, unknown> 
 }
 
 function isSkelAnimAsset(asset: RemoteGraphicAsset, graphicDefById: GraphicDefMap): boolean {
-  const graphicDefinition = graphicDefById.get(String(asset.graphicId))
+  const graphicDefinition = graphicDefById.get(asset.graphicId)
   return isSkelAnimGraphicDefinition(graphicDefinition) || asset.remotePath.includes('/Characters/')
 }
 
 function sortAnimations(left: AnimationItem, right: AnimationItem): number {
-  return (
-    left.seat - right.seat ||
-    left.championName.display.localeCompare(right.championName.display) ||
-    left.championName.original.localeCompare(right.championName.original) ||
-    (left.kind === right.kind ? 0 : left.kind === 'hero-base' ? -1 : 1) ||
-    left.illustrationName.display.localeCompare(right.illustrationName.display) ||
-    left.illustrationName.original.localeCompare(right.illustrationName.original) ||
-    left.id.localeCompare(right.id)
-  )
+  const seatDiff = left.seat - right.seat
+  if (seatDiff !== 0) {
+    return seatDiff
+  }
+
+  const displayNameDiff = left.championName.display.localeCompare(right.championName.display)
+  if (displayNameDiff !== 0) {
+    return displayNameDiff
+  }
+
+  const originalNameDiff = left.championName.original.localeCompare(right.championName.original)
+  if (originalNameDiff !== 0) {
+    return originalNameDiff
+  }
+
+  if (left.kind !== right.kind) {
+    return left.kind === 'hero-base' ? -1 : 1
+  }
+
+  const displayIllustrationDiff = left.illustrationName.display.localeCompare(right.illustrationName.display)
+  if (displayIllustrationDiff !== 0) {
+    return displayIllustrationDiff
+  }
+
+  const originalIllustrationDiff = left.illustrationName.original.localeCompare(right.illustrationName.original)
+  if (originalIllustrationDiff !== 0) {
+    return originalIllustrationDiff
+  }
+
+  return left.id.localeCompare(right.id)
 }
 
 function buildHeroAnimationTasks(
@@ -209,7 +232,7 @@ function buildHeroAnimationTasks(
       outputId: visual.championId,
       sourceSlot: 'base',
       asset: visual.base,
-      graphicDefinition: graphicDefById.get(String(visual.base.graphicId)) ?? null,
+      graphicDefinition: graphicDefById.get(visual.base.graphicId) ?? null,
     })
   }
 
@@ -267,8 +290,8 @@ function buildSkinAnimationTasks(
         outputGroup: 'skins',
         outputId: skin.id,
         sourceSlot: slot,
+        graphicDefinition: graphicDefById.get(asset.graphicId) ?? null,
         asset,
-        graphicDefinition: graphicDefById.get(String(asset.graphicId)) ?? null,
       })
     }
   }
@@ -295,7 +318,7 @@ function canReuseExistingAnimation(
     existingAnimation.sourceGraphic === task.asset.sourceGraphic &&
     (existingAnimation.sourceVersion ?? null) === (task.asset.sourceVersion ?? null) &&
     existingAnimation.asset?.path === buildAnimationAssetPath(currentVersion, task.outputGroup, task.outputId) &&
-    existingAnimation.asset?.format === 'skelanim-zlib'
+    existingAnimation.asset.format === 'skelanim-zlib'
   )
 }
 
@@ -352,16 +375,16 @@ export async function syncChampionAnimations(
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
-  const definitionsInput = options.input ? path.resolve(options.input) : null
+  const definitionsInput = options.input != null && options.input !== '' ? path.resolve(options.input) : null
   const idleOverridesFile = path.resolve(
     options.idleOverridesFile ?? DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   )
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const championIdFilter = parseIdFilter(options.championIds ?? undefined)
   const skinIdFilter = parseIdFilter(options.skinIds ?? undefined)
-  const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
+  const hasSelectionFilters = Boolean(championIdFilter ?? skinIdFilter)
   const visuals = (await readJson(visualsFile)) as ChampionVisualsCollection
-  const definitions = definitionsInput ? await readJson(definitionsInput) : null
+  const definitions = definitionsInput != null && definitionsInput !== '' ? await readJson(definitionsInput) : null
   const rawGraphicDefines =
     (definitions as { graphic_defines?: unknown[] } | null)?.graphic_defines ?? []
   const graphicDefById: GraphicDefMap = new Map(
@@ -488,7 +511,7 @@ export async function syncChampionAnimations(
     )
     await cleanupAnimationDir(
       path.join(animationRoot, 'skins'),
-      new Set(nextAnimations.filter((item) => item.kind === 'skin').map((item) => `${item.skinId}.bin`)),
+      new Set(nextAnimations.filter((item) => item.kind === 'skin').map((item) => `${String(item.skinId)}.bin`)),
     )
   }
 
@@ -499,12 +522,12 @@ export async function syncChampionAnimations(
     outputDir,
     visualsFile,
     currentVersion,
-    totalBytes: sortedAnimations.reduce((sum, item) => sum + item.asset.bytes, 0),
-    count: sortedAnimations.length,
     heroCount,
     skinCount,
     downloadedCount,
     reusedCount,
+    totalBytes: sortedAnimations.reduce((sum, item) => sum + item.asset.bytes, 0),
+    count: sortedAnimations.length,
   }
 }
 
@@ -532,7 +555,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -540,15 +563,16 @@ async function main(): Promise<void> {
   const result = await syncChampionAnimations(values)
   console.log(`动画资源同步完成：`)
   console.log(`- output dir: ${result.outputDir}`)
-  console.log(`- hero animations: ${result.heroCount}`)
-  console.log(`- skin animations: ${result.skinCount}`)
-  console.log(`- total count: ${result.count}`)
-  console.log(`- total bytes: ${result.totalBytes}`)
-  console.log(`- downloaded: ${result.downloadedCount}`)
-  console.log(`- reused: ${result.reusedCount}`)
+  console.log(`- hero animations: ${String(result.heroCount)}`)
+  console.log(`- skin animations: ${String(result.skinCount)}`)
+  console.log(`- total count: ${String(result.count)}`)
+  console.log(`- total bytes: ${String(result.totalBytes)}`)
+  console.log(`- downloaded: ${String(result.downloadedCount)}`)
+  console.log(`- reused: ${String(result.reusedCount)}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryScriptPath = process.argv[1]
+if (entryScriptPath !== undefined && import.meta.url === pathToFileURL(entryScriptPath).href) {
   main().catch((error: unknown) => {
     console.error(`同步动画资源失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

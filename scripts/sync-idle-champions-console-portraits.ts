@@ -1,5 +1,7 @@
+import { Buffer } from 'node:buffer'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { PNG } from 'pngjs'
@@ -111,11 +113,19 @@ function trimTransparentArea(pngBuffer: Buffer): TrimmedPng {
     for (let x = 0; x < bounds.width; x += 1) {
       const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const outputIndex = (y * output.width + x) * 4
+      const r = source.data[sourceIndex]
+      const g = source.data[sourceIndex + 1]
+      const b = source.data[sourceIndex + 2]
+      const a = source.data[sourceIndex + 3]
 
-      output.data[outputIndex] = source.data[sourceIndex]!
-      output.data[outputIndex + 1] = source.data[sourceIndex + 1]!
-      output.data[outputIndex + 2] = source.data[sourceIndex + 2]!
-      output.data[outputIndex + 3] = source.data[sourceIndex + 3]!
+      if (r === undefined || g === undefined || b === undefined || a === undefined) {
+        throw new Error('PNG 像素索引越界')
+      }
+
+      output.data[outputIndex] = r
+      output.data[outputIndex + 1] = g
+      output.data[outputIndex + 2] = b
+      output.data[outputIndex + 3] = a
     }
   }
 
@@ -135,15 +145,15 @@ async function downloadChampionConsolePortrait(
   task: ChampionConsolePortraitSource,
   options: DownloadOptions,
 ): Promise<ConsolePortraitItem> {
-  const existingItem = options.existingItemsByChampionId.get(String(task.championId)) ?? null
+  const existingItem = options.existingItemsByChampionId.get(task.championId) ?? null
   const nextImagePath = buildChampionConsolePortraitPath(options.currentVersion, task.championId)
 
   if (
     existingItem
     && canReuseGeneratedImage({
-      existingItem,
       nextSourceGraphic: task.graphic,
       nextSourceVersion: task.version,
+      existingItem,
       nextImagePath,
     })
   ) {
@@ -163,7 +173,7 @@ async function downloadChampionConsolePortrait(
   const response = await fetch(url, { cache: 'no-store' })
 
   if (!response.ok) {
-    throw new Error(`下载 ${task.graphic} 失败：HTTP ${response.status}`)
+    throw new Error(`下载 ${task.graphic} 失败：HTTP ${String(response.status)}`)
   }
 
   const rawBuffer = Buffer.from(await response.arrayBuffer())
@@ -209,7 +219,7 @@ async function downloadChampionConsolePortrait(
 export async function syncChampionConsolePortraits(
   options: SyncConsolePortraitsOptions = {},
 ): Promise<ConsolePortraitSyncResult> {
-  if (!options.input) {
+  if (options.input == null || options.input === '') {
     throw new Error('缺少 --input，无法根据 definitions 快照同步英雄正面图')
   }
 
@@ -241,7 +251,7 @@ export async function syncChampionConsolePortraits(
   const existingItemsByChampionId = new Map<string, ConsolePortraitItem>(
     (existingManifest?.items ?? []).map(
       (item): [string, ConsolePortraitItem] => [
-        String((item as ConsolePortraitItem).championId),
+        (item as ConsolePortraitItem).championId,
         item as ConsolePortraitItem,
       ],
     ),
@@ -251,9 +261,9 @@ export async function syncChampionConsolePortraits(
 
   const portraits = await runWithConcurrency(tasks, concurrency, (task) =>
     downloadChampionConsolePortrait(task, {
-      outputDir,
       currentVersion: options.currentVersion ?? 'v1',
       masterApiUrl: options.masterApiUrl,
+      outputDir,
       existingItemsByChampionId,
     }),
   )
@@ -271,18 +281,19 @@ export async function syncChampionConsolePortraits(
   const dimensionSummary = new Map<string, number>()
 
   portraits.forEach((portrait) => {
-    const dimensionKey =
-      portrait.width && portrait.height ? `${portrait.width}x${portrait.height}` : 'unknown'
+    const dimensionKey = portrait.width !== 0 && portrait.height !== 0
+      ? `${String(portrait.width)}x${String(portrait.height)}`
+      : 'unknown'
     dimensionSummary.set(dimensionKey, (dimensionSummary.get(dimensionKey) ?? 0) + 1)
   })
 
   return {
     outputDir: path.join(outputDir, CHAMPION_CONSOLE_PORTRAIT_DIR_NAME),
     count: portraits.length,
-    portraits,
     dimensions: Array.from(dimensionSummary.entries())
       .sort((left, right) => left[0].localeCompare(right[0]))
       .map(([size, count]) => ({ size, count })),
+    portraits,
   }
 }
 
@@ -294,7 +305,7 @@ function printUsage(): void {
   --input <file>             官方 definitions 快照 JSON
   --outputDir <dir>          正面图输出根目录，默认 ${DEFAULT_OUTPUT_DIR}
   --masterApiUrl <url>       官方 mobile_assets 根地址，默认 ${DEFAULT_MASTER_API_URL}
-  --concurrency <n>          并发下载数，默认 ${DEFAULT_CONCURRENCY}
+  --concurrency <n>          并发下载数，默认 ${String(DEFAULT_CONCURRENCY)}
   --help                     显示帮助
 `)
 }
@@ -310,7 +321,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -319,13 +330,15 @@ async function main(): Promise<void> {
 
   console.log('英雄正面图同步完成：')
   console.log(`- 输出目录: ${result.outputDir}`)
-  console.log(`- 数量: ${result.count}`)
-  console.log(
-    `- 尺寸分布: ${result.dimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
-  )
+  console.log(`- 数量: ${String(result.count)}`)
+  const dimensionList = result.dimensions
+    .map((item) => `${item.size} (${String(item.count)})`)
+    .join(', ')
+  console.log(`- 尺寸分布: ${dimensionList !== '' ? dimensionList : '无'}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const argvEntry = process.argv[1]
+if (argvEntry != null && import.meta.url === pathToFileURL(argvEntry).href) {
   main().catch((error: unknown) => {
     console.error(`同步英雄正面图失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
