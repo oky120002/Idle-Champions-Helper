@@ -26,9 +26,9 @@ export function useVariantCollectionState(): VariantState {
           ) ?? []
 
         setState({
+          campaigns,
           status: 'ready',
           variants: variantCollection.items,
-          campaigns,
           formations: formationCollection.items,
         })
       })

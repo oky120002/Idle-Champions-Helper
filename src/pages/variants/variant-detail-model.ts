@@ -29,11 +29,7 @@ export function getEnemyTypeStats(group: VariantAdventureGroup, locale: AppLocal
   for (const variant of group.variants) {
     if (variant.enemyTypeCounts && Object.keys(variant.enemyTypeCounts).length > 0) {
       for (const [enemyType, count] of Object.entries(variant.enemyTypeCounts)) {
-        if (count <= 0 || NON_DISPLAY_ENEMY_TAGS.has(enemyType)) {
-          continue
-        }
-
-        counts.set(enemyType, (counts.get(enemyType) ?? 0) + count)
+        appendEnemyCountEntry(counts, enemyType, count)
       }
 
       total += variant.enemyCount
@@ -56,7 +52,21 @@ export function getEnemyTypeStats(group: VariantAdventureGroup, locale: AppLocal
       label: getEnemyTypeLabel(id, locale),
       percent: total > 0 ? (count / total) * 100 : 0,
     }))
-    .sort((left, right) => right.percent - left.percent || left.label.localeCompare(right.label))
+    .sort((left, right) => compareByPercentThenLabel(left, right))
+}
+
+function appendEnemyCountEntry(counts: Map<string, number>, enemyType: string, count: number): void {
+  if (count <= 0 || NON_DISPLAY_ENEMY_TAGS.has(enemyType)) {
+    return
+  }
+
+  counts.set(enemyType, (counts.get(enemyType) ?? 0) + count)
+}
+
+function compareByPercentThenLabel(left: VariantRatioStat, right: VariantRatioStat): number {
+  const diff = right.percent - left.percent
+  if (diff !== 0) return diff
+  return left.label.localeCompare(right.label)
 }
 
 export function getAttackTypeStats(attackMix: VariantAttackMix, locale: AppLocale): VariantRatioStat[] {
@@ -76,19 +86,19 @@ export function getAttackTypeStats(attackMix: VariantAttackMix, locale: AppLocal
       label: labels[id],
       percent: total > 0 ? (count / total) * 100 : 0,
     }))
-    .sort((left, right) => right.percent - left.percent || left.label.localeCompare(right.label))
+    .sort((left, right) => compareByPercentThenLabel(left, right))
 }
 
 export function getSpecialEnemySummary(group: VariantAdventureGroup, locale: AppLocale): string {
   if (group.specialEnemyMin === group.specialEnemyMax) {
     return locale === 'zh-CN'
-      ? `${group.specialEnemyMax} 个`
-      : `${group.specialEnemyMax}`
+      ? `${String(group.specialEnemyMax)} 个`
+      : String(group.specialEnemyMax)
   }
 
   return locale === 'zh-CN'
-    ? `${group.specialEnemyMin}-${group.specialEnemyMax} 个`
-    : `${group.specialEnemyMin}-${group.specialEnemyMax}`
+    ? `${String(group.specialEnemyMin)}-${String(group.specialEnemyMax)} 个`
+    : `${String(group.specialEnemyMin)}-${String(group.specialEnemyMax)}`
 }
 
 export function getAreaHighlights(group: VariantAdventureGroup): VariantAreaHighlight[] {
@@ -102,9 +112,11 @@ export function getAreaHighlights(group: VariantAdventureGroup): VariantAreaHigh
     }
   }
 
-  return Array.from(byId.values()).sort(
-    (left, right) => left.start - right.start || left.kind.localeCompare(right.kind),
-  )
+  return Array.from(byId.values()).sort((left, right) => {
+    const diff = left.start - right.start
+    if (diff !== 0) return diff
+    return left.kind.localeCompare(right.kind)
+  })
 }
 
 export function getMechanicLabels(group: VariantAdventureGroup, locale: AppLocale): string[] {

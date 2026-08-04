@@ -5,6 +5,8 @@ import type {
   AnimationAuditFeedbackExportEntry,
   AnimationAuditFeedbackExportPayload,
   AnimationAuditFeedbackTag,
+  AnimationAuditFeedbackVerdict,
+  AnimationAuditSequenceMetrics,
 } from './types'
 
 const FEEDBACK_STORAGE_KEY = 'animation-audit.feedback.v1'
@@ -41,7 +43,7 @@ export function normalizeAnimationAuditFeedbackDraft(
   const note = draft.note.trim()
   const tags = dedupeFeedbackTags(draft.tags)
 
-  if (!draft.verdict && tags.length === 0 && !note) {
+  if (draft.verdict === null && tags.length === 0 && note === '') {
     return null
   }
 
@@ -80,13 +82,13 @@ export function readStoredAnimationAuditFeedback(): AnimationAuditFeedbackById {
   try {
     const rawValue = window.localStorage.getItem(FEEDBACK_STORAGE_KEY)
 
-    if (!rawValue) {
+    if (rawValue == null || rawValue === '') {
       return {}
     }
 
     const parsed: unknown = JSON.parse(rawValue)
 
-    if (!parsed || typeof parsed !== 'object') {
+    if (parsed == null || typeof parsed !== 'object') {
       return {}
     }
 
@@ -94,7 +96,7 @@ export function readStoredAnimationAuditFeedback(): AnimationAuditFeedbackById {
 
     return Object.fromEntries(
       Object.entries(parsedRecord).flatMap(([entryId, value]) => {
-        if (!value || typeof value !== 'object') {
+        if (value == null || typeof value !== 'object') {
           return []
         }
 
@@ -121,6 +123,26 @@ export function writeStoredAnimationAuditFeedback(feedbackById: AnimationAuditFe
   window.localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(feedbackById))
 }
 
+function resolvePreferredSequenceIndex(
+  verdict: AnimationAuditFeedbackVerdict | null,
+  entry: AnimationAuditEntry,
+  alternate: AnimationAuditSequenceMetrics | undefined,
+): number | null {
+  if (verdict === 'current') {
+    return entry.current.sequenceIndex
+  }
+
+  if (verdict === 'recommended') {
+    return entry.recommended.sequenceIndex
+  }
+
+  if (verdict === 'alternate') {
+    return alternate?.sequenceIndex ?? null
+  }
+
+  return null
+}
+
 function buildFeedbackExportEntry(
   entry: AnimationAuditEntry,
   feedback: AnimationAuditFeedbackDraft,
@@ -141,14 +163,7 @@ function buildFeedbackExportEntry(
     suspicionScore: entry.suspicionScore,
     suspicionSignals: entry.suspicionSignals,
     verdict: feedback.verdict,
-    preferredSequenceIndex:
-      feedback.verdict === 'current'
-        ? entry.current.sequenceIndex
-        : feedback.verdict === 'recommended'
-          ? entry.recommended.sequenceIndex
-          : feedback.verdict === 'alternate'
-            ? (alternate?.sequenceIndex ?? null)
-            : null,
+    preferredSequenceIndex: resolvePreferredSequenceIndex(feedback.verdict, entry, alternate),
     tags: feedback.tags,
     note: feedback.note,
     currentSequenceIndex: entry.current.sequenceIndex,
@@ -177,9 +192,9 @@ export function buildAnimationAuditFeedbackPayload({
   })
 
   return {
-    version: 1,
     generatedAt,
     sourceHref,
+    version: 1,
     totalSelected: feedbackEntries.length,
     entries: feedbackEntries,
   }

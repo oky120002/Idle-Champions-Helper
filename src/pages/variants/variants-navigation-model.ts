@@ -11,7 +11,7 @@ export function normalizeVariantSearch(value: string): string {
 }
 
 function fuzzyIncludes(value: string, query: string): boolean {
-  if (!query) {
+  if (query === '') {
     return true
   }
 
@@ -47,7 +47,7 @@ export function buildVariantNavigationSearchGroups(
   return groups
     .map((campaign) => {
       const campaignMatches = matchesLocalizedName(campaign.campaign, query)
-      const adventures = query
+      const adventures = query !== ''
         ? campaign.adventures.filter((adventure) => matchesLocalizedName(adventure.adventure, query))
         : campaign.adventures.slice(0, 6)
 

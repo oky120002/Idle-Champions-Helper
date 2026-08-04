@@ -85,6 +85,25 @@ const MECHANIC_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
   weather: { 'zh-CN': '天气效果', 'en-US': 'Weather' },
 }
 
+/**
+ * 区域高亮 body 文案表：key = highlight.kind；未命中走 getMechanicLabel 回退。
+ * 同一 kind 的 _by_area 与基础形式共享文案（"递进/分区"语义已由 prefix 承载）。
+ */
+const HIGHLIGHT_BODY_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
+  slot_escort: { 'zh-CN': '追加护送占位', 'en-US': 'escort blockers' },
+  slot_escort_by_area: { 'zh-CN': '追加护送占位', 'en-US': 'escort blockers' },
+  additional_bosses: { 'zh-CN': '额外 Boss', 'en-US': 'extra bosses' },
+  additional_bosses_by_area: { 'zh-CN': '额外 Boss', 'en-US': 'extra bosses' },
+  blocked_heroes_by_area: { 'zh-CN': '封锁英雄', 'en-US': 'hero lockouts' },
+  only_allow_crusaders: { 'zh-CN': '轮换限制', 'en-US': 'rotation rule' },
+  only_allow_crusaders_by_area: { 'zh-CN': '轮换限制', 'en-US': 'rotation rule' },
+  replace_monsters: { 'zh-CN': '替换敌人池', 'en-US': 'enemy swaps' },
+  replace_monsters_by_area: { 'zh-CN': '替换敌人池', 'en-US': 'enemy swaps' },
+  static_monsters_by_area: { 'zh-CN': '固定敌人', 'en-US': 'static enemies' },
+  darken_by_area: { 'zh-CN': '场景压暗', 'en-US': 'darkened stage' },
+  slot_effects_by_area: { 'zh-CN': '槽位效果', 'en-US': 'slot effects' },
+}
+
 function titleCase(value: string): string {
   return value
     .split(/[_-]/)
@@ -118,7 +137,7 @@ export function getMechanicLabel(kind: string, locale: AppLocale): string {
 }
 
 function formatPercent(value: number): string {
-  return `${Math.round(value * 100)}%`
+  return `${String(Math.round(value * 100))}%`
 }
 
 export function getAttackMixSummary(mix: VariantAttackMix, locale: AppLocale): string {
@@ -139,47 +158,24 @@ export function getAttackMixSummary(mix: VariantAttackMix, locale: AppLocale): s
 
 function formatAreaRange(start: number, end: number | null, locale: AppLocale): string {
   if (end === null || end === start) {
-    return locale === 'zh-CN' ? `${start} 区起` : `Area ${start}+`
+    return locale === 'zh-CN' ? `${String(start)} 区起` : `Area ${String(start)}+`
   }
 
-  return locale === 'zh-CN' ? `${start}-${end} 区` : `Area ${start}-${end}`
+  return locale === 'zh-CN'
+    ? `${String(start)}-${String(end)} 区`
+    : `Area ${String(start)}-${String(end)}`
 }
 
 export function getAreaHighlightLabel(highlight: VariantAreaHighlight, locale: AppLocale): string {
   const prefix = formatAreaRange(highlight.start, highlight.end, locale)
-  const body = (() => {
-    switch (highlight.kind) {
-      case 'slot_escort_by_area':
-      case 'slot_escort':
-        return locale === 'zh-CN' ? '追加护送占位' : 'escort blockers'
-      case 'additional_bosses_by_area':
-      case 'additional_bosses':
-        return locale === 'zh-CN' ? '额外 Boss' : 'extra bosses'
-      case 'blocked_heroes_by_area':
-        return locale === 'zh-CN' ? '封锁英雄' : 'hero lockouts'
-      case 'only_allow_crusaders_by_area':
-      case 'only_allow_crusaders':
-        return locale === 'zh-CN' ? '轮换限制' : 'rotation rule'
-      case 'replace_monsters_by_area':
-      case 'replace_monsters':
-        return locale === 'zh-CN' ? '替换敌人池' : 'enemy swaps'
-      case 'static_monsters_by_area':
-        return locale === 'zh-CN' ? '固定敌人' : 'static enemies'
-      case 'darken_by_area':
-        return locale === 'zh-CN' ? '场景压暗' : 'darkened stage'
-      case 'slot_effects_by_area':
-        return locale === 'zh-CN' ? '槽位效果' : 'slot effects'
-      default:
-        return getMechanicLabel(highlight.kind, locale)
-    }
-  })()
+  const bodyLabel = HIGHLIGHT_BODY_LABELS[highlight.kind]?.[locale] ?? getMechanicLabel(highlight.kind, locale)
+  const loopHint = formatHighlightLoopHint(highlight.loopAt, locale)
 
-  const loopHint =
-    highlight.loopAt && highlight.loopAt > 0
-      ? locale === 'zh-CN'
-        ? ` · 每 ${highlight.loopAt} 区循环`
-        : ` · repeats every ${highlight.loopAt}`
-      : ''
+  return `${prefix} · ${bodyLabel}${loopHint}`
+}
 
-  return `${prefix} · ${body}${loopHint}`
+function formatHighlightLoopHint(loopAt: number | null, locale: AppLocale): string {
+  if (loopAt == null || loopAt <= 0) return ''
+  const value = String(loopAt)
+  return locale === 'zh-CN' ? ` · 每 ${value} 区循环` : ` · repeats every ${value}`
 }
