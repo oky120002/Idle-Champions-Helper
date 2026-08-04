@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { resolveSignalMultiplier } from '../planner/mechanics/signalMultiplier'
 import { buildInput, createHero } from '../planner/mechanics/mechanicTestFixtures'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
@@ -28,7 +29,7 @@ const makeProfile = (
     },
   } as unknown as ResolvedHeroAbilityProfile)
 
-const buff = (targetUpgradeId: string, value: number, rawEffect = `buff_upgrade,${value},${targetUpgradeId}`): EquipmentBuff => ({
+const buff = (targetUpgradeId: string, value: number, rawEffect = `buff_upgrade,${String(value)},${targetUpgradeId}`): EquipmentBuff => ({
   targetUpgradeId,
   value,
   rawEffect,
@@ -39,7 +40,7 @@ describe('applyEquipmentBuffsToProfile', () => {
     const base = baseSignal({ rawEffect: 'hero_dps_multiplier_mult,100', upgradeId: '4' })
     const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('4', 275)])
     expect(profile.carrySignals).toHaveLength(2)
-    const wrapper = profile.carrySignals[1]!
+    const wrapper = unwrap(profile.carrySignals[1], 'expected carry wrapper at index 1')
     expect(wrapper.kind).toBe('heroDpsMultiplier')
     expect(wrapper.value).toBe(275)
     expect(wrapper.rawEffect).toBe('buff_upgrade,275,4')
@@ -54,7 +55,7 @@ describe('applyEquipmentBuffsToProfile', () => {
     const profile = applyEquipmentBuffsToProfile(makeProfile([], [base]), [buff('9', 50)])
     expect(profile.carrySignals).toHaveLength(0)
     expect(profile.supportSignals).toHaveLength(2)
-    expect(profile.supportSignals[1]!.bonusScaleOfSignal).toBe(base)
+    expect(unwrap(profile.supportSignals[1], 'expected support wrapper at index 1').bonusScaleOfSignal).toBe(base)
   })
 
   it('【追加非替换】base signal 必须保留', () => {
@@ -73,7 +74,7 @@ describe('applyEquipmentBuffsToProfile', () => {
     })
     const profile = applyEquipmentBuffsToProfile(makeProfile([], [base]), [buff('5', 40)])
     expect(profile.supportSignals).toHaveLength(2) // base + wrapper
-    const wrapper = profile.supportSignals[1]!
+    const wrapper = unwrap(profile.supportSignals[1], 'expected support wrapper at index 1')
     expect(wrapper.kind).toBe('enemyVulnerability')
     expect(wrapper.value).toBe(40)
     expect(wrapper.bonusScaleOfSignal).toBe(base)
@@ -84,8 +85,9 @@ describe('applyEquipmentBuffsToProfile', () => {
     const base = baseSignal({ rawEffect: 'damage_reduction,30', kind: 'damageReduction', value: 30, upgradeId: '7' })
     const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('7', 50)])
     expect(profile.carrySignals).toHaveLength(2)
-    expect(profile.carrySignals[1]!.kind).toBe('damageReduction')
-    expect(profile.carrySignals[1]!.bonusScaleOfSignal).toBe(base)
+    const drWrapper = unwrap(profile.carrySignals[1], 'expected carry wrapper at index 1')
+    expect(drWrapper.kind).toBe('damageReduction')
+    expect(drWrapper.bonusScaleOfSignal).toBe(base)
   })
 
   it('attackSpeed/cooldown base 暂不收（base 不进评分，注入 wrapper 也无效，需先让 speed 进评分）', () => {
@@ -139,8 +141,8 @@ describe('applyEquipmentBuffsToProfile', () => {
     ])
     expect(profile.carrySignals).toHaveLength(2) // baseA + wrapperA
     expect(profile.supportSignals).toHaveLength(2) // baseB + wrapperB
-    expect(profile.carrySignals[1]!.value).toBe(87.5)
-    expect(profile.supportSignals[1]!.value).toBe(87.5)
+    expect(unwrap(profile.carrySignals[1], 'expected carry wrapper at index 1').value).toBe(87.5)
+    expect(unwrap(profile.supportSignals[1], 'expected support wrapper at index 1').value).toBe(87.5)
   })
 
   it('【stacksMultiply base】wrapper 不继承 base 的 stacksMultiply/applyManually（防 (1+buff/100)^N 灾难高估）', () => {
@@ -156,7 +158,7 @@ describe('applyEquipmentBuffsToProfile', () => {
       applyManually: true,
     })
     const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('42', 25)])
-    const wrapper = profile.carrySignals[1]!
+    const wrapper = unwrap(profile.carrySignals[1], 'expected carry wrapper at index 1')
     expect(wrapper.bonusScaleOfSignal).toBe(base)
     // 不得继承 stacksMultiply/applyManually——wrapper 是固定百分比放大，非堆叠/手动信号。
     expect(wrapper.stacksMultiply).toBeFalsy()
@@ -174,7 +176,7 @@ describe('applyEquipmentBuffsToProfile', () => {
       stacksMultiply: true,
     })
     const profile = applyEquipmentBuffsToProfile(makeProfile([base]), [buff('42', 25)])
-    const wrapper = profile.carrySignals[1]!
+    const wrapper = unwrap(profile.carrySignals[1], 'expected carry wrapper at index 1')
     const r = resolveSignalMultiplier(
       buildInput({
         carryHero: createHero('carry'),
@@ -184,6 +186,7 @@ describe('applyEquipmentBuffsToProfile', () => {
       wrapper,
     )
     expect(r.ok).toBe(true)
-    if (r.ok) expect(r.multiplier).toBeCloseTo(1.125, 10)
+    if (!r.ok) throw new Error('expected r.ok to be true')
+    expect(r.multiplier).toBeCloseTo(1.125, 10)
   })
 })

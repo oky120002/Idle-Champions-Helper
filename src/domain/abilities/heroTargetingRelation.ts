@@ -1,5 +1,17 @@
 import type { HeroPositionRelation } from './abilityModel'
 
+/** filter-like target 类型集合（isFilterLikeTarget 查询用，原 6 路 || 合并） */
+const FILTER_LIKE_TYPES = new Set([
+  'by_tags',
+  'tags',
+  'attack_type',
+  'stat',
+  'stat_score',
+  // heroes：英雄 ID 白名单（{type:"heroes",hero_ids:[...]}），限定 buff 目标而非位置，
+  // 语义同 filter_targets 的 hero_ids filter（位置关系=any）。真实样本：ed=196/621/1279。
+  'heroes',
+])
+
 export interface HeroExplicitTargetingNone {
   status: 'none'
   relation: 'any'
@@ -21,19 +33,12 @@ export type HeroExplicitTargeting =
   | HeroExplicitTargetingUnsupported
 
 export function isFilterLikeTarget(target: unknown): boolean {
-  if (!target || typeof target !== 'object') {
+  if (target == null || typeof target !== 'object') {
     return false
   }
 
   const type = (target as Record<string, unknown>).type
-  return type === 'by_tags'
-    || type === 'tags'
-    || type === 'attack_type'
-    || type === 'stat'
-    || type === 'stat_score'
-    // heroes：英雄 ID 白名单（{type:"heroes",hero_ids:[...]}），限定 buff 目标而非位置，
-    // 语义同 filter_targets 的 hero_ids filter（位置关系=any）。真实样本：ed=196/621/1279。
-    || type === 'heroes'
+  return typeof type === 'string' && FILTER_LIKE_TYPES.has(type)
 }
 
 // Array.isArray 对 unknown narrow 成 any[]（触发 no-unsafe-assignment），统一用谓词收窄到 unknown[]。
@@ -126,14 +131,14 @@ function normalizeTargetRelation(target: unknown): HeroPositionRelation | null {
   if (typeof target === 'string') {
     return STRING_RELATION_MAP[target] ?? null
   }
-  if (target && typeof target === 'object') {
+  if (target != null && typeof target === 'object') {
     return normalizeObjectRelation(target as Record<string, unknown>)
   }
   return null
 }
 
 export function normalizeExplicitTargeting(effect: unknown): HeroExplicitTargeting {
-  const targetsField = (effect && typeof effect === 'object') ? (effect as Record<string, unknown>).targets : undefined
+  const targetsField = (effect != null && typeof effect === 'object') ? (effect as Record<string, unknown>).targets : undefined
   const rawTargets: unknown[] = isUnknownArray(targetsField) ? targetsField : []
 
   if (rawTargets.length === 0) {
@@ -151,8 +156,8 @@ export function normalizeExplicitTargeting(effect: unknown): HeroExplicitTargeti
     return { status: 'unsupported', note: `mixed targets: ${JSON.stringify(rawTargets)}` }
   }
 
-  return {
-    status: 'supported',
-    relation: uniqueRelations[0]!,
-  }
+  const relation = uniqueRelations[0]
+  return relation !== undefined
+    ? { status: 'supported', relation }
+    : { status: 'unsupported', note: 'unexpected empty uniqueRelations' }
 }

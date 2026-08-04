@@ -75,6 +75,27 @@ function buildEquipmentBuffWrapper(base: HeroAbilitySignal, buff: EquipmentBuff)
 }
 
 /**
+ * direct base signal 按 upgradeId 索引（分 carry/support 保留 bucket 归属）。
+ */
+function indexBaseSignal(
+  index: Map<string, HeroAbilitySignal[]>,
+  signal: HeroAbilitySignal,
+): void {
+  if (signal.bonusScaleOfSignal) {
+    return // wrapper 自身不作 base（防递归 buff_upgrade 元家族）
+  }
+  if (signal.upgradeId == null || signal.upgradeId === '') {
+    return // 无 upgrade id 不可被 target 反查
+  }
+  if (!SUPPORTED_BUFF_TARGET_KINDS.has(signal.kind)) {
+    return // 非 DPS/gold/crit/health target → 没算（宁可不准不可错）
+  }
+  const list = index.get(signal.upgradeId) ?? []
+  list.push(signal)
+  index.set(signal.upgradeId, list)
+}
+
+/**
  * 应用 owned 装备 buff_upgrade 到 profile：按 target upgradeId 反查 direct base signal，构造 wrapper
  * 按 base 所在 bucket 追加（appendHeroAbilitySignals，保留 base 信号）。无匹配 base → 无 wrapper（原样返回）。
  */
@@ -86,31 +107,13 @@ export function applyEquipmentBuffsToProfile(
     return profile
   }
 
-  // direct base signal 按 upgradeId 索引（分 carry/support 保留 bucket 归属）。
   const carryByUpgradeId = new Map<string, HeroAbilitySignal[]>()
   const supportByUpgradeId = new Map<string, HeroAbilitySignal[]>()
-  const indexBase = (
-    index: Map<string, HeroAbilitySignal[]>,
-    signal: HeroAbilitySignal,
-  ): void => {
-    if (signal.bonusScaleOfSignal) {
-      return // wrapper 自身不作 base（防递归 buff_upgrade 元家族）
-    }
-    if (!signal.upgradeId) {
-      return // 无 upgrade id 不可被 target 反查
-    }
-    if (!SUPPORTED_BUFF_TARGET_KINDS.has(signal.kind)) {
-      return // 非 DPS/gold/crit/health target → 没算（宁可不准不可错）
-    }
-    const list = index.get(signal.upgradeId) ?? []
-    list.push(signal)
-    index.set(signal.upgradeId, list)
-  }
   for (const signal of profile.carrySignals) {
-    indexBase(carryByUpgradeId, signal)
+    indexBaseSignal(carryByUpgradeId, signal)
   }
   for (const signal of profile.supportSignals) {
-    indexBase(supportByUpgradeId, signal)
+    indexBaseSignal(supportByUpgradeId, signal)
   }
 
   const carryWrappers: HeroAbilitySignal[] = []

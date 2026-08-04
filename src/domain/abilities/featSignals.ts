@@ -53,7 +53,7 @@ export function applyFeatsToProfile(
   activeFeatIds: readonly string[],
   heroFeats: readonly FeatEntry[] | undefined,
 ): ResolvedHeroAbilityProfile {
-  const active = new Set(activeFeatIds.map((id) => String(id)))
+  const active = new Set(activeFeatIds)
   const carry: HeroAbilitySignal[] = []
   const support: HeroAbilitySignal[] = []
   for (const feat of heroFeats ?? []) {

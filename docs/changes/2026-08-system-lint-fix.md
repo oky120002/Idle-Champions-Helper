@@ -51,7 +51,7 @@
 - [x] 阶段 2: scripts/data 测试 + effect-resolvers（151 违规，23 文件：3 大 test + effect-resolvers 11 + 9 小 test）—— 验证：`npx eslint scripts/data/**/*.ts` 全清（scripts/data 至此 0 违规）+ tsc 0 + 227 单测全过 + diff 复核 build-models.test signalPreset 类型修正与生产 effect-helpers.ts:44 一致
 - [x] 阶段 3: scripts/sync-pets/portraits + check-color-contrast/colors + normalize-definitions（180 违规，6 文件）—— 验证：6 文件 eslint 0 + tsc 0 + 相关单测 27 全过（check-color-contrast 18/normalize-definitions 4/check-colors 5）+ diff 复核 PetImage.format 字面量使删比较安全、像素循环 `?? 0` 与原 `!` 在 OOB 均强转 0 等价
 - [x] 阶段 4: scripts/ 其余全部（333 违规，分 4a/4b：4a 顶层 sync/audit 产品+test 163 `78eb0f43`；4b private-user-data 53 + simulator 37 + 杂项顶层 56 + 漏网 test 24 = 170）—— 验证：`npx eslint scripts/**/*.ts` 全清（scripts/ 至此 0 违规）+ tsc 0 + scripts/ 48 文件 358 单测全过；顺带修 rules 表 docs-governance 合规（`2493d556`，207→92 行+Status，原 3 失败转绿）
-- [ ] 阶段 5: src/domain/abilities（~100：heroPredicate 44、signalSemantics 23）
+- [x] 阶段 5: src/domain/abilities（92 违规，9 文件）—— 验证：abilities eslint 0 errors/0 warnings + tsc 0 + 111 单测全过。**no-cycle 偏差（待裁定）**：abilityModel.ts/signalSemantics.ts 的 abilities↔planner **值环**（`REGISTERED_STACK_FUNCS`/`POOL_SCOPE_BY_KIND` 是运行时常量，非 import type 可破）两处 disable 带理由，与修法表「no-cycle 不豁免」冲突——打断需架构重构（常量下沉叶子模块或依赖反转），属核心边界改动。已暂停推进，待用户裁定是「接受 disable + 记架构 TODO」还是「立项重构破环」
 - [ ] 阶段 6: src/domain/planner 产品 + references（~120：recommendationEngine 35、references tests 17+21、PlannerScenarioSelection 18、compute）
 - [ ] 阶段 7: src/domain/planner 测试 + domain 其他（~200：steadyStateScoring.test 43、buffs、effects、types、simulator、variant-model 21、localizedText）
 - [ ] 阶段 8: src/pages/champion-detail（~150：effect-payload 28、effect-targets 20、upgrade-presentation-model 20、DetailUpgradeSection 17、detail-cards）

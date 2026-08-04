@@ -1,4 +1,6 @@
+/* eslint-disable max-lines -- 英雄能力共享模型（kind/dimension/pool/signal 类型+常量集中），拆分损害一跳命中率，与 heroPredicate.ts 同处置 */
 import type { AbilityScoreKey, DataCollection, LocalizedText } from '../types'
+// eslint-disable-next-line import-x/no-cycle -- 循环依赖 abilityModel→stackCountResolver→signalSemantics→abilityModel；打断需重构模块边界（scorer 能力下沉），超出 lint 写法修复范围
 import { REGISTERED_STACK_FUNCS } from '../planner/mechanics/stackCountResolver'
 
 /**
@@ -330,17 +332,17 @@ function aggregateGainByDimension(
 ): Partial<Record<HeroAbilityDimension, number>> {
   const byDim = new Map<HeroAbilityDimension, { addPercent: number; multFactor: number }>()
   for (const signal of signals) {
-    const dimension = DIMENSION_BY_KIND[signal.kind]
-    if (!dimension) continue
+    const dimension = DIMENSION_BY_KIND[signal.kind] as HeroAbilityDimension | undefined
+    if (dimension === undefined) continue
     // applyManually 信号实际评分恒丢弃（resolveSignalMultiplier 首分支 ok:false）——不计入 gain，
     // 否则幻影增益可能在同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）。
     if (signal.applyManually === true) continue
     // 未注册 stackFunc 信号实际评分走 stackFunc 路径找不到 resolver 恒丢弃——同上不计入（止幻影增益）。
-    if (signal.stackFunc && !REGISTERED_STACK_FUNCS.has(signal.stackFunc)) continue
+    if (signal.stackFunc != null && signal.stackFunc !== '' && !REGISTERED_STACK_FUNCS.has(signal.stackFunc)) continue
     const entry = byDim.get(dimension) ?? { addPercent: 0, multFactor: 1 }
     // stacksMultiply + 无 stackFunc（短路分支）：实际评分走 multFactor (1+value/100)^count，base 仅依赖门控
     // 不参与数值 → gain 用 signal.value（非 base.value×value/100），路由须与 pool 对称走 multFactor。
-    const isDynStackShortcut = signal.stacksMultiply === true && !signal.stackFunc
+    const isDynStackShortcut = signal.stacksMultiply === true && (signal.stackFunc == null || signal.stackFunc === '')
     // 非 dyn-stack：buff_upgrade wrapper 按 base.value×value/100 折算（applySignalPercent），否则用 value。
     const effectiveValue = isDynStackShortcut || !signal.bonusScaleOfSignal
       ? signal.value

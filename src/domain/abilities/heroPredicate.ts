@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 模块内聚：谓词解析 + 求值 + 遍历同居一文件，拆分会损害一跳命中率 */
 // IC 英雄布尔谓词的统一解析与求值。
 //
 // IC 数据有两套「英雄谓词」语法，求值域相同（对单个英雄求布尔）：
@@ -23,35 +24,48 @@ const SHORTHAND_AND = '^'
 const FUNCTIONAL_OR = '||'
 const FUNCTIONAL_AND = '&&'
 
+/**
+ * 正则匹配 / 数组访问后取元素；理论不会触发 throw（regex 无可选捕获组、length 已守卫），
+ * 仅为消除 `!` 非空断言（被 `@typescript-eslint/no-non-null-assertion` 禁止）。
+ */
+function requireElement<T>(arr: readonly T[], index: number): T {
+  const value = arr[index]
+  if (value === undefined) {
+    throw new Error(`element ${String(index)} unexpectedly undefined`)
+  }
+  return value
+}
+
+// 假定 s 首尾是 (...)；判断这对括号是否包裹整个字符串（中间未提前回到 depth 0）。
+function parenWrapsWholeExpr(s: string): boolean {
+  let depth = 0
+
+  for (let index = 0; index < s.length; index += 1) {
+    const char = s[index]
+    if (char === '(') {
+      depth += 1
+    } else if (char === ')') {
+      depth -= 1
+      if (depth < 0) {
+        return false
+      }
+      if (depth === 0 && index < s.length - 1) {
+        return false
+      }
+    }
+  }
+
+  return depth === 0
+}
+
 function stripOuterParentheses(expr: string): string {
   let current = expr.trim()
 
-  while (current.startsWith('(') && current.endsWith(')')) {
-    let depth = 0
-    let wrapsWholeExpr = true
-
-    for (let index = 0; index < current.length; index += 1) {
-      const char = current[index]
-      if (char === '(') {
-        depth += 1
-      } else if (char === ')') {
-        depth -= 1
-        if (depth === 0 && index < current.length - 1) {
-          wrapsWholeExpr = false
-          break
-        }
-      }
-
-      if (depth < 0) {
-        wrapsWholeExpr = false
-        break
-      }
-    }
-
-    if (!wrapsWholeExpr || depth !== 0) {
-      break
-    }
-
+  while (
+    current.startsWith('(') &&
+    current.endsWith(')') &&
+    parenWrapsWholeExpr(current)
+  ) {
     current = current.slice(1, -1).trim()
   }
 
@@ -109,7 +123,7 @@ function compareNumber(left: number | null | undefined, operator: HeroComparison
 
 function getHeroStatValue(hero: ResolvedHeroAbilityProfile, stat: HeroStatKey): number | undefined {
   if (stat === 'total_ability_score') {
-    return Object.values(hero.abilityScores ?? {}).reduce(
+    return Object.values(hero.abilityScores).reduce(
       (sum, value) => sum + (typeof value === 'number' ? value : 0),
       0,
     )
@@ -120,6 +134,7 @@ function getHeroStatValue(hero: ResolvedHeroAbilityProfile, stat: HeroStatKey): 
 
 // functional 叶子：HasTag/GetStat/age/hero_id/HasAttackDamageType(+ has_base_attack_dmg_type_ 别名)/base_attack_cooldown/is_undead/true/as_int。
 // 非 boolean 叶子（min/max/floor 等数值表达式）返回 null。
+// eslint-disable-next-line sonarjs/cognitive-complexity, sonarjs/max-lines-per-function -- 14 种正则叶子顺序匹配，线性结构天然超规模/超长度，拆子函数会损害一跳命中率
 function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
   if (expr === 'true') {
     return { op: 'true' }
@@ -136,103 +151,103 @@ function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
 
   // EligibleForPatron(<var>)：参数恒为「当前 patron」变量（如 aeon_current_patron_id），不解析参数；
   // runtime 查 hero.eligiblePatronIds 是否含 ownedSaveContext.currentPatronId。
-  const eligibleForPatronMatch = expr.match(/^EligibleForPatron\([^)]+\)$/)
-  if (eligibleForPatronMatch) {
+  if (/^EligibleForPatron\([^)]+\)$/.exec(expr) !== null) {
     return { op: 'eligibleForPatron' }
   }
 
   // GetUpgradeUnlocked(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
   // build 期 enrichUpgradeUnlockNodes 解析 ownerHeroId(self) + requiredLevel 烘进节点。
-  const upgradeUnlockedMatch = expr.match(/^GetUpgradeUnlocked\((\d+)\)$/)
-  if (upgradeUnlockedMatch) {
-    return { op: 'upgradeUnlocked', upgradeId: upgradeUnlockedMatch[1]! }
+  const upgradeUnlockedMatch = /^GetUpgradeUnlocked\((\d+)\)$/.exec(expr)
+  if (upgradeUnlockedMatch !== null) {
+    return { op: 'upgradeUnlocked', upgradeId: requireElement(upgradeUnlockedMatch, 1) }
   }
 
   // GetUpgradePurchased(N)：存档依赖 global 谓词。parser 仅产 {upgradeId}；
   // build 期 enrichment 补 ownerHeroId(self) + requiredLevel + isSpecialization。
-  const upgradePurchasedMatch = expr.match(/^GetUpgradePurchased\((\d+)\)$/)
-  if (upgradePurchasedMatch) {
-    return { op: 'upgradePurchased', upgradeId: upgradePurchasedMatch[1]! }
+  const upgradePurchasedMatch = /^GetUpgradePurchased\((\d+)\)$/.exec(expr)
+  if (upgradePurchasedMatch !== null) {
+    return { op: 'upgradePurchased', upgradeId: requireElement(upgradePurchasedMatch, 1) }
   }
 
   // GetFeatEquipped(N)：存档依赖 per-hero 谓词。runtime 查 equippedFeatIds（被评估英雄的 feats）。
-  const featEquippedMatch = expr.match(/^GetFeatEquipped\((\d+)\)$/)
-  if (featEquippedMatch) {
-    return { op: 'featEquipped', featId: featEquippedMatch[1]! }
+  const featEquippedMatch = /^GetFeatEquipped\((\d+)\)$/.exec(expr)
+  if (featEquippedMatch !== null) {
+    return { op: 'featEquipped', featId: requireElement(featEquippedMatch, 1) }
   }
 
-  const asIntMatch = expr.match(/^as_int\((.+)\)$/)
-  if (asIntMatch) {
-    return parseHeroPredicate(asIntMatch[1]!, 'functional')
+  const asIntMatch = /^as_int\((.+)\)$/.exec(expr)
+  if (asIntMatch !== null) {
+    return parseHeroPredicate(requireElement(asIntMatch, 1), 'functional')
   }
 
-  const attackDamageTypeMatch = expr.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
-  if (attackDamageTypeMatch) {
-    return { op: 'attackType', attackType: attackDamageTypeMatch[1]!.toLowerCase(), negate: false }
+  const attackDamageTypeMatch = /^HasAttackDamageType\(`([^`]+)`\)$/.exec(expr)
+  if (attackDamageTypeMatch !== null) {
+    return { op: 'attackType', attackType: requireElement(attackDamageTypeMatch, 1).toLowerCase(), negate: false }
   }
 
   // has_base_attack_dmg_type_X 是 HasAttackDamageType(`X`) 的裸标识符别名
   //（raw 23 处，magic/melee/ranged；泛化支持任意类型名，与 HasAttackDamageType 同语义）
-  const baseAttackDmgTypeMatch = expr.match(/^has_base_attack_dmg_type_([a-zA-Z_]+)$/)
-  if (baseAttackDmgTypeMatch) {
-    return { op: 'attackType', attackType: baseAttackDmgTypeMatch[1]!.toLowerCase(), negate: false }
+  const baseAttackDmgTypeMatch = /^has_base_attack_dmg_type_([a-zA-Z_]+)$/.exec(expr)
+  if (baseAttackDmgTypeMatch !== null) {
+    return { op: 'attackType', attackType: requireElement(baseAttackDmgTypeMatch, 1).toLowerCase(), negate: false }
   }
 
   // has_tag_X 是 HasTag(`X`) 的裸标识符别名（raw has_tag_rivalswaterdeep/speed/acqinc/cteam）。
-  const hasTagAliasMatch = expr.match(/^has_tag_([a-zA-Z_]+)$/)
-  if (hasTagAliasMatch) {
-    return { op: 'tag', tag: hasTagAliasMatch[1]!.toLowerCase() }
+  const hasTagAliasMatch = /^has_tag_([a-zA-Z_]+)$/.exec(expr)
+  if (hasTagAliasMatch !== null) {
+    return { op: 'tag', tag: requireElement(hasTagAliasMatch, 1).toLowerCase() }
   }
 
-  const tagMatch = expr.match(/^HasTag\(`([^`]+)`\)$/)
-  if (tagMatch) {
-    return { op: 'tag', tag: tagMatch[1]!.toLowerCase() }
+  const tagMatch = /^HasTag\(`([^`]+)`\)$/.exec(expr)
+  if (tagMatch !== null) {
+    return { op: 'tag', tag: requireElement(tagMatch, 1).toLowerCase() }
   }
 
-  const statMatch = expr.match(/^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/)
-  if (statMatch) {
+  const statMatch = /^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/.exec(expr)
+  if (statMatch !== null) {
     return {
       op: 'stat',
-      stat: statMatch[1]!.toLowerCase() as HeroStatKey,
-      operator: statMatch[2] as HeroComparisonOperator,
-      value: Number(statMatch[3]),
+      stat: requireElement(statMatch, 1).toLowerCase() as HeroStatKey,
+      operator: requireElement(statMatch, 2) as HeroComparisonOperator,
+      value: Number(requireElement(statMatch, 3)),
     }
   }
 
-  const baseAttackCooldownMatch = expr.match(/^base_attack_cooldown\s*(>=|<=|>|<|==)\s*(\d+(?:\.\d+)?)$/)
-  if (baseAttackCooldownMatch) {
+  const baseAttackCooldownMatch = /^base_attack_cooldown\s*(>=|<=|>|<|==)\s*(\d+(?:\.\d+)?)$/.exec(expr)
+  if (baseAttackCooldownMatch !== null) {
     return {
       op: 'baseAttackCooldown',
-      operator: baseAttackCooldownMatch[1] as HeroComparisonOperator,
-      value: Number(baseAttackCooldownMatch[2]),
+      operator: requireElement(baseAttackCooldownMatch, 1) as HeroComparisonOperator,
+      value: Number(requireElement(baseAttackCooldownMatch, 2)),
     }
   }
 
-  const ageMatch = expr.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)$/)
-  if (ageMatch) {
-    return { op: 'age', operator: ageMatch[1] as HeroComparisonOperator, value: Number(ageMatch[2]) }
+  const ageMatch = /^age\s*(>=|<=|>|<|==)\s*(\d+)$/.exec(expr)
+  if (ageMatch !== null) {
+    return { op: 'age', operator: requireElement(ageMatch, 1) as HeroComparisonOperator, value: Number(requireElement(ageMatch, 2)) }
   }
 
-  const heroIdEqMatch = expr.match(/^hero_id\s*==\s*([0-9]+)$/)
-  if (heroIdEqMatch) {
-    return { op: 'heroId', heroId: heroIdEqMatch[1]!, negate: false }
+  const heroIdEqMatch = /^hero_id\s*==\s*(\d+)$/.exec(expr)
+  if (heroIdEqMatch !== null) {
+    return { op: 'heroId', heroId: requireElement(heroIdEqMatch, 1), negate: false }
   }
 
-  const heroIdNeqMatch = expr.match(/^hero_id\s*!=\s*([0-9]+)$/)
-  if (heroIdNeqMatch) {
-    return { op: 'heroId', heroId: heroIdNeqMatch[1]!, negate: true }
+  const heroIdNeqMatch = /^hero_id\s*!=\s*(\d+)$/.exec(expr)
+  if (heroIdNeqMatch !== null) {
+    return { op: 'heroId', heroId: requireElement(heroIdNeqMatch, 1), negate: true }
   }
 
   return null
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 递归下降解析器，OR/AND/NOT 三层 split + 递归调用天然超 15
 export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect): HeroPredicateAST | null {
   if (typeof expr !== 'string') {
     return null
   }
 
   const trimmed = expr.trim()
-  if (!trimmed) {
+  if (trimmed === '') {
     return null
   }
 
@@ -257,7 +272,7 @@ export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect)
       return null
     }
     const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
-    return nodes.length === 1 ? nodes[0]! : { op: 'or', children: nodes }
+    return nodes.length === 1 ? requireElement(nodes, 0) : { op: 'or', children: nodes }
   }
 
   // AND。任一子句不可解析 → 整体 null（保守，避免丢弃导致放宽语义）。
@@ -269,7 +284,7 @@ export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect)
       return null
     }
     const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
-    return nodes.length === 1 ? nodes[0]! : { op: 'and', children: nodes }
+    return nodes.length === 1 ? requireElement(nodes, 0) : { op: 'and', children: nodes }
   }
 
   // NOT（前缀 !）
@@ -287,6 +302,7 @@ export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect)
   return null
 }
 
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity, sonarjs/max-lines-per-function -- AST eval 大 switch，14 分支线性分派，拆子函数会损害一跳命中率
 function evalNode(
   ast: HeroPredicateAST,
   hero: ResolvedHeroAbilityProfile,
@@ -307,7 +323,7 @@ function evalNode(
     case 'age':
       return compareNumber(hero.age, ast.operator, ast.value)
     case 'heroId': {
-      const equal = String(hero.heroId) === ast.heroId
+      const equal = hero.heroId === ast.heroId
       return ast.negate ? !equal : equal
     }
     case 'attackType': {
@@ -329,7 +345,7 @@ function evalNode(
         return false
       }
       // specialization → 玩家是否选了这个专精（owner.specializations 含 N）。
-      if (ast.isSpecialization) {
+      if (ast.isSpecialization === true) {
         return hero.ownedSaveContext?.ownedSpecializations.get(ast.ownerHeroId)?.has(ast.upgradeId) ?? false
       }
       // regular → owner 等级 >= requiredLevel（同 GetUpgradeUnlocked，owned 英雄升级即自动购买）。
@@ -364,12 +380,12 @@ function evalNode(
 
 export function evalHeroPredicate(ast: HeroPredicateAST, hero: ResolvedHeroAbilityProfile): boolean {
   const tags = new Set(
-    (hero.tags ?? [])
+    hero.tags
       .filter((tag) => typeof tag === 'string')
       .map((tag) => tag.toLowerCase()),
   )
   const attackTypes = new Set(
-    (hero.baseAttackDamageTypes ?? [])
+    hero.baseAttackDamageTypes
       .filter((value) => typeof value === 'string')
       .map((value) => value.toLowerCase()),
   )

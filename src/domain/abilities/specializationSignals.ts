@@ -63,7 +63,7 @@ export function applySpecializationsToProfile(
   activeUpgradeIds: readonly string[],
   heroSpecializations: readonly SpecializationEntry[] | undefined,
 ): ResolvedHeroAbilityProfile {
-  const active = new Set(activeUpgradeIds.map((id) => String(id)))
+  const active = new Set(activeUpgradeIds)
   const carry: HeroAbilitySignal[] = []
   const support: HeroAbilitySignal[] = []
   for (const entry of heroSpecializations ?? []) {

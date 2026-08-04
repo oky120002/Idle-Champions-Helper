@@ -65,7 +65,7 @@ describe('computeHeroGainProfile', () => {
     value: number,
     amountFunc?: HeroAbilitySignal['amountFunc'],
   ): HeroAbilitySignal {
-    return { kind, value, rawEffect: `${kind},${value}`, source: 'official-parsed', amountFunc: amountFunc ?? null }
+    return { kind, value, rawEffect: `${kind},${String(value)}`, source: 'official-parsed', amountFunc: amountFunc ?? null }
   }
 
   it('add 信号同维度按百分比相加（+100%+100% → ×3）', () => {
