@@ -91,7 +91,10 @@ export function mockChampionDetailCollections() {
   })
 }
 
-function renderAtRoute(initialEntry: string, includeBackRoute: boolean) {
+function renderAtRoute(
+  initialEntry: string | { pathname: string; search?: string; state?: unknown },
+  includeBackRoute: boolean,
+) {
   return render(
     createElement(
       I18nProvider,
@@ -118,22 +121,7 @@ function renderAtRouteWithState(
   },
   includeBackRoute: boolean,
 ) {
-  return render(
-    createElement(
-      I18nProvider,
-      null,
-      createElement(
-        MemoryRouter,
-        { initialEntries: [initialEntry] },
-        createElement(
-          Routes,
-          null,
-          includeBackRoute ? createElement(Route, { path: '/champions', element: createElement('div', null, '筛选页占位') }) : null,
-          createElement(Route, { path: '/champions/:championId', element: createElement(ChampionDetailPage) }),
-        ),
-      ),
-    ),
-  )
+  return renderAtRoute(initialEntry, includeBackRoute)
 }
 
 export function renderChampionDetailPage() {

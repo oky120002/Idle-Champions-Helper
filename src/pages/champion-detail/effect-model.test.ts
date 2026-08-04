@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { JsonValue, ChampionDetail, ChampionRawEntry, ChampionUpgradeDetail  } from '../../domain/types'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { buildAttackLabelById, buildEffectContext, buildUpgradeLabelById } from './detail-derived-context'
 import { buildEffectDefinitionPresentation, buildUpgradePresentation } from './effect-model'
 import { championDetailBaseFixture } from './championDetailBaseFixture'
@@ -73,7 +74,7 @@ describe('champion detail effect model', () => {
       [{ effect_string: 'global_dps_multiplier_mult,100' }],
     )
 
-    const presentation = buildEffectDefinitionPresentation(entry, effectContext!)
+    const presentation = buildEffectDefinitionPresentation(entry, unwrap(effectContext, 'effectContext 应非空'))
     expect(presentation.summary).toBe('激活“战士”时，每当呆宝们攻击，会让他们后方的勇士伤害提高 100%。')
   })
 
@@ -124,7 +125,7 @@ describe('champion detail effect model', () => {
 
     expect(effectContext).not.toBeNull()
 
-    const presentation = buildEffectDefinitionPresentation(effectDefinition, effectContext!)
+    const presentation = buildEffectDefinitionPresentation(effectDefinition, unwrap(effectContext, 'effectContext 应非空'))
 
     expect(presentation.summary).toContain('盆栽能量 - 妮茜变成盆栽 5 秒')
     expect(presentation.summary).toContain('闪耀魅力的伤害加成提高 100%')
@@ -166,7 +167,7 @@ describe('champion detail effect model', () => {
       [{ effect_string: 'change_base_attack,378' }],
     )
 
-    const presentation = buildEffectDefinitionPresentation(entry, effectContext!)
+    const presentation = buildEffectDefinitionPresentation(entry, unwrap(effectContext, 'effectContext 应非空'))
     expect(presentation.summary).toBe('将普攻替换为 燃烧之手')
   })
 
@@ -200,7 +201,7 @@ describe('champion detail effect model', () => {
 
     expect(effectContext).not.toBeNull()
 
-    const presentation = buildEffectDefinitionPresentation(effectDefinition, effectContext!)
+    const presentation = buildEffectDefinitionPresentation(effectDefinition, unwrap(effectContext, 'effectContext 应非空'))
     expect(presentation.summary).toContain('提高 300%')
     expect(presentation.summary).not.toContain('提高 0%')
   })
@@ -276,7 +277,7 @@ describe('champion detail effect model', () => {
 
     expect(effectContext).not.toBeNull()
 
-    const presentation = buildUpgradePresentation(subjectUpgrade, effectContext!)
+    const presentation = buildUpgradePresentation(subjectUpgrade, unwrap(effectContext, 'effectContext 应非空'))
     expect(presentation.summary).toContain('提高 100%')
     expect(presentation.summary).not.toContain('提高 0%')
   })

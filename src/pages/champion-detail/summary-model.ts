@@ -1,5 +1,5 @@
 import type { AppLocale } from '../../app/i18n'
-import type { ChampionDetail, ChampionFeatDetail, JsonValue } from '../../domain/types'
+import type { ChampionDetail, ChampionFeatDetail, JsonPrimitive, JsonValue } from '../../domain/types'
 import type { DetailFieldProps, EffectContext, FeatEffectEntry, SummaryTagGroupProps } from './types'
 import { buildEffectKeyPayload, describeEffectPayload, parseEffectPayload } from './effect-model'
 import { isJsonObject, isJsonPrimitive, parseInlineJsonValue } from './detail-json'
@@ -13,8 +13,9 @@ const REDACTED_AVAILABILITY_KEYS = new Set([
   'time_gate_blackout',
 ])
 
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 按 JSON 原始类型分派，自然认知复杂度
 export function formatStructuredPrimitive(
-  value: string | number | boolean | null,
+  value: JsonPrimitive,
   locale: AppLocale,
   parentKey: string | null,
   effectContext?: EffectContext | null,
@@ -45,7 +46,7 @@ export function formatStructuredPrimitive(
 
   const trimmed = value.trim()
 
-  if (!trimmed) {
+  if (trimmed === '') {
     return buildNotAvailableLabel(locale)
   }
 
@@ -61,7 +62,7 @@ export function formatStructuredPrimitive(
     return localizeSourceType(trimmed, locale)
   }
 
-  if ((trimmed.startsWith('{') || trimmed.startsWith('[')) && parseInlineJsonValue(trimmed)) {
+  if ((trimmed.startsWith('{') || trimmed.startsWith('[')) && parseInlineJsonValue(trimmed) != null) {
     return null
   }
 
@@ -92,7 +93,7 @@ export function buildOverviewPropertyFields(
 
     const formatted = formatStructuredPrimitive(rawValue, locale, key, effectContext)
 
-    if (!formatted || formatted === buildNotAvailableLabel(locale)) {
+    if (formatted == null || formatted === '' || formatted === buildNotAvailableLabel(locale)) {
       return
     }
 
@@ -117,7 +118,7 @@ export function collectStructuredSummaryTags(
   effectContext: EffectContext,
   parentKey: string | null = null,
 ): string[] {
-  if (parentKey && REDACTED_AVAILABILITY_KEYS.has(parentKey)) {
+  if (parentKey != null && parentKey !== '' && REDACTED_AVAILABILITY_KEYS.has(parentKey)) {
     return []
   }
 
@@ -142,7 +143,7 @@ export function collectStructuredSummaryTags(
   }
 
   if (typeof value === 'boolean') {
-    if (!value || !parentKey) {
+    if (!value || parentKey == null || parentKey === '') {
       return []
     }
 
@@ -151,11 +152,11 @@ export function collectStructuredSummaryTags(
 
   const formatted = formatStructuredPrimitive(value, locale, parentKey, effectContext)
 
-  if (!formatted || formatted === buildNotAvailableLabel(locale)) {
+  if (formatted == null || formatted === '' || formatted === buildNotAvailableLabel(locale)) {
     return []
   }
 
-  if (!parentKey || parentKey === 'source' || parentKey === 'type') {
+  if (parentKey == null || parentKey === '' || parentKey === 'source' || parentKey === 'type') {
     return [formatted]
   }
 

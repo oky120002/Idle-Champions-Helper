@@ -1,12 +1,14 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import { describe, expect, it } from 'vitest'
 import type { ChampionDetail } from '../../domain/types'
 import { buildAttackLabelById, buildEffectContext, buildUpgradeLabelById } from './detail-derived-context'
 import { buildUpgradePresentation } from './effect-model'
 
-const UNRESOLVED_PATTERN =
-  /\{[^}]+\}(?:#[0-9a-f]+)?|\[#\d+[A-Z]?\]|\$\(|\$[a-zA-Z_][a-zA-Z0-9_]*(?:___\d+)?|\b该值\b|\bvalue\b/iu
+// 游戏数据占位符固定格式，输入来自打包后的 champion-details JSON，无对抗输入
+// eslint-disable-next-line sonarjs/super-linear-regex, sonarjs/regex-complexity
+const UNRESOLVED_PATTERN = /\{[^}]+\}(?:#[0-9a-f]+)?|\[#\d+[A-Z]?\]|\$\(|\$[a-z_]\w*(?:___\d+)?|\b该值\b|\bvalue\b/iu
 
 function loadChampionDetails(): ChampionDetail[] {
   const detailDir = path.resolve(process.cwd(), 'public/data/v1/champion-details')

@@ -5,13 +5,14 @@ import { buildNotAvailableLabel, formatNumberishToken } from './detail-value-for
 import { resolveEffectDescription, resolveEffectTargets, resolveEffectToken } from './effect-payload'
 
 function localizeEffectTag(value: string | null | undefined, locale: 'zh-CN' | 'en-US'): string | null {
-  if (!value) {
+  if (value == null || value === '') {
     return null
   }
 
   return TAG_LABELS[value.trim().toLowerCase()]?.[locale] ?? value
 }
 
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity, sonarjs/max-lines-per-function -- 20+ case effect-kind 分派器，拆子函数损一跳命中率
 export function describeEffectPayload(
   payload: ParsedEffectPayload,
   effectContext: EffectContext,
@@ -169,17 +170,25 @@ export function describeEffectPayload(
   }
 
   const preferDescription =
-    resolvedDescription &&
-    ((locale === 'zh-CN' && containsCjkCharacters(resolvedDescription)) || locale !== 'zh-CN')
+    resolvedDescription != null &&
+    resolvedDescription !== '' &&
+    (locale !== 'zh-CN' || containsCjkCharacters(resolvedDescription))
+
+  const descriptionFallback =
+    !preferDescription && resolvedDescription != null && resolvedDescription !== ''
+      ? resolvedDescription
+      : null
+  const targetDetail =
+    targets.detail != null && targets.detail !== '' && targets.detail !== targets.summary
+      ? targets.detail
+      : null
 
   return {
     categoryLabel,
     targetLabel: targets.summary,
     targetHint: targets.detail,
     summary: preferDescription ? resolvedDescription : summary,
-    detail:
-      (!preferDescription && resolvedDescription ? resolvedDescription : null) ??
-      (targets.detail && targets.detail !== targets.summary ? targets.detail : null),
+    detail: descriptionFallback ?? targetDetail,
     isRawEffectKindFallback: isRawEffectKindFallback && !preferDescription,
   }
 }

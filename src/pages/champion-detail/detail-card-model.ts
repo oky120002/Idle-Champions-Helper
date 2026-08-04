@@ -10,7 +10,7 @@ import { isJsonObject } from './detail-json'
 import type { SkinArtworkIds } from './types'
 
 export function buildRarityLabel(value: string | null, locale: AppLocale): string {
-  if (!value) {
+  if (value == null || value === '') {
     return locale === 'zh-CN' ? '未标注' : 'Unlabeled'
   }
 
@@ -32,7 +32,7 @@ export function readGraphicId(value: JsonValue, key: string): string | null {
     return null
   }
 
-  const normalized = `${candidate}`.trim()
+  const normalized = String(candidate).trim()
   return normalized.length > 0 ? normalized : null
 }
 

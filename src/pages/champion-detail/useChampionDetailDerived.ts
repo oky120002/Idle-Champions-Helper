@@ -16,7 +16,7 @@ interface Translation {
   (text: { zh: string; en: string }): string
 }
 
-export function useChampionDetailDerived(detail: ChampionDetail | null, locale: AppLocale, t: Translation) {
+function useMemoizedPresentation(detail: ChampionDetail | null, locale: AppLocale) {
   const attackLabelById = useMemo(() => buildAttackLabelById(detail, locale), [detail, locale])
   const upgradeLabelById = useMemo(
     () => buildUpgradeLabelById(detail, locale, attackLabelById),
@@ -30,6 +30,11 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     () => buildUpgradePresentations(detail, effectContext),
     [detail, effectContext],
   )
+  return { effectContext, upgradePresentations }
+}
+
+export function useChampionDetailDerived(detail: ChampionDetail | null, locale: AppLocale, t: Translation) {
+  const { effectContext, upgradePresentations } = useMemoizedPresentation(detail, locale)
   const spotlightUpgrades = useMemo(() => buildSpotlightUpgrades(detail), [detail])
   const specializationColumns = useMemo(
     () => buildSpecializationUpgradeColumns(detail, spotlightUpgrades, effectContext, upgradePresentations),

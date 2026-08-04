@@ -20,8 +20,9 @@ export function resolveSectionIdFromHashValue(hashValue: string): DetailSectionI
     ? normalizedHash.slice(DETAIL_HASH_PREFIX.length)
     : normalizedHash
 
-  if (LEGACY_SECTION_ID_MAP[normalizedSectionId]) {
-    return LEGACY_SECTION_ID_MAP[normalizedSectionId]
+  const legacySectionId = LEGACY_SECTION_ID_MAP[normalizedSectionId]
+  if (legacySectionId != null) {
+    return legacySectionId
   }
 
   return isDetailSectionId(normalizedSectionId) ? normalizedSectionId : null

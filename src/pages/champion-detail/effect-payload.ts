@@ -23,54 +23,42 @@ function localizeTagValue(tag: string, locale: AppLocale): string {
 
   const localized = TAG_LABELS[normalized]?.[locale]
 
-  if (localized) {
+  if (localized != null && localized !== '') {
     return localized
   }
 
   return locale === 'zh-CN' ? normalized : toTitleCase(humanizeIdentifier(normalized))
 }
 
+function formatBooleanMetaValue(value: boolean, locale: AppLocale): string {
+  if (value) return locale === 'zh-CN' ? '是' : 'Yes'
+  return locale === 'zh-CN' ? '否' : 'No'
+}
+
+function formatStringMetaValue(value: string, locale: AppLocale): string | null {
+  const trimmed = value.trim()
+  if (trimmed === '') return null
+  if (!trimmed.includes('|')) return localizeTagValue(trimmed, locale)
+  return trimmed
+    .split('|')
+    .map((token) => localizeTagValue(token, locale))
+    .join(locale === 'zh-CN' ? '、' : ', ')
+}
+
 function formatEffectMetaValue(value: JsonValue, locale: AppLocale): string | null {
-  if (value == null) {
-    return null
-  }
-
-  if (typeof value === 'number') {
-    return formatNumberishToken(String(value), locale)
-  }
-
-  if (typeof value === 'boolean') {
-    return value ? (locale === 'zh-CN' ? '是' : 'Yes') : locale === 'zh-CN' ? '否' : 'No'
-  }
-
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-
-    if (!trimmed) {
-      return null
-    }
-
-    if (trimmed.includes('|')) {
-      return trimmed
-        .split('|')
-        .map((token) => localizeTagValue(token, locale))
-        .join(locale === 'zh-CN' ? '、' : ', ')
-    }
-
-    return localizeTagValue(trimmed, locale)
-  }
-
+  if (value == null) return null
+  if (typeof value === 'number') return formatNumberishToken(String(value), locale)
+  if (typeof value === 'boolean') return formatBooleanMetaValue(value, locale)
+  if (typeof value === 'string') return formatStringMetaValue(value, locale)
   return null
 }
 
 function resolveAmountExpr(expr: string, payloads: ParsedEffectPayload[], locale: AppLocale): string | null {
   const trimmed = expr.trim()
 
-  if (!trimmed) {
-    return null
-  }
+  if (trimmed === '') return null
 
-  const upgradeAmountMatch = trimmed.match(/^upgrade_amount\((\d+),\s*(\d+)\)$/)
+  const upgradeAmountMatch = /^upgrade_amount\((\d+),\s*(\d+)\)$/.exec(trimmed)
 
   if (upgradeAmountMatch) {
     const resolved = resolveEffectPayloadAmountToken(
@@ -98,11 +86,9 @@ function resolvePayloadReference(
   payloads: ParsedEffectPayload[],
 ): { payload: ParsedEffectPayload; baseToken: string } {
   const trimmed = token.trim()
-  const match = trimmed.match(/^(.*?)(?:___(\d+))$/)
+  const match = /^(.*?)(?:___(\d+))$/.exec(trimmed)
 
-  if (!match) {
-    return { payload, baseToken: trimmed }
-  }
+  if (!match) return { payload, baseToken: trimmed }
 
   const baseToken = match[1]?.trim() ?? trimmed
   const index = Number(match[2]) - 1
@@ -125,16 +111,12 @@ function resolveAmountToken(
         ? resolveAmountExpr(targetPayload.meta.amount_expr, payloads, effectContext.locale)
         : null
 
-    if (fromExpr) {
-      return fromExpr
-    }
+    if (fromExpr != null && fromExpr !== '') return fromExpr
 
     return formatNumberishToken(targetPayload.args.filter(isNumberishToken)[0] ?? targetPayload.args[0] ?? null, effectContext.locale)
   }
 
-  if (baseToken === 'not_buffed amount') {
-    return resolveAmountToken(`amount${token.includes('___') ? token.slice(token.indexOf('___')) : ''}`, payload, payloads, effectContext)
-  }
+  if (baseToken === 'not_buffed amount') return resolveAmountToken(`amount${token.includes('___') ? token.slice(token.indexOf('___')) : ''}`, payload, payloads, effectContext)
 
   return null
 }
@@ -155,6 +137,67 @@ function resolveMetaBackedToken(
   return null
 }
 
+function resolveStaticKeywordToken(trimmed: string, effectContext: EffectContext): string | null {
+  if (trimmed === 'source_hero' || trimmed === 'source') return effectContext.championName
+  if (trimmed === 'd_s1_seat') return effectContext.locale === 'zh-CN' ? '客座栏位' : 'guest seat'
+  if (trimmed === 'd_s1_guest') return effectContext.locale === 'zh-CN' ? '客座明星' : 'guest star'
+  if (trimmed === 'd_s1_seat_core_hero' || trimmed === 'd_s1_slot_hero') return effectContext.locale === 'zh-CN' ? '代表勇士' : 'representative champion'
+  return null
+}
+
+function resolveUpgradeNameToken(
+  trimmed: string,
+  payload: ParsedEffectPayload,
+  payloads: ParsedEffectPayload[],
+  effectContext: EffectContext,
+): string {
+  const { payload: targetPayload, baseToken } = resolvePayloadReference(trimmed.slice('upgrade_name '.length).trim(), payload, payloads)
+  const upgradeId =
+    ['id', 'upgrade_id'].includes(baseToken) ? targetPayload.args[1] ?? targetPayload.args[0] ?? null : null
+
+  if (upgradeId == null || upgradeId === '') return effectContext.locale === 'zh-CN' ? '对应能力' : 'the linked ability'
+
+  return effectContext.upgradeLabelById.get(upgradeId) ?? upgradeId
+}
+
+function resolveAttackNameToken(
+  trimmed: string,
+  payload: ParsedEffectPayload,
+  payloads: ParsedEffectPayload[],
+  effectContext: EffectContext,
+): string | null {
+  const { payload: targetPayload, baseToken } = resolvePayloadReference(trimmed.slice('attack_name '.length).trim(), payload, payloads)
+  const attackId = ['attack_id', 'id'].includes(baseToken) ? targetPayload.args[0] ?? null : null
+  if (attackId == null || attackId === '') return null
+  return effectContext.attackLabelById.get(attackId) ?? `#${attackId}`
+}
+
+function resolvePrefixedToken(
+  trimmed: string,
+  payload: ParsedEffectPayload,
+  payloads: ParsedEffectPayload[],
+  effectContext: EffectContext,
+): string | null {
+  if (trimmed.startsWith('seconds_plural ')) {
+    const nested = resolveCompoundToken(trimmed.slice('seconds_plural '.length), payload, payloads, effectContext)
+    if (nested == null || nested === '') return null
+    return effectContext.locale === 'zh-CN' ? `${nested} 秒` : `${nested} seconds`
+  }
+
+  if (trimmed.startsWith('upgrade_name ')) return resolveUpgradeNameToken(trimmed, payload, payloads, effectContext)
+
+  if (trimmed.startsWith('upgrade_hero ')) return effectContext.championName
+
+  if (trimmed.startsWith('attack_name ')) return resolveAttackNameToken(trimmed, payload, payloads, effectContext)
+
+  if (trimmed.startsWith('describe_tags ')) {
+    const raw = resolveMetaBackedToken(trimmed.slice('describe_tags '.length).trim(), payload, payloads, effectContext)
+    return raw != null && raw !== '' ? formatNullableText(raw, effectContext.locale) : null
+  }
+
+  return null
+}
+
 function resolveCompoundToken(
   token: string,
   payload: ParsedEffectPayload,
@@ -163,88 +206,25 @@ function resolveCompoundToken(
 ): string | null {
   const trimmed = token.trim()
 
-  if (trimmed === 'source_hero' || trimmed === 'source') {
-    return effectContext.championName
-  }
+  const staticResult = resolveStaticKeywordToken(trimmed, effectContext)
+  if (staticResult !== null) return staticResult
 
   if (trimmed === 'gromma_circle_of_the_mountain_target') {
     const buffTarget = typeof payload.meta?.buff_target === 'string' ? payload.meta.buff_target : null
-    return buffTarget ? localizeTagValue(buffTarget, effectContext.locale) : effectContext.locale === 'zh-CN' ? '中立' : 'Neutral'
+    if (buffTarget != null && buffTarget !== '') return localizeTagValue(buffTarget, effectContext.locale)
+    return effectContext.locale === 'zh-CN' ? '中立' : 'Neutral'
   }
 
-  if (trimmed === 'd_s1_seat') {
-    return effectContext.locale === 'zh-CN' ? '客座栏位' : 'guest seat'
-  }
+  if (trimmed === 'target') return resolveEffectTargets(payload, effectContext).summary
 
-  if (trimmed === 'd_s1_guest') {
-    return effectContext.locale === 'zh-CN' ? '客座明星' : 'guest star'
-  }
-
-  if (trimmed === 'd_s1_seat_core_hero' || trimmed === 'd_s1_slot_hero') {
-    return effectContext.locale === 'zh-CN' ? '代表勇士' : 'representative champion'
-  }
-
-  if (trimmed === 'target') {
-    return resolveEffectTargets(payload, effectContext).summary
-  }
-
-  if (trimmed.startsWith('seconds_plural ')) {
-    const nested = resolveCompoundToken(trimmed.slice('seconds_plural '.length), payload, payloads, effectContext)
-
-    if (!nested) {
-      return null
-    }
-
-    return effectContext.locale === 'zh-CN' ? `${nested} 秒` : `${nested} seconds`
-  }
-
-  if (trimmed.startsWith('upgrade_name ')) {
-    const targetToken = trimmed.slice('upgrade_name '.length).trim()
-    const { payload: targetPayload, baseToken } = resolvePayloadReference(targetToken, payload, payloads)
-    const upgradeId =
-      baseToken === 'id' || baseToken === 'upgrade_id' ? targetPayload.args[1] ?? targetPayload.args[0] ?? null : null
-
-    if (!upgradeId) {
-      return effectContext.locale === 'zh-CN' ? '对应能力' : 'the linked ability'
-    }
-
-    return effectContext.upgradeLabelById.get(upgradeId) ?? upgradeId
-  }
-
-  if (trimmed.startsWith('upgrade_hero ')) {
-    return effectContext.championName
-  }
-
-  if (trimmed.startsWith('attack_name ')) {
-    const targetToken = trimmed.slice('attack_name '.length).trim()
-    const { payload: targetPayload, baseToken } = resolvePayloadReference(targetToken, payload, payloads)
-    const attackId =
-      baseToken === 'attack_id' || baseToken === 'id' ? targetPayload.args[0] ?? null : null
-
-    if (!attackId) {
-      return null
-    }
-
-    return effectContext.attackLabelById.get(attackId) ?? `#${attackId}`
-  }
-
-  if (trimmed.startsWith('describe_tags ')) {
-    const targetToken = trimmed.slice('describe_tags '.length).trim()
-    const raw = resolveMetaBackedToken(targetToken, payload, payloads, effectContext)
-    return raw ? formatNullableText(raw, effectContext.locale) : null
-  }
+  const prefixedResult = resolvePrefixedToken(trimmed, payload, payloads, effectContext)
+  if (prefixedResult !== null) return prefixedResult
 
   const resolvedAmount = resolveAmountToken(trimmed, payload, payloads, effectContext)
-
-  if (resolvedAmount) {
-    return resolvedAmount
-  }
+  if (resolvedAmount != null && resolvedAmount !== '') return resolvedAmount
 
   const resolvedMetaValue = resolveMetaBackedToken(trimmed, payload, payloads, effectContext)
-
-  if (resolvedMetaValue) {
-    return resolvedMetaValue
-  }
+  if (resolvedMetaValue != null && resolvedMetaValue !== '') return resolvedMetaValue
 
   return null
 }
@@ -260,12 +240,13 @@ export function resolveEffectToken(
 
 function replaceMarkupPlaceholders(description: string, locale: AppLocale, effectContext: EffectContext): string {
   return description
+    // eslint-disable-next-line sonarjs/super-linear-regex -- 游戏数据效果描述，输入受限且长度有界
     .replace(/\{([^}]+)\}(?:#([0-9a-f]+))?/gi, (_match, rawLabel) => {
       const trimmed = String(rawLabel).trim()
       const normalized = trimmed.toLowerCase()
       return TAG_LABELS[normalized]?.[locale] ?? localizeTagValue(trimmed, locale)
     })
-    .replace(/\[#(\d+)[A-Z]?\]/g, (_match, attackId) => effectContext.attackLabelById.get(String(attackId)) ?? `#${attackId}`)
+    .replace(/\[#(\d+)[A-Z]?\]/g, (_match: string, attackId: string) => effectContext.attackLabelById.get(attackId) ?? `#${attackId}`)
 }
 
 function normalizeResolvedText(value: string, locale: AppLocale): string {
@@ -273,6 +254,7 @@ function normalizeResolvedText(value: string, locale: AppLocale): string {
     .replace(/\s+/g, ' ')
     .replace(/\^+/g, ' ')
     .replace(locale === 'zh-CN' ? /第\s*客座栏位\s*栏位/g : /Seat\s+guest seat/gi, locale === 'zh-CN' ? '客座栏位' : 'guest seat')
+    // eslint-disable-next-line sonarjs/super-linear-regex -- 已解析的显示文本，长度有界
     .replace(/\s+([，。！？、,.!?:;）])/g, '$1')
     .replace(/([（(])\s+/g, '$1')
     .trim()
@@ -284,15 +266,13 @@ export function resolveEffectDescription(
   effectContext: EffectContext,
   payloads: ParsedEffectPayload[] = [payload],
 ): string | null {
-  if (!description) {
-    return null
-  }
+  if (description == null || description === '') return null
   const replaced = description
     .replace(/\$\(([^)]+)\)/g, (_match: string, token: string) => {
       return resolveEffectToken(token, payload, effectContext, payloads) ?? (effectContext.locale === 'zh-CN' ? '该值' : 'value')
     })
-    .replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)(?:___(\d+))?/g, (_match: string, rawBase: string, rawIndex?: string) => {
-      const token = rawIndex ? `${rawBase}___${rawIndex}` : rawBase
+    .replace(/\$([a-zA-Z_]\w*)(?:___(\d+))?/g, (_match: string, rawBase: string, rawIndex?: string) => {
+      const token = rawIndex != null && rawIndex !== '' ? `${rawBase}___${rawIndex}` : rawBase
       return resolveEffectToken(token, payload, effectContext, payloads) ?? (effectContext.locale === 'zh-CN' ? '该值' : 'value')
     })
 

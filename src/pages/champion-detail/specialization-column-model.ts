@@ -15,7 +15,9 @@ function collectEffectStrings(value: unknown, effectStrings: string[], depth = 0
   }
 
   if (Array.isArray(value)) {
-    value.forEach((item) => collectEffectStrings(item, effectStrings, depth + 1))
+    value.forEach((item) => {
+      collectEffectStrings(item, effectStrings, depth + 1)
+    })
     return
   }
 
@@ -27,7 +29,9 @@ function collectEffectStrings(value: unknown, effectStrings: string[], depth = 0
     effectStrings.push(value.effect_string)
   }
 
-  Object.values(value).forEach((item) => collectEffectStrings(item, effectStrings, depth + 1))
+  Object.values(value).forEach((item) => {
+    collectEffectStrings(item, effectStrings, depth + 1)
+  })
 }
 
 function buildUpgradeTargetIdMap(detail: ChampionDetail): Map<string, Set<string>> {
@@ -36,7 +40,7 @@ function buildUpgradeTargetIdMap(detail: ChampionDetail): Map<string, Set<string
   detail.upgrades.forEach((upgrade) => {
     const effectStrings: string[] = []
 
-    if (upgrade.effectReference) {
+    if (upgrade.effectReference != null && upgrade.effectReference !== '') {
       effectStrings.push(upgrade.effectReference)
     }
 
@@ -73,7 +77,7 @@ function compareUpgradesByLevel(left: ChampionUpgradeDetail, right: ChampionUpgr
 }
 
 function isSpecializationSeed(upgrade: ChampionUpgradeDetail): boolean {
-  return Boolean(upgrade.specializationName || upgrade.specializationGraphicId)
+  return Boolean(upgrade.specializationName ?? upgrade.specializationGraphicId)
 }
 
 function isHiddenProgressionUpgrade(upgrade: ChampionUpgradeDetail): boolean {
@@ -83,13 +87,15 @@ function isHiddenProgressionUpgrade(upgrade: ChampionUpgradeDetail): boolean {
 function normalizeGraphicId(graphicId: string | null | undefined): string | null {
   const trimmedGraphicId = graphicId?.trim()
 
-  return trimmedGraphicId && trimmedGraphicId !== '0' ? trimmedGraphicId : null
+  return trimmedGraphicId != null && trimmedGraphicId !== '' && trimmedGraphicId !== '0'
+    ? trimmedGraphicId
+    : null
 }
 
 function resolveUpgradeIconGraphicId(detail: ChampionDetail, upgrade: ChampionUpgradeDetail): string | null {
   const specializationGraphicId = normalizeGraphicId(upgrade.specializationGraphicId)
 
-  if (specializationGraphicId) {
+  if (specializationGraphicId != null && specializationGraphicId !== '') {
     return specializationGraphicId
   }
 
@@ -97,7 +103,10 @@ function resolveUpgradeIconGraphicId(detail: ChampionDetail, upgrade: ChampionUp
     return null
   }
 
-  const payload = upgrade.effectReference ? parseEffectPayload(upgrade.effectReference) : null
+  const payload =
+    upgrade.effectReference != null && upgrade.effectReference !== ''
+      ? parseEffectPayload(upgrade.effectReference)
+      : null
 
   if (payload?.kind !== 'set_ultimate_attack') {
     return normalizeGraphicId(detail.attacks.ultimate?.graphicId)
@@ -105,13 +114,14 @@ function resolveUpgradeIconGraphicId(detail: ChampionDetail, upgrade: ChampionUp
 
   const attackId = payload.args[0]
 
-  if (attackId && detail.attacks.ultimate?.id !== attackId) {
+  if (attackId != null && attackId !== '' && detail.attacks.ultimate?.id !== attackId) {
     return null
   }
 
   return normalizeGraphicId(detail.attacks.ultimate?.graphicId)
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 列构建编排函数，含两轮遍历+种子映射
 export function buildSpecializationUpgradeColumns(
   detail: ChampionDetail | null,
   spotlightUpgrades: ChampionUpgradeDetail[],
@@ -153,7 +163,7 @@ export function buildSpecializationUpgradeColumns(
       const targetIds = targetIdMap.get(upgrade.id)
       const isRelated = upgrade.requiredUpgradeId === seed.id || targetIds?.has(seed.id)
 
-      if (!isRelated) {
+      if (isRelated !== true) {
         return
       }
 

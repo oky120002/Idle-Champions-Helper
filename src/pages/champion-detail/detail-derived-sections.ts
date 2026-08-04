@@ -11,21 +11,26 @@ import type {
   UpgradeCategoryMeta,
 } from './types'
 
+function isSpotlightUpgrade(upgrade: ChampionUpgradeDetail): boolean {
+  const hasMeta =
+    Boolean(upgrade.name) ||
+    Boolean(upgrade.specializationName) ||
+    Boolean(upgrade.specializationDescription) ||
+    Boolean(upgrade.tipText)
+  return (
+    hasMeta ||
+    Boolean(upgrade.effectDefinition) ||
+    upgrade.upgradeType === 'unlock_ability' ||
+    upgrade.upgradeType === 'unlock_ultimate'
+  )
+}
+
 export function buildSpotlightUpgrades(detail: ChampionDetail | null): ChampionUpgradeDetail[] {
   if (!detail) {
     return []
   }
 
-  return detail.upgrades.filter(
-    (upgrade) =>
-      Boolean(upgrade.name) ||
-      Boolean(upgrade.specializationName) ||
-      Boolean(upgrade.specializationDescription) ||
-      Boolean(upgrade.tipText) ||
-      Boolean(upgrade.effectDefinition) ||
-      upgrade.upgradeType === 'unlock_ability' ||
-      upgrade.upgradeType === 'unlock_ultimate',
-  )
+  return detail.upgrades.filter(isSpotlightUpgrade)
 }
 
 export function buildLedgerUpgrades(detail: ChampionDetail | null): ChampionUpgradeDetail[] {
@@ -33,16 +38,7 @@ export function buildLedgerUpgrades(detail: ChampionDetail | null): ChampionUpgr
     return []
   }
 
-  return detail.upgrades.filter(
-    (upgrade) =>
-      !upgrade.name &&
-      !upgrade.specializationName &&
-      !upgrade.specializationDescription &&
-      !upgrade.tipText &&
-      !upgrade.effectDefinition &&
-      upgrade.upgradeType !== 'unlock_ability' &&
-      upgrade.upgradeType !== 'unlock_ultimate',
-  )
+  return detail.upgrades.filter((upgrade) => !isSpotlightUpgrade(upgrade))
 }
 
 export function buildLedgerRows(
@@ -99,10 +95,32 @@ export function buildLedgerFilterOptions(
   })
 }
 
+type Translation = (text: { zh: string; en: string }) => string
+
+function buildOptionalDateFields(detail: ChampionDetail, locale: AppLocale, t: Translation): DetailFieldProps[] {
+  const fields: DetailFieldProps[] = []
+
+  if (detail.lastReworkDate != null && detail.lastReworkDate !== '') {
+    fields.push({
+      label: t({ zh: '最后重做', en: 'Last rework' }),
+      value: formatDateText(detail.lastReworkDate, locale),
+    })
+  }
+
+  if (detail.availability.nextEventTimestamp != null && detail.availability.nextEventTimestamp > 0) {
+    fields.push({
+      label: t({ zh: '下次活动时间', en: 'Next event time' }),
+      value: formatTimestamp(detail.availability.nextEventTimestamp, locale),
+    })
+  }
+
+  return fields
+}
+
 export function buildOverviewFields(options: {
   detail: ChampionDetail | null
   locale: AppLocale
-  t: (text: { zh: string; en: string }) => string
+  t: Translation
   effectContext: EffectContext | null
 }): DetailFieldProps[] {
   const { detail, locale, t, effectContext } = options
@@ -114,7 +132,7 @@ export function buildOverviewFields(options: {
   return [
     {
       label: t({ zh: 'Seat', en: 'Seat' }),
-      value: locale === 'zh-CN' ? `${detail.summary.seat} 号位` : `Seat ${detail.summary.seat}`,
+      value: locale === 'zh-CN' ? `${String(detail.summary.seat)} 号位` : `Seat ${String(detail.summary.seat)}`,
     },
     ...(detail.eventName
       ? [
@@ -128,22 +146,7 @@ export function buildOverviewFields(options: {
       label: t({ zh: '首次可用', en: 'Date available' }),
       value: formatDateText(detail.dateAvailable, locale),
     },
-    ...(detail.lastReworkDate
-      ? [
-          {
-            label: t({ zh: '最后重做', en: 'Last rework' }),
-            value: formatDateText(detail.lastReworkDate, locale),
-          },
-        ]
-      : []),
-    ...(detail.availability.nextEventTimestamp && detail.availability.nextEventTimestamp > 0
-      ? [
-          {
-            label: t({ zh: '下次活动时间', en: 'Next event time' }),
-            value: formatTimestamp(detail.availability.nextEventTimestamp, locale),
-          },
-        ]
-      : []),
+    ...buildOptionalDateFields(detail, locale, t),
     {
       label: t({ zh: '默认天赋槽解锁', en: 'Default feat slots' }),
       value:

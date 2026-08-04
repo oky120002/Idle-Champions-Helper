@@ -5,7 +5,7 @@ export function buildNotAvailableLabel(locale: AppLocale): string {
 }
 
 export function formatDigitString(value: string | null, locale: AppLocale): string {
-  if (!value) {
+  if (value === null || value === '') {
     return buildNotAvailableLabel(locale)
   }
 
@@ -25,7 +25,9 @@ export function formatNumber(value: number | null, locale: AppLocale): string {
 }
 
 export function formatBoolean(value: boolean, locale: AppLocale): string {
-  return value ? (locale === 'zh-CN' ? '是' : 'Yes') : locale === 'zh-CN' ? '否' : 'No'
+  const yesLabel = locale === 'zh-CN' ? '是' : 'Yes'
+  const noLabel = locale === 'zh-CN' ? '否' : 'No'
+  return value ? yesLabel : noLabel
 }
 
 export function formatTimestamp(value: number | null, locale: AppLocale): string {
@@ -40,12 +42,12 @@ export function formatTimestamp(value: number | null, locale: AppLocale): string
 }
 
 export function formatDateText(value: string | null, locale: AppLocale): string {
-  if (!value?.trim()) {
+  if (value === null || value.trim() === '') {
     return buildNotAvailableLabel(locale)
   }
 
   const trimmed = value.trim()
-  const calendarDateMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})/)
+  const calendarDateMatch = /^(\d{4})-(\d{2})-(\d{2})/.exec(trimmed)
 
   if (calendarDateMatch) {
     const [, yearToken, monthToken, dayToken] = calendarDateMatch
@@ -74,11 +76,12 @@ export function formatDateText(value: string | null, locale: AppLocale): string 
 }
 
 export function formatNullableText(value: string | null, locale: AppLocale): string {
-  return value?.trim() || buildNotAvailableLabel(locale)
+  const trimmed = value?.trim() ?? ''
+  return trimmed !== '' ? trimmed : buildNotAvailableLabel(locale)
 }
 
 export function formatNumberishToken(value: string | null, locale: AppLocale): string {
-  if (!value) {
+  if (value === null || value === '') {
     return buildNotAvailableLabel(locale)
   }
 
@@ -94,7 +97,7 @@ export function formatNumberishToken(value: string | null, locale: AppLocale): s
 }
 
 export function formatMultiplierValue(value: string | null, locale: AppLocale): string | null {
-  if (!value) {
+  if (value === null || value === '') {
     return null
   }
 

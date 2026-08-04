@@ -39,12 +39,12 @@ export function buildEffectDefinitionPresentation(
   }
 
   const descriptionValue = snapshot.description
-  const description =
-    isJsonObject(descriptionValue) && typeof descriptionValue.desc === 'string'
-      ? descriptionValue.desc
-      : typeof descriptionValue === 'string'
-        ? descriptionValue
-        : null
+  let description: string | null = null
+  if (isJsonObject(descriptionValue) && typeof descriptionValue.desc === 'string') {
+    description = descriptionValue.desc
+  } else if (typeof descriptionValue === 'string') {
+    description = descriptionValue
+  }
   const effectKeys = Array.isArray(snapshot.effect_keys) ? snapshot.effect_keys.filter(isJsonObject) : []
   const payloads = effectKeys.map((effectKey) => buildEffectKeyPayload(effectKey)).filter((value): value is NonNullable<typeof value> => Boolean(value))
   const descriptors = payloads
@@ -53,8 +53,12 @@ export function buildEffectDefinitionPresentation(
   const readableDescriptors = descriptors.filter((descriptor) => !descriptor.isRawEffectKindFallback)
   const primaryPayload = payloads[0] ?? null
   const primaryDescription =
-    primaryPayload && description ? resolveEffectDescription(description, primaryPayload, effectContext, payloads) : description
-  const summary = primaryDescription || readableDescriptors[0]?.summary || null
+    primaryPayload && description != null && description !== ''
+      ? resolveEffectDescription(description, primaryPayload, effectContext, payloads)
+      : description
+  const summary = [primaryDescription, readableDescriptors[0]?.summary].find(
+    (value): value is string => value != null && value !== '',
+  ) ?? null
   const detail = readableDescriptors[0]?.detail ?? null
   const bullets = readableDescriptors
     .map((descriptor) => descriptor.summary)
@@ -67,6 +71,7 @@ export function buildEffectDefinitionPresentation(
   }
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 升级标签构建，多类型分支
 export function buildUpgradeReferenceLabel(
   upgrade: ChampionUpgradeDetail,
   locale: AppLocale,
@@ -75,8 +80,8 @@ export function buildUpgradeReferenceLabel(
   if (upgrade.name) {
     return sanitizeEffectText(getPrimaryLocalizedText(upgrade.name, locale), {
       locale,
-      championName: '',
       attackLabelById,
+      championName: '',
       upgradeLabelById: new Map<string, string>(),
     })
   }
@@ -84,18 +89,21 @@ export function buildUpgradeReferenceLabel(
   if (upgrade.specializationName) {
     return sanitizeEffectText(getPrimaryLocalizedText(upgrade.specializationName, locale), {
       locale,
-      championName: '',
       attackLabelById,
+      championName: '',
       upgradeLabelById: new Map<string, string>(),
     })
   }
 
   if (upgrade.upgradeType === 'unlock_ultimate') {
-    const payload = upgrade.effectReference ? parseEffectPayload(upgrade.effectReference) : null
-    const attackLabel =
-      payload?.kind === 'set_ultimate_attack' && payload.args[0]
-        ? attackLabelById.get(payload.args[0]) ?? null
+    const payload =
+      upgrade.effectReference != null && upgrade.effectReference !== ''
+        ? parseEffectPayload(upgrade.effectReference)
         : null
+    let attackLabel: string | null = null
+    if (payload?.kind === 'set_ultimate_attack' && payload.args[0] != null && payload.args[0] !== '') {
+      attackLabel = attackLabelById.get(payload.args[0]) ?? null
+    }
 
     return attackLabel ?? (locale === 'zh-CN' ? '终极技解锁' : 'Ultimate unlock')
   }
@@ -104,26 +112,31 @@ export function buildUpgradeReferenceLabel(
     return locale === 'zh-CN' ? `能力 #${upgrade.id}` : `Ability #${upgrade.id}`
   }
 
-  if (upgrade.upgradeType) {
+  if (upgrade.upgradeType != null && upgrade.upgradeType !== '') {
     return localizeUpgradeType(upgrade.upgradeType, locale)
   }
 
   return locale === 'zh-CN' ? `升级 #${upgrade.id}` : `Upgrade #${upgrade.id}`
 }
 
+// eslint-disable-next-line complexity, sonarjs/max-lines-per-function -- 展示模型构建，自然条件分支
 export function buildUpgradePresentation(
   upgrade: ChampionUpgradeDetail,
   effectContext: EffectContext,
 ): UpgradePresentation {
-  const effectPayload = upgrade.effectReference ? parseEffectPayload(upgrade.effectReference) : null
+  const effectPayload =
+    upgrade.effectReference != null && upgrade.effectReference !== ''
+      ? parseEffectPayload(upgrade.effectReference)
+      : null
   const validEffectDescriptor = effectPayload ? describeEffectPayload(effectPayload, effectContext) : null
   const readableEffectDescriptor =
     validEffectDescriptor && !validEffectDescriptor.isRawEffectKindFallback ? validEffectDescriptor : null
   const effectDefinition = buildEffectDefinitionPresentation(upgrade.effectDefinition, effectContext)
   const typeLabel =
-    upgrade.upgradeType
+    upgrade.upgradeType != null && upgrade.upgradeType !== ''
       ? localizeUpgradeType(upgrade.upgradeType, effectContext.locale)
       : validEffectDescriptor?.categoryLabel ?? localizeUpgradeType(null, effectContext.locale)
+  // eslint-disable-next-line complexity -- title 多分支构建
   const title = (() => {
     if (upgrade.name) {
       return getSanitizedLocalizedText(upgrade.name, effectContext.locale, effectContext) ?? buildUnavailableUpgradeLabel(effectContext.locale)
@@ -139,11 +152,11 @@ export function buildUpgradePresentation(
         : `Unlock ultimate: ${validEffectDescriptor?.targetLabel ?? buildUnavailableUpgradeLabel(effectContext.locale)}`
     }
 
-    if (upgrade.upgradeType === 'upgrade_ability' && validEffectDescriptor?.targetLabel) {
+    if (upgrade.upgradeType === 'upgrade_ability' && validEffectDescriptor?.targetLabel != null && validEffectDescriptor.targetLabel !== '') {
       return effectContext.locale === 'zh-CN' ? `强化：${validEffectDescriptor.targetLabel}` : `Boost: ${validEffectDescriptor.targetLabel}`
     }
 
-    if (validEffectDescriptor?.targetLabel) {
+    if (validEffectDescriptor?.targetLabel != null && validEffectDescriptor.targetLabel !== '') {
       return effectContext.locale === 'zh-CN' ? `${typeLabel}：${validEffectDescriptor.targetLabel}` : `${typeLabel}: ${validEffectDescriptor.targetLabel}`
     }
 
@@ -154,12 +167,14 @@ export function buildUpgradePresentation(
     readableEffectDescriptor?.summary ??
     getSanitizedLocalizedText(upgrade.specializationDescription, effectContext.locale, effectContext) ??
     getSanitizedLocalizedText(upgrade.tipText, effectContext.locale, effectContext)
-  const prerequisiteLabel = upgrade.requiredUpgradeId
-    ? effectContext.upgradeLabelById.get(upgrade.requiredUpgradeId) ??
-      (effectContext.locale === 'zh-CN' ? `升级 #${upgrade.requiredUpgradeId}` : `Upgrade #${upgrade.requiredUpgradeId}`)
-    : effectContext.locale === 'zh-CN'
-      ? '无前置'
-      : 'No prerequisite'
+  const fallbackPrerequisiteLabel = effectContext.locale === 'zh-CN' ? '无前置' : 'No prerequisite'
+  let prerequisiteLabel: string
+  if (upgrade.requiredUpgradeId != null && upgrade.requiredUpgradeId !== '') {
+    prerequisiteLabel = effectContext.upgradeLabelById.get(upgrade.requiredUpgradeId)
+      ?? (effectContext.locale === 'zh-CN' ? `升级 #${upgrade.requiredUpgradeId}` : `Upgrade #${upgrade.requiredUpgradeId}`)
+  } else {
+    prerequisiteLabel = fallbackPrerequisiteLabel
+  }
   const detailLines = [
     getSanitizedLocalizedText(upgrade.specializationDescription, effectContext.locale, effectContext),
     getSanitizedLocalizedText(upgrade.tipText, effectContext.locale, effectContext),
@@ -173,11 +188,11 @@ export function buildUpgradePresentation(
   return {
     title,
     typeLabel,
-    targetLabel: validEffectDescriptor?.targetLabel ?? null,
-    targetHint: validEffectDescriptor?.targetHint ?? null,
     summary,
     detailLines,
     prerequisiteLabel,
+    targetLabel: validEffectDescriptor?.targetLabel ?? null,
+    targetHint: validEffectDescriptor?.targetHint ?? null,
     staticMultiplierLabel: formatMultiplierValue(upgrade.staticDpsMult, effectContext.locale),
   }
 }

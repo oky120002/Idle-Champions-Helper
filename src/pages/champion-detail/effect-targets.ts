@@ -1,6 +1,20 @@
 import type { AppLocale } from '../../app/i18n'
 import type { ParsedEffectPayload, EffectContext } from './types'
 
+const UPGRADE_SINGLE_TARGET_KINDS = new Set([
+  'buff_upgrade',
+  'buff_upgrade_add_flat_amount',
+  'buff_upgrade_effect_stacks_max_mult',
+  'buff_upgrade_per_any_tagged_crusader_mult',
+  'change_upgrade_data',
+  'change_upgrade_targets',
+])
+
+function resolveUpgradeTargetLabel(targetId: string | null, effectContext: EffectContext): string | null {
+  if (targetId == null || targetId === '') return null
+  return effectContext.upgradeLabelById.get(targetId) ?? targetId
+}
+
 export function summarizeTargetLabels(labels: string[], locale: AppLocale): {
   summary: string | null
   detail: string | null
@@ -21,12 +35,13 @@ export function summarizeTargetLabels(labels: string[], locale: AppLocale): {
       ? (normalizedPrefixes[0] ?? null)
       : null
 
-  if (sharedPrefix) {
+  if (sharedPrefix != null && sharedPrefix !== '') {
+    const branchCount = String(labels.length)
     return {
       summary:
         locale === 'zh-CN'
-          ? `${sharedPrefix}（${labels.length} 个分支）`
-          : `${sharedPrefix} (${labels.length} branches)`,
+          ? `${sharedPrefix}（${branchCount} 个分支）`
+          : `${sharedPrefix} (${branchCount} branches)`,
       detail: labels.join(' / '),
     }
   }
@@ -35,11 +50,12 @@ export function summarizeTargetLabels(labels: string[], locale: AppLocale): {
     return { summary: labels.join(' / '), detail: null }
   }
 
+  const firstLabel = labels[0] ?? ''
   return {
     summary:
       locale === 'zh-CN'
-        ? `${labels[0]} 等 ${labels.length} 项`
-        : `${labels[0]} and ${labels.length - 1} more`,
+        ? `${firstLabel} 等 ${String(labels.length)} 项`
+        : `${firstLabel} and ${String(labels.length - 1)} more`,
     detail: labels.join(' / '),
   }
 }
@@ -50,42 +66,26 @@ export function resolveEffectTargets(
 ): { summary: string | null; detail: string | null } {
   const { kind, args } = payload
 
-  if (
-    kind === 'buff_upgrade' ||
-    kind === 'buff_upgrade_add_flat_amount' ||
-    kind === 'buff_upgrade_effect_stacks_max_mult' ||
-    kind === 'buff_upgrade_per_any_tagged_crusader_mult' ||
-    kind === 'change_upgrade_data' ||
-    kind === 'change_upgrade_targets'
-  ) {
-    const targetId = args[1] ?? args[0] ?? null
-    const label = targetId ? effectContext.upgradeLabelById.get(targetId) ?? `${targetId}` : null
-    return { summary: label, detail: null }
+  if (UPGRADE_SINGLE_TARGET_KINDS.has(kind)) {
+    return { summary: resolveUpgradeTargetLabel(args[1] ?? args[0] ?? null, effectContext), detail: null }
   }
 
   if (kind === 'buff_upgrades') {
     return summarizeTargetLabels(
-      args.slice(1).map((id) => effectContext.upgradeLabelById.get(id) ?? `${id}`),
+      args.slice(1).map((id) => effectContext.upgradeLabelById.get(id) ?? id),
       effectContext.locale,
     )
   }
 
   if (kind === 'set_ultimate_attack' || kind === 'change_base_attack') {
     const attackId = args[0] ?? null
-    const label = attackId ? effectContext.attackLabelById.get(attackId) ?? `#${attackId}` : null
+    const label = attackId != null && attackId !== '' ? (effectContext.attackLabelById.get(attackId) ?? `#${attackId}`) : null
     return { summary: label, detail: null }
   }
 
-  if (kind === 'buff_upgrade_per_any_tagged_crusader') {
-    const targetId = args[1] ?? null
-    const label = targetId ? effectContext.upgradeLabelById.get(targetId) ?? `${targetId}` : null
-    return { summary: label, detail: args[2] ? args[2] : null }
-  }
-
-  if (kind === 'buff_upgrade_per_any_tagged_crusader_mult') {
-    const targetId = args[1] ?? null
-    const label = targetId ? effectContext.upgradeLabelById.get(targetId) ?? `${targetId}` : null
-    return { summary: label, detail: args[2] ? args[2] : null }
+  if (kind === 'buff_upgrade_per_any_tagged_crusader' || kind === 'buff_upgrade_per_any_tagged_crusader_mult') {
+    const detail = args[2]
+    return { summary: resolveUpgradeTargetLabel(args[1] ?? null, effectContext), detail: detail != null && detail !== '' ? detail : null }
   }
 
   return { summary: null, detail: null }

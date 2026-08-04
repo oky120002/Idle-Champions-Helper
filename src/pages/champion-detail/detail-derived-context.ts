@@ -4,6 +4,14 @@ import type { AppLocale } from '../../app/i18n'
 import type { EffectContext, UpgradePresentation } from './types'
 import { buildUpgradePresentation, buildUpgradeReferenceLabel } from './effect-model'
 
+function isAttackSnapshot(snapshot: unknown): snapshot is { id: number; name: string } {
+  if (snapshot == null || typeof snapshot !== 'object' || Array.isArray(snapshot)) {
+    return false
+  }
+  const obj = snapshot as Record<string, unknown>
+  return typeof obj.id === 'number' && typeof obj.name === 'string'
+}
+
 export function buildAttackLabelById(detail: ChampionDetail | null, locale: AppLocale): Map<string, string> {
   if (!detail) {
     return new Map<string, string>()
@@ -14,13 +22,7 @@ export function buildAttackLabelById(detail: ChampionDetail | null, locale: AppL
   detail.raw.attacks.forEach((attackEntry) => {
     const snapshot = locale === 'zh-CN' ? attackEntry.snapshots.display : attackEntry.snapshots.original
 
-    if (
-      snapshot &&
-      typeof snapshot === 'object' &&
-      !Array.isArray(snapshot) &&
-      typeof snapshot.id === 'number' &&
-      typeof snapshot.name === 'string'
-    ) {
+    if (isAttackSnapshot(snapshot)) {
       nextMap.set(String(snapshot.id), snapshot.name)
     }
   })
@@ -54,9 +56,9 @@ export function buildEffectContext(
 
   return {
     locale,
-    championName: getPrimaryLocalizedText(detail.summary.name, locale),
     attackLabelById,
     upgradeLabelById,
+    championName: getPrimaryLocalizedText(detail.summary.name, locale),
   }
 }
 

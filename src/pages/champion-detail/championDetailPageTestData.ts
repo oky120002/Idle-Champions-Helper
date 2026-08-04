@@ -20,11 +20,11 @@ export const defaultSectionTopMap = {
 
 export function createDomRect(top: number): DOMRect {
   return {
+    top,
     x: 0,
     y: top,
     width: 0,
     height: 0,
-    top,
     right: 0,
     bottom: top,
     left: 0,
