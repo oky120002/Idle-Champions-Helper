@@ -20,9 +20,14 @@
 
 ## 核心原则（新 session 必读，违反会重蹈覆辙）
 
-1. **按 message 对症**：每条违规先读 message（类型词/场景），查 `2026-08-system-lint-fix-rules.md` 选修法。strict-boolean 看 message 类型词：`string`→带 `!== ''`、`number`→带 `!== 0`、`object`→`!= null`、`any`→先缩类型。
-2. **禁统一模板**：**禁止**机械套 `!== null && !== undefined`（对 string 漏 `''`、对纯 string 用错——上次回退的根因，commit `2e338c21`）。
+**三条铁律（违反任一 = 整批回退）：**
+
+1. **语义不变**：每处修复必须保持修复前后运行时语义完全一致（相同输入 → 相同行为）。lint 修复只改写法、不改逻辑。典型陷阱：把 `string | null` 的 `if (x)` 改成 `if (x !== '')` 会让 null 漏过——必须按真实类型补全判空（`if (x != null && x !== '')`）；`obj!` 改 `obj` 时要确认运行期确实非空。eslint/tsc 都查不出这类行为漂移，只能靠人脑核对。**例外**：若某处改动确实改变了局部真值/行为，必须在邻近代码指认出补偿逻辑证明整体行为仍等价（说清哪行补偿了什么）；指认不出补偿代码的视为 bug，不得提交。拿不准语义时宁可 `eslint-disable` 带理由，不赌。每阶段主智能体跑相关单测做语义回归闸。
+2. **按 message 对症，禁统一模板**：每条违规先读 message（类型词/场景），查 `2026-08-system-lint-fix-rules.md` 选修法。strict-boolean 看 message 类型词：`string`→带 `!== ''`、`number`→带 `!== 0`、`object`→`!= null`、`any`→先缩类型。**禁止**机械套 `!== null && !== undefined`（对 string 漏 `''`、对纯 string 用错——上次回退的根因，commit `2e338c21`）。
 3. **禁 sd/sed/perl 批量替换**（`\1` 反向引用出错破坏代码）：所有修改用 **Edit 工具逐处精确**。
+
+**支撑规则：**
+
 4. **helper**：`tests/utils/dom-assertions.ts` 提供 `unwrap<T>(value, msg): T`（替代 `!`）、`queryOrFail(container, selector): Element`。
 5. **每文件双重验证**：`npx eslint <file>`（该文件 0 违规）+ `npx tsc -b --pretty false 2>&1 | grep <file>`（无新 typecheck 错）。
 6. **每阶段 commit + 勾选**：阶段完成后 `git commit`（中文 Conventional Commits），勾选本 checklist。
@@ -65,15 +70,16 @@
 ```
 修复 <文件列表或目录> 的所有 ESLint 违规。工作目录是仓库根。
 
-铁律：
-1. 绝对禁止 sd/sed/perl 批量替换（\1 出错）。所有修改用 Edit 工具。
-2. 每条违规先读 message，按 docs/changes/2026-08-system-lint-fix-rules.md 对症。
+铁律（违反任一 = 整批回退）：
+1. **语义不变**：每处修复保持修复前后运行时语义完全一致，只改写法不改逻辑。典型陷阱：`string | null` 的 `if (x)` 改成 `if (x !== '')` 会让 null 漏过，必须 `if (x != null && x !== '')`；`x!` 去感叹号要确认运行期非空。eslint/tsc 查不出行为漂移，靠人脑核对。若局部改动改变局部真值/行为，必须指认邻近补偿代码证明整体等价（哪行补什么），指认不出即 bug。拿不准就 eslint-disable 带理由，不赌。
+2. 绝对禁止 sd/sed/perl 批量替换（\1 出错）。所有修改用 Edit 工具。
+3. 每条违规先读 message，按 docs/changes/2026-08-system-lint-fix-rules.md 对症。
    - strict-boolean 看 message 类型词：string→!== ''，number→!== 0，object→!= null，any→缩类型。
    - 禁止统一 !== null && !== undefined（对 string 漏 ''）。
-3. 不创建新文件。每改一文件跑 npx eslint <file>（0 违规）+ npx tsc -b（无新错误）。
-4. 不改 eslint.config.js/package.json/tsconfig。
-5. helper：tests/utils/dom-assertions.ts（unwrap/queryOrFail 替代 !）。
-6. 语义存疑不硬改：行内 // eslint-disable-next-line <rule> 带理由。
+4. 不创建新文件。每改一文件跑 npx eslint <file>（0 违规）+ npx tsc -b（无新错误）。
+5. 不改 eslint.config.js/package.json/tsconfig。
+6. helper：tests/utils/dom-assertions.ts（unwrap/queryOrFail 替代 !）。
+7. 语义存疑不硬改：行内 // eslint-disable-next-line <rule> 带理由。
 
 背景：配置 strictTypeChecked + 行业共识选项。typecheck 当前 0。
 报告：修了哪些文件、每文件主要规则、残留什么（标注原因）。
