@@ -13,12 +13,12 @@ import {
 } from './specializationSelection'
 
 interface PlannerSpecializationPanelProps {
-  ownedHeroes: OwnedHero[]
-  catalog: SpecializationCatalog
-  overrides: SpecializationOverrideMap
-  championById: Map<string, Champion>
-  onSetOverride: (heroId: string, upgradeIds: string[]) => void
-  onClearOverride: (heroId: string) => void
+  readonly ownedHeroes: OwnedHero[]
+  readonly catalog: SpecializationCatalog
+  readonly overrides: SpecializationOverrideMap
+  readonly championById: Map<string, Champion>
+  readonly onSetOverride: (heroId: string, upgradeIds: string[]) => void
+  readonly onClearOverride: (heroId: string) => void
 }
 
 /**
@@ -63,7 +63,7 @@ export function PlannerSpecializationPanel({
         </strong>
         <span className="planner-specialization-panel__hint">
           {customizedCount > 0
-            ? t({ zh: `${customizedCount} 名已自定义`, en: `${customizedCount} customized` })
+            ? t({ zh: `${String(customizedCount)} 名已自定义`, en: `${String(customizedCount)} customized` })
             : t({ zh: '按英雄设定专精偏好', en: 'Set specialization per champion' })}
         </span>
       </summary>
@@ -83,7 +83,9 @@ export function PlannerSpecializationPanel({
                     type="button"
                     className="planner-specialization-row__reset"
                     data-reset-hero={hero.heroId}
-                    onClick={() => onClearOverride(hero.heroId)}
+                    onClick={() => {
+                      onClearOverride(hero.heroId)
+                    }}
                   >
                     {t({ zh: '恢复存档', en: 'Reset' })}
                   </button>
@@ -91,7 +93,7 @@ export function PlannerSpecializationPanel({
               </div>
               {groupSpecializationsByTier(availableSpecializations(entries, effective)).map((tier, tierIndex) => (
                 <SpecializationTierRadios
-                  key={tier.requiredLevel ?? `tier-${tierIndex}`}
+                  key={tier.requiredLevel ?? `tier-${String(tierIndex)}`}
                   heroId={hero.heroId}
                   tier={tier}
                   tierIndex={tierIndex}
@@ -116,12 +118,12 @@ export function PlannerSpecializationPanel({
 }
 
 interface SpecializationTierRadiosProps {
-  heroId: string
-  tier: SpecializationTier
-  tierIndex: number
-  effective: readonly string[]
-  t: (text: { zh: string; en: string }) => string
-  onSelect: (selected: string | null) => void
+  readonly heroId: string
+  readonly tier: SpecializationTier
+  readonly tierIndex: number
+  readonly effective: readonly string[]
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly onSelect: (selected: string | null) => void
 }
 
 function SpecializationTierRadios({
@@ -134,10 +136,10 @@ function SpecializationTierRadios({
 }: SpecializationTierRadiosProps) {
   const tierIds = tier.entries.map((entry) => entry.upgradeId)
   const selectedId = effective.find((id) => tierIds.includes(id)) ?? null
-  const groupName = `spec-${heroId}-tier-${tier.requiredLevel ?? tierIndex}`
+  const groupName = `spec-${heroId}-tier-${String(tier.requiredLevel ?? tierIndex)}`
   const legend =
     tier.requiredLevel !== null
-      ? t({ zh: `解锁等级 ${tier.requiredLevel}`, en: `Unlocks at Lv.${tier.requiredLevel}` })
+      ? t({ zh: `解锁等级 ${String(tier.requiredLevel)}`, en: `Unlocks at Lv.${String(tier.requiredLevel)}` })
       : t({ zh: '专精', en: 'Specialization' })
 
   return (
@@ -149,7 +151,9 @@ function SpecializationTierRadios({
           name={groupName}
           value=""
           checked={selectedId === null}
-          onChange={() => onSelect(null)}
+          onChange={() => {
+            onSelect(null)
+          }}
           data-spec-option="none"
         />
         <span>{t({ zh: '无', en: 'None' })}</span>
@@ -161,7 +165,9 @@ function SpecializationTierRadios({
             name={groupName}
             value={entry.upgradeId}
             checked={selectedId === entry.upgradeId}
-            onChange={() => onSelect(entry.upgradeId)}
+            onChange={() => {
+              onSelect(entry.upgradeId)
+            }}
             data-spec-option={entry.upgradeId}
           />
           <span>{entry.specializationName?.display ?? entry.upgradeId}</span>

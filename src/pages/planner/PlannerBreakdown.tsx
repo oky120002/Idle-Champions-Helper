@@ -37,9 +37,9 @@ const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
 }
 
 interface PlannerBreakdownProps {
-  breakdown: SimulationBreakdown | null
+  readonly breakdown: SimulationBreakdown | null
   /** heroId → 展示名（由调用方从 placementEntries 构造）。 */
-  heroNameById: Map<string, string>
+  readonly heroNameById: Map<string, string>
 }
 
 /**
@@ -106,21 +106,21 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
                     <strong>{name}</strong>
                     <span>
                       {t({
-                        zh: `槽位 ${contribution.supportSlotId} · ${contribution.signals.length} 个生效加成`,
-                        en: `slot ${contribution.supportSlotId} · ${contribution.signals.length} active`,
+                        zh: `槽位 ${contribution.supportSlotId} · ${String(contribution.signals.length)} 个生效加成`,
+                        en: `slot ${contribution.supportSlotId} · ${String(contribution.signals.length)} active`,
                       })}
                     </span>
                   </p>
                   <ul className="planner-breakdown__signals">
                     {top.map((signal, index) => (
-                      <li key={`${signal.signalKind}:${index}`}>
+                      <li key={`${signal.signalKind}:${String(index)}`}>
                         <span>{t(SIGNAL_KIND_LABEL[signal.signalKind])}</span>
                         <strong>×{formatFactor(signal.multiplier)}</strong>
                       </li>
                     ))}
                     {remaining > 0 ? (
                       <li className="planner-breakdown__more">
-                        {t({ zh: `+${remaining} 个`, en: `+${remaining} more` })}
+                        {t({ zh: `+${String(remaining)} 个`, en: `+${String(remaining)} more` })}
                       </li>
                     ) : null}
                   </ul>

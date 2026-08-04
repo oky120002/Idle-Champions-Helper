@@ -2,8 +2,8 @@ import { useI18n } from '../../app/i18n'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 
 export interface PlannerScoringModeProps {
-  value: ScoringMode
-  onChange: (mode: ScoringMode) => void
+  readonly value: ScoringMode
+  readonly onChange: (mode: ScoringMode) => void
 }
 
 const MODES = [

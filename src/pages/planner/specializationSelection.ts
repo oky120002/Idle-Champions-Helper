@@ -24,15 +24,15 @@ export function mergeSpecializationOverrides(
     return snapshot
   }
 
-  let changed = false
   const ownedHeroes = snapshot.ownedHeroes.map((hero) => {
     const override = overrides[hero.heroId]
     if (override === undefined) {
       return hero
     }
-    changed = true
     return { ...hero, specializations: override }
   })
+  // 替代原 let changed 闭包标志：TS 无法追踪闭包内赋值，no-unnecessary-condition 误报
+  const changed = snapshot.ownedHeroes.some((hero) => overrides[hero.heroId] !== undefined)
 
   return changed ? { ...snapshot, ownedHeroes } : snapshot
 }
@@ -64,7 +64,7 @@ export function groupSpecializationsByTier(entries: SpecializationEntry[]): Spec
 }
 
 function tierSortKey(level: number | null): number {
-  return level === null ? Number.POSITIVE_INFINITY : level
+  return level ?? Number.POSITIVE_INFINITY
 }
 
 /**
@@ -98,7 +98,7 @@ export function availableSpecializations(
   const selectedSet = new Set(selected)
   return entries.filter((entry) => {
     const prereq = entry.requiredUpgradeId
-    if (!prereq) return true
+    if (prereq === null || prereq === undefined || prereq === '') return true
     if (!entryById.has(prereq)) return true
     return selectedSet.has(prereq)
   })
@@ -121,7 +121,7 @@ export function pruneOrphanedSpecializations(
     changed = false
     for (const id of [...selected]) {
       const prereq = entryById.get(id)?.requiredUpgradeId
-      if (prereq && entryById.has(prereq) && !selected.has(prereq)) {
+      if (prereq != null && prereq !== '' && entryById.has(prereq) && !selected.has(prereq)) {
         selected.delete(id)
         changed = true
       }

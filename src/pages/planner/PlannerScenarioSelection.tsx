@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 内聚的场景选择组件，拆分会降低常见任务一跳命中率 */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
@@ -14,9 +15,9 @@ import {
 } from './plannerScenarioModel'
 
 interface PlannerScenarioSelectionProps {
-  variants: Variant[]
-  selectedId?: string | null
-  onSelectedIdChange?: (variantId: string | null) => void
+  readonly variants: Variant[]
+  readonly selectedId?: string | null
+  readonly onSelectedIdChange?: (variantId: string | null) => void
 }
 
 export function PlannerScenarioSelection({
@@ -51,15 +52,8 @@ export function PlannerScenarioSelection({
 
         return {
           id: variant.id,
-          name,
           campaignId: variant.campaign.id,
-          campaign,
-          adventure,
-          scene,
           objectiveArea: variant.objectiveArea,
-          restrictions,
-          rewards,
-          mechanics,
           enemyCount: variant.enemyCount,
           searchText: normalizeSearchText([
             name,
@@ -71,6 +65,13 @@ export function PlannerScenarioSelection({
             rewards.join(' '),
             mechanics.join(' '),
           ].join(' ')),
+          name,
+          campaign,
+          adventure,
+          scene,
+          restrictions,
+          rewards,
+          mechanics,
         }
       }),
     [locale, variants],
@@ -83,15 +84,21 @@ export function PlannerScenarioSelection({
       && queryTokens.every((token) => record.searchText.includes(token))
     ))
 
-    return [...base].sort((left, right) => (
-      getScenarioSortWeight(left, selectedId) - getScenarioSortWeight(right, selectedId)
-      || left.campaign.localeCompare(right.campaign, locale)
-      || (left.objectiveArea ?? Number.MAX_SAFE_INTEGER) - (right.objectiveArea ?? Number.MAX_SAFE_INTEGER)
-      || left.name.localeCompare(right.name, locale)
-    ))
+    return [...base].sort((left, right) => {
+      const weightDiff = getScenarioSortWeight(left, selectedId) - getScenarioSortWeight(right, selectedId)
+      if (weightDiff !== 0 && !Number.isNaN(weightDiff)) return weightDiff
+
+      const campaignDiff = left.campaign.localeCompare(right.campaign, locale)
+      if (campaignDiff !== 0 && !Number.isNaN(campaignDiff)) return campaignDiff
+
+      const areaDiff = (left.objectiveArea ?? Number.MAX_SAFE_INTEGER) - (right.objectiveArea ?? Number.MAX_SAFE_INTEGER)
+      if (areaDiff !== 0 && !Number.isNaN(areaDiff)) return areaDiff
+
+      return left.name.localeCompare(right.name, locale)
+    })
   }, [activeCampaignId, locale, queryTokens, records, selectedId])
   const visibleRecords = showAllResults ? filteredRecords : filteredRecords.slice(0, DEFAULT_VISIBLE_RESULTS)
-  const selectedRecord = selectedId
+  const selectedRecord = selectedId != null && selectedId !== ''
     ? records.find((record) => record.id === selectedId) ?? null
     : null
   const hiddenResultCount = Math.max(filteredRecords.length - visibleRecords.length, 0)
@@ -107,6 +114,21 @@ export function PlannerScenarioSelection({
       updateSelectedId(filteredRecords[0]?.id ?? null)
     }
   }, [filteredRecords, onSelectedIdChange, selectedId, updateSelectedId])
+
+  let summaryText: string
+  if (filteredRecords.length === 0) {
+    summaryText = t({ zh: '当前没有匹配场景。换个关键词，或切回其他战役。', en: 'No scenarios match. Change the query or switch campaigns.' })
+  } else if (hiddenResultCount > 0) {
+    summaryText = t({
+      zh: `当前先显示 ${String(visibleRecords.length)} / ${String(filteredRecords.length)} 项；继续输入关键词或展开全部匹配项。`,
+      en: `Showing ${String(visibleRecords.length)} of ${String(filteredRecords.length)}. Keep typing or expand the full result set.`,
+    })
+  } else {
+    summaryText = t({
+      zh: `当前展示 ${String(visibleRecords.length)} 项，可直接选择并查看右侧详情。`,
+      en: `Showing ${String(visibleRecords.length)} scenarios. Select one to inspect its details.`,
+    })
+  }
 
   return (
     <div className="planner-scenario-selection">
@@ -165,7 +187,7 @@ export function PlannerScenarioSelection({
                 en: 'Search by campaign, scenario, objective area, or restrictions',
               })}
             />
-            {search ? (
+            {search !== '' ? (
               <button
                 type="button"
                 className="action-button action-button--ghost action-button--compact"
@@ -203,17 +225,7 @@ export function PlannerScenarioSelection({
         </div>
 
         <p className="planner-scenario-selection__summary" aria-live="polite">
-          {filteredRecords.length === 0
-            ? t({ zh: '当前没有匹配场景。换个关键词，或切回其他战役。', en: 'No scenarios match. Change the query or switch campaigns.' })
-            : hiddenResultCount > 0
-              ? t({
-                  zh: `当前先显示 ${visibleRecords.length} / ${filteredRecords.length} 项；继续输入关键词或展开全部匹配项。`,
-                  en: `Showing ${visibleRecords.length} of ${filteredRecords.length}. Keep typing or expand the full result set.`,
-                })
-              : t({
-                  zh: `当前展示 ${visibleRecords.length} 项，可直接选择并查看右侧详情。`,
-                  en: `Showing ${visibleRecords.length} scenarios. Select one to inspect its details.`,
-                })}
+          {summaryText}
         </p>
       </div>
 
@@ -245,7 +257,7 @@ export function PlannerScenarioSelection({
             <button
               type="button"
               className="action-button action-button--secondary planner-scenario-selection__toggle"
-              onClick={() => setShowAllResults(true)}
+              onClick={() => { setShowAllResults(true) }}
             >
               {t({ zh: '展开全部匹配项', en: 'Show all matches' })}
             </button>
@@ -255,7 +267,7 @@ export function PlannerScenarioSelection({
             <button
               type="button"
               className="action-button action-button--ghost planner-scenario-selection__toggle"
-              onClick={() => setShowAllResults(false)}
+              onClick={() => { setShowAllResults(false) }}
             >
               {t({ zh: '收起到精简视图', en: 'Collapse to compact view' })}
             </button>

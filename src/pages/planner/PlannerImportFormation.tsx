@@ -8,9 +8,9 @@ import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScenarioRef } from '../../domain/types'
 
 interface PlannerImportFormationProps {
-  result: PlannerResult | null
-  layoutId: string | null
-  scenarioRef: ScenarioRef | null
+  readonly result: PlannerResult | null
+  readonly layoutId: string | null
+  readonly scenarioRef: ScenarioRef | null
 }
 
 /**
@@ -23,11 +23,14 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
   const [importing, setImporting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  if (!result || !layoutId) {
+  if (!result || layoutId == null || layoutId === '') {
     return null
   }
 
   async function handleImport() {
+    if (result == null || layoutId == null || layoutId === '') {
+      return
+    }
     setImporting(true)
     setError(null)
     try {
@@ -35,11 +38,11 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
       // 让 formation 编辑器恢复 draft 时走「版本一致」快路径，不触发对不存在路径的 404 加载。
       const { current: dataVersion } = await loadVersion()
       await saveRecentFormationDraft({
-        schemaVersion: DRAFT_SCHEMA_VERSION,
         dataVersion,
-        layoutId: layoutId!,
         scenarioRef,
-        placements: result!.placements,
+        layoutId,
+        schemaVersion: DRAFT_SCHEMA_VERSION,
+        placements: result.placements,
         updatedAt: new Date().toISOString(),
       })
       await navigate('/formation')
@@ -63,7 +66,7 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
               en: 'Write the current recommendation as the recent draft and jump to the formation editor to keep tweaking.',
             })}
           </p>
-          {error ? <span className="planner-import-formation__status" role="alert">{error}</span> : null}
+          {error != null && error !== '' ? <span className="planner-import-formation__status" role="alert">{error}</span> : null}
         </div>
         <button
           type="button"

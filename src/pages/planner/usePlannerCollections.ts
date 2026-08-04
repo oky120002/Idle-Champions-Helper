@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { fetchJson, loadCollection, loadVersion } from '../../data/client'
 import { loadResolvedPlannerModel } from '../../data/plannerModel'
@@ -28,6 +28,47 @@ export interface UsePlannerCollectionsResult {
   selectVariantId: (variantId: string | null) => void
 }
 
+/** 加载并映射 planner 公共数据（场景/英雄/profile/champion 映射/loot-catalog），与 hook 分离减负。 */
+interface PlannerCollectionsData {
+  collections: PlannerCollections
+  profileSnapshot: UserProfileSnapshot | null
+  lootCatalog: LootCatalogEntry[]
+  patronPerkCatalog: PatronPerkCatalogEntry[]
+  effectDefinitions: EffectDefinitionEntry[]
+  championById: Map<string, Champion>
+  firstVariantId: string | null
+}
+
+async function loadPlannerCollectionsData(): Promise<PlannerCollectionsData> {
+  const version = await loadVersion()
+  const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
+    loadCollection<Variant>('variants'),
+    loadResolvedPlannerModel(),
+    resolveUserProfileSnapshot(),
+    loadCollection<Champion>('champions'),
+    loadCollection<LootCatalogEntry>('loot-catalog'),
+    fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
+    loadCollection<EffectDefinitionEntry>('effect-definitions'),
+    fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
+    fetchJson<{ catalog: SpecializationCatalog }>(`${version.current}/specialization-catalog.json`),
+  ])
+  return {
+    collections: {
+      variants: variants.items,
+      plannerHeroes: plannerModel.heroes,
+      plannerScenarios: plannerModel.scenarios,
+      featCatalog: featCatalogData.catalog,
+      specializationCatalog: specializationCatalogData.catalog,
+    },
+    profileSnapshot: resolution.snapshot,
+    lootCatalog: lootCatalogCollection.items,
+    patronPerkCatalog: patronPerksData.perks,
+    effectDefinitions: effectDefinitionsData.items,
+    championById: new Map(champions.items.map((champion) => [champion.id, champion])),
+    firstVariantId: variants.items[0]?.id ?? null,
+  }
+}
+
 /**
  * planner 公共数据加载（场景/英雄/profile/champion 映射/loot-catalog + 当前选中场景）。
  *
@@ -40,13 +81,7 @@ export interface UsePlannerCollectionsResult {
  * 与回填 variantIdFromEvaluate）。不做推荐搜索与评分。
  */
 export function usePlannerCollections(initialVariantId?: string | null): UsePlannerCollectionsResult {
-  const [collections, setCollections] = useState<PlannerCollections>({
-    variants: [],
-    plannerHeroes: [],
-    plannerScenarios: [],
-    featCatalog: {},
-    specializationCatalog: {},
-  })
+  const [collections, setCollections] = useState<PlannerCollections>({ variants: [], plannerHeroes: [], plannerScenarios: [], featCatalog: {}, specializationCatalog: {} })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [lootCatalog, setLootCatalog] = useState<LootCatalogEntry[]>([])
   const [patronPerkCatalog, setPatronPerkCatalog] = useState<PatronPerkCatalogEntry[]>([])
@@ -55,53 +90,32 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
   const [loadError, setLoadError] = useState<string | null>(null)
+  // ref 捕获初始值供 effect 内使用，避免进依赖数组触发重新加载（initialVariantId 仅首次加载生效）。
+  const initialVariantIdRef = useRef(initialVariantId)
 
   useEffect(() => {
     let active = true
-
-    async function loadPlannerCollections() {
+    async function run() {
       setLoadState('loading')
       setLoadError(null)
-
       try {
-        const version = await loadVersion()
-        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
-          loadCollection<Variant>('variants'),
-          loadResolvedPlannerModel(),
-          resolveUserProfileSnapshot(),
-          loadCollection<Champion>('champions'),
-          loadCollection<LootCatalogEntry>('loot-catalog'),
-          fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
-          loadCollection<EffectDefinitionEntry>('effect-definitions'),
-          fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
-          fetchJson<{ catalog: SpecializationCatalog }>(`${version.current}/specialization-catalog.json`),
-        ])
-
+        const data = await loadPlannerCollectionsData()
         if (!active) return
-
-        setCollections({
-          variants: variants.items,
-          plannerHeroes: plannerModel.heroes,
-          plannerScenarios: plannerModel.scenarios,
-          featCatalog: featCatalogData.catalog ?? {},
-          specializationCatalog: specializationCatalogData.catalog ?? {},
-        })
-        setProfileSnapshot(resolution.snapshot)
-        setLootCatalog(lootCatalogCollection.items)
-        setPatronPerkCatalog(patronPerksData.perks ?? [])
-        setEffectDefinitions(effectDefinitionsData.items)
-        setChampionById(new Map(champions.items.map((champion) => [champion.id, champion])))
-        setSelectedVariantId((current) => current ?? initialVariantId ?? variants.items[0]?.id ?? null)
+        setCollections(data.collections)
+        setProfileSnapshot(data.profileSnapshot)
+        setLootCatalog(data.lootCatalog)
+        setPatronPerkCatalog(data.patronPerkCatalog)
+        setEffectDefinitions(data.effectDefinitions)
+        setChampionById(data.championById)
+        setSelectedVariantId((current) => current ?? initialVariantIdRef.current ?? data.firstVariantId)
         setLoadState('ready')
-      } catch (caught) {
+      } catch (caught: unknown) {
         if (!active) return
         setLoadState('error')
         setLoadError(caught instanceof Error ? caught.message : String(caught))
       }
     }
-
-    void loadPlannerCollections()
-
+    void run()
     return () => {
       active = false
     }
@@ -112,15 +126,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
   }, [])
 
   return {
-    collections,
-    profileSnapshot,
-    lootCatalog,
-    patronPerkCatalog,
-    effectDefinitions,
-    championById,
-    selectedVariantId,
-    loadState,
-    loadError,
-    selectVariantId,
+    collections, profileSnapshot, lootCatalog, patronPerkCatalog,
+    effectDefinitions, championById, selectedVariantId, loadState, loadError, selectVariantId,
   }
 }

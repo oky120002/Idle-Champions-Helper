@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 页面编排型组件，职责为组合子组件，JSX 长度源于编排广度而非逻辑复杂度；拆分会增加常见修改的跨文件跳转 */
 import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
@@ -108,13 +109,13 @@ export function PlannerPage() {
     const locked = navigateState?.lockedSlotsFromEvaluate
     const variantId = navigateState?.variantIdFromEvaluate
     if (!locked) return
-    if (variantId) {
+    if (variantId != null && variantId !== '') {
       selectVariantId(variantId)
     }
     Object.entries(locked).forEach(([slotId, heroId]) => {
       lockSlot(slotId, heroId)
     })
-  }, [location.key, selectVariantId, lockSlot])
+  }, [location.key, location.state, selectVariantId, lockSlot])
 
   const safeResultIndex = plannerRecommendation.results.length > 0
     ? Math.min(selectedResultIndex, plannerRecommendation.results.length - 1)
@@ -225,7 +226,7 @@ export function PlannerPage() {
               </section>
 
               <div className="planner-page__result-column">
-                {recommendError ? (
+                {recommendError != null && recommendError !== '' ? (
                   <section className="surface-card page-shell" role="alert">
                     <div className="surface-card__header">
                       <div className="surface-card__header-copy">
@@ -252,7 +253,7 @@ export function PlannerPage() {
                     </div>
                   </section>
                 ) : null}
-                {plannerRecommendation.blocker ? (
+                {plannerRecommendation.blocker != null ? (
                   <section className="surface-card page-shell planner-page__status-panel" role="status">
                     <div className="surface-card__header">
                       <div className="surface-card__header-copy">

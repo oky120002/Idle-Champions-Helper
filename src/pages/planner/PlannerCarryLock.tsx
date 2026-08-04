@@ -3,9 +3,9 @@ import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
 
 interface PlannerCarryLockProps {
-  championById: Map<string, Champion>
-  value: string | null
-  onChange: (heroId: string | null) => void
+  readonly championById: Map<string, Champion>
+  readonly value: string | null
+  readonly onChange: (heroId: string | null) => void
 }
 
 /**
@@ -14,7 +14,10 @@ interface PlannerCarryLockProps {
 export function PlannerCarryLock({ championById, value, onChange }: PlannerCarryLockProps) {
   const { t, locale } = useI18n()
   const champions = [...championById.values()]
-    .sort((left, right) => left.seat - right.seat || left.id.localeCompare(right.id))
+    .sort((left, right) => {
+      const diff = left.seat - right.seat
+      return diff === 0 || Number.isNaN(diff) ? left.id.localeCompare(right.id) : diff
+    })
 
   return (
     <section className="surface-card planner-carry-lock" aria-label={t({ zh: '指定核心输出位', en: 'Lock carry' })}>
@@ -27,12 +30,15 @@ export function PlannerCarryLock({ championById, value, onChange }: PlannerCarry
           className="slot-select"
           data-testid="planner-carry-lock-select"
           value={value ?? ''}
-          onChange={(event) => onChange(event.target.value || null)}
+          onChange={(event) => {
+            const next = event.target.value
+            onChange(next !== '' ? next : null)
+          }}
         >
           <option value="">{t({ zh: '不指定（自动推荐）', en: 'Auto (no lock)' })}</option>
           {champions.map((champion) => (
             <option key={champion.id} value={champion.id}>
-              {`${getPrimaryLocalizedText(champion.name, locale)} · Seat ${champion.seat}`}
+              {`${getPrimaryLocalizedText(champion.name, locale)} · Seat ${String(champion.seat)}`}
             </option>
           ))}
         </select>

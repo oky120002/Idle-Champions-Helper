@@ -7,9 +7,9 @@ import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { FormationPreset, ScenarioRef } from '../../domain/types/formation'
 
 interface PlannerSavePresetProps {
-  result: PlannerResult | null
-  layoutId: string | null
-  scenarioRef: ScenarioRef | null
+  readonly result: PlannerResult | null
+  readonly layoutId: string | null
+  readonly scenarioRef: ScenarioRef | null
 }
 
 export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSavePresetProps) {
@@ -18,7 +18,7 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  if (!result || !layoutId) {
+  if (result === null || layoutId === null || layoutId === '') {
     return (
       <section className="surface-card planner-save-preset" aria-label={t({ zh: '结果保存', en: 'Result save' })}>
         <div className="surface-card__body planner-save-preset__body">
@@ -43,9 +43,10 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
       const now = new Date().toISOString()
       const { current: dataVersion } = await loadVersion()
       const preset: FormationPreset = {
-        id: `planner-${Date.now()}`,
-        schemaVersion: PRESET_SCHEMA_VERSION,
         dataVersion,
+        scenarioRef,
+        id: `planner-${String(Date.now())}`,
+        schemaVersion: PRESET_SCHEMA_VERSION,
         name: t({ zh: '自动计划推荐', en: 'Planner recommendation' }),
         description: t({
           zh: `自动计划生成，目标值 ${presetResult.objectiveValue}`,
@@ -53,7 +54,6 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
         }),
         layoutId: presetLayoutId,
         placements: presetResult.placements,
-        scenarioRef,
         scenarioTags: scenarioRef ? [`${scenarioRef.kind}:${scenarioRef.id}`] : [],
         priority: 'medium',
         createdAt: now,
@@ -76,7 +76,7 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
           <strong>{t({ zh: '把当前推荐写入方案存档', en: 'Store the current recommendation as a preset' })}</strong>
           <p>{t({ zh: '保存后可回到“方案存档”继续编辑或覆盖命名方案。', en: 'After saving, continue editing or rename it from the Presets page.' })}</p>
           {saved ? <span className="planner-save-preset__status">{t({ zh: '已保存', en: 'Saved' })}</span> : null}
-          {error ? <span className="planner-save-preset__status" role="alert">{error}</span> : null}
+          {error != null && error !== '' ? <span className="planner-save-preset__status" role="alert">{error}</span> : null}
         </div>
         <button
           type="button"

@@ -30,8 +30,8 @@ export function PlannerResultCard({
     : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
   const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
     slotId,
-    slotLabel: slotId,
     heroId,
+    slotLabel: slotId,
     heroName: heroId,
     seat: null,
   }))
@@ -41,14 +41,17 @@ export function PlannerResultCard({
   const heroNameById = new Map<string, string>(
     displayPlacementEntries.map((entry) => [entry.heroId, entry.heroName]),
   )
-  const carrySlotId = carryHeroId
+  const carrySlotId = carryHeroId != null && carryHeroId !== ''
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
-  const boundLabel = areaEstimate?.boundBy === 'survival'
-    ? t({ zh: '存活受限', en: 'survival-bound' })
-    : areaEstimate?.boundBy === 'bud'
-      ? t({ zh: '伤害受限', en: 'BUD-bound' })
-      : t({ zh: '已达上限', en: 'max-area' })
+  let boundLabel: string
+  if (areaEstimate?.boundBy === 'survival') {
+    boundLabel = t({ zh: '存活受限', en: 'survival-bound' })
+  } else if (areaEstimate?.boundBy === 'bud') {
+    boundLabel = t({ zh: '伤害受限', en: 'BUD-bound' })
+  } else {
+    boundLabel = t({ zh: '已达上限', en: 'max-area' })
+  }
 
   return (
     <article
@@ -70,8 +73,8 @@ export function PlannerResultCard({
             </p>
             <p className="planner-result-card__slot-count">
               {t({
-                zh: `已填充 ${displayPlacementEntries.length} 个槽位`,
-                en: `${displayPlacementEntries.length} slots filled`,
+                zh: `已填充 ${String(displayPlacementEntries.length)} 个槽位`,
+                en: `${String(displayPlacementEntries.length)} slots filled`,
               })}
             </p>
           </div>
@@ -114,7 +117,7 @@ export function PlannerResultCard({
                     <strong>{entry.heroName}</strong>
                     <span>
                       {entry.seat !== null
-                        ? t({ zh: `Seat ${entry.seat} · ${entry.heroId}`, en: `Seat ${entry.seat} · ${entry.heroId}` })
+                        ? t({ zh: `Seat ${String(entry.seat)} · ${entry.heroId}`, en: `Seat ${String(entry.seat)} · ${entry.heroId}` })
                         : entry.heroId}
                     </span>
                   </span>
@@ -145,12 +148,12 @@ export function PlannerResultCard({
                   {t({ zh: '推图预估', en: 'Area estimate' })}
                 </h4>
                 <p data-testid="planner-area-estimate">
-                  {t({ zh: `约可推进到第 ${areaEstimate.area} 层`, en: `~ area ${areaEstimate.area}` })}
+                  {t({ zh: `约可推进到第 ${String(areaEstimate.area)} 层`, en: `~ area ${String(areaEstimate.area)}` })}
                 </p>
                 <p className="planner-result-card__area-estimate-note">
                   {t({
-                    zh: `约束：${boundLabel}（击杀上限 ${areaEstimate.killableArea} / 存活上限 ${areaEstimate.survivableArea}，绝对值未校准）`,
-                    en: `bound: ${boundLabel} (killable ${areaEstimate.killableArea} / survivable ${areaEstimate.survivableArea}, uncalibrated)`,
+                    zh: `约束：${boundLabel}（击杀上限 ${String(areaEstimate.killableArea)} / 存活上限 ${String(areaEstimate.survivableArea)}，绝对值未校准）`,
+                    en: `bound: ${boundLabel} (killable ${String(areaEstimate.killableArea)} / survivable ${String(areaEstimate.survivableArea)}, uncalibrated)`,
                   })}
                 </p>
               </section>
