@@ -3,8 +3,8 @@ import { useLayoutEffect, useRef } from 'react'
 const MIN_FONT_SCALE = 0.72
 
 interface ChampionCardAffiliationTextProps {
-  text: string
-  title?: string | null
+  readonly text: string
+  readonly title?: string | null
 }
 
 export function ChampionCardAffiliationText({

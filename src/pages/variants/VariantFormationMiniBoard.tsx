@@ -4,9 +4,9 @@ import { getFormationBoardMetrics } from '../../domain/formationLayout'
 import type { FormationLayout } from '../../domain/types'
 
 type VariantFormationMiniBoardProps = {
-  formation: FormationLayout | null
-  locale: AppLocale
-  t: (text: LocaleText) => string
+  readonly formation: FormationLayout | null
+  readonly locale: AppLocale
+  readonly t: (text: LocaleText) => string
 }
 
 export function VariantFormationMiniBoard({ formation, locale, t }: VariantFormationMiniBoardProps) {

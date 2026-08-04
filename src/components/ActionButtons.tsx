@@ -19,9 +19,9 @@ export interface ActionButtonItem {
 }
 
 interface ActionButtonsProps {
-  items: ActionButtonItem[]
-  wrap?: boolean
-  className?: string
+  readonly items: ActionButtonItem[]
+  readonly wrap?: boolean
+  readonly className?: string
 }
 
 export function ActionButtons({
@@ -29,7 +29,7 @@ export function ActionButtons({
   wrap = true,
   className = 'button-row',
 }: ActionButtonsProps) {
-  const visibleItems = items.filter((item) => !item.hidden)
+  const visibleItems = items.filter((item) => item.hidden !== true)
 
   if (visibleItems.length === 0) {
     return null

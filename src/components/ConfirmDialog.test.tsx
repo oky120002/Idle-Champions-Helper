@@ -31,7 +31,7 @@ describe('ConfirmDialog', () => {
         <p>内容</p>
       </ConfirmDialog>,
     )
-    fireEvent.click(screen.getByRole('dialog'))
+    fireEvent.click(screen.getByRole('button', { name: '关闭' }))
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 

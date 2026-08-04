@@ -264,6 +264,8 @@ export function useAnimationAuditPageModel() {
   }, [auditEntries, feedbackById])
 
   return {
+    canShowMore: filteredEntries.length > MAX_DEFAULT_VISIBLE_ENTRIES,
+    hasFeedback: feedbackSummary.selected > 0,
     state,
     search,
     setSearch,
@@ -275,7 +277,6 @@ export function useAnimationAuditPageModel() {
     setShowAll,
     filteredEntries,
     visibleEntries,
-    canShowMore: filteredEntries.length > MAX_DEFAULT_VISIBLE_ENTRIES,
     summary,
     feedbackById,
     setFeedbackVerdict,
@@ -284,7 +285,6 @@ export function useAnimationAuditPageModel() {
     clearFeedback,
     clearAllFeedback,
     feedbackSummary,
-    hasFeedback: feedbackSummary.selected > 0,
     feedbackPreviewJson,
     feedbackCopyState,
     copyFeedbackJson,

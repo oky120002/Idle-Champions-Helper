@@ -1,6 +1,7 @@
 import type {
   HeroAbilitySignal,
   HeroComparisonOperator,
+  HeroPositionQualifier,
   HeroPredicateAST,
   HeroQualifier,
   HeroStatKey,
@@ -10,6 +11,7 @@ import type {
 import { POOL_SCOPE_BY_KIND } from './abilityModel'
 import { evalHeroPredicate, parseHeroPredicate } from './heroPredicate.ts'
 import { isFilterLikeTarget, isUnknownArray, normalizeExplicitTargeting } from './heroTargetingRelation'
+import type { HeroExplicitTargeting } from './heroTargetingRelation'
 
 export { normalizeExplicitTargeting }
 export type { HeroExplicitTargeting } from './heroTargetingRelation'
@@ -18,7 +20,7 @@ export type { HeroExplicitTargeting } from './heroTargetingRelation'
 // target_filters_or / targets 中 filter-like 对象）。signal-coverage 等脚本复用，
 // 禁止另起副本——曾因副本漂移漏读 target_filters_or 与 targets 导致覆盖率失真。
 export function getRawFilters(effect: unknown): unknown[] {
-  if (!effect || typeof effect !== 'object') {
+  if (effect === null || effect === undefined || typeof effect !== 'object') {
     return []
   }
   const e = effect as Record<string, unknown>
@@ -58,12 +60,16 @@ function normalizeComparisonOperator(value: unknown): HeroComparisonOperator | n
   }
 }
 
-export function normalizeSignalAmountFunc(value: unknown): 'add' | 'mult' | 'unknown' | null {
+export type SignalAmountFunc = 'add' | 'mult' | 'unknown'
+
+export function normalizeSignalAmountFunc(value: unknown): SignalAmountFunc | null {
   if (value === 'add' || value === 'mult') {
     return value
   }
 
-  return value ? 'unknown' : null
+  if (value === null || value === undefined) return null
+  if (value === false || value === 0 || value === '') return null
+  return 'unknown'
 }
 
 // hero_ids / exclude_heroes 的英雄 id 列表 → HeroPredicateAST。
@@ -79,8 +85,12 @@ function heroIdsToPredicate(heroIds: unknown, negate: boolean): HeroPredicateAST
   if (nodes.length === 0) {
     return null
   }
-  const inner: HeroPredicateAST = nodes.length === 1 ? nodes[0]! : { op: 'or', children: nodes }
-  return negate ? { op: 'not', child: inner } : inner
+  if (nodes.length === 1) {
+    const [only] = nodes
+    const inner: HeroPredicateAST = only ?? { op: 'or', children: nodes }
+    return negate ? { op: 'not', child: inner } : inner
+  }
+  return negate ? { op: 'not', child: { op: 'or', children: nodes } } : { op: 'or', children: nodes }
 }
 
 // 合并两个 HeroQualifier（AND 语义）：null 取另一个，同结构去重。
@@ -106,26 +116,24 @@ export function mergeHeroQualifiers(
 // effect 的 by_tags/tags/hero_expr/hero_ids/exclude_heroes/stat/attack_type filter 统一解析为 HeroQualifier.predicate。
 // tags 用 parseHeroPredicate('shorthand')，hero_expr 用 parseHeroPredicate('functional')
 //（与 per_hero_expr 同方言），支持括号 / 复合表达式精确求值；多 filter 间 AND。
+function isNonNullObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
 export function normalizeTargetQualifier(effect: unknown): HeroQualifier | null {
-  const rawFilters = getRawFilters(effect).filter((filter) => filter && typeof filter === 'object')
+  const rawFilters = getRawFilters(effect).filter(isNonNullObject)
 
   const tagAsts = rawFilters
-    .filter((filter) => {
-      const f = filter as Record<string, unknown>
-      return (f.type === 'by_tags' || f.type === 'tags') && typeof f.tags === 'string' && (f.tags).length > 0
-    })
-    .map((filter) => parseHeroPredicate((filter as Record<string, unknown>).tags, 'shorthand'))
+    .filter((f) => (f.type === 'by_tags' || f.type === 'tags') && typeof f.tags === 'string' && f.tags.length > 0)
+    .map((filter) => parseHeroPredicate(filter.tags, 'shorthand'))
     .filter((node): node is HeroPredicateAST => node !== null)
 
   // hero_expr filter（functional 谓词）：限定 effect 目标英雄，语义同 per_hero_expr。
   // 真实样本：Diana/Sheila/Baldric 的 hero_dps_multiplier_mult 用 hero_expr 限定 DEX/tag/race。
   // 不可解析（GetUpgradeUnlocked 等运行时叶子）→ null → 保守丢弃该 filter。
   const heroExprAsts = rawFilters
-    .filter((filter) => {
-      const f = filter as Record<string, unknown>
-      return f.type === 'hero_expr' && typeof f.hero_expr === 'string' && (f.hero_expr).length > 0
-    })
-    .map((filter) => parseHeroPredicate((filter as Record<string, unknown>).hero_expr, 'functional'))
+    .filter((f) => f.type === 'hero_expr' && typeof f.hero_expr === 'string' && f.hero_expr.length > 0)
+    .map((filter) => parseHeroPredicate(filter.hero_expr, 'functional'))
     .filter((node): node is HeroPredicateAST => node !== null)
 
   // hero_ids / exclude_heroes filter：按英雄 id 白名单/黑名单限定 effect 目标。
@@ -133,26 +141,20 @@ export function normalizeTargetQualifier(effect: unknown): HeroQualifier | null 
   // 复用 heroId AST 节点（与 per_hero_expr 的 hero_id==N 同节点），多 id → OR，exclude → NOT。
   // type:'heroes'（targets 字段的英雄白名单，如 ed=196 hero_ids:[1..12]）同结构，一并提取。
   const heroIdAsts = rawFilters
-    .filter((filter) => {
-      const t = (filter as Record<string, unknown>).type
-      return t === 'hero_ids' || t === 'heroes'
-    })
-    .map((filter) => heroIdsToPredicate((filter as Record<string, unknown>).hero_ids, false))
+    .filter((f) => f.type === 'hero_ids' || f.type === 'heroes')
+    .map((filter) => heroIdsToPredicate(filter.hero_ids, false))
     .filter((node): node is HeroPredicateAST => node !== null)
 
   const excludeHeroAsts = rawFilters
-    .filter((filter) => (filter as Record<string, unknown>).type === 'exclude_heroes')
-    .map((filter) => heroIdsToPredicate((filter as Record<string, unknown>).hero_ids, true))
+    .filter((f) => f.type === 'exclude_heroes')
+    .map((filter) => heroIdsToPredicate(filter.hero_ids, true))
     .filter((node): node is HeroPredicateAST => node !== null)
 
   const statAsts = statQualifiersToNodes(normalizeStatQualifiers(effect))
 
   const attackTypeAsts: HeroPredicateAST[] = rawFilters
-    .filter((filter) => {
-      const f = filter as Record<string, unknown>
-      return f.type === 'attack_type' && typeof f.attack === 'string'
-    })
-    .map((filter) => ({ op: 'attackType', attackType: ((filter as Record<string, unknown>).attack as string).toLowerCase().trim(), negate: false }))
+    .filter((f) => f.type === 'attack_type' && typeof f.attack === 'string')
+    .map((filter) => ({ op: 'attackType', attackType: (filter.attack as string).toLowerCase().trim(), negate: false }))
 
   const children: HeroPredicateAST[] = [...tagAsts, ...heroExprAsts, ...heroIdAsts, ...excludeHeroAsts, ...statAsts, ...attackTypeAsts]
   if (children.length === 0) {
@@ -160,7 +162,11 @@ export function normalizeTargetQualifier(effect: unknown): HeroQualifier | null 
   }
   // 同结构节点去重（多个等价 filter 合并为一个，避免冗余 and）。
   const uniqueChildren = [...new Map(children.map((node) => [JSON.stringify(node), node] as const)).values()]
-  return { predicate: uniqueChildren.length === 1 ? uniqueChildren[0]! : { op: 'and', children: uniqueChildren } }
+  if (uniqueChildren.length === 1) {
+    const [only] = uniqueChildren
+    return { predicate: only ?? { op: 'and', children: uniqueChildren } }
+  }
+  return { predicate: { op: 'and', children: uniqueChildren } }
 }
 
 // HeroStatQualifier[] → stat AST 节点。normalizeTargetQualifier 与 effect-helpers 复用。
@@ -176,34 +182,36 @@ export function statQualifiersToNodes(statQualifiers: HeroStatQualifier[] | null
   }))
 }
 
+/** Extract the comparison operator from check/comparison fields, default '>='. */
+function readStatOperator(f: Record<string, unknown>): string | null {
+  if (typeof f.check === 'string') return f.check
+  if (typeof f.comparison === 'string') return f.comparison
+  return '>='
+}
+
+/** Extract the numeric threshold from score/check/value fields. */
+function readStatValue(f: Record<string, unknown>): number | null {
+  if (typeof f.score === 'number') return f.score
+  if (typeof f.check === 'number') return f.check
+  if (typeof f.value === 'number') return f.value
+  return null
+}
+
 export function normalizeStatQualifiers(effect: unknown): HeroStatQualifier[] | null {
   const qualifiers = getRawFilters(effect)
-    .filter((filter) => filter && typeof filter === 'object')
-    .map((filter) => {
-      const f = filter as Record<string, unknown>
-      const stat = typeof f.stat === 'string' ? (f.stat).toLowerCase() : null
-      const operator = normalizeComparisonOperator(
-        typeof f.check === 'string'
-          ? f.check
-          : typeof f.comparison === 'string'
-            ? f.comparison
-            : '>=',
-      )
-      const rawValue = typeof f.score === 'number'
-        ? f.score
-        : typeof f.check === 'number'
-          ? f.check
-          : typeof f.value === 'number'
-            ? f.value
-          : null
+    .filter(isNonNullObject)
+    .map((f): HeroStatQualifier | null => {
+      const stat = typeof f.stat === 'string' ? f.stat.toLowerCase() : null
+      const operator = normalizeComparisonOperator(readStatOperator(f))
+      const rawValue = readStatValue(f)
 
-      if (!stat || rawValue === null || !operator) {
+      if (stat === null || stat === '' || rawValue === null || operator === null) {
         return null
       }
 
       return {
-        stat: stat as HeroStatKey,
         operator,
+        stat: stat as HeroStatKey,
         value: rawValue,
       }
     })
@@ -225,19 +233,56 @@ export function parsePerHeroExpr(expr: unknown): HeroPredicateAST | null {
 // 仅处理 tag 形态（formation-count-mult-stack 机制）；非 tag 形态（upgrade_id/unique_alignment 等）
 // 属其它机制，保持原状不动，避免回归。
 function readStackFuncDataTag(stackFuncData: unknown): string | null {
-  if (stackFuncData && typeof stackFuncData === 'object') {
-    const tag = (stackFuncData as Record<string, unknown>).tag
+  if (isNonNullObject(stackFuncData)) {
+    const tag = stackFuncData.tag
     if (typeof tag === 'string') return tag
   }
   return null
 }
 
+function resolveFormationCountQualifier(
+  signal: HeroAbilitySignal,
+  perHeroQualifier: HeroQualifier | null,
+  stackFuncDataQualifier: HeroQualifier | null,
+  filterQualifier: HeroQualifier | null,
+  useFormationCountQualifier: boolean,
+  keepTargetQualifier: boolean,
+): HeroQualifier | null {
+  if (signal.formationCountQualifier) return signal.formationCountQualifier
+  if (perHeroQualifier) return perHeroQualifier
+  if (stackFuncDataQualifier) return stackFuncDataQualifier
+  return useFormationCountQualifier || keepTargetQualifier ? filterQualifier : null
+}
+
+function resolveTargetQualifier(
+  signal: HeroAbilitySignal,
+  filterQualifier: HeroQualifier | null,
+  heroScopedLegacyTarget: HeroQualifier | null,
+  hasExplicitCountQualifier: boolean,
+  keepTargetQualifier: boolean,
+  useFormationCountQualifier: boolean,
+): HeroQualifier | null {
+  if (signal.targetQualifier) return signal.targetQualifier
+  if (hasExplicitCountQualifier || keepTargetQualifier) return filterQualifier
+  if (useFormationCountQualifier) return heroScopedLegacyTarget
+  return filterQualifier
+}
+
+function resolvePositionQualifier(
+  signal: HeroAbilitySignal,
+  explicitTargeting: HeroExplicitTargeting,
+): HeroPositionQualifier | null {
+  if (signal.positionQualifier) return signal.positionQualifier
+  if (explicitTargeting.status === 'supported') return { relation: explicitTargeting.relation }
+  return null
+}
+
 export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown): HeroAbilitySignal {
-  const e: Record<string, unknown> = (effect && typeof effect === 'object') ? effect as Record<string, unknown> : {}
+  const e: Record<string, unknown> = isNonNullObject(effect) ? effect : {}
   // tag/stat/attack filter 统一经 normalizeTargetQualifier 解析为 { predicate }。
   const filterQualifier = normalizeTargetQualifier(effect)
   const perHeroPredicate = parsePerHeroExpr(e.per_hero_expr)
-  const perHeroQualifier = perHeroPredicate ? { predicate: perHeroPredicate } : null
+  const perHeroQualifier = perHeroPredicate !== null ? { predicate: perHeroPredicate } : null
   const explicitTargeting = normalizeExplicitTargeting(effect)
   const stackFuncRaw = e.stack_func
   const useFormationCountQualifier = typeof stackFuncRaw === 'string' && stackFuncRaw !== 'per_upgrade_targets'
@@ -245,17 +290,15 @@ export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown
 
   // stack_func_data.tag 解析为 count 限定（多 tag "a|b|c" → OR，与 IC tags 同 shorthand 方言）。
   const stackFuncDataTag = readStackFuncDataTag(e.stack_func_data)
-  const stackFuncDataPredicate = stackFuncDataTag ? parseHeroPredicate(stackFuncDataTag, 'shorthand') : null
-  const stackFuncDataQualifier = stackFuncDataPredicate ? { predicate: stackFuncDataPredicate } : null
+  const stackFuncDataPredicate = stackFuncDataTag !== null ? parseHeroPredicate(stackFuncDataTag, 'shorthand') : null
+  const stackFuncDataQualifier = stackFuncDataPredicate !== null ? { predicate: stackFuncDataPredicate } : null
 
   // 有显式 count 限定来源（per_hero_expr 或 stack_func_data.tag）时，filter_targets 回归 target 语义。
   const hasExplicitCountQualifier = stackFuncDataQualifier !== null || perHeroQualifier !== null
 
-  const formationCountQualifier: HeroQualifier | null =
-    signal.formationCountQualifier
-    ?? perHeroQualifier
-    ?? stackFuncDataQualifier
-    ?? (useFormationCountQualifier || keepTargetQualifier ? filterQualifier : null)
+  const formationCountQualifier = resolveFormationCountQualifier(
+    signal, perHeroQualifier, stackFuncDataQualifier, filterQualifier, useFormationCountQualifier, keepTargetQualifier,
+  )
 
   // legacy filter→count 路径（stack_func 作 count 源、无显式 count 限定）：hero 作用域 buff 的 filter/count 同源
   // ——游戏描述统一为 "buff [F] 英雄 ... for each [F] Champion"（ed=2390 矮人 / ed=2883 中立 / buff_upgrade_per_any_tagged_crusader*），
@@ -266,24 +309,20 @@ export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown
       ? formationCountQualifier
       : null
 
+  const targetQualifier = resolveTargetQualifier(
+    signal, filterQualifier, heroScopedLegacyTarget,
+    hasExplicitCountQualifier, keepTargetQualifier, useFormationCountQualifier,
+  )
+  const positionQualifier = resolvePositionQualifier(signal, explicitTargeting)
+
   return {
     ...signal,
-    targetQualifier:
-      signal.targetQualifier
-      ?? (hasExplicitCountQualifier || keepTargetQualifier
-        ? filterQualifier
-        : useFormationCountQualifier
-          ? heroScopedLegacyTarget
-          : filterQualifier),
+    targetQualifier,
     formationCountQualifier,
     // 显式 targets（含 'all'/'all_slots'）→ 记 {relation}；无 targets（自增益）→ null。
     // 'all' 必须显式记 {relation:'any'}：resolvePositionRelation 对 null 走类型默认（heroDpsMultiplier→'self'），
     // 若 'all' 降 null，阵型范围 hero_dps 信号（如蔚善良榜样 targets:all）会被误判自增益，support 位永不 buff carry。
-    positionQualifier:
-      signal.positionQualifier
-      ?? (explicitTargeting.status === 'supported'
-        ? { relation: explicitTargeting.relation }
-        : null),
+    positionQualifier,
     formationCountPositionQualifier: signal.formationCountPositionQualifier ?? null,
     amountFunc: signal.amountFunc ?? normalizeSignalAmountFunc(e.amount_func),
     stackFunc: signal.stackFunc ?? (typeof stackFuncRaw === 'string' ? stackFuncRaw : null),

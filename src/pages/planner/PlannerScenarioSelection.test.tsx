@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
-import { PlannerScenarioSelection } from './PlannerScenarioSelection'
 import type { LocalizedOption, LocalizedText, Variant } from '../../domain/types'
+import { PlannerScenarioSelection } from './PlannerScenarioSelection'
 
 function text(original: string, display = original): LocalizedText {
   return { original, display }

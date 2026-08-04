@@ -22,7 +22,7 @@ export function buildOfficialPlayServerBaseUrl(serverNumber: number): string {
   return `https://ps${serverNumber}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
 }
 
-export function createReadonlyFetchOptions(): RequestInit {
+export function createReadonlyFetchOptions(): { credentials: 'omit'; cache: 'no-store'; referrerPolicy: 'no-referrer' } {
   return {
     credentials: 'omit',
     cache: 'no-store',

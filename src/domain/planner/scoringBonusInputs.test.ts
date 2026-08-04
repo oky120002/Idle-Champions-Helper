@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildScoringBonusInputs } from './scoringBonusInputs'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { PatronPerkCatalogEntry } from '../buffs/patronPerkGlobalBuff'
 import type { LootCatalogEntry } from '../buffs/equipmentMult'
 import type { FeatCatalog } from '../abilities/featSignals'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
+import { buildScoringBonusInputs } from './scoringBonusInputs'
 
 function makeSnapshot(over: Partial<UserProfileSnapshot> = {}): UserProfileSnapshot {
   return {
@@ -21,7 +21,6 @@ function makeSnapshot(over: Partial<UserProfileSnapshot> = {}): UserProfileSnaps
 
 function makeOwnedHero(heroId: string, lootBySlot: OwnedHero['lootBySlot']): OwnedHero {
   return {
-    heroId,
     level: 1,
     equipment: {},
     feats: [],
@@ -31,9 +30,10 @@ function makeOwnedHero(heroId: string, lootBySlot: OwnedHero['lootBySlot']): Own
     featSlots: 0,
     isOwned: true,
     gildableSlotId: null,
-    lootBySlot,
     legendaryBySlot: {},
     specializations: [],
+    heroId,
+    lootBySlot,
   }
 }
 
@@ -69,10 +69,10 @@ describe('buildScoringBonusInputs', () => {
     ]
     const r = buildScoringBonusInputs({
       profileSnapshot: null,
-      lootCatalog,
       effectDefinitions: [],
       patronPerkCatalog: [],
       hypotheticalEquipment: { heroIds: ['1'], rarity: 4, enchant: 2000 },
+      lootCatalog,
     })
     // 两槽 hero_dps base 100+50=150，enchant 2000 → ×(1+2000/250)=×9 → 1350 addPercent → multiplier 14.5
     expect(r.equipmentAdjustmentByHero.get('1')).toBeCloseTo(14.5, 5)
@@ -89,10 +89,10 @@ describe('buildScoringBonusInputs', () => {
     })
     const r = buildScoringBonusInputs({
       profileSnapshot: snap,
-      lootCatalog,
       effectDefinitions: [],
       patronPerkCatalog: [],
       hypotheticalEquipment: { heroIds: ['1'], rarity: 4, enchant: 2000 }, // 应被忽略
+      lootCatalog,
     })
     // 存档 rarity 1 hero_dps=10，enchant 0 → ×1 = 10 → multiplier 1.1（假设 rarity4+enchant2000 不生效）
     expect(r.equipmentAdjustmentByHero.get('1')).toBeCloseTo(1.1, 5)
@@ -167,8 +167,8 @@ describe('buildScoringBonusInputs', () => {
     const r = buildScoringBonusInputs({
       profileSnapshot: makeSnapshot({ patronPerks: { '20': 10 }, activeContext: { patronId: 1, deity: null } }),
       lootCatalog: [],
-      effectDefinitions,
       patronPerkCatalog: perks,
+      effectDefinitions,
     })
     expect(r.globalBuffMultiplier).toBe(1)
     expect(r.externalHeroDpsContributions).toHaveLength(1)
@@ -198,9 +198,9 @@ describe('buildScoringBonusInputs', () => {
       profileSnapshot: makeSnapshot({
         ownedHeroes: [makeOwnedHero('h1', { '1': { slotId: '1', rarity: 1, gild: 0, enchant: 0, pigment: 0, found: {} } })],
       }),
-      lootCatalog,
       effectDefinitions: [],
       patronPerkCatalog: [],
+      lootCatalog,
     })
     // 350 × (1 + 0/250) = 350 → 1 + 350/100 = 4.5
     expect(r.equipmentAdjustmentByHero.get('h1')).toBeCloseTo(4.5, 5)
@@ -216,9 +216,9 @@ describe('buildScoringBonusInputs', () => {
         // slot3 buff_upgrade enchant 250 → 275 × (1+250/250) = 550
         ownedHeroes: [makeOwnedHero('h1', { '3': { slotId: '3', rarity: 4, gild: 0, enchant: 250, pigment: 0, found: {} } })],
       }),
-      lootCatalog,
       effectDefinitions: [],
       patronPerkCatalog: [],
+      lootCatalog,
     })
     expect(r.equipmentBuffsByHero.get('h1')).toEqual([
       { targetUpgradeId: '4', value: 550, rawEffect: 'buff_upgrade,275,4' },

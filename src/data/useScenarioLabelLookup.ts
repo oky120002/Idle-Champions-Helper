@@ -15,7 +15,7 @@ interface EnumGroup {
 let cachedLookup: Promise<ScenarioLabelLookup> | null = null
 
 function loadScenarioLabelLookup(): Promise<ScenarioLabelLookup> {
-  if (!cachedLookup) {
+  if (cachedLookup === null) {
     cachedLookup = Promise.all([
       loadCollection<Variant>('variants'),
       loadCollection<Adventure>('adventures'),

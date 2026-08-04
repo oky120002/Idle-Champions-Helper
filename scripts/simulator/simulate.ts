@@ -11,6 +11,7 @@
  *
  * 输出：JSON 打印到 stdout（含 formation / carry / dps / pools / contributions 拆解）。
  */
+import process from 'node:process'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 

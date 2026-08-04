@@ -2,13 +2,13 @@ import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { loadVersion } from '../../data/client'
+import { mockChampionsPageCollections, renderChampionsPage } from './championsPageTestHarness'
+
 vi.mock('../../data/client', () => ({
   loadCollection: vi.fn(),
   loadVersion: vi.fn(),
 }))
-
-import { loadVersion } from '../../data/client'
-import { mockChampionsPageCollections, renderChampionsPage } from './championsPageTestHarness'
 
 const mockedLoadVersion = vi.mocked(loadVersion)
 

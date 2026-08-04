@@ -78,17 +78,17 @@ export function scanBuildContent(
   const lines = content.split('\n')
 
   for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index]!
+    const line = lines[index] ?? ''
     const lineNumber = index + 1
 
     for (const marker of FORBIDDEN_BUILD_MARKERS) {
       for (const match of line.matchAll(marker.pattern)) {
         findings.push({
           kind: marker.kind,
-          filePath,
           line: lineNumber,
           match: match[0],
           description: marker.description,
+          filePath,
         })
       }
     }

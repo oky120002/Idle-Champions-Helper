@@ -3,7 +3,7 @@ import { VariantAdventureDetail } from './VariantAdventureDetail'
 import type { VariantsPageModel } from './types'
 
 type VariantsResultsSectionProps = {
-  model: VariantsPageModel
+  readonly model: VariantsPageModel
 }
 
 export function VariantsResultsSection({ model }: VariantsResultsSectionProps) {

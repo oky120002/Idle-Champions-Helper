@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 
 import { fetchJson, loadCollection, loadVersion } from '../../data/client'
 import { loadResolvedPlannerModel } from '../../data/plannerModel'
@@ -39,6 +39,50 @@ export interface UsePlannerCollectionsResult {
  * 已加载数据。跨页携带选中场景由调用方经路由 state 传递（自配评估页 initialVariantId
  * 与回填 variantIdFromEvaluate）。不做推荐搜索与评分。
  */
+async function fetchAllPlannerData() {
+  const version = await loadVersion()
+  const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
+    loadCollection<Variant>('variants'),
+    loadResolvedPlannerModel(),
+    resolveUserProfileSnapshot(),
+    loadCollection<Champion>('champions'),
+    loadCollection<LootCatalogEntry>('loot-catalog'),
+    fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
+    loadCollection<EffectDefinitionEntry>('effect-definitions'),
+    fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
+    fetchJson<{ catalog: SpecializationCatalog }>(`${version.current}/specialization-catalog.json`),
+  ])
+  return { variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData }
+}
+
+type PlannerData = Awaited<ReturnType<typeof fetchAllPlannerData>>
+
+function applyPlannerData(
+  data: PlannerData,
+  initialVariantId: string | null | undefined,
+  setCollections: Dispatch<SetStateAction<PlannerCollections>>,
+  setProfileSnapshot: Dispatch<SetStateAction<UserProfileSnapshot | null>>,
+  setLootCatalog: Dispatch<SetStateAction<LootCatalogEntry[]>>,
+  setPatronPerkCatalog: Dispatch<SetStateAction<PatronPerkCatalogEntry[]>>,
+  setEffectDefinitions: Dispatch<SetStateAction<EffectDefinitionEntry[]>>,
+  setChampionById: Dispatch<SetStateAction<Map<string, Champion>>>,
+  setSelectedVariantId: Dispatch<SetStateAction<string | null>>,
+) {
+  setCollections({
+    variants: data.variants.items,
+    plannerHeroes: data.plannerModel.heroes,
+    plannerScenarios: data.plannerModel.scenarios,
+    featCatalog: data.featCatalogData.catalog,
+    specializationCatalog: data.specializationCatalogData.catalog,
+  })
+  setProfileSnapshot(data.resolution.snapshot)
+  setLootCatalog(data.lootCatalogCollection.items)
+  setPatronPerkCatalog(data.patronPerksData.perks)
+  setEffectDefinitions(data.effectDefinitionsData.items)
+  setChampionById(new Map(data.champions.items.map((c) => [c.id, c])))
+  setSelectedVariantId((current) => current ?? initialVariantId ?? data.variants.items[0]?.id ?? null)
+}
+
 export function usePlannerCollections(initialVariantId?: string | null): UsePlannerCollectionsResult {
   const [collections, setCollections] = useState<PlannerCollections>({
     variants: [],
@@ -59,52 +103,18 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
   useEffect(() => {
     let active = true
 
-    async function loadPlannerCollections() {
-      setLoadState('loading')
-      setLoadError(null)
+    void fetchAllPlannerData().then((data) => {
+      if (!active) return
+      applyPlannerData(data, initialVariantId, setCollections, setProfileSnapshot, setLootCatalog, setPatronPerkCatalog, setEffectDefinitions, setChampionById, setSelectedVariantId)
+      setLoadState('ready')
+    }).catch((caught: unknown) => {
+      if (!active) return
+      setLoadState('error')
+      setLoadError(caught instanceof Error ? caught.message : String(caught))
+    })
 
-      try {
-        const version = await loadVersion()
-        const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
-          loadCollection<Variant>('variants'),
-          loadResolvedPlannerModel(),
-          resolveUserProfileSnapshot(),
-          loadCollection<Champion>('champions'),
-          loadCollection<LootCatalogEntry>('loot-catalog'),
-          fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
-          loadCollection<EffectDefinitionEntry>('effect-definitions'),
-          fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
-          fetchJson<{ catalog: SpecializationCatalog }>(`${version.current}/specialization-catalog.json`),
-        ])
-
-        if (!active) return
-
-        setCollections({
-          variants: variants.items,
-          plannerHeroes: plannerModel.heroes,
-          plannerScenarios: plannerModel.scenarios,
-          featCatalog: featCatalogData.catalog ?? {},
-          specializationCatalog: specializationCatalogData.catalog ?? {},
-        })
-        setProfileSnapshot(resolution.snapshot)
-        setLootCatalog(lootCatalogCollection.items)
-        setPatronPerkCatalog(patronPerksData.perks ?? [])
-        setEffectDefinitions(effectDefinitionsData.items)
-        setChampionById(new Map(champions.items.map((champion) => [champion.id, champion])))
-        setSelectedVariantId((current) => current ?? initialVariantId ?? variants.items[0]?.id ?? null)
-        setLoadState('ready')
-      } catch (caught) {
-        if (!active) return
-        setLoadState('error')
-        setLoadError(caught instanceof Error ? caught.message : String(caught))
-      }
-    }
-
-    void loadPlannerCollections()
-
-    return () => {
-      active = false
-    }
+    return () => { active = false }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const selectVariantId = useCallback((variantId: string | null) => {

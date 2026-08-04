@@ -37,7 +37,7 @@ export async function loadVersion(): Promise<DataVersion> {
   const cacheKey = 'version'
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached !== undefined) {
     return cached as DataVersion
   }
 
@@ -108,7 +108,7 @@ export async function loadCollectionAtVersion<T>(version: string, name: string):
   const cacheKey = `${version}:${name}`
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached !== undefined) {
     return cached as DataCollection<T>
   }
 
@@ -133,7 +133,7 @@ export async function loadBinaryData(relativePath: string): Promise<ArrayBuffer>
   const cacheKey = `binary:${relativePath}`
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached !== undefined) {
     return cached as ArrayBuffer
   }
 
@@ -149,7 +149,7 @@ export async function loadChampionDetailAtVersion(
   const cacheKey = `${version}:champion-details:${championId}`
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached !== undefined) {
     return cached as ChampionDetail
   }
 
@@ -167,7 +167,7 @@ export async function loadSearchDocuments(): Promise<SearchDocumentCollection> {
   const cacheKey = 'search-documents'
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached !== undefined) {
     return cached as SearchDocumentCollection
   }
 

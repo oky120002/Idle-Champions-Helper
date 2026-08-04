@@ -79,7 +79,7 @@ export function DossierSection({
       src={resolveDataUrl(consolePortraitPath)}
       alt={locale === 'zh-CN' ? `${primaryName}正面图` : `${primaryName} front portrait`}
       loading="eager"
-      onError={() => setFailedConsolePortraitPath(consolePortraitPath)}
+      onError={() => { setFailedConsolePortraitPath(consolePortraitPath); }}
     />
   ) : heroIllustration ? (
     <img
@@ -102,7 +102,7 @@ export function DossierSection({
             type="button"
             className="champion-dossier__portrait-action"
             aria-label={t({ zh: '打开皮肤立绘预览', en: 'Open skin artwork preview' })}
-            onClick={() => openArtworkDialog()}
+            onClick={() => { openArtworkDialog(); }}
           >
             {portrait}
             <span aria-hidden="true" className="champion-dossier__portrait-action-icon">

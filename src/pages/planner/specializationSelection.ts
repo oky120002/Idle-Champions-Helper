@@ -24,17 +24,15 @@ export function mergeSpecializationOverrides(
     return snapshot
   }
 
-  let changed = false
+  const hasOverride = snapshot.ownedHeroes.some((hero) => overrides[hero.heroId] !== undefined)
+  if (!hasOverride) return snapshot
+
   const ownedHeroes = snapshot.ownedHeroes.map((hero) => {
     const override = overrides[hero.heroId]
-    if (override === undefined) {
-      return hero
-    }
-    changed = true
-    return { ...hero, specializations: override }
+    return override === undefined ? hero : { ...hero, specializations: override }
   })
 
-  return changed ? { ...snapshot, ownedHeroes } : snapshot
+  return { ...snapshot, ownedHeroes }
 }
 
 /** 一个专精层（同 requiredLevel 互斥选项组）。null requiredLevel 归为一组（保守互斥）。 */
@@ -64,7 +62,7 @@ export function groupSpecializationsByTier(entries: SpecializationEntry[]): Spec
 }
 
 function tierSortKey(level: number | null): number {
-  return level === null ? Number.POSITIVE_INFINITY : level
+  return level ?? Number.POSITIVE_INFINITY
 }
 
 /**
@@ -98,7 +96,7 @@ export function availableSpecializations(
   const selectedSet = new Set(selected)
   return entries.filter((entry) => {
     const prereq = entry.requiredUpgradeId
-    if (!prereq) return true
+    if (prereq == null || prereq === '') return true
     if (!entryById.has(prereq)) return true
     return selectedSet.has(prereq)
   })
@@ -121,7 +119,7 @@ export function pruneOrphanedSpecializations(
     changed = false
     for (const id of [...selected]) {
       const prereq = entryById.get(id)?.requiredUpgradeId
-      if (prereq && entryById.has(prereq) && !selected.has(prereq)) {
+      if (prereq != null && prereq !== '' && entryById.has(prereq) && !selected.has(prereq)) {
         selected.delete(id)
         changed = true
       }

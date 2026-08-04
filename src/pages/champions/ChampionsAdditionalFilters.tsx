@@ -5,7 +5,7 @@ import {
 import type { ChampionsPageModel } from './types'
 
 interface ChampionsAdditionalFiltersProps {
-  model: ChampionsPageModel
+  readonly model: ChampionsPageModel
 }
 
 const championsAdditionalFilterCopy: ChampionAdditionalFilterCopy = {
@@ -102,8 +102,8 @@ export function ChampionsAdditionalFilters({ model }: ChampionsAdditionalFilters
         isMetaExpanded: isMetaFiltersExpanded,
       }}
       actions={{
-        toggleIdentityExpanded: () => setIdentityFiltersExpanded(!isIdentityFiltersExpanded),
-        toggleMetaExpanded: () => setMetaFiltersExpanded(!isMetaFiltersExpanded),
+        toggleIdentityExpanded: () => { setIdentityFiltersExpanded(!isIdentityFiltersExpanded); },
+        toggleMetaExpanded: () => { setMetaFiltersExpanded(!isMetaFiltersExpanded); },
         resetRace,
         toggleRace,
         resetGender,

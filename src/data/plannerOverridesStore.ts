@@ -28,7 +28,7 @@ export async function readPlannerHeroOverride(heroId: string): Promise<HeroAbili
     const store = transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides)
     const raw = await requestToPromise(store.get(heroId) as IDBRequest<unknown>)
     await waitForTransaction(transaction)
-    return raw ? parseStoredRecord<HeroAbilityOverridePatch>(raw, heroAbilityOverridePatchSchema, 'planner hero override') : null
+    return raw !== undefined ? parseStoredRecord<HeroAbilityOverridePatch>(raw, heroAbilityOverridePatchSchema, 'planner hero override') : null
   } finally {
     database.close()
   }

@@ -8,16 +8,16 @@ import {
 import type { MechanicOptionGroup } from './types'
 
 interface MechanicFilterFieldGroupProps {
-  locale: AppLocale
-  label: ReactNode
-  hint?: ReactNode
-  groups: MechanicOptionGroup[]
-  selectedValues: string[]
-  onReset: () => void
-  onToggle: (value: string) => void
-  allLabel: ReactNode
-  groupHint: (groupId: MechanicOptionGroup['id']) => ReactNode
-  className?: string
+  readonly locale: AppLocale
+  readonly label: ReactNode
+  readonly hint?: ReactNode
+  readonly groups: MechanicOptionGroup[]
+  readonly selectedValues: string[]
+  readonly onReset: () => void
+  readonly onToggle: (value: string) => void
+  readonly allLabel: ReactNode
+  readonly groupHint: (groupId: MechanicOptionGroup['id']) => ReactNode
+  readonly className?: string
 }
 
 export function MechanicFilterFieldGroup({
@@ -62,7 +62,7 @@ export function MechanicFilterFieldGroup({
                   type="button"
                   className={selectedValues.includes(mechanic) ? 'filter-chip filter-chip--active' : 'filter-chip'}
                   aria-pressed={selectedValues.includes(mechanic)}
-                  onClick={() => onToggle(mechanic)}
+                  onClick={() => { onToggle(mechanic); }}
                 >
                   {getChampionTagLabel(mechanic, locale)}
                 </button>

@@ -36,8 +36,8 @@ async function writeRawOverride(heroId: string, value: unknown): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       const transaction = database.transaction(APP_STORE_NAMES.heroAbilityOverrides, 'readwrite')
       transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides).put(value, heroId)
-      transaction.oncomplete = () => resolve()
-      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
+      transaction.oncomplete = () => { resolve(); }
+      transaction.onerror = () => { reject(transaction.error ?? new Error('写入失败')); }
     })
   } finally {
     database.close()

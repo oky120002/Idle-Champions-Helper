@@ -4,8 +4,8 @@ import { buildPriorityLabel } from './preset-model'
 import type { PresetsPageModel, PresetView } from './types'
 
 type PresetEditorFormProps = {
-  model: PresetsPageModel
-  view: PresetView
+  readonly model: PresetsPageModel
+  readonly view: PresetView
 }
 
 export function PresetEditorForm({ model, view }: PresetEditorFormProps) {
@@ -35,7 +35,7 @@ export function PresetEditorForm({ model, view }: PresetEditorFormProps) {
             label: t({ zh: '保存修改', en: 'Save changes' }),
             tone: 'secondary',
             disabled: editor.name.trim().length === 0,
-            onClick: () => savePresetEdit(view.preset),
+            onClick: () => { savePresetEdit(view.preset); },
           },
           {
             id: 'cancel-edit',

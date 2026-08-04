@@ -3,8 +3,8 @@ import {
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
   WorkbenchToolbarMark,
-  type WorkbenchAccentTone,
-} from './WorkbenchScaffold'
+} from './WorkbenchToolbarPrimitives'
+import type { WorkbenchAccentTone } from './WorkbenchScaffold'
 import { WorkbenchToolbarItems, type WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import { WorkbenchToolbarTabList } from './WorkbenchToolbarTabList'
 
@@ -83,6 +83,18 @@ function joinClasses(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ')
 }
 
+function renderToolbarGroup(config: WorkbenchToolbarGroupConfig, slot: WorkbenchToolbarRegion): ReactNode {
+  return (
+    <div className={joinClasses('workbench-page__toolbar-group', `workbench-page__toolbar-group--${slot}`, config.className)}>
+      {config.items.map((item, index) => (
+        <Fragment key={`${slot}-${index}`}>
+          {renderWorkbenchToolbarSection(item, slot)}
+        </Fragment>
+      ))}
+    </div>
+  )
+}
+
 export function renderWorkbenchToolbarSection(
   config: WorkbenchToolbarSectionConfig | undefined,
   slot: WorkbenchToolbarRegion = 'primary',
@@ -91,68 +103,51 @@ export function renderWorkbenchToolbarSection(
     return null
   }
 
-  if (config.kind === 'group') {
-    return (
-      <div className={joinClasses('workbench-page__toolbar-group', `workbench-page__toolbar-group--${slot}`, config.className)}>
-        {config.items.map((item, index) => (
-          <Fragment key={`${slot}-${index}`}>
-            {renderWorkbenchToolbarSection(item, slot)}
-          </Fragment>
-        ))}
-      </div>
-    )
+  switch (config.kind) {
+    case 'group':
+      return renderToolbarGroup(config, slot)
+    case 'node':
+      return config.node
+    case 'mark':
+      return (
+        <WorkbenchToolbarMark
+          label={config.label}
+          {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
+        />
+      )
+    case 'filter-status':
+      return (
+        <WorkbenchToolbarFilterStatus
+          label={config.label}
+          activeCount={config.activeCount}
+          {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
+        />
+      )
+    case 'copy':
+      return (
+        <WorkbenchToolbarCopy
+          {...(config.kicker !== undefined ? { kicker: config.kicker } : {})}
+          title={config.title}
+          {...(config.detail !== undefined ? { detail: config.detail } : {})}
+        />
+      )
+    case 'tablist':
+      return (
+        <WorkbenchToolbarTabList
+          value={config.value}
+          items={config.items}
+          ariaLabel={config.ariaLabel}
+          onChange={config.onChange}
+        />
+      )
+    default:
+      return (
+        <WorkbenchToolbarItems
+          items={config.items}
+          layout={config.layout ?? 'inline'}
+        />
+      )
   }
-
-  if (config.kind === 'node') {
-    return config.node
-  }
-
-  if (config.kind === 'mark') {
-    return (
-      <WorkbenchToolbarMark
-        label={config.label}
-        {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
-      />
-    )
-  }
-
-  if (config.kind === 'filter-status') {
-    return (
-      <WorkbenchToolbarFilterStatus
-        label={config.label}
-        activeCount={config.activeCount}
-        {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
-      />
-    )
-  }
-
-  if (config.kind === 'copy') {
-    return (
-      <WorkbenchToolbarCopy
-        {...(config.kicker !== undefined ? { kicker: config.kicker } : {})}
-        title={config.title}
-        {...(config.detail !== undefined ? { detail: config.detail } : {})}
-      />
-    )
-  }
-
-  if (config.kind === 'tablist') {
-    return (
-      <WorkbenchToolbarTabList
-        value={config.value}
-        items={config.items}
-        ariaLabel={config.ariaLabel}
-        onChange={config.onChange}
-      />
-    )
-  }
-
-  return (
-    <WorkbenchToolbarItems
-      items={config.items}
-      layout={config.layout ?? 'inline'}
-    />
-  )
 }
 
 export function resolveWorkbenchToolbarSlotConfig(

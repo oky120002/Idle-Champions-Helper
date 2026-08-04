@@ -5,13 +5,13 @@ import type {
 import type { LocalDevRefreshState } from './useUserSyncModel'
 
 type LocalDevSnapshotSectionProps = {
-  canLoadLocalDevSnapshot: boolean
-  profileResolution: UserProfileResolution
-  selectedProfileSource: UserProfileSourceKind
-  localDevRefreshState: LocalDevRefreshState
-  onSelectBrowserSnapshot: () => void
-  onSelectLocalDevSnapshot: () => void
-  onRefreshLocalDevSnapshot: () => void
+  readonly canLoadLocalDevSnapshot: boolean
+  readonly profileResolution: UserProfileResolution
+  readonly selectedProfileSource: UserProfileSourceKind
+  readonly localDevRefreshState: LocalDevRefreshState
+  readonly onSelectBrowserSnapshot: () => void
+  readonly onSelectLocalDevSnapshot: () => void
+  readonly onRefreshLocalDevSnapshot: () => void
 }
 
 function formatProfileSourceLabel(source: UserProfileSourceKind) {
@@ -39,7 +39,7 @@ export function LocalDevSnapshotSection({
         </p>
       )}
 
-      {profileResolution.errorMessage && (
+      {profileResolution.errorMessage !== null && (
         <p role="alert">{profileResolution.errorMessage}</p>
       )}
 

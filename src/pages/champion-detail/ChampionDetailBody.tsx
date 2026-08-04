@@ -18,33 +18,33 @@ import type {
 } from './types'
 
 interface ChampionDetailBodyProps {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  activeSectionId: DetailSectionId
-  overviewFields: DetailFieldProps[]
-  effectContext: EffectContext
-  specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
-  specializationColumns: SpecializationUpgradeColumn[]
-  ledgerRows: LedgerUpgradeRow[]
-  ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
-  activeLedgerFilterKeySet: Set<string>
-  visibleLedgerRows: LedgerUpgradeRow[]
-  hiddenLedgerSummary: string
-  hasCustomLedgerFilterState: boolean
-  isShowingAllLedgerTypes: boolean
-  toggleLedgerFilter: (key: string) => void
-  resetLedgerFilters: () => void
-  enableAllLedgerFilters: () => void
-  openArtworkDialog: (skinId?: string) => void
-  isArtworkDialogOpen: boolean
-  selectedSkin: ChampionSkinDetail | null
-  selectedSkinAnimation: ChampionAnimation | null
-  selectedSkinIllustration: ChampionIllustration | null
-  selectedSkinArtworkIds: SkinArtworkIds | null
-  selectedSkinPreviewUrl: string | null
-  closeArtworkDialog: () => void
-  setSelectedSkinId: (skinId: string | null) => void
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly activeSectionId: DetailSectionId
+  readonly overviewFields: DetailFieldProps[]
+  readonly effectContext: EffectContext
+  readonly specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
+  readonly specializationColumns: SpecializationUpgradeColumn[]
+  readonly ledgerRows: LedgerUpgradeRow[]
+  readonly ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
+  readonly activeLedgerFilterKeySet: Set<string>
+  readonly visibleLedgerRows: LedgerUpgradeRow[]
+  readonly hiddenLedgerSummary: string
+  readonly hasCustomLedgerFilterState: boolean
+  readonly isShowingAllLedgerTypes: boolean
+  readonly toggleLedgerFilter: (key: string) => void
+  readonly resetLedgerFilters: () => void
+  readonly enableAllLedgerFilters: () => void
+  readonly openArtworkDialog: (skinId?: string) => void
+  readonly isArtworkDialogOpen: boolean
+  readonly selectedSkin: ChampionSkinDetail | null
+  readonly selectedSkinAnimation: ChampionAnimation | null
+  readonly selectedSkinIllustration: ChampionIllustration | null
+  readonly selectedSkinArtworkIds: SkinArtworkIds | null
+  readonly selectedSkinPreviewUrl: string | null
+  readonly closeArtworkDialog: () => void
+  readonly setSelectedSkinId: (skinId: string | null) => void
 }
 
 export function ChampionDetailBody(props: ChampionDetailBodyProps) {

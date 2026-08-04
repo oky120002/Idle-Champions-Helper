@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest'
+import { unwrap } from '../../tests/utils/dom-assertions.ts'
 
 import {
   buildChampionPatronEligibility,
@@ -78,7 +79,7 @@ it('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
 
 it('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allow', () => {
   const patrons = [
-    normalizePatronDefinition(
+    unwrap(normalizePatronDefinition(
       {
         id: 1,
         name: 'Mirt',
@@ -92,8 +93,8 @@ it('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allo
         },
       },
       { name: '米尔特' },
-    )!,
-    normalizePatronDefinition(
+    ), 'patron Mirt'),
+    unwrap(normalizePatronDefinition(
       {
         id: 2,
         name: 'Vajra',
@@ -109,8 +110,8 @@ it('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allo
         },
       },
       { name: '瓦吉拉' },
-    )!,
-    normalizePatronDefinition(
+    ), 'patron Vajra'),
+    unwrap(normalizePatronDefinition(
       {
         id: 5,
         name: 'Elminster',
@@ -128,7 +129,7 @@ it('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allo
         },
       },
       { name: '艾尔明斯特' },
-    )!,
+    ), 'patron Elminster'),
   ]
 
   const bruenor = buildChampionPatronEligibility(

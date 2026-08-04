@@ -43,7 +43,7 @@ function usePlannerCompute<T>(
 
   useEffect(() => {
     if (!enabled) {
-      return
+      return undefined
     }
     // 标记「计算中」：异步计算（worker）的 loading 反映外部计算进度，跨 render 持久，
     // 是 effect 同步 external system 的合理用法，非由 props/state 派生。
@@ -67,7 +67,7 @@ function usePlannerCompute<T>(
           }
         })
     }, PLANNER_COMPUTE_DEBOUNCE_MS)
-    return () => clearTimeout(timer)
+    return () => { clearTimeout(timer); }
     // compute 捕获的变量（variant/options/placements）均在 deps；compute 本身不放 deps 避免每次触发。
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runner, enabled, ...deps])

@@ -1,6 +1,6 @@
+import type { PresetPriority } from '../domain/types'
 import { FieldGroup } from './FieldGroup'
 import { SegmentedButtonGroup } from './SegmentedButtonGroup'
-import type { PresetPriority } from '../domain/types'
 
 export interface PresetFormFieldValue {
   name: string
@@ -10,26 +10,26 @@ export interface PresetFormFieldValue {
 }
 
 interface PresetFormFieldsProps {
-  value: PresetFormFieldValue
-  priorityOptions: PresetPriority[]
-  nameInputId?: string
-  descriptionInputId?: string
-  tagsInputId?: string
-  namePlaceholder?: string
-  descriptionPlaceholder?: string
-  tagsPlaceholder?: string
-  tagsHint?: string
-  nameLabel: string
-  descriptionLabel: string
-  tagsLabel: string
-  priorityLabel: string
-  getPriorityOptionLabel: (priority: PresetPriority) => string
-  onChange: <K extends keyof PresetFormFieldValue>(
+  readonly value: PresetFormFieldValue
+  readonly priorityOptions: PresetPriority[]
+  readonly nameInputId?: string
+  readonly descriptionInputId?: string
+  readonly tagsInputId?: string
+  readonly namePlaceholder?: string
+  readonly descriptionPlaceholder?: string
+  readonly tagsPlaceholder?: string
+  readonly tagsHint?: string
+  readonly nameLabel: string
+  readonly descriptionLabel: string
+  readonly tagsLabel: string
+  readonly priorityLabel: string
+  readonly getPriorityOptionLabel: (priority: PresetPriority) => string
+  readonly onChange: <K extends keyof PresetFormFieldValue>(
     key: K,
     value: PresetFormFieldValue[K],
   ) => void
-  includeStackClass?: boolean
-  className?: string
+  readonly includeStackClass?: boolean
+  readonly className?: string
 }
 
 export function PresetFormFields({
@@ -62,7 +62,7 @@ export function PresetFormFields({
           type="text"
           value={value.name}
           {...(namePlaceholder !== undefined ? { placeholder: namePlaceholder } : {})}
-          onChange={(event) => onChange('name', event.target.value)}
+          onChange={(event) => { onChange('name', event.target.value); }}
         />
       </FieldGroup>
 
@@ -73,7 +73,7 @@ export function PresetFormFields({
           rows={4}
           value={value.description}
           {...(descriptionPlaceholder !== undefined ? { placeholder: descriptionPlaceholder } : {})}
-          onChange={(event) => onChange('description', event.target.value)}
+          onChange={(event) => { onChange('description', event.target.value); }}
         />
       </FieldGroup>
 
@@ -88,7 +88,7 @@ export function PresetFormFields({
           type="text"
           value={value.scenarioTagsInput}
           {...(tagsPlaceholder !== undefined ? { placeholder: tagsPlaceholder } : {})}
-          onChange={(event) => onChange('scenarioTagsInput', event.target.value)}
+          onChange={(event) => { onChange('scenarioTagsInput', event.target.value); }}
         />
       </FieldGroup>
 
@@ -100,7 +100,7 @@ export function PresetFormFields({
             label: getPriorityOptionLabel(option),
           }))}
           ariaLabel={priorityLabel}
-          onChange={(nextPriority) => onChange('priority', nextPriority)}
+          onChange={(nextPriority) => { onChange('priority', nextPriority); }}
         />
       </FieldGroup>
     </div>

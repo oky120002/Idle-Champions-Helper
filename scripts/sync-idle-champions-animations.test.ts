@@ -1,8 +1,9 @@
-import { it, expect } from 'vitest'
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { it, expect } from 'vitest'
 import { writeJson } from './data/io-utils.ts'
 import { syncChampionAnimations } from './sync-idle-champions-animations.ts'
 
@@ -288,7 +289,7 @@ it('syncChampionAnimations 输出 hero-base 与 skin 原始动画包和清单', 
   expect(heroAnimation).toBeTruthy()
   expect(skinAnimation).toBeTruthy()
   expect(heroAnimation?.kind).toBe('hero-base')
-  expect(heroAnimation?.skinId).toBe(null)
+  expect(heroAnimation?.skinId).toBeNull()
   expect(heroAnimation?.sourceSlot).toBe('base')
   expect(heroAnimation?.asset.path).toBe('v1/champion-animations/heroes/23.bin')
   expect(heroAnimation?.defaultSequenceIndex).toBe(0)

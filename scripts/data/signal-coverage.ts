@@ -1,3 +1,4 @@
+import process from 'node:process'
 import path from 'node:path'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'

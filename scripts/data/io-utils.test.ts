@@ -1,7 +1,7 @@
-import { it, expect } from 'vitest'
 import { mkdtemp, rm, readFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
+import { it, expect } from 'vitest'
 import {
   readJson,
   readJsonIfExists,
@@ -38,7 +38,7 @@ it('readJson 不存在时抛 ENOENT', async () => {
 it('readJsonIfExists 不存在时返回 null，存在时返回内容', async () => {
   await withTempDir(async (dir) => {
     const missing = path.join(dir, 'missing.json')
-    expect(await readJsonIfExists(missing)).toBe(null)
+    expect(await readJsonIfExists(missing)).toBeNull()
 
     const file = path.join(dir, 'a.json')
     await writeJson(file, [1, 2])
@@ -78,8 +78,8 @@ it('runWithConcurrency 空数组直接返回空数组', async () => {
 })
 
 it('parseIdFilter 解析逗号分隔、去空白；空值返回 null', () => {
-  expect(parseIdFilter('')).toBe(null)
-  expect(parseIdFilter(null as unknown as string)).toBe(null)
-  expect(parseIdFilter(' , ')).toBe(null)
+  expect(parseIdFilter('')).toBeNull()
+  expect(parseIdFilter(null as unknown as string)).toBeNull()
+  expect(parseIdFilter(' , ')).toBeNull()
   expect(parseIdFilter('a, b ,c')).toEqual(new Set(['a', 'b', 'c']))
 })

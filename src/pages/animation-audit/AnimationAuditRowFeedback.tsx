@@ -6,14 +6,14 @@ import type {
 } from './types'
 
 interface AnimationAuditRowFeedbackProps {
-  entryId: string
-  hasAlternate: boolean
-  feedback: AnimationAuditFeedbackDraft
-  t: (text: { zh: string; en: string }) => string
-  onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
-  onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
-  onNoteChange: (entryId: string, note: string) => void
-  onClearFeedback: (entryId: string) => void
+  readonly entryId: string
+  readonly hasAlternate: boolean
+  readonly feedback: AnimationAuditFeedbackDraft
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
+  readonly onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
+  readonly onNoteChange: (entryId: string, note: string) => void
+  readonly onClearFeedback: (entryId: string) => void
 }
 
 function buildVerdictLabel(
@@ -75,7 +75,7 @@ export function AnimationAuditRowFeedback({
           <button
             type="button"
             className="animation-audit-feedback-card__clear"
-            onClick={() => onClearFeedback(entryId)}
+            onClick={() => { onClearFeedback(entryId); }}
           >
             {t({ zh: '清空本行', en: 'Clear row' })}
           </button>
@@ -94,7 +94,7 @@ export function AnimationAuditRowFeedback({
                   ? 'animation-audit-feedback-chip animation-audit-feedback-chip--active'
                   : 'animation-audit-feedback-chip'
               }
-              onClick={() => onVerdictChange(entryId, feedback.verdict === verdict ? null : verdict)}
+              onClick={() => { onVerdictChange(entryId, feedback.verdict === verdict ? null : verdict); }}
             >
               {buildVerdictLabel(verdict, t)}
             </button>
@@ -120,7 +120,7 @@ export function AnimationAuditRowFeedback({
                 <input
                   type="checkbox"
                   checked={checked}
-                  onChange={() => onTagToggle(entryId, tag)}
+                  onChange={() => { onTagToggle(entryId, tag); }}
                 />
                 <span>{buildFeedbackTagLabel(tag, t)}</span>
               </label>
@@ -134,7 +134,7 @@ export function AnimationAuditRowFeedback({
         <textarea
           rows={2}
           value={feedback.note}
-          onChange={(event) => onNoteChange(entryId, event.target.value)}
+          onChange={(event) => { onNoteChange(entryId, event.target.value); }}
           placeholder={t({
             zh: '例如：武器抖动怪，或者 seq 2 比推荐更接近游戏。',
             en: 'For example: weapon jitters oddly, or sequence 2 feels closer to the game.',

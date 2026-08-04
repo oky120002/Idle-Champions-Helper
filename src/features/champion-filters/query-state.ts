@@ -50,7 +50,7 @@ export function appendCommonFilterSearchParams(
   filters.selectedSeats
     .slice()
     .sort((left, right) => left - right)
-    .forEach((seat) => searchParams.append(keys.seat, String(seat)))
+    .forEach((seat) => { searchParams.append(keys.seat, String(seat)); })
   appendSortedStringValues(searchParams, keys.role, filters.selectedRoles)
   appendSortedStringValues(searchParams, keys.affiliation, filters.selectedAffiliations)
   appendSortedStringValues(searchParams, keys.race, filters.selectedRaces)

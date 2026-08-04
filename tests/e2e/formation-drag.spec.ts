@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { unwrap } from '../utils/dom-assertions'
 
 // HTML5 DnD 在 Playwright 下用 mouse 手势不可靠；用 DataTransfer 合成事件确定性测试
 // 拖拽接线（dragstart 写 dataTransfer → drop 读 → handleAssignChampion）。
@@ -25,9 +26,9 @@ test.describe('阵型编辑器拖拽主链路（桌面）', () => {
       window.localStorage.removeItem('idle-champions-helper.locale')
       await new Promise<void>((resolve) => {
         const request = window.indexedDB.deleteDatabase('idle-champions-helper')
-        request.onsuccess = () => resolve()
-        request.onerror = () => resolve()
-        request.onblocked = () => resolve()
+        request.onsuccess = () => { resolve(); }
+        request.onerror = () => { resolve(); }
+        request.onblocked = () => { resolve(); }
       })
     })
     await page.setViewportSize({ width: 1280, height: 900 })
@@ -48,7 +49,7 @@ test.describe('阵型编辑器拖拽主链路（桌面）', () => {
 
     await drag(page, `.hero-picker--source [data-hero-id="${heroId}"]`, `[data-slot-id="${firstSlot}"]`)
 
-    await expect(page.locator(`[data-slot-id="${firstSlot}"]`)).toHaveAttribute('data-hero-id', heroId!)
+    await expect(page.locator(`[data-slot-id="${firstSlot}"]`)).toHaveAttribute('data-hero-id', unwrap(heroId, 'heroId'))
   })
 
   test('slot→slot 槽位间拖动原子清原 slot', async ({ page }) => {
@@ -61,17 +62,17 @@ test.describe('阵型编辑器拖拽主链路（桌面）', () => {
       els.map((e) => e.getAttribute('data-slot-id')),
     )
     const [slot1, slot2] = slots
-    expect(slot1 && slot2).toBeTruthy()
+    expect(slot1 !== null && slot1 !== undefined && slot2 !== null && slot2 !== undefined).toBeTruthy()
 
     // 先放入 slot1
-    await drag(page, `.hero-picker--source [data-hero-id="${heroId}"]`, `[data-slot-id="${slot1}"]`)
-    await expect(page.locator(`[data-slot-id="${slot1}"]`)).toHaveAttribute('data-hero-id', heroId!)
+    await drag(page, `.hero-picker--source [data-hero-id="${heroId}"]`, `[data-slot-id="${unwrap(slot1, 'slot1')}"]`)
+    await expect(page.locator(`[data-slot-id="${unwrap(slot1, 'slot1')}"]`)).toHaveAttribute('data-hero-id', unwrap(heroId, 'heroId'))
 
     // 拖 slot1 的英雄到 slot2 → slot1 应清空、slot2 接管
-    await drag(page, `[data-slot-id="${slot1}"] .formation-slot__summary-badge`, `[data-slot-id="${slot2}"]`)
+    await drag(page, `[data-slot-id="${unwrap(slot1, 'slot1')}"] .formation-slot__summary-badge`, `[data-slot-id="${unwrap(slot2, 'slot2')}"]`)
 
-    await expect(page.locator(`[data-slot-id="${slot1}"]`)).not.toHaveAttribute('data-hero-id')
-    await expect(page.locator(`[data-slot-id="${slot2}"]`)).toHaveAttribute('data-hero-id', heroId!)
+    await expect(page.locator(`[data-slot-id="${unwrap(slot1, 'slot1')}"]`)).not.toHaveAttribute('data-hero-id')
+    await expect(page.locator(`[data-slot-id="${unwrap(slot2, 'slot2')}"]`)).toHaveAttribute('data-hero-id', unwrap(heroId, 'heroId'))
   })
 
   test('slot→移除区 拖出移除', async ({ page }) => {
@@ -83,7 +84,7 @@ test.describe('阵型编辑器拖拽主链路（桌面）', () => {
     const firstSlot = await page.locator('[data-slot-id]').first().getAttribute('data-slot-id')
 
     await drag(page, `.hero-picker--source [data-hero-id="${heroId}"]`, `[data-slot-id="${firstSlot}"]`)
-    await expect(page.locator(`[data-slot-id="${firstSlot}"]`)).toHaveAttribute('data-hero-id', heroId!)
+    await expect(page.locator(`[data-slot-id="${firstSlot}"]`)).toHaveAttribute('data-hero-id', unwrap(heroId, 'heroId'))
 
     // 拖到移除区 → 该槽清空
     await drag(

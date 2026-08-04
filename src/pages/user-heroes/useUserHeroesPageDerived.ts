@@ -73,19 +73,66 @@ function getRosterMetricChipLabel(
   }
 }
 
-export function useUserHeroesPageDerived({
-  locale,
-  t,
-  state,
-  filters,
-  ownedHeroes,
-  activeRosterMetricFilterId,
-}: UseUserHeroesPageDerivedOptions) {
-  const baseFilteredChampions = useMemo(() => {
-    if (state.status !== 'ready') {
-      return []
-    }
+type ReadyChampionState = Extract<ChampionState, { status: 'ready' }>
 
+function collectChampionFilterOptions(state: ReadyChampionState, locale: AppLocale) {
+  return {
+    roles: state.roles,
+    affiliations: state.affiliations,
+    raceOptions: collectAttributeFilterOptions(state.champions, 'race', locale),
+    genderOptions: collectAttributeFilterOptions(state.champions, 'gender', locale),
+    alignmentOptions: collectAttributeFilterOptions(state.champions, 'alignment', locale),
+    professionOptions: collectAttributeFilterOptions(state.champions, 'profession', locale),
+    acquisitionOptions: collectAttributeFilterOptions(state.champions, 'acquisition', locale),
+    mechanicOptions: collectAttributeFilterOptions(state.champions, 'mechanics', locale),
+  }
+}
+
+function buildOrderedSelectedFilters(
+  filters: ChampionsFilterState,
+  opts: ReturnType<typeof collectChampionFilterOptions>,
+) {
+  return {
+    orderedSelectedSeats: seatOptions.filter((seat) => filters.selectedSeats.includes(seat)),
+    orderedSelectedRoles: opts.roles.filter((role) => filters.selectedRoles.includes(role)),
+    orderedSelectedAffiliations: opts.affiliations.filter((affiliation) =>
+      filters.selectedAffiliations.includes(affiliation.original),
+    ),
+    orderedSelectedRaces: opts.raceOptions.filter((race) => filters.selectedRaces.includes(race)),
+    orderedSelectedGenders: opts.genderOptions.filter((gender) => filters.selectedGenders.includes(gender)),
+    orderedSelectedAlignments: opts.alignmentOptions.filter((alignment) => filters.selectedAlignments.includes(alignment)),
+    orderedSelectedProfessions: opts.professionOptions.filter((profession) =>
+      filters.selectedProfessions.includes(profession),
+    ),
+    orderedSelectedAcquisitions: opts.acquisitionOptions.filter((acquisition) =>
+      filters.selectedAcquisitions.includes(acquisition),
+    ),
+    orderedSelectedMechanics: opts.mechanicOptions.filter((mechanic) => filters.selectedMechanics.includes(mechanic)),
+  }
+}
+
+function hasActiveChampionFilters(filters: ChampionsFilterState, activeRosterMetricFilterId: UserHeroesRosterMetricFilterId | null): boolean {
+  if (filters.search.trim().length > 0) return true
+  if (filters.selectedSeats.length > 0) return true
+  if (filters.selectedRoles.length > 0) return true
+  if (filters.selectedAffiliations.length > 0) return true
+  if (filters.selectedRaces.length > 0) return true
+  if (filters.selectedGenders.length > 0) return true
+  if (filters.selectedAlignments.length > 0) return true
+  if (filters.selectedProfessions.length > 0) return true
+  if (filters.selectedAcquisitions.length > 0) return true
+  if (filters.selectedMechanics.length > 0) return true
+  return activeRosterMetricFilterId !== null
+}
+
+function useFilteredChampionPipeline(
+  state: ChampionState,
+  filters: ChampionsFilterState,
+  ownedHeroes: OwnedHero[],
+  activeRosterMetricFilterId: UserHeroesRosterMetricFilterId | null,
+) {
+  const baseFilteredChampions = useMemo(() => {
+    if (state.status !== 'ready') return []
     return filterChampions(state.champions, {
       search: filters.search,
       seats: filters.selectedSeats,
@@ -99,90 +146,55 @@ export function useUserHeroesPageDerived({
       mechanics: filters.selectedMechanics,
     })
   }, [filters, state])
+
   const ownedHeroById = useMemo(() => buildOwnedHeroById(ownedHeroes), [ownedHeroes])
-  const filteredChampionIds = useMemo(
-    () => baseFilteredChampions.map((champion) => champion.id),
-    [baseFilteredChampions],
-  )
+  const filteredChampionIds = useMemo(() => baseFilteredChampions.map((c) => c.id), [baseFilteredChampions])
   const matchedChampionIds = useMemo(
     () => buildRosterMetricMatchedChampionIds(filteredChampionIds, ownedHeroById, activeRosterMetricFilterId),
     [activeRosterMetricFilterId, filteredChampionIds, ownedHeroById],
   )
   const filteredChampions = useMemo(
-    () => baseFilteredChampions.filter((champion) => matchedChampionIds.has(champion.id)),
+    () => baseFilteredChampions.filter((c) => matchedChampionIds.has(c.id)),
     [baseFilteredChampions, matchedChampionIds],
   )
+
+  return { ownedHeroById, matchedChampionIds, filteredChampions }
+}
+
+function useRosterData(
+  state: ChampionState,
+  ownedHeroes: OwnedHero[],
+  matchedChampionIds: Set<string>,
+  ownedHeroById: ReadonlyMap<string, OwnedHero>,
+  filteredChampions: readonly { readonly id: string; readonly seat: number }[],
+) {
   const rosterSeatColumns = useMemo(
-    () => (
-      state.status === 'ready'
-        ? buildChampionRosterSeatColumns(state.champions, matchedChampionIds, ownedHeroById)
-        : []
-    ),
+    () => state.status === 'ready' ? buildChampionRosterSeatColumns(state.champions, matchedChampionIds, ownedHeroById) : [],
     [matchedChampionIds, ownedHeroById, state],
   )
   const rosterSummary = useMemo(
-    () => (
-      state.status === 'ready'
-        ? buildChampionRosterSummary(state.champions, ownedHeroes, matchedChampionIds)
-        : null
-    ),
+    () => state.status === 'ready' ? buildChampionRosterSummary(state.champions, ownedHeroes, matchedChampionIds) : null,
     [matchedChampionIds, ownedHeroes, state],
   )
   const heroIllustrationByChampionId = useMemo(
-    () =>
-      state.status === 'ready'
-        ? new Map(state.heroIllustrations.map((illustration) => [illustration.championId, illustration]))
-        : new Map(),
+    () => state.status === 'ready' ? new Map(state.heroIllustrations.map((illu) => [illu.championId, illu])) : new Map(),
     [state],
   )
-  const matchedSeats = useMemo(
-    () => new Set(filteredChampions.map((champion) => champion.seat)).size,
-    [filteredChampions],
-  )
+  const matchedSeats = useMemo(() => new Set(filteredChampions.map((c) => c.seat)).size, [filteredChampions])
 
-  const roles = state.status === 'ready' ? state.roles : []
-  const affiliations = state.status === 'ready' ? state.affiliations : []
-  const raceOptions = state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'race', locale) : []
-  const genderOptions = state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'gender', locale) : []
-  const alignmentOptions =
-    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'alignment', locale) : []
-  const professionOptions =
-    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'profession', locale) : []
-  const acquisitionOptions =
-    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'acquisition', locale) : []
-  const mechanicOptions =
-    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'mechanics', locale) : []
+  return { rosterSeatColumns, rosterSummary, heroIllustrationByChampionId, matchedSeats }
+}
 
-  const orderedSelectedSeats = seatOptions.filter((seat) => filters.selectedSeats.includes(seat))
-  const orderedSelectedRoles = roles.filter((role) => filters.selectedRoles.includes(role))
-  const orderedSelectedAffiliations = affiliations.filter((affiliation) =>
-    filters.selectedAffiliations.includes(affiliation.original),
-  )
-  const orderedSelectedRaces = raceOptions.filter((race) => filters.selectedRaces.includes(race))
-  const orderedSelectedGenders = genderOptions.filter((gender) => filters.selectedGenders.includes(gender))
-  const orderedSelectedAlignments = alignmentOptions.filter((alignment) => filters.selectedAlignments.includes(alignment))
-  const orderedSelectedProfessions = professionOptions.filter((profession) =>
-    filters.selectedProfessions.includes(profession),
-  )
-  const orderedSelectedAcquisitions = acquisitionOptions.filter((acquisition) =>
-    filters.selectedAcquisitions.includes(acquisition),
-  )
-  const orderedSelectedMechanics = mechanicOptions.filter((mechanic) => filters.selectedMechanics.includes(mechanic))
-
-  const baseActiveFilterChips = buildActiveFilterChips({
-    locale,
-    t,
-    filters,
-    orderedSelectedSeats,
-    orderedSelectedRoles,
-    orderedSelectedAffiliations,
-    orderedSelectedRaces,
-    orderedSelectedGenders,
-    orderedSelectedAlignments,
-    orderedSelectedProfessions,
-    orderedSelectedAcquisitions,
-    orderedSelectedMechanics,
-  })
+function buildActiveFilterChipList(
+  locale: AppLocale,
+  t: ChampionsPageTranslator,
+  filters: ChampionsFilterState,
+  filterOptions: ReturnType<typeof collectChampionFilterOptions> | null,
+  activeRosterMetricFilterId: UserHeroesRosterMetricFilterId | null,
+): ActiveFilterChip[] {
+  if (!filterOptions) return []
+  const orderedSelected = buildOrderedSelectedFilters(filters, filterOptions)
+  const baseActiveFilterChips = buildActiveFilterChips({ locale, t, filters, ...orderedSelected })
   const rosterMetricChip: ActiveFilterChip | null = activeRosterMetricFilterId
     ? {
         id: 'roster-metric',
@@ -190,47 +202,52 @@ export function useUserHeroesPageDerived({
         clearLabel: t({ zh: '清空顶部指标筛选', en: 'Clear top metric filter' }),
       }
     : null
-  const activeFilterChips = [
-    ...baseActiveFilterChips,
-    ...(rosterMetricChip ? [rosterMetricChip] : []),
-  ]
+  return [...baseActiveFilterChips, ...(rosterMetricChip ? [rosterMetricChip] : [])]
+}
+
+export function useUserHeroesPageDerived({
+  locale,
+  t,
+  state,
+  filters,
+  ownedHeroes,
+  activeRosterMetricFilterId,
+}: UseUserHeroesPageDerivedOptions) {
+  const { ownedHeroById, matchedChampionIds, filteredChampions } = useFilteredChampionPipeline(
+    state, filters, ownedHeroes, activeRosterMetricFilterId,
+  )
+  const { rosterSeatColumns, rosterSummary, heroIllustrationByChampionId, matchedSeats } = useRosterData(
+    state, ownedHeroes, matchedChampionIds, ownedHeroById, filteredChampions,
+  )
+
+  const filterOptions = state.status === 'ready' ? collectChampionFilterOptions(state, locale) : null
+  const activeFilterChips = buildActiveFilterChipList(locale, t, filters, filterOptions, activeRosterMetricFilterId)
   const activeFilters = activeFilterChips.map((chip) => chip.label)
-  const hasActiveFilters =
-    filters.search.trim().length > 0 ||
-    filters.selectedSeats.length > 0 ||
-    filters.selectedRoles.length > 0 ||
-    filters.selectedAffiliations.length > 0 ||
-    filters.selectedRaces.length > 0 ||
-    filters.selectedGenders.length > 0 ||
-    filters.selectedAlignments.length > 0 ||
-    filters.selectedProfessions.length > 0 ||
-    filters.selectedAcquisitions.length > 0 ||
-    filters.selectedMechanics.length > 0 ||
-    activeRosterMetricFilterId !== null
-  const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
+  const hasActiveFilters = hasActiveChampionFilters(filters, activeRosterMetricFilterId)
+  const mechanicOptionGroups = groupMechanicOptions(filterOptions?.mechanicOptions ?? [])
   const identityFiltersSelectedCount =
     filters.selectedRaces.length + filters.selectedGenders.length + filters.selectedAlignments.length
   const metaFiltersSelectedCount =
     filters.selectedProfessions.length + filters.selectedAcquisitions.length + filters.selectedMechanics.length
 
   return {
+    roles: filterOptions?.roles ?? [],
+    affiliations: filterOptions?.affiliations ?? [],
+    raceOptions: filterOptions?.raceOptions ?? [],
+    genderOptions: filterOptions?.genderOptions ?? [],
+    alignmentOptions: filterOptions?.alignmentOptions ?? [],
+    professionOptions: filterOptions?.professionOptions ?? [],
+    acquisitionOptions: filterOptions?.acquisitionOptions ?? [],
+    mechanicOptions: filterOptions?.mechanicOptions ?? [],
+    mechanicOptionGroups,
+    activeFilterChips,
+    activeFilters,
     filteredChampions,
     rosterSeatColumns,
     rosterSummary,
     heroIllustrationByChampionId,
     matchedSeats,
-    roles,
-    affiliations,
-    raceOptions,
-    genderOptions,
-    alignmentOptions,
-    professionOptions,
-    acquisitionOptions,
-    mechanicOptions,
-    activeFilterChips,
-    activeFilters,
     hasActiveFilters,
-    mechanicOptionGroups,
     identityFiltersSelectedCount,
     metaFiltersSelectedCount,
   }

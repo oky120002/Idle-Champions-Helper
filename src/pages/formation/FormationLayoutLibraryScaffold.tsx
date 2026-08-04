@@ -26,23 +26,23 @@ interface FormationLayoutLibraryCardItem {
 }
 
 interface FormationLayoutLibraryScaffoldProps {
-  ariaLabel: string
-  eyebrow: ReactNode
-  title: ReactNode
-  description: ReactNode
-  statsLabel: string
-  stats: FormationLayoutLibraryStatItem[]
-  fields: FormFieldSchema[]
-  selection: {
-    kicker: ReactNode
-    title: ReactNode
-    description: ReactNode
-    pills: FormationLayoutLibrarySelectionPill[]
+  readonly ariaLabel: string
+  readonly eyebrow: ReactNode
+  readonly title: ReactNode
+  readonly description: ReactNode
+  readonly statsLabel: string
+  readonly stats: FormationLayoutLibraryStatItem[]
+  readonly fields: FormFieldSchema[]
+  readonly selection: {
+    readonly kicker: ReactNode
+    readonly title: ReactNode
+    readonly description: ReactNode
+    readonly pills: FormationLayoutLibrarySelectionPill[]
   }
-  resultsLabel: ReactNode
-  resultsDescription: ReactNode
-  cardsAriaLabel: string
-  cards: FormationLayoutLibraryCardItem[]
+  readonly resultsLabel: ReactNode
+  readonly resultsDescription: ReactNode
+  readonly cardsAriaLabel: string
+  readonly cards: FormationLayoutLibraryCardItem[]
 }
 
 export function FormationLayoutLibraryScaffold({
@@ -74,7 +74,7 @@ export function FormationLayoutLibraryScaffold({
               <span className="formation-layout-library__stat-label">{item.label}</span>
               <strong
                 className={
-                  item.compact
+                  item.compact === true
                     ? 'formation-layout-library__stat-value formation-layout-library__stat-value--compact'
                     : 'formation-layout-library__stat-value'
                 }

@@ -62,14 +62,14 @@ interface ChampionAdditionalFilterActions {
 }
 
 interface ChampionAdditionalFilterSectionsProps {
-  locale: AppLocale
-  t: (text: LocaleText) => string
-  copy: ChampionAdditionalFilterCopy
-  values: ChampionAdditionalFilterValues
-  options: ChampionAdditionalFilterOptions
-  ui: ChampionAdditionalFilterUiState
-  actions: ChampionAdditionalFilterActions
-  mechanicGroupHint: (groupId: MechanicOptionGroup['id']) => ReactNode
+  readonly locale: AppLocale
+  readonly t: (text: LocaleText) => string
+  readonly copy: ChampionAdditionalFilterCopy
+  readonly values: ChampionAdditionalFilterValues
+  readonly options: ChampionAdditionalFilterOptions
+  readonly ui: ChampionAdditionalFilterUiState
+  readonly actions: ChampionAdditionalFilterActions
+  readonly mechanicGroupHint: (groupId: MechanicOptionGroup['id']) => ReactNode
 }
 
 function buildSectionStatus(selectedCount: number, t: (text: LocaleText) => string): string {
@@ -114,7 +114,7 @@ export function ChampionAdditionalFilterSections({
               selectedValues: values.selectedRaces,
               allLabel: t({ zh: '全部', en: 'All' }),
               onReset: actions.resetRace,
-              onToggle: (value) => actions.toggleRace(String(value)),
+              onToggle: (value) => { actions.toggleRace(String(value)); },
             },
             {
               kind: 'chip-multi',
@@ -128,7 +128,7 @@ export function ChampionAdditionalFilterSections({
               selectedValues: values.selectedGenders,
               allLabel: t({ zh: '全部', en: 'All' }),
               onReset: actions.resetGender,
-              onToggle: (value) => actions.toggleGender(String(value)),
+              onToggle: (value) => { actions.toggleGender(String(value)); },
             },
             {
               kind: 'chip-multi',
@@ -142,7 +142,7 @@ export function ChampionAdditionalFilterSections({
               selectedValues: values.selectedAlignments,
               allLabel: t({ zh: '全部', en: 'All' }),
               onReset: actions.resetAlignment,
-              onToggle: (value) => actions.toggleAlignment(String(value)),
+              onToggle: (value) => { actions.toggleAlignment(String(value)); },
             },
           ],
         },
@@ -166,7 +166,7 @@ export function ChampionAdditionalFilterSections({
               selectedValues: values.selectedProfessions,
               allLabel: t({ zh: '全部', en: 'All' }),
               onReset: actions.resetProfession,
-              onToggle: (value) => actions.toggleProfession(String(value)),
+              onToggle: (value) => { actions.toggleProfession(String(value)); },
             },
             {
               kind: 'chip-multi',
@@ -180,7 +180,7 @@ export function ChampionAdditionalFilterSections({
               selectedValues: values.selectedAcquisitions,
               allLabel: t({ zh: '全部', en: 'All' }),
               onReset: actions.resetAcquisition,
-              onToggle: (value) => actions.toggleAcquisition(String(value)),
+              onToggle: (value) => { actions.toggleAcquisition(String(value)); },
             },
             {
               kind: 'custom',

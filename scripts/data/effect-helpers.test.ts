@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeEffectSignal, parseBaseCritChancePercent } from './effect-helpers'
 import { parseEffectPayload } from '../../src/domain/effects/effect-string'
+import { normalizeEffectSignal, parseBaseCritChancePercent } from './effect-helpers'
 
 describe('normalizeEffectSignal · vulnerability', () => {
   it('monster_with_tag_more_damage → enemyVulnerability（tag 动态 args[1]）', () => {

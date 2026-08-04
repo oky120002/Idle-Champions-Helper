@@ -3,8 +3,8 @@ import { useI18n } from '../../app/i18n'
 import { WorkbenchFilterMetricsHeader } from './WorkbenchFilterMetricsHeader'
 
 interface ConfiguredWorkbenchMetricsHeaderProps {
-  items: PageHeaderMetricItem[]
-  activeFilters?: string[] | undefined
+  readonly items: PageHeaderMetricItem[]
+  readonly activeFilters?: string[] | undefined
 }
 
 export function ConfiguredWorkbenchMetricsHeader({

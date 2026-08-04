@@ -1,12 +1,4 @@
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.ts'
-import {
-  collectEffectEntries,
-  normalizeEffectSignal,
-  parseBaseCritChancePercent,
-  shouldIgnoreUnsupportedEffectEntry,
-  splitEffectString,
-} from './effect-helpers.ts'
-import { asRecord } from './io-utils.ts'
 import type {
   HeroAbilityProfile,
   HeroAbilitySignal,
@@ -15,6 +7,14 @@ import type {
   HeroUnsupportedSignal,
 } from '../../src/domain/abilities/abilityModel'
 import { computeHeroGainProfile } from '../../src/domain/abilities/abilityModel'
+import {
+  collectEffectEntries,
+  normalizeEffectSignal,
+  parseBaseCritChancePercent,
+  shouldIgnoreUnsupportedEffectEntry,
+  splitEffectString,
+} from './effect-helpers.ts'
+import { asRecord } from './io-utils.ts'
 
 // GetUpgradeUnlocked(N) / GetUpgradePurchased(N) 节点 build 期解析：upgrade N 属本英雄（self，布尔引用均
 // self-ref），从 detail.upgrades 取 requiredLevel + isSpecialization(specializationName 非空) + ownerHeroId=self

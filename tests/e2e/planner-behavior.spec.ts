@@ -17,9 +17,9 @@ async function resetPlannerDatabase(page: Page) {
     await new Promise<void>((resolve) => {
       const request = window.indexedDB.deleteDatabase('idle-champions-helper')
 
-      request.onsuccess = () => resolve()
-      request.onerror = () => resolve()
-      request.onblocked = () => resolve()
+      request.onsuccess = () => { resolve(); }
+      request.onerror = () => { resolve(); }
+      request.onblocked = () => { resolve(); }
     })
   })
 }
@@ -32,9 +32,9 @@ async function seedPlannerSnapshot(page: Page, ownedHeroes: SeededOwnedHero[]) {
       await new Promise<void>((resolve) => {
         const deleteRequest = window.indexedDB.deleteDatabase(appDatabaseName)
 
-        deleteRequest.onsuccess = () => resolve()
-        deleteRequest.onerror = () => resolve()
-        deleteRequest.onblocked = () => resolve()
+        deleteRequest.onsuccess = () => { resolve(); }
+        deleteRequest.onerror = () => { resolve(); }
+        deleteRequest.onblocked = () => { resolve(); }
       })
 
       await new Promise<void>((resolve, reject) => {

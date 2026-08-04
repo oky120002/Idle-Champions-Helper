@@ -1,7 +1,9 @@
+import process from 'node:process'
 import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 import { readJson, readJsonIfExists, writeJson } from './data/io-utils.ts'
 import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './data/resource-sync-policy.ts'
 import { compareLocalizedText, uniqueLocalizedTexts, uniqueStrings } from './data/normalize-text-utils.ts'
@@ -49,7 +51,6 @@ import {
 } from './data/official-rule-helpers.ts'
 import { buildEffectDefinitionTemplates } from './data/effect-definition-templates.ts'
 import { buildFeatCatalog } from './data/feat-catalog.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
 
 /**
  * definitions 归一化编排：把官方原始 definitions 快照拆成 champions / adventures /
@@ -766,7 +767,8 @@ async function main(): Promise<void> {
   )
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryPoint = process.argv[1]
+if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
   main().catch((error: unknown) => {
     console.error(`归一化 definitions 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

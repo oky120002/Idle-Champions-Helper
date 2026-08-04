@@ -17,8 +17,16 @@ import { PresetEditorForm } from './PresetEditorForm'
 import type { PresetsPageModel, PresetView } from './types'
 
 type PresetCardProps = {
-  model: PresetsPageModel
-  view: PresetView
+  readonly model: PresetsPageModel
+  readonly view: PresetView
+}
+
+function resolvePresetActiveStatus(
+  promptKind: PresetView['prompt']['kind'],
+  showCompatibilityNotice: boolean,
+): 'invalid' | 'compatibility' | 'none' {
+  if (promptKind === 'invalid') return 'invalid'
+  return showCompatibilityNotice ? 'compatibility' : 'none'
 }
 
 export function PresetCard({ model, view }: PresetCardProps) {
@@ -28,12 +36,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
   const showCompatibilityNotice = isCompatibleRestore(view) || hasDroppedReferences(view)
   const isEditing = editingPresetId === view.preset.id
   const isDeleteConfirming = deleteConfirmId === view.preset.id
-  const activeStatus =
-    view.prompt.kind === 'invalid'
-      ? 'invalid'
-      : view.prompt.kind === 'restore' && showCompatibilityNotice
-        ? 'compatibility'
-        : 'none'
+  const activeStatus = resolvePresetActiveStatus(view.prompt.kind, showCompatibilityNotice)
   const statusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
     status: activeStatus,
     items: [
@@ -120,21 +123,21 @@ export function PresetCard({ model, view }: PresetCardProps) {
             icon: <ArchiveRestore aria-hidden="true" strokeWidth={1.9} />,
             tone: 'secondary',
             disabled: view.prompt.kind !== 'restore',
-            onClick: () => restorePreset(view),
+            onClick: () => { restorePreset(view); },
           },
           {
             id: 'edit-preset',
             label: t({ zh: '编辑', en: 'Edit' }),
             icon: <Pencil aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
-            onClick: () => startEditingPreset(view.preset),
+            onClick: () => { startEditingPreset(view.preset); },
           },
           {
             id: 'confirm-delete',
             label: t({ zh: '确认删除', en: 'Confirm delete' }),
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             hidden: !isDeleteConfirming,
-            onClick: () => deletePreset(view.preset),
+            onClick: () => { deletePreset(view.preset); },
           },
           {
             id: 'cancel-delete',
@@ -150,7 +153,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: isDeleteConfirming,
-            onClick: () => openDeleteConfirm(view.preset.id),
+            onClick: () => { openDeleteConfirm(view.preset.id); },
           },
         ]}
       />

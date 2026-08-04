@@ -92,13 +92,13 @@ export function resolvePreparedAssetState(
   preparedEntry: PreparedSkelAnimEntry | null,
   loadErrorEntry: SkelAnimLoadErrorEntry | null,
 ): PreparedAssetState {
-  const prepared = assetPath && preparedEntry?.assetPath === assetPath ? preparedEntry.value : null
-  const loadError = assetPath && loadErrorEntry?.assetPath === assetPath ? loadErrorEntry.message : null
+  const prepared = assetPath !== null && preparedEntry?.assetPath === assetPath ? preparedEntry.value : null
+  const loadError = assetPath !== null && loadErrorEntry?.assetPath === assetPath ? loadErrorEntry.message : null
 
   return {
     prepared,
     loadError,
-    isLoading: Boolean(assetPath && !prepared && !loadError),
+    isLoading: assetPath !== null && prepared === null && loadError === null,
   }
 }
 
@@ -175,17 +175,18 @@ export function buildSkelAnimStatusText({
   prefersReducedMotion,
   labels,
 }: BuildSkelAnimStatusTextOptions) {
-  if (loadError) {
+  if (loadError !== null && loadError !== '') {
     return `${labels.error} · ${loadError}`
   }
 
   if (showCanvas) {
-    return `${labels.animated}${prefersReducedMotion ? ` · ${labels.reducedMotion}` : ''}`
+    const reducedMotionSuffix = prefersReducedMotion ? ` · ${labels.reducedMotion}` : ''
+    return `${labels.animated}${reducedMotionSuffix}`
   }
 
   return labels.fallback
 }
 
 export function buildSkelAnimRootClassName(className?: string) {
-  return className ? `skelanim-player ${className}` : 'skelanim-player'
+  return className !== undefined && className !== '' ? `skelanim-player ${className}` : 'skelanim-player'
 }

@@ -43,9 +43,9 @@ export function buildIllustrationFilterActions({
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
-    resetExtraFilters: () => setViewFilter('all'),
+    resetExtraFilters: () => { setViewFilter('all'); },
     extraChipMutations: {
-      view: () => setViewFilter('all'),
+      view: () => { setViewFilter('all'); },
     },
   })
 

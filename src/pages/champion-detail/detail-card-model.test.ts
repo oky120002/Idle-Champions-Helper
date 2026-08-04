@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { resolveSkinPreviewUrl } from './detail-card-model'
 import type { ChampionIllustration } from '../../domain/types'
+import { resolveSkinPreviewUrl } from './detail-card-model'
 
 function createSkinIllustration(): ChampionIllustration {
   return {

@@ -3,13 +3,41 @@ import { PageHeaderMetrics, type PageHeaderMetricItem } from '../PageHeaderMetri
 import { WorkbenchFilterResultsHeader } from './WorkbenchScaffold'
 
 interface WorkbenchFilterMetricsHeaderProps {
-  items: PageHeaderMetricItem[]
-  activeFilters?: string[]
-  filterSummaryPrefix?: string
-  eyebrow?: string
-  title?: ReactNode
-  description?: ReactNode
-  className?: string
+  readonly items: PageHeaderMetricItem[]
+  readonly activeFilters?: string[]
+  readonly filterSummaryPrefix?: string
+  readonly eyebrow?: string
+  readonly title?: ReactNode
+  readonly description?: ReactNode
+  readonly className?: string
+}
+
+const MIN_METRICS_SCALE = 0.5
+
+function applyMetricsScale(target: HTMLElement, currentScale: number): number {
+  const metricsRow = target.querySelector('.page-header-metrics')
+
+  if (!(metricsRow instanceof HTMLElement)) {
+    return currentScale
+  }
+
+  target.style.setProperty('--workbench-metrics-scale', '1')
+
+  const availableWidth = getVisibleInlineWidth(target)
+  const naturalWidth = metricsRow.getBoundingClientRect().width
+
+  if (availableWidth <= 0 || naturalWidth <= availableWidth) {
+    return 1
+  }
+
+  const nextScale = Math.max(MIN_METRICS_SCALE, (availableWidth / naturalWidth) * 0.985)
+
+  if (Math.abs(nextScale - currentScale) < 0.01) {
+    return currentScale
+  }
+
+  target.style.setProperty('--workbench-metrics-scale', `${nextScale}`)
+  return nextScale
 }
 
 function getVisibleInlineWidth(element: HTMLElement): number {
@@ -46,10 +74,9 @@ export function WorkbenchFilterMetricsHeader({
     const element = metricsFitRef.current
 
     if (element === null) {
-      return
+      return undefined
     }
 
-    const MIN_SCALE = 0.5
     let currentScale = 1
 
     const applyScale = () => {
@@ -59,40 +86,13 @@ export function WorkbenchFilterMetricsHeader({
         return
       }
 
-      const metricsRow = target.querySelector('.page-header-metrics')
-
-      if (!(metricsRow instanceof HTMLElement)) {
-        return
-      }
-
-      target.style.setProperty('--workbench-metrics-scale', '1')
-
-      const availableWidth = getVisibleInlineWidth(target)
-      const naturalWidth = metricsRow.getBoundingClientRect().width
-
-      if (availableWidth <= 0 || naturalWidth <= availableWidth) {
-        if (currentScale !== 1) {
-          currentScale = 1
-          target.style.setProperty('--workbench-metrics-scale', '1')
-        }
-
-        return
-      }
-
-      const nextScale = Math.max(MIN_SCALE, (availableWidth / naturalWidth) * 0.985)
-
-      if (Math.abs(nextScale - currentScale) < 0.01) {
-        return
-      }
-
-      currentScale = nextScale
-      target.style.setProperty('--workbench-metrics-scale', `${nextScale}`)
+      currentScale = applyMetricsScale(target, currentScale)
     }
 
     applyScale()
 
     if (typeof ResizeObserver === 'undefined') {
-      return
+      return undefined
     }
 
     let frameId: number | null = null

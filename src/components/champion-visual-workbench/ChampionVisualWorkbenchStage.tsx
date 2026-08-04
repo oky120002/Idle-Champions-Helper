@@ -4,7 +4,7 @@ import { getDeliveryLabel, getPreviewStageClassName } from './asset-model'
 import type { ChampionVisualWorkbenchModel } from './types'
 
 type ChampionVisualWorkbenchStageProps = {
-  model: ChampionVisualWorkbenchModel
+  readonly model: ChampionVisualWorkbenchModel
 }
 
 export function ChampionVisualWorkbenchStage({ model }: ChampionVisualWorkbenchStageProps) {

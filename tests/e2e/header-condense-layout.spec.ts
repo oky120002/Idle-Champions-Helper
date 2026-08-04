@@ -135,6 +135,7 @@ test('英雄筛选页桌面端应默认使用紧凑头部，并锁定整页外�
 
   const scrolledTop = await scrollWindowInstantly(page, 320)
   expect(scrolledTop).toBe(0)
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- 头部 condense CSS 动画 620ms 完成后才能读取稳定终态
   await page.waitForTimeout(headerCondenseAnimationWaitMs)
 
   const condensedMetrics = await getHeaderMetrics(page)
@@ -165,6 +166,7 @@ test('英雄筛选页桌面端应默认使用紧凑头部，并锁定整页外�
     })
 
   await scrollWindowInstantly(page, 0)
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- 头部 condense CSS 动画 620ms 完成后才能读取稳定终态
   await page.waitForTimeout(headerCondenseAnimationWaitMs)
   await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
 })

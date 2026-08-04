@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { buildCandidatePool } from './candidatePool'
 import { createOwnedHero } from '../user-profile/fixtures'
 import type { OwnedHero } from '../user-profile/types'
+import { buildCandidatePool } from './candidatePool'
 
 describe('candidate pool modes', () => {
   const ownedHeroes: OwnedHero[] = [

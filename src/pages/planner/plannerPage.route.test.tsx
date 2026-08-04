@@ -4,17 +4,6 @@ import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../../data/client', async () => {
-  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
-
-  return {
-    ...actual,
-    loadVersion: vi.fn(),
-    loadCollection: vi.fn(),
-    fetchJson: vi.fn(),
-  }
-})
-
 import { App } from '../../app/App'
 import { I18nProvider } from '../../app/i18n'
 import { ThemeProvider } from '../../app/theme'
@@ -32,6 +21,17 @@ import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
 import type { OfficialPlannerScenarioModel } from '../../domain/planner/plannerModel'
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../domain/types'
 import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
+
+vi.mock('../../data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
+
+  return {
+    ...actual,
+    loadVersion: vi.fn(),
+    loadCollection: vi.fn(),
+    fetchJson: vi.fn(),
+  }
+})
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 const mockedLoadVersion = vi.mocked(loadVersion)
@@ -248,7 +248,7 @@ describe('planner route and navigation', () => {
     expect(within(result).getByText(/^核心英雄 DPS$/)).toBeInTheDocument()
 
     const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
-      .map((item) => item.textContent ?? '')
+      .map((item) => item.textContent)
     expect(placementTexts).toHaveLength(4)
     expect(placementTexts.some((text) => text.includes('bruenor'))).toBe(true)
     expect(placementTexts.some((text) => text.includes('celeste'))).toBe(true)
@@ -283,7 +283,7 @@ describe('planner route and navigation', () => {
 
     const result = await screen.findByRole('article', { name: /推荐结果/ })
     const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
-      .map((item) => item.textContent ?? '')
+      .map((item) => item.textContent)
     const seatOneHeroes = placementTexts.filter((text) => text.includes('bruenor') || text.includes('asharra'))
     expect(seatOneHeroes).toHaveLength(1)
   })

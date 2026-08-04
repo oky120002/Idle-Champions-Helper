@@ -23,9 +23,9 @@ async function resetUserDataState(page: Page, sourcePreference: string | null = 
 
     await new Promise<void>((resolve) => {
       const request = window.indexedDB.deleteDatabase(appDatabaseName)
-      request.onsuccess = () => resolve()
-      request.onerror = () => resolve()
-      request.onblocked = () => resolve()
+      request.onsuccess = () => { resolve(); }
+      request.onerror = () => { resolve(); }
+      request.onblocked = () => { resolve(); }
     })
   }, {
     appDatabaseName: APP_DATABASE_NAME,
@@ -40,9 +40,9 @@ async function seedBrowserSnapshot(page: Page, ownedHeroes: SeededOwnedHero[]) {
       await new Promise<void>((resolve) => {
         const deleteRequest = window.indexedDB.deleteDatabase(appDatabaseName)
 
-        deleteRequest.onsuccess = () => resolve()
-        deleteRequest.onerror = () => resolve()
-        deleteRequest.onblocked = () => resolve()
+        deleteRequest.onsuccess = () => { resolve(); }
+        deleteRequest.onerror = () => { resolve(); }
+        deleteRequest.onblocked = () => { resolve(); }
       })
 
       await new Promise<void>((resolve, reject) => {

@@ -1,13 +1,15 @@
+import { Buffer } from 'node:buffer'
+import process from 'node:process'
 import { mkdir, readdir, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { parseArgs } from 'node:util'
+import { pathToFileURL } from 'node:url'
+import { cropOpaqueBounds } from './data/png-image-helpers.ts'
 import {
   readJson,
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { cropOpaqueBounds } from './data/png-image-helpers.ts'
-import path from 'node:path'
-import { parseArgs } from 'node:util'
-import { pathToFileURL } from 'node:url'
 import {
   DEFAULT_MASTER_API_URL,
   buildGraphicMap,
@@ -319,7 +321,8 @@ async function main(): Promise<void> {
   console.log(`装备 icon 同步完成：${result.count} 项 -> ${result.outputDir}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryPoint = process.argv[1]
+if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
   main().catch((error: unknown) => {
     console.error(`同步装备 icon 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

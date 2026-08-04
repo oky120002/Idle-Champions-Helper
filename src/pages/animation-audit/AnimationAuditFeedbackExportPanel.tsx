@@ -2,18 +2,18 @@ import { ChevronDown, Clipboard, Eraser } from 'lucide-react'
 import type { AnimationAuditCopyState } from './types'
 
 interface AnimationAuditFeedbackExportPanelProps {
-  feedbackSummary: {
-    selected: number
-    withVerdict: number
-    withTags: number
-    withNotes: number
+  readonly feedbackSummary: {
+    readonly selected: number
+    readonly withVerdict: number
+    readonly withTags: number
+    readonly withNotes: number
   }
-  hasFeedback: boolean
-  feedbackCopyState: AnimationAuditCopyState
-  feedbackPreviewJson: string
-  onCopy: () => void
-  onClearAll: () => void
-  t: (text: { zh: string; en: string }) => string
+  readonly hasFeedback: boolean
+  readonly feedbackCopyState: AnimationAuditCopyState
+  readonly feedbackPreviewJson: string
+  readonly onCopy: () => void
+  readonly onClearAll: () => void
+  readonly t: (text: { zh: string; en: string }) => string
 }
 
 function buildFeedbackCopyStateLabel(

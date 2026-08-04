@@ -33,16 +33,19 @@ test('英雄详情页在分区内连续向下滚动时不会被 hash 同步拉�
   const initialScrollTop = await getPaneScrollTop(page)
 
   await scrollPaneBy(page, 320)
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- hash 同步是异步竞态，需固定等待观察滚动位置是否被拉回
   await page.waitForTimeout(150)
 
   const firstScrollTop = await getPaneScrollTop(page)
 
   await scrollPaneBy(page, 320)
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- hash 同步是异步竞态，需固定等待观察滚动位置是否被拉回
   await page.waitForTimeout(250)
 
   const secondScrollTop = await getPaneScrollTop(page)
 
   await scrollPaneBy(page, 320)
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- hash 同步是异步竞态，需固定等待观察滚动位置是否被拉回
   await page.waitForTimeout(250)
 
   const thirdScrollTop = await getPaneScrollTop(page)

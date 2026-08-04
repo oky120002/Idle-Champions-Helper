@@ -20,53 +20,20 @@ import { createExclusiveStatusBannerItems } from '../components/statusBannerStac
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetCard } from './presets/PresetCard'
 import { usePresetsPageModel } from './presets/usePresetsPageModel'
+import type { PresetsPageModel } from './presets/types'
 
-export function PresetsPage() {
-  const model = usePresetsPageModel()
-  const location = useLocation()
-  const contentScrollRef = useRef<HTMLDivElement | null>(null)
-  const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
-  const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const { state, t, pageStatus, metrics } = model
-  const contentStatusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
-    status: state.status,
-    items: [
-      {
-        id: 'loading',
-        when: 'loading',
-        tone: 'info',
-        children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }),
-      },
-      {
-        id: 'error',
-        when: 'error',
-        tone: 'error',
-        title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
-        ...(state.status === 'error' ? { detail: state.message } : {}),
-      },
-    ],
-  })
-  const managementScopeSections: SurfaceCardContentSection[] = [
+type Translator = PresetsPageModel['t']
+
+function buildManagementScopeSections(t: Translator): SurfaceCardContentSection[] {
+  return [
     {
       id: 'what-works-now',
       title: t({ zh: '当前范围', en: 'What works now' }),
       items: [
-        {
-          id: 'browse-presets',
-          content: t({ zh: '查看命名方案列表', en: 'Browse named presets' }),
-        },
-        {
-          id: 'edit-presets',
-          content: t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' }),
-        },
-        {
-          id: 'delete-presets',
-          content: t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' }),
-        },
-        {
-          id: 'restore-presets',
-          content: t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' }),
-        },
+        { id: 'browse-presets', content: t({ zh: '查看命名方案列表', en: 'Browse named presets' }) },
+        { id: 'edit-presets', content: t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' }) },
+        { id: 'delete-presets', content: t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' }) },
+        { id: 'restore-presets', content: t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' }) },
       ],
     },
     {
@@ -78,21 +45,27 @@ export function PresetsPage() {
       }),
     },
   ]
+}
+
+export function PresetsPage() {
+  const model = usePresetsPageModel()
+  const location = useLocation()
+  const contentScrollRef = useRef<HTMLDivElement | null>(null)
+  const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
+  const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
+  const { state, t, pageStatus, metrics } = model
+  const contentStatusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
+    status: state.status,
+    items: [
+      { id: 'loading', when: 'loading', tone: 'info', children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }) },
+      { id: 'error', when: 'error', tone: 'error', title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }), ...(state.status === 'error' ? { detail: state.message } : {}) },
+    ],
+  })
+  const managementScopeSections = buildManagementScopeSections(t)
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchBadgeItem({
-      id: 'preset-total',
-      label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }),
-    }),
-    createWorkbenchBadgeItem({
-      id: 'preset-recoverable',
-      tone: 'muted',
-      label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }),
-    }),
-    createWorkbenchShareItem({
-      t,
-      state: shareLinkState,
-      onCopy: copyCurrentLink,
-    }),
+    createWorkbenchBadgeItem({ id: 'preset-total', label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }) }),
+    createWorkbenchBadgeItem({ id: 'preset-recoverable', tone: 'muted', label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }) }),
+    createWorkbenchShareItem({ t, state: shareLinkState, onCopy: copyCurrentLink }),
   ]
 
   return (

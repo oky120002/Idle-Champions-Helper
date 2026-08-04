@@ -3,9 +3,9 @@ import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
 
 interface PlannerCarryLockProps {
-  championById: Map<string, Champion>
-  value: string | null
-  onChange: (heroId: string | null) => void
+  readonly championById: Map<string, Champion>
+  readonly value: string | null
+  readonly onChange: (heroId: string | null) => void
 }
 
 /**
@@ -27,7 +27,7 @@ export function PlannerCarryLock({ championById, value, onChange }: PlannerCarry
           className="slot-select"
           data-testid="planner-carry-lock-select"
           value={value ?? ''}
-          onChange={(event) => onChange(event.target.value || null)}
+          onChange={(event) => { onChange(event.target.value || null); }}
         >
           <option value="">{t({ zh: '不指定（自动推荐）', en: 'Auto (no lock)' })}</option>
           {champions.map((champion) => (

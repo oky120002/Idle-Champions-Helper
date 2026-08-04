@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
+import { queryOrFail } from '../../../tests/utils/dom-assertions'
 import { PlannerCandidateMode } from './PlannerCandidateMode'
 
 describe('PlannerCandidateMode', () => {
@@ -26,7 +27,7 @@ describe('PlannerCandidateMode', () => {
       </I18nProvider>,
     )
 
-    await user.click(container.querySelector('[data-candidate-mode="all-hypothetical"]')!)
+    await user.click(queryOrFail(container, '[data-candidate-mode="all-hypothetical"]'))
 
     expect(onChange).toHaveBeenCalledWith('all-hypothetical')
   })

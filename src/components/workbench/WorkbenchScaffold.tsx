@@ -1,180 +1,39 @@
-import type { CSSProperties, ReactNode } from 'react'
-import { useI18n } from '../../app/i18n'
+import type { ReactNode } from 'react'
+
 export type WorkbenchAccentTone = 'copper' | 'steel'
 export type WorkbenchBadgeVariant = 'chrome' | 'filter'; export type WorkbenchBadgeTone = 'default' | 'muted'
 export type WorkbenchShareState = 'idle' | 'success' | 'error'
 
-interface WorkbenchToolbarMarkProps {
-  label: string
-  accentTone?: WorkbenchAccentTone
-  className?: string
-}
-
-interface WorkbenchToolbarLeadStatusProps {
-  label: string
-  status: ReactNode
-  statusTitle?: string
-  accentTone?: WorkbenchAccentTone
-  className?: string
-}
-
-interface WorkbenchToolbarFilterStatusProps {
-  label: string
-  activeCount: number
-  accentTone?: WorkbenchAccentTone
-  className?: string
-}
-
-interface WorkbenchToolbarCopyProps {
-  kicker?: ReactNode
-  title: ReactNode
-  detail?: ReactNode
-  className?: string
-}
-
-interface WorkbenchToolbarActionClusterProps {
-  children: ReactNode
-  className?: string
-}
-
-interface WorkbenchToolbarBadgeProps {
-  children: ReactNode
-  variant?: WorkbenchBadgeVariant
-  tone?: WorkbenchBadgeTone
-  className?: string
-}
-
 interface WorkbenchSidebarHeaderProps {
-  kicker: ReactNode
-  title?: ReactNode
-  description?: ReactNode
-  status?: ReactNode
-  statusLabel?: string
-  className?: string
+  readonly kicker: ReactNode
+  readonly title?: ReactNode
+  readonly description?: ReactNode
+  readonly status?: ReactNode
+  readonly statusLabel?: string
+  readonly className?: string
 }
 
 interface WorkbenchContentStackProps {
-  children: ReactNode
-  className?: string
+  readonly children: ReactNode
+  readonly className?: string
 }
 
 interface WorkbenchFilterResultsHeaderProps {
-  eyebrow?: string
-  title?: ReactNode
-  description?: ReactNode
-  metrics?: ReactNode
-  filterSummary?: ReactNode
-  reserveFilterSummarySpace?: boolean
-  className?: string
-}
-
-const ACCENT_TONE_COLOR: Record<WorkbenchAccentTone, string> = {
-  copper: 'var(--color-copper)',
-  steel: 'var(--color-steel)',
+  readonly eyebrow?: string
+  readonly title?: ReactNode
+  readonly description?: ReactNode
+  readonly metrics?: ReactNode
+  readonly filterSummary?: ReactNode
+  readonly reserveFilterSummarySpace?: boolean
+  readonly className?: string
 }
 
 function joinClasses(...classNames: Array<string | undefined | false>) {
   return classNames.filter(Boolean).join(' ')
 }
 
-export function WorkbenchToolbarMark({ label, accentTone = 'copper', className }: WorkbenchToolbarMarkProps) {
-  return (
-    <div
-      className={joinClasses('workbench-page__toolbar-mark', className)}
-      style={{ '--workbench-page-accent': ACCENT_TONE_COLOR[accentTone] } as CSSProperties}
-      aria-hidden="true"
-    >
-      <span className="workbench-page__toolbar-mark-dot" />
-      <span className="workbench-page__toolbar-mark-label">{label}</span>
-    </div>
-  )
-}
-
-export function WorkbenchToolbarLeadStatus({
-  label,
-  status,
-  statusTitle,
-  accentTone = 'copper',
-  className,
-}: WorkbenchToolbarLeadStatusProps) {
-  return (
-    <div className={joinClasses('workbench-page__toolbar-lead-status-group', className)}>
-      <WorkbenchToolbarMark
-        label={label}
-        accentTone={accentTone}
-        className="workbench-page__toolbar-lead-status-mark"
-      />
-      <span
-        className="workbench-page__toolbar-lead-status"
-        aria-live="polite"
-        title={statusTitle}
-      >
-        {status}
-      </span>
-    </div>
-  )
-}
-
-export function WorkbenchToolbarFilterStatus({
-  label,
-  activeCount,
-  accentTone = 'copper',
-  className,
-}: WorkbenchToolbarFilterStatusProps) {
-  const { t } = useI18n()
-  const status = activeCount > 0
-    ? t({ zh: `${activeCount} 项条件`, en: `${activeCount} active` })
-    : t({ zh: '条件待命', en: 'Filters idle' })
-  const statusTitle = activeCount > 0
-    ? t({ zh: `${activeCount} 项筛选条件已启用`, en: `${activeCount} active filters enabled` })
-    : status
-
-  return (
-    <WorkbenchToolbarLeadStatus
-      label={label}
-      status={status}
-      statusTitle={statusTitle}
-      accentTone={accentTone}
-      {...(className !== undefined ? { className } : {})}
-    />
-  )
-}
-
-export function WorkbenchToolbarCopy({ kicker, title, detail, className }: WorkbenchToolbarCopyProps) {
-  return (
-    <div className={joinClasses('workbench-page__toolbar-copy', className)}>
-      {kicker != null ? <span className="workbench-page__toolbar-kicker">{kicker}</span> : null}
-      <strong className="workbench-page__toolbar-title">{title}</strong>
-      {detail != null ? <span className="workbench-page__toolbar-detail">{detail}</span> : null}
-    </div>
-  )
-}
-
-export function WorkbenchToolbarActionCluster({
-  children,
-  className,
-}: WorkbenchToolbarActionClusterProps) {
-  return <div className={joinClasses('workbench-page__toolbar-action-cluster', className)}>{children}</div>
-}
-
-export function WorkbenchToolbarBadge({
-  children,
-  variant = 'chrome',
-  tone = 'default',
-  className,
-}: WorkbenchToolbarBadgeProps) {
-  return (
-    <span
-      className={joinClasses(
-        'workbench-page__toolbar-badge',
-        variant === 'filter' ? 'filter-sidebar-panel__badge' : '',
-        tone === 'muted' ? 'workbench-page__toolbar-badge--muted' : '',
-        className,
-      )}
-    >
-      {children}
-    </span>
-  )
+function hasNode(node: ReactNode | undefined): boolean {
+  return node !== undefined && node !== null
 }
 
 export function WorkbenchSidebarHeader({
@@ -189,10 +48,10 @@ export function WorkbenchSidebarHeader({
     <div className={joinClasses('workbench-page__sidebar-header', className)}>
       <div className="workbench-page__sidebar-copy">
         <p className="workbench-page__sidebar-kicker">{kicker}</p>
-        {title != null ? <h3 className="workbench-page__sidebar-title">{title}</h3> : null}
-        {description != null ? <p className="workbench-page__sidebar-description">{description}</p> : null}
+        {hasNode(title) ? <h3 className="workbench-page__sidebar-title">{title}</h3> : null}
+        {hasNode(description) ? <p className="workbench-page__sidebar-description">{description}</p> : null}
       </div>
-      {status != null ? (
+      {hasNode(status) ? (
         <div
           className="workbench-page__sidebar-status"
           role="group"
@@ -205,7 +64,7 @@ export function WorkbenchSidebarHeader({
   )
 }
 
-export function WorkbenchSidebarLoading({ className }: { className?: string }) {
+export function WorkbenchSidebarLoading({ className }: { readonly className?: string }) {
   return <div className={joinClasses('workbench-page__sidebar-loading', className)} aria-hidden="true" />
 }
 
@@ -216,10 +75,28 @@ export function WorkbenchContentStack({
   return <div className={joinClasses('workbench-page__content-stack', className)}>{children}</div>
 }
 
+function renderFilterSummary(filterSummary: ReactNode | undefined, reserveFilterSummarySpace: boolean): ReactNode {
+  if (filterSummary === undefined && !reserveFilterSummarySpace) {
+    return null
+  }
+
+  const ariaProps = filterSummary !== undefined ? { 'aria-live': 'polite' as const } : { 'aria-hidden': true }
+
+  return (
+    <p
+      className="results-panel__filter-summary workbench-filter-header__filter-summary"
+      {...ariaProps}
+      data-empty={filterSummary === undefined ? 'true' : undefined}
+    >
+      {filterSummary ?? ' '}
+    </p>
+  )
+}
+
 export function WorkbenchFilterResultsHeader({
   eyebrow, title, description, metrics, filterSummary, reserveFilterSummarySpace = false, className,
 }: WorkbenchFilterResultsHeaderProps) {
-  const hasCopy = eyebrow != null || title != null || description != null
+  const hasCopy = hasNode(eyebrow) || hasNode(title) || hasNode(description)
 
   return (
     <div
@@ -234,32 +111,24 @@ export function WorkbenchFilterResultsHeader({
         <div className="workbench-filter-header__titlebar">
           {hasCopy ? (
             <div className="workbench-filter-header__copy">
-              {eyebrow != null ? (
+              {hasNode(eyebrow) ? (
                 <p className="page-tab-header__eyebrow page-tab-header__eyebrow--accent-only workbench-filter-header__kicker">
                   <span className="page-tab-header__eyebrow-accent">{eyebrow}</span>
                 </p>
               ) : null}
-              {title != null ? <h2 className="workbench-filter-header__title">{title}</h2> : null}
-              {description != null ? (
+              {hasNode(title) ? <h2 className="workbench-filter-header__title">{title}</h2> : null}
+              {hasNode(description) ? (
                 <p className="supporting-text workbench-filter-header__description">{description}</p>
               ) : null}
             </div>
           ) : null}
 
-          {metrics != null ? (
+          {hasNode(metrics) ? (
             <div className="workbench-filter-header__metrics">{metrics}</div>
           ) : null}
         </div>
 
-        {filterSummary !== undefined || reserveFilterSummarySpace ? (
-          <p
-            className="results-panel__filter-summary workbench-filter-header__filter-summary"
-            {...(filterSummary !== undefined ? { 'aria-live': 'polite' } : { 'aria-hidden': true })}
-            data-empty={filterSummary === undefined ? 'true' : undefined}
-          >
-            {filterSummary ?? '\u00A0'}
-          </p>
-        ) : null}
+        {renderFilterSummary(filterSummary, reserveFilterSummarySpace)}
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
 import type { Champion } from '../../domain/types'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { HeroPicker } from './HeroPicker'
 
 const champions: Champion[] = [
@@ -72,7 +73,7 @@ describe('HeroPicker', () => {
     )
 
     await user.click(screen.getByTestId('hero-picker-trigger'))
-    const jimCard = screen.getByText('吉姆').closest('button')!
+    const jimCard = unwrap(screen.getByText('吉姆').closest('button'), 'jim button not found')
 
     expect(jimCard).toHaveAttribute('data-hero-id', 'jim')
     expect(jimCard).not.toHaveAttribute('draggable')
@@ -139,7 +140,7 @@ describe('HeroPicker', () => {
 
     expect(screen.queryByText('未放置')).toBeNull()
     // jsdom 不实现 DataTransfer，无法验证 dataTransfer 写入；仅校验英雄卡为 div + draggable + data-hero-id。
-    const jimCard = screen.getByText('吉姆').closest('div')!
+    const jimCard = unwrap(screen.getByText('吉姆').closest('div'), 'jim div not found')
     expect(jimCard).toHaveAttribute('draggable', 'true')
     expect(jimCard).toHaveAttribute('data-hero-id', 'jim')
   })

@@ -175,10 +175,8 @@ export function getAreaHighlightLabel(highlight: VariantAreaHighlight, locale: A
   })()
 
   const loopHint =
-    highlight.loopAt && highlight.loopAt > 0
-      ? locale === 'zh-CN'
-        ? ` · 每 ${highlight.loopAt} 区循环`
-        : ` · repeats every ${highlight.loopAt}`
+    highlight.loopAt !== null && highlight.loopAt > 0
+      ? (locale === 'zh-CN' ? ` · 每 ${highlight.loopAt} 区循环` : ` · repeats every ${highlight.loopAt}`)
       : ''
 
   return `${prefix} · ${body}${loopHint}`

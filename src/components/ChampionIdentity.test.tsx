@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { ChampionIdentity } from './ChampionIdentity'
 import type { Champion } from '../domain/types'
+import { ChampionIdentity } from './ChampionIdentity'
 
 const bruenor: Champion = {
   id: '1',

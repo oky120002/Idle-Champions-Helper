@@ -72,7 +72,7 @@ export function buildHighlightedSnippet(
 
   let lastIndex = 0
   for (const match of window.matchAll(pattern)) {
-    const index = match.index ?? 0
+    const index = match.index
     if (index > lastIndex) {
       segments.push({ text: window.slice(lastIndex, index), match: false })
     }

@@ -43,12 +43,12 @@ export function useUserDataPageModel(): UserDataPageModel {
   function handleFillSample() {
     const sampleInput = buildSampleInput(method)
 
-    if (sampleInput.supportUrl) {
+    if (sampleInput.supportUrl !== undefined) {
       setSupportUrl(sampleInput.supportUrl)
       return
     }
 
-    if (sampleInput.manualUserId && sampleInput.manualHash) {
+    if (sampleInput.manualUserId !== undefined && sampleInput.manualHash !== undefined) {
       setManualUserId(sampleInput.manualUserId)
       setManualHash(sampleInput.manualHash)
       return
@@ -88,13 +88,13 @@ export function useUserDataPageModel(): UserDataPageModel {
     importMethodLabels,
     selectedMethod,
     maskedCredentials,
-    updateSupportUrl: setSupportUrl,
-    updateManualUserId: setManualUserId,
-    updateManualHash: setManualHash,
-    updateWebRequestLog: setWebRequestLog,
     handleParse,
     handleFillSample,
     handleClear,
     handleSelectMethod,
+    updateSupportUrl: setSupportUrl,
+    updateManualUserId: setManualUserId,
+    updateManualHash: setManualHash,
+    updateWebRequestLog: setWebRequestLog,
   }
 }

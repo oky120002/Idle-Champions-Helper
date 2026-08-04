@@ -1,12 +1,13 @@
+import process from 'node:process'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
 import { asArray, asRecord, readJson, readJsonIfExists, writeJson } from './io-utils.ts'
 import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './resource-sync-policy.ts'
 import { buildOfficialHeroModel } from './buildHeroModels.ts'
 import { buildOfficialScenarioModel } from './buildScenarioModels.ts'
 import { normalizeSemanticOverrides } from './buildSemanticOverrides.ts'
 import { buildSpecializationEntries, type SpecializationEntry } from './specialization-catalog.ts'
-import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'
@@ -98,8 +99,8 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
 
   await writeJson(path.join(versionDir, 'hero-abilities.json'), {
     items: heroAbilities,
-    updatedAt,
     pipelineHash: nextPipelineHash,
+    updatedAt,
   })
   await writeJson(path.join(versionDir, 'specialization-catalog.json'), {
     catalog: specializationCatalog,
@@ -134,7 +135,7 @@ async function main(): Promise<void> {
   console.log(`- scenarios: ${result.scenarioCount}`)
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error: unknown) => {
     const message = error instanceof Error ? error.message : String(error)
     console.error(`构建 hero ability model 失败：${message}`)

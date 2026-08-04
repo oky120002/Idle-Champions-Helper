@@ -39,19 +39,19 @@ describe('private snapshot manifest', () => {
 
   it('拒绝 tmp/private-user-data 之外的目标路径', () => {
     expect(() =>
-      writeManifest({
+      { writeManifest({
         targetDir: 'src/data/snapshots',
         manifest: stubManifest,
-      }),
+      }); },
     ).toThrow(/tmp[/\\]private-user-data/)
   })
 
   it('拒绝空路径', () => {
     expect(() =>
-      writeManifest({
+      { writeManifest({
         targetDir: '',
         manifest: stubManifest,
-      }),
+      }); },
     ).toThrow()
   })
 

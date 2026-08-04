@@ -15,27 +15,16 @@ import type {
 } from './types'
 
 export function isCampaignEnumGroup(value: unknown): value is CampaignEnumGroup {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'id' in value &&
-    value.id === 'campaigns' &&
-    'values' in value &&
-    Array.isArray(value.values)
-  )
+  if (typeof value !== 'object' || value === null) return false
+  if (!('id' in value) || value.id !== 'campaigns') return false
+  return 'values' in value && Array.isArray(value.values)
 }
 
 export function isLocalizedOption(value: unknown): value is LocalizedOption {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'id' in value &&
-    typeof value.id === 'string' &&
-    'original' in value &&
-    typeof value.original === 'string' &&
-    'display' in value &&
-    typeof value.display === 'string'
-  )
+  if (typeof value !== 'object' || value === null) return false
+  if (!('id' in value) || typeof value.id !== 'string') return false
+  if (!('original' in value) || typeof value.original !== 'string') return false
+  return 'display' in value && typeof value.display === 'string'
 }
 
 function toggleSelection(values: string[], nextValue: string): string[] {
@@ -140,21 +129,45 @@ function matchesVariantSearch(variant: Variant, query: string, locale: 'zh-CN' |
     return true
   }
 
-  return (
+  const matchesCoreText =
     matchesLocalizedText(variant.name, query) ||
-    matchesLocalizedText(variant.campaign, query) ||
+    matchesLocalizedText(variant.campaign, query)
+  const matchesOptionalText =
     (variant.adventure ? matchesLocalizedText(variant.adventure, query) : false) ||
-    (variant.scene ? matchesLocalizedText(variant.scene, query) : false) ||
+    (variant.scene ? matchesLocalizedText(variant.scene, query) : false)
+  const matchesListText =
     variant.restrictions.some((item) => matchesLocalizedText(item, query)) ||
-    variant.rewards.some((item) => matchesLocalizedText(item, query)) ||
-    variant.enemyTypes.some((item) => {
-      if (NON_DISPLAY_ENEMY_TAGS.has(item)) {
-        return false
-      }
+    variant.rewards.some((item) => matchesLocalizedText(item, query))
+  const matchesEnemyTypes = variant.enemyTypes.some((item) => {
+    if (NON_DISPLAY_ENEMY_TAGS.has(item)) return false
+    return getEnemyTypeLabel(item, locale).toLowerCase().includes(query) || item.includes(query)
+  })
 
-      return getEnemyTypeLabel(item, locale).toLowerCase().includes(query) || item.includes(query)
-    })
-  )
+  return matchesCoreText || matchesOptionalText || matchesListText || matchesEnemyTypes
+}
+
+function variantMatchesFilters(
+  variant: Variant,
+  ctx: {
+    query: string
+    locale: 'zh-CN' | 'en-US'
+    selectedCampaign: string
+    selectedEnemyTypeIds: string[]
+    selectedSceneIds: string[]
+    selectedAttackProfile: AttackProfileFilterId
+    selectedSpecialEnemyRange: SpecialEnemyFilterId
+    hasAreaFilter: boolean
+    areaNumber: number
+  },
+): boolean {
+  const { query, locale, selectedCampaign, selectedEnemyTypeIds, selectedSceneIds, selectedAttackProfile, selectedSpecialEnemyRange, hasAreaFilter, areaNumber } = ctx
+  const matchesCampaign = selectedCampaign === ALL_CAMPAIGNS || variant.campaign.id === selectedCampaign
+  const matchesEnemyTypes = selectedEnemyTypeIds.length === 0 || selectedEnemyTypeIds.some((t) => variant.enemyTypes.includes(t))
+  const matchesScenes = selectedSceneIds.length === 0 || (variant.scene ? selectedSceneIds.includes(variant.scene.id) : false)
+  const matchesAttackProfile = selectedAttackProfile === '__all__' || getAttackProfileId(variant) === selectedAttackProfile
+  const matchesSpecialEnemy = selectedSpecialEnemyRange === '__all__' || getSpecialEnemyRangeId(variant.specialEnemyCount) === selectedSpecialEnemyRange
+  const matchesArea = !hasAreaFilter || (variant.objectiveArea ?? 0) >= areaNumber
+  return [matchesCampaign, matchesEnemyTypes, matchesScenes, matchesAttackProfile, matchesSpecialEnemy, matchesArea, matchesVariantSearch(variant, query, locale)].every(Boolean)
 }
 
 export function filterVariants(options: {
@@ -168,48 +181,14 @@ export function filterVariants(options: {
   selectedSpecialEnemyRange: SpecialEnemyFilterId
   areaSearch: string
 }): Variant[] {
-  const {
-    variants,
-    locale,
-    search,
-    selectedCampaign,
-    selectedEnemyTypeIds,
-    selectedSceneIds,
-    selectedAttackProfile,
-    selectedSpecialEnemyRange,
-    areaSearch,
-  } = options
+  const { variants, locale, search, selectedCampaign, selectedEnemyTypeIds, selectedSceneIds, selectedAttackProfile, selectedSpecialEnemyRange, areaSearch } = options
   const query = search.trim().toLowerCase()
   const areaNumber = Number(areaSearch.trim())
   const hasAreaFilter = areaSearch.trim().length > 0 && Number.isFinite(areaNumber) && areaNumber > 0
 
-  return variants.filter((variant) => {
-    const matchesCampaign =
-      selectedCampaign === ALL_CAMPAIGNS || variant.campaign.id === selectedCampaign
-    const matchesEnemyTypes =
-      selectedEnemyTypeIds.length === 0 ||
-      selectedEnemyTypeIds.some((enemyType) => variant.enemyTypes.includes(enemyType))
-    const matchesScenes =
-      selectedSceneIds.length === 0 ||
-      (variant.scene ? selectedSceneIds.includes(variant.scene.id) : false)
-    const attackProfile = getAttackProfileId(variant)
-    const matchesAttackProfile =
-      selectedAttackProfile === '__all__' || attackProfile === selectedAttackProfile
-    const specialEnemyRange = getSpecialEnemyRangeId(variant.specialEnemyCount)
-    const matchesSpecialEnemyRange =
-      selectedSpecialEnemyRange === '__all__' || specialEnemyRange === selectedSpecialEnemyRange
-    const matchesArea = !hasAreaFilter || (variant.objectiveArea ?? 0) >= areaNumber
-
-    return (
-      matchesCampaign &&
-      matchesEnemyTypes &&
-      matchesScenes &&
-      matchesAttackProfile &&
-      matchesSpecialEnemyRange &&
-      matchesArea &&
-      matchesVariantSearch(variant, query, locale)
-    )
-  })
+  return variants.filter((variant) => variantMatchesFilters(variant, {
+    query, locale, selectedCampaign, selectedEnemyTypeIds, selectedSceneIds, selectedAttackProfile, selectedSpecialEnemyRange, hasAreaFilter, areaNumber,
+  }))
 }
 
 export function buildActiveVariantFilters(options: {
@@ -239,41 +218,23 @@ export function buildActiveVariantFilters(options: {
     .map((sceneId) => sceneOptions.find((option) => option.id === sceneId)?.label ?? sceneId)
     .filter(Boolean)
 
-  return [
-    search.trim()
-      ? locale === 'zh-CN'
-        ? `关键词：${search.trim()}`
-        : `Keyword: ${search.trim()}`
-      : null,
-    selectedCampaignLabel
-      ? locale === 'zh-CN'
-        ? `战役：${getLocalizedTextPair(selectedCampaignLabel, locale)}`
-        : `Campaign: ${getLocalizedTextPair(selectedCampaignLabel, locale)}`
-      : null,
-    selectedEnemyTypeIds.length > 0
-      ? locale === 'zh-CN'
-        ? `敌人：${selectedEnemyTypeIds.map((item) => getEnemyTypeLabel(item, locale)).join(' / ')}`
-        : `Enemy: ${selectedEnemyTypeIds.map((item) => getEnemyTypeLabel(item, locale)).join(' / ')}`
-      : null,
-    sceneLabels.length > 0
-      ? locale === 'zh-CN'
-        ? `场景：${sceneLabels.join(' / ')}`
-        : `Scene: ${sceneLabels.join(' / ')}`
-      : null,
-    selectedAttackProfile !== '__all__'
-      ? locale === 'zh-CN'
-        ? `攻击占比：${getAttackProfileLabel(selectedAttackProfile, locale)}`
-        : `Attack mix: ${getAttackProfileLabel(selectedAttackProfile, locale)}`
-      : null,
-    selectedSpecialEnemyRange !== '__all__'
-      ? locale === 'zh-CN'
-        ? `特别敌人：${getSpecialEnemyRangeLabel(selectedSpecialEnemyRange, locale)}`
-        : `Special enemies: ${getSpecialEnemyRangeLabel(selectedSpecialEnemyRange, locale)}`
-      : null,
-    areaSearch.trim()
-      ? locale === 'zh-CN'
-        ? `区域：${areaSearch.trim()} 区`
-        : `Area: ${areaSearch.trim()}`
-      : null,
-  ].filter((item): item is string => item !== null)
+  const enemyTypeList = selectedEnemyTypeIds.map((item) => getEnemyTypeLabel(item, locale)).join(' / ')
+  const pick = <T>(zh: T, en: T): T => (locale === 'zh-CN' ? zh : en)
+  const trimmedSearch = search.trim()
+  const trimmedArea = areaSearch.trim()
+  const campaignText = selectedCampaignLabel ? getLocalizedTextPair(selectedCampaignLabel, locale) : null
+  const attackProfileText = selectedAttackProfile !== '__all__' ? getAttackProfileLabel(selectedAttackProfile, locale) : null
+  const specialEnemyText = selectedSpecialEnemyRange !== '__all__' ? getSpecialEnemyRangeLabel(selectedSpecialEnemyRange, locale) : null
+
+  const labels: (string | null)[] = [
+    trimmedSearch ? pick(`关键词：${trimmedSearch}`, `Keyword: ${trimmedSearch}`) : null,
+    campaignText !== null ? pick(`战役：${campaignText}`, `Campaign: ${campaignText}`) : null,
+    enemyTypeList ? pick(`敌人：${enemyTypeList}`, `Enemy: ${enemyTypeList}`) : null,
+    sceneLabels.length > 0 ? pick(`场景：${sceneLabels.join(' / ')}`, `Scene: ${sceneLabels.join(' / ')}`) : null,
+    attackProfileText !== null ? pick(`攻击占比：${attackProfileText}`, `Attack mix: ${attackProfileText}`) : null,
+    specialEnemyText !== null ? pick(`特别敌人：${specialEnemyText}`, `Special enemies: ${specialEnemyText}`) : null,
+    trimmedArea ? pick(`区域：${trimmedArea} 区`, `Area: ${trimmedArea}`) : null,
+  ]
+
+  return labels.filter((item): item is string => item !== null)
 }

@@ -1,17 +1,7 @@
+import { Buffer } from 'node:buffer'
 import { deflateSync } from 'node:zlib'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
-vi.mock('../../data/client', async () => {
-  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
-
-  return {
-    ...actual,
-    loadBinaryData: vi.fn(),
-    loadChampionDetail: vi.fn(),
-    loadCollection: vi.fn(),
-  }
-})
 
 import {
   animatedSkinFixture,
@@ -28,6 +18,17 @@ import {
   renderChampionDetailPage,
   restoreChampionDetailDomEnvironment,
 } from './championDetailPageTestHarness'
+
+vi.mock('../../data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
+
+  return {
+    ...actual,
+    loadBinaryData: vi.fn(),
+    loadChampionDetail: vi.fn(),
+    loadCollection: vi.fn(),
+  }
+})
 
 beforeEach(() => {
   prepareChampionDetailDomEnvironment()

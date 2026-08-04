@@ -1,7 +1,9 @@
+import process from 'node:process'
 import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
 import type { ChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
@@ -28,7 +30,6 @@ import {
   runWithConcurrency,
 } from './data/io-utils.ts'
 import type { RemoteGraphicAsset } from './data/champion-asset-helpers.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -548,7 +549,8 @@ async function main(): Promise<void> {
   console.log(`- reused: ${result.reusedCount}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryPoint = process.argv[1]
+if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
   main().catch((error: unknown) => {
     console.error(`同步动画资源失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

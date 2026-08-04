@@ -12,7 +12,7 @@ export async function readRecentFormationDraft(): Promise<FormationDraft | null>
     const store = transaction.objectStore(APP_STORE_NAMES.formationDrafts)
     const raw = await requestToPromise(store.get(RECENT_DRAFT_KEY) as IDBRequest<unknown>)
     await waitForTransaction(transaction)
-    return raw ? parseStoredRecord<FormationDraft>(raw, formationDraftSchema, 'formation draft') : null
+    return raw !== undefined ? parseStoredRecord<FormationDraft>(raw, formationDraftSchema, 'formation draft') : null
   } finally {
     database.close()
   }

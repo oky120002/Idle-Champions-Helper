@@ -178,6 +178,7 @@ export function useVariantsPageModel(): VariantsPageModel {
       ? selectedCampaignGroup.campaign
       : null
   const activeFilters = buildVariantNavigationFilters({
+    sceneOptions: optionState.sceneOptions,
     locale,
     t,
     search,
@@ -185,7 +186,6 @@ export function useVariantsPageModel(): VariantsPageModel {
     selectedAdventureGroup,
     selectedEnemyTypeIds,
     selectedSceneIds,
-    sceneOptions: optionState.sceneOptions,
     selectedAttackProfile,
     selectedSpecialEnemyRange,
     areaSearch,
@@ -233,7 +233,6 @@ export function useVariantsPageModel(): VariantsPageModel {
     state,
     filters,
     shareLinkState,
-    showResultsQuickNavTop: motion.showResultsQuickNavTop,
     filteredVariants,
     visibleVariants,
     allCampaignGroups,
@@ -245,43 +244,45 @@ export function useVariantsPageModel(): VariantsPageModel {
     scenesWithResults,
     activeFilters,
     selectedCampaignLabel,
+    copyCurrentLink,
     enemyTypeOptions: optionState.enemyTypeOptions,
     sceneOptions: optionState.sceneOptions,
     commonObjectiveAreas: optionState.commonObjectiveAreas,
     canToggleResultVisibility,
+    showResultsQuickNavTop: motion.showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
     selectCampaign: (value) =>
-      runFilterMutation(() => {
+      { runFilterMutation(() => {
         const nextCampaign = allCampaignGroups.find((group) => group.id === value)
         setSelectedCampaign(value)
         setSelectedAdventureId(nextCampaign?.adventures[0]?.adventureId ?? '')
-      }),
-    selectAdventure: (value) => runFilterMutation(() => setSelectedAdventureId(value)),
+      }); },
+    selectAdventure: (value) => { runFilterMutation(() => { setSelectedAdventureId(value); }); },
     selectAdventureTarget: (target) =>
-      runFilterMutation(() => {
+      { runFilterMutation(() => {
         setSelectedCampaign(target.campaignId)
         setSelectedAdventureId(target.adventureId)
-      }),
+      }); },
     selectDetailTab: (value) => {
       motion.prepareResultsViewportTransition('filters')
       setDetailTab(value)
     },
-    updateSearch: (value) => runFilterMutation(() => setSearch(value)),
+    updateSearch: (value) => { runFilterMutation(() => { setSearch(value); }); },
     updateSelectedCampaign: (value) =>
-      runFilterMutation(() => {
+      { runFilterMutation(() => {
         const nextCampaign = allCampaignGroups.find((group) => group.id === value)
         setSelectedCampaign(value)
         setSelectedAdventureId(nextCampaign?.adventures[0]?.adventureId ?? '')
-      }),
-    updateAreaSearch: (value) => runFilterMutation(() => setAreaSearch(value)),
-    updateAttackProfile: (value) => runFilterMutation(() => setSelectedAttackProfile(value)),
-    updateSpecialEnemyRange: (value) => runFilterMutation(() => setSelectedSpecialEnemyRange(value)),
-    resetEnemyTypes: () => runFilterMutation(() => setSelectedEnemyTypeIds([])),
+      }); },
+    updateAreaSearch: (value) => { runFilterMutation(() => { setAreaSearch(value); }); },
+    updateAttackProfile: (value) => { runFilterMutation(() => { setSelectedAttackProfile(value); }); },
+    updateSpecialEnemyRange: (value) => { runFilterMutation(() => { setSelectedSpecialEnemyRange(value); }); },
+    resetEnemyTypes: () => { runFilterMutation(() => { setSelectedEnemyTypeIds([]); }); },
     toggleEnemyType: (value) =>
-      runFilterMutation(() => setSelectedEnemyTypeIds((current) => toggleVariantSelection(current, value))),
-    resetScenes: () => runFilterMutation(() => setSelectedSceneIds([])),
+      { runFilterMutation(() => { setSelectedEnemyTypeIds((current) => toggleVariantSelection(current, value)); }); },
+    resetScenes: () => { runFilterMutation(() => { setSelectedSceneIds([]); }); },
     toggleScene: (value) =>
-      runFilterMutation(() => setSelectedSceneIds((current) => toggleVariantSelection(current, value))),
+      { runFilterMutation(() => { setSelectedSceneIds((current) => toggleVariantSelection(current, value)); }); },
     clearAllFilters: () => {
       motion.prepareResultsViewportTransition('filters')
       setShowAllResults(false)
@@ -300,6 +301,5 @@ export function useVariantsPageModel(): VariantsPageModel {
       setShowAllResults((current) => !current)
     },
     scrollResultsToTop: motion.scrollResultsToTop,
-    copyCurrentLink,
   }
 }

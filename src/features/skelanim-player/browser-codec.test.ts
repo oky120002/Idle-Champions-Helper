@@ -1,6 +1,8 @@
-import { expect, it } from 'vitest'
+import { Buffer } from 'node:buffer'
 import zlib from 'node:zlib'
+import { expect, it } from 'vitest'
 
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { decodeSkelAnimBuffer } from './browser-codec'
 
 // 与 scripts/data/skelanim-codec 同格式的二进制协议；src 侧 textures 只存原始 bytes
@@ -171,14 +173,16 @@ it('decodeSkelAnimBuffer 解析 sheet/texture/character/piece/frame 全字段', 
   expect(decoded.sheetWidth).toBe(16)
   expect(decoded.sheetHeight).toBe(32)
   expect(decoded.textures).toHaveLength(1)
-  expect(decoded.textures[0]!.textureId).toBe(0)
-  expect(Array.from(decoded.textures[0]!.bytes)).toEqual(Array.from(textureBytes))
+  const texture = unwrap(decoded.textures[0], 'first texture should exist')
+  expect(texture.textureId).toBe(0)
+  expect(Array.from(texture.bytes)).toEqual(Array.from(textureBytes))
 
-  const character = decoded.characters[0]!
+  const character = unwrap(decoded.characters[0], 'first character should exist')
   expect(character.name).toBe('TestHero')
   expect(character.characterIndex).toBe(0)
 
-  const piece = character.sequences[0]!.pieces[0]!
+  const sequence = unwrap(character.sequences[0], 'first sequence should exist')
+  const piece = unwrap(sequence.pieces[0], 'first piece should exist')
   expect(piece).toEqual({
     pieceIndex: 0,
     textureId: 0,
@@ -237,10 +241,21 @@ it('decodeSkelAnimBuffer 按 sequenceIndex/pieceIndex 标注序号并保留多 s
   })
 
   const decoded = await decodeSkelAnimBuffer(buffer)
+  const character = unwrap(decoded.characters[0], 'first character should exist')
 
-  expect(decoded.characters[0]!.sequences.map((sequence) => sequence.sequenceIndex)).toEqual([0, 1])
-  expect(decoded.characters[0]!.sequences[0]!.pieces[0]!.frames[0]!.depth).toBe(0)
-  expect(decoded.characters[0]!.sequences[1]!.pieces[0]!.frames[0]!.depth).toBe(1)
+  expect(character.sequences.map((sequence) => sequence.sequenceIndex)).toEqual([0, 1])
+
+  const seq0Piece0Frame0 = unwrap(
+    unwrap(unwrap(character.sequences[0], 'sequence 0').pieces[0], 'piece 0').frames[0],
+    'frame 0',
+  )
+  expect(seq0Piece0Frame0.depth).toBe(0)
+
+  const seq1Piece0Frame0 = unwrap(
+    unwrap(unwrap(character.sequences[1], 'sequence 1').pieces[0], 'piece 0').frames[0],
+    'frame 0',
+  )
+  expect(seq1Piece0Frame0.depth).toBe(1)
 })
 
 it('decodeSkelAnimBuffer 将缺失帧标记为 null（布尔前缀=0）', async () => {
@@ -276,7 +291,10 @@ it('decodeSkelAnimBuffer 将缺失帧标记为 null（布尔前缀=0）', async 
   })
 
   const decoded = await decodeSkelAnimBuffer(buffer)
-  const frames = decoded.characters[0]!.sequences[0]!.pieces[0]!.frames
+  const character = unwrap(decoded.characters[0], 'first character should exist')
+  const sequence = unwrap(character.sequences[0], 'first sequence should exist')
+  const piece = unwrap(sequence.pieces[0], 'first piece should exist')
+  const frames = piece.frames
 
   expect(frames).toHaveLength(2)
   expect(frames[0]).toBeNull()
@@ -292,8 +310,9 @@ it('decodeSkelAnimBuffer 支持空字符串角色名（长度前缀=0）', async
   })
 
   const decoded = await decodeSkelAnimBuffer(buffer)
+  const character = unwrap(decoded.characters[0], 'first character should exist')
 
   expect(decoded.textures).toEqual([])
-  expect(decoded.characters[0]!.name).toBe('')
-  expect(decoded.characters[0]!.sequences).toEqual([])
+  expect(character.name).toBe('')
+  expect(character.sequences).toEqual([])
 })

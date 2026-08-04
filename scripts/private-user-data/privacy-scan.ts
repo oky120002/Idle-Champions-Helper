@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import process from 'node:process'
 /**
  * privacy:scan — scans src/, docs/, and tests/ for credentials,
  * private snapshots, and unsafe path references.

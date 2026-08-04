@@ -10,7 +10,7 @@ export function useChampionVisualWorkbenchModel({ champion, visual, locale }: Ch
   const [selectedAssetId, setSelectedAssetId] = useState<AssetSelection>('hero-base')
 
   const selectedSkin = useMemo(() => {
-    if (!visual?.skins.length || !selectedSkinId) {
+    if (visual === null || visual.skins.length === 0 || selectedSkinId === null || selectedSkinId === '') {
       return null
     }
 
@@ -33,9 +33,9 @@ export function useChampionVisualWorkbenchModel({ champion, visual, locale }: Ch
     selectedAssetOption,
     selectedAsset,
     assetOptions,
-    skinCount: visual?.skins.length ?? 0,
-    visualSlotCount: countVisualSlots(visual),
     setSelectedSkinId,
     setSelectedAssetId,
+    skinCount: visual?.skins.length ?? 0,
+    visualSlotCount: countVisualSlots(visual),
   }
 }

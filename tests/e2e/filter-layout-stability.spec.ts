@@ -227,6 +227,7 @@ test('英雄筛选页桌面端收起抽屉后，应完全收起左栏并只保�
   expect(expandedSidebarWidth).toBeGreaterThanOrEqual(280)
 
   await collapseToggle.click()
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- CSS transition 340ms 完成后才能读取稳定终态布局
   await page.waitForTimeout(LAYOUT_TRANSITION_MS)
 
   const collapsedSidebarWidth = await getElementWidth(sidebar)
@@ -257,6 +258,7 @@ test('英雄筛选页桌面端收起抽屉后，应完全收起左栏并只保�
 
   // 展开反向：同样读首末态，不依赖过程采样。
   await expandToggle.click()
+  // eslint-disable-next-line sonarjs/no-fixed-wait-in-tests -- CSS transition 340ms 完成后才能读取稳定终态布局
   await page.waitForTimeout(LAYOUT_TRANSITION_MS)
 
   const expandedAgainContentLeft = await getElementLeft(content)

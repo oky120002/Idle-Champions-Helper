@@ -4,6 +4,16 @@ import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
+import {
+  mockFormationPageCollections,
+  mockedLoadCollection,
+  mockedLoadCollectionAtVersion,
+  mockedLoadVersion,
+  renderFormationPage,
+  resetFormationPageDatabase,
+} from './formationPageTestHarness'
+
 vi.mock('../../data/client', async () => {
   const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
 
@@ -14,16 +24,6 @@ vi.mock('../../data/client', async () => {
     loadVersion: vi.fn(),
   }
 })
-
-import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
-import {
-  mockFormationPageCollections,
-  mockedLoadCollection,
-  mockedLoadCollectionAtVersion,
-  mockedLoadVersion,
-  renderFormationPage,
-  resetFormationPageDatabase,
-} from './formationPageTestHarness'
 
 const versionFixture: DataVersion = {
   current: 'v1',

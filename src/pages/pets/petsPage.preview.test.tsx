@@ -1,7 +1,12 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, render  } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { I18nProvider } from '../../app/i18n'
+import { loadCollection, loadVersion } from '../../data/client'
+import type { DataCollection, Pet, PetAnimation } from '../../domain/types'
+import { PetsPage } from '../PetsPage'
 
 vi.mock('../../data/client', async () => {
   const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
@@ -16,12 +21,6 @@ vi.mock('../../data/client', async () => {
 vi.mock('../../features/skelanim-player/SkelAnimCanvas', () => ({
   SkelAnimCanvas: ({ alt }: { alt: string }) => <div data-testid="skelanim-preview">{alt}</div>,
 }))
-
-import { render } from '@testing-library/react'
-import { I18nProvider } from '../../app/i18n'
-import { loadCollection, loadVersion } from '../../data/client'
-import type { DataCollection, Pet, PetAnimation } from '../../domain/types'
-import { PetsPage } from '../PetsPage'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 const mockedLoadVersion = vi.mocked(loadVersion)

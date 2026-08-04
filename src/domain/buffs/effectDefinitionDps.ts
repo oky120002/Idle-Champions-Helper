@@ -53,7 +53,9 @@ export function resolveEffectDefinitionKeys(
   if (!match) {
     return null
   }
-  return templates.get(match[1]!)?.effectKeys ?? null
+  const key = match[1]
+  if (key === undefined) return null
+  return templates.get(key)?.effectKeys ?? null
 }
 
 /**

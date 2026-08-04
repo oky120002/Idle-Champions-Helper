@@ -2,9 +2,9 @@ import { useI18n } from '../../app/i18n'
 import type { PlannerScenarioRecord } from './plannerScenarioModel'
 
 interface PlannerScenarioListItemProps {
-  record: PlannerScenarioRecord
-  isSelected: boolean
-  onSelect: (id: string) => void
+  readonly record: PlannerScenarioRecord
+  readonly isSelected: boolean
+  readonly onSelect: (id: string) => void
 }
 
 export function PlannerScenarioListItem({ record, isSelected, onSelect }: PlannerScenarioListItemProps) {
@@ -15,7 +15,7 @@ export function PlannerScenarioListItem({ record, isSelected, onSelect }: Planne
       <button
         type="button"
         className={`planner-scenario-selection__item${isSelected ? ' planner-scenario-selection__item--selected' : ''}`}
-        onClick={() => onSelect(record.id)}
+        onClick={() => { onSelect(record.id); }}
       >
         <span className="planner-scenario-selection__item-topline">
           <span className="planner-scenario-selection__item-name">{record.name}</span>

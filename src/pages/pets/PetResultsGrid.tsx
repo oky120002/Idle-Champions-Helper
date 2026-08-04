@@ -4,8 +4,8 @@ import type { Pet, PetAnimation } from '../../domain/types'
 import { PetResultCard } from './PetResultCard'
 
 interface PetResultsGridProps {
-  pets: Pet[]
-  animationByPetId: ReadonlyMap<string, PetAnimation>
+  readonly pets: Pet[]
+  readonly animationByPetId: ReadonlyMap<string, PetAnimation>
 }
 
 export function PetResultsGrid({ pets, animationByPetId }: PetResultsGridProps) {

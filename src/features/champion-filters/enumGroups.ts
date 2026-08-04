@@ -2,34 +2,21 @@ import type { LocalizedText } from '../../domain/types'
 import type { LocalizedEnumGroup, StringEnumGroup } from './types'
 
 export function isLocalizedText(value: unknown): value is LocalizedText {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'original' in value &&
-    typeof value.original === 'string' &&
-    'display' in value &&
-    typeof value.display === 'string'
-  )
+  if (typeof value !== 'object' || value === null) return false
+  if (!('original' in value) || !('display' in value)) return false
+  return typeof value.original === 'string' && typeof value.display === 'string'
 }
 
 export function isLocalizedEnumGroup(value: unknown): value is LocalizedEnumGroup {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'id' in value &&
-    'values' in value &&
-    Array.isArray(value.values) &&
-    value.values.every((item) => isLocalizedText(item))
-  )
+  if (typeof value !== 'object' || value === null) return false
+  if (!('id' in value) || !('values' in value)) return false
+  if (!Array.isArray(value.values)) return false
+  return value.values.every((item) => isLocalizedText(item))
 }
 
 export function isStringEnumGroup(value: unknown): value is StringEnumGroup {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'id' in value &&
-    'values' in value &&
-    Array.isArray(value.values) &&
-    value.values.every((item) => typeof item === 'string')
-  )
+  if (typeof value !== 'object' || value === null) return false
+  if (!('id' in value) || !('values' in value)) return false
+  if (!Array.isArray(value.values)) return false
+  return value.values.every((item) => typeof item === 'string')
 }

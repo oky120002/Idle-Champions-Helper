@@ -2,7 +2,7 @@
 
 import {
   createContext,
-  type PropsWithChildren,
+  type ReactNode,
   useContext,
   useEffect,
   useMemo,
@@ -42,22 +42,22 @@ function getThemeStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
 }
 
 function getSystemTheme(): ResolvedTheme {
-  if (typeof window === 'undefined' || !window.matchMedia) {
+  if (typeof window === 'undefined') {
     return 'dark'
   }
 
   return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
 }
 
-export function ThemeProvider({ children }: PropsWithChildren) {
+export function ThemeProvider({ children }: { readonly children?: ReactNode }) {
   const [preference, setPreference] = useState<ThemePreference>(() => {
     return parseStoredPreference(getThemeStorage()?.getItem(STORAGE_KEY) ?? null)
   })
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(getSystemTheme)
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) {
-      return
+    if (typeof window === 'undefined') {
+      return undefined
     }
 
     const mql = window.matchMedia('(prefers-color-scheme: light)')
@@ -66,7 +66,7 @@ export function ThemeProvider({ children }: PropsWithChildren) {
     }
 
     mql.addEventListener('change', onChange)
-    return () => mql.removeEventListener('change', onChange)
+    return () => { mql.removeEventListener('change', onChange); }
   }, [])
 
   const resolvedTheme: ResolvedTheme = preference === 'system' ? systemTheme : preference

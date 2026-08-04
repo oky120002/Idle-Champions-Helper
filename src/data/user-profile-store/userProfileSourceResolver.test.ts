@@ -3,13 +3,13 @@ import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { APP_DATABASE_NAME } from '../localDatabase'
+import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 import {
   readPreferredUserProfileSource,
   resolveUserProfileSnapshot,
   savePreferredUserProfileSource,
 } from './userProfileSourceResolver'
 import { readUserProfileSnapshot, saveUserProfileSnapshot } from './userProfileStore'
-import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 
 function createMemoryStorage(): Storage {
   const values = new Map<string, string>()

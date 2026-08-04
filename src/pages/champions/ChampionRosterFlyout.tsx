@@ -11,25 +11,32 @@ import { calculateChampionRosterFlyoutPosition } from './championRosterFlyoutPos
 import { ChampionRosterSlot } from './ChampionRosterSlot'
 
 interface ChampionRosterFlyoutProps {
-  champion: Champion
-  ownedHero: OwnedHero | null
-  legendaryLevelCap: number
-  locale: 'zh-CN' | 'en-US'
-  locationSearch: string
-  navigationTo?: string
-  returnToPath?: string
-  returnLabel?: {
-    zh: string
-    en: string
+  readonly champion: Champion
+  readonly ownedHero: OwnedHero | null
+  readonly legendaryLevelCap: number
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly locationSearch: string
+  readonly navigationTo?: string
+  readonly returnToPath?: string
+  readonly returnLabel?: {
+    readonly zh: string
+    readonly en: string
   }
-  anchorRect: DOMRect
-  onClose: () => void
-  onNavigate: () => void
+  readonly anchorRect: DOMRect
+  readonly onClose: () => void
+  readonly onNavigate: () => void
 }
 
 const FLYOUT_VIEWPORT_GUTTER = 14
 const FLYOUT_MAX_WIDTH = 420
 const FLYOUT_FALLBACK_HEIGHT = 520
+
+function resolveFlyoutEmptyState(ownedHero: OwnedHero | null, status: 'loading' | 'ready' | 'error'): string | null {
+  if (ownedHero === null) return '当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。'
+  if (status === 'error') return '读取这名英雄的装备定义失败，稍后重试即可。'
+  if (status === 'loading') return '正在读取装备槽位定义…'
+  return null
+}
 
 interface FlyoutPosition {
   top: number
@@ -180,9 +187,9 @@ export function ChampionRosterFlyout({
       setPosition({
         top: nextPosition.top,
         left: nextPosition.left,
-        width,
         maxHeight: nextPosition.maxHeight,
         ready: true,
+        width,
       })
     }
 
@@ -237,22 +244,12 @@ export function ChampionRosterFlyout({
         </button>
       </div>
 
-      {!ownedHero ? (
-        <div className="champion-roster-flyout__empty">
-          当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。
-        </div>
-      ) : status === 'error' ? (
-        <div className="champion-roster-flyout__empty">
-          读取这名英雄的装备定义失败，稍后重试即可。
-        </div>
-      ) : status === 'loading' ? (
-        <div className="champion-roster-flyout__empty">
-          正在读取装备槽位定义…
-        </div>
+      {resolveFlyoutEmptyState(ownedHero, status) !== null ? (
+        <div className="champion-roster-flyout__empty">{resolveFlyoutEmptyState(ownedHero, status)}</div>
       ) : (
         <div className="champion-roster-flyout__slot-grid">
           {slots.map((slot) => {
-            const equipmentIcon = slot.graphicId ? equipmentIconsById.get(slot.graphicId) ?? null : null
+            const equipmentIcon = slot.graphicId !== null ? equipmentIconsById.get(slot.graphicId) ?? null : null
             return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} />
           })}
         </div>

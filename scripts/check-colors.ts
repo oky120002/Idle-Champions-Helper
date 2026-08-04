@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
@@ -5,7 +6,7 @@ import { join, relative } from 'node:path'
 // 命中即视为硬编码。要求括号后跟数字，故 oklch(var())、rgb(var()) 这类包 var 的合法写法不会误中；
 // color-mix 的 in oklch 关键字无括号也不会误中。命名色（white/black 等）不检测——
 // 本项目用它们作 color-mix 锚点（见 tokens.css 注释），强行检测会大面积误报。
-const COLOR_LITERAL_RE = /(?:rgba?|hsla?|oklch|oklab|lab|lch)\(\s*\d|#(?:[0-9a-fA-F]{3,4}){1,2}\b/
+const COLOR_LITERAL_RE = /(?:rgba?|hsla?|oklch|oklab|lab|lch)\(\d|#(?:[0-9a-fA-F]{3,4}){1,2}\b/
 
 export interface ColorViolation {
   file: string
@@ -59,6 +60,6 @@ function main() {
 }
 
 // vitest 运行时 process.env.VITEST 为 'true'，跳过 CLI；直接 tsx 运行时执行 main。
-if (!process.env.VITEST) {
+if (process.env.VITEST === undefined || process.env.VITEST === '') {
   main()
 }

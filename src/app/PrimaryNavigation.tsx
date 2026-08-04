@@ -9,12 +9,12 @@ import {
 import { PanelLocaleSwitcher } from './LocaleSwitcher'
 
 interface PrimaryNavigationProps {
-  activeNavigationItem: AppNavigationItem
-  isMobileNavOpen: boolean
-  locale: AppLocale
-  onLocaleSelect: (locale: AppLocale) => void
-  onNavigate: () => void
-  t: TranslationFn
+  readonly activeNavigationItem: AppNavigationItem
+  readonly isMobileNavOpen: boolean
+  readonly locale: AppLocale
+  readonly onLocaleSelect: (locale: AppLocale) => void
+  readonly onNavigate: () => void
+  readonly t: TranslationFn
 }
 
 export function PrimaryNavigation({

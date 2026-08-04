@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import type { SkelAnimManifest } from './types'
 import {
   buildSkelAnimStatusText,
   resolveCanvasRasterScale,
@@ -13,6 +12,7 @@ import type {
   SkelAnimCanvasLabels,
   SkelAnimLoadErrorEntry,
 } from '../features/skelanim-player/types'
+import type { SkelAnimManifest } from './types'
 
 const labels: SkelAnimCanvasLabels = {
   play: '播放',

@@ -2,12 +2,12 @@ import type { ReactNode } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 interface FilterDisclosureSectionProps {
-  title: string
-  summary: string
-  status: string
-  isExpanded: boolean
-  onToggle: () => void
-  children: ReactNode
+  readonly title: string
+  readonly summary: string
+  readonly status: string
+  readonly isExpanded: boolean
+  readonly onToggle: () => void
+  readonly children: ReactNode
 }
 
 export function FilterDisclosureSection(props: FilterDisclosureSectionProps) {

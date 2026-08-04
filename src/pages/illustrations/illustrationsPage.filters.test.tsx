@@ -2,6 +2,13 @@ import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import {
+  installClipboardMock,
+  mockIllustrationsPageCollections,
+  mockedLoadCollection,
+  renderIllustrationsPage,
+} from './illustrationsPageTestHarness'
+
 vi.mock('../../data/client', async () => {
   const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
 
@@ -10,13 +17,6 @@ vi.mock('../../data/client', async () => {
     loadCollection: vi.fn(),
   }
 })
-
-import {
-  installClipboardMock,
-  mockIllustrationsPageCollections,
-  mockedLoadCollection,
-  renderIllustrationsPage,
-} from './illustrationsPageTestHarness'
 
 describe('IllustrationsPage filters', () => {
   beforeEach(() => {

@@ -92,22 +92,7 @@ export function mockChampionDetailCollections() {
 }
 
 function renderAtRoute(initialEntry: string, includeBackRoute: boolean) {
-  return render(
-    createElement(
-      I18nProvider,
-      null,
-      createElement(
-        MemoryRouter,
-        { initialEntries: [initialEntry] },
-        createElement(
-          Routes,
-          null,
-          includeBackRoute ? createElement(Route, { path: '/champions', element: createElement('div', null, '筛选页占位') }) : null,
-          createElement(Route, { path: '/champions/:championId', element: createElement(ChampionDetailPage) }),
-        ),
-      ),
-    ),
-  )
+  return renderChampionDetailTree([initialEntry], includeBackRoute)
 }
 
 function renderAtRouteWithState(
@@ -118,13 +103,17 @@ function renderAtRouteWithState(
   },
   includeBackRoute: boolean,
 ) {
+  return renderChampionDetailTree([initialEntry], includeBackRoute)
+}
+
+function renderChampionDetailTree(initialEntries: Array<string | { pathname: string; search?: string; state?: unknown }>, includeBackRoute: boolean) {
   return render(
     createElement(
       I18nProvider,
       null,
       createElement(
         MemoryRouter,
-        { initialEntries: [initialEntry] },
+        { initialEntries },
         createElement(
           Routes,
           null,

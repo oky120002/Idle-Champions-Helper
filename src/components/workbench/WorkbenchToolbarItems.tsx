@@ -7,7 +7,7 @@ import type {
 import {
   WorkbenchToolbarActionCluster,
   WorkbenchToolbarBadge,
-} from './WorkbenchScaffold'
+} from './WorkbenchToolbarPrimitives'
 import { WorkbenchToolbarActionButton } from './WorkbenchToolbarActionButton'
 
 interface WorkbenchToolbarBaseAction {
@@ -41,13 +41,41 @@ export type WorkbenchToolbarItemConfig =
   | WorkbenchToolbarBadgeAction
 
 interface WorkbenchToolbarItemsProps {
-  items: WorkbenchToolbarItemConfig[]
-  layout?: 'inline' | 'cluster'
-  className?: string
+  readonly items: WorkbenchToolbarItemConfig[]
+  readonly layout?: 'inline' | 'cluster'
+  readonly className?: string
 }
 
 function joinClasses(...classNames: Array<string | undefined | false>) {
   return classNames.filter(Boolean).join(' ')
+}
+
+function renderButtonActionItem(item: WorkbenchToolbarButtonAction): ReactNode {
+  const hasVisibleLabel = typeof item.label === 'string'
+    ? item.label.length > 0
+    : item.label !== null && item.label !== undefined
+  const ariaLabel = typeof item.label === 'string' && item.label.length > 0
+    ? item.label
+    : item.title
+
+  return (
+    <WorkbenchToolbarActionButton
+      key={item.id}
+      onClick={item.onClick}
+      {...(item.icon !== undefined ? { icon: item.icon } : {})}
+      iconOnly={!hasVisibleLabel}
+      {...(ariaLabel !== undefined ? { ariaLabel } : {})}
+      {...(item.variant !== undefined ? { variant: item.variant } : {})}
+      {...(item.isActive !== undefined ? { isActive: item.isActive } : {})}
+      {...(item.ariaPressed !== undefined ? { ariaPressed: item.ariaPressed } : {})}
+      {...(item.title !== undefined ? { title: item.title } : {})}
+      {...(item.tone !== undefined ? { tone: item.tone } : {})}
+      {...(item.state !== undefined ? { state: item.state } : {})}
+      {...(item.className !== undefined ? { className: item.className } : {})}
+    >
+      {item.label}
+    </WorkbenchToolbarActionButton>
+  )
 }
 
 export function WorkbenchToolbarItems({
@@ -55,7 +83,7 @@ export function WorkbenchToolbarItems({
   layout = 'inline',
   className,
 }: WorkbenchToolbarItemsProps) {
-  const visibleItems = items.filter((item) => !item.hidden)
+  const visibleItems = items.filter((item) => item.hidden !== true)
 
   if (visibleItems.length === 0) {
     return null
@@ -74,31 +102,7 @@ export function WorkbenchToolbarItems({
       )
     }
 
-    const hasVisibleLabel = typeof item.label === 'string'
-      ? item.label.length > 0
-      : item.label != null
-    const ariaLabel = typeof item.label === 'string' && item.label.length > 0
-      ? item.label
-      : item.title
-
-    return (
-      <WorkbenchToolbarActionButton
-        key={item.id}
-        onClick={item.onClick}
-        {...(item.icon !== undefined ? { icon: item.icon } : {})}
-        iconOnly={!hasVisibleLabel}
-        {...(ariaLabel !== undefined ? { ariaLabel } : {})}
-        {...(item.variant !== undefined ? { variant: item.variant } : {})}
-        {...(item.isActive !== undefined ? { isActive: item.isActive } : {})}
-        {...(item.ariaPressed !== undefined ? { ariaPressed: item.ariaPressed } : {})}
-        {...(item.title !== undefined ? { title: item.title } : {})}
-        {...(item.tone !== undefined ? { tone: item.tone } : {})}
-        {...(item.state !== undefined ? { state: item.state } : {})}
-        {...(item.className !== undefined ? { className: item.className } : {})}
-      >
-        {item.label}
-      </WorkbenchToolbarActionButton>
-    )
+    return renderButtonActionItem(item)
   })
 
   if (layout === 'cluster') {

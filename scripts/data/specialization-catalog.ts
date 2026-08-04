@@ -1,11 +1,11 @@
-import { collectEffectEntries, collectSpecializationEffectEntries, normalizeEffectSignal, splitEffectString } from './effect-helpers'
-import { asArray, asRecord } from './io-utils'
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics'
 import {
   DIMENSION_BY_KIND,
   type HeroAbilityDimension,
   type HeroAbilitySignal,
 } from '../../src/domain/abilities/abilityModel'
+import { collectEffectEntries, collectSpecializationEffectEntries, normalizeEffectSignal, splitEffectString } from './effect-helpers'
+import { asArray, asRecord } from './io-utils'
 import type { SignalBucket } from './effect-resolvers/resolverShared'
 
 /**

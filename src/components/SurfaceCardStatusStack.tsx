@@ -11,15 +11,15 @@ export interface SurfaceCardStatusStackItem {
 }
 
 interface SurfaceCardStatusStackProps {
-  items: SurfaceCardStatusStackItem[]
+  readonly items: SurfaceCardStatusStackItem[]
 }
 
 function hasVisibleStatusItems(item: SurfaceCardStatusStackItem): boolean {
-  return item.statusItems.some((statusItem) => !statusItem.hidden)
+  return item.statusItems.some((statusItem) => statusItem.hidden !== true)
 }
 
 export function SurfaceCardStatusStack({ items }: SurfaceCardStatusStackProps) {
-  const visibleItems = items.filter((item) => !item.hidden && hasVisibleStatusItems(item))
+  const visibleItems = items.filter((item) => item.hidden !== true && hasVisibleStatusItems(item))
 
   if (visibleItems.length === 0) {
     return null

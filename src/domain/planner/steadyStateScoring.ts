@@ -1,21 +1,21 @@
 import Decimal from 'decimal.js'
 
-import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
-import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
-import { computeTeamGoldFind } from './goldObjective'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
 import { computeSingleHitDamage } from '../simulator/budCalculation'
 import { estimateMaxArea, type AreaEstimationResult } from '../simulator/areaEstimation'
 import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
+import type { EquipmentCritBonus } from '../buffs/equipmentMult'
 import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
-import type { EquipmentCritBonus } from '../buffs/equipmentMult'
+import { computeTeamGoldFind } from './goldObjective'
+import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 /**
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
@@ -278,7 +278,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
 
   for (const carryEntry of placedEntries) {
-    if (input.lockedCarryHeroId && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
+    if (input.lockedCarryHeroId !== undefined && input.lockedCarryHeroId !== null && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
       continue
     }
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
@@ -401,9 +401,9 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       bestCarryHeroId = carryEntry.hero.heroId
       bestActiveKinds = activeKinds
       bestBreakdownData = {
+        pools: breakdownPools,
         carryEntry,
         carryLevel,
-        pools: breakdownPools,
         critFactor,
         vulnFactor,
         contributions,
@@ -413,7 +413,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
   let areaEstimate: AreaEstimationResult | null = null
   // formation-buff 模式 bestCarryDps 是阵型聚合倍率（非真实 DPS），BUD/推图层数估算无意义，跳过。
-  if (bestCarryHeroId && aggregateProjection === 'absolute-dps') {
+  if (bestCarryHeroId !== null && aggregateProjection === 'absolute-dps') {
     const bestCarryEntry = placedEntries.find((entry) => entry.hero.heroId === bestCarryHeroId)
     if (bestCarryEntry) {
       const survivalPools = new Map<string, AggregatedPool>()
@@ -475,18 +475,18 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     breakdown = {
       carryHeroId: carryEntry.hero.heroId,
       carrySlotId: carryEntry.slotId,
-      carryLevel,
       baseDps: formatGameNumber(baseDps),
       levelCurve: formatGameNumber(levelCurve),
       carryDps: formatGameNumber(bestCarryDps),
       factors: {
-        damagePool,
         crit: critFactor,
         vulnerability: vulnFactor,
+        damagePool,
         globalBuff,
         heroDpsPool,
       },
       pools: [...pools.values()],
+      carryLevel,
       contributions,
     }
   }

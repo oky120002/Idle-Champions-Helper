@@ -21,12 +21,12 @@ export interface SurfaceCardContentSection {
 }
 
 interface SurfaceCardContentSectionsProps {
-  eyebrow?: string
-  title?: string
-  description?: string
-  sections: SurfaceCardContentSection[]
-  layout?: SurfaceCardSectionLayout
-  className?: string
+  readonly eyebrow?: string
+  readonly title?: string
+  readonly description?: string
+  readonly sections: SurfaceCardContentSection[]
+  readonly layout?: SurfaceCardSectionLayout
+  readonly className?: string
 }
 
 function getListClassName(listVariant: SurfaceCardSectionListVariant | undefined): string {
@@ -42,10 +42,10 @@ export function SurfaceCardContentSections({
   className,
 }: SurfaceCardContentSectionsProps) {
   const visibleSections = sections
-    .filter((section) => !section.hidden)
+    .filter((section) => section.hidden !== true)
     .map((section) => ({
       ...section,
-      items: section.items?.filter((item) => !item.hidden) ?? [],
+      items: section.items?.filter((item) => item.hidden !== true) ?? [],
     }))
     .filter((section) => section.title !== undefined || section.detail !== undefined || section.items.length > 0)
 

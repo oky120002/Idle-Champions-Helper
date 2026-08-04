@@ -179,10 +179,11 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [loadProfileResolution, selectedProfileSource])
 
   return {
-    syncState,
-    busy,
     canSync: Boolean(credentials) && !busy,
     canLoadLocalDevSnapshot: showLocalDevSnapshotAction,
+    reload: loadSnapshot,
+    syncState,
+    busy,
     showLocalDevSnapshotAction,
     profileResolution,
     selectedProfileSource,
@@ -192,6 +193,5 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     handleSelectLocalDevSnapshot,
     handleRefreshLocalDevSnapshot,
     handleDelete,
-    reload: loadSnapshot,
   }
 }

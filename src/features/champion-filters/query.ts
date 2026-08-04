@@ -30,5 +30,5 @@ export function appendSortedStringValues(searchParams: URLSearchParams, key: str
   values
     .slice()
     .sort((left, right) => left.localeCompare(right))
-    .forEach((value) => searchParams.append(key, value))
+    .forEach((value) => { searchParams.append(key, value); })
 }

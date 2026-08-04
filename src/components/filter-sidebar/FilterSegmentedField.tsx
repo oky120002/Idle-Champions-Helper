@@ -8,13 +8,13 @@ interface FilterSegmentedOption<T extends string> {
 }
 
 interface FilterSegmentedFieldProps<T extends string> {
-  label: ReactNode
-  value: T
-  options: Array<FilterSegmentedOption<T>>
-  onChange: (value: T) => void
-  groupLabel: string
-  hint?: ReactNode
-  className?: string
+  readonly label: ReactNode
+  readonly value: T
+  readonly options: Array<FilterSegmentedOption<T>>
+  readonly onChange: (value: T) => void
+  readonly groupLabel: string
+  readonly hint?: ReactNode
+  readonly className?: string
 }
 
 export function FilterSegmentedField<T extends string>({

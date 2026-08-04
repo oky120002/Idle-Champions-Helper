@@ -2,10 +2,10 @@ import { useI18n } from '../../app/i18n'
 import type { ActiveFilterChip } from './types'
 
 interface ActiveFilterChipBarProps {
-  chips: ActiveFilterChip[]
-  onClearChip: (id: string) => void
-  title?: string
-  hint?: string
+  readonly chips: ActiveFilterChip[]
+  readonly onClearChip: (id: string) => void
+  readonly title?: string
+  readonly hint?: string
 }
 
 export function ActiveFilterChipBar({
@@ -43,7 +43,7 @@ export function ActiveFilterChipBar({
             type="button"
             className="active-filter-chip"
             aria-label={chip.clearLabel}
-            onClick={() => onClearChip(chip.id)}
+            onClick={() => { onClearChip(chip.id); }}
           >
             <span>{chip.label}</span>
             <span aria-hidden="true" className="active-filter-chip__dismiss">

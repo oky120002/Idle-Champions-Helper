@@ -6,7 +6,7 @@ let currentState: EvaluatePlacements = {}
 const listeners = new Set<() => void>()
 
 function emit(): void {
-  listeners.forEach((listener) => listener())
+  listeners.forEach((listener) => { listener(); })
 }
 
 export function getEvaluatePlacements(): EvaluatePlacements {
@@ -44,7 +44,7 @@ export function useEvaluatePlacements(): [EvaluatePlacements, (next: EvaluatePla
   const [value, setValue] = useState(currentState)
 
   useEffect(() => {
-    const listener = () => setValue(currentState)
+    const listener = () => { setValue(currentState); }
     listeners.add(listener)
     return () => {
       listeners.delete(listener)

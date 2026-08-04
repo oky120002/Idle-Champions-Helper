@@ -7,12 +7,12 @@ export interface SegmentedButtonGroupItem<T extends string> {
 }
 
 interface SegmentedButtonGroupProps<T extends string> {
-  value: T
-  items: Array<SegmentedButtonGroupItem<T>>
-  ariaLabel: string
-  onChange: (value: T) => void
-  mode?: 'group' | 'tablist'
-  className?: string
+  readonly value: T
+  readonly items: Array<SegmentedButtonGroupItem<T>>
+  readonly ariaLabel: string
+  readonly onChange: (value: T) => void
+  readonly mode?: 'group' | 'tablist'
+  readonly className?: string
 }
 
 export function SegmentedButtonGroup<T extends string>({
@@ -40,8 +40,8 @@ export function SegmentedButtonGroup<T extends string>({
                 : 'segmented-control__button'
             }
             {...(isTablist ? { role: 'tab', 'aria-selected': isActive } : { 'aria-pressed': isActive })}
-            {...(item.disabled ? { disabled: true } : {})}
-            onClick={() => onChange(item.value)}
+            {...(item.disabled === true ? { disabled: true } : {})}
+            onClick={() => { onChange(item.value); }}
           >
             {item.label}
           </button>

@@ -11,7 +11,18 @@ import { getFormationLayoutLabel } from '../../domain/formationLayout'
 import { PRESET_PRIORITY_OPTIONS, type FormationPageModel } from './types'
 
 interface FormationPresetCardProps {
-  model: FormationPageModel
+  readonly model: FormationPageModel
+}
+
+function resolveSaveDisabledReason(
+  canSavePreset: boolean,
+  isSavingPreset: boolean,
+  championCount: number,
+  t: (text: { zh: string; en: string }) => string,
+): string | undefined {
+  if (canSavePreset || isSavingPreset) return undefined
+  if (championCount === 0) return t({ zh: '先放置至少 1 名英雄', en: 'Place at least one champion first' })
+  return t({ zh: '先填写方案名称', en: 'Enter a preset name first' })
 }
 
 export function FormationPresetCard({ model }: FormationPresetCardProps) {
@@ -32,11 +43,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     getPresetPriorityLabel,
   } = model
   const getScenarioLabel = useScenarioLabelLookup()
-  const saveDisabledReason = !canSavePreset && !isSavingPreset
-    ? (selectedChampions.length === 0
-        ? t({ zh: '先放置至少 1 名英雄', en: 'Place at least one champion first' })
-        : t({ zh: '先填写方案名称', en: 'Enter a preset name first' }))
-    : undefined
+  const saveDisabledReason = resolveSaveDisabledReason(canSavePreset, isSavingPreset, selectedChampions.length, t)
   const previewItems = [
     {
       id: 'selected-layout',

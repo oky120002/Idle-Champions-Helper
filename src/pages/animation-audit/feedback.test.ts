@@ -213,8 +213,8 @@ describe('buildAnimationAuditFeedbackPayload', () => {
     const payload = buildAnimationAuditFeedbackPayload({
       auditEntries: [],
       feedbackById: {},
-      generatedAt,
       sourceHref: null,
+      generatedAt,
     })
     expect(payload.sourceHref).toBeNull()
     expect(payload.entries).toEqual([])
@@ -448,7 +448,7 @@ describe('writeStoredAnimationAuditFeedback', () => {
   })
 
   it('window 未定义时直接返回不抛错（SSR/Node 守卫）', () => {
-    expect(() => writeStoredAnimationAuditFeedback({})).not.toThrow()
+    expect(() => { writeStoredAnimationAuditFeedback({}); }).not.toThrow()
   })
 
   it('有 window 时以 storage key 写入 JSON 序列化结果', () => {

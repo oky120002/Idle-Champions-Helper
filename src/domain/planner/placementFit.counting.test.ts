@@ -28,12 +28,12 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
-      carryHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      carryHero,
+      supportHero,
+      scenario,
       heroesById,
     })
 
@@ -64,12 +64,12 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
-      carryHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      carryHero,
+      supportHero,
+      scenario,
       heroesById,
     })
 
@@ -99,10 +99,10 @@ describe('placement fit — counting', () => {
     const fit = evaluatePlacementFit({
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
       placements: { s1: 'adj-1', s2: 'carry', s3: 'adj-2' },
+      supportHero,
+      scenario,
       heroesById,
     })
 
@@ -156,12 +156,12 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
-      carryHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      carryHero,
+      supportHero,
+      scenario,
       heroesById,
     })
 
@@ -192,12 +192,12 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
-      carryHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      carryHero,
+      supportHero,
+      scenario,
       heroesById,
     })
 
@@ -228,12 +228,12 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
-      carryHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      carryHero,
+      supportHero,
+      scenario,
       heroesById,
     })
 
@@ -264,12 +264,12 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
-      carryHero,
       carrySlotId: 's4',
-      supportHero,
       supportSlotId: 's1',
       scenario: extendedScenario,
       placements: { s1: 'support', s2: 'other', s3: 'other-two', s4: 'carry' },
+      carryHero,
+      supportHero,
       heroesById,
     })
 

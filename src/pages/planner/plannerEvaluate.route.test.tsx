@@ -5,17 +5,6 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../../data/client', async () => {
-  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
-
-  return {
-    ...actual,
-    loadVersion: vi.fn(),
-    loadCollection: vi.fn(),
-    fetchJson: vi.fn(),
-  }
-})
-
 import { App } from '../../app/App'
 import { I18nProvider } from '../../app/i18n'
 import { ThemeProvider } from '../../app/theme'
@@ -27,6 +16,17 @@ import type { EffectDefinitionEntry } from '../../domain/buffs/effectDefinitionD
 import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
 import type { OfficialPlannerScenarioModel } from '../../domain/planner/plannerModel'
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../domain/types'
+
+vi.mock('../../data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
+
+  return {
+    ...actual,
+    loadVersion: vi.fn(),
+    loadCollection: vi.fn(),
+    fetchJson: vi.fn(),
+  }
+})
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 const mockedLoadVersion = vi.mocked(loadVersion)
@@ -191,9 +191,9 @@ async function resetDatabase(): Promise<void> {
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-    request.onerror = () => resolve()
-    request.onblocked = () => resolve()
-    request.onsuccess = () => resolve()
+    request.onerror = () => { resolve(); }
+    request.onblocked = () => { resolve(); }
+    request.onsuccess = () => { resolve(); }
   })
 }
 
@@ -297,7 +297,7 @@ describe('planner evaluate route', () => {
     expect(lockBtn).toHaveAttribute('aria-pressed', 'true')
 
     const fillBtn = await screen.findByTestId('planner-evaluate-fill-remaining')
-    await waitFor(() => expect(fillBtn).not.toBeDisabled())
+    await waitFor(() => { expect(fillBtn).not.toBeDisabled(); })
     await user.click(fillBtn)
 
     const board = screen.getByTestId('planner-evaluate-board')

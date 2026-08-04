@@ -10,7 +10,7 @@ import { isJsonObject } from './detail-json'
 import type { SkinArtworkIds } from './types'
 
 export function buildRarityLabel(value: string | null, locale: AppLocale): string {
-  if (!value) {
+  if (value === null || value === '') {
     return locale === 'zh-CN' ? '未标注' : 'Unlabeled'
   }
 

@@ -109,24 +109,59 @@ export type FilterSidebarGroupSchema =
   | FilterSidebarDisclosureGroupSchema
 
 interface FilterSidebarSchemaRendererProps {
-  groups: FilterSidebarGroupSchema[]
+  readonly groups: FilterSidebarGroupSchema[]
+}
+
+function renderSearchField(field: FilterSidebarSearchFieldSchema) {
+  return (
+    <FilterSearchField
+      key={field.id}
+      label={field.label}
+      value={field.value}
+      onChange={field.onChange}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+      {...(field.type !== undefined ? { type: field.type } : {})}
+    />
+  )
+}
+
+function renderChipSingleField(field: FilterSidebarChipSingleFieldSchema) {
+  return (
+    <FilterChipSingleSelectField
+      key={field.id}
+      label={field.label}
+      value={field.value}
+      options={field.options}
+      onChange={field.onChange}
+      groupLabel={field.groupLabel}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+    />
+  )
+}
+
+function renderChipMultiField(field: FilterSidebarChipMultiFieldSchema) {
+  return (
+    <FilterChipMultiSelectField
+      key={field.id}
+      label={field.label}
+      options={field.options}
+      selectedValues={field.selectedValues}
+      onReset={field.onReset}
+      onToggle={field.onToggle}
+      allLabel={field.allLabel}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+    />
+  )
 }
 
 function renderField(field: FilterSidebarFieldSchema) {
   switch (field.kind) {
     case 'search':
-      return (
-        <FilterSearchField
-          key={field.id}
-          label={field.label}
-          value={field.value}
-          onChange={field.onChange}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-          {...(field.type !== undefined ? { type: field.type } : {})}
-        />
-      )
+      return renderSearchField(field)
     case 'segmented':
       return (
         <FilterSegmentedField
@@ -153,32 +188,9 @@ function renderField(field: FilterSidebarFieldSchema) {
         />
       )
     case 'chip-single':
-      return (
-        <FilterChipSingleSelectField
-          key={field.id}
-          label={field.label}
-          value={field.value}
-          options={field.options}
-          onChange={field.onChange}
-          groupLabel={field.groupLabel}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-        />
-      )
+      return renderChipSingleField(field)
     case 'chip-multi':
-      return (
-        <FilterChipMultiSelectField
-          key={field.id}
-          label={field.label}
-          options={field.options}
-          selectedValues={field.selectedValues}
-          onReset={field.onReset}
-          onToggle={field.onToggle}
-          allLabel={field.allLabel}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-        />
-      )
+      return renderChipMultiField(field)
     case 'custom':
       return <Fragment key={field.id}>{field.render()}</Fragment>
   }
@@ -193,7 +205,7 @@ export function FilterSidebarSchemaRenderer({
         if (group.kind === 'plain') {
           return (
             <Fragment key={group.id}>
-              {group.label != null ? (
+              {group.label !== null && group.label !== undefined ? (
                 <div className="filter-sidebar-panel__section-label">{group.label}</div>
               ) : null}
               <div className="filter-panel filter-panel--sidebar">
@@ -205,7 +217,7 @@ export function FilterSidebarSchemaRenderer({
 
         return (
           <Fragment key={group.id}>
-            {group.label != null ? (
+            {group.label !== null && group.label !== undefined ? (
               <div className="filter-sidebar-panel__section-label filter-sidebar-panel__section-label--subtle">
                 {group.label}
               </div>

@@ -1,9 +1,8 @@
-import { Eye, EyeOff, Shuffle } from 'lucide-react'
+import { Eye, EyeOff, Shuffle, Link2  } from 'lucide-react'
 import { createElement } from 'react'
 import type { LocaleText } from '../../app/i18n'
 import type { WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from './useWorkbenchShareLink'
-import { Link2 } from 'lucide-react'
 
 type WorkbenchTranslate = (text: LocaleText) => string
 
@@ -64,8 +63,8 @@ export function createWorkbenchBadgeItem({
 }: WorkbenchBadgeItemOptions): WorkbenchToolbarItemConfig {
   return {
     id,
-    kind: 'badge',
     label,
+    kind: 'badge',
     ...(tone !== undefined ? { tone } : {}),
     ...(hidden !== undefined ? { hidden } : {}),
   }
@@ -88,10 +87,10 @@ export function createWorkbenchResultVisibilityItem({
       })
 
   return {
-    id: 'toggle-visibility',
     label,
-    icon: createElement(showAllResults ? EyeOff : Eye, { 'aria-hidden': true, strokeWidth: 1.9 }),
     onClick,
+    id: 'toggle-visibility',
+    icon: createElement(showAllResults ? EyeOff : Eye, { 'aria-hidden': true, strokeWidth: 1.9 }),
     isActive: showAllResults,
     ariaPressed: showAllResults,
     variant: 'prominent',
@@ -118,33 +117,43 @@ export function createWorkbenchShuffleItem({
   }
 }
 
+function resolveShareLabel(state: WorkbenchShareLinkState, t: WorkbenchTranslate): string {
+  if (state === 'success') {
+    return t({ zh: '已复制链接', en: 'Link copied' })
+  }
+  if (state === 'error') {
+    return t({ zh: '复制失败', en: 'Copy failed' })
+  }
+  return ''
+}
+
+function resolveShareTitle(state: WorkbenchShareLinkState, t: WorkbenchTranslate): string {
+  if (state === 'success') {
+    return t({ zh: '链接已复制到剪贴板', en: 'Link copied to clipboard' })
+  }
+  if (state === 'error') {
+    return t({ zh: '复制失败，点击重试', en: 'Copy failed. Click to retry' })
+  }
+  return t({ zh: '复制当前页面链接', en: 'Copy current page link' })
+}
+
 export function createWorkbenchShareItem({
   t,
   state,
   onCopy,
 }: WorkbenchShareItemOptions): WorkbenchToolbarItemConfig {
-  const label =
-    state === 'success'
-      ? t({ zh: '已复制链接', en: 'Link copied' })
-      : state === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : ''
-  const title =
-    state === 'success'
-      ? t({ zh: '链接已复制到剪贴板', en: 'Link copied to clipboard' })
-      : state === 'error'
-        ? t({ zh: '复制失败，点击重试', en: 'Copy failed. Click to retry' })
-        : t({ zh: '复制当前页面链接', en: 'Copy current page link' })
+  const label = resolveShareLabel(state, t)
+  const title = resolveShareTitle(state, t)
 
   return {
-    id: 'share-link',
-    kind: 'button',
     label,
     title,
+    state,
+    id: 'share-link',
+    kind: 'button',
     icon: createElement(Link2, { 'aria-hidden': true, strokeWidth: 2.2 }),
     onClick: onCopy,
     tone: 'share',
-    state,
     isActive: state === 'success',
   }
 }
@@ -175,17 +184,17 @@ export function createWorkbenchFilterToolbarItems({
       ? [
           createWorkbenchShuffleItem({
             t,
+            isReady,
             resultCount: filteredCount,
             hasRandomOrder: shuffle.hasRandomOrder,
-            isReady,
             onClick: shuffle.onShuffle,
           }),
         ]
       : []),
     createWorkbenchShareItem({
       t,
-      state: shareState,
       onCopy,
+      state: shareState,
     }),
   ]
 }

@@ -11,9 +11,9 @@ test('移动端阵型页应以无横滑棋盘配合槽位编辑卡完成编辑',
     await new Promise<void>((resolve) => {
       const request = window.indexedDB.deleteDatabase('idle-champions-helper')
 
-      request.onsuccess = () => resolve()
-      request.onerror = () => resolve()
-      request.onblocked = () => resolve()
+      request.onsuccess = () => { resolve(); }
+      request.onerror = () => { resolve(); }
+      request.onblocked = () => { resolve(); }
     })
   })
 

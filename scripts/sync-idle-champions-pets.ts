@@ -1,15 +1,20 @@
 import { execFile } from 'node:child_process'
-import {
-  compareLocalizedText,
-  normalizeLocalizedText,
-  toText,
-} from './data/normalize-text-utils.ts'
+import { Buffer } from 'node:buffer'
+import process from 'node:process'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { inflateRawSync, inflateSync, unzipSync } from 'node:zlib'
 import { PNG } from 'pngjs'
+import type { LocalizedText } from '../src/domain/types/common.ts'
+import type { PetImage } from '../src/domain/types/assets.ts'
+import type { Pet, PetAcquisition, PetAcquisitionKind } from '../src/domain/types/champions.ts'
+import {
+  compareLocalizedText,
+  normalizeLocalizedText,
+  toText,
+} from './data/normalize-text-utils.ts'
 import {
   DEFAULT_MASTER_API_URL,
   buildRemoteGraphicAsset,
@@ -35,9 +40,6 @@ import {
   removeUnexpectedFiles,
   shouldSkipResourceSync,
 } from './data/resource-sync-policy.ts'
-import type { LocalizedText } from '../src/domain/types/common.ts'
-import type { PetImage } from '../src/domain/types/assets.ts'
-import type { Pet, PetAcquisition, PetAcquisitionKind } from '../src/domain/types/champions.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -193,7 +195,7 @@ function buildPetAnimationAssetPath(currentVersion: string, petId: string): stri
 function toNonZeroText(value: unknown): string | null {
   const text = toText(value)
 
-  if (!text || text === '0') {
+  if (text === null || text === '0') {
     return null
   }
 
@@ -239,7 +241,7 @@ function getUpdatedAt(rawDefinitions: GameDefinitions): string {
 }
 
 function canReusePetImage(existingImage: PetImage | null | undefined, expectedPath: string): boolean {
-  return existingImage?.path === expectedPath && existingImage?.format === 'png'
+  return existingImage?.path === expectedPath
 }
 
 function canReusePetAnimation(
@@ -253,12 +255,10 @@ function canReusePetAnimation(
   return (
     existingAnimation.id === task.petId &&
     existingAnimation.petId === task.petId &&
-    existingAnimation.sourceSlot === 'illustration' &&
     existingAnimation.sourceGraphicId === task.asset.graphicId &&
     existingAnimation.sourceGraphic === task.asset.sourceGraphic &&
     (existingAnimation.sourceVersion ?? null) === (task.asset.sourceVersion ?? null) &&
-    existingAnimation.asset?.path === task.outputPath &&
-    existingAnimation.asset?.format === 'skelanim-zlib'
+    existingAnimation.asset.path === task.outputPath
   )
 }
 
@@ -273,7 +273,7 @@ function buildPremiumRefsByFamiliarId(
     const effectList = Array.isArray(premiumItem.effect) ? premiumItem.effect : []
     for (const rawEffect of effectList) {
       const effect = asRecord(rawEffect)
-      if (!effect || effect.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
+      if (effect?.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
         continue
       }
 
@@ -301,7 +301,7 @@ function buildPatronRefsByFamiliarId(
     const effectList = Array.isArray(patronItem.effects) ? patronItem.effects : []
     for (const rawEffect of effectList) {
       const effect = asRecord(rawEffect)
-      if (!effect || effect.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
+      if (effect?.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
         continue
       }
 
@@ -332,11 +332,11 @@ function pickBestPremiumRef(
     const rawName = (toText(ref.raw.name) ?? '').trim().toLowerCase()
     let score = 0
 
-    if (premiumItemId && rawId === premiumItemId) {
+    if (premiumItemId !== null && rawId === premiumItemId) {
       score += 1000
     }
 
-    if (sourceItemId && rawId === sourceItemId) {
+    if (sourceItemId !== null && rawId === sourceItemId) {
       score += 900
     }
 
@@ -426,8 +426,8 @@ function buildAcquisition(
     : null
 
   const patronId = toNonZeroText(sourceRecord?.patron_id ?? asRecord(patronRef?.raw)?.patron_id)
-  const patronDefinition = patronId ? (patronsById.get(patronId) ?? null) : null
-  const localizedPatronDefinition = patronId
+  const patronDefinition = patronId !== null ? (patronsById.get(patronId) ?? null) : null
+  const localizedPatronDefinition = patronId !== null
     ? (localizedPatronsById.get(patronId) ?? patronDefinition)
     : null
   const patronName = patronDefinition
@@ -447,23 +447,24 @@ function buildAcquisition(
         ?? asRecord(patronDefinition)?.currency_name ?? 'Patron currency',
     )
     : null
-  const patronCost = patronRef ? toNumber(asRecord(patronRef.raw.cost)?.patron_currency) : null
-  const patronInfluence = patronRef
-    ? readPatronInfluenceRequirement(
-      Array.isArray(patronRef.raw.requirements) ? patronRef.raw.requirements : [],
-    )
+  const patronCost = patronRef !== null ? toNumber(asRecord(patronRef.raw.cost)?.patron_currency) : null
+  const patronRequirements = patronRef !== null && Array.isArray(patronRef.raw.requirements)
+    ? patronRef.raw.requirements
+    : []
+  const patronInfluence = patronRef !== null
+    ? readPatronInfluenceRequirement(patronRequirements)
     : null
-  const premiumPackName = premiumRef
+  const premiumPackName = premiumRef !== null
     ? normalizeLocalizedText(
       premiumRef.raw.name,
-      premiumRef.localized?.name,
+      premiumRef.localized.name,
       `Premium item ${String(premiumRef.raw.id)}`,
     )
     : null
-  const premiumPackDescription = premiumRef
+  const premiumPackDescription = premiumRef !== null
     ? normalizeLocalizedText(
       premiumRef.raw.description,
-      premiumRef.localized?.description,
+      premiumRef.localized.description,
       premiumRef.raw.description ?? premiumRef.raw.name ?? '',
     )
     : null
@@ -574,9 +575,7 @@ function summarizeSequence(sequence: SkelAnimSequence): SequenceSummary {
       continue
     }
 
-    if (firstRenderableFrameIndex === null) {
-      firstRenderableFrameIndex = frameIndex
-    }
+    firstRenderableFrameIndex ??= frameIndex
 
     bounds = mergeBounds(bounds, frameBounds)
   }
@@ -638,7 +637,7 @@ async function renderPetSkelAnimPng(task: PetAssetTask, rawBuffer: Buffer): Prom
   const sequences = character.sequences.map(summarizeSequence)
   const defaultSequence = resolveDefaultSequence(sequences, task.preferredSequenceIndexes)
 
-  if (!defaultSequence || !defaultSequence.bounds) {
+  if (!defaultSequence?.bounds) {
     throw new Error('没有可渲染的 illustration sequence')
   }
 
@@ -666,10 +665,10 @@ function copyOpaqueRegion(
       const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const targetIndex = ((offsetY + y) * target.width + (offsetX + x)) * 4
 
-      target.data[targetIndex] = source.data[sourceIndex]!
-      target.data[targetIndex + 1] = source.data[sourceIndex + 1]!
-      target.data[targetIndex + 2] = source.data[sourceIndex + 2]!
-      target.data[targetIndex + 3] = source.data[sourceIndex + 3]!
+      target.data[targetIndex] = source.data[sourceIndex] ?? 0
+      target.data[targetIndex + 1] = source.data[sourceIndex + 1] ?? 0
+      target.data[targetIndex + 2] = source.data[sourceIndex + 2] ?? 0
+      target.data[targetIndex + 3] = source.data[sourceIndex + 3] ?? 0
     }
   }
 }
@@ -730,7 +729,7 @@ function processIllustrationPng(pngBuffer: Buffer): ProcessedPng {
 
 async function downloadRawAsset(task: { remoteUrl: string }): Promise<Buffer> {
   const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
+  const timer = setTimeout(() => { controller.abort(); }, FETCH_TIMEOUT_MS)
 
   try {
     const response = await fetch(task.remoteUrl, {
@@ -852,19 +851,19 @@ function buildSyncCounts(pets: readonly PetCatalogItem[], animations: number): S
   return {
     icons: pets.filter((pet) => Boolean(pet.icon)).length,
     illustrations: pets.filter((pet) => Boolean(pet.illustration)).length,
-    animations,
     gems: countAcquisitionKind(pets, 'gems'),
     premium: countAcquisitionKind(pets, 'premium'),
     patron: countAcquisitionKind(pets, 'patron'),
     unavailable: countAcquisitionKind(pets, 'not-yet-available'),
     unknown: countAcquisitionKind(pets, 'unknown'),
+    animations,
   }
 }
 
 export async function syncPetsCatalog(
   options: SyncPetsCatalogOptions = {},
 ): Promise<SyncPetsCatalogResult> {
-  if (!options.input) {
+  if (options.input === undefined || options.input === '') {
     throw new Error('缺少 --input，无法根据 definitions 快照同步宠物目录')
   }
 
@@ -873,7 +872,7 @@ export async function syncPetsCatalog(
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const rawDefinitions = (await readJson(input)) as GameDefinitions
-  const localizedDefinitions = options.localizedInput
+  const localizedDefinitions = options.localizedInput !== undefined && options.localizedInput !== ''
     ? ((await readJson(path.resolve(options.localizedInput))) as GameDefinitions)
     : rawDefinitions
   const updatedAt = getUpdatedAt(rawDefinitions)
@@ -953,8 +952,8 @@ export async function syncPetsCatalog(
       Boolean(definition.is_available ?? propertiesRecord?.is_available ?? false)
     const iconGraphicId = toNonZeroText(definition.graphic_id)
     const illustrationGraphicId = toNonZeroText(propertiesRecord?.xl_graphic_id)
-    const iconGraphic = iconGraphicId ? (graphicMap.get(iconGraphicId) ?? null) : null
-    const illustrationGraphic = illustrationGraphicId ? (graphicMap.get(illustrationGraphicId) ?? null) : null
+    const iconGraphic = iconGraphicId !== null ? (graphicMap.get(iconGraphicId) ?? null) : null
+    const illustrationGraphic = illustrationGraphicId !== null ? (graphicMap.get(illustrationGraphicId) ?? null) : null
     const iconAsset = iconGraphic ? buildPetGraphicAsset(iconGraphic, assetBaseUrl) : null
     const illustrationAsset = illustrationGraphic ? buildPetGraphicAsset(illustrationGraphic, assetBaseUrl) : null
 
@@ -962,17 +961,14 @@ export async function syncPetsCatalog(
       id: petId,
       name: normalizeLocalizedText(
         definition.name,
-        localizedDefinition?.name,
+        localizedDefinition.name,
         `Pet ${petId}`,
       ) ?? { original: `Pet ${petId}`, display: `Pet ${petId}` },
       description: normalizeLocalizedText(
         definition.description,
-        localizedDefinition?.description,
+        localizedDefinition.description,
         definition.description ?? definition.name ?? `Pet ${petId}`,
       ),
-      isAvailable,
-      iconGraphicId,
-      illustrationGraphicId,
       acquisition: buildAcquisition(
         definition,
         premiumRef,
@@ -986,6 +982,9 @@ export async function syncPetsCatalog(
       iconSourceVersion: iconAsset?.sourceVersion ?? null,
       illustrationSourceGraphic: illustrationAsset?.sourceGraphic ?? null,
       illustrationSourceVersion: illustrationAsset?.sourceVersion ?? null,
+      isAvailable,
+      iconGraphicId,
+      illustrationGraphicId,
     }
     const existingPet = existingPetById.get(petId) ?? null
 
@@ -997,8 +996,8 @@ export async function syncPetsCatalog(
     const animationOutputPath = buildPetAnimationAssetPath(currentVersion, petId)
 
     if (
-      iconAsset?.sourceGraphic &&
-      existingPet &&
+      iconAsset !== null &&
+      existingPet !== null &&
       existingPet.iconSourceGraphic === iconAsset.sourceGraphic &&
       (existingPet.iconSourceVersion ?? null) === (iconAsset.sourceVersion ?? null) &&
       canReusePetImage(existingPet.icon, iconOutputPath) &&
@@ -1007,7 +1006,7 @@ export async function syncPetsCatalog(
       pet.icon = existingPet.icon
     }
 
-    if (!pet.icon && iconAsset?.sourceGraphic) {
+    if (pet.icon === null && iconAsset !== null) {
       tasks.push({
         petId,
         variant: 'icon',
@@ -1021,8 +1020,8 @@ export async function syncPetsCatalog(
     }
 
     if (
-      illustrationAsset?.sourceGraphic &&
-      existingPet &&
+      illustrationAsset !== null &&
+      existingPet !== null &&
       existingPet.illustrationSourceGraphic === illustrationAsset.sourceGraphic &&
       (existingPet.illustrationSourceVersion ?? null) === (illustrationAsset.sourceVersion ?? null) &&
       canReusePetImage(existingPet.illustration, illustrationOutputPath) &&
@@ -1031,7 +1030,7 @@ export async function syncPetsCatalog(
       pet.illustration = existingPet.illustration
     }
 
-    if (illustrationAsset?.sourceGraphic && !pet.illustration) {
+    if (illustrationAsset !== null && pet.illustration === null) {
       tasks.push({
         petId,
         variant: 'illustration',
@@ -1044,7 +1043,7 @@ export async function syncPetsCatalog(
       })
     }
 
-    if (illustrationAsset?.sourceGraphic && isSkelAnimGraphicDefinition(illustrationGraphic)) {
+    if (illustrationAsset !== null && isSkelAnimGraphicDefinition(illustrationGraphic)) {
       const animationTask: PetAnimationTask = {
         petId,
         name: pet.name,
@@ -1146,7 +1145,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -1166,7 +1165,8 @@ async function main(): Promise<void> {
   console.log(`- unknown: ${result.counts.unknown}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryPoint = process.argv[1]
+if (entryPoint !== undefined && import.meta.url === pathToFileURL(entryPoint).href) {
   main().catch((error: unknown) => {
     console.error(`同步宠物目录失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

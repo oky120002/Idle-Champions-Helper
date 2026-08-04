@@ -4,6 +4,12 @@ import { createElement, Fragment } from 'react'
 import { createMemoryRouter, RouterProvider, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { I18nProvider } from '../../app/i18n'
+import { loadCollection } from '../../data/client'
+import type { DataCollection, Pet, PetAnimation } from '../../domain/types'
+import { PetsPage } from '../PetsPage'
+import { MAX_VISIBLE_PETS } from './constants'
+
 vi.mock('../../data/client', async () => {
   const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
 
@@ -12,12 +18,6 @@ vi.mock('../../data/client', async () => {
     loadCollection: vi.fn(),
   }
 })
-
-import { I18nProvider } from '../../app/i18n'
-import { loadCollection } from '../../data/client'
-import type { DataCollection, Pet, PetAnimation } from '../../domain/types'
-import { PetsPage } from '../PetsPage'
-import { MAX_VISIBLE_PETS } from './constants'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 const writeClipboardText = vi.fn<(_: string) => Promise<void>>()

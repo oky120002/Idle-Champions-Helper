@@ -46,7 +46,7 @@ export function SkinArtworkDialog({
       onClick={closeArtworkDialog}
     >
       <div className="skin-artwork-dialog__backdrop" aria-hidden="true" />
-      <div className="skin-artwork-dialog__panel" onClick={(event) => event.stopPropagation()}>
+      <div className="skin-artwork-dialog__panel" onClick={(event) => { event.stopPropagation(); }}>
         <div className="skin-artwork-dialog__header">
           <div className="skin-artwork-dialog__copy">
             <p className="champion-detail-sidebar__eyebrow">{t({ zh: '皮肤立绘预览', en: 'Skin artwork preview' })}</p>
@@ -129,7 +129,7 @@ export function SkinArtworkDialog({
                         : `Switch skin: ${getPrimaryLocalizedText(skin.name, locale)}`
                     }
                     aria-pressed={selectedSkin.id === skin.id}
-                    onClick={() => setSelectedSkinId(skin.id)}
+                    onClick={() => { setSelectedSkinId(skin.id); }}
                   >
                     <span className="skin-artwork-dialog__tab-title">{getPrimaryLocalizedText(skin.name, locale)}</span>
                     <span className="skin-artwork-dialog__tab-meta">

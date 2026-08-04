@@ -35,13 +35,19 @@ export function useWorkbenchShareLink(pathname: string, search: string, hash: st
   const copyCurrentLink = useCallback(async () => {
     const shareUrl = buildWorkbenchShareUrl(pathname, search, hash)
 
-    if (!shareUrl || typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+    if (shareUrl === null) {
+      setShareLinkState('error')
+      return
+    }
+
+    const clipboard = navigator.clipboard as Clipboard | undefined
+    if (clipboard === undefined) {
       setShareLinkState('error')
       return
     }
 
     try {
-      await navigator.clipboard.writeText(shareUrl)
+      await clipboard.writeText(shareUrl)
       setShareLinkState('success')
     } catch {
       setShareLinkState('error')

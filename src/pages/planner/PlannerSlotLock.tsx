@@ -1,14 +1,15 @@
 import { useI18n } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Champion, FormationSlot } from '../../domain/types'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 
 interface PlannerSlotLockProps {
-  slots: FormationSlot[]
-  placements: Record<string, string>
-  championById: Map<string, Champion>
-  lockedSlots: Record<string, string>
-  onLock: (slotId: string, heroId: string) => void
-  onClearLock: (slotId: string) => void
+  readonly slots: FormationSlot[]
+  readonly placements: Record<string, string>
+  readonly championById: Map<string, Champion>
+  readonly lockedSlots: Record<string, string>
+  readonly onLock: (slotId: string, heroId: string) => void
+  readonly onClearLock: (slotId: string) => void
 }
 
 /**
@@ -23,7 +24,7 @@ export function PlannerSlotLock({
   onClearLock,
 }: PlannerSlotLockProps) {
   const { t, locale } = useI18n()
-  const filledSlots = slots.filter((slot) => placements[slot.id])
+  const filledSlots = slots.filter((slot) => slot.id in placements)
 
   if (filledSlots.length === 0) {
     return null
@@ -40,7 +41,7 @@ export function PlannerSlotLock({
       <div className="surface-card__body">
         <ul className="planner-slot-lock__list" data-testid="planner-slot-lock">
           {filledSlots.map((slot) => {
-            const heroId = placements[slot.id]!
+            const heroId = unwrap(placements[slot.id], `placements[${slot.id}] should exist`)
             const champion = championById.get(heroId)
             const isLocked = lockedSlots[slot.id] === heroId
             const name = champion ? getPrimaryLocalizedText(champion.name, locale) : heroId
@@ -55,7 +56,7 @@ export function PlannerSlotLock({
                   data-testid={`planner-slot-lock-toggle-${slot.id}`}
                   data-locked={isLocked}
                   className={isLocked ? 'is-locked' : ''}
-                  onClick={() => (isLocked ? onClearLock(slot.id) : onLock(slot.id, heroId))}
+                  onClick={() => { if (isLocked) { onClearLock(slot.id) } else { onLock(slot.id, heroId) } }}
                 >
                   {isLocked ? t({ zh: '解锁', en: 'Unlock' }) : t({ zh: '锁定', en: 'Lock' })}
                 </button>

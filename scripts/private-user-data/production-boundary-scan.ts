@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import process from 'node:process'
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { scanBuildContent } from './production-boundary-scanner.ts'

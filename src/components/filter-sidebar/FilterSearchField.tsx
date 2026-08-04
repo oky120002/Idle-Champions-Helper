@@ -3,13 +3,13 @@ import { Search } from 'lucide-react'
 import { FieldGroup } from '../FieldGroup'
 
 interface FilterSearchFieldProps {
-  label: ReactNode
-  value: string
-  onChange: (value: string) => void
-  hint?: ReactNode
-  placeholder?: string
-  className?: string
-  type?: 'search' | 'text'
+  readonly label: ReactNode
+  readonly value: string
+  readonly onChange: (value: string) => void
+  readonly hint?: ReactNode
+  readonly placeholder?: string
+  readonly className?: string
+  readonly type?: 'search' | 'text'
 }
 
 export function FilterSearchField({
@@ -30,7 +30,7 @@ export function FilterSearchField({
           type={type}
           value={value}
           placeholder={placeholder}
-          onChange={(event) => onChange(event.target.value)}
+          onChange={(event) => { onChange(event.target.value); }}
         />
       </span>
     </FieldGroup>

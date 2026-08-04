@@ -5,6 +5,7 @@
  * 测量三档计算模式（full / p90 / p50）下 buildPlannerRecommendation 单次耗时，
  * 以及单次评分（evaluateFormation）耗时。合成快照默认全英雄已拥有（worst case）。
  */
+import process from 'node:process'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { performance } from 'node:perf_hooks'

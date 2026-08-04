@@ -72,16 +72,16 @@ export interface SkelAnimCanvasLabels {
 }
 
 export interface SkelAnimCanvasProps {
-  animation: SkelAnimManifest | null
-  fallbackSrc: string | null
-  alt: string
-  labels: SkelAnimCanvasLabels
-  viewportBounds?: SkelAnimBounds | null
-  className?: string
-  showStatus?: boolean
-  showControls?: boolean
-  playbackMode?: 'manual' | 'play' | 'pause'
-  sequenceIntent?: 'default' | 'walk'
+  readonly animation: SkelAnimManifest | null
+  readonly fallbackSrc: string | null
+  readonly alt: string
+  readonly labels: SkelAnimCanvasLabels
+  readonly viewportBounds?: SkelAnimBounds | null
+  readonly className?: string
+  readonly showStatus?: boolean
+  readonly showControls?: boolean
+  readonly playbackMode?: 'manual' | 'play' | 'pause'
+  readonly sequenceIntent?: 'default' | 'walk'
 }
 
 export interface PreparedSkelAnimEntry {

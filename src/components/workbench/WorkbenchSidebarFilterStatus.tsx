@@ -1,9 +1,9 @@
 import { useI18n } from '../../app/i18n'
-import { WorkbenchToolbarBadge } from './WorkbenchScaffold'
+import { WorkbenchToolbarBadge } from './WorkbenchToolbarPrimitives'
 
 interface WorkbenchSidebarFilterStatusProps {
-  activeCount: number
-  className?: string
+  readonly activeCount: number
+  readonly className?: string
 }
 
 export function WorkbenchSidebarFilterStatus({

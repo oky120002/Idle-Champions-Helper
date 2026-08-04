@@ -1,17 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('../../data/client', async () => {
-  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
-
-  return {
-    ...actual,
-    loadBinaryData: vi.fn(),
-    loadChampionDetail: vi.fn(),
-    loadCollection: vi.fn(),
-  }
-})
-
 import { detailFixture } from './championDetailPageTestData'
 import {
   mockChampionDetailCollections,
@@ -23,6 +12,17 @@ import {
   restoreChampionDetailDomEnvironment,
   sectionTopMap,
 } from './championDetailPageTestHarness'
+
+vi.mock('../../data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
+
+  return {
+    ...actual,
+    loadBinaryData: vi.fn(),
+    loadChampionDetail: vi.fn(),
+    loadCollection: vi.fn(),
+  }
+})
 
 beforeEach(() => {
   prepareChampionDetailDomEnvironment()

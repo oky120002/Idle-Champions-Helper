@@ -11,8 +11,8 @@ import { VariantFormationMiniBoard } from './VariantFormationMiniBoard'
 import { VariantResultCard } from './VariantResultCard'
 
 type VariantAdventureSectionProps = {
-  model: Pick<VariantsPageModel, 'locale' | 't'>
-  group: VariantAdventureGroup
+  readonly model: Pick<VariantsPageModel, 'locale' | 't'>
+  readonly group: VariantAdventureGroup
 }
 
 function getObjectiveAreaSummaryLabel(group: VariantAdventureGroup, locale: 'zh-CN' | 'en-US'): string | null {
@@ -98,8 +98,8 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
           </p>
 
           <div className="variant-meta-row">
-            {sceneLabel ? <span className="variant-meta-pill">{sceneLabel}</span> : null}
-            {objectiveAreaSummary ? <span className="variant-meta-pill">{objectiveAreaSummary}</span> : null}
+            {sceneLabel !== null ? <span className="variant-meta-pill">{sceneLabel}</span> : null}
+            {objectiveAreaSummary !== null ? <span className="variant-meta-pill">{objectiveAreaSummary}</span> : null}
             <span className="variant-meta-pill variant-meta-pill--accent">
               {getSpecialEnemySummaryLabel(group, locale)}
             </span>

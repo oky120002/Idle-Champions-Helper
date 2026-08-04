@@ -25,17 +25,6 @@ export function useFormationPageState() {
   const [activeMobileSlotId, setActiveMobileSlotId] = useState('')
   const [presetForm, setPresetForm] = useState<PresetFormState>({ ...DEFAULT_PRESET_FORM_STATE })
 
-  function bumpEditRevision() {
-    setEditRevision((current) => current + 1)
-  }
-
-  function updatePresetForm<K extends keyof PresetFormState>(key: K, value: PresetFormState[K]) {
-    setPresetForm((current) => ({
-      ...current,
-      [key]: value,
-    }))
-  }
-
   return {
     state,
     setState,
@@ -54,7 +43,6 @@ export function useFormationPageState() {
     isDraftPersistenceArmed,
     setIsDraftPersistenceArmed,
     editRevision,
-    bumpEditRevision,
     isSavingPreset,
     setIsSavingPreset,
     layoutSearch,
@@ -65,6 +53,9 @@ export function useFormationPageState() {
     setActiveMobileSlotId,
     presetForm,
     setPresetForm,
-    updatePresetForm,
+    bumpEditRevision: () => { setEditRevision((current) => current + 1) },
+    updatePresetForm: <K extends keyof PresetFormState>(key: K, value: PresetFormState[K]) => {
+      setPresetForm((current) => ({ ...current, [key]: value }))
+    },
   }
 }

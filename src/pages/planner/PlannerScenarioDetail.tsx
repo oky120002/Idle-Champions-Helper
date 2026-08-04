@@ -2,7 +2,7 @@ import { useI18n } from '../../app/i18n'
 import type { PlannerScenarioRecord } from './plannerScenarioModel'
 
 interface PlannerScenarioDetailProps {
-  record: PlannerScenarioRecord | null
+  readonly record: PlannerScenarioRecord | null
 }
 
 export function PlannerScenarioDetail({ record }: PlannerScenarioDetailProps) {

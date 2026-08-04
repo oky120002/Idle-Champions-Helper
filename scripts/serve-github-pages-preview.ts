@@ -1,3 +1,5 @@
+import process from 'node:process'
+import type { Buffer } from 'node:buffer'
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import { access, readFile, stat } from 'node:fs/promises'
 import path from 'node:path'

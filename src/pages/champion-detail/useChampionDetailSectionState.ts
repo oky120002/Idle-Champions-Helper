@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
+import type { ChampionDetail } from '../../domain/types'
 import { DETAIL_SECTION_IDS, type DetailSectionId, type DetailSectionLink, type DetailSectionProgressState } from './types'
 import { buildSectionHash, resolveActiveSectionId, resolveSectionIdFromBrowserHash, resolveSectionIdFromHashValue } from './navigation'
-import type { ChampionDetail } from '../../domain/types'
 
 interface Translation {
   (text: { zh: string; en: string }): string

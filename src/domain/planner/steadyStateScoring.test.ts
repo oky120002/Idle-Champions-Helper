@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { scoreFormation } from './steadyStateScoring'
+
+import { unwrap } from '../../../tests/utils/dom-assertions'
+
 import { compareGameNumbers } from '../simulator/gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
+import { scoreFormation } from './steadyStateScoring'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
 
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
@@ -192,9 +195,9 @@ describe('steady state scoring', () => {
 
     const result = scoreFormation({
       placements: { s1: 'gold', s2: 'plain' },
+      scoringMode: 'team-gold',
       heroesById,
       scenario,
-      scoringMode: 'team-gold',
     })
 
     // gold pool: 1 + 200/100 = 3；team_gold_find = base_gold(1) × 3 = 3
@@ -340,9 +343,9 @@ describe('steady state scoring', () => {
     })
     const withGlobalBuff = scoreFormation({
       placements: { s1: 'carry' },
+      globalBuffMultiplier: 2,
       heroesById,
       scenario,
-      globalBuffMultiplier: 2,
     })
 
     // 无全局加成：carryDps = 10 × 1.06 × 1（无 pool）= 10.6
@@ -388,26 +391,26 @@ describe('steady state scoring', () => {
       const placements = { s1: 'carry', s2: 'buf' }
 
       const base = scoreFormation({
-        placements,
-        heroesById: new Map([['carry', createHero('carry', { baseDamage: 10 })], ['buf', support]]),
-        scenario,
         globalBuffMultiplier: 5,
         aggregateProjection: 'formation-buff',
+        heroesById: new Map([['carry', createHero('carry', { baseDamage: 10 })], ['buf', support]]),
+        placements,
+        scenario,
       })
       // 改 globalBuff（外部加成）→ formation-buff 不变
       const noGlobal = scoreFormation({
-        placements,
-        heroesById: new Map([['carry', createHero('carry', { baseDamage: 10 })], ['buf', support]]),
-        scenario,
         aggregateProjection: 'formation-buff',
+        heroesById: new Map([['carry', createHero('carry', { baseDamage: 10 })], ['buf', support]]),
+        placements,
+        scenario,
       })
       expect(noGlobal.objectiveValue.toNumber()).toBeCloseTo(base.objectiveValue.toNumber(), 6)
       // 改 baseDamage（绝对基线）→ formation-buff 不变
       const bigBase = scoreFormation({
-        placements,
-        heroesById: new Map([['carry', createHero('carry', { baseDamage: 9999 })], ['buf', support]]),
-        scenario,
         aggregateProjection: 'formation-buff',
+        heroesById: new Map([['carry', createHero('carry', { baseDamage: 9999 })], ['buf', support]]),
+        placements,
+        scenario,
       })
       expect(bigBase.objectiveValue.toNumber()).toBeCloseTo(base.objectiveValue.toNumber(), 6)
     })
@@ -436,35 +439,34 @@ describe('steady state scoring', () => {
         scenario,
       })
 
-      const breakdown = result.breakdown
-      expect(breakdown).not.toBeNull()
-      expect(breakdown!.carryHeroId).toBe('carry')
-      expect(breakdown!.carrySlotId).toBe('s1')
-      expect(breakdown!.carryLevel).toBe(1)
+      const breakdown = unwrap(result.breakdown, 'breakdown should exist')
+      expect(breakdown.carryHeroId).toBe('carry')
+      expect(breakdown.carrySlotId).toBe('s1')
+      expect(breakdown.carryLevel).toBe(1)
       // baseDps = baseDamage(10) × levelCurve(1.06) = 10.6；加成前基线
-      expect(Number(breakdown!.baseDps)).toBeCloseTo(10.6, 4)
+      expect(Number(breakdown.baseDps)).toBeCloseTo(10.6, 4)
       // levelCurve 是游戏记数法字符串（与 baseDps/carryDps 同契约），Number 解析后 ≈ rate
-      expect(Number(breakdown!.levelCurve)).toBeCloseTo(1.06, 4)
+      expect(Number(breakdown.levelCurve)).toBeCloseTo(1.06, 4)
       // carryDps = baseDps(10.6) × globalBuff(3) × heroDpsPool(2) = 63.6；与 score 一致
       // 同 key 全源加法后：ability global(support +200%)→globalBuff=3，ability hero(carry +100%)→heroDpsPool=2，
       // 各自外露为独立因子；damagePool 为残余（非 global/hero 的 damage 池，结构性 =1）。
-      expect(Number(breakdown!.carryDps)).toBeCloseTo(63.6, 4)
-      expect(breakdown!.factors.damagePool).toBeCloseTo(1, 6)
-      expect(breakdown!.factors.crit).toBeCloseTo(1, 6)
-      expect(breakdown!.factors.vulnerability).toBeCloseTo(1, 6)
-      expect(breakdown!.factors.globalBuff).toBeCloseTo(3, 6)
-      expect(breakdown!.factors.heroDpsPool).toBeCloseTo(2, 6)
+      expect(Number(breakdown.carryDps)).toBeCloseTo(63.6, 4)
+      expect(breakdown.factors.damagePool).toBeCloseTo(1, 6)
+      expect(breakdown.factors.crit).toBeCloseTo(1, 6)
+      expect(breakdown.factors.vulnerability).toBeCloseTo(1, 6)
+      expect(breakdown.factors.globalBuff).toBeCloseTo(3, 6)
+      expect(breakdown.factors.heroDpsPool).toBeCloseTo(2, 6)
       // pools：hero self（addPercent 100 → ×2）与 global（addPercent 200 → ×3）
-      const heroPool = breakdown!.pools.find((p) => p.scope === 'hero')
+      const heroPool = breakdown.pools.find((p) => p.scope === 'hero')
       expect(heroPool?.addPercent).toBeCloseTo(100, 6)
       expect(heroPool?.poolMultiplier).toBeCloseTo(2, 6)
-      const globalPool = breakdown!.pools.find((p) => p.scope === 'global')
+      const globalPool = breakdown.pools.find((p) => p.scope === 'global')
       expect(globalPool?.addPercent).toBeCloseTo(200, 6)
       expect(globalPool?.poolMultiplier).toBeCloseTo(3, 6)
       // contributions：carry 自带 heroDpsMultiplier、buf 贡献 globalDpsMultiplier
-      const bufContribution = breakdown!.contributions.find((c) => c.supportHeroId === 'buf')
+      const bufContribution = breakdown.contributions.find((c) => c.supportHeroId === 'buf')
       expect(bufContribution?.signals.some((s) => s.signalKind === 'globalDpsMultiplier' && Math.abs(s.multiplier - 3) < 1e-6)).toBe(true)
-      const carryContribution = breakdown!.contributions.find((c) => c.supportHeroId === 'carry')
+      const carryContribution = breakdown.contributions.find((c) => c.supportHeroId === 'carry')
       expect(carryContribution?.signals.some((s) => s.signalKind === 'heroDpsMultiplier')).toBe(true)
     })
 
@@ -476,12 +478,12 @@ describe('steady state scoring', () => {
       const heroesById = new Map([['carry', carry]])
       const result = scoreFormation({
         placements: { s1: 'carry' },
-        heroesById,
-        scenario,
         equipmentAdjustmentByHero: new Map([['carry', 1.5]]),
         externalHeroDpsContributions: [{ value: 200, qualifier: null }],
+        heroesById,
+        scenario,
       })
-      const b = result.breakdown!
+      const b = unwrap(result.breakdown, 'breakdown should exist')
       expect(b.factors.heroDpsPool).toBeCloseTo(3.5, 6)
       const recomputed = Number(b.baseDps)
         * b.factors.damagePool * b.factors.crit * b.factors.vulnerability
@@ -517,13 +519,13 @@ describe('steady state scoring', () => {
 
       const result = scoreFormation({
         placements: { s1: 'carry', s2: 'crit', s3: 'vuln' },
-        heroesById,
-        scenario,
         globalBuffMultiplier: 1.5,
         equipmentAdjustmentByHero: new Map([['carry', 1.5]]),
         externalHeroDpsContributions: [{ value: 200, qualifier: null }],
+        heroesById,
+        scenario,
       })
-      const b = result.breakdown!
+      const b = unwrap(result.breakdown, 'breakdown should exist')
 
       // 全因子同时非默认——任一为 1 则该因子的非对称回归不可见。
       // damagePool 是残余（非 global/hero 的 damage 池，结构性 =1），不在此测；
@@ -557,9 +559,9 @@ describe('steady state scoring', () => {
 
       const teamGold = scoreFormation({
         placements: { s1: 'gold', s2: 'carry' },
+        scoringMode: 'team-gold',
         heroesById,
         scenario,
-        scoringMode: 'team-gold',
       })
       expect(teamGold.breakdown).toBeNull()
     })
@@ -586,9 +588,10 @@ describe('steady state scoring', () => {
         scenario,
       })
 
-      expect(result.breakdown!.factors.crit).toBeGreaterThan(1)
+      const breakdown = unwrap(result.breakdown, 'breakdown should exist')
+      expect(breakdown.factors.crit).toBeGreaterThan(1)
       // monsterTags 空 → 视为无条件匹配（与 computeVulnerabilityFactor 一致）
-      expect(result.breakdown!.factors.vulnerability).toBeGreaterThan(1)
+      expect(breakdown.factors.vulnerability).toBeGreaterThan(1)
     })
 
     it('levelCurve 为字符串，高 level 也不溢出为 null（JSON 契约）', () => {
@@ -598,11 +601,11 @@ describe('steady state scoring', () => {
       const heroesById = new Map([['carry', carry]])
       const result = scoreFormation({
         placements: { s1: 'carry' },
+        heroLevels: new Map([['carry', 20000]]),
         heroesById,
         scenario,
-        heroLevels: new Map([['carry', 20000]]),
       })
-      const breakdown = result.breakdown!
+      const breakdown = unwrap(result.breakdown, 'breakdown should exist')
       expect(typeof breakdown.levelCurve).toBe('string')
       // JSON 序列化往返不丢值（原 bug：Infinity → null）
       const roundTrip = JSON.parse(JSON.stringify({ levelCurve: breakdown.levelCurve })) as { levelCurve: unknown }
@@ -624,8 +627,10 @@ describe('steady state scoring', () => {
         equipmentHealthByHero: new Map([['carry', 11]]), // +1000% health
       })
       expect(base.areaEstimate).not.toBeNull()
+      const baseArea = unwrap(base.areaEstimate, 'base areaEstimate should exist')
+      const withHealthArea = unwrap(withHealth.areaEstimate, 'withHealth areaEstimate should exist')
       // health ↑ → survival:hero 池↑ → effectiveHealth↑ → survival 约束放宽 → survivableArea 上升
-      expect(withHealth.areaEstimate!.survivableArea).toBeGreaterThan(base.areaEstimate!.survivableArea)
+      expect(withHealthArea.survivableArea).toBeGreaterThan(baseArea.survivableArea)
     })
 
     it('未导入存档（equipmentHealthByHero 空/缺省）→ survival 不变（?? 1，向后兼容）', () => {
@@ -634,11 +639,13 @@ describe('steady state scoring', () => {
       const without = scoreFormation({ placements: { s1: 'carry' }, heroesById, scenario })
       const emptyMap = scoreFormation({
         placements: { s1: 'carry' },
+        equipmentHealthByHero: new Map(),
         heroesById,
         scenario,
-        equipmentHealthByHero: new Map(),
       })
-      expect(emptyMap.areaEstimate!.survivableArea).toBe(without.areaEstimate!.survivableArea)
+      const emptyMapArea = unwrap(emptyMap.areaEstimate, 'emptyMap areaEstimate should exist')
+      const withoutArea = unwrap(without.areaEstimate, 'without areaEstimate should exist')
+      expect(emptyMapArea.survivableArea).toBe(withoutArea.survivableArea)
     })
   })
 
@@ -727,15 +734,16 @@ describe('steady state scoring', () => {
       const heroesById = new Map([['carry', carry], ['buf', support]])
       const result = scoreFormation({
         placements: { s1: 'carry', s2: 'buf' },
+        globalBuffMultiplier: 5, // 外部 global_dps = 1+400/100
         heroesById,
         scenario,
-        globalBuffMultiplier: 5, // 外部 global_dps = 1+400/100
       })
       // unified global = 1+(200+400)/100 = 7（非 3×5=15）；carryDps = 10 × 1.06 × 7 = 74.2
       expect(result.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 7, 4)
-      expect(result.breakdown!.factors.globalBuff).toBeCloseTo(7, 6)
+      const breakdown = unwrap(result.breakdown, 'breakdown should exist')
+      expect(breakdown.factors.globalBuff).toBeCloseTo(7, 6)
       // global 池 addPercent = 200(ability) + 400(外部) = 600
-      const globalPool = result.breakdown!.pools.find((p) => p.scope === 'global')
+      const globalPool = breakdown.pools.find((p) => p.scope === 'global')
       expect(globalPool?.addPercent).toBeCloseTo(600, 6)
     })
 
@@ -752,15 +760,16 @@ describe('steady state scoring', () => {
       const heroesById = new Map([['carry', carry]])
       const result = scoreFormation({
         placements: { s1: 'carry' },
-        heroesById,
-        scenario,
         equipmentAdjustmentByHero: new Map([['carry', 1.5]]), // 装备 +50%
         externalHeroDpsContributions: [{ value: 200, qualifier: null }], // 外部 +200%
+        heroesById,
+        scenario,
       })
       // unified hero = 1+(100+50+200)/100 = 4.5（非 2×3.5=7）；carryDps = 10 × 1.06 × 4.5 = 47.7
       expect(result.objectiveValue.toNumber()).toBeCloseTo(10 * 1.06 * 4.5, 4)
-      expect(result.breakdown!.factors.heroDpsPool).toBeCloseTo(4.5, 6)
-      const heroPool = result.breakdown!.pools.find((p) => p.scope === 'hero')
+      const heroBreakdown = unwrap(result.breakdown, 'breakdown should exist')
+      expect(heroBreakdown.factors.heroDpsPool).toBeCloseTo(4.5, 6)
+      const heroPool = heroBreakdown.pools.find((p) => p.scope === 'hero')
       expect(heroPool?.addPercent).toBeCloseTo(350, 6)
     })
 
@@ -776,15 +785,16 @@ describe('steady state scoring', () => {
       const heroesById = new Map([['carry', carry], ['buf', support]])
       const withExternal = scoreFormation({
         placements: { s1: 'carry', s2: 'buf' },
-        heroesById,
-        scenario,
         globalBuffMultiplier: 5,
         aggregateProjection: 'formation-buff',
+        heroesById,
+        scenario,
       })
       // formation-buff：ability global 池(×3) only，外部 +400% 不注入 → 3
       expect(withExternal.objectiveValue.toNumber()).toBeCloseTo(3, 6)
       // breakdown factors 也只反映 ability（globalBuff=3，外部未注入）
-      expect(withExternal.breakdown!.factors.globalBuff).toBeCloseTo(3, 6)
+      const fbBreakdown = unwrap(withExternal.breakdown, 'breakdown should exist')
+      expect(fbBreakdown.factors.globalBuff).toBeCloseTo(3, 6)
     })
   })
 
@@ -799,9 +809,9 @@ describe('steady state scoring', () => {
     })
     const adjusted = scoreFormation({
       placements: { s1: 'carry' },
+      equipmentAdjustmentByHero: new Map([['carry', 0.5]]),
       heroesById,
       scenario,
-      equipmentAdjustmentByHero: new Map([['carry', 0.5]]),
     })
 
     // 理论 10.6；调整比 0.5 → 5.3（owned 装备弱于理论最大）

@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, writeFile } from 'node:fs/promises'
+import { describe, expect, it } from 'vitest'
 import { readJson } from './data/io-utils.ts'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.ts'
 import { normalizeEffectReference } from './data/normalize-champions.ts'
@@ -754,8 +754,8 @@ describe('normalize-idle-champions-definitions', () => {
     expect(normalizeEffectReference('hero_dps_multiplier_mult,100')).toBe('hero_dps_multiplier_mult,100')
     expect(normalizeEffectReference('effect_def,1308')).toBe('effect_def,1308')
     // 空/非串
-    expect(normalizeEffectReference(null)).toBe(null)
-    expect(normalizeEffectReference('   ')).toBe(null)
+    expect(normalizeEffectReference(null)).toBeNull()
+    expect(normalizeEffectReference('   ')).toBeNull()
   })
 
   it('在 manualOverrides 文件损坏时抛错而非静默丢失', async () => {

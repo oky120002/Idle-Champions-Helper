@@ -4,14 +4,14 @@ import { describeEffectItem } from './summary-model'
 import type { EffectContext } from './types'
 
 type DetailLegendarySectionProps = {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  effectContext: EffectContext
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly effectContext: EffectContext
 }
 
 export function DetailLegendarySection({ detail, locale, t, effectContext }: DetailLegendarySectionProps) {
-  const legendaryEffects = detail.legendaryEffects ?? []
+  const legendaryEffects = detail.legendaryEffects
 
   return (
     <SurfaceCard className="detail-section detail-section--legendary detail-section--headerless">

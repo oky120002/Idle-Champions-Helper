@@ -16,25 +16,25 @@ import type {
 } from './types'
 
 interface DetailSectionPanelsProps {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  activeSectionId: DetailSectionLink['id']
-  effectContext: EffectContext
-  overviewFields: DetailFieldProps[]
-  specializationColumns: SpecializationUpgradeColumn[]
-  specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
-  ledgerRows: LedgerUpgradeRow[]
-  ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
-  activeLedgerFilterKeySet: Set<string>
-  visibleLedgerRows: LedgerUpgradeRow[]
-  hiddenLedgerSummary: string
-  hasCustomLedgerFilterState: boolean
-  isShowingAllLedgerTypes: boolean
-  toggleLedgerFilter: (key: string) => void
-  resetLedgerFilters: () => void
-  enableAllLedgerFilters: () => void
-  openArtworkDialog: (skinId?: string) => void
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly activeSectionId: DetailSectionLink['id']
+  readonly effectContext: EffectContext
+  readonly overviewFields: DetailFieldProps[]
+  readonly specializationColumns: SpecializationUpgradeColumn[]
+  readonly specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
+  readonly ledgerRows: LedgerUpgradeRow[]
+  readonly ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
+  readonly activeLedgerFilterKeySet: Set<string>
+  readonly visibleLedgerRows: LedgerUpgradeRow[]
+  readonly hiddenLedgerSummary: string
+  readonly hasCustomLedgerFilterState: boolean
+  readonly isShowingAllLedgerTypes: boolean
+  readonly toggleLedgerFilter: (key: string) => void
+  readonly resetLedgerFilters: () => void
+  readonly enableAllLedgerFilters: () => void
+  readonly openArtworkDialog: (skinId?: string) => void
 }
 
 export function DetailSectionPanels(props: DetailSectionPanelsProps) {

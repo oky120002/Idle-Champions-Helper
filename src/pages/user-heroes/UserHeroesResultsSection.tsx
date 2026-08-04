@@ -8,7 +8,7 @@ import type { UserHeroesPageModel, UserHeroesRosterMetricFilterId } from './type
 import { getUserHeroProfileSourceLabel } from './userHeroProfileSourceLabel'
 
 interface UserHeroesResultsSectionProps {
-  model: UserHeroesPageModel
+  readonly model: UserHeroesPageModel
 }
 
 interface OpenFlyoutState {
@@ -72,7 +72,7 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
         title="用户英雄矩阵"
         highlightLabel="高亮已拥有"
         activeMetricId={model.activeRosterMetricFilterId}
-        onMetricToggle={(metricId) => model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId)}
+        onMetricToggle={(metricId) => { model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId); }}
       />
 
       {!hasMatches ? (
@@ -143,7 +143,7 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
           returnToPath="/user-heroes"
           returnLabel={{ zh: '返回用户英雄', en: 'Back to user heroes' }}
           anchorRect={openFlyout.anchorRect}
-          onClose={() => setOpenFlyout(null)}
+          onClose={() => { setOpenFlyout(null); }}
           onNavigate={model.saveListScroll}
         />
       ) : null}

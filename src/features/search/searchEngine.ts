@@ -6,12 +6,32 @@ import type { SearchBucket, SearchDocument, SearchDocumentCollection, SearchHit 
 // 桶权重：英雄名 > 关键字标签 > 长正文。命中桶优先级同序，用于决定 snippet 来源。
 const BOOST: Record<SearchBucket, number> = { title: 3, meta: 2, body: 1.5 }
 const BUCKET_PRIORITY: SearchBucket[] = ['title', 'meta', 'body']
+const SEARCH_FIELDS: ReadonlySet<string> = new Set(['title', 'body', 'meta'])
 
 interface IndexedDocument {
   championId: string
   title: string
   body: string
   meta: string
+}
+
+type MiniSearchResult = ReadonlyArray<{
+  id: string
+  score: number
+  match: Record<string, string[]>
+  terms: string[]
+}>
+
+function collectMatchedBuckets(match: Record<string, string[]>): Set<SearchBucket> {
+  const buckets = new Set<SearchBucket>()
+  for (const fields of Object.values(match)) {
+    for (const field of fields) {
+      if (SEARCH_FIELDS.has(field)) {
+        buckets.add(field as SearchBucket)
+      }
+    }
+  }
+  return buckets
 }
 
 export interface SearchEngine {
@@ -37,8 +57,8 @@ export function buildEngine(collection: SearchDocumentCollection): SearchEngine 
     idField: 'championId',
     fields: ['title', 'body', 'meta'],
     processTerm: (term) => term,
-    tokenize,
     searchOptions: { prefix: true, fuzzy: 0.2, boost: BOOST },
+    tokenize,
   })
   mini.addAll(collection.items.map(toIndexedDocument))
 
@@ -49,12 +69,7 @@ export function buildEngine(collection: SearchDocumentCollection): SearchEngine 
         return []
       }
 
-      const results = mini.search(trimmed) as ReadonlyArray<{
-        id: string
-        score: number
-        match: Record<string, string[]>
-        terms: string[]
-      }>
+      const results = mini.search(trimmed) as MiniSearchResult
       const hits: SearchHit[] = []
       for (const result of results) {
         const doc = byId.get(result.id)
@@ -62,16 +77,9 @@ export function buildEngine(collection: SearchDocumentCollection): SearchEngine 
           continue
         }
         // MiniSearch 的 match 形如 { term: [field, ...] }（词项 → 命中字段），反转得到命中字段集。
-        const matchedBuckets = new Set<SearchBucket>()
-        for (const fields of Object.values(result.match)) {
-          for (const field of fields) {
-            if (field === 'title' || field === 'body' || field === 'meta') {
-              matchedBuckets.add(field)
-            }
-          }
-        }
+        const matchedBuckets = collectMatchedBuckets(result.match)
         const bucket = BUCKET_PRIORITY.find((candidate) => matchedBuckets.has(candidate)) ?? 'body'
-        hits.push({ doc, score: result.score, bucket, terms: result.terms })
+        hits.push({ doc, bucket, score: result.score, terms: result.terms })
       }
 
       return hits.slice(0, limit)
@@ -83,14 +91,12 @@ let enginePromise: Promise<SearchEngine | null> | null = null
 
 // 模块级单例：首次调用才加载文档并建索引，之后复用。失败时重置以便重试。
 export function getSearchEngine(): Promise<SearchEngine | null> {
-  if (!enginePromise) {
-    enginePromise = loadSearchDocuments()
-      .then((collection) => buildEngine(collection))
-      .catch((error) => {
-        console.error('加载搜索索引失败', error)
-        enginePromise = null
-        return null
-      })
-  }
+  enginePromise ??= loadSearchDocuments()
+    .then((collection) => buildEngine(collection))
+    .catch((error) => {
+      console.error('加载搜索索引失败', error)
+      enginePromise = null
+      return null
+    })
   return enginePromise
 }

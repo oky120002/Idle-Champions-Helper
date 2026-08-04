@@ -1,10 +1,10 @@
 import 'fake-indexeddb/auto'
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import type { FormationDraft, FormationPreset } from '../domain/types'
 import { deleteRecentFormationDraft, readRecentFormationDraft, saveRecentFormationDraft } from './formationDraftStore'
 import { deleteFormationPreset, listFormationPresets, saveFormationPreset } from './formationPresetStore'
 import { APP_DATABASE_NAME, APP_STORE_NAMES, openAppDatabase } from './localDatabase'
-import type { FormationDraft, FormationPreset } from '../domain/types'
 
 function createDraft(updatedAt: string): FormationDraft {
   return {
@@ -21,7 +21,6 @@ function createDraft(updatedAt: string): FormationDraft {
 
 function createPreset(id: string, updatedAt: string): FormationPreset {
   return {
-    id,
     schemaVersion: 1,
     dataVersion: 'v1',
     name: `方案 ${id}`,
@@ -34,6 +33,7 @@ function createPreset(id: string, updatedAt: string): FormationPreset {
     scenarioTags: [],
     priority: 'medium',
     createdAt: '2026-04-13T00:00:00.000Z',
+    id,
     updatedAt,
   }
 }
@@ -63,8 +63,8 @@ async function writeRawRecord(storeName: string, key: string, value: unknown): P
     await new Promise<void>((resolve, reject) => {
       const transaction = database.transaction(storeName, 'readwrite')
       transaction.objectStore(storeName).put(value, key)
-      transaction.oncomplete = () => resolve()
-      transaction.onerror = () => reject(transaction.error ?? new Error('写入失败'))
+      transaction.oncomplete = () => { resolve(); }
+      transaction.onerror = () => { reject(transaction.error ?? new Error('写入失败')); }
     })
   } finally {
     database.close()

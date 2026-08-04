@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
 import type { LocalizedOption, LocalizedText, Variant } from '../types'
-import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
-import type { OfficialPlannerScenarioModel } from './plannerModel'
-import type { PlannerCollections } from './recommendationTypes'
 import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
 import { resolveHeroAbilityProfiles } from '../abilities/abilityModel'
+import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
+import type { OfficialPlannerScenarioModel } from './plannerModel'
+import type { PlannerCollections } from './recommendationTypes'
 
 /**
  * 轮 7 运行时边界审计的实测复现：喂损坏/极端/不一致数据，锁定失败路径的实际行为。

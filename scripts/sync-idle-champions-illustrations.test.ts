@@ -1,10 +1,11 @@
-import { it, expect } from 'vitest'
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
-import { writeJson } from './data/io-utils.ts'
+import { it, expect } from 'vitest'
 import { PNG } from 'pngjs'
+import { writeJson } from './data/io-utils.ts'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.ts'
 
 interface TestHooks {

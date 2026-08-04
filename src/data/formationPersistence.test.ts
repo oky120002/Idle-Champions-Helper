@@ -1,10 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Champion, FormationLayout } from '../domain/types'
 
-vi.mock('./client', () => ({
-  loadCollectionAtVersion: vi.fn(),
-}))
-
 import { loadCollectionAtVersion } from './client'
 import {
   buildDroppedReferenceDetail,
@@ -13,14 +9,16 @@ import {
   validateFormationPlacements,
 } from './formationPersistence'
 
+vi.mock('./client', () => ({
+  loadCollectionAtVersion: vi.fn(),
+}))
+
 function createChampion(id: string, seat: number, name = id): Champion {
   return {
-    id,
     name: {
       original: name,
       display: name,
     },
-    seat,
     roles: [],
     affiliations: [],
     tags: [],
@@ -30,6 +28,8 @@ function createChampion(id: string, seat: number, name = id): Champion {
       forcedEligiblePatronIds: [],
       unsupportedPatronIds: [],
     },
+    id,
+    seat,
   }
 }
 
@@ -115,9 +115,9 @@ describe('formationPersistence helpers', () => {
 
     expect(prompt).toEqual({
       kind: 'invalid',
-      snapshot,
       title: { zh: '草稿版本过旧，当前不能直接恢复', en: 'draft version is too old to restore directly' },
       detail: { zh: '当前只识别 schemaVersion=1 的草稿；检测到旧版本为 0。', en: 'Only schemaVersion=1 draft is supported; detected old version 0.' },
+      snapshot,
     })
     expect(mockedLoadCollectionAtVersion).not.toHaveBeenCalled()
   })
@@ -243,9 +243,9 @@ describe('formationPersistence helpers', () => {
 
     expect(prompt).toEqual({
       kind: 'invalid',
-      snapshot,
       title: { zh: '草稿没有可恢复的有效放置结果', en: 'draft has no valid placements to restore' },
       detail: { zh: '1 个英雄引用已失效', en: '1 champion reference(s) invalid' },
+      snapshot,
     })
   })
 })

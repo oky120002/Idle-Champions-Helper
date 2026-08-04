@@ -4,10 +4,10 @@ import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import { useI18n } from '../../app/i18n'
 
 interface PlannerTopLineupsProps {
-  results: PlannerResult[]
-  selectedIndex: number
-  championById: Map<string, Champion>
-  onSelect: (index: number) => void
+  readonly results: PlannerResult[]
+  readonly selectedIndex: number
+  readonly championById: Map<string, Champion>
+  readonly onSelect: (index: number) => void
 }
 
 /**
@@ -29,7 +29,7 @@ export function PlannerTopLineups({ results, selectedIndex, championById, onSele
       <div className="surface-card__body">
         <div className="planner-top-lineups__tabs" role="tablist">
           {results.map((result, index) => {
-            const carry = result.carryHeroId ? championById.get(result.carryHeroId) ?? null : null
+            const carry = result.carryHeroId !== null ? championById.get(result.carryHeroId) ?? null : null
             const carryName = carry
               ? getPrimaryLocalizedText(carry.name, locale)
               : (result.carryHeroId ?? '—')
@@ -47,7 +47,7 @@ export function PlannerTopLineups({ results, selectedIndex, championById, onSele
                 ]
                   .filter(Boolean)
                   .join(' ')}
-                onClick={() => onSelect(index)}
+                onClick={() => { onSelect(index); }}
               >
                 <span className="planner-top-lineups__tab-carry">{carryName}</span>
                 <span className="planner-top-lineups__tab-score">{result.objectiveValue}</span>

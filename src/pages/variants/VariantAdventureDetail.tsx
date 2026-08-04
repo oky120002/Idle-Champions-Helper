@@ -13,7 +13,7 @@ import { VariantAdventureTabs } from './VariantAdventureTabs'
 import { VariantFormationMiniBoard } from './VariantFormationMiniBoard'
 
 type VariantAdventureDetailProps = {
-  model: VariantsPageModel
+  readonly model: VariantsPageModel
 }
 
 export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {

@@ -17,7 +17,7 @@ export function useSearchEngine(enabled: boolean): UseSearchEngineResult {
 
   useEffect(() => {
     if (!enabled || engine || failed) {
-      return
+      return undefined
     }
     let active = true
     void getSearchEngine().then((next) => {
@@ -35,6 +35,16 @@ export function useSearchEngine(enabled: boolean): UseSearchEngineResult {
     }
   }, [enabled, engine, failed])
 
-  const status: SearchEngineStatus = engine ? 'ready' : failed ? 'error' : enabled ? 'loading' : 'idle'
+  const status: SearchEngineStatus = resolveSearchStatus(engine, failed, enabled)
   return { status, engine }
+}
+
+function resolveSearchStatus(
+  engine: SearchEngine | null,
+  failed: boolean,
+  enabled: boolean,
+): SearchEngineStatus {
+  if (engine !== null) return 'ready'
+  if (failed) return 'error'
+  return enabled ? 'loading' : 'idle'
 }
