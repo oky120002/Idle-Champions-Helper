@@ -80,7 +80,7 @@ type RawRecord = Record<string, unknown>
 // 业界 char-filter 做法：分词前把模板占位符剥成空格。替换值运行时才确定（stacks/area/BUD/buff 多层放大），
 // 静态数据拿不到，故不求值替换，只剥除。$# 是脏话字面量、非占位符，保留。
 export function cleanText(input: string): string {
-  if (!input) {
+  if (input === '') {
     return ''
   }
 
@@ -88,7 +88,7 @@ export function cleanText(input: string): string {
     .replace(/\$（[^）]*）/g, ' ') // 全角括号中文残留 $（奖金）
     .replace(/\$[一-鿿぀-ヿ]+/g, ' ') // CJK 裸形残留 $阈值
     .replace(/\$\([^)]*\)/g, ' ') // 主力：$(name)/$(func arg)/$(if|else|fi)/中文函数名
-    .replace(/\$[A-Za-z_][A-Za-z0-9_]*/g, ' ') // 裸形 $amount $target
+    .replace(/\$[A-Za-z_]\w*/g, ' ') // 裸形 $amount $target
     .replace(/\$[%0-9]+/g, ' ') // 数据 bug $% $10
     .replace(/\^\^/g, ' ') // 游戏内换行 markup
     .replace(/\s+/g, ' ')
@@ -97,7 +97,7 @@ export function cleanText(input: string): string {
 
 // 判定 {original, display} 信封形态：'leaf'（值为字符串/null）、'container'（值为对象，即 snapshots）、null（非信封）。
 function classifyLocalized(value: unknown): 'leaf' | 'container' | null {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (value === null || value === undefined || typeof value !== 'object' || Array.isArray(value)) {
     return null
   }
   const record = value as RawRecord
@@ -127,11 +127,11 @@ function classifyBucket(pathParts: readonly string[], leafKey: string): Bucket {
 
 function pushText(doc: SearchDocument, lang: Lang, bucket: Bucket, text: string): void {
   const cleaned = cleanText(text)
-  if (!cleaned) {
+  if (cleaned === '') {
     return
   }
   const target = doc[bucket][lang]
-  doc[bucket][lang] = target ? `${target} ${cleaned}` : cleaned
+  doc[bucket][lang] = target !== '' ? `${target} ${cleaned}` : cleaned
 }
 
 function walk(node: unknown, pathParts: string[], langCtx: LangCtx, doc: SearchDocument): void {
@@ -176,26 +176,26 @@ function walk(node: unknown, pathParts: string[], langCtx: LangCtx, doc: SearchD
     return
   }
 
-  if (typeof node === 'string' && langCtx) {
+  if (typeof node === 'string' && langCtx !== null) {
     pushText(doc, langCtx, classifyBucket(pathParts, pathParts[pathParts.length - 1] ?? ''), node)
   }
 }
 
 // 非信封补抓：传奇装备效果描述（normalizer 未本地化，纯英文，见 normalizer 1247-1258 行）。
 function collectLegendaryEffects(detail: unknown, doc: SearchDocument): void {
-  if (!detail || typeof detail !== 'object') {
+  if (detail === null || detail === undefined || typeof detail !== 'object') {
     return
   }
   const detailRecord = detail as RawRecord
   const legendaryEffects = Array.isArray(detailRecord.legendaryEffects) ? detailRecord.legendaryEffects : []
   for (const group of legendaryEffects) {
-    if (!group || typeof group !== 'object') {
+    if (group === null || group === undefined || typeof group !== 'object') {
       continue
     }
     const groupRecord = group as RawRecord
     const effects = Array.isArray(groupRecord.effects) ? groupRecord.effects : []
     for (const effect of effects) {
-      if (!effect || typeof effect !== 'object') {
+      if (effect === null || effect === undefined || typeof effect !== 'object') {
         continue
       }
       const effectRecord = effect as RawRecord
@@ -207,7 +207,7 @@ function collectLegendaryEffects(detail: unknown, doc: SearchDocument): void {
 }
 
 function coerceChampionName(value: unknown): ChampionName {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+  if (value === null || value === undefined || typeof value !== 'object' || Array.isArray(value)) {
     return { original: '', display: '' }
   }
   const record = value as RawRecord
@@ -233,10 +233,10 @@ function buildSearchDocument(champion: RawRecord, detail: unknown): SearchDocume
   const nameRaw = champion.name
   if (nameRaw !== null && nameRaw !== undefined) {
     const nameRecord = coerceChampionName(nameRaw)
-    if (nameRecord.original) {
+    if (nameRecord.original !== '') {
       pushText(doc, 'en', 'title', nameRecord.original)
     }
-    if (nameRecord.display) {
+    if (nameRecord.display !== '') {
       pushText(doc, 'zh', 'title', nameRecord.display)
     }
   }
@@ -295,7 +295,7 @@ export async function buildSearchIndex(options: BuildSearchIndexOptions = {}): P
 
   await writeJson(path.join(versionDir, 'search', 'search-documents.json'), { items, updatedAt })
 
-  return { versionDir, updatedAt, heroCount: items.length, totalChars }
+  return { versionDir, updatedAt, totalChars, heroCount: items.length }
 }
 
 // 调试出口：把每英雄抽取明细写到 tmp/search-extract-dump.txt，便于人工核对召回/噪声。
@@ -321,6 +321,7 @@ async function dumpExtract(): Promise<void> {
 }
 
 async function main(): Promise<void> {
+  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局变量，运行时存在；sonarjs 静态分析误报
   if (process.argv.slice(2).includes('--dump')) {
     await dumpExtract()
     return
@@ -330,11 +331,11 @@ async function main(): Promise<void> {
   console.log('search index 构建完成：')
   console.log(`- version dir: ${result.versionDir}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
-  console.log(`- heroes: ${result.heroCount}`)
-  console.log(`- total chars: ${result.totalChars}`)
+  console.log(`- heroes: ${String(result.heroCount)}`)
+  console.log(`- total chars: ${String(result.totalChars)}`)
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] != null && process.argv[1] !== '' && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error: unknown) => {
     const message = error instanceof Error ? error.message : String(error)
     console.error(`构建 search index 失败：${message}`)

@@ -74,11 +74,14 @@ function getContextOrder(kind: string): number {
 }
 
 function compareFormationContexts(left: FormationContext, right: FormationContext): number {
-  return (
-    getContextOrder(left.kind) - getContextOrder(right.kind) ||
-    compareLocalizedText(left.name ?? { original: '', display: '' }, right.name ?? { original: '', display: '' }) ||
-    left.id.localeCompare(right.id)
+  const orderDiff = getContextOrder(left.kind) - getContextOrder(right.kind)
+  if (orderDiff !== 0) return orderDiff
+  const nameDiff = compareLocalizedText(
+    left.name ?? { original: '', display: '' },
+    right.name ?? { original: '', display: '' },
   )
+  if (nameDiff !== 0) return nameDiff
+  return left.id.localeCompare(right.id)
 }
 
 function toFiniteNumber(value: unknown, fallback = 0): number {
@@ -101,13 +104,16 @@ function buildNormalizedSlotSeed(slot: RawDefinition = {}, index = 0): SlotSeed 
 }
 
 function compareSlotSeeds(left: SlotSeed, right: SlotSeed, rowIndexBySeed: Map<number, number>): number {
-  return (
-    left.columnSeed - right.columnSeed ||
-    (rowIndexBySeed.get(left.rowSeed) ?? 0) - (rowIndexBySeed.get(right.rowSeed) ?? 0) ||
-    left.y - right.y ||
-    right.x - left.x ||
-    left.index - right.index
-  )
+  const columnDiff = left.columnSeed - right.columnSeed
+  if (columnDiff !== 0) return columnDiff
+  const rowDiff =
+    (rowIndexBySeed.get(left.rowSeed) ?? 0) - (rowIndexBySeed.get(right.rowSeed) ?? 0)
+  if (rowDiff !== 0) return rowDiff
+  const yDiff = left.y - right.y
+  if (yDiff !== 0) return yDiff
+  const xDiff = right.x - left.x
+  if (xDiff !== 0) return xDiff
+  return left.index - right.index
 }
 
 function compareSlotIds(left: string, right: string): number {
@@ -129,11 +135,11 @@ export function normalizeOfficialFormationSlots(rawSlots: readonly RawDefinition
   const rowIndexBySeed = new Map(rowSeeds.map((value, index) => [value, index + 1]))
   const sortedSeeds = [...seeds].sort((left, right) => compareSlotSeeds(left, right, rowIndexBySeed))
   const slotIdByOriginalIndex = new Map<number, string>(
-    sortedSeeds.map((slot, index) => [slot.index, `s${index + 1}`]),
+    sortedSeeds.map((slot, index) => [slot.index, `s${String(index + 1)}`]),
   )
 
   return sortedSeeds.map((slot, index) => ({
-    id: `s${index + 1}`,
+    id: `s${String(index + 1)}`,
     row: rowIndexBySeed.get(slot.rowSeed) ?? 0,
     column: slot.columnSeed + 1,
     x: slot.x,
@@ -151,7 +157,7 @@ export function buildOfficialFormationSignature(rawSlots: readonly RawDefinition
   return slots
     .map(
       (slot) =>
-        `${slot.column}:${slot.row}:${slot.x}:${slot.y}:${slot.adjacentSlotIds.join(',')}`,
+        `${String(slot.column)}:${String(slot.row)}:${String(slot.x)}:${String(slot.y)}:${slot.adjacentSlotIds.join(',')}`,
     )
     .join('|')
 }
@@ -173,8 +179,8 @@ function buildFormationContext(
   )
 
   const context: FormationContext = {
-    kind,
     id: toStr(originalDefinition.id),
+    kind,
     name,
   }
 
@@ -195,59 +201,63 @@ function buildFormationName(
 ): LocalizedText {
   if (!primaryContext?.name) {
     return {
-      original: `Official layout ${slotCount} slots · ${layoutId}`,
-      display: `官方布局 ${slotCount} 槽 · ${layoutId}`,
+      original: `Official layout ${String(slotCount)} slots · ${layoutId}`,
+      display: `官方布局 ${String(slotCount)} 槽 · ${layoutId}`,
     }
   }
 
   return {
-    original: `${primaryContext.name.original} · ${slotCount} slots`,
-    display: `${primaryContext.name.display} · ${slotCount} 槽`,
+    original: `${primaryContext.name.original} · ${String(slotCount)} slots`,
+    display: `${primaryContext.name.display} · ${String(slotCount)} 槽`,
   }
 }
 
 function buildFormationNotes(contexts: readonly FormationContext[], slotCount: number): LocalizedText {
-  const counts = contexts.reduce(
+  const counts = contexts.reduce<Record<FormationContextKind, number>>(
     (result, context) => {
-      result[context.kind] = (result[context.kind] ?? 0) + 1
+      result[context.kind] = result[context.kind] + 1
       return result
     },
-    { campaign: 0, adventure: 0, variant: 0 } as Record<FormationContextKind, number>,
+    { campaign: 0, adventure: 0, variant: 0 },
   )
 
   const summaryParts = [
-    counts.campaign > 0 ? `${counts.campaign} 个战役` : null,
-    counts.adventure > 0 ? `${counts.adventure} 个冒险` : null,
-    counts.variant > 0 ? `${counts.variant} 个变体` : null,
+    counts.campaign > 0 ? `${String(counts.campaign)} 个战役` : null,
+    counts.adventure > 0 ? `${String(counts.adventure)} 个冒险` : null,
+    counts.variant > 0 ? `${String(counts.variant)} 个变体` : null,
   ].filter((value): value is string => value !== null)
 
   const englishSummaryParts = [
-    counts.campaign > 0 ? `${counts.campaign} campaign${counts.campaign > 1 ? 's' : ''}` : null,
-    counts.adventure > 0
-      ? `${counts.adventure} adventure${counts.adventure > 1 ? 's' : ''}`
-      : null,
-    counts.variant > 0 ? `${counts.variant} variant${counts.variant > 1 ? 's' : ''}` : null,
+    counts.campaign > 0 ? formatPluralCount(counts.campaign, 'campaign') : null,
+    counts.adventure > 0 ? formatPluralCount(counts.adventure, 'adventure') : null,
+    counts.variant > 0 ? formatPluralCount(counts.variant, 'variant') : null,
   ].filter((value): value is string => value !== null)
 
   return {
-    original: `Auto-extracted ${slotCount}-slot layout from official definitions, currently linked to ${englishSummaryParts.join(' / ')}.`,
-    display: `官方 definitions 自动提取的 ${slotCount} 槽布局，当前关联 ${summaryParts.join(' / ')}。`,
+    original: `Auto-extracted ${String(slotCount)}-slot layout from official definitions, currently linked to ${englishSummaryParts.join(' / ')}.`,
+    display: `官方 definitions 自动提取的 ${String(slotCount)} 槽布局，当前关联 ${summaryParts.join(' / ')}。`,
   }
+}
+
+function formatPluralCount(count: number, singular: string): string {
+  return `${String(count)} ${singular}${count > 1 ? 's' : ''}`
 }
 
 function compareFormationLayouts(left: OfficialFormationLayout, right: OfficialFormationLayout): number {
   const leftPrimaryContext = left.sourceContexts[0]
   const rightPrimaryContext = right.sourceContexts[0]
 
-  return (
-    left.slots.length - right.slots.length ||
-    getContextOrder(leftPrimaryContext?.kind ?? '') - getContextOrder(rightPrimaryContext?.kind ?? '') ||
-    compareLocalizedText(
-      leftPrimaryContext?.name ?? left.name,
-      rightPrimaryContext?.name ?? right.name,
-    ) ||
-    left.id.localeCompare(right.id)
+  const slotsDiff = left.slots.length - right.slots.length
+  if (slotsDiff !== 0) return slotsDiff
+  const orderDiff =
+    getContextOrder(leftPrimaryContext?.kind ?? '') - getContextOrder(rightPrimaryContext?.kind ?? '')
+  if (orderDiff !== 0) return orderDiff
+  const nameDiff = compareLocalizedText(
+    leftPrimaryContext?.name ?? left.name,
+    rightPrimaryContext?.name ?? right.name,
   )
+  if (nameDiff !== 0) return nameDiff
+  return left.id.localeCompare(right.id)
 }
 
 export function extractOfficialFormations(
@@ -275,7 +285,11 @@ export function extractOfficialFormations(
   ): void {
     const gameChanges = Array.isArray(definition.game_changes) ? definition.game_changes : []
     const rawFormation = gameChanges
-      .map((change) => (change && typeof change === 'object' ? (change as RawDefinition).formation : undefined))
+      .map((change) =>
+        typeof change === 'object' && change !== null
+          ? (change as RawDefinition).formation
+          : undefined,
+      )
       .find((change): change is RawDefinition[] => Array.isArray(change) && change.length > 0)
 
     if (!rawFormation) {
@@ -293,9 +307,9 @@ export function extractOfficialFormations(
         id: layoutId,
         name: buildFormationName(context, slots.length, layoutId),
         notes: buildFormationNotes([context], slots.length),
-        slots,
         applicableContexts: [{ kind: context.kind, id: context.id }],
         sourceContexts: [context],
+        slots,
       })
       return
     }

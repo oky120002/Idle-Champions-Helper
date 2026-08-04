@@ -88,6 +88,12 @@ function asUnknownArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : []
 }
 
+function parseStaticDpsMult(raw: unknown): number {
+  if (typeof raw === 'number') return raw
+  if (typeof raw === 'string' && raw !== '') return Number.parseFloat(raw)
+  return Number.NaN
+}
+
 type EffectEntryInit = {
   effectString: string
   effect: Record<string, unknown>
@@ -203,7 +209,7 @@ function parseWhereQualifierFromArgs(
   const numericCheck = Number(check)
 
   if (normalizedCompare === 'age' || normalizedCompare === 'base_attack_cooldown') {
-    const predicate = parsePerHeroExpr(`${normalizedCompare}${normalizedComparison}${check}`)
+    const predicate = parsePerHeroExpr(`${normalizedCompare}${normalizedComparison}${String(check)}`)
     return predicate ? { predicate } : null
   }
 
@@ -227,7 +233,14 @@ function parseWhereQualifierFromArgs(
   }
 
   const nodes = statQualifiersToNodes(requiredStats)
-  return { predicate: nodes.length === 1 ? nodes[0]! : { op: 'and', children: nodes } }
+  if (nodes.length === 1) {
+    const node = nodes[0]
+    if (node === undefined) {
+      throw new Error('statQualifiersToNodes returned length=1 but nodes[0] is undefined')
+    }
+    return { predicate: node }
+  }
+  return { predicate: { op: 'and', children: nodes } }
 }
 
 function resolveBuffUpgradeSeed(entry: EffectEntry): BuffUpgradeSeed | null {
@@ -306,7 +319,7 @@ function resolveBuffUpgradeSeed(entry: EffectEntry): BuffUpgradeSeed | null {
 
   if (payload.kind === 'buff_upgrade_per_target_crusader') {
     const countRelation = resolveCountRelation(payload.args[2] ?? null)
-    if (!countRelation) {
+    if (countRelation == null) {
       return null
     }
 
@@ -397,12 +410,8 @@ function collectRawEffectEntries(detail: unknown): {
     const isSpecialization = upgrade.specializationName != null
 
     const staticDpsMultRaw = upgrade.staticDpsMult
-    const staticDpsMult = typeof staticDpsMultRaw === 'number'
-      ? staticDpsMultRaw
-      : typeof staticDpsMultRaw === 'string' && staticDpsMultRaw !== ''
-        ? Number.parseFloat(staticDpsMultRaw)
-        : NaN
-    if (Number.isFinite(staticDpsMult) && staticDpsMult > 1 && upgradeId) {
+    const staticDpsMult = parseStaticDpsMult(staticDpsMultRaw)
+    if (Number.isFinite(staticDpsMult) && staticDpsMult > 1 && upgradeId !== '') {
       staticDpsMults.set(upgradeId, staticDpsMult)
     }
 
@@ -421,11 +430,11 @@ function collectRawEffectEntries(detail: unknown): {
         // 直接用作 effectString；effectPayload 仅用于提取 kind/args。
         effectString: upgrade.effectReference,
         effect: upgrade,
-        effectPayload,
         effectPayloads: [],
         sourceBucket: 'upgrade',
-        upgradeId,
         requiredLevel: upgradeRequiredLevel,
+        effectPayload,
+        upgradeId,
       })
       upgradeEntries.push(entry)
       if (isSpecialization) {
@@ -448,7 +457,7 @@ function collectRawEffectEntries(detail: unknown): {
         const record = asRecord(effectKey)
         return record ? buildEffectKeyPayload(record) : null
       })
-      if (upgradeId) {
+      if (upgradeId !== '') {
         upgradePayloadsById.set(upgradeId, effectPayloads)
       }
       effectKeys.forEach((effectKeyRaw, index) => {
@@ -458,10 +467,10 @@ function collectRawEffectEntries(detail: unknown): {
             effectString: effectKey.effect_string,
             effect: effectKey,
             effectPayload: effectPayloads[index] ?? null,
-            effectPayloads,
             sourceBucket: 'upgrade-effect-key',
-            upgradeId,
             requiredLevel: upgradeRequiredLevel,
+            effectPayloads,
+            upgradeId,
           })
           upgradeEntries.push(entry)
           if (isSpecialization) {
@@ -486,10 +495,10 @@ function collectRawEffectEntries(detail: unknown): {
       if (effect && typeof effect.effect_string === 'string') {
         effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
-          effect,
           effectPayload: parseEffectPayload(effect.effect_string),
           effectPayloads: [],
           sourceBucket: 'loot',
+          effect,
         }))
       }
     }
@@ -503,10 +512,10 @@ function collectRawEffectEntries(detail: unknown): {
       if (effect && typeof effect.effect_string === 'string') {
         effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
-          effect,
           effectPayload: parseEffectPayload(effect.effect_string),
           effectPayloads: [],
           sourceBucket: 'legendary',
+          effect,
         }))
       }
     }
@@ -524,10 +533,10 @@ function collectRawEffectEntries(detail: unknown): {
       if (effect && typeof effect.effect_string === 'string') {
         effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
-          effect,
           effectPayload: parseEffectPayload(effect.effect_string),
           effectPayloads: [],
           sourceBucket: 'feat',
+          effect,
         }))
       }
     }
@@ -579,7 +588,7 @@ function summarizeBuffUpgradeBase(
 
   for (const targetEntry of targetEntries) {
     const targetSignalResult = resolveEntrySignal(targetEntry)
-    if (targetSignalResult && targetSignalResult.ok) {
+    if (targetSignalResult?.ok === true) {
       resolvedSignals.push(targetSignalResult)
       continue
     }
@@ -600,21 +609,23 @@ function summarizeBuffUpgradeBase(
   if (resolvedSignals.length > 0) {
     return {
       status: 'wrapper-supported-base-resolved',
+      unresolvedReason: null,
       resolvedSignals,
       unresolvedBaseEffectNames,
       ignoredBaseEffectNames,
-      unresolvedReason: null,
     }
   }
 
-  const unresolvedReason =
-    targetEntries.length === 0
-      ? 'target-upgrade-missing'
-      : unresolvedBaseEffectNames.length > 0
-        ? 'base-effect-unrecognized'
-        : ignoredBaseEffectNames.length > 0
-          ? 'base-effect-ignored-or-empty'
-          : 'base-signal-not-derived'
+  let unresolvedReason: string
+  if (targetEntries.length === 0) {
+    unresolvedReason = 'target-upgrade-missing'
+  } else if (unresolvedBaseEffectNames.length > 0) {
+    unresolvedReason = 'base-effect-unrecognized'
+  } else if (ignoredBaseEffectNames.length > 0) {
+    unresolvedReason = 'base-effect-ignored-or-empty'
+  } else {
+    unresolvedReason = 'base-signal-not-derived'
+  }
 
   return {
     status: 'wrapper-supported-base-unresolved',
@@ -642,30 +653,30 @@ export function analyzeBuffUpgradeWrappers(detail: unknown): BuffUpgradeWrapperA
 
     if (!wrapperSupported || !buffSeed) {
       auditEntries.push({
-        wrapperKind,
         wrapperEffectString: entry.effectString,
         status: 'wrapper-family-unsupported',
-        targetUpgradeIds,
         unresolvedReason: !wrapperSupported ? 'wrapper-kind-unsupported' : 'wrapper-seed-unresolved',
         unresolvedBaseEffectNames: [],
         ignoredBaseEffectNames: [],
+        wrapperKind,
+        targetUpgradeIds,
       })
       continue
     }
 
     const allTargetEntries = targetUpgradeIds.flatMap((targetUpgradeId) =>
-      upgradeEffectEntriesById.get(String(targetUpgradeId)) ?? [],
+      upgradeEffectEntriesById.get(targetUpgradeId) ?? [],
     )
     const summary = summarizeBuffUpgradeBase(allTargetEntries)
 
     auditEntries.push({
-      wrapperKind,
       wrapperEffectString: entry.effectString,
       status: summary.status,
-      targetUpgradeIds,
       unresolvedReason: summary.unresolvedReason,
       unresolvedBaseEffectNames: summary.unresolvedBaseEffectNames,
       ignoredBaseEffectNames: summary.ignoredBaseEffectNames,
+      wrapperKind,
+      targetUpgradeIds,
     })
   }
 
@@ -721,7 +732,7 @@ export function collectEffectEntries(detail: unknown): {
   // 随专精进 catalog，runtime 按玩家选择注入，而非丢失或泄漏到 base。
   const specializationUpgradeIds = new Set<string>()
   for (const entry of specializationEntries) {
-    if (entry.upgradeId) {
+    if (entry.upgradeId != null && entry.upgradeId !== '') {
       specializationUpgradeIds.add(entry.upgradeId)
     }
   }
@@ -746,7 +757,7 @@ export function collectEffectEntries(detail: unknown): {
     // 影响 162/164 英雄、4727 条 ability 源静态 entry。
     // 保留三类运行时修饰：(1) stacks_multiply 动态（area 依赖，如蔚出言不逊）；(2) 复杂 wrapper（per_tagged /
     // distance 等，阵型依赖）；(3) 外部源 loot/feat/legendary（装备/feat/专长，不在 ability snapshot 内）。
-    const buffUpgradeKind = entry.effectPayload?.kind
+    const buffUpgradeKind = entry.effectPayload.kind
     const isPlainBuffUpgrade = buffUpgradeKind === 'buff_upgrade' || buffUpgradeKind === 'buff_upgrades'
     const isAbilitySource = entry.sourceBucket === 'upgrade' || entry.sourceBucket === 'upgrade-effect-key'
     const isDynamicStacks = asRecord(entry.effect)?.stacks_multiply === true
@@ -761,12 +772,12 @@ export function collectEffectEntries(detail: unknown): {
 
     const targetUpgradeIds = resolveTargetUpgradeIds(entry.effectPayload)
     for (const targetUpgradeId of targetUpgradeIds) {
-      const targetIdStr = String(targetUpgradeId)
+      const targetIdStr = targetUpgradeId
       const targetsSpecialization = specializationUpgradeIds.has(targetIdStr)
       const targetEntries = upgradeEffectEntriesById.get(targetIdStr) ?? []
       for (const targetEntry of targetEntries) {
         const targetSignalResult = resolveEntrySignal(targetEntry)
-        if (!targetSignalResult || !targetSignalResult.ok) {
+        if (targetSignalResult?.ok !== true) {
           continue
         }
 
@@ -779,7 +790,7 @@ export function collectEffectEntries(detail: unknown): {
           targetQualifier: mergeHeroQualifiers(targetSignal.targetQualifier ?? null, wrapperQualifier),
           rawEffect: entry.effectString,
           value: resolveNumericValue(
-            entry.effectPayload?.args?.[0] ?? '',
+            entry.effectPayload.args[0] ?? '',
             entry.effectPayload,
             entry.effectPayloads,
             entry.upgradePayloadsById,
@@ -830,33 +841,33 @@ export function collectEffectEntries(detail: unknown): {
   if (staticDpsMults.size > 0) {
     const upgradesWithSignal = new Set<string>()
     for (const entry of allEntries) {
-      if (!entry.upgradeId) continue
+      if (entry.upgradeId == null || entry.upgradeId === '') continue
       if (entry.signalPreset) {
         upgradesWithSignal.add(entry.upgradeId)
         continue
       }
       const result = resolveEntrySignal(entry)
-      if (result?.ok) {
+      if (result?.ok === true) {
         upgradesWithSignal.add(entry.upgradeId)
       }
     }
     for (const [upgradeId, mult] of staticDpsMults) {
       if (upgradesWithSignal.has(upgradeId)) continue
       allEntries.push(buildEffectEntry({
-        effectString: `static_dps_mult,${mult}`,
+        effectString: `static_dps_mult,${String(mult)}`,
         effect: {},
         effectPayload: null,
         effectPayloads: [],
         sourceBucket: 'static-dps',
-        upgradeId,
         bucketOverride: 'carrySignals',
         signalPreset: {
           kind: 'heroDpsMultiplier',
           value: (mult - 1) * 100,
-          rawEffect: `static_dps_mult,${mult}`,
+          rawEffect: `static_dps_mult,${String(mult)}`,
           source: 'official-parsed',
           amountFunc: 'mult',
         },
+        upgradeId,
       }))
     }
   }

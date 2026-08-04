@@ -47,7 +47,7 @@
 
 **并行**：不同批次目录不重叠，可派多 Agent 并行（建议一次 2-3 个，避免 API 速率限制）。**每批独立 commit**。
 
-- [ ] 阶段 1: scripts/data 产品源码（~220 违规：official-rule-helpers 56、normalize-adventures 37、formation-layout-helpers 35、effect-helpers 29、normalize-champions 26、signal-coverage 21、build-search-index 17）—— 验证：`npx eslint 'scripts/data/*.ts'`（非 test）0 违规
+- [x] 阶段 1: scripts/data 产品源码（221 违规，7 文件：official-rule-helpers 56、normalize-adventures 37、formation-layout-helpers 35、effect-helpers 29、normalize-champions 26、signal-coverage 21、build-search-index 17）—— 验证：7 文件 eslint 0 + tsc 0 + scripts/data 227 单测全过 + diff 复核 unknown 判空语义等价
 - [ ] 阶段 2: scripts/data 测试 + effect-resolvers（~200：build-models.test 28、skelanim.test 20、dpsResolver.test 19、normalize-champions.test 18、gold/speed/vulnerability Resolver test、mobile-asset-codec、restrictions-parser、io-utils）
 - [ ] 阶段 3: scripts/sync + check-color-contrast（~174：sync-pets 59、sync-portraits 43、check-color-contrast 38、normalize-definitions 34）
 - [ ] 阶段 4: scripts/ 其他（~245：sync-animations/illustrations/console-portraits 27/25/24、audit-animations 20、build-data 19、sync-equipment/specialization 19/19、private-user-data 53、simulator 37）

@@ -65,12 +65,12 @@ function getAffiliationTags(
 
 export function normalizeEffectReference(rawEffect: unknown): string | null {
   const text = toText(rawEffect)
-  if (!text) {
+  if (text === null || text === '') {
     return null
   }
 
   if (text.startsWith('{')) {
-    const match = text.match(/"effect_string"\s*:\s*"([^"]+)"/)
+    const match = /"effect_string"\s*:\s*"([^"]+)"/.exec(text)
     if (match) {
       return match[1] ?? null
     }
@@ -106,11 +106,11 @@ function buildRawEntry(id: unknown, originalValue: unknown, displayValue: unknow
 function parseEffectDefinitionId(value: unknown): string | null {
   const text = toText(value)
 
-  if (!text) {
+  if (text === null || text === '') {
     return null
   }
 
-  const match = /^effect_def,([0-9]+)$/.exec(text.trim())
+  const match = /^effect_def,(\d+)$/.exec(text.trim())
   return match ? (match[1] ?? null) : null
 }
 
@@ -181,12 +181,8 @@ export function normalizeChampion(
       originalName,
       displayName,
       `Champion ${String(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     seat: Number(originalDefinition.seat_id ?? originalDefinition.seat ?? 0),
-    roles,
-    affiliations,
-    tags,
-    patronEligibility,
     portrait: portraitSource
       ? {
           path: buildChampionPortraitPath(currentVersion, String(originalDefinition.id)),
@@ -194,6 +190,10 @@ export function normalizeChampion(
           sourceVersion: portraitSource.version,
         }
       : null,
+    roles,
+    affiliations,
+    tags,
+    patronEligibility,
   }
 }
 
@@ -230,8 +230,8 @@ function normalizeChampionCharacterSheet(
     race: normalizeOptionalLocalizedText(originalSheet.race, localizedSheet.race),
     age: normalizeNumber(originalSheet.age),
     alignment: normalizeOptionalLocalizedText(originalSheet.alignment, localizedSheet.alignment),
-    abilityScores,
     backstory: normalizeOptionalLocalizedText(originalSheet.backstory, localizedSheet.backstory),
+    abilityScores,
   }
 
   return result.fullName ||
@@ -275,7 +275,7 @@ function normalizeAttack(
       originalDefinition.name,
       localizedDefinition?.name,
       `Attack ${String(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     description: normalizeOptionalLocalizedText(
       originalDefinition.description,
       localizedDefinition?.description,
@@ -321,7 +321,7 @@ function normalizeEventUpgrades(
           item.name,
           localizedItem.name,
           `Event Upgrade ${toStr(item.upgrade_id ?? item.id ?? '')}`,
-        )!,
+        ) as LocalizedText,
         description: normalizeOptionalLocalizedText(item.description, localizedItem.description),
         graphicId: toText(item.graphic_id),
       }
@@ -359,12 +359,11 @@ function normalizeChampionUpgrade(
     requiredLevel: normalizeNumber(originalDefinition.required_level),
     requiredUpgradeId: (() => {
       const value = toText(originalDefinition.required_upgrade_id)
-      return value && value !== '0' ? value : null
+      return value != null && value !== '' && value !== '0' ? value : null
     })(),
     name: normalizeOptionalLocalizedText(originalDefinition.name, localizedDefinition?.name),
     upgradeType: toText(originalDefinition.upgrade_type),
-    effectReference,
-    effectDefinition: effectDefinitionId
+    effectDefinition: effectDefinitionId != null && effectDefinitionId !== ''
       ? buildRawEntry(
           effectDefinitionId,
           effectDefinitionsById.get(effectDefinitionId) ?? null,
@@ -383,6 +382,7 @@ function normalizeChampionUpgrade(
     ),
     specializationGraphicId: toText(originalDefinition.specialization_graphic_id),
     tipText: normalizeOptionalLocalizedText(originalDefinition.tip_text, localizedDefinition?.tip_text),
+    effectReference,
   }
 }
 
@@ -410,7 +410,7 @@ function normalizeChampionFeat(
       originalDefinition.name,
       localizedDefinition?.name,
       `Feat ${String(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     description: normalizeOptionalLocalizedText(
       originalDefinition.description,
       localizedDefinition?.description,
@@ -445,7 +445,7 @@ function normalizeChampionSkin(
       originalDefinition.name,
       localizedDefinition?.name,
       `Skin ${String(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     cost: normalizeJsonValue(originalDefinition.cost ?? []),
     details: normalizeJsonValue(originalDefinition.details ?? {}),
     rarity: toText(originalDefinition.rarity),
@@ -481,7 +481,7 @@ function normalizeChampionLoot(
       originalDefinition.name,
       localizedDefinition?.name,
       `Loot ${String(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     description: normalizeOptionalLocalizedText(
       originalDefinition.description,
       localizedDefinition?.description,
@@ -492,7 +492,10 @@ function normalizeChampionLoot(
     maxLevel: normalizeNumberList(originalDefinition.max_level),
     effects: normalizeJsonValue(originalDefinition.effects ?? []),
     allowGoldenEpic: Boolean(originalDefinition.allow_ge),
-    isGoldenEpic: Boolean(goldenEpicLootId && id === goldenEpicLootId),
+    isGoldenEpic:
+      goldenEpicLootId != null &&
+      goldenEpicLootId !== '' &&
+      id === goldenEpicLootId,
   }
 }
 
@@ -542,7 +545,11 @@ export function normalizeChampionVisualSkin(
 
   return {
     id: String(originalDefinition.id),
-    name: normalizeLocalizedText(originalName, displayName, `Skin ${String(originalDefinition.id)}`)!,
+    name: normalizeLocalizedText(
+      originalName,
+      displayName,
+      `Skin ${String(originalDefinition.id)}`,
+    ) as LocalizedText,
     portrait: resolveGraphicAssetById(graphicMap, details.portrait_graphic_id, baseUrl),
     base: resolveGraphicAssetById(graphicMap, details.base_graphic_id, baseUrl),
     large: resolveGraphicAssetById(graphicMap, details.large_graphic_id, baseUrl),
@@ -585,7 +592,7 @@ export function normalizeChampionVisual(
       originalName,
       displayName,
       `Champion ${String(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     portrait: portraitSource?.remote
       ? {
           localPath: buildChampionPortraitPath(currentVersion, String(originalDefinition.id)),
@@ -618,7 +625,9 @@ function expandAbilityEffectStrings(
   // 形态 1：effect_def,N 引用 → 展开 effect_defines[N].effect_keys（顶层，raw effect_defines 结构）。
   const defMatch = /^effect_def,(.+)$/.exec(effect)
   if (defMatch) {
-    const def = effectDefinitionsById.get(defMatch[1]!)
+    const effectId = defMatch[1]
+    if (effectId === undefined) return []
+    const def = effectDefinitionsById.get(effectId)
     return asRawArray(asRawRecord(def).effect_keys)
       .map((key) => asRawRecord(key))
       .map((key) => (typeof key.effect_string === 'string' ? key.effect_string : ''))
@@ -752,20 +761,23 @@ export function normalizeChampionDetail(
         localizedEffectDefinitionsById,
       ),
     )
-    .sort(
-      (left, right) =>
+    .sort((left, right) => {
+      const levelDiff =
         (left.requiredLevel ?? Number.MAX_SAFE_INTEGER) -
-          (right.requiredLevel ?? Number.MAX_SAFE_INTEGER) || Number(left.id) - Number(right.id),
-    )
+        (right.requiredLevel ?? Number.MAX_SAFE_INTEGER)
+      if (levelDiff !== 0) return levelDiff
+      return Number(left.id) - Number(right.id)
+    })
   const feats = (featsByHeroId.get(champion.id) ?? [])
     .map((definition) =>
       normalizeChampionFeat(definition, localizedFeatsById.get(String(definition.id))),
     )
-    .sort(
-      (left, right) =>
-        (left.order ?? Number.MAX_SAFE_INTEGER) - (right.order ?? Number.MAX_SAFE_INTEGER) ||
-        Number(left.id) - Number(right.id),
-    )
+    .sort((left, right) => {
+      const orderDiff =
+        (left.order ?? Number.MAX_SAFE_INTEGER) - (right.order ?? Number.MAX_SAFE_INTEGER)
+      if (orderDiff !== 0) return orderDiff
+      return Number(left.id) - Number(right.id)
+    })
   const skins = (skinsByHeroId.get(champion.id) ?? [])
     .map((definition) =>
       normalizeChampionSkin(definition, localizedSkinsById.get(String(definition.id))),
@@ -779,31 +791,42 @@ export function normalizeChampionDetail(
         goldenEpicLootId,
       ),
     )
-    .sort(
-      (left, right) =>
-        (left.slotId ?? Number.MAX_SAFE_INTEGER) - (right.slotId ?? Number.MAX_SAFE_INTEGER) ||
-        Number(left.rarity ?? Number.MAX_SAFE_INTEGER) - Number(right.rarity ?? Number.MAX_SAFE_INTEGER) ||
-        Number(left.id) - Number(right.id),
-    )
+    .sort((left, right) => {
+      const slotDiff =
+        (left.slotId ?? Number.MAX_SAFE_INTEGER) - (right.slotId ?? Number.MAX_SAFE_INTEGER)
+      if (slotDiff !== 0) return slotDiff
+      const rarityDiff =
+        Number(left.rarity ?? Number.MAX_SAFE_INTEGER) -
+        Number(right.rarity ?? Number.MAX_SAFE_INTEGER)
+      if (rarityDiff !== 0) return rarityDiff
+      return Number(left.id) - Number(right.id)
+    })
   const legendaryEffects = normalizeChampionLegendaryEffects(
     originalDefinition,
     legendaryEffectDefinitionsById,
   )
-  const baseAttack = baseAttackId
-    ? normalizeAttack(
-        attackDefinitionsById.get(baseAttackId),
-        localizedAttackDefinitionsById.get(baseAttackId),
-      )
-    : null
-  const ultimateAttack = ultimateAttackId
-    ? normalizeAttack(
-        attackDefinitionsById.get(ultimateAttackId),
-        localizedAttackDefinitionsById.get(ultimateAttackId),
-      )
-    : null
+  const baseAttack =
+    baseAttackId != null && baseAttackId !== ''
+      ? normalizeAttack(
+          attackDefinitionsById.get(baseAttackId),
+          localizedAttackDefinitionsById.get(baseAttackId),
+        )
+      : null
+  const ultimateAttack =
+    ultimateAttackId != null && ultimateAttackId !== ''
+      ? normalizeAttack(
+          attackDefinitionsById.get(ultimateAttackId),
+          localizedAttackDefinitionsById.get(ultimateAttackId),
+        )
+      : null
 
   return {
     updatedAt,
+    upgrades,
+    feats,
+    skins,
+    loot,
+    legendaryEffects,
     summary: champion,
     englishName: toText(originalDefinition.english_name) ?? champion.name.original,
     eventName: normalizeOptionalLocalizedText(
@@ -842,11 +865,6 @@ export function normalizeChampionDetail(
         asRawArray(localizedDefinition?.event_upgrades),
       ),
     },
-    upgrades,
-    feats,
-    skins,
-    loot,
-    legendaryEffects,
     ability: normalizeChampionAbility(abilityDefine, effectDefinitionsById),
     raw: {
       hero: buildRawSnapshotPair(originalDefinition, localizedDefinition ?? null),

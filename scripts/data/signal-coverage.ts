@@ -72,13 +72,17 @@ function incrementCounter(counter: Map<string, number>, key: string): void {
 
 function sortCounter(counter: Map<string, number>, limit: number = Infinity): CounterEntry[] {
   return [...counter.entries()]
-    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+    .sort((left, right) => {
+      const countDiff = right[1] - left[1]
+      if (countDiff !== 0) return countDiff
+      return left[0].localeCompare(right[0])
+    })
     .slice(0, limit)
     .map(([key, count]) => ({ key, count }))
 }
 
 function describeFilter(filter: unknown): string {
-  if (!filter || typeof filter !== 'object') {
+  if (filter === null || typeof filter !== 'object') {
     return 'unknown-filter'
   }
 
@@ -93,20 +97,24 @@ function describeFilter(filter: unknown): string {
   }
 
   if ((f.type === 'stat' || f.type === 'stat_score') && typeof f.stat === 'string') {
-    const operator = typeof f.comparison === 'string'
-      ? f.comparison
-      : typeof f.check === 'string'
-        ? f.check
-        : '>='
-    const value = typeof f.score === 'number'
-      ? f.score
-      : typeof f.check === 'number'
-        ? f.check
-        : '?'
+    const operator = resolveStatOperator(f)
+    const value = resolveStatValue(f)
     return `${f.type}:${f.stat.toLowerCase()}${operator}${value}`
   }
 
   return `type:${typeof f.type === 'string' ? f.type : 'unknown'}`
+}
+
+function resolveStatOperator(f: Record<string, unknown>): string {
+  if (typeof f.comparison === 'string') return f.comparison
+  if (typeof f.check === 'string') return f.check
+  return '>='
+}
+
+function resolveStatValue(f: Record<string, unknown>): string {
+  if (typeof f.score === 'number') return String(f.score)
+  if (typeof f.check === 'number') return String(f.check)
+  return '?'
 }
 
 /**
@@ -132,7 +140,7 @@ export function classifyScoringSupport(signal: {
   stackFunc?: string | null
   amountFunc?: string | null
 }): ScoringSupportClassification {
-  if (signal.applyManually) {
+  if (signal.applyManually === true) {
     return 'manual'
   }
 
@@ -141,11 +149,11 @@ export function classifyScoringSupport(signal: {
   // 须排除「有 stackFunc」的信号：它们的层数源是 stackFunc（resolveSignalMultiplier 改走 stackFunc 路径），
   // 旧实现误把 stacksMultiply+stackFunc（如 hero32 per_mithral_hall_stacks）判 supported，实际是
   // stacksMultiply 分支用 manualStackCount 灾难高估（(1+value/100)^1000）——现落 stackFunc 白名单判定。
-  if (signal.stacksMultiply === true && !signal.stackFunc) {
+  if (signal.stacksMultiply === true && (signal.stackFunc == null || signal.stackFunc === '')) {
     return 'supported'
   }
 
-  if (!signal.stackFunc) {
+  if (signal.stackFunc == null || signal.stackFunc === '') {
     return 'supported'
   }
 
@@ -204,11 +212,17 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
         buffUpgradeWrapperSupportedBaseResolved += 1
       } else if (wrapperAuditEntry.status === 'wrapper-supported-base-unresolved') {
         buffUpgradeWrapperSupportedBaseUnresolved += 1
-      } else if (wrapperAuditEntry.status === 'wrapper-family-unsupported') {
+      } else if (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- 类型将 status 收为 3-literal union，TS 认为此时 === 'wrapper-family-unsupported' 恒真；保留显式比较以容忍数据异常时不静默丢失计数
+        wrapperAuditEntry.status === 'wrapper-family-unsupported'
+      ) {
         buffUpgradeWrapperFamilyUnsupported += 1
       }
 
-      if (wrapperAuditEntry.unresolvedReason) {
+      if (
+        wrapperAuditEntry.unresolvedReason != null
+        && wrapperAuditEntry.unresolvedReason !== ''
+      ) {
         incrementCounter(buffUpgradeWrapperUnresolvedReasonCounts, wrapperAuditEntry.unresolvedReason)
       }
 
@@ -234,7 +248,7 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
 
       const perHeroExprRaw = entry.effect.per_hero_expr
       const perHeroExpr = typeof perHeroExprRaw === 'string' ? perHeroExprRaw.trim() : null
-      if (perHeroExpr) {
+      if (perHeroExpr != null && perHeroExpr !== '') {
         perHeroExprTotal += 1
         incrementCounter(perHeroExprCounts, perHeroExpr)
         if (parsePerHeroExpr(perHeroExpr) === null) {
@@ -264,7 +278,7 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
       incrementCounter(amountStackComboCounts, `${stackFunc}__${amountFunc}`)
       incrementCounter(scoreSupportCounts, scoreSupport)
 
-      if (signal.applyManually) {
+      if (signal.applyManually === true) {
         manualSignals += 1
       }
 
@@ -275,7 +289,7 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
         signalsWithStatTargetQualifier += 1
       }
 
-      if (signal.stackFunc) {
+      if (signal.stackFunc != null && signal.stackFunc !== '') {
         stackedSignals += 1
         if (signal.formationCountQualifier) {
           stackedSignalsWithQualifier += 1
@@ -296,6 +310,8 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
 
   return {
     totals: {
+      stackedSignalsWithoutQualifier: stackedSignals - stackedSignalsWithQualifier,
+      unparsedPerHeroExprTotal: perHeroExprTotal - parsedPerHeroExprTotal,
       totalHeroes,
       totalEffectEntries,
       recognizedSignals,
@@ -303,10 +319,8 @@ export function generateSignalCoverageReport(details: unknown[]): SignalCoverage
       manualSignals,
       stackedSignals,
       stackedSignalsWithQualifier,
-      stackedSignalsWithoutQualifier: stackedSignals - stackedSignalsWithQualifier,
       perHeroExprTotal,
       parsedPerHeroExprTotal,
-      unparsedPerHeroExprTotal: perHeroExprTotal - parsedPerHeroExprTotal,
       signalsWithTagTargetQualifier,
       signalsWithStatTargetQualifier,
       signalsWithTagCountQualifier,
@@ -379,7 +393,7 @@ export function extractCoverageBaseline(report: SignalCoverageReport): CoverageB
 }
 
 export function diffCoverageBaseline(expected: CoverageBaseline, actual: CoverageBaseline): string | null {
-  const keys = [...new Set([...Object.keys(expected), ...Object.keys(actual)])].sort()
+  const keys = [...new Set([...Object.keys(expected), ...Object.keys(actual)])].sort((left, right) => left.localeCompare(right))
   const lines: string[] = []
   for (const key of keys) {
     const before = expected[key]
@@ -387,12 +401,15 @@ export function diffCoverageBaseline(expected: CoverageBaseline, actual: Coverag
     if (before === after) continue
     const delta = (after ?? 0) - (before ?? 0)
     const sign = delta > 0 ? '+' : ''
-    lines.push(`  ${key}: ${before ?? '(missing)'} → ${after ?? '(missing)'} (${sign}${delta})`)
+    lines.push(
+      `  ${key}: ${String(before ?? '(missing)')} → ${String(after ?? '(missing)')} (${sign}${String(delta)})`,
+    )
   }
   return lines.length > 0 ? lines.join('\n') : null
 }
 
 async function main(): Promise<void> {
+  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 运行时全局，sonarjs 静态分析未识别 Node 全局导致误报
   const args = process.argv.slice(2)
   const versionDir = args.find((arg) => !arg.startsWith('--')) ?? DEFAULT_VERSION_DIR
   const report = await generateSignalCoverageFromVersionDir(versionDir)
@@ -417,13 +434,13 @@ async function main(): Promise<void> {
   }
 
   const diff = diffCoverageBaseline(expected, actual)
-  if (diff) {
+  if (diff != null && diff !== '') {
     process.stderr.write(`signal-coverage 基线漂移（覆盖率变化须显式确认）：\n${diff}\n\n运行 --update-baseline 更新基线，并审查变化是否符合预期。\n`)
     process.exitCode = 1
   }
 }
 
 const currentFilePath = fileURLToPath(import.meta.url)
-if (process.argv[1] && path.resolve(process.argv[1]) === currentFilePath) {
+if (process.argv[1] != null && process.argv[1] !== '' && path.resolve(process.argv[1]) === currentFilePath) {
   await main()
 }

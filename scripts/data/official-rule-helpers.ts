@@ -8,7 +8,6 @@ import {
 } from './normalize-text-utils.ts'
 
 type RawDefinition = Record<string, unknown>
-type LocalizedDefinition = RawDefinition
 
 function asRawRecord(value: unknown): RawDefinition {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -34,7 +33,7 @@ function normalizeBooleanFlag(value: unknown): boolean {
   }
 
   const text = toText(value)
-  if (!text) {
+  if (text === null || text === '') {
     return false
   }
 
@@ -46,7 +45,7 @@ function normalizeRemainingProperties(value: unknown, consumedKeys: readonly str
     return value.length > 0 ? normalizeJsonValue(value) : null
   }
 
-  if (!value || typeof value !== 'object') {
+  if (value === null || value === undefined || typeof value !== 'object') {
     return null
   }
 
@@ -64,8 +63,8 @@ function normalizeLocalizedTextRecord(
   originalValue: unknown,
   displayValue: unknown,
 ): Record<string, LocalizedText> | null {
-  const originalEntries = originalValue && typeof originalValue === 'object' ? Object.entries(originalValue as RawDefinition) : []
-  const displayEntries = displayValue && typeof displayValue === 'object' ? Object.entries(displayValue as RawDefinition) : []
+  const originalEntries = originalValue !== null && originalValue !== undefined && typeof originalValue === 'object' ? Object.entries(originalValue as RawDefinition) : []
+  const displayEntries = displayValue !== null && displayValue !== undefined && typeof displayValue === 'object' ? Object.entries(displayValue as RawDefinition) : []
   const keys = [...new Set([...originalEntries.map(([key]) => key), ...displayEntries.map(([key]) => key)])].sort(
     (left, right) => left.localeCompare(right),
   )
@@ -117,14 +116,14 @@ export interface EffectStringReference {
 export function normalizeEffectStringReference(effectStringValue: unknown): EffectStringReference | null {
   const effectString = toText(effectStringValue)
 
-  if (!effectString) {
+  if (effectString === null || effectString === '') {
     return null
   }
 
   const [key = '', ...args] = effectString.split(',').map((item) => item.trim())
   const firstArg = args[0]
   const effectDefinitionId =
-    key === 'effect_def' && typeof firstArg === 'string' && firstArg.trim() ? firstArg.trim() : null
+    key === 'effect_def' && typeof firstArg === 'string' && firstArg.trim() !== '' ? firstArg.trim() : null
 
   return {
     effectString,
@@ -138,8 +137,8 @@ function normalizeTextMapEntries(
   originalValue: unknown,
   displayValue: unknown,
 ): LocalizedText[] {
-  const originalEntries = originalValue && typeof originalValue === 'object' ? Object.entries(originalValue as RawDefinition) : []
-  const displayEntries = displayValue && typeof displayValue === 'object' ? Object.entries(displayValue as RawDefinition) : []
+  const originalEntries = originalValue !== null && originalValue !== undefined && typeof originalValue === 'object' ? Object.entries(originalValue as RawDefinition) : []
+  const displayEntries = displayValue !== null && displayValue !== undefined && typeof displayValue === 'object' ? Object.entries(displayValue as RawDefinition) : []
   const keys = [...new Set([...originalEntries.map(([key]) => key), ...displayEntries.map(([key]) => key)])]
   const originalRecord = originalValue as RawDefinition | null | undefined
   const displayRecord = displayValue as RawDefinition | null | undefined
@@ -158,7 +157,7 @@ function normalizeTextMapEntries(
 
 function normalizeDateString(value: unknown): number | null {
   const text = toText(value)
-  if (!text) {
+  if (text === null || text === '') {
     return null
   }
 
@@ -173,7 +172,7 @@ function buildTagRequirementFromExpression(expression: unknown): string[] | null
   }
 
   const normalized = expression.trim()
-  const negatedDisjunctionMatch = normalized.match(/^!\(([^)]+)\)$/)
+  const negatedDisjunctionMatch = /^!\(([^)]+)\)$/.exec(normalized)
   if (!negatedDisjunctionMatch) {
     return null
   }
@@ -213,7 +212,7 @@ type PatronEligibilityRule =
     }
 
 function normalizePatronEligibilityRule(change: unknown): PatronEligibilityRule[] {
-  if (!change || typeof change !== 'object') {
+  if (change === null || change === undefined || typeof change !== 'object') {
     return []
   }
 
@@ -225,6 +224,7 @@ function normalizePatronEligibilityRule(change: unknown): PatronEligibilityRule[
   const rules: PatronEligibilityRule[] = []
 
   const byTags = asRawRecord(changeRecord.by_tags)
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- byTags.tags 是 unknown；truthy 检查覆盖所有 falsy 值（含 ''/0/false/NaN），单一类型守卫无法保留完整语义
   if (byTags.tags) {
     rules.push({
       type: 'tags',
@@ -246,7 +246,7 @@ function normalizePatronEligibilityRule(change: unknown): PatronEligibilityRule[
           const operator = typeof statRuleRecord.comp === 'string' ? statRuleRecord.comp : null
           const value = normalizeNumber(statRuleRecord.value)
 
-          if (!stat || !operator || value === null) {
+          if (stat === null || stat === '' || operator === null || operator === '' || value === null) {
             return null
           }
 
@@ -258,16 +258,18 @@ function normalizePatronEligibilityRule(change: unknown): PatronEligibilityRule[
   }
 
   const byExpr = asRawRecord(changeRecord.by_expr)
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- byExpr.expr 是 unknown；truthy 检查覆盖所有 falsy 值（含 ''/0/false/NaN），单一类型守卫无法保留完整语义
   if (byExpr.expr) {
     const rawExpression = toStr(byExpr.expr)
-    const thresholdMatch = rawExpression.match(/^TimeAvailable\(`days`\)\s*>\s*\(?\s*(\d+)\s*\*\s*(\d+)\s*\)?$/)
+    // eslint-disable-next-line sonarjs/super-linear-regex -- 匹配固定格式游戏数据表达式（TimeAvailable(`days`) > N * N），输入长度受限且格式稳定，回溯风险仅为理论性
+    const thresholdMatch = /^TimeAvailable\(`days`\)\s*>\s*\(?\s*(\d+)\s*\*\s*(\d+)\s*\)?$/.exec(rawExpression)
     const maxAgeDays = thresholdMatch ? Number(thresholdMatch[1]) * Number(thresholdMatch[2]) : null
 
     rules.push({
       type: 'time_available_days',
+      supported: maxAgeDays !== null,
       rawExpression,
       maxAgeDays,
-      supported: maxAgeDays !== null,
     })
   }
 
@@ -305,7 +307,7 @@ export interface PatronDefinition {
 
 export function normalizePatronDefinition(
   originalDefinition: RawDefinition = {},
-  localizedDefinition: LocalizedDefinition = {},
+  localizedDefinition: RawDefinition = {},
 ): PatronDefinition | null {
   const name = normalizeLocalizedText(
     originalDefinition.name,
@@ -324,7 +326,6 @@ export function normalizePatronDefinition(
 
   return {
     id: toStr(originalDefinition.id),
-    name,
     description: normalizeLocalizedText(
       originalDefinition.description,
       localizedDefinition.description,
@@ -339,7 +340,8 @@ export function normalizePatronDefinition(
     weeklyFreePlayCap: normalizeNumber(originalDefinition.weekly_free_play_cap),
     forceAllowedHeroIds: collectForcedHeroIds(gameChanges),
     eligibilityRules: rules,
-    evaluationStatus: rules.every((rule) => rule.supported !== false) ? 'complete' : 'partial',
+    evaluationStatus: rules.every((rule) => rule.supported) ? 'complete' : 'partial',
+    name,
   }
 }
 
@@ -402,7 +404,7 @@ function matchesPatronEligibilityRule(
   facts: ChampionRestrictionFacts,
   rule: PatronEligibilityRule,
 ): boolean {
-  if (rule.supported === false) {
+  if (!rule.supported) {
     return false
   }
 
@@ -425,15 +427,12 @@ function matchesPatronEligibilityRule(
     return rule.blockedWhen === 'any' ? !checks.some(Boolean) : !checks.every(Boolean)
   }
 
-  if (rule.type === 'time_available_days') {
-    if (facts.timeAvailableDays === null || rule.maxAgeDays === null) {
-      return false
-    }
-
-    return facts.timeAvailableDays <= rule.maxAgeDays
+  // 此处 rule.type 已收窄为 'time_available_days'（'tags' 与 'stats' 分支均已 return）
+  if (facts.timeAvailableDays === null || rule.maxAgeDays === null) {
+    return false
   }
 
-  return false
+  return facts.timeAvailableDays <= rule.maxAgeDays
 }
 
 export interface ChampionPatronEligibility {
@@ -477,11 +476,16 @@ export function buildChampionPatronEligibility(
     }
   }
 
+  eligiblePatronIds.sort((left, right) => Number(left) - Number(right))
+  ruleQualifiedPatronIds.sort((left, right) => Number(left) - Number(right))
+  forcedEligiblePatronIds.sort((left, right) => Number(left) - Number(right))
+  unsupportedPatronIds.sort((left, right) => Number(left) - Number(right))
+
   return {
-    eligiblePatronIds: eligiblePatronIds.sort((left, right) => Number(left) - Number(right)),
-    ruleQualifiedPatronIds: ruleQualifiedPatronIds.sort((left, right) => Number(left) - Number(right)),
-    forcedEligiblePatronIds: forcedEligiblePatronIds.sort((left, right) => Number(left) - Number(right)),
-    unsupportedPatronIds: unsupportedPatronIds.sort((left, right) => Number(left) - Number(right)),
+    eligiblePatronIds,
+    ruleQualifiedPatronIds,
+    forcedEligiblePatronIds,
+    unsupportedPatronIds,
   }
 }
 
@@ -506,8 +510,8 @@ export function normalizePatronObjectiveTiers(
 ): PatronObjectiveTier[] {
   const result: PatronObjectiveTier[] = []
 
-  for (const [patronId, tiers] of Object.entries(patronObjectives ?? {})) {
-    if (!tiers || typeof tiers !== 'object') {
+  for (const [patronId, tiers] of Object.entries(patronObjectives)) {
+    if (tiers === null || tiers === undefined || typeof tiers !== 'object') {
       continue
     }
 
@@ -521,15 +525,14 @@ export function normalizePatronObjectiveTiers(
     }
   }
 
-  return result.sort(
-    (left, right) =>
-      Number(left.patronId) - Number(right.patronId) ||
-      Number(left.tierId) - Number(right.tierId),
-  )
+  return result.sort((left, right) => {
+    const byPatron = Number(left.patronId) - Number(right.patronId)
+    return byPatron !== 0 ? byPatron : Number(left.tierId) - Number(right.tierId)
+  })
 }
 
 export function buildScenarioRuleContextId(kind: string, id: string | number): string {
-  return `${kind}:${id}`
+  return `${kind}:${String(id)}`
 }
 
 export function buildScenarioModeTags(
@@ -539,6 +542,7 @@ export function buildScenarioModeTags(
 ): string[] {
   const tags = [kind]
 
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- repeatable 签名 unknown；truthy 检查覆盖所有 falsy 值，caller 实际传 boolean，单一比较无法保留完整 truthy 语义
   if (repeatable) {
     tags.push('free_play')
   }
@@ -562,23 +566,23 @@ export function normalizeOfficialGameRuleDefinition(
 ): OfficialGameRuleDefinition | null {
   const ruleName = toText(definition.rule_name)
 
-  if (!ruleName) {
+  if (ruleName === null || ruleName === '') {
     return null
   }
 
   const rule =
-    definition.rule && typeof definition.rule === 'object'
+    definition.rule !== null && definition.rule !== undefined && typeof definition.rule === 'object'
       ? normalizeJsonValue(definition.rule)
       : normalizeJsonValue(definition.rule ?? null)
 
   return {
     id: toStr(definition.id),
-    ruleName,
     topLevelKeys:
-      rule && typeof rule === 'object' && !Array.isArray(rule)
+      rule !== null && typeof rule === 'object' && !Array.isArray(rule)
         ? Object.keys(rule).sort((left, right) => left.localeCompare(right))
         : [],
     rule,
+    ruleName,
   }
 }
 
@@ -597,18 +601,18 @@ export function normalizeOfficialStatDefinition(
 ): OfficialStatDefinition | null {
   const name = toText(definition.name)
 
-  if (!name) {
+  if (name === null || name === '') {
     return null
   }
 
   return {
     id: toStr(definition.id),
-    name,
     multiKey: normalizeBooleanFlag(definition.multi_key),
     clearOnReset: normalizeBooleanFlag(definition.clear_on_reset),
     serverOnly: normalizeBooleanFlag(definition.server_only),
     readOnly: normalizeBooleanFlag(definition.read_only),
     properties: normalizeRemainingProperties(definition.properties),
+    name,
   }
 }
 
@@ -630,7 +634,7 @@ export interface OfficialBuffDefinition {
 
 export function normalizeOfficialBuffDefinition(
   originalDefinition: RawDefinition = {},
-  localizedDefinition: LocalizedDefinition = {},
+  localizedDefinition: RawDefinition = {},
 ): OfficialBuffDefinition | null {
   const name = normalizeLocalizedText(
     originalDefinition.name,
@@ -647,7 +651,6 @@ export function normalizeOfficialBuffDefinition(
 
   return {
     id: toStr(originalDefinition.id),
-    name,
     description: normalizeLocalizedText(
       originalDefinition.description,
       localizedDefinition.description,
@@ -675,6 +678,7 @@ export function normalizeOfficialBuffDefinition(
       'inventory_graphic_id',
       'name_plural',
     ]),
+    name,
   }
 }
 
@@ -686,7 +690,7 @@ interface EffectKeyParam {
 function normalizeEffectKeyParamNames(value: unknown): EffectKeyParam[] {
   const text = toText(value)
 
-  if (!text) {
+  if (text === null || text === '') {
     return []
   }
 
@@ -699,11 +703,11 @@ function normalizeEffectKeyParamNames(value: unknown): EffectKeyParam[] {
 
       if (parts.length === 1) {
         const name = parts[0]
-        return name ? { name, type: null } : null
+        return name !== undefined && name !== '' ? { name, type: null } : null
       }
 
       const name = parts.at(-1)
-      return name
+      return name !== undefined && name !== ''
         ? {
             name,
             type: parts.slice(0, -1).join(' '),
@@ -725,17 +729,17 @@ export interface OfficialEffectKeyDefinition {
 
 export function normalizeOfficialEffectKeyDefinition(
   originalDefinition: RawDefinition = {},
-  localizedDefinition: LocalizedDefinition = {},
+  localizedDefinition: RawDefinition = {},
 ): OfficialEffectKeyDefinition | null {
   const key = toText(originalDefinition.key)
 
-  if (!key) {
+  if (key === null || key === '') {
     return null
   }
 
   return {
-    id: toStr(originalDefinition.id),
     key,
+    id: toStr(originalDefinition.id),
     owner: toText(originalDefinition.owner),
     paramNames: normalizeEffectKeyParamNames(originalDefinition.param_names),
     descriptions: normalizeLocalizedTextRecord(
@@ -777,7 +781,7 @@ export function normalizePatronPerkTierDefinition(
   const tierId =
     definition.tier_id === undefined || definition.tier_id === null ? null : toStr(definition.tier_id)
 
-  if (!patronId || !tierId) {
+  if (patronId === null || patronId === '' || tierId === null || tierId === '') {
     return null
   }
 
@@ -787,9 +791,9 @@ export function normalizePatronPerkTierDefinition(
 
   return {
     id: toStr(definition.id),
+    requiredPurchasedPerkCount: extractPurchasedPerkRequirementCount(definition.requirements),
     patronId,
     tierId,
-    requiredPurchasedPerkCount: extractPurchasedPerkRequirementCount(definition.requirements),
     requirements,
   }
 }
@@ -800,7 +804,7 @@ interface PatronPerkCost {
 }
 
 function normalizePatronPerkCost(cost: unknown): PatronPerkCost | null {
-  if (!cost || typeof cost !== 'object') {
+  if (cost === null || cost === undefined || typeof cost !== 'object') {
     return null
   }
 
@@ -860,7 +864,7 @@ export interface PatronPerkDefinition {
 
 export function normalizePatronPerkDefinition(
   originalDefinition: RawDefinition = {},
-  localizedDefinition: LocalizedDefinition = {},
+  localizedDefinition: RawDefinition = {},
 ): PatronPerkDefinition | null {
   const patronId =
     originalDefinition.patron_id === undefined || originalDefinition.patron_id === null
@@ -876,7 +880,7 @@ export function normalizePatronPerkDefinition(
     `Patron Perk ${toStr(originalDefinition.id ?? 'unknown')}`,
   )
 
-  if (!patronId || !tierId || !name) {
+  if (patronId === null || patronId === '' || tierId === null || tierId === '' || name === null) {
     return null
   }
 
@@ -886,9 +890,6 @@ export function normalizePatronPerkDefinition(
 
   return {
     id: toStr(originalDefinition.id),
-    patronId,
-    tierId,
-    name,
     graphicId:
       originalDefinition.graphic_id === undefined || originalDefinition.graphic_id === null
         ? null
@@ -896,7 +897,6 @@ export function normalizePatronPerkDefinition(
     typeId: normalizeNumber(originalDefinition.type),
     levels: normalizeNumber(originalDefinition.levels),
     cost: normalizePatronPerkCost(originalDefinition.cost),
-    effects,
     effectDefinitionIds: Array.from(
       new Set(
         effects
@@ -905,6 +905,10 @@ export function normalizePatronPerkDefinition(
       ),
     ).sort((left, right) => Number(left) - Number(right)),
     properties: normalizeJsonValue(originalDefinition.properties ?? []),
+    patronId,
+    tierId,
+    name,
+    effects,
   }
 }
 
@@ -939,7 +943,7 @@ export interface TrialsRoleDefinition {
 
 export function normalizeTrialsRoleDefinition(
   originalDefinition: RawDefinition = {},
-  localizedDefinition: LocalizedDefinition = {},
+  localizedDefinition: RawDefinition = {},
   adventureMetadata: TrialsAdventureMetadata | null = null,
 ): TrialsRoleDefinition | null {
   const name = normalizeLocalizedText(
@@ -956,15 +960,13 @@ export function normalizeTrialsRoleDefinition(
     originalDefinition.adventure_id === undefined || originalDefinition.adventure_id === null
       ? null
       : toStr(originalDefinition.adventure_id)
-  const scenarioKind: 'adventure' | 'variant' | null = adventureMetadata
-    ? adventureMetadata.isVariant
-      ? 'variant'
-      : 'adventure'
-    : null
+  let scenarioKind: 'adventure' | 'variant' | null = null
+  if (adventureMetadata) {
+    scenarioKind = adventureMetadata.isVariant ? 'variant' : 'adventure'
+  }
 
   return {
     id: toStr(originalDefinition.id),
-    name,
     description: normalizeLocalizedText(
       originalDefinition.description,
       localizedDefinition.description,
@@ -973,10 +975,8 @@ export function normalizeTrialsRoleDefinition(
       originalDefinition.graphic_id === undefined || originalDefinition.graphic_id === null
         ? null
         : toStr(originalDefinition.graphic_id),
-    adventureId,
-    scenarioKind,
     ruleContextId:
-      scenarioKind && adventureMetadata?.id !== undefined
+      scenarioKind !== null && adventureMetadata?.id !== undefined
         ? buildScenarioRuleContextId(scenarioKind, adventureMetadata.id)
         : null,
     adventure: adventureMetadata
@@ -993,6 +993,9 @@ export function normalizeTrialsRoleDefinition(
       x: normalizeNumber(originalDefinition.location_position_x),
       y: normalizeNumber(originalDefinition.location_position_y),
     },
+    name,
+    adventureId,
+    scenarioKind,
   }
 }
 
@@ -1005,14 +1008,14 @@ interface TrialsDifficultyCost {
 function normalizeTrialsDifficultyCost(cost: RawDefinition = {}): TrialsDifficultyCost | null {
   const costType = toText(cost.cost)
 
-  if (!costType) {
+  if (costType === null || costType === '') {
     return null
   }
 
   return {
-    costType,
     difficultyTokenId: toText(cost.difficulty_token_id),
     amount: normalizeNumber(cost.amount),
+    costType,
   }
 }
 
@@ -1030,7 +1033,7 @@ export interface TrialsDifficultyDefinition {
 
 export function normalizeTrialsDifficultyDefinition(
   originalDefinition: RawDefinition = {},
-  localizedDefinition: LocalizedDefinition = {},
+  localizedDefinition: RawDefinition = {},
 ): TrialsDifficultyDefinition | null {
   const name = normalizeLocalizedText(
     originalDefinition.name,
@@ -1044,7 +1047,6 @@ export function normalizeTrialsDifficultyDefinition(
 
   return {
     id: toStr(originalDefinition.id),
-    name,
     shortName: toText(localizedDefinition.short_name) ?? toText(originalDefinition.short_name),
     description: normalizeLocalizedText(
       originalDefinition.description,
@@ -1060,5 +1062,6 @@ export function normalizeTrialsDifficultyDefinition(
       .map((cost) => normalizeTrialsDifficultyCost(cost))
       .filter((value): value is TrialsDifficultyCost => value !== null),
     rewardData: normalizeJsonValue(originalDefinition.reward_data ?? []),
+    name,
   }
 }

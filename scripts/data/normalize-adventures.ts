@@ -302,15 +302,19 @@ function buildVariantEnemySummary(
   return {
     enemyCount: pool.size,
     enemyTypes: Array.from(enemyTypeCounts.entries())
-      .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+      .sort((left, right) => {
+        const diff = right[1] - left[1]
+        return diff !== 0 ? diff : left[0].localeCompare(right[0])
+      })
       .map(([tag]) => tag),
     enemyTypeCounts: Object.fromEntries(
-      Array.from(enemyTypeCounts.entries()).sort(
-        (left, right) => right[1] - left[1] || left[0].localeCompare(right[0]),
-      ),
+      Array.from(enemyTypeCounts.entries()).sort((left, right) => {
+        const diff = right[1] - left[1]
+        return diff !== 0 ? diff : left[0].localeCompare(right[0])
+      }),
     ),
-    attackMix,
     specialEnemyCount: specialEnemyCount + escortCount,
+    attackMix,
     escortCount,
   }
 }
@@ -335,10 +339,16 @@ export function buildVariantMetadataMap(
       definition.variant_adventure_id !== undefined
         ? toStr(definition.variant_adventure_id)
         : null
-    const adventure = baseAdventureId ? adventureMap.get(baseAdventureId) ?? null : null
+    const adventure =
+      baseAdventureId != null && baseAdventureId !== ''
+        ? adventureMap.get(baseAdventureId) ?? null
+        : null
     const sceneKey =
-      adventure?.locationId ? `${adventure.campaign.id}:${adventure.locationId}` : null
-    const scene = sceneKey ? sceneMap.get(sceneKey) ?? null : null
+      adventure?.locationId != null && adventure.locationId !== ''
+        ? `${adventure.campaign.id}:${adventure.locationId}`
+        : null
+    const scene =
+      sceneKey != null && sceneKey !== '' ? sceneMap.get(sceneKey) ?? null : null
     const objectiveArea = extractObjectiveArea(definition)
     const areaHighlights = collectAreaHighlights(asRawArray(definition.game_changes))
     const enemySummary = buildVariantEnemySummary(definition, baseAdventureId ?? '', monsterCatalog)
@@ -418,7 +428,7 @@ export function normalizeAdventure(
       originalDefinition.name,
       localizedDefinition?.name,
       `Adventure ${toStr(originalDefinition.id)}`,
-    )!,
+    ) as LocalizedText,
     campaign: adventureMetadata.campaign,
     description: normalizeOptionalLocalizedText(
       originalDefinition.description,
@@ -427,14 +437,14 @@ export function normalizeAdventure(
     objectiveArea: adventureMetadata.objectiveArea ?? null,
     locationId: adventureMetadata.locationId ?? null,
     areaSetId: adventureMetadata.areaSetId ?? null,
-    scene,
     requirements: normalizeLocalizedTextList(originalRequirements, displayRequirements),
     restrictions: normalizeLocalizedTextList(originalRestrictions, displayRestrictions),
     rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
-    repeatable,
-    patronObjectiveTiers,
     modeTags: buildScenarioModeTags('adventure', repeatable, patronObjectiveTiers),
     mechanics: collectScenarioMechanics(asRawArray(originalDefinition.game_changes)),
+    scene,
+    repeatable,
+    patronObjectiveTiers,
   }
 }
 
@@ -488,8 +498,7 @@ export function normalizeVariant(
       originalDefinition.name,
       localizedDefinition?.name,
       `Variant ${toStr(originalDefinition.id)}`,
-    )!,
-    campaign,
+    ) as LocalizedText,
     adventureId: metadata?.adventureId ?? null,
     adventure: metadata?.adventure ?? null,
     objectiveArea: metadata?.objectiveArea ?? null,
@@ -498,8 +507,6 @@ export function normalizeVariant(
     scene: metadata?.scene ?? null,
     restrictions: normalizeLocalizedTextList(originalRestrictions, displayRestrictions),
     rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
-    repeatable,
-    patronObjectiveTiers,
     modeTags: buildScenarioModeTags('variant', repeatable, patronObjectiveTiers),
     enemyCount: metadata?.enemyCount ?? 0,
     enemyTypes: metadata?.enemyTypes ?? [],
@@ -518,6 +525,9 @@ export function normalizeVariant(
     forcedHeroIds: metadata?.forcedHeroIds ?? [],
     allowedHeroIds: metadata?.allowedHeroIds ?? [],
     allowedTags: metadata?.allowedTags ?? [],
+    campaign,
+    repeatable,
+    patronObjectiveTiers,
   }
 }
 
@@ -572,8 +582,6 @@ export function normalizeManualFormations(
 
       return {
         id: toStr(formation.id),
-        name,
-        notes,
         slots: asRawArray(formation.slots).map((slot) => ({
           id: toStr(slot.id),
           row: Number(slot.row),
@@ -586,7 +594,10 @@ export function normalizeManualFormations(
         })),
         applicableContexts: Array.isArray(formation.applicableContexts)
           ? (formation.applicableContexts as RawDefinition[])
-              .filter((context) => context.kind && context.id !== undefined)
+              .filter(
+                (context) =>
+                  Boolean(context.kind) && context.id !== undefined,
+              )
               .map((context) => ({
                 kind: toStr(context.kind),
                 id: toStr(context.id),
@@ -595,7 +606,10 @@ export function normalizeManualFormations(
         sourceContexts: Array.isArray(formation.sourceContexts)
           ? (formation.sourceContexts as RawDefinition[])
               .filter(
-                (context) => context.kind && context.id !== undefined && context.name,
+                (context) =>
+                  Boolean(context.kind) &&
+                  context.id !== undefined &&
+                  Boolean(context.name),
               )
               .map((context): NonNullable<NormalizedManualFormation['sourceContexts']>[number] | null => {
                 const contextNameRecord = asRawRecord(context.name)
@@ -623,6 +637,8 @@ export function normalizeManualFormations(
               })
               .filter((value): value is NonNullable<typeof value> => value !== null)
           : undefined,
+        name,
+        notes,
       }
     })
     .filter((formation): formation is NormalizedManualFormation & { name: LocalizedText } =>
@@ -634,13 +650,14 @@ export function normalizeManualFormations(
 function stripAdventureFlavor(value: unknown): string | null {
   const text = toText(value)
 
-  if (!text) {
+  if (text === null || text === '') {
     return null
   }
 
   return text
     .replace(/^Time Gate\s*-\s*/i, '')
     .replace(/^时空门\s*-\s*/u, '')
+    // eslint-disable-next-line sonarjs/super-linear-regex -- 字符类严格限定无嵌套量词，仅匹配末尾括号注释，实际无 ReDoS 风险
     .replace(/\s*[（(][^()（）]+[)）]\s*$/u, '')
     .trim()
 }
@@ -663,11 +680,11 @@ function extractObjectiveArea(definition: RawDefinition = {}): number | null {
 
   const objectiveText = toText(definition.objectives_text)
 
-  if (!objectiveText) {
+  if (objectiveText === null || objectiveText === '') {
     return null
   }
 
-  const match = objectiveText.match(/(\d+)/)
+  const match = /(\d+)/.exec(objectiveText)
   return match ? normalizeNumber(match[1]) : null
 }
 
@@ -683,14 +700,19 @@ function collectEscortNames(gameChanges: readonly unknown[] = []): string[] {
       return
     }
 
-    if (!value || typeof value !== 'object') {
+    if (value === null || typeof value !== 'object') {
       return
     }
 
     const record = value as RawDefinition
     const nextType = typeof record.type === 'string' ? record.type : currentType
 
-    if (nextType && nextType.startsWith('slot_escort') && Array.isArray(record.names)) {
+    if (
+      nextType !== null &&
+      nextType !== '' &&
+      nextType.startsWith('slot_escort') &&
+      Array.isArray(record.names)
+    ) {
       names.push(...toTextList(record.names))
     }
 
@@ -710,7 +732,7 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
   let hasAllowed = false
 
   for (const change of gameChanges) {
-    if (!change || typeof change !== 'object') {
+    if (change === null || typeof change !== 'object') {
       continue
     }
     const record = change as RawDefinition
@@ -745,7 +767,7 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
       if (typeof tags === 'string') {
         for (const tag of tags.split('|')) {
           const trimmed = tag.trim()
-          if (trimmed) {
+          if (trimmed !== '') {
             allowedTags.add(trimmed)
           }
         }
@@ -784,10 +806,10 @@ function pushAreaHighlight(result: Map<string, AreaHighlight>, entry: RawAreaHig
       end: normalizeNumber(entry.end),
     }),
     kind: entry.kind,
-    start,
     end: normalizeNumber(entry.end),
     loopAt: normalizeNumber(entry.loopAt),
     repeatAt: normalizeNumber(entry.repeatAt),
+    start,
   }
 
   if (!result.has(normalizedEntry.id)) {
@@ -798,7 +820,7 @@ function pushAreaHighlight(result: Map<string, AreaHighlight>, entry: RawAreaHig
 function parseAreaRange(rangeText: unknown): AreaRange | null {
   const normalized = toText(rangeText)
 
-  if (!normalized) {
+  if (normalized === null || normalized === '') {
     return null
   }
 
@@ -833,7 +855,7 @@ function collectAreaHighlights(gameChanges: readonly unknown[] = []): AreaHighli
       return
     }
 
-    if (!value || typeof value !== 'object') {
+    if (value === null || typeof value !== 'object') {
       return
     }
 
@@ -894,12 +916,14 @@ function collectAreaHighlights(gameChanges: readonly unknown[] = []): AreaHighli
     })
   }
 
-  return Array.from(highlights.values()).sort(
-    (left, right) =>
-      left.start - right.start ||
-      (left.end ?? Number.MAX_SAFE_INTEGER) - (right.end ?? Number.MAX_SAFE_INTEGER) ||
-      left.kind.localeCompare(right.kind),
-  )
+  return Array.from(highlights.values()).sort((left, right) => {
+    const startDiff = left.start - right.start
+    if (startDiff !== 0) return startDiff
+    const endDiff =
+      (left.end ?? Number.MAX_SAFE_INTEGER) - (right.end ?? Number.MAX_SAFE_INTEGER)
+    if (endDiff !== 0) return endDiff
+    return left.kind.localeCompare(right.kind)
+  })
 }
 
 function classifyMonsterAttack(
@@ -917,9 +941,10 @@ function classifyMonsterAttack(
   }
 
   const attackId = monster.attack_id !== undefined ? toStr(monster.attack_id) : null
-  const attackName = attackId
-    ? (toText(attackDefinitionsById.get(attackId)?.name)?.toLowerCase() ?? '')
-    : ''
+  const attackName =
+    attackId !== null && attackId !== ''
+      ? (toText(attackDefinitionsById.get(attackId)?.name)?.toLowerCase() ?? '')
+      : ''
 
   if (attackName.includes('melee')) {
     return 'melee'
@@ -948,9 +973,9 @@ function normalizeMonsterIdentity(
   return {
     id: toStr(monster.id),
     name: toText(monster.name) ?? `Monster ${toStr(monster.id)}`,
+    isSpecial: tags.some((tag) => SPECIAL_MONSTER_TAGS.has(tag)),
     tags,
     attackType,
-    isSpecial: tags.some((tag) => SPECIAL_MONSTER_TAGS.has(tag)),
   }
 }
 
@@ -994,7 +1019,7 @@ function collectMonsterIdsFromGameChange(
     return result
   }
 
-  if (!value || typeof value !== 'object') {
+  if (value === null || typeof value !== 'object') {
     return result
   }
 
@@ -1017,7 +1042,7 @@ function collectMonsterIdsFromGameChange(
       continue
     }
 
-    if (key === 'monster_replacements_by_id' && item && typeof item === 'object') {
+    if (key === 'monster_replacements_by_id' && item !== null && typeof item === 'object') {
       for (const replacementId of Object.values(item as RawDefinition)) {
         const normalized = normalizeNumber(replacementId)
 
@@ -1045,7 +1070,8 @@ export function buildAffiliationMap(
   for (const definition of originalDefinitions) {
     const tag = definition.affiliation_tag ?? definition.tag ?? definition.key
 
-    if (!tag) {
+    // eslint-disable-next-line no-extra-boolean-cast -- tag 是 unknown，直接真值判断会触发 strict-boolean-expressions（any in conditional），需 Boolean() 显式转布尔
+    if (!Boolean(tag)) {
       continue
     }
 
@@ -1055,7 +1081,8 @@ export function buildAffiliationMap(
   for (const definition of localizedDefinitions) {
     const tag = definition.affiliation_tag ?? definition.tag ?? definition.key
 
-    if (!tag) {
+    // eslint-disable-next-line no-extra-boolean-cast -- tag 是 unknown，直接真值判断会触发 strict-boolean-expressions（any in conditional），需 Boolean() 显式转布尔
+    if (!Boolean(tag)) {
       continue
     }
 
@@ -1198,8 +1225,8 @@ export function buildAdventureMap(
           {
             id,
             name,
-            themeName: themeName ?? name,
             campaign,
+            themeName: themeName ?? name,
             locationId:
               originalDefinition.location_id !== undefined
                 ? toStr(originalDefinition.location_id)
@@ -1228,7 +1255,11 @@ export function buildSceneMap(adventureMap: Map<string, AdventureMetadata>): Map
   >()
 
   for (const adventure of adventureMap.values()) {
-    if (adventure.isVariant || !adventure.locationId) {
+    if (
+      adventure.isVariant ||
+      adventure.locationId === null ||
+      adventure.locationId === ''
+    ) {
       continue
     }
 
@@ -1275,7 +1306,7 @@ export function normalizePatrons(
 
 function collectScenarioMechanics(gameChanges: readonly unknown[] = []): string[] {
   return uniqueStrings(
-    (gameChanges ?? [])
+    gameChanges
       .map((gameChange) => toText(asRawRecord(gameChange).type))
       .filter((value): value is string => value !== null),
   )
