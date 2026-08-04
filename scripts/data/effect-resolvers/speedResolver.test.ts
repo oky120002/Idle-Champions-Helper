@@ -6,12 +6,11 @@ describe('resolveSpeedSignal', () => {
   it('base_attack_speed_mult 无 target → attackSpeedMult / carrySignals（自身速度）', () => {
     const r = resolveSpeedSignal(buildResolveContext({ effectName: 'base_attack_speed_mult', numericValue: 30 }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('attackSpeedMult')
-      expect(r.signal.value).toBe(30)
-      expect(r.signal.amountFunc).toBe('mult')
-      expect(r.bucket).toBe('carrySignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('attackSpeedMult')
+    expect(r.signal.value).toBe(30)
+    expect(r.signal.amountFunc).toBe('mult')
+    expect(r.bucket).toBe('carrySignals')
   })
 
   it('base_attack_speed_mult 带 targets:["all"] → supportSignals（光环）', () => {
@@ -25,20 +24,18 @@ describe('resolveSpeedSignal', () => {
   it('reduce_attack_cooldown → attackSpeedMult / add（减冷却=提速）', () => {
     const r = resolveSpeedSignal(buildResolveContext({ effectName: 'reduce_attack_cooldown' }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('attackSpeedMult')
-      expect(r.signal.amountFunc).toBeUndefined()
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('attackSpeedMult')
+    expect(r.signal.amountFunc).toBeUndefined()
   })
 
   it('reduce_ultimate_cooldown → cooldownReduction / supportSignals（global 池）', () => {
     const r = resolveSpeedSignal(buildResolveContext({ effectName: 'reduce_ultimate_cooldown' }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('cooldownReduction')
-      expect(r.signal.amountFunc).toBeUndefined()
-      expect(r.bucket).toBe('supportSignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('cooldownReduction')
+    expect(r.signal.amountFunc).toBeUndefined()
+    expect(r.bucket).toBe('supportSignals')
   })
 
   it('ability_cooldown_reduction_mult → cooldownReduction / mult', () => {

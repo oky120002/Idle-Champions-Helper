@@ -76,7 +76,7 @@ interface EffectEntryLike {
   effectString: string
   sourceBucket: string
   effect: { filter_targets?: unknown[] } & Record<string, unknown>
-  signalPreset: HeroSignal & { value?: number | undefined; targetQualifier?: unknown }
+  signalPreset: (HeroSignal & { value?: number | undefined; targetQualifier?: unknown }) | null
 }
 
 interface EffectSignalResultLike {
@@ -478,7 +478,7 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
   expect(first?.abilityScores.str).toBe(15)
   expect(first?.carrySignals[0]?.kind).toBe('heroDpsMultiplier')
   // build 期预算收益：有 DPS carry 信号 → self.damage > 1；self/support 分层都在。
-  expect(first?.gainProfile?.self?.damage).toBeGreaterThan(1)
+  expect(first?.gainProfile?.self.damage).toBeGreaterThan(1)
   expect(first?.gainProfile?.support).toBeDefined()
   const perTargetCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader,100,adj')
   const perTaggedCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult,200,companion')
@@ -804,7 +804,8 @@ it('collectEffectEntries loot buff_upgrade 多 rarity 同信号位取最高 magn
   // 三 rarity 同信号位去重为 1 条，且保留最高 magnitude（157.8）。
   expect(derived).toHaveLength(1)
   expect(derived[0]?.effectString).toBe('buff_upgrade,157.8,4')
-  expect(derived[0]?.signalPreset.value).toBe(157.8)
+  // eslint-disable-next-line sonarjs/no-floating-point-equality -- 157.8 是 fixture 字面量直接比对，无浮点运算误差
+  expect(derived[0]?.signalPreset?.value).toBe(157.8)
   // 派生 wrapper 的 bonusScaleOfSignal 指向 base ability signal（保留 wrapper 语义链路）。
   expect(derived[0]?.signalPreset?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
 })
@@ -900,7 +901,9 @@ it('loot buff_upgrades wrapper 派生多 target base 信号（collectEffectEntri
     (entry) => entry.sourceBucket === 'loot' && entry.signalPreset != null && entry.effectString === 'buff_upgrades,100,4,5',
   )
   expect(derived).toHaveLength(2)
-  const baseRawEffects = derived.map((entry) => entry.signalPreset?.bonusScaleOfSignal?.rawEffect).sort()
+  const baseRawEffects = derived
+    .map((entry) => entry.signalPreset?.bonusScaleOfSignal?.rawEffect)
+    .sort((a, b) => String(a).localeCompare(String(b)))
   expect(baseRawEffects).toEqual(['hero_dps_multiplier_mult,50', 'hero_dps_multiplier_mult,80'])
 })
 
@@ -939,7 +942,7 @@ it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，理�
   }
   const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const featEntries = entries.filter((entry) => entry.sourceBucket === 'feat')
-  const effectStrings = featEntries.map((entry) => entry.effectString).sort()
+  const effectStrings = featEntries.map((entry) => entry.effectString).sort((a, b) => a.localeCompare(b))
   expect(effectStrings).toEqual(['global_dps_multiplier_mult,10', 'hero_dps_multiplier_mult,100'])
   // hero_expr 限定随 entry.effect 流入，消费层 attachSignalSemantics 正确处理。
   const heroDpsEntry = featEntries.find((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')
@@ -963,7 +966,7 @@ it('collectEffectEntries 收集 ability effects', () => {
   }
   const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const abilityEntries = entries.filter((entry) => entry.sourceBucket === 'ability')
-  const effectStrings = abilityEntries.map((entry) => entry.effectString).sort()
+  const effectStrings = abilityEntries.map((entry) => entry.effectString).sort((a, b) => a.localeCompare(b))
   expect(effectStrings).toEqual(['do_nothing', 'global_dps_multiplier_mult,0.8333333333333333'])
   // duration/baseCooldown 随 entry.effect 流入（供消费层 modron gating 按玩家状态）。
   const dpsEntry = abilityEntries.find((entry) => entry.effectString.startsWith('global_dps_multiplier_mult,'))
@@ -1034,9 +1037,9 @@ it('collectEffectEntries static_dps_mult fallback：复杂 effect 进 unsupporte
   const entries = collectEffectEntries(detail).entries as EffectEntryLike[]
   const fallback = entries.filter((entry) => entry.sourceBucket === 'static-dps')
   expect(fallback.length).toBe(1)
-  expect(fallback[0]?.signalPreset.kind).toBe('heroDpsMultiplier')
-  expect(fallback[0]?.signalPreset.value).toBe(300) // (4-1)*100 → mult 后 =4×
-  expect(fallback[0]?.signalPreset.amountFunc).toBe('mult')
+  expect(fallback[0]?.signalPreset?.kind).toBe('heroDpsMultiplier')
+  expect(fallback[0]?.signalPreset?.value).toBe(300) // (4-1)*100 → mult 后 =4×
+  expect(fallback[0]?.signalPreset?.amountFunc).toBe('mult')
 })
 
 it('collectEffectEntries static_dps_mult 不与可解析 effect 重复（防双重计算）', () => {
@@ -1085,7 +1088,7 @@ it('collectEffectEntries loot buff_upgrade wrapper 合并 wrapper 自身 filter_
   const derived = entries.filter((entry) => entry.sourceBucket === 'loot' && entry.signalPreset != null)
   expect(derived.length).toBe(1)
   // wrapper 的 hero_ids 限定合并到 derived signal 的 targetQualifier（base 无 filter → 直接取 wrapper 限定）。
-  expect(derived[0]?.signalPreset.targetQualifier).toEqual({
+  expect(derived[0]?.signalPreset?.targetQualifier).toEqual({
     predicate: { op: 'heroId', heroId: '82', negate: false },
   })
 })

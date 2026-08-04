@@ -7,11 +7,10 @@ describe('resolveGoldSignal', () => {
   it('gold_multiplier_mult → 全队金币池（support）', () => {
     const r = resolveGoldSignal(buildResolveContext({ effectName: 'gold_multiplier_mult', numericValue: 50 }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('globalGoldMultiplier')
-      expect(r.signal.value).toBe(50)
-      expect(r.bucket).toBe('supportSignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('globalGoldMultiplier')
+    expect(r.signal.value).toBe(50)
+    expect(r.bucket).toBe('supportSignals')
   })
 
   it('gold_mult_per_tagged_crusader_mult → per_tagged_crusader_mult + formationCountQualifier', () => {
@@ -20,12 +19,11 @@ describe('resolveGoldSignal', () => {
       effectPayload: parseEffectPayload('gold_mult_per_tagged_crusader_mult,100,female'),
     }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('globalGoldMultiplier')
-      expect(r.signal.amountFunc).toBe('mult')
-      expect(r.signal.stackFunc).toBe('per_tagged_crusader_mult')
-      expect(r.signal.formationCountQualifier).toBeTruthy()
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('globalGoldMultiplier')
+    expect(r.signal.amountFunc).toBe('mult')
+    expect(r.signal.stackFunc).toBe('per_tagged_crusader_mult')
+    expect(r.signal.formationCountQualifier).toBeTruthy()
   })
 
   it('gold_mult_per_tagged_crusader_mult 缺 tag qualifier → unsupported', () => {

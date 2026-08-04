@@ -1,5 +1,6 @@
 import os from 'node:os'
 import path from 'node:path'
+import process from 'node:process'
 import { mkdtemp, readFile } from 'node:fs/promises'
 import { it, expect } from 'vitest'
 import {
@@ -90,7 +91,7 @@ it('shouldSkipDataPipeline: 无 existingHash（首次/旧 version.json）→ 不
   expect(
     shouldSkipDataPipeline({
       existingUpdatedAt: '2026-07-25',
-      existingHash: undefined,
+      existingHash: null,
       nextUpdatedAt: '2026-07-25',
       nextHash: 'abc123',
     }),

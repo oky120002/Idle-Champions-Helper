@@ -6,12 +6,11 @@ describe('resolveSurvivalSignal', () => {
   it('health_mult 无 target → heroHealthMultiplier / carrySignals（自身生命）', () => {
     const r = resolveSurvivalSignal(buildResolveContext({ effectName: 'health_mult', numericValue: 200 }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('heroHealthMultiplier')
-      expect(r.signal.value).toBe(200)
-      expect(r.signal.amountFunc).toBeUndefined()
-      expect(r.bucket).toBe('carrySignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('heroHealthMultiplier')
+    expect(r.signal.value).toBe(200)
+    expect(r.signal.amountFunc).toBeUndefined()
+    expect(r.bucket).toBe('carrySignals')
   })
 
   it('health_mult 带 targets:["all"] → supportSignals（光环）', () => {
@@ -32,11 +31,10 @@ describe('resolveSurvivalSignal', () => {
   it('damage_reduction → damageReduction / add（global 池→supportSignals）', () => {
     const r = resolveSurvivalSignal(buildResolveContext({ effectName: 'damage_reduction' }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('damageReduction')
-      expect(r.signal.amountFunc).toBeUndefined()
-      expect(r.bucket).toBe('supportSignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('damageReduction')
+    expect(r.signal.amountFunc).toBeUndefined()
+    expect(r.bucket).toBe('supportSignals')
   })
 
   it('trials_damage_reduction_mult → damageReduction / mult（与 add 等价类区分）', () => {

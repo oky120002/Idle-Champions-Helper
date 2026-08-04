@@ -159,7 +159,7 @@ export function resolveNumericValue(
       effectPayloads ?? [effectPayload],
       upgradePayloadsById,
     )
-    const resolvedValue = resolved === null ? Number.NaN : parseFloat(String(resolved))
+    const resolvedValue = resolved === null ? Number.NaN : parseFloat(resolved)
 
     if (Number.isFinite(resolvedValue)) {
       return resolvedValue

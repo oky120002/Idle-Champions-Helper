@@ -18,12 +18,12 @@ export function resolveGoldSignal(ctx: EffectResolveContext): EffectSignalResult
   }
 
   if (effectName === 'gold_mult_per_tagged_crusader_mult') {
-    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
+    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args[1] ?? null)
     if (!formationCountQualifier) {
       return makeUnsupported(
         effectName,
         effectValue,
-        `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
+        `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args[1] ?? null)}`,
         source,
       )
     }
@@ -33,10 +33,10 @@ export function resolveGoldSignal(ctx: EffectResolveContext): EffectSignalResult
       signal: {
         kind: 'globalGoldMultiplier',
         value: numericValue,
-        rawEffect,
-        source,
         amountFunc: 'mult',
         stackFunc: 'per_tagged_crusader_mult',
+        rawEffect,
+        source,
         formationCountQualifier,
       },
       bucket: 'supportSignals',

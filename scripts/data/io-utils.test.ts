@@ -30,7 +30,7 @@ it('readJson 解析已有 JSON 文件', async () => {
 it('readJson 不存在时抛 ENOENT', async () => {
   await withTempDir(async (dir) => {
     await expect(readJson(path.join(dir, 'missing.json'))).rejects.toSatisfy(
-      (error: NodeJS.ErrnoException) => error.code === 'ENOENT',
+      (error: Error & { code?: string }) => error.code === 'ENOENT',
     )
   })
 })

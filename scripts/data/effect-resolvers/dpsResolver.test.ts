@@ -7,20 +7,18 @@ describe('resolveDpsSignal', () => {
   it('global_dps_multiplier_mult → 全队 dps 池（support）', () => {
     const r = resolveDpsSignal(buildResolveContext({ effectName: 'global_dps_multiplier_mult', numericValue: 200 }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('globalDpsMultiplier')
-      expect(r.signal.value).toBe(200)
-      expect(r.bucket).toBe('supportSignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('globalDpsMultiplier')
+    expect(r.signal.value).toBe(200)
+    expect(r.bucket).toBe('supportSignals')
   })
 
   it('hero_dps_multiplier_mult 无 targeting → carry 池（自身）', () => {
     const r = resolveDpsSignal(buildResolveContext({ effectName: 'hero_dps_multiplier_mult', effect: {} }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.kind).toBe('heroDpsMultiplier')
-      expect(r.bucket).toBe('carrySignals')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.kind).toBe('heroDpsMultiplier')
+    expect(r.bucket).toBe('carrySignals')
   })
 
   it('hero_dps_multiplier_mult targeting all → support 池', () => {
@@ -39,11 +37,10 @@ describe('resolveDpsSignal', () => {
       effect: { targets: ['all'] },
     }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.amountFunc).toBe('add')
-      expect(r.signal.stackFunc).toBe('per_target_crusader')
-      expect(r.signal.formationCountPositionQualifier?.relation).toBe('any')
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.amountFunc).toBe('add')
+    expect(r.signal.stackFunc).toBe('per_target_crusader')
+    expect(r.signal.formationCountPositionQualifier?.relation).toBe('any')
   })
 
   it('hero_dps_mult_per_target_crusader_mult → mult（与 add 变体等价类区分）', () => {
@@ -63,11 +60,10 @@ describe('resolveDpsSignal', () => {
       effect: { targets: ['all'] },
     }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.stackFunc).toBe('per_tagged_crusader_mult')
-      expect(r.signal.amountFunc).toBe('mult')
-      expect(r.signal.formationCountQualifier).toBeTruthy()
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.stackFunc).toBe('per_tagged_crusader_mult')
+    expect(r.signal.amountFunc).toBe('mult')
+    expect(r.signal.formationCountQualifier).toBeTruthy()
   })
 
   it('hero_dps_mult_per_crusader_mult → per_crusader + targetQualifier（来自 filter_targets）', () => {
@@ -76,11 +72,10 @@ describe('resolveDpsSignal', () => {
       effect: { targets: ['all'], filter_targets: [{ type: 'by_tags', tags: 'female' }] },
     }))
     expect(r?.ok).toBe(true)
-    if (r?.ok) {
-      expect(r.signal.stackFunc).toBe('per_crusader')
-      expect(r.signal.targetQualifier).toBeTruthy()
-      expect(r.signal.formationCountQualifier).toBeTruthy()
-    }
+    if (r?.ok !== true) return
+    expect(r.signal.stackFunc).toBe('per_crusader')
+    expect(r.signal.targetQualifier).toBeTruthy()
+    expect(r.signal.formationCountQualifier).toBeTruthy()
   })
 
   it('hero_dps_mult_per_col_behind → per_col_behind', () => {

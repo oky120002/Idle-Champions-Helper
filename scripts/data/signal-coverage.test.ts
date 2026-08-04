@@ -74,7 +74,7 @@ describe('coverage baseline gate', () => {
       { key: 'supported', count: overrides.supported ?? 0 },
       { key: 'unsupported-composition', count: overrides.unsupportedComposition ?? 0 },
     ]
-    if (overrides.wrapperFamilyUnsupported) {
+    if (overrides.wrapperFamilyUnsupported != null && overrides.wrapperFamilyUnsupported !== 0) {
       report.buffUpgradeWrapperStatus = [
         { key: 'wrapper-family-unsupported', count: overrides.wrapperFamilyUnsupported },
       ]

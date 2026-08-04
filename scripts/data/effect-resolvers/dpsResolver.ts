@@ -18,12 +18,12 @@ function resolveHeroDpsPerTarget(ctx: EffectResolveContext, amountFunc: HeroAbil
     return makeUnsupported(effectName, effectValue, bucketResult.note, source)
   }
 
-  const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
-  if (!countRelation) {
+  const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args[1] ?? null)
+  if (countRelation === null) {
     return makeUnsupported(
       effectName,
       effectValue,
-      `Unsupported per-target count relation: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
+      `Unsupported per-target count relation: ${JSON.stringify(effectMetadata.effectPayload?.args[1] ?? null)}`,
       source,
     )
   }
@@ -33,11 +33,11 @@ function resolveHeroDpsPerTarget(ctx: EffectResolveContext, amountFunc: HeroAbil
     signal: {
       kind: 'heroDpsMultiplier',
       value: numericValue,
+      stackFunc: 'per_target_crusader',
+      formationCountPositionQualifier: { relation: countRelation },
       rawEffect,
       source,
       amountFunc,
-      stackFunc: 'per_target_crusader',
-      formationCountPositionQualifier: { relation: countRelation },
     },
     bucket: bucketResult.bucket,
   }
@@ -51,12 +51,12 @@ function resolveHeroDpsPerTagged(ctx: EffectResolveContext): EffectSignalResult 
     return makeUnsupported(effectName, effectValue, bucketResult.note, source)
   }
 
-  const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
+  const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args[1] ?? null)
   if (!formationCountQualifier) {
     return makeUnsupported(
       effectName,
       effectValue,
-      `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
+      `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args[1] ?? null)}`,
       source,
     )
   }
@@ -66,10 +66,10 @@ function resolveHeroDpsPerTagged(ctx: EffectResolveContext): EffectSignalResult 
     signal: {
       kind: 'heroDpsMultiplier',
       value: numericValue,
-      rawEffect,
-      source,
       amountFunc: 'mult',
       stackFunc: 'per_tagged_crusader_mult',
+      rawEffect,
+      source,
       formationCountQualifier,
     },
     bucket: bucketResult.bucket,
@@ -136,12 +136,12 @@ export function resolveDpsSignal(ctx: EffectResolveContext): EffectSignalResult 
       signal: {
         kind: 'heroDpsMultiplier',
         value: numericValue,
-        rawEffect,
-        source,
         amountFunc: 'mult',
         stackFunc: 'per_crusader',
-        targetQualifier,
         formationCountQualifier: targetQualifier,
+        rawEffect,
+        source,
+        targetQualifier,
       },
       bucket: bucketResult.bucket,
     }
@@ -158,10 +158,10 @@ export function resolveDpsSignal(ctx: EffectResolveContext): EffectSignalResult 
       signal: {
         kind: 'heroDpsMultiplier',
         value: numericValue,
-        rawEffect,
-        source,
         amountFunc: 'mult',
         stackFunc: 'per_col_behind',
+        rawEffect,
+        source,
       },
       bucket: bucketResult.bucket,
     }

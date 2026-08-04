@@ -1,4 +1,5 @@
 import zlib from 'node:zlib'
+import { Buffer } from 'node:buffer'
 import { it, expect } from 'vitest'
 import { PNG } from 'pngjs'
 import {

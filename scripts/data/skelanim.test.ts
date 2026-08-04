@@ -1,6 +1,8 @@
 import zlib from 'node:zlib'
+import { Buffer } from 'node:buffer'
 import { expect, it } from 'vitest'
 import { PNG } from 'pngjs'
+import { unwrap } from '../../tests/utils/dom-assertions'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.ts'
 import {
   computeSkelAnimFrameBounds,
@@ -196,13 +198,16 @@ it('decodeSkelAnimGraphicBuffer 解析 frame 字段顺序与 piece 数据', () =
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const frame = decoded.characters[0]!.sequences[0]!.pieces[0]!.frames[0]
+  const character = unwrap(decoded.characters[0], 'characters[0] 应存在')
+  const sequence = unwrap(character.sequences[0], 'sequences[0] 应存在')
+  const piece = unwrap(sequence.pieces[0], 'pieces[0] 应存在')
+  const frame = piece.frames[0]
 
   expect(decoded.sheetWidth).toBe(16)
   expect(decoded.sheetHeight).toBe(16)
   expect(decoded.textures.length).toBe(1)
-  expect(decoded.characters[0]!.name).toBe('TestHero')
-  expect(decoded.characters[0]!.sequences[0]!.pieces[0]!).toEqual({
+  expect(character.name).toBe('TestHero')
+  expect(piece).toEqual({
     pieceIndex: 0,
     textureId: 0,
     sourceX: 3,
@@ -467,7 +472,9 @@ it('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', async 
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const bounds = computeSkelAnimFrameBounds(decoded.characters[0]!.sequences[0]!, 0)
+  const character = unwrap(decoded.characters[0], 'characters[0] 应存在')
+  const sequence = unwrap(character.sequences[0], 'sequences[0] 应存在')
+  const bounds = computeSkelAnimFrameBounds(sequence, 0)
   const rendered = await renderSkelAnimPoseToPngBuffer(decoded, {
     sequenceIndex: 0,
     frameIndex: 0,
@@ -475,13 +482,14 @@ it('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', async 
   const png = PNG.sync.read(rendered.bytes)
 
   expect(bounds).toBeTruthy()
-  expect(Math.abs(bounds!.minX + 2)).toBeLessThan(1e-9)
-  expect(Math.abs(bounds!.minY)).toBeLessThan(1e-9)
-  expect(Math.abs(bounds!.maxX)).toBeLessThan(1e-9)
-  expect(Math.abs(bounds!.maxY - 1)).toBeLessThan(1e-9)
-  expect(bounds!.width).toBe(2)
-  expect(bounds!.height).toBe(1)
-  expect(bounds!.visiblePieceCount).toBe(1)
+  const b = unwrap(bounds, 'bounds 应非空')
+  expect(Math.abs(b.minX + 2)).toBeLessThan(1e-9)
+  expect(Math.abs(b.minY)).toBeLessThan(1e-9)
+  expect(Math.abs(b.maxX)).toBeLessThan(1e-9)
+  expect(Math.abs(b.maxY - 1)).toBeLessThan(1e-9)
+  expect(b.width).toBe(2)
+  expect(b.height).toBe(1)
+  expect(b.visiblePieceCount).toBe(1)
   expect(rendered.width).toBe(2)
   expect(rendered.height).toBe(1)
   expect(Array.from(png.data.subarray(0, 4))).toEqual([255, 0, 0, 255])
@@ -559,7 +567,8 @@ it('selectBestSkelAnimPose 默认选择第一个 sequence 的首帧', () => {
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const pose = selectBestSkelAnimPose(decoded.characters[0]!)
+  const character = unwrap(decoded.characters[0], 'characters[0] 应存在')
+  const pose = selectBestSkelAnimPose(character)
 
   expect(pose.sequenceIndex).toBe(0)
   expect(pose.frameIndex).toBe(0)
@@ -631,7 +640,8 @@ it('selectBestSkelAnimPose 跳过不可渲染首帧并继续找同 sequence 的�
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const pose = selectBestSkelAnimPose(decoded.characters[0]!)
+  const character = unwrap(decoded.characters[0], 'characters[0] 应存在')
+  const pose = selectBestSkelAnimPose(character)
 
   expect(pose.sequenceIndex).toBe(0)
   expect(pose.frameIndex).toBe(1)
@@ -708,7 +718,8 @@ it('selectBestSkelAnimPose 按 preferredSequenceIndexes 与 preferredFrameIndexe
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const pose = selectBestSkelAnimPose(decoded.characters[0]!, {
+  const character = unwrap(decoded.characters[0], 'characters[0] 应存在')
+  const pose = selectBestSkelAnimPose(character, {
     preferredSequenceIndexes: [1, 0],
     preferredFrameIndexes: [0],
   })

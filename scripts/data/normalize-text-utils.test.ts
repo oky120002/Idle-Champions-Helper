@@ -108,6 +108,7 @@ it('toTextList 不做分隔拆分，只按元素', () => {
 it('normalizeJsonValue 递归归一化，undefined→null', () => {
   expect(normalizeJsonValue(undefined)).toBe(null)
   expect(normalizeJsonValue(null)).toBe(null)
+  // eslint-disable-next-line sonarjs/no-undefined-assignment -- 测试输入：被测函数专门处理 undefined→null，改 null 会削弱覆盖
   expect(normalizeJsonValue({ a: undefined, b: [1, undefined] })).toEqual({ a: null, b: [1, null] })
   expect(normalizeJsonValue([1, 'x', true])).toEqual([1, 'x', true])
 })

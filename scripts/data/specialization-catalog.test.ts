@@ -188,7 +188,7 @@ describe('buildSpecializationEntries', () => {
     }
     const entries = buildSpecializationEntries(detail)
     expect(entries).toHaveLength(2)
-    expect(entries.map((e) => e.upgradeId).sort()).toEqual(['108', '109'])
+    expect(entries.map((e) => e.upgradeId).sort((a, b) => a.localeCompare(b))).toEqual(['108', '109'])
   })
 
   it('buff_upgrade wrapper 增益专精 → 派生信号附到 catalog（修复 ADR 0017 偏差，不丢增益）', () => {
@@ -209,10 +209,12 @@ describe('buildSpecializationEntries', () => {
     const entries = buildSpecializationEntries(detail)
     const beast = entries.find((e) => e.upgradeId === '109')
     // 自身 +300 + 派生 +25，都 beast tag（runtime 随玩家选 109 注入 → +325）
-    expect(beast?.signals).toHaveLength(2)
-    const values = beast!.signals.map((s) => s.signal.value).sort((a, b) => a - b)
+    expect(beast).toBeDefined()
+    if (!beast) return
+    expect(beast.signals).toHaveLength(2)
+    const values = beast.signals.map((s) => s.signal.value).sort((a, b) => a - b)
     expect(values).toEqual([25, 300])
-    expect(beast!.signals.map((s) => s.signal.monsterTags)).toEqual([['beast'], ['beast']])
+    expect(beast.signals.map((s) => s.signal.monsterTags)).toEqual([['beast'], ['beast']])
   })
 
   it('loot/feat 源 buff_upgrade wrapper 不进 spec catalog（选专精无条件注入不查 owned → overcount；atd_b1e5f3a2c7）', () => {
@@ -247,8 +249,8 @@ describe('buildSpecializationEntries', () => {
     // 自身 enemyVulnerability 300；loot(+25~275)/feat(+80) 源 wrapper 已移出 catalog（无条件注入不查 owned
     // → overcount）；upgrade 源 +200% 被 progression-exclusion 排除（IC snapshot 已含，effect-helpers.ts:753）
     expect(beast?.signals.every((s) => s.signal.bonusScaleOfSignal == null)).toBe(true)
-    expect(beast?.signals.some((s) => s.signal.value === 300 && s.signal.monsterTags?.includes('beast'))).toBe(true)
+    expect(beast?.signals.some((s) => s.signal.value === 300 && (s.signal.monsterTags ?? []).includes('beast'))).toBe(true)
     expect(beast?.signals.some((s) => s.signal.value === 275)).toBe(false)
-    expect(byId.get('112')?.signals.some((s) => s.signal.monsterTags?.includes('monstrosity'))).toBe(true)
+    expect(byId.get('112')?.signals.some((s) => (s.signal.monsterTags ?? []).includes('monstrosity'))).toBe(true)
   })
 })

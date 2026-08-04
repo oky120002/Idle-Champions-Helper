@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../../tests/utils/dom-assertions'
 import { normalizeChampionAbility } from './normalize-champions'
 
 // ability_defines（ult/主动技能）提取 + uptime 折算。
@@ -13,13 +14,15 @@ describe('normalizeChampionAbility', () => {
       new Map(),
     )
     expect(ability).not.toBeNull()
-    expect(ability!.id).toBe('10')
-    expect(ability!.duration).toBe(30)
-    expect(ability!.baseCooldown).toBe(3600)
-    expect(ability!.effects).toHaveLength(1)
-    expect(ability!.effects[0]!.startsWith('hero_dps_multiplier_mult,')).toBe(true)
+    const a = unwrap(ability, 'ability 应解析成功')
+    expect(a.id).toBe('10')
+    expect(a.duration).toBe(30)
+    expect(a.baseCooldown).toBe(3600)
+    expect(a.effects).toHaveLength(1)
+    const firstEffect = unwrap(a.effects[0], 'effects[0] 应存在')
+    expect(firstEffect.startsWith('hero_dps_multiplier_mult,')).toBe(true)
     // value 1 × (30/3600) ≈ 0.00833
-    expect(Number(ability!.effects[0]!.split(',')[1])).toBeCloseTo(1 * (30 / 3600), 6)
+    expect(Number(firstEffect.split(',')[1])).toBeCloseTo(1 * (30 / 3600), 6)
   })
 
   it('JSON 串 effect parse effect_string 后折算（Pact Weapon）', () => {
@@ -32,10 +35,12 @@ describe('normalizeChampionAbility', () => {
       },
       new Map(),
     )
-    expect(ability!.effects).toHaveLength(1)
-    expect(ability!.effects[0]!.startsWith('hero_dps_multiplier_mult,')).toBe(true)
+    const a = unwrap(ability, 'ability 应解析成功')
+    expect(a.effects).toHaveLength(1)
+    const firstEffect = unwrap(a.effects[0], 'effects[0] 应存在')
+    expect(firstEffect.startsWith('hero_dps_multiplier_mult,')).toBe(true)
     // value 100 × (30/3600) ≈ 0.833
-    expect(Number(ability!.effects[0]!.split(',')[1])).toBeCloseTo(100 * (30 / 3600), 6)
+    expect(Number(firstEffect.split(',')[1])).toBeCloseTo(100 * (30 / 3600), 6)
   })
 
   it('effect_def,N 引用展开 effect_defines[N].effect_keys（Commander 全队 DPS）', () => {
@@ -53,10 +58,14 @@ describe('normalizeChampionAbility', () => {
       effectDefinitionsById,
     )
     // global_dps 100 × 1/120 ≈ 0.833；do_nothing 无 value 段，原样返回。
-    expect(ability!.effects).toHaveLength(2)
-    const dps = ability!.effects.find((s) => s.startsWith('global_dps_multiplier_mult,'))!
+    const a = unwrap(ability, 'ability 应解析成功')
+    expect(a.effects).toHaveLength(2)
+    const dps = unwrap(
+      a.effects.find((s) => s.startsWith('global_dps_multiplier_mult,')),
+      '应找到 global_dps_multiplier_mult',
+    )
     expect(Number(dps.split(',')[1])).toBeCloseTo(100 * (30 / 3600), 6)
-    expect(ability!.effects).toContain('do_nothing')
+    expect(a.effects).toContain('do_nothing')
   })
 
   it('uptime=0（duration=0）→ value 折算为 0（非 DPS ult 本不收，DPS ult 无 modron 保守不计）', () => {
@@ -64,7 +73,8 @@ describe('normalizeChampionAbility', () => {
       { id: 3, duration: 0, base_cooldown: 7200, effect: 'hero_dps_multiplier_mult,100' },
       new Map(),
     )
-    expect(ability!.effects).toEqual(['hero_dps_multiplier_mult,0'])
+    const a = unwrap(ability, 'ability 应解析成功')
+    expect(a.effects).toEqual(['hero_dps_multiplier_mult,0'])
   })
 
   it('无 ability → null', () => {

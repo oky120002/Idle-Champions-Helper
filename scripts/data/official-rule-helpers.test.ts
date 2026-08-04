@@ -1,5 +1,7 @@
 import { expect, it } from 'vitest'
 
+import { unwrap } from '../../tests/utils/dom-assertions.ts'
+
 import {
   buildChampionPatronEligibility,
   buildScenarioModeTags,
@@ -78,57 +80,66 @@ it('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
 
 it('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allow', () => {
   const patrons = [
-    normalizePatronDefinition(
-      {
-        id: 1,
-        name: 'Mirt',
-        game_changes: {
-          1: [
-            {
-              type: 'disallow_crusaders',
-              by_tags: { tags: '!(good|evil)' },
-            },
-          ],
-        },
-      },
-      { name: '米尔特' },
-    )!,
-    normalizePatronDefinition(
-      {
-        id: 2,
-        name: 'Vajra',
-        game_changes: {
-          1: [
-            {
-              type: 'disallow_crusaders',
-              by_stat: {
-                stats: [{ stat: 'con', comp: '<', value: 14 }],
+    unwrap(
+      normalizePatronDefinition(
+        {
+          id: 1,
+          name: 'Mirt',
+          game_changes: {
+            1: [
+              {
+                type: 'disallow_crusaders',
+                by_tags: { tags: '!(good|evil)' },
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-      { name: '瓦吉拉' },
-    )!,
-    normalizePatronDefinition(
-      {
-        id: 5,
-        name: 'Elminster',
-        game_changes: {
-          1: [
-            {
-              type: 'disallow_crusaders',
-              by_expr: { expr: 'TimeAvailable(`days`) > (365 * 3)' },
-            },
-            {
-              type: 'force_allow_hero',
-              hero_ids: [58],
-            },
-          ],
+        { name: '米尔特' },
+      ),
+      'Mirt patron should not be null',
+    ),
+    unwrap(
+      normalizePatronDefinition(
+        {
+          id: 2,
+          name: 'Vajra',
+          game_changes: {
+            1: [
+              {
+                type: 'disallow_crusaders',
+                by_stat: {
+                  stats: [{ stat: 'con', comp: '<', value: 14 }],
+                },
+              },
+            ],
+          },
         },
-      },
-      { name: '艾尔明斯特' },
-    )!,
+        { name: '瓦吉拉' },
+      ),
+      'Vajra patron should not be null',
+    ),
+    unwrap(
+      normalizePatronDefinition(
+        {
+          id: 5,
+          name: 'Elminster',
+          game_changes: {
+            1: [
+              {
+                type: 'disallow_crusaders',
+                by_expr: { expr: 'TimeAvailable(`days`) > (365 * 3)' },
+              },
+              {
+                type: 'force_allow_hero',
+                hero_ids: [58],
+              },
+            ],
+          },
+        },
+        { name: '艾尔明斯特' },
+      ),
+      'Elminster patron should not be null',
+    ),
   ]
 
   const bruenor = buildChampionPatronEligibility(

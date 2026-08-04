@@ -18,10 +18,10 @@ export function buildResolveContext(overrides: {
   }
   return {
     effectName: overrides.effectName,
-    effectValue,
     source: 'official-parsed',
-    numericValue,
     rawEffect: `${overrides.effectName},${effectValue}`,
+    effectValue,
+    numericValue,
     effectMetadata,
   }
 }
