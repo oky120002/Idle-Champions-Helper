@@ -1,6 +1,7 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { buildPlannerExplanations } from './plannerNarrative'
 import type { PlannerPlacementEntry } from './recommendationTypes'
@@ -8,11 +9,11 @@ import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 function makeHero(heroId: string, display: string, seat: number): ResolvedHeroAbilityProfile {
   // buildPlannerExplanations 只读 heroId / name.display / seat，其余字段测试无关。
-  return { heroId, name: { display }, seat } as unknown as ResolvedHeroAbilityProfile
+  return { heroId, seat, name: { display } } as unknown as ResolvedHeroAbilityProfile
 }
 
 function makePlacement(heroId: string): PlannerPlacementEntry {
-  return { slotId: `slot-${heroId}`, slotLabel: `slot-${heroId}`, heroId, heroName: heroId, seat: 1 }
+  return { heroId, slotId: `slot-${heroId}`, slotLabel: `slot-${heroId}`, heroName: heroId, seat: 1 }
 }
 
 const scenario = { scenarioWarnings: [] } as unknown as ResolvedPlannerScenarioModel
@@ -31,7 +32,7 @@ describe('buildPlannerExplanations', () => {
     )
 
     expect(lines).toHaveLength(2)
-    expect(lines[1]!.zh).toContain('team_gold_find')
+    expect(unwrap(lines[1], 'expected line at index 1').zh).toContain('team_gold_find')
     expect(lines.some((line) => line.zh.includes('Minsc'))).toBe(false)
   })
 
@@ -53,9 +54,10 @@ describe('buildPlannerExplanations', () => {
     expect(lines).toHaveLength(3)
     const carryLine = lines.find((line) => line.zh.includes('核心输出位'))
     expect(carryLine).toBeDefined()
-    expect(carryLine!.zh).toContain('Minsc')
-    expect(carryLine!.zh).toContain('1.50e92') // formatGameNumber(objectiveValue)
-    expect(carryLine!.zh).toContain('Birdsong') // 支援总结
+    const carry = unwrap(carryLine, 'expected carry line')
+    expect(carry.zh).toContain('Minsc')
+    expect(carry.zh).toContain('1.50e92') // formatGameNumber(objectiveValue)
+    expect(carry.zh).toContain('Birdsong') // 支援总结
   })
 
   it('carry-dps + 无 carry + 无信号：2 行（槽位 + 通用），无 carry 行', () => {

@@ -73,8 +73,8 @@ describe('placement fit — upgrade', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's2',
       supportHero,
+      carrySlotId: 's2',
       supportSlotId: 's1',
       scenario: extendedScenario,
       placements: {
@@ -162,13 +162,13 @@ describe('placement fit — upgrade', () => {
     ])
 
     const fit = evaluatePlacementFit({
+      scenario,
+      heroesById,
       carryHero: vi,
       carrySlotId: 's2',
       supportHero: vi,
       supportSlotId: 's2',
-      scenario,
       placements: { s1: 'g1', s2: 'vi', s3: 'g2' },
-      heroesById,
     })
 
     // 基数 4^3=64（3 名 good，multFactor）；修饰 addPercent=300 → (1+3)*64 = 256

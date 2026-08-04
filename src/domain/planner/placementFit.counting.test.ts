@@ -29,12 +29,12 @@ describe('placement fit — counting', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's2',
       supportHero,
-      supportSlotId: 's1',
       scenario,
-      placements: { s1: 'support', s2: 'carry', s3: 'other' },
       heroesById,
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
     })
 
     expect(fit.totalMultiplier).toBeCloseTo(1.6)
@@ -65,12 +65,12 @@ describe('placement fit — counting', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's2',
       supportHero,
-      supportSlotId: 's1',
       scenario,
-      placements: { s1: 'support', s2: 'carry', s3: 'other' },
       heroesById,
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
     })
 
     expect(fit.totalMultiplier).toBeCloseTo(1.728)
@@ -97,13 +97,13 @@ describe('placement fit — counting', () => {
     ])
 
     const fit = evaluatePlacementFit({
+      supportHero,
+      scenario,
+      heroesById,
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
       placements: { s1: 'adj-1', s2: 'carry', s3: 'adj-2' },
-      heroesById,
     })
 
     expect(fit.totalMultiplier).toBe(3)
@@ -157,12 +157,12 @@ describe('placement fit — counting', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's2',
       supportHero,
-      supportSlotId: 's1',
       scenario,
-      placements: { s1: 'support', s2: 'carry', s3: 'other' },
       heroesById,
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
     })
 
     expect(fit.totalMultiplier).toBeCloseTo(1.331)
@@ -193,12 +193,12 @@ describe('placement fit — counting', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's2',
       supportHero,
-      supportSlotId: 's1',
       scenario,
-      placements: { s1: 'support', s2: 'carry', s3: 'other' },
       heroesById,
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
     })
 
     expect(fit.totalMultiplier).toBeCloseTo(1.3)
@@ -229,12 +229,12 @@ describe('placement fit — counting', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's2',
       supportHero,
-      supportSlotId: 's1',
       scenario,
-      placements: { s1: 'support', s2: 'carry', s3: 'other' },
       heroesById,
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
     })
 
     expect(fit.totalMultiplier).toBeCloseTo(1.21)
@@ -265,12 +265,12 @@ describe('placement fit — counting', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
-      carrySlotId: 's4',
       supportHero,
+      heroesById,
+      carrySlotId: 's4',
       supportSlotId: 's1',
       scenario: extendedScenario,
       placements: { s1: 'support', s2: 'other', s3: 'other-two', s4: 'carry' },
-      heroesById,
     })
 
     expect(fit.totalMultiplier).toBe(4)

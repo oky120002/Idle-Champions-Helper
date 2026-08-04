@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { checkFormationLegality } from './formationLegality'
 
 describe('formation legality checks', () => {
@@ -11,8 +12,9 @@ describe('formation legality checks', () => {
 
     const seatConflict = result.violations.find((v) => v.kind === 'seatConflict')
     expect(seatConflict).toBeDefined()
-    expect(seatConflict!.heroes).toContain('1')
-    expect(seatConflict!.heroes).toContain('5')
+    const conflict = unwrap(seatConflict, 'expected seatConflict')
+    expect(conflict.heroes).toContain('1')
+    expect(conflict.heroes).toContain('5')
   })
 
   it('检测缺失的 forced champions', () => {
@@ -27,8 +29,9 @@ describe('formation legality checks', () => {
 
     const missingForce = result.violations.find((v) => v.kind === 'missingForced')
     expect(missingForce).toBeDefined()
-    expect(missingForce!.heroIds).toContain('1')
-    expect(missingForce!.heroIds).toContain('12')
+    const missing = unwrap(missingForce, 'expected missingForced')
+    expect(missing.heroIds).toContain('1')
+    expect(missing.heroIds).toContain('12')
   })
 
   it('合法阵型不产生违规', () => {

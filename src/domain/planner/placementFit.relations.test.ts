@@ -12,18 +12,18 @@ describe('placement fit — relations', () => {
     })
 
     const activeFit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
     })
     const inactiveFit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's3',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
     })
 
     expect(activeFit.totalMultiplier).toBe(2)
@@ -45,18 +45,18 @@ describe('placement fit — relations', () => {
     })
 
     const activeFit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's3',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
     })
     const inactiveFit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
     })
 
     expect(activeFit.totalMultiplier).toBe(2)
@@ -79,18 +79,18 @@ describe('placement fit — relations', () => {
     })
 
     const activeFit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
     })
     const inactiveFit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's3',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
     })
 
     expect(activeFit.totalMultiplier).toBe(2)
@@ -545,11 +545,11 @@ describe('placement fit — relations', () => {
     const carry = createHero('carry', { tags: ['female'] })
 
     const fit = evaluatePlacementFit({
+      scenario,
       carryHero: carry,
       carrySlotId: 's1',
       supportHero: support,
       supportSlotId: 's3',
-      scenario,
       placements: { s1: 'carry', s3: 'support' },
       heroesById: new Map([['carry', carry], ['support', support]]),
     })

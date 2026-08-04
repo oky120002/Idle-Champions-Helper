@@ -88,7 +88,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const requestId = requestIdOf(last)
 
     const result = fakeRec({ blocker: 'missing-profile' })
-    fake.emit({ type: 'result', requestId, ok: true, result })
+    fake.emit({ type: 'result', ok: true, requestId, result })
     await expect(promise).resolves.toBe(result)
   })
 
@@ -100,7 +100,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const requestId = requestIdOf(fake.posted.at(-1))
 
     const result = { result: null, layoutId: null, slots: [], scenarioRef: null, blocker: null } as FormationEvaluation
-    fake.emit({ type: 'result', requestId, ok: true, result })
+    fake.emit({ type: 'result', ok: true, requestId, result })
     await expect(promise).resolves.toBe(result)
   })
 
@@ -131,7 +131,7 @@ describe('WorkerPlannerComputeRunner', () => {
     const promise = runner.recommend({ variant: null, profileSnapshot: null, options: {} })
     const requestId = requestIdOf(fake.posted.at(-1))
 
-    fake.emit({ type: 'result', requestId, ok: false, error: 'boom' })
+    fake.emit({ type: 'result', ok: false, error: 'boom', requestId })
     await expect(promise).rejects.toThrow('boom')
   })
 
@@ -145,7 +145,7 @@ describe('WorkerPlannerComputeRunner', () => {
     // 过期 requestId（不在 pending 中）
     fake.emit({ type: 'result', requestId: 9999, ok: true, result: fakeRec({ blocker: 'no-legal-recommendation' }) })
     // 正确 requestId
-    fake.emit({ type: 'result', requestId, ok: true, result: fakeRec({ blocker: null }) })
+    fake.emit({ type: 'result', ok: true, result: fakeRec({ blocker: null }), requestId })
 
     await expect(promise).resolves.toMatchObject({ blocker: null })
   })

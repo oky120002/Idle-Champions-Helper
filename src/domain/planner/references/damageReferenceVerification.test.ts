@@ -10,10 +10,13 @@
 // 登记在 architecture.md「后续目标」逐项修复，本测试持续度量偏差驱动收敛。
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
+import { fileURLToPath } from 'node:url'
 
 import { describe, expect, it } from 'vitest'
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 
+import { unwrap } from '../../../../tests/utils/dom-assertions'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
 import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
 import { scoreFormation } from '../steadyStateScoring'
@@ -29,6 +32,7 @@ const allReferences: ChampionReference[] = Object.values(modules).flatMap((mod) 
 const referencesByHeroId = new Map(allReferences.map((ref) => [ref.heroId, ref]))
 
 // 加载真实 built hero-abilities.json（归一化产物），计算器本身不读文件——此处仅测试构造入参。
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const dataDir = path.resolve(__dirname, '../../../../public/data/v1')
 const heroesRaw = JSON.parse(readFileSync(path.join(dataDir, 'hero-abilities.json'), 'utf8')) as {
   items: HeroAbilityProfile[]
@@ -121,22 +125,24 @@ describe('伤害参照自动发现与数据完整性', () => {
     const issues: string[] = []
     for (const ref of allReferences) {
       for (const snap of ref.snapshots) {
-        if (!snap.id) issues.push(`${ref.heroId}: 缺 id`)
-        if (!snap.capturedAt) issues.push(`${ref.heroId}/${snap.id}: 缺 capturedAt`)
+        if (snap.id === '') issues.push(`${ref.heroId}: 缺 id`)
+        if (snap.capturedAt === '') issues.push(`${ref.heroId}/${snap.id}: 缺 capturedAt`)
         if (typeof snap.context.formationSize !== 'number') issues.push(`${ref.heroId}/${snap.id}: 缺 formationSize`)
       }
     }
-    expect(issues, issues.join('\n')).toEqual([])
+    expect(issues).toEqual([])
   })
 })
 
 describe('formation-buff 模式（结构正确性，CI 门控）', () => {
   it('明斯克/瓦罗单英雄快照产出正阵型聚合（真实 signal 不崩、聚合>0）', () => {
-    for (const snap of referencesByHeroId.get('7')!.snapshots) {
+    const minscRef = unwrap(referencesByHeroId.get('7'), '参照 hero 7 未找到')
+    for (const snap of minscRef.snapshots) {
       const result = scoreSingleSnapshot('7', snap)
       expect(result.objectiveValue.toNumber(), `明斯克 ${snap.id}`).toBeGreaterThan(0)
     }
-    for (const snap of referencesByHeroId.get('159')!.snapshots) {
+    const varoRef = unwrap(referencesByHeroId.get('159'), '参照 hero 159 未找到')
+    for (const snap of varoRef.snapshots) {
       const result = scoreSingleSnapshot('159', snap)
       expect(result.objectiveValue.toNumber(), `瓦罗 ${snap.id}`).toBeGreaterThan(0)
     }
@@ -155,8 +161,8 @@ describe('formation-buff 模式（结构正确性，CI 门控）', () => {
     const soloMinsc = scoreFormation({
       placements: { minsc: '7' },
       heroesById: new Map([['7', minsc]]),
-      scenario,
       aggregateProjection: 'formation-buff',
+      scenario,
       heroLevels,
     })
     // 明斯克 + 瓦罗：瓦罗 support signal（战斗指南/全局 buff）并入 damage pool。
@@ -166,8 +172,8 @@ describe('formation-buff 模式（结构正确性，CI 门控）', () => {
         ['7', minsc],
         ['159', varo],
       ]),
-      scenario,
       aggregateProjection: 'formation-buff',
+      scenario,
       heroLevels,
     })
 
@@ -186,13 +192,13 @@ describe('formation-buff 模式（结构正确性，CI 门控）', () => {
       carrySlotId: 'minsc',
       supportHero: varo,
       supportSlotId: 'varo',
-      scenario,
       placements: { minsc: '7', varo: '159' },
       heroesById: new Map([
         ['7', minsc],
         ['159', varo],
       ]),
       dimension: 'damage',
+      scenario,
     })
     // 瓦罗是 support，至少有一条 damage signal 对明斯克 active（全局或位置 buff）。
     const activeForMinsc = fit.scoreBreakdown.filter((p) => p.active)
@@ -204,19 +210,19 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
   // baseDamage/BUD 未校准 → 计算器绝对量与实测差几十个数量级（见 architecture.md「投影模式」）。
   // 这里度量偏差作 BUD 校准回归基线，驱动收敛；不门控 CI。
   it('明斯克外部加成聚合为全局乘数（恩赐祝福+赞助者，约束③入参）', () => {
-    const minscRef = referencesByHeroId.get('7')!
+    const minscRef = unwrap(referencesByHeroId.get('7'), '参照 hero 7 未找到')
     // 关注核心×5(+400%) · 普通种族×16(+1500%) · 以身作则×2.5(+150%) · 铁胃×2.5(+150%) = 500
     for (const snap of minscRef.snapshots) {
       const mult = aggregateGlobalBuffMultiplier(snap)
-      expect(mult, `${snap.id}`).toBeGreaterThan(400)
-      expect(mult, `${snap.id}`).toBeLessThan(600)
+      expect(mult).toBeGreaterThan(400)
+      expect(mult).toBeLessThan(600)
     }
   })
 
   it('明斯克 level 1/722 绝对伤害偏差被度量（对比无/含外部加成，驱动 BUD 校准）', () => {
     const minsc = loadBuiltHero('7')
     const scenario = singleSlotScenario()
-    const minscRef = referencesByHeroId.get('7')!
+    const minscRef = unwrap(referencesByHeroId.get('7'), '参照 hero 7 未找到')
     const snapById = new Map(minscRef.snapshots.map((s) => [s.id, s]))
     const observed: Record<string, string> = {
       'minsc-l1': '1.25e45',
@@ -225,15 +231,15 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
     const levels: Record<string, number> = { 'minsc-l1': 1, 'minsc-l722': 722 }
 
     for (const [snapId, obsStr] of Object.entries(observed)) {
-      const snap = snapById.get(snapId)!
+      const snap = unwrap(snapById.get(snapId), `快照 ${snapId} 未找到`)
       const globalBuff = aggregateGlobalBuffMultiplier(snap)
-      const level = levels[snapId]!
+      const level = unwrap(levels[snapId], `level for ${snapId} 未定义`)
       const baseInput = {
         placements: { s1: '7' },
         heroesById: new Map([['7', minsc]]),
-        scenario,
         heroLevels: new Map([['7', level]]),
         aggregateProjection: 'absolute-dps' as const,
+        scenario,
       }
       const calcNoBuff = scoreFormation(baseInput).objectiveValue
       const calcWithBuff = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff }).objectiveValue
@@ -263,15 +269,15 @@ describe('absolute-dps 模式（校准基线，记录不门控）', () => {
 
     const minsc = loadBuiltHero('7')
     const scenario = singleSlotScenario()
-    const minscRef = referencesByHeroId.get('7')!
-    const snap = minscRef.snapshots.find((s) => s.id === 'minsc-l1')!
+    const minscRef = unwrap(referencesByHeroId.get('7'), '参照 hero 7 未找到')
+    const snap = unwrap(minscRef.snapshots.find((s) => s.id === 'minsc-l1'), '快照 minsc-l1 未找到')
     const globalBuff = aggregateGlobalBuffMultiplier(snap)
     const baseInput = {
       placements: { s1: '7' },
       heroesById: new Map([['7', minsc]]),
-      scenario,
       heroLevels: new Map([['7', 1]]),
       aggregateProjection: 'absolute-dps' as const,
+      scenario,
     }
     const calcWithBuff = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff }).objectiveValue
     const calcWithEq = scoreFormation({ ...baseInput, globalBuffMultiplier: globalBuff, equipmentAdjustmentByHero }).objectiveValue

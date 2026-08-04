@@ -9,6 +9,8 @@ describe('scoring support 同步守护', () => {
     // 导致覆盖率误报 unsupported-composition。两份白名单必须同步——任一侧新增 stackFunc
     // 支持时，此测试失败，强制同步。
     const scorerKeys = new Set(Object.keys(STACK_COUNT_RESOLVERS))
-    expect([...scorerKeys].sort()).toEqual([...SCORING_SUPPORTED_STACK_FUNCS].sort())
+    expect([...scorerKeys].sort((a, b) => a.localeCompare(b))).toEqual(
+      [...SCORING_SUPPORTED_STACK_FUNCS].sort((a, b) => a.localeCompare(b)),
+    )
   })
 })

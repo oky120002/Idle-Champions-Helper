@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import type { LocalizedOption, LocalizedText, Variant } from '../types'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
@@ -95,8 +96,8 @@ function buildScenario(
 
 function buildCollections(scenarios: OfficialPlannerScenarioModel[]): PlannerCollections {
   return {
-    variants: scenarios.map((s) => buildVariant(s.variantId)),
     plannerHeroes,
+    variants: scenarios.map((s) => buildVariant(s.variantId)),
     plannerScenarios: scenarios,
   }
 }
@@ -110,8 +111,8 @@ describe('runtime edge — 损坏个人快照', () => {
     })
 
     const evaluation = evaluateFormation({
-      variant: buildVariant('v-nan'),
       collections,
+      variant: buildVariant('v-nan'),
       profileSnapshot: profile,
       placements: { s1: 'h1' },
     })
@@ -119,8 +120,9 @@ describe('runtime edge — 损坏个人快照', () => {
     // 不抛异常；NaN dps 与 ZERO 比较恒 false → bestCarryHeroId=null、objectiveValue 静默归零。
     // normalizer 的 toNumberValue 防 NaN（finite 守卫），此场景仅腐蚀的 IndexedDB 快照可触发。
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.objectiveValue).toBe('0')
-    expect(evaluation.result!.carryHeroId).toBeNull()
+    const nanResult = unwrap(evaluation.result, 'evaluation.result 已断言非空')
+    expect(nanResult.objectiveValue).toBe('0')
+    expect(nanResult.carryHeroId).toBeNull()
   })
 
   it('放置了 plannerHeroes 之外的英雄 id → 不崩溃，附 restriction warning（按 level 1 估算）', () => {
@@ -129,14 +131,14 @@ describe('runtime edge — 损坏个人快照', () => {
     const profile = createUserProfileSnapshot()
 
     const evaluation = evaluateFormation({
-      variant: buildVariant('v-unknown'),
       collections,
+      variant: buildVariant('v-unknown'),
       profileSnapshot: profile,
       placements: { s1: 'nonexistent-hero' },
     })
 
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.warnings.some((w) => w.includes('nonexistent-hero'))).toBe(true)
+    expect(unwrap(evaluation.result, 'evaluation.result 已断言非空').warnings.some((w) => w.includes('nonexistent-hero'))).toBe(true)
   })
 })
 
@@ -147,15 +149,16 @@ describe('runtime edge — 空/极端阵型', () => {
     const profile = createUserProfileSnapshot()
 
     const evaluation = evaluateFormation({
-      variant: buildVariant('v-empty'),
       collections,
+      variant: buildVariant('v-empty'),
       profileSnapshot: profile,
       placements: {},
     })
 
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.objectiveValue).toBe('0')
-    expect(evaluation.result!.breakdown).toBeNull()
+    const emptyResult = unwrap(evaluation.result, 'evaluation.result 已断言非空')
+    expect(emptyResult.objectiveValue).toBe('0')
+    expect(emptyResult.breakdown).toBeNull()
   })
 
   it('候选不足填满槽位 → insufficient-owned-heroes blocker', () => {
@@ -167,8 +170,8 @@ describe('runtime edge — 空/极端阵型', () => {
     })
 
     const recommendation = buildPlannerRecommendation({
-      variant: buildVariant('v-insufficient'),
       collections,
+      variant: buildVariant('v-insufficient'),
       profileSnapshot: profile,
     })
 

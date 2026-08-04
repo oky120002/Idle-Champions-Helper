@@ -10,8 +10,8 @@ function makeHero(
 ): ResolvedHeroAbilityProfile {
   return {
     heroId,
-    name: { original: heroId, display: heroId },
     seat,
+    name: { original: heroId, display: heroId },
     roles: [],
     tags: [],
     baseAttackDamageTypes: [],
@@ -31,10 +31,10 @@ function makeHero(
 describe('computationMode 常量', () => {
   it('MODE_FRACTION：full=1.0 / p90=0.9 / p80=0.8 / p70=0.7 / p60=0.6 / p50=0.5', () => {
     expect(MODE_FRACTION.full).toBe(1.0)
-    expect(MODE_FRACTION.p90).toBe(0.9)
-    expect(MODE_FRACTION.p80).toBe(0.8)
-    expect(MODE_FRACTION.p70).toBe(0.7)
-    expect(MODE_FRACTION.p60).toBe(0.6)
+    expect(MODE_FRACTION.p90).toBeCloseTo(0.9)
+    expect(MODE_FRACTION.p80).toBeCloseTo(0.8)
+    expect(MODE_FRACTION.p70).toBeCloseTo(0.7)
+    expect(MODE_FRACTION.p60).toBeCloseTo(0.6)
     expect(MODE_FRACTION.p50).toBe(0.5)
   })
 
@@ -78,7 +78,7 @@ describe('applyComputationMode', () => {
       makeHero('h4', 1, { support: { damage: 1.05 } }),
     ]
     const kept = applyComputationMode(heroes, 'p50', 'carry-dps', new Set())
-    expect(kept.map((h) => h.heroId).sort()).toEqual(['h1', 'h2'])
+    expect(kept.map((h) => h.heroId).sort((a, b) => a.localeCompare(b))).toEqual(['h1', 'h2'])
   })
 
   it('每席位至少留 1 个（即使席位只有 1 个低收益英雄）', () => {
@@ -95,7 +95,7 @@ describe('applyComputationMode', () => {
     ]
     const kept = applyComputationMode(heroes, 'p50', 'carry-dps', new Set(['forced']))
     // forced 必留 + 非 forced 候选 p50 留前 1（strong1）= 共 2
-    expect(kept.map((h) => h.heroId).sort()).toEqual(['forced', 'strong1'])
+    expect(kept.map((h) => h.heroId).sort((a, b) => a.localeCompare(b))).toEqual(['forced', 'strong1'])
   })
 
   it('scoringMode 切换排序 key：金币英雄在 team-gold 模式排前', () => {
@@ -116,7 +116,7 @@ describe('applyComputationMode', () => {
     ]
     const kept = applyComputationMode(heroes, 'p50', 'carry-dps', new Set())
     // ceil(3×0.5)=2，留 selfCarry(10) + supportHero(8)
-    expect(kept.map((h) => h.heroId).sort()).toEqual(['selfCarry', 'supportHero'])
+    expect(kept.map((h) => h.heroId).sort((a, b) => a.localeCompare(b))).toEqual(['selfCarry', 'supportHero'])
   })
 
   it('保留原始顺序（确定性）', () => {

@@ -22,6 +22,7 @@ function makeSnapshot(over: Partial<UserProfileSnapshot> = {}): UserProfileSnaps
 function makeOwnedHero(heroId: string, lootBySlot: OwnedHero['lootBySlot']): OwnedHero {
   return {
     heroId,
+    lootBySlot,
     level: 1,
     equipment: {},
     feats: [],
@@ -31,7 +32,6 @@ function makeOwnedHero(heroId: string, lootBySlot: OwnedHero['lootBySlot']): Own
     featSlots: 0,
     isOwned: true,
     gildableSlotId: null,
-    lootBySlot,
     legendaryBySlot: {},
     specializations: [],
   }
@@ -68,8 +68,8 @@ describe('buildScoringBonusInputs', () => {
       { heroId: '1', slotId: '2', rarity: '4', effectString: 'hero_dps_multiplier_mult,50' },
     ]
     const r = buildScoringBonusInputs({
-      profileSnapshot: null,
       lootCatalog,
+      profileSnapshot: null,
       effectDefinitions: [],
       patronPerkCatalog: [],
       hypotheticalEquipment: { heroIds: ['1'], rarity: 4, enchant: 2000 },
@@ -88,8 +88,8 @@ describe('buildScoringBonusInputs', () => {
       ownedHeroes: [makeOwnedHero('1', { '1': { slotId: '1', rarity: 1, gild: 0, enchant: 0, pigment: 0, found: {} } })],
     })
     const r = buildScoringBonusInputs({
-      profileSnapshot: snap,
       lootCatalog,
+      profileSnapshot: snap,
       effectDefinitions: [],
       patronPerkCatalog: [],
       hypotheticalEquipment: { heroIds: ['1'], rarity: 4, enchant: 2000 }, // 应被忽略
@@ -165,9 +165,9 @@ describe('buildScoringBonusInputs', () => {
       { id: '20', patronId: '1', typeId: 2, effects: [{ effectString: 'effect_def,455', perLevel: 100 }] },
     ]
     const r = buildScoringBonusInputs({
+      effectDefinitions,
       profileSnapshot: makeSnapshot({ patronPerks: { '20': 10 }, activeContext: { patronId: 1, deity: null } }),
       lootCatalog: [],
-      effectDefinitions,
       patronPerkCatalog: perks,
     })
     expect(r.globalBuffMultiplier).toBe(1)
@@ -195,10 +195,10 @@ describe('buildScoringBonusInputs', () => {
       { heroId: 'h1', slotId: '1', rarity: '1', effectString: 'hero_dps_multiplier_mult,350' },
     ]
     const r = buildScoringBonusInputs({
+      lootCatalog,
       profileSnapshot: makeSnapshot({
         ownedHeroes: [makeOwnedHero('h1', { '1': { slotId: '1', rarity: 1, gild: 0, enchant: 0, pigment: 0, found: {} } })],
       }),
-      lootCatalog,
       effectDefinitions: [],
       patronPerkCatalog: [],
     })
@@ -212,11 +212,11 @@ describe('buildScoringBonusInputs', () => {
       { heroId: 'h1', slotId: '1', rarity: '1', effectString: 'hero_dps_multiplier_mult,100' },
     ]
     const r = buildScoringBonusInputs({
+      lootCatalog,
       profileSnapshot: makeSnapshot({
         // slot3 buff_upgrade enchant 250 → 275 × (1+250/250) = 550
         ownedHeroes: [makeOwnedHero('h1', { '3': { slotId: '3', rarity: 4, gild: 0, enchant: 250, pigment: 0, found: {} } })],
       }),
-      lootCatalog,
       effectDefinitions: [],
       patronPerkCatalog: [],
     })

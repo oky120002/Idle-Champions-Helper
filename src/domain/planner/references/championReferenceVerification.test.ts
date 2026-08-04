@@ -7,13 +7,18 @@
 // Chaotic Neutral 阵营）才被 buff。手搓 signal 曾给蔚塞 geneutral 掩盖此事实——真实数据端到端暴露并修正。
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../../../../tests/utils/dom-assertions'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
 import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
 import { evaluatePlacementFit } from '../placementFit'
 import { vi95ReferenceData } from './vi95ReferenceData'
+
+// ESM 没有 __dirname 全局；用 import.meta.url 派生等价路径。
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // 蔚只有一份快照（area=193 机制参照）；统一 snapshots 口径下读 [0]。
 const viSnapshot = vi95ReferenceData.snapshots[0]
@@ -21,10 +26,10 @@ const viSnapshot = vi95ReferenceData.snapshots[0]
 function createHero(heroId: string, tags: string[]): HeroAbilityProfile {
   return {
     heroId,
+    tags,
     name: { original: heroId, display: heroId },
     seat: 1,
     roles: [],
-    tags,
     baseAttackDamageTypes: [],
     baseAttackCooldown: null,
     age: null,
@@ -97,7 +102,7 @@ function buildViSupportFormation() {
   const heroesById = new Map(heroes.map(h => [h.heroId, h]))
   const placements: Record<string, string> = {}
   scenario.slotTopology.forEach((slot, i) => {
-    placements[slot.slotId] = heroes[i]!.heroId
+    placements[slot.slotId] = unwrap(heroes[i], `heroes[${i.toString()}] 未定义`).heroId
   })
   return { carry, realVi, heroesById, placements }
 }
@@ -109,13 +114,13 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
   it('善良榜样 formation-count-mult-stack: 4^7 = 16384（蔚作 support，geneutral carry，7 good 计数）', () => {
     const { carry, realVi, heroesById, placements } = buildViSupportFormation()
     const fit = evaluatePlacementFit({
+      scenario,
+      placements,
+      heroesById,
       carryHero: carry,
       carrySlotId: 's1',
       supportHero: realVi,
       supportSlotId: 's2',
-      scenario,
-      placements,
-      heroesById,
       manualStackCount: viSnapshot.expected.manualStackCount,
     })
 
@@ -127,13 +132,13 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
   it('出言不逊 dynamic-stack-multiply: 1.0033^1930 ≈ 576（真实 signal + bonusScaleOfSignal 联动）', () => {
     const { carry, realVi, heroesById, placements } = buildViSupportFormation()
     const fit = evaluatePlacementFit({
+      scenario,
+      placements,
+      heroesById,
       carryHero: carry,
       carrySlotId: 's1',
       supportHero: realVi,
       supportSlotId: 's2',
-      scenario,
-      placements,
-      heroesById,
       manualStackCount: viSnapshot.expected.manualStackCount,
     })
 
@@ -147,19 +152,19 @@ describe('真实数据端到端（built hero-abilities.json → evaluatePlacemen
     // 蔚 damage:hero pool 恰好这两条 mult 类（其余 hero_dps,100/200 与 buff_upgrade 修饰 amountFunc=null 进 addPercent）。
     const { carry, realVi, heroesById, placements } = buildViSupportFormation()
     const fit = evaluatePlacementFit({
+      scenario,
+      placements,
+      heroesById,
       carryHero: carry,
       carrySlotId: 's1',
       supportHero: realVi,
       supportSlotId: 's2',
-      scenario,
-      placements,
-      heroesById,
       manualStackCount: viSnapshot.expected.manualStackCount,
     })
     const heroDpsPool = fit.pools.find(p => p.dimension === 'damage' && p.scope === 'hero')
     expect(heroDpsPool, 'damage:hero pool 须存在').toBeDefined()
     // multFactor = 16384 × ~576 ≈ 9.44e6（两条 mult 类 signal 累乘；addPercent 不影响 multFactor）
-    expectWithinTolerance(heroDpsPool!.multFactor, 16384 * 576, TOLERANCE)
+    expectWithinTolerance(unwrap(heroDpsPool, 'damage:hero pool 须存在').multFactor, 16384 * 576, TOLERANCE)
   })
 })
 
@@ -170,23 +175,23 @@ describe('参照校准 expected 值真实性（非凑数）', () => {
     const ref = viSnapshot
 
     // 善良榜样：perStackPercent=300 + amountFunc=mult + formationSize=7 → (1+300/100)^7 = 4^7 = 16384
-    const goodExample = ref.abilities.find((a) => a.rawEffect === 'hero_dps_multiplier_mult,300')!
-    const goodCheck = ref.expected.multiplierChecks.find((c) => c.rawEffect === goodExample.rawEffect)!
+    const goodExample = unwrap(ref.abilities.find((a) => a.rawEffect === 'hero_dps_multiplier_mult,300'), 'goodExample 未找到')
+    const goodCheck = unwrap(ref.expected.multiplierChecks.find((c) => c.rawEffect === goodExample.rawEffect), 'goodCheck 未找到')
     expect(goodExample.mechanics.perStackPercent).toBe(300)
     expect(goodExample.mechanics.amountFunc).toBe('mult')
     expect(goodCheck.expectedMultiplier).toBeCloseTo(
-      (1 + (goodExample.mechanics.perStackPercent ?? 0) / 100) ** ref.context.formationSize,
+      (1 + goodExample.mechanics.perStackPercent / 100) ** ref.context.formationSize,
       0,
     )
 
     // 出言不逊：perStackPercent=0.33 + stacksMultiply + manualStackCount=1930 → 1.0033^1930
-    const sass = ref.abilities.find((a) => a.rawEffect === 'buff_upgrade,0.33,12312')!
-    const sassCheck = ref.expected.multiplierChecks.find((c) => c.rawEffect === sass.rawEffect)!
-    expect(sass.mechanics.perStackPercent).toBe(0.33)
+    const sass = unwrap(ref.abilities.find((a) => a.rawEffect === 'buff_upgrade,0.33,12312'), 'sass 未找到')
+    const sassCheck = unwrap(ref.expected.multiplierChecks.find((c) => c.rawEffect === sass.rawEffect), 'sassCheck 未找到')
+    expect(sass.mechanics.perStackPercent).toBeCloseTo(0.33, 2)
     expect(sass.mechanics.stacksMultiply).toBe(true)
     expectWithinTolerance(
       sassCheck.expectedMultiplier,
-      (1 + (sass.mechanics.perStackPercent ?? 0) / 100) ** ref.expected.manualStackCount,
+      (1 + sass.mechanics.perStackPercent / 100) ** ref.expected.manualStackCount,
       TOLERANCE,
     )
   })
@@ -197,7 +202,7 @@ describe('抽象阈值守护（dps-mechanic-abstraction.md）', () => {
   const registryPath = path.resolve(__dirname, '../../../../docs/specs/modules/planner/dps-mechanics.md')
   const registry = readFileSync(registryPath, 'utf8')
   const registryIds = new Set(
-    [...registry.matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => m[1]!),
+    [...registry.matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => unwrap(m[1], 'regex match group 1 未捕获')),
   )
 
   it('注册表机制数 ≤ 10（>10 触发策略注册表升级，见 dps-mechanic-abstraction.md）', () => {
@@ -208,7 +213,7 @@ describe('抽象阈值守护（dps-mechanic-abstraction.md）', () => {
 describe('关联一致性（mechanicId 三处一致）', () => {
   const registryPath = path.resolve(__dirname, '../../../../docs/specs/modules/planner/dps-mechanics.md')
   const registryIds = new Set(
-    [...readFileSync(registryPath, 'utf8').matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => m[1]!),
+    [...readFileSync(registryPath, 'utf8').matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => unwrap(m[1], 'regex match group 1 未捕获')),
   )
 
   it('reference 的 mechanicIds 必须在注册表', () => {
@@ -216,7 +221,7 @@ describe('关联一致性（mechanicId 三处一致）', () => {
     const unknown: string[] = []
     for (const ref of refs) {
       for (const snapshot of ref.snapshots) {
-        for (const ability of snapshot.abilities ?? []) {
+        for (const ability of snapshot.abilities) {
           for (const id of ability.mechanicIds) {
             if (!registryIds.has(id)) unknown.push(`${ref.heroId}/${ability.nameZh}: ${id}`)
           }

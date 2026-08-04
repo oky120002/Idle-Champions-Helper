@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { compareGameNumbers } from '../simulator/gameNumber'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
 import { beamSearch } from './beamSearchRanking'
@@ -10,9 +11,9 @@ function makeResult(score: number, carryHeroId: string | null = null): ScoringRe
   return {
     objectiveValue: value,
     warnings: [],
-    carryHeroId,
     activeSignalKinds: new Set<HeroAbilityKind>(),
     breakdown: null,
+    carryHeroId,
   }
 }
 
@@ -42,7 +43,7 @@ describe('beam search ranking', () => {
     })
 
     expect(results.length).toBeGreaterThan(0)
-    expect(results[0]!.objectiveValue.toNumber()).toBeGreaterThan(0)
+    expect(unwrap(results[0], 'expected at least one result').objectiveValue.toNumber()).toBeGreaterThan(0)
   })
 
   it('beam width 限制候选扩展', () => {
@@ -71,7 +72,7 @@ describe('beam search ranking', () => {
       }),
     })
 
-    const top = results[0]!
+    const top = unwrap(results[0], 'expected at least one result')
     expect(top).toHaveProperty('objectiveValue')
     expect(top).toHaveProperty('placements')
     expect(top).toHaveProperty('breakdown')
@@ -119,7 +120,9 @@ describe('beam search ranking', () => {
 
     expect(results.length).toBeLessThanOrEqual(2)
     for (let i = 1; i < results.length; i++) {
-      expect(compareGameNumbers(results[i - 1]!.objectiveValue, results[i]!.objectiveValue)).toBeGreaterThanOrEqual(0)
+      const prev = unwrap(results[i - 1], `expected result at index ${String(i - 1)}`)
+      const curr = unwrap(results[i], `expected result at index ${String(i)}`)
+      expect(compareGameNumbers(prev.objectiveValue, curr.objectiveValue)).toBeGreaterThanOrEqual(0)
     }
   })
 })

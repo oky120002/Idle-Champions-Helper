@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { parseHeroPredicate } from '../../abilities/heroPredicate'
+import { unwrap } from '../../../../tests/utils/dom-assertions'
 import { resolveSignalMultiplier, DEFAULT_MANUAL_STACK_COUNT } from './signalMultiplier'
 import { buildSignal, buildInput, createHero } from './mechanicTestFixtures'
 
@@ -16,7 +17,7 @@ describe('resolveSignalMultiplier · plain-percent（无 stackFunc）', () => {
   it('value=100 → percentToMultiplier(100) = 2', () => {
     const r = resolveSignalMultiplier(buildInput(baseInput), buildSignal({ value: 100 }))
     expect(r.ok).toBe(true)
-    if (r.ok) expect(r.multiplier).toBe(2)
+    expect(r.ok && r.multiplier).toBe(2)
   })
 
   it('value=0 → 1（边界）', () => {
@@ -40,7 +41,7 @@ describe('resolveSignalMultiplier · dynamic-stack-multiply', () => {
     // value=0.33 per-stack → (1.0033)^1000 有限且 > 1
     const r = resolveSignalMultiplier(buildInput(baseInput), buildSignal({ value: 0.33, stacksMultiply: true }))
     expect(r.ok).toBe(true)
-    if (r.ok) expect(r.multiplier).toBeGreaterThan(1)
+    expect(r.ok && r.multiplier).toBeGreaterThan(1)
   })
 
   it('高 value 在大 count 下溢出 → 不计分 warning', () => {
@@ -89,7 +90,7 @@ describe('resolveSignalMultiplier · dynamic-stack-multiply', () => {
       buildSignal({ value: 100, stacksMultiply: true, stackFunc: 'per_crusader', amountFunc: 'mult' }),
     )
     expect(r.ok).toBe(true)
-    if (r.ok) expect(r.multiplier).toBe(4) // 2 英雄 → 2^2 = 4（非 2^1000）
+    expect(r.ok && r.multiplier).toBe(4) // 2 英雄 → 2^2 = 4（非 2^1000）
   })
 })
 
@@ -104,7 +105,7 @@ describe('resolveSignalMultiplier · bonusScaleOfSignal 折叠（22× 高估回�
       buildSignal({ value: 100, bonusScaleOfSignal: base }),
     )
     expect(r.ok).toBe(true)
-    if (r.ok) expect(r.multiplier).toBe(2) // 非 4
+    expect(r.ok && r.multiplier).toBe(2) // 非 4
   })
 
   it('基础 multiplier<=1（value=0）→ 修饰不计分（依赖未生效）', () => {
@@ -122,7 +123,7 @@ describe('resolveSignalMultiplier · bonusScaleOfSignal 折叠（22× 高估回�
 
 describe('resolveSignalMultiplier · formation-count（amountFunc add/mult 等价类）', () => {
   // 两名 female 英雄入阵（含 support），per_crusader 计数匹配 formationCountQualifier 的英雄。
-  const femalePredicate = parseHeroPredicate('female', 'shorthand')!
+  const femalePredicate = unwrap(parseHeroPredicate('female', 'shorthand'), 'failed to parse female predicate')
   const support = createHero('support', { tags: ['female'] })
   const other = createHero('other', { tags: ['female'] })
   const formationInput = buildInput({

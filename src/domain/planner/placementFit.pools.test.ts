@@ -79,6 +79,7 @@ describe('placement fit — pools', () => {
 
   it('aggregatePools: false 时跳过 pool 聚合，只产 scoreBreakdown', () => {
     const fit = evaluatePlacementFit({
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's2',
       supportHero: createHero('support', {
@@ -87,7 +88,6 @@ describe('placement fit — pools', () => {
         ],
       }),
       supportSlotId: 's1',
-      scenario,
       aggregatePools: false,
     })
 

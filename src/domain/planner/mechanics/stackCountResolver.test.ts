@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { parseHeroPredicate } from '../../abilities/heroPredicate'
+import { unwrap } from '../../../../tests/utils/dom-assertions'
 import { STACK_COUNT_RESOLVERS } from './stackCountResolver'
 import { buildInput, buildSignal, createHero } from './mechanicTestFixtures'
 
 describe('STACK_COUNT_RESOLVERS', () => {
   it('keys 覆盖全部支持的 stackFunc（与 scoringSupportSync 守护一致）', () => {
-    expect(Object.keys(STACK_COUNT_RESOLVERS).sort()).toEqual([
+    expect(Object.keys(STACK_COUNT_RESOLVERS).sort((a, b) => a.localeCompare(b))).toEqual([
       'per_col_behind',
       'per_crusader',
       'per_hero',
@@ -18,7 +19,7 @@ describe('STACK_COUNT_RESOLVERS', () => {
   })
 
   it('per_crusader 计数匹配 formationCountQualifier 的英雄', () => {
-    const femalePredicate = parseHeroPredicate('female', 'shorthand')!
+    const femalePredicate = unwrap(parseHeroPredicate('female', 'shorthand'), 'failed to parse female predicate')
     const support = createHero('support', { tags: ['female'] })
     const other = createHero('other', { tags: ['female'] })
     const nonFemale = createHero('nofemale')
@@ -34,11 +35,12 @@ describe('STACK_COUNT_RESOLVERS', () => {
       ]),
     })
     const signal = buildSignal({ value: 100, stackFunc: 'per_crusader', formationCountQualifier: { predicate: femalePredicate } })
-    expect(STACK_COUNT_RESOLVERS.per_crusader!.count(input, signal)).toBe(2)
+    const resolver = unwrap(STACK_COUNT_RESOLVERS.per_crusader, 'missing per_crusader resolver')
+    expect(resolver.count(input, signal)).toBe(2)
   })
 
   it('excludeSelf 排除 support 自身', () => {
-    const femalePredicate = parseHeroPredicate('female', 'shorthand')!
+    const femalePredicate = unwrap(parseHeroPredicate('female', 'shorthand'), 'failed to parse female predicate')
     const support = createHero('support', { tags: ['female'] })
     const other = createHero('other', { tags: ['female'] })
     const input = buildInput({
@@ -57,7 +59,8 @@ describe('STACK_COUNT_RESOLVERS', () => {
       formationCountQualifier: { predicate: femalePredicate },
       excludeSelf: true,
     })
-    expect(STACK_COUNT_RESOLVERS.per_crusader!.count(input, signal)).toBe(1)
+    const resolver = unwrap(STACK_COUNT_RESOLVERS.per_crusader, 'missing per_crusader resolver')
+    expect(resolver.count(input, signal)).toBe(1)
   })
 
   it('缺 placements/heroesById → null（需上下文，消费侧降级 warning）', () => {
@@ -65,8 +68,9 @@ describe('STACK_COUNT_RESOLVERS', () => {
     const signal = buildSignal({
       value: 100,
       stackFunc: 'per_crusader',
-      formationCountQualifier: { predicate: parseHeroPredicate('female', 'shorthand')! },
+      formationCountQualifier: { predicate: unwrap(parseHeroPredicate('female', 'shorthand'), 'failed to parse female predicate') },
     })
-    expect(STACK_COUNT_RESOLVERS.per_crusader!.count(input, signal)).toBeNull()
+    const resolver = unwrap(STACK_COUNT_RESOLVERS.per_crusader, 'missing per_crusader resolver')
+    expect(resolver.count(input, signal)).toBeNull()
   })
 })

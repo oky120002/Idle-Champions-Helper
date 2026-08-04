@@ -61,6 +61,14 @@ const champions: Champion[] = [
   { id: 'jarlaxle', name: text('Jarlaxle', '贾拉索'), seat: 4, roles: ['dps', 'gold'], affiliations: [], tags: [] },
 ]
 
+const carrySignalsByHero = new Map<string, HeroAbilityProfile['carrySignals']>([
+  ['asharra', [{ kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' }]],
+  ['jarlaxle', [{ kind: 'heroDpsMultiplier', value: 25, rawEffect: 'hero_dps_multiplier_mult,25', source: 'official-parsed' }]],
+])
+const supportSignalsByHero = new Map<string, HeroAbilityProfile['supportSignals']>([
+  ['bruenor', [{ kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_multiplier_mult,100', source: 'official-parsed' }]],
+  ['celeste', [{ kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_multiplier_mult,50', source: 'official-parsed' }]],
+])
 const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
   heroId: champion.id,
   name: champion.name,
@@ -73,24 +81,8 @@ const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
   abilityScores: {},
   baseDamage: 1,
   baseHealth: 1,
-  carrySignals: champion.id === 'asharra'
-    ? [
-        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
-      ]
-    : champion.id === 'jarlaxle'
-      ? [
-          { kind: 'heroDpsMultiplier', value: 25, rawEffect: 'hero_dps_multiplier_mult,25', source: 'official-parsed' },
-        ]
-      : [],
-  supportSignals: champion.id === 'bruenor'
-    ? [
-        { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_multiplier_mult,100', source: 'official-parsed' },
-      ]
-    : champion.id === 'celeste'
-      ? [
-          { kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_multiplier_mult,50', source: 'official-parsed' },
-        ]
-      : [],
+  carrySignals: carrySignalsByHero.get(champion.id) ?? [],
+  supportSignals: supportSignalsByHero.get(champion.id) ?? [],
   unsupportedSignals: [],
   sourceBreakdown: {
     carrySignals: [],
@@ -129,7 +121,7 @@ const collections: PlannerCollections = {
 
 describe('planner recommendation engine', () => {
   it('无用户快照时返回 missing-profile blocker', () => {
-    const recommendation = buildPlannerRecommendation({ variant: selectedVariant, collections, profileSnapshot: null })
+    const recommendation = buildPlannerRecommendation({ collections, variant: selectedVariant, profileSnapshot: null })
 
     expect(recommendation.blocker).toBe('missing-profile')
     expect(recommendation.result).toBeNull()
@@ -139,8 +131,8 @@ describe('planner recommendation engine', () => {
 
   it('all-hypothetical 模式无个人快照也能生成推荐（DPS 模拟不依赖个人数据）', () => {
     const recommendation = buildPlannerRecommendation({
-      variant: selectedVariant,
       collections,
+      variant: selectedVariant,
       profileSnapshot: null,
       options: { candidateMode: 'all-hypothetical' },
     })
@@ -152,8 +144,8 @@ describe('planner recommendation engine', () => {
 
   it('evaluateFormation 在 all-hypothetical 模式无个人快照也能评估指定阵型', () => {
     const evaluation = evaluateFormation({
-      variant: selectedVariant,
       collections,
+      variant: selectedVariant,
       profileSnapshot: null,
       placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
       options: { candidateMode: 'all-hypothetical' },
@@ -181,8 +173,8 @@ describe('planner recommendation engine', () => {
     })
 
     const recommendation = buildPlannerRecommendation({
-      variant: selectedVariant,
       collections,
+      variant: selectedVariant,
       profileSnapshot: snapshot,
       options: { computationMode: 'full' },
     })
@@ -211,8 +203,8 @@ describe('planner recommendation engine', () => {
     })
 
     const evaluation = evaluateFormation({
-      variant: selectedVariant,
       collections,
+      variant: selectedVariant,
       profileSnapshot: snapshot,
       placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
       options: { scoringMode: 'team-gold' },
@@ -253,8 +245,8 @@ describe('planner recommendation engine', () => {
       scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
     }
     const occupiedCollections: PlannerCollections = {
-      variants: [occupiedVariant],
       plannerHeroes,
+      variants: [occupiedVariant],
       plannerScenarios: [occupiedScenario],
     }
     const snapshot = createUserProfileSnapshot({
@@ -307,8 +299,8 @@ describe('planner recommendation engine', () => {
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
-      variants: [allowedVariant],
       plannerHeroes,
+      variants: [allowedVariant],
       plannerScenarios: [allowedScenario],
     }
     const snapshot = createUserProfileSnapshot({
@@ -365,8 +357,8 @@ describe('planner recommendation engine', () => {
       scenarioWarnings: [],
     }
     const forcedCollections: PlannerCollections = {
-      variants: [forcedVariant],
       plannerHeroes,
+      variants: [forcedVariant],
       plannerScenarios: [forcedScenario],
     }
     // 用户未拥有 nayeli，但 force_use_heroes 强制纳入
@@ -404,7 +396,7 @@ describe('evaluateFormation 指定阵型评估', () => {
   })
 
   it('无快照时返回 missing-profile blocker', () => {
-    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: null, placements: { s1: 'bruenor' } })
+    const evaluation = evaluateFormation({ collections, variant: selectedVariant, profileSnapshot: null, placements: { s1: 'bruenor' } })
     expect(evaluation.blocker).toBe('missing-profile')
     expect(evaluation.result).toBeNull()
     expect(evaluation.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
@@ -414,7 +406,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // 刻意放一个非最优阵型：验证 evaluateFormation 不改成搜索结果。
     const placements = { s1: 'bruenor', s2: 'asharra', s3: 'celeste', s4: 'nayeli' }
 
-    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: snapshot, placements })
+    const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: snapshot, collections, placements })
 
     expect(evaluation.blocker).toBeNull()
     expect(evaluation.layoutId).toBe('layout-catacombs')
@@ -439,7 +431,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // bruenor 与 asharra 同属 seat 1，放不同槽位 → seat 冲突（evaluate 不搜索、不丢弃用户阵型）。
     const placements = { s1: 'bruenor', s2: 'asharra' }
 
-    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: snapshot, placements })
+    const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: snapshot, collections, placements })
 
     expect(evaluation.blocker).toBeNull()
     expect(evaluation.result?.warnings.some((warning) => warning.includes('冲突'))).toBe(true)
@@ -474,8 +466,8 @@ describe('evaluateFormation 指定阵型评估', () => {
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
-      variants: [allowedVariant],
       plannerHeroes,
+      variants: [allowedVariant],
       plannerScenarios: [allowedScenario],
     }
     // asharra 不在白名单
@@ -492,7 +484,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
     })
     // asharra 未在快照中（snapshot 只拥有 bruenor）→ 按 level 1 估算
-    const evaluation = evaluateFormation({ variant: selectedVariant, collections, profileSnapshot: smallSnapshot, placements: { s1: 'asharra' } })
+    const evaluation = evaluateFormation({ collections, variant: selectedVariant, profileSnapshot: smallSnapshot, placements: { s1: 'asharra' } })
 
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(true)
   })
@@ -502,8 +494,8 @@ describe('evaluateFormation 指定阵型评估', () => {
       ownedHeroes: [createOwnedHero({ heroId: 'bruenor', level: 500 })],
     })
     const evaluation = evaluateFormation({
-      variant: selectedVariant,
       collections,
+      variant: selectedVariant,
       profileSnapshot: smallSnapshot,
       placements: { s1: 'asharra' },
       options: { candidateMode: 'all-hypothetical' },

@@ -21,11 +21,11 @@ describe('placement fit — stacking', () => {
     })
 
     const fit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
       manualStackCount: 10,
     })
 
@@ -49,11 +49,11 @@ describe('placement fit — stacking', () => {
       ],
     })
     const fit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
       manualStackCount: 1000,
     })
     expect(fit.totalMultiplier).toBe(1)
@@ -86,11 +86,11 @@ describe('placement fit — stacking', () => {
     })
     // 阵型无 dwarf → 基础 count=0 → multiplier=4^0=1 → stacksMultiply 信号不生效
     const fit = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: supportHero,
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's2',
-      scenario,
       placements: { s2: 'support' },
       heroesById: new Map([['support', supportHero]]),
       manualStackCount: 5,
@@ -112,11 +112,11 @@ describe('placement fit — stacking', () => {
       ],
     })
     const baseInput = {
+      supportHero,
+      scenario,
       carryHero: supportHero,
       carrySlotId: 's2' as const,
-      supportHero,
       supportSlotId: 's2' as const,
-      scenario,
     }
 
     // 缺省 manualStackCount 与显式 1000 结果一致 → 证明默认值生效

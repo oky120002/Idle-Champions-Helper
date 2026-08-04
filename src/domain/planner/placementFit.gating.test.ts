@@ -11,19 +11,19 @@ describe('placement fit — gating', () => {
       ],
     })
     const fitLocked = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       supportLevel: 50,
     })
     const fitUnlocked = evaluatePlacementFit({
+      supportHero,
+      scenario,
       carryHero: createHero('carry'),
       carrySlotId: 's2',
-      supportHero,
       supportSlotId: 's1',
-      scenario,
       supportLevel: 150,
     })
     expect(fitLocked.totalMultiplier).toBe(1)
@@ -57,10 +57,10 @@ describe('placement fit — gating', () => {
 
     const fit = evaluatePlacementFit({
       carryHero,
+      scenario,
       carrySlotId: 's2',
       supportHero: carryHero,
       supportSlotId: 's2',
-      scenario,
     })
 
     expect(fit.totalMultiplier).toBe(2.5)
@@ -138,7 +138,7 @@ describe('placement fit — gating', () => {
       scenario,
     })
 
-    expect(fit.totalMultiplier).toBe(1.4)
+    expect(fit.totalMultiplier).toBeCloseTo(1.4)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('stat-match')
   })
 
@@ -166,11 +166,11 @@ describe('placement fit — gating', () => {
     })
 
     const fit = evaluatePlacementFit({
+      scenario,
       carryHero: vi,
       carrySlotId: 's2',
       supportHero: vi,
       supportSlotId: 's2',
-      scenario,
       placements: { s2: 'vi' },
       heroesById: new Map([['vi', vi]]),
     })

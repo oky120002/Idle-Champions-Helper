@@ -61,7 +61,7 @@ describe('computeCritFactor · per-hero base crit（set_base_crit_chance 覆盖�
 
   it('null/undefined base → 用默认 2.5%（无信号 → 1.0，与既有行为一致）', () => {
     expect(computeCritFactor([], null)).toBe(1)
-    expect(computeCritFactor([], undefined)).toBe(1)
+    expect(computeCritFactor([])).toBe(1)
   })
 
   it('20% base + crit damage 信号 → base 与 damage 叠加，高于默认 base 同信号', () => {
@@ -91,6 +91,7 @@ describe('computeCritFactor · 装备 crit mult（B1-d，第三参 equipmentCrit
 
   it('null/undefined equipmentCrit → 不影响（向后兼容）', () => {
     expect(computeCritFactor([], undefined, null)).toBe(1)
-    expect(computeCritFactor([], undefined, undefined)).toBe(1)
+    // 不传 equipmentCrit 等价于 undefined，由默认值兜底
+    expect(computeCritFactor([])).toBe(1)
   })
 })

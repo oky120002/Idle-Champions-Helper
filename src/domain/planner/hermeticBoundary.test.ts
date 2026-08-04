@@ -4,11 +4,14 @@
 // 本测试防回归：谁在域里加 `import { loadCollection }` 或读文件，CI 即 fail。
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
-const DOMAIN_ROOT = path.resolve(__dirname, '..') // src/domain
+const PLANNER_DIR = path.dirname(fileURLToPath(import.meta.url))
+const DOMAIN_ROOT = path.resolve(PLANNER_DIR, '..') // src/domain
 const SCANNED_DIRS = [
-  __dirname, // src/domain/planner
+  PLANNER_DIR, // src/domain/planner
   path.resolve(DOMAIN_ROOT, 'simulator'),
   path.resolve(DOMAIN_ROOT, 'abilities'),
   path.resolve(DOMAIN_ROOT, 'buffs'),
@@ -40,10 +43,12 @@ describe('planner/simulator/abilities/buffs 域 Hermetic 边界', () => {
       const src = readFileSync(file, 'utf8')
       let m: RegExpExecArray | null
       while ((m = importRe.exec(src)) !== null) {
-        const resolved = path.resolve(path.dirname(file), m[1]!)
+        const importPath = m[1]
+        if (importPath === undefined) continue
+        const resolved = path.resolve(path.dirname(file), importPath)
         // 相对 src/domain 的路径若以 '..' 起始 = 逃出域 → 破坏 hermetic。
         if (path.relative(DOMAIN_ROOT, resolved).startsWith('..')) {
-          violations.push(`${path.relative(process.cwd(), file)} → ${m[1]}`)
+          violations.push(`${path.relative(process.cwd(), file)} → ${importPath}`)
         }
       }
     }
