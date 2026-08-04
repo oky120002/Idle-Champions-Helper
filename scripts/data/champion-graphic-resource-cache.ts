@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -34,12 +35,12 @@ export interface IllustrationCandidate {
 }
 
 function buildAssetCacheKey(asset: RemoteGraphicAsset): string {
-  return `${asset.graphicId}:${asset.sourceVersion ?? 'na'}:${asset.remotePath}`
+  return `${asset.graphicId}:${String(asset.sourceVersion ?? 'na')}:${asset.remotePath}`
 }
 
 function buildAssetCacheFileName(asset: RemoteGraphicAsset): string {
   const digest = createHash('sha1').update(asset.remotePath).digest('hex').slice(0, 12)
-  return `${asset.graphicId}-${asset.sourceVersion ?? 'na'}-${digest}.bin`
+  return `${asset.graphicId}-${String(asset.sourceVersion ?? 'na')}-${digest}.bin`
 }
 
 async function readBufferExists(filePath: string): Promise<Buffer | null> {
@@ -102,9 +103,7 @@ export function createChampionGraphicResourceCache(
   let cacheDirPromise: Promise<unknown> | null = null
 
   async function ensureCacheDir(): Promise<void> {
-    if (!cacheDirPromise) {
-      cacheDirPromise = mkdir(cacheDir, { recursive: true })
-    }
+    cacheDirPromise ??= mkdir(cacheDir, { recursive: true })
 
     await cacheDirPromise
   }
@@ -128,7 +127,7 @@ export function createChampionGraphicResourceCache(
       const response = await fetch(asset.remoteUrl, { cache: 'no-store' })
 
       if (!response.ok) {
-        throw new Error(`下载资源失败：HTTP ${response.status}`)
+        throw new Error(`下载资源失败：HTTP ${String(response.status)}`)
       }
 
       const rawBuffer = Buffer.from(await response.arrayBuffer())

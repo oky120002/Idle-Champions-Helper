@@ -47,8 +47,8 @@
 
 **并行**：不同批次目录不重叠，可派多 Agent 并行（建议一次 2-3 个，避免 API 速率限制）。**每批独立 commit**。
 
-- [x] 阶段 1: scripts/data 产品源码（221 违规，7 文件：official-rule-helpers 56、normalize-adventures 37、formation-layout-helpers 35、effect-helpers 29、normalize-champions 26、signal-coverage 21、build-search-index 17）—— 验证：7 文件 eslint 0 + tsc 0 + scripts/data 227 单测全过 + diff 复核 unknown 判空语义等价
-- [ ] 阶段 2: scripts/data 测试 + effect-resolvers（~200：build-models.test 28、skelanim.test 20、dpsResolver.test 19、normalize-champions.test 18、gold/speed/vulnerability Resolver test、mobile-asset-codec、restrictions-parser、io-utils）
+- [x] 阶段 1: scripts/data 产品源码（340 违规，27 个非 test 文件；首批 7 大头 `0000d860` + 本批其余 20 个）—— 验证：`npx eslint scripts/data/*.ts`（非 test）0 + tsc 0 + scripts/data 227 单测全过 + diff 复核关键改动语义等价（unknown 判空 / feat-catalog 死守卫清理靠完备 Record+result.ok / io-utils 有界 throw 死代码 / Zod4 .loose() 等价）
+- [ ] 阶段 2: scripts/data 测试 + effect-resolvers（实测 ~151：skelanim.test 20、dpsResolver.test 19、normalize-champions.test 18、speed/survival/gold/crit/vulnerability Resolver test、build-models.test 11、其余小 test 文件、effect-resolvers 产品 dps/vuln/gold/resolverShared/fixtures。注：原列的 mobile-asset-codec/restrictions-parser/io-utils 三非 test 文件已并入阶段 1）
 - [ ] 阶段 3: scripts/sync + check-color-contrast（~174：sync-pets 59、sync-portraits 43、check-color-contrast 38、normalize-definitions 34）
 - [ ] 阶段 4: scripts/ 其他（~245：sync-animations/illustrations/console-portraits 27/25/24、audit-animations 20、build-data 19、sync-equipment/specialization 19/19、private-user-data 53、simulator 37）
 - [ ] 阶段 5: src/domain/abilities（~100：heroPredicate 44、signalSemantics 23）

@@ -56,7 +56,9 @@ function enSlotOccupyCount(text: string): number | null {
   EN_NUMBER_SLOTS_RE.lastIndex = 0
   const adjMatch = EN_NUMBER_SLOTS_RE.exec(text)
   if (adjMatch) {
-    return tokenToNumber(adjMatch[1]!)
+    const token = adjMatch[1]
+    if (token === undefined) return null
+    return tokenToNumber(token)
   }
   // 回退：「take up slots」（复数 occupy）取首个数词（实体数 = 格数）。
   // 搜索范围限定到「take up slots」之前——占格实体数词总在动词前（"Three imps take up slots"）；
@@ -65,7 +67,9 @@ function enSlotOccupyCount(text: string): number | null {
   if (takeUpMatch) {
     const first = EN_FIRST_NUMBER_RE.exec(text.slice(0, takeUpMatch.index))
     if (first) {
-      return tokenToNumber(first[1]!)
+      const token = first[1]
+      if (token === undefined) return null
+      return tokenToNumber(token)
     }
   }
   return null
@@ -147,11 +151,15 @@ function zhSlotOccupyCount(text: string): number | null {
     return null
   }
   // 提取紧邻「格」前的中文数词或数字。
-  const match = text.match(/([一二两三四五六七八九]|\d+)\s*格/)
-  if (!match) {
+  // eslint-disable-next-line sonarjs/super-linear-regex -- 交替组内 CJK 字符集与 ASCII digit 不重叠，回溯风险可忽略
+  const match = /([一二两三四五六七八九]|\d+)\s*格/.exec(text)
+  if (match === null) {
     return null
   }
-  const token = match[1]!
+  const token = match[1]
+  if (token === undefined) {
+    return null
+  }
   const n = /^\d+$/.test(token) ? parseInt(token, 10) : ZH_DIGITS[token]
   return typeof n === 'number' && n > 0 ? n : null
 }
@@ -175,16 +183,16 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   const warnings: string[] = []
 
   for (const { original, display } of restrictions) {
-    const enCount = original ? enSlotOccupyCount(original) : null
-    const zhCount = display ? zhSlotOccupyCount(display) : null
-    const overrideCount = original ? matchOverride(original) : null
+    const enCount = original !== '' ? enSlotOccupyCount(original) : null
+    const zhCount = display !== '' ? zhSlotOccupyCount(display) : null
+    const overrideCount = original !== '' ? matchOverride(original) : null
     const count = enCount ?? zhCount ?? overrideCount
 
     if (count !== null && count > 0) {
       lockedSlotCount = Math.max(lockedSlotCount, count)
-    } else if (!isTrivialRestriction(original, display) && (original || display)) {
+    } else if (!isTrivialRestriction(original, display) && (original !== '' || display !== '')) {
       // 非 slot-occupying 且非已知无约束 → 记 warning 待手工评估。
-      warnings.push(`未解析 restriction：${original || display}`)
+      warnings.push(`未解析 restriction：${original !== '' ? original : display}`)
     }
   }
 

@@ -22,7 +22,7 @@ export function buildGraphicMap(
   return new Map(
     graphicDefines
       .filter((definition): definition is Record<string, unknown> => {
-        if (!definition || typeof definition !== 'object') {
+        if (definition == null || typeof definition !== 'object') {
           return false
         }
         const record = definition as Record<string, unknown>
@@ -99,7 +99,14 @@ export function buildRemoteGraphicAsset(
   graphicDefinition: Record<string, unknown>,
   baseUrl: string = DEFAULT_MASTER_API_URL,
 ): RemoteGraphicAsset | null {
-  if (!graphicDefinition.graphic || graphicDefinition.id === undefined) {
+  const graphic = graphicDefinition.graphic
+  if (
+    graphic == null ||
+    graphic === '' ||
+    graphic === 0 ||
+    graphic === false ||
+    graphicDefinition.id === undefined
+  ) {
     return null
   }
 
@@ -107,8 +114,8 @@ export function buildRemoteGraphicAsset(
     typeof graphicDefinition.graphic === 'string' ? graphicDefinition.graphic : toStr(graphicDefinition.graphic)
 
   return {
-    graphicId: toStr(graphicDefinition.id),
     sourceGraphic,
+    graphicId: toStr(graphicDefinition.id),
     sourceVersion: toGraphicVersion(graphicDefinition),
     remotePath: buildMobileAssetPath(sourceGraphic),
     remoteUrl: buildMobileAssetUrl(sourceGraphic, baseUrl),

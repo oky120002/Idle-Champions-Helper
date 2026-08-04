@@ -27,7 +27,7 @@ function normalizeComparableValue(value: unknown): string | null {
 
   if (typeof value === 'string') {
     const trimmed = value.trim()
-    return trimmed || null
+    return trimmed !== '' ? trimmed : null
   }
 
   // value 已排除 null/undefined/number/string；剩余为外部不可信类型，防御性转字符串。
@@ -50,15 +50,15 @@ export function compareUpdatedAt(left: unknown, right: unknown): number {
   const normalizedLeft = normalizeUpdatedAt(left)
   const normalizedRight = normalizeUpdatedAt(right)
 
-  if (!normalizedLeft && !normalizedRight) {
+  if ((normalizedLeft == null || normalizedLeft === '') && (normalizedRight == null || normalizedRight === '')) {
     return 0
   }
 
-  if (!normalizedLeft) {
+  if (normalizedLeft == null || normalizedLeft === '') {
     return -1
   }
 
-  if (!normalizedRight) {
+  if (normalizedRight == null || normalizedRight === '') {
     return 1
   }
 
@@ -81,7 +81,7 @@ export async function readExistingCollection(
   const collection = await readJsonIfExists(collectionFile)
 
   if (
-    !collection
+    collection == null
     || typeof collection !== 'object'
     || !Array.isArray((collection as Record<string, unknown>).items)
   ) {
@@ -94,7 +94,7 @@ export async function readExistingCollection(
 export async function readUpdatedAtFromJsonFile(filePath: string): Promise<string | null> {
   const payload = await readJsonIfExists(filePath)
   const updatedAt =
-    payload && typeof payload === 'object'
+    payload != null && typeof payload === 'object'
       ? (payload as Record<string, unknown>).updatedAt
       : undefined
   return normalizeUpdatedAt(updatedAt)
@@ -109,7 +109,7 @@ export async function fileExists(filePath: string): Promise<boolean> {
     await access(filePath)
     return true
   } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    if (error != null && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
       return false
     }
 
@@ -134,14 +134,17 @@ export function canReuseGeneratedImage({
   nextSourceVersion,
   nextImagePath,
 }: ReuseCheckInput): boolean {
-  const existingPath = existingItem?.image?.path
-  if (!existingPath) {
+  if (existingItem == null) {
+    return false
+  }
+  const existingPath = existingItem.image?.path
+  if (existingPath == null || existingPath === '') {
     return false
   }
 
   return (
-    normalizeComparableValue(existingItem?.sourceGraphic) === normalizeComparableValue(nextSourceGraphic)
-    && normalizeComparableValue(existingItem?.sourceVersion) === normalizeComparableValue(nextSourceVersion)
+    normalizeComparableValue(existingItem.sourceGraphic) === normalizeComparableValue(nextSourceGraphic)
+    && normalizeComparableValue(existingItem.sourceVersion) === normalizeComparableValue(nextSourceVersion)
     && existingPath === nextImagePath
   )
 }
@@ -155,7 +158,7 @@ export async function removeUnexpectedFiles(
   try {
     entries = await readdir(directory, { withFileTypes: true })
   } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    if (error != null && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
       return
     }
 
@@ -220,7 +223,7 @@ export async function collectPipelineFiles(): Promise<string[]> {
       files.add(file)
     }
   }
-  return [...files].sort()
+  return [...files].sort((a, b) => a.localeCompare(b))
 }
 
 export async function computePipelineHash(): Promise<string> {
@@ -239,6 +242,7 @@ export async function computePipelineHash(): Promise<string> {
 
 /** 手动强制重跑逃生口：`FORCE_DATA_REBUILD=1` 跳过所有增量判定。 */
 export function isForceDataRebuild(): boolean {
+  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局，@types/node 已声明类型
   return process.env.FORCE_DATA_REBUILD === '1' || process.env.FORCE_DATA_REBUILD === 'true'
 }
 

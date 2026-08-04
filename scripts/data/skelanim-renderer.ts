@@ -200,7 +200,7 @@ export function selectBestSkelAnimPose(
   character: SkelAnimCharacter,
   options: SkelAnimPoseOptions = {},
 ): SkelAnimPose {
-  const maxCanvasEdge = Math.max(4096, Number(options.maxCanvasEdge ?? 4096))
+  const maxCanvasEdge = Math.max(4096, options.maxCanvasEdge ?? 4096)
   const sequences = resolveSequenceOrder(character, options.preferredSequenceIndexes ?? [])
 
   if (sequences.length === 0) {
@@ -222,11 +222,11 @@ export function selectBestSkelAnimPose(
       return {
         sequenceIndex: sequence.sequenceIndex,
         sequenceLength: sequence.length,
-        frameIndex,
         visiblePieceCount: bounds.visiblePieceCount,
         width: bounds.width,
         height: bounds.height,
         area: bounds.width * bounds.height,
+        frameIndex,
         bounds,
       }
     }
@@ -255,6 +255,7 @@ export interface RenderSkelAnimPoseOptions extends SkelAnimPoseOptions {
 }
 
 export interface RenderedSkelAnimPose {
+  // eslint-disable-next-line sonarjs/no-reference-error -- Buffer 是 Node.js 全局类型（tsconfig.node.json types:["node"]），sonarjs 未识别 Node 全白名单
   bytes: Buffer
   width: number
   height: number
@@ -286,14 +287,14 @@ export async function renderSkelAnimPoseToPngBuffer(
           const sequence = character.sequences.find((item) => item.sequenceIndex === explicitSequenceIndex)
 
           if (!sequence) {
-            throw new Error(`角色 ${character.name} 不存在 sequence ${explicitSequenceIndex}`)
+            throw new Error(`角色 ${character.name} 不存在 sequence ${String(explicitSequenceIndex)}`)
           }
 
           const bounds = computeSkelAnimFrameBounds(sequence, explicitFrameIndex)
 
           if (!bounds) {
             throw new Error(
-              `角色 ${character.name} 的 sequence ${explicitSequenceIndex} frame ${explicitFrameIndex} 不可渲染`,
+              `角色 ${character.name} 的 sequence ${String(explicitSequenceIndex)} frame ${String(explicitFrameIndex)} 不可渲染`,
             )
           }
 
@@ -309,7 +310,7 @@ export async function renderSkelAnimPoseToPngBuffer(
   const sequence = character.sequences.find((item) => item.sequenceIndex === pose.sequenceIndex)
 
   if (!sequence) {
-    throw new Error(`角色 ${character.name} 不存在 sequence ${pose.sequenceIndex}`)
+    throw new Error(`角色 ${character.name} 不存在 sequence ${String(pose.sequenceIndex)}`)
   }
 
   const textureImages = await loadTextureImages(skelAnim.textures)
@@ -317,7 +318,7 @@ export async function renderSkelAnimPoseToPngBuffer(
   const viewportBounds = options.viewportBounds ?? pose.bounds
   const logicalWidth = Math.max(1, Math.ceil(viewportBounds.maxX - viewportBounds.minX))
   const logicalHeight = Math.max(1, Math.ceil(viewportBounds.maxY - viewportBounds.minY))
-  const rasterScale = Math.max(1, Number(options.rasterScale ?? 1))
+  const rasterScale = Math.max(1, options.rasterScale ?? 1)
   const width = Math.max(1, Math.ceil(logicalWidth * rasterScale))
   const height = Math.max(1, Math.ceil(logicalHeight * rasterScale))
   const canvas = createCanvas(width, height)
@@ -333,7 +334,7 @@ export async function renderSkelAnimPoseToPngBuffer(
     const image = textureImageById.get(piece.textureId)
 
     if (!image) {
-      throw new Error(`缺少 texture ${piece.textureId}`)
+      throw new Error(`缺少 texture ${String(piece.textureId)}`)
     }
 
     context.save()
@@ -356,8 +357,6 @@ export async function renderSkelAnimPoseToPngBuffer(
 
   return {
     bytes: canvas.toBuffer('image/png'),
-    width,
-    height,
     render: {
       sequenceIndex: pose.sequenceIndex,
       sequenceLength: pose.sequenceLength,
@@ -371,5 +370,7 @@ export async function renderSkelAnimPoseToPngBuffer(
       },
       visiblePieceCount: pose.bounds.visiblePieceCount,
     },
+    width,
+    height,
   }
 }

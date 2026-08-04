@@ -59,7 +59,7 @@ function readSpecializationName(raw: unknown): SpecializationNameValue | null {
   const rec = asRecord(raw)
   if (!rec) return null
   const original = typeof rec.original === 'string' ? rec.original : null
-  if (!original) return null
+  if (original == null || original === '') return null
   const display = typeof rec.display === 'string' ? rec.display : original
   return { original, display }
 }
@@ -85,13 +85,13 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     const name = readSpecializationName(upgrade.specializationName)
     if (!name) continue
     const id = typeof upgrade.id === 'string' || typeof upgrade.id === 'number' ? String(upgrade.id) : ''
-    if (!id) continue
+    if (id === '') continue
     const requiredLevelRaw = upgrade.requiredLevel
     const requiredLevel = typeof requiredLevelRaw === 'number' && Number.isFinite(requiredLevelRaw)
       ? requiredLevelRaw
       : null
     const requiredUpgradeIdRaw = upgrade.requiredUpgradeId
-    const requiredUpgradeId = typeof requiredUpgradeIdRaw === 'string' && requiredUpgradeIdRaw
+    const requiredUpgradeId = typeof requiredUpgradeIdRaw === 'string' && requiredUpgradeIdRaw !== ''
       ? requiredUpgradeIdRaw
       : null
     metaByUpgradeId.set(id, { name, requiredLevel, requiredUpgradeId })
@@ -101,7 +101,7 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   const signalsByUpgradeId = new Map<string, SpecializationSignalEntry[]>()
   for (const entry of collectSpecializationEffectEntries(detail)) {
     const upgradeId = entry.upgradeId ?? ''
-    if (!upgradeId) continue
+    if (upgradeId === '') continue
     const split = splitEffectString(entry.effectString)
     if (!split) continue
     const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
@@ -115,10 +115,11 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
       requiredLevel: semanticSignal.requiredLevel ?? entry.requiredLevel,
     }
     const dimension = DIMENSION_BY_KIND[signal.kind]
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- 防御性守卫：运行时 signal.kind 可能超出类型联合（JSON 数据），查表实际可能为 undefined
     if (!dimension) continue
     const list = signalsByUpgradeId.get(upgradeId) ?? []
     // bucket 与 buildOfficialHeroModel 同源（同一 normalizeEffectSignal 调用），逐字复现 base 分类。
-    list.push({ dimension, bucket: parsed.bucket, signal })
+    list.push({ dimension, signal, bucket: parsed.bucket })
     signalsByUpgradeId.set(upgradeId, list)
   }
 
@@ -137,6 +138,7 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
       const signal = derivedEntry.signalPreset
       if (!signal) continue
       const dimension = DIMENSION_BY_KIND[signal.kind]
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- 防御性守卫：运行时 signal.kind 可能超出类型联合（JSON 数据），查表实际可能为 undefined
       if (!dimension) continue
       // 派生信号 bucket = 目标 spec 的 bucket（collectEffectEntries 已写入 bucketOverride）；
       // 与 base 派生展开同源（resolveEntrySignal 的 bucketOverride ?? 'supportSignals'）。
@@ -158,7 +160,7 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     expanded = false
     for (const id of [...keep]) {
       const prereq = metaByUpgradeId.get(id)?.requiredUpgradeId
-      if (prereq && metaByUpgradeId.has(prereq) && !keep.has(prereq)) {
+      if (prereq != null && metaByUpgradeId.has(prereq) && !keep.has(prereq)) {
         keep.add(prereq)
         expanded = true
       }
@@ -169,7 +171,7 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   for (const [upgradeId, { name, requiredLevel, requiredUpgradeId }] of metaByUpgradeId) {
     if (!keep.has(upgradeId)) continue
     const signals = signalsByUpgradeId.get(upgradeId) ?? []
-    entries.push({ upgradeId, specializationName: name, requiredLevel, requiredUpgradeId, signals })
+    entries.push({ upgradeId, requiredLevel, requiredUpgradeId, signals, specializationName: name })
   }
   return entries
 }

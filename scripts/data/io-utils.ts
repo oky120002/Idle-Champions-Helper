@@ -16,7 +16,7 @@ export async function readJsonIfExists(filePath: string): Promise<unknown> {
   try {
     return await readJson(filePath)
   } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    if (error != null && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
       return null
     }
 
@@ -56,7 +56,11 @@ export async function runWithConcurrency<T, R>(
     while (cursor < items.length) {
       const currentIndex = cursor
       cursor += 1
-      results[currentIndex] = await worker(items[currentIndex]!, currentIndex)
+      const item = items[currentIndex]
+      if (item === undefined) {
+        throw new Error(`unreachable: 索引 ${String(currentIndex)} 越界`)
+      }
+      results[currentIndex] = await worker(item, currentIndex)
     }
   }
 
@@ -71,7 +75,7 @@ export async function runWithConcurrency<T, R>(
  * 把 `--ids a,b,c` 形式的逗号分隔参数解析为 Set；空值返回 null（表示不过滤）。
  */
 export function parseIdFilter(rawValue: string | undefined): Set<string> | null {
-  if (!rawValue) {
+  if (rawValue == null || rawValue === '') {
     return null
   }
 

@@ -1,4 +1,5 @@
 import path from 'node:path'
+import process from 'node:process'
 import { pathToFileURL } from 'node:url'
 import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
 import { asArray, asRecord, readJson, readJsonIfExists, writeJson } from './io-utils.ts'
@@ -97,8 +98,8 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     })
 
   await writeJson(path.join(versionDir, 'hero-abilities.json'), {
-    items: heroAbilities,
     updatedAt,
+    items: heroAbilities,
     pipelineHash: nextPipelineHash,
   })
   await writeJson(path.join(versionDir, 'specialization-catalog.json'), {
@@ -130,11 +131,11 @@ async function main(): Promise<void> {
   console.log('hero ability model 构建完成：')
   console.log(`- version dir: ${result.versionDir}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
-  console.log(`- heroes: ${result.heroCount}`)
-  console.log(`- scenarios: ${result.scenarioCount}`)
+  console.log(`- heroes: ${String(result.heroCount)}`)
+  console.log(`- scenarios: ${String(result.scenarioCount)}`)
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] != null && process.argv[1] !== '' && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error: unknown) => {
     const message = error instanceof Error ? error.message : String(error)
     console.error(`构建 hero ability model 失败：${message}`)

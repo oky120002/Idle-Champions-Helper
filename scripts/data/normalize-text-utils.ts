@@ -14,7 +14,7 @@ import type { JsonValue, LocalizedText } from '../../src/domain/types/common.ts'
 export function toText(value: unknown): string | null {
   if (typeof value === 'string') {
     const trimmed = value.trim()
-    return trimmed || null
+    return trimmed !== '' ? trimmed : null
   }
 
   if (typeof value === 'number' && Number.isFinite(value)) {
@@ -31,10 +31,8 @@ export function toText(value: unknown): string | null {
  * 'zh-Hans' { collation: 'pinyin' }，属独立产品决策。
  */
 export function compareLocalizedText(left: LocalizedText, right: LocalizedText): number {
-  return (
-    left.display.localeCompare(right.display, 'en') ||
-    left.original.localeCompare(right.original, 'en')
-  )
+  const cmp = left.display.localeCompare(right.display, 'en')
+  return cmp !== 0 ? cmp : left.original.localeCompare(right.original, 'en')
 }
 
 export function normalizeLocalizedText(
@@ -46,7 +44,7 @@ export function normalizeLocalizedText(
   const original = toText(originalValue) ?? toText(displayValue) ?? fallback
   const display = toText(displayValue) ?? original
 
-  if (!original || !display) {
+  if (original === '' || display === '') {
     return null
   }
 
@@ -75,7 +73,7 @@ export function uniqueLocalizedTexts(values: readonly (LocalizedText | null)[]):
   const unique = new Map<string, LocalizedText>()
 
   for (const value of values) {
-    if (!value || !value.original || !value.display) {
+    if (value === null || value.original === '' || value.display === '') {
       continue
     }
 
@@ -92,7 +90,7 @@ export function toLocalizedOverrideList(value: unknown): LocalizedText[] {
 
   if (typeof value === 'string' || typeof value === 'number') {
     const text = toText(value)
-    return text ? [{ original: text, display: text }] : []
+    return text != null && text !== '' ? [{ original: text, display: text }] : []
   }
 
   if (typeof value === 'object' && value !== null) {
@@ -148,7 +146,7 @@ export function toStringList(value: unknown): string[] {
   if (typeof value === 'string') {
     const trimmed = value.trim()
 
-    if (!trimmed) {
+    if (trimmed === '') {
       return []
     }
 
@@ -183,7 +181,7 @@ export function toTextList(value: unknown): string[] {
 
   if (typeof value === 'string') {
     const trimmed = value.trim()
-    return trimmed ? [trimmed] : []
+    return trimmed !== '' ? [trimmed] : []
   }
 
   if (typeof value === 'number') {
@@ -193,6 +191,7 @@ export function toTextList(value: unknown): string[] {
   return []
 }
 
+// eslint-disable-next-line sonarjs/function-return-type -- 类型分发归一化器：各分支按值类型返回不同 JsonValue 变体，统一返回一种类型会丢失类型信息
 export function normalizeJsonValue(value: unknown): JsonValue {
   if (
     value === null ||
@@ -235,7 +234,7 @@ export function normalizeNumber(value: unknown): number | null {
 
   const text = toText(value)
 
-  if (!text) {
+  if (text == null || text === '') {
     return null
   }
 

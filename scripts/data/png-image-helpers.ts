@@ -1,3 +1,4 @@
+import type { Buffer } from 'node:buffer'
 import { PNG } from 'pngjs'
 
 /**
@@ -83,11 +84,11 @@ export function cropOpaqueBounds(pngBuffer: Buffer): CroppedPng {
       const outputIndex = (y * output.width + x) * 4
 
       // 索引在 source 尺寸内，noUncheckedIndexedAccess 下 data[i] 为 number|undefined，
-      // 读侧用 ! 断言（循环边界保证在范围内）。
-      output.data[outputIndex] = source.data[sourceIndex]!
-      output.data[outputIndex + 1] = source.data[sourceIndex + 1]!
-      output.data[outputIndex + 2] = source.data[sourceIndex + 2]!
-      output.data[outputIndex + 3] = source.data[sourceIndex + 3]!
+      // 读侧用 ?? 0 兜底（循环边界保证在范围内，undefined 不可能命中）。
+      output.data[outputIndex] = source.data[sourceIndex] ?? 0
+      output.data[outputIndex + 1] = source.data[sourceIndex + 1] ?? 0
+      output.data[outputIndex + 2] = source.data[sourceIndex + 2] ?? 0
+      output.data[outputIndex + 3] = source.data[sourceIndex + 3] ?? 0
     }
   }
 

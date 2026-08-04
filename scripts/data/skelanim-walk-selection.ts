@@ -110,9 +110,7 @@ function summarizeWalkSequenceMetrics(sequence: SkelAnimSequence): WalkSequenceM
     renderableFrameCount += 1
     bounds = mergeBounds(bounds, frameBounds)
 
-    if (firstRenderableFrameIndex === null) {
-      firstRenderableFrameIndex = frameIndex
-    }
+    firstRenderableFrameIndex ??= frameIndex
   }
 
   for (const piece of sequence.pieces) {
@@ -291,7 +289,11 @@ export function resolveWalkPosterPose(
     renderableMetrics[0] ??
     null
 
-  if (!current || current.firstRenderableFrameIndex === null || !current.bounds) {
+  if (!current) {
+    return null
+  }
+
+  if (current.firstRenderableFrameIndex === null || !current.bounds) {
     return null
   }
 
@@ -304,11 +306,27 @@ export function resolveWalkPosterPose(
       }))
       .sort(
         (left, right) =>
+          // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- 排序比较器惯用法：分差为 0 时回退到次序键
           right.walkCandidateScore - left.walkCandidateScore ||
           left.sequence.sequenceIndex - right.sequence.sequenceIndex,
       )[0] ?? null
 
-  if (!candidate || candidate.firstRenderableFrameIndex === null || !candidate.bounds) {
+  if (!candidate) {
+    const fallbackFrameIndex = resolveWalkFallbackFrameIndex(
+      manifest,
+      current.sequence,
+      current.firstRenderableFrameIndex,
+    )
+    const viewportBounds = resolveWalkViewportBounds(current.sequence, fallbackFrameIndex, current.bounds)
+
+    return {
+      sequenceIndex: current.sequence.sequenceIndex,
+      frameIndex: fallbackFrameIndex,
+      viewportBounds,
+    }
+  }
+
+  if (candidate.firstRenderableFrameIndex === null || !candidate.bounds) {
     const fallbackFrameIndex = resolveWalkFallbackFrameIndex(
       manifest,
       current.sequence,

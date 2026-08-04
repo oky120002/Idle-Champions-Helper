@@ -173,7 +173,7 @@ function isUnsafeIdlePromotion(
 
 export function resolvePreferredSequenceIndexes(graphicDefinition: GraphicDefinition = {}): number[] {
   const exportParams = graphicDefinition.export_params
-  if (!exportParams || typeof exportParams !== 'object') {
+  if (exportParams === null || typeof exportParams !== 'object') {
     return []
   }
   const sequenceOverride = (exportParams as Record<string, unknown>).sequence_override
@@ -198,9 +198,7 @@ export function summarizeAnimationSequence(sequence: SkelAnimSequence): Animatio
       continue
     }
 
-    if (firstRenderableFrameIndex === null) {
-      firstRenderableFrameIndex = frameIndex
-    }
+    firstRenderableFrameIndex ??= frameIndex
 
     bounds = mergeBounds(bounds, {
       minX: frameBounds.minX,
@@ -300,17 +298,17 @@ export function summarizeAnimationSequenceMetrics(
     frameIndex: firstRenderable,
     frameCount: sequence.length,
     pieceCount: sequence.pieces.length,
-    renderableFrameCount,
     renderableFrameRatio: renderableFrameCount / frameCount,
-    persistentPieceCount,
     persistentPieceRatio: persistentPieceCount / pieceCount,
-    singleFramePieceCount,
     singleFramePieceRatio: singleFramePieceCount / pieceCount,
-    averageVisiblePieceRatio,
     nullPieceRatio: 1 - averageVisiblePieceRatio,
     bounds: sequenceSummary?.bounds ?? null,
     boundsArea: buildBoundsArea(sequenceSummary?.bounds ?? null),
     averageMotion: motionPairCount > 0 ? motionTotal / motionPairCount : 0,
+    renderableFrameCount,
+    persistentPieceCount,
+    singleFramePieceCount,
+    averageVisiblePieceRatio,
   }
 }
 
@@ -350,13 +348,15 @@ export function compareAnimationSequenceMetrics(
   left: ScoredAnimationSequenceMetrics,
   right: ScoredAnimationSequenceMetrics,
 ): number {
-  return (
-    right.score - left.score ||
-    right.boundsAreaRatio - left.boundsAreaRatio ||
-    right.pieceCoverageRatio - left.pieceCoverageRatio ||
-    right.averageVisiblePieceRatio - left.averageVisiblePieceRatio ||
-    left.sequenceIndex - right.sequenceIndex
-  )
+  const scoreDiff = right.score - left.score
+  if (scoreDiff !== 0) return scoreDiff
+  const boundsDiff = right.boundsAreaRatio - left.boundsAreaRatio
+  if (boundsDiff !== 0) return boundsDiff
+  const coverageDiff = right.pieceCoverageRatio - left.pieceCoverageRatio
+  if (coverageDiff !== 0) return coverageDiff
+  const visibilityDiff = right.averageVisiblePieceRatio - left.averageVisiblePieceRatio
+  if (visibilityDiff !== 0) return visibilityDiff
+  return left.sequenceIndex - right.sequenceIndex
 }
 
 export function resolveLegacyDefaultMetrics(

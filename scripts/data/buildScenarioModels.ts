@@ -108,30 +108,29 @@ export function buildOfficialScenarioModel(
     const item = asRecord(raw) ?? {}
     const original = typeof item.original === 'string' ? item.original : ''
     const localized = asRecord(item.display) ?? {}
-    const display = typeof item.display === 'string'
-      ? item.display
-      : (typeof localized.display === 'string' ? localized.display : '')
+    const fallbackDisplay = typeof localized.display === 'string' ? localized.display : ''
+    const display = typeof item.display === 'string' ? item.display : fallbackDisplay
     return { original, display }
   })
   const parsedRestrictions = parseRestrictions(restrictionTexts)
   const restrictionWarnings: string[] = []
   if (parsedRestrictions.lockedSlotCount > 0) {
-    restrictionWarnings.push(`当前场景有 ${parsedRestrictions.lockedSlotCount} 个槽位被非英雄实体占据，不参与英雄占位。`)
+    restrictionWarnings.push(`当前场景有 ${String(parsedRestrictions.lockedSlotCount)} 个槽位被非英雄实体占据，不参与英雄占位。`)
   }
   // 未解析的非平凡 restriction → 提示含特殊机制，请人工评估（flavor 文本不映射阵型约束）。
   restrictionWarnings.push(...parsedRestrictions.warnings.map((w) => `${w}（含特殊机制，请人工评估对阵型的影响）`))
 
   return {
+    slotTopology,
+    allowedTags,
     variantId: variant.id,
     scenarioRef: { kind: 'variant', id: variant.id },
     name: variant.name,
     formationLayoutId: formation?.id ?? null,
     objectiveArea: variant.objectiveArea ?? null,
-    slotTopology,
     forcedHeroes: asArray(variant.forcedHeroIds),
     enemyTypes: asArray(variant.enemyTypes),
     allowedHeroes: allowedHeroIds,
-    allowedTags,
     occupiedSlotCount: parsedRestrictions.lockedSlotCount,
     scenarioWarnings: [
       ...mechanicWarnings,

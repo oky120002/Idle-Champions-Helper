@@ -102,7 +102,7 @@ export function buildOfficialHeroModel(
       const signal = {
         ...semanticSignal,
         requiredLevel: semanticSignal.requiredLevel ?? entry.requiredLevel,
-        upgradeId: entry.upgradeId || null,
+        upgradeId: entry.upgradeId !== null && entry.upgradeId !== '' ? entry.upgradeId : null,
       }
       if (parsed.bucket === 'carrySignals') {
         carrySignals.push(signal)
@@ -122,12 +122,12 @@ export function buildOfficialHeroModel(
   const upgradesRaw = detail.upgrades
   if (Array.isArray(upgradesRaw)) {
     for (const up of upgradesRaw) {
-      if (!up || typeof up !== 'object') continue
+      if (up === null || typeof up !== 'object') continue
       const u = up as { id?: unknown; requiredLevel?: unknown; specializationName?: unknown }
       const idStr = typeof u.id === 'string' || typeof u.id === 'number' ? String(u.id) : null
-      if (idStr && typeof u.requiredLevel === 'number') {
+      if (idStr !== null && idStr !== '' && typeof u.requiredLevel === 'number') {
         const specName = u.specializationName
-        const isSpecialization = !!specName && typeof specName === 'object'
+        const isSpecialization = typeof specName === 'object' && specName !== null
         upgradeMeta.set(idStr, { requiredLevel: u.requiredLevel, isSpecialization })
       }
     }
@@ -140,11 +140,11 @@ export function buildOfficialHeroModel(
   const rawBaseDamage = Number(detail.baseDamage)
   const baseDamage = Number.isFinite(rawBaseDamage) ? rawBaseDamage : 0
   const costCurvesRaw = detail.costCurves
-  const costCurves = costCurvesRaw && typeof costCurvesRaw === 'object' ? costCurvesRaw as Record<string, number> : null
+  const costCurves = typeof costCurvesRaw === 'object' && costCurvesRaw !== null ? costCurvesRaw as Record<string, number> : null
   const rawBaseHealth = Number(detail.baseHealth)
   const baseHealth = Number.isFinite(rawBaseHealth) ? rawBaseHealth : 0
   const healthCurvesRaw = detail.healthCurves
-  const healthCurves = healthCurvesRaw && typeof healthCurvesRaw === 'object' ? healthCurvesRaw as Record<string, number> : null
+  const healthCurves = typeof healthCurvesRaw === 'object' && healthCurvesRaw !== null ? healthCurvesRaw as Record<string, number> : null
 
   const attacks = asRecord(detail.attacks) ?? {}
   const base = asRecord(attacks.base) ?? {}
@@ -164,10 +164,17 @@ export function buildOfficialHeroModel(
     seat: champion.seat as number,
     roles: champion.roles as string[],
     tags: champion.tags as string[],
-    baseAttackDamageTypes: base.damageTypes as string[] ?? [],
+    baseAttackDamageTypes: (base.damageTypes as string[] | undefined) ?? [],
     baseAttackCooldown: typeof base.cooldown === 'number' ? base.cooldown : null,
     age: typeof characterSheet.age === 'number' ? characterSheet.age : null,
-    abilityScores: characterSheet.abilityScores as HeroAbilityProfile['abilityScores'] ?? {},
+    abilityScores: (characterSheet.abilityScores as HeroAbilityProfile['abilityScores'] | undefined) ?? {},
+    // build 期预算各维度收益，供 computationMode 按收益排序裁剪候选（见 src/domain/planner/computationMode.ts）。
+    gainProfile: computeHeroGainProfile(carrySignals, supportSignals),
+    sourceBreakdown: {
+      carrySignals: carrySignals.map((): 'official-parsed' => 'official-parsed'),
+      supportSignals: supportSignals.map((): 'official-parsed' => 'official-parsed'),
+      unsupportedSignals: unsupportedSignals.map((): 'official-parsed' => 'official-parsed'),
+    },
     baseDamage,
     baseCritChancePercent,
     costCurves,
@@ -177,12 +184,5 @@ export function buildOfficialHeroModel(
     carrySignals,
     supportSignals,
     unsupportedSignals,
-    // build 期预算各维度收益，供 computationMode 按收益排序裁剪候选（见 src/domain/planner/computationMode.ts）。
-    gainProfile: computeHeroGainProfile(carrySignals, supportSignals),
-    sourceBreakdown: {
-      carrySignals: carrySignals.map((): 'official-parsed' => 'official-parsed'),
-      supportSignals: supportSignals.map((): 'official-parsed' => 'official-parsed'),
-      unsupportedSignals: unsupportedSignals.map((): 'official-parsed' => 'official-parsed'),
-    },
   }
 }

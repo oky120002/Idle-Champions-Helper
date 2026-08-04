@@ -61,7 +61,7 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
   const buffWrappers: FeatBuffWrapper[] = []
 
   for (const effect of effects) {
-    if (!effect || typeof effect !== 'object') {
+    if (effect === null || typeof effect !== 'object') {
       continue
     }
     const effectString = (effect as Record<string, unknown>).effect_string
@@ -89,13 +89,10 @@ export function normalizeFeatEntry(feat: RawFeat): FeatEntry | null {
       continue
     }
     const dimension = DIMENSION_BY_KIND[result.signal.kind]
-    if (!dimension) {
-      continue
-    }
     // attachSignalSemantics 与 buildOfficialHeroModel 同源，保证限定符与 base 一致；
     // bucket 复现 base 分类（resolveBucket），供 runtime 路由（feat 外部化，与专精同构）。
     const signal = attachSignalSemantics(result.signal, effect as Record<string, unknown>)
-    signals.push({ dimension, bucket: result.bucket, signal })
+    signals.push({ dimension, signal, bucket: result.bucket })
   }
 
   // 既无 direct scoring signal 也无 buff_upgrade wrapper → 不进 catalog（同既有 signals 兜底）。
@@ -110,6 +107,7 @@ export function buildFeatCatalog(
 ): Record<string, FeatEntry[]> {
   const catalog: Record<string, FeatEntry[]> = {}
   for (const feat of heroFeatDefines) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- 防御 JSON 畸形数据（null/非对象元素），类型签名 RawFeat[] 不保证运行期
     if (!feat || typeof feat !== 'object') {
       continue
     }
@@ -122,7 +120,9 @@ export function buildFeatCatalog(
       continue
     }
     const key = String(heroId)
-    ;(catalog[key] ??= []).push(entry)
+    const bucket = catalog[key] ?? []
+    catalog[key] = bucket
+    bucket.push(entry)
   }
   return catalog
 }

@@ -17,9 +17,9 @@ export const championDetailsSchema = z
             cooldown: z.number(),
             damageTypes: z.array(z.string()),
           })
-          .passthrough(),
+          .loose(),
       })
-      .passthrough(),
+      .loose(),
     baseDamage: numericString,
     baseHealth: numericString,
     costCurves: z.record(z.string(), z.number()).nullish(),
@@ -29,11 +29,11 @@ export const championDetailsSchema = z
         age: z.number().nullable(),
         abilityScores: z.record(z.string(), z.number()),
       })
-      .passthrough(),
+      .loose(),
     upgrades: z.array(z.unknown()),
     feats: z.array(z.unknown()).optional(),
     loot: z.array(z.unknown()).optional(),
     legendaryEffects: z.array(z.unknown()).optional(),
     raw: z.unknown().optional(),
   })
-  .passthrough()
+  .loose()
