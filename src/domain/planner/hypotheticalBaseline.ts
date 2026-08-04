@@ -45,13 +45,29 @@ function computeMedianEquipment(
       .filter((v): v is number => v !== undefined)
       .sort((a, b) => a - b)
 
-    if (values.length > 0) {
-      const mid = Math.floor(values.length / 2)
-      result[slot] = values.length % 2 === 0
-        ? Math.round((values[mid - 1]! + values[mid]!) / 2)
-        : values[mid]!
+    const median = computeMedian(values)
+    if (median !== undefined) {
+      result[slot] = median
     }
   }
 
   return result
+}
+
+function computeMedian(values: number[]): number | undefined {
+  if (values.length === 0) {
+    return undefined
+  }
+  const mid = Math.floor(values.length / 2)
+  const lo = values[mid - 1]
+  const hi = values[mid]
+  if (values.length % 2 === 0) {
+    // 偶数个取中位两数均值；math 保证 lo/hi 非空（length>0，偶数 mid>=1）
+    if (lo !== undefined && hi !== undefined) {
+      return Math.round((lo + hi) / 2)
+    }
+    return undefined
+  }
+  // 奇数个取中位数；math 保证 hi 非空（length>0）
+  return hi
 }

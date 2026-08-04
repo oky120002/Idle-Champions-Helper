@@ -96,6 +96,38 @@ function collectFeatBuffWrappersByHero(
   return result
 }
 
+/** 有存档用 owned 实际；无存档用假设装备（UI what-if，全英雄统一稀有度+附魔）；否则空（向后兼容）。 */
+function resolveEquipmentHeroes(
+  profileSnapshot: UserProfileSnapshot | null,
+  hypotheticalEquipment: HypotheticalEquipmentConfig | null | undefined,
+  lootCatalog: readonly LootCatalogEntry[],
+) {
+  if (profileSnapshot != null && profileSnapshot.ownedHeroes.length > 0) {
+    return profileSnapshot.ownedHeroes
+  }
+  if (hypotheticalEquipment != null && lootCatalog.length > 0) {
+    return synthesizeHypotheticalLootByHero(hypotheticalEquipment, lootCatalog)
+  }
+  return []
+}
+
+/** feat 源 buff_upgrade wrapper 合并进 equipmentBuffsByHero（复用 applyEquipmentBuffsToProfile 反查通道）。 */
+function mergeFeatBuffsInto(
+  equipmentBuffsByHero: Map<string, EquipmentBuff[]>,
+  ownedHeroes: readonly OwnedHero[],
+  featCatalog: FeatCatalog | null | undefined,
+): void {
+  const featBuffs = collectFeatBuffWrappersByHero(ownedHeroes, featCatalog)
+  for (const [heroId, buffs] of featBuffs) {
+    const existing = equipmentBuffsByHero.get(heroId)
+    if (existing) {
+      existing.push(...buffs)
+    } else {
+      equipmentBuffsByHero.set(heroId, [...buffs])
+    }
+  }
+}
+
 export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): ScoringBonusInputs {
   const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment, featCatalog } = input
 
@@ -105,13 +137,8 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
   let equipmentGoldByHero = new Map<string, number>()
   let equipmentCritByHero = new Map<string, EquipmentCritBonus>()
   let equipmentBuffsByHero = new Map<string, EquipmentBuff[]>()
-  // 有存档用 owned 实际；无存档用假设装备（UI what-if，全英雄统一稀有度+附魔）；否则空（向后兼容）。
-  const hasOwnedHeroes = !!profileSnapshot && profileSnapshot.ownedHeroes.length > 0
-  const equipmentHeroes = hasOwnedHeroes
-    ? profileSnapshot.ownedHeroes
-    : hypotheticalEquipment && lootCatalog.length > 0
-      ? synthesizeHypotheticalLootByHero(hypotheticalEquipment, lootCatalog)
-      : []
+  const hasOwnedHeroes = profileSnapshot != null && profileSnapshot.ownedHeroes.length > 0
+  const equipmentHeroes = resolveEquipmentHeroes(profileSnapshot, hypotheticalEquipment, lootCatalog)
   if (equipmentHeroes.length > 0 && lootCatalog.length > 0) {
     equipmentAdjustmentByHero = computeEquipmentAdjustmentByHero(equipmentHeroes, lootCatalog)
     equipmentHealthByHero = computeEquipmentHealthByHero(equipmentHeroes, lootCatalog)
@@ -120,18 +147,8 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
     equipmentCritByHero = computeEquipmentCritByHero(equipmentHeroes, lootCatalog)
     equipmentBuffsByHero = collectEquipmentBuffsByHero(equipmentHeroes, lootCatalog)
   }
-  // feat 源 buff_upgrade wrapper（owned-aware，独立 of lootCatalog/装备路径）：合并进 equipmentBuffsByHero
-  // 复用 applyEquipmentBuffsToProfile 反查通道（target 普通升级的 base signal）。仅 owned feat 装备才放大。
   if (hasOwnedHeroes) {
-    const featBuffs = collectFeatBuffWrappersByHero(profileSnapshot.ownedHeroes, featCatalog)
-    for (const [heroId, buffs] of featBuffs) {
-      const existing = equipmentBuffsByHero.get(heroId)
-      if (existing) {
-        existing.push(...buffs)
-      } else {
-        equipmentBuffsByHero.set(heroId, [...buffs])
-      }
-    }
+    mergeFeatBuffsInto(equipmentBuffsByHero, profileSnapshot.ownedHeroes, featCatalog)
   }
 
   const effectDefTemplates = new Map(effectDefinitions.map((entry) => [entry.id, entry]))

@@ -1,4 +1,5 @@
-import Decimal from 'decimal.js'
+/* eslint-disable max-lines -- planner 核心评分引擎：scoreFormation 主流程 + 7 个紧密协作的子函数（已全部 ≤50 行/max-lines-per-function 已清）。拆到多个文件会让评分逻辑修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
+import { Decimal } from 'decimal.js'
 
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
@@ -237,6 +238,337 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
   }
 }
 
+/**
+ * 按 dimension 拆 evaluatePlacementFit.scoreBreakdown：crit 全量进 critParts；
+ * vuln 经 monsterTags 条件匹配进 vulnParts；damage/crit active + vuln(active 且匹配) 合并进 supportActiveParts。
+ * 提取自 scoreFormation 内层 support 循环以降低嵌套（nested-control-flow）并复用分类逻辑。
+ * activeKinds 按 active + matched 累积（mutate），跨 supportEntry 生效。
+ */
+function classifyScoreBreakdownParts(
+  parts: readonly PlacementFitScorePart[],
+  enemyTypeSet: Set<string>,
+  activeKinds: Set<HeroAbilityKind>,
+): { critParts: PlacementFitScorePart[]; vulnParts: PlacementFitScorePart[]; supportActiveParts: PlacementFitScorePart[] } {
+  const critParts: PlacementFitScorePart[] = []
+  const vulnParts: PlacementFitScorePart[] = []
+  const supportActiveParts: PlacementFitScorePart[] = []
+  for (const part of parts) {
+    const dim = DIMENSION_BY_KIND[part.signalKind]
+    if (dim === 'crit') {
+      critParts.push(part)
+      if (part.active) {
+        activeKinds.add(part.signalKind)
+        supportActiveParts.push(part)
+      }
+    } else if (dim === 'vulnerability') {
+      // 条件性匹配（active + monsterTags 与场景 enemyTypes 相交）下沉到 isVulnerabilityMatched。
+      if (!isVulnerabilityMatched(part, enemyTypeSet)) {
+        continue
+      }
+      activeKinds.add(part.signalKind)
+      vulnParts.push(part)
+      supportActiveParts.push(part)
+    } else if (dim === 'damage' && part.active) {
+      activeKinds.add(part.signalKind)
+      supportActiveParts.push(part)
+    }
+  }
+  return { critParts, vulnParts, supportActiveParts }
+}
+
+/**
+ * 把阵型内 ability 池与外部加成（globalBuff/equipment/externalHeroDps）合成 unified 池并求积。
+ * - formation-buff 投影：只取 ability 聚合（排除外部加成，约束②）。
+ * - absolute-dps 投影：IC 同 key 全源加法（A1）注入 ability 池副本得 unified 池，返回 unified 聚合 + breakdown 用副本。
+ * 提取自 scoreFormation 以降嵌套（nested-control-flow）与复杂度；语义零改变（变量传递完全对称）。
+ */
+function aggregateExternalDamagePools(
+  sharedPools: Map<string, AggregatedPool>,
+  input: ScoringInput,
+  carryHero: ResolvedHeroAbilityProfile,
+  abilityDamageAggregate: number,
+  aggregateProjection: AggregateProjection,
+): { damageAggregate: number; breakdownPools: Map<string, AggregatedPool> } {
+  if (aggregateProjection === 'formation-buff') {
+    return { damageAggregate: abilityDamageAggregate, breakdownPools: sharedPools }
+  }
+  const externalPools: AggregatedPool[] = []
+  const globalBuffMultiplier = input.globalBuffMultiplier ?? 1
+  // 账号级 patron/blessing global_dps（不依赖 placed）+ 装备 global_dps（placement-aware，只计阵型内英雄）。
+  const globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
+  if (globalAddPercent !== 0) {
+    externalPools.push({ dimension: 'damage', scope: 'global', addPercent: globalAddPercent, multFactor: 1, poolMultiplier: 1 })
+  }
+  const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryHero.heroId) ?? 1
+  let externalHeroDpsAddPercent = 0
+  for (const contribution of input.externalHeroDpsContributions ?? []) {
+    if (matchesHeroQualifier(carryHero, contribution.qualifier)) {
+      externalHeroDpsAddPercent += contribution.value
+    }
+  }
+  const heroAddPercent = (equipmentAdjustment - 1) * 100 + externalHeroDpsAddPercent
+  if (heroAddPercent !== 0) {
+    externalPools.push({ dimension: 'damage', scope: 'hero', addPercent: heroAddPercent, multFactor: 1, poolMultiplier: 1 })
+  }
+  const unifiedPools = new Map<string, AggregatedPool>()
+  for (const [key, pool] of sharedPools) {
+    unifiedPools.set(key, { ...pool })
+  }
+  mergePools(unifiedPools, externalPools)
+  return { damageAggregate: productOfPoolMultipliers(unifiedPools), breakdownPools: unifiedPools }
+}
+
+/** best carry 的拆解中间量（scoreFormation 主循环结束后据此构建 SimulationBreakdown）。 */
+type BreakdownData = {
+  carryEntry: PlacedEntry
+  carryLevel: number
+  pools: Map<string, AggregatedPool>
+  critFactor: number
+  vulnFactor: number
+  contributions: SimulationContribution[]
+}
+
+/**
+ * 迭代所有 support 位求 damage/crit/vuln 加成池（一次跑三维度避免重复匹配）。
+ * 提取自 scoreCarryCandidate 内层循环以降函数行数；语义零改变。
+ */
+function collectSupportSignalsForCarry(
+  carryEntry: PlacedEntry,
+  placedEntries: readonly PlacedEntry[],
+  input: ScoringInput,
+  enemyTypeSet: Set<string>,
+): {
+  warnings: string[]
+  activeKinds: Set<HeroAbilityKind>
+  sharedPools: Map<string, AggregatedPool>
+  critParts: PlacementFitScorePart[]
+  vulnParts: PlacementFitScorePart[]
+  contributions: SimulationContribution[]
+} {
+  const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
+  const activeKinds = new Set<HeroAbilityKind>()
+  // pool 在整队层面聚合：同一 dimension:scope 的 pool 跨所有支持位合并
+  // （addPercent 相加、multFactor 相乘），pool 间再相乘。
+  // 不能按支持位独立 pool 乘积再相乘——那会把不同位向同一 pool 的 additive 贡献变成累乘。
+  const sharedPools = new Map<string, AggregatedPool>()
+  const critParts: PlacementFitScorePart[] = []
+  const vulnParts: PlacementFitScorePart[] = []
+  const contributions: SimulationContribution[] = []
+
+  for (const supportEntry of placedEntries) {
+    // 一次跑 damage/crit/vulnerability 三维度（dimension 数组），signal 只迭代一遍 + 一次 qualifier 匹配，
+    // 避免原 3 次 evaluatePlacementFit 对同一批 signal 重复匹配（结构性加速 ~3x 内层）。
+    const fit = evaluatePlacementFit({
+      carryHero: carryEntry.hero,
+      carrySlotId: carryEntry.slotId,
+      supportHero: supportEntry.hero,
+      supportSlotId: supportEntry.slotId,
+      scenario: input.scenario,
+      placements: input.placements,
+      heroesById: input.heroesById,
+      dimension: ['damage', 'crit', 'vulnerability'],
+      aggregatePools: true,
+      manualStackCount: input.manualStackCount,
+      supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+    })
+    warnings.push(...fit.warnings)
+    // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
+    mergePools(sharedPools, fit.pools.filter((pool) => pool.dimension === 'damage'))
+
+    // 按 dimension 拆 scoreBreakdown：crit 全量进 critParts；vuln 经 monsterTags 条件匹配进 vulnParts；
+    // damage/crit active + vuln(active 且匹配) 合并进 contributions。
+    const classified = classifyScoreBreakdownParts(fit.scoreBreakdown, enemyTypeSet, activeKinds)
+    critParts.push(...classified.critParts)
+    vulnParts.push(...classified.vulnParts)
+
+    if (classified.supportActiveParts.length > 0) {
+      contributions.push({
+        supportHeroId: supportEntry.hero.heroId,
+        supportSlotId: supportEntry.slotId,
+        signals: classified.supportActiveParts,
+      })
+    }
+  }
+
+  return { warnings, activeKinds, sharedPools, critParts, vulnParts, contributions }
+}
+
+/**
+ * 评估单个 carry 候选：collectSupportSignalsForCarry 收集三维度信号池 → 合成 unified damageAggregate
+ * → carryDps。提取自 scoreFormation 以降复杂度；语义零改变。
+ */
+function scoreCarryCandidate(
+  carryEntry: PlacedEntry,
+  placedEntries: readonly PlacedEntry[],
+  input: ScoringInput,
+  aggregateProjection: AggregateProjection,
+  enemyTypeSet: Set<string>,
+): { carryDps: GameNumberValue; warnings: string[]; activeKinds: Set<HeroAbilityKind> } & BreakdownData {
+  const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
+  const { warnings, activeKinds, sharedPools, critParts, vulnParts, contributions } = collectSupportSignalsForCarry(carryEntry, placedEntries, input, enemyTypeSet)
+
+  const critFactor = computeCritFactor(critParts, carryEntry.hero.baseCritChancePercent, input.equipmentCritByHero?.get(carryEntry.hero.heroId))
+  const vulnFactor = computeVulnerabilityFactor(vulnParts)
+  const critVuln = critFactor * vulnFactor
+
+  // 阵型内 ability 加成池聚合（formation-buff 投影的 objective 与 breakdown 都用它）。
+  const abilityDamageAggregate = productOfPoolMultipliers(sharedPools)
+  const { damageAggregate, breakdownPools } = aggregateExternalDamagePools(
+    sharedPools,
+    input,
+    carryEntry.hero,
+    abilityDamageAggregate,
+    aggregateProjection,
+  )
+
+  // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。
+  const carryDps = aggregateProjection === 'formation-buff'
+    ? new Decimal(damageAggregate * critVuln)
+    : computeCarryDps(carryEntry.hero, carryLevel, damageAggregate * critVuln)
+
+  return {
+    pools: breakdownPools,
+    carryDps,
+    warnings,
+    activeKinds,
+    carryEntry,
+    carryLevel,
+    critFactor,
+    vulnFactor,
+    contributions,
+  }
+}
+
+/**
+ * best carry 的 survival 池聚合 → effectiveHealth + BUD → 推图层数预估。
+ * 提取自 scoreFormation 尾段以降复杂度；语义零改变（变量传递完全对称）。
+ */
+function computeAreaEstimateForBestCarry(
+  bestCarryHeroId: string,
+  bestCarryDps: GameNumberValue,
+  placedEntries: readonly PlacedEntry[],
+  input: ScoringInput,
+): AreaEstimationResult | null {
+  const bestCarryEntry = placedEntries.find((entry) => entry.hero.heroId === bestCarryHeroId)
+  if (!bestCarryEntry) {
+    return null
+  }
+  const survivalPools = new Map<string, AggregatedPool>()
+  for (const supportEntry of placedEntries) {
+    const fit = evaluatePlacementFit({
+      carryHero: bestCarryEntry.hero,
+      carrySlotId: bestCarryEntry.slotId,
+      supportHero: supportEntry.hero,
+      supportSlotId: supportEntry.slotId,
+      scenario: input.scenario,
+      placements: input.placements,
+      heroesById: input.heroesById,
+      dimension: 'survival',
+      manualStackCount: input.manualStackCount,
+      supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+    })
+    mergePools(survivalPools, fit.pools)
+  }
+  // 装备 health_mult（per-carry，hero-scoped）并入 carry 的 survival:hero 池（外部加成，同 ability survival 池加法）。
+  const equipmentHealthMult = input.equipmentHealthByHero?.get(bestCarryHeroId) ?? 1
+  const equipmentHealthAddPercent = (equipmentHealthMult - 1) * 100
+  if (equipmentHealthAddPercent !== 0) {
+    mergePools(survivalPools, [{ dimension: 'survival', scope: 'hero', addPercent: equipmentHealthAddPercent, multFactor: 1, poolMultiplier: 1 }])
+  }
+  const carryLevel = input.heroLevels?.get(bestCarryHeroId) ?? DEFAULT_CARRY_LEVEL
+  const effectiveHealth = computeEffectiveHealth(
+    bestCarryEntry.hero,
+    carryLevel,
+    productOfPoolMultipliers(survivalPools),
+  )
+  // ponytail: BUD 用 carry 单次伤害近似（carryDps × attackCooldown）；carry 通常设 BUD，
+  // 绝对值偏差归 7.5 BUD 实测校准。相对比较保序。
+  const bud = computeSingleHitDamage(bestCarryDps, bestCarryEntry.hero.baseAttackCooldown)
+  return estimateMaxArea({ bud, effectiveHealth })
+}
+
+/**
+ * 从 best carry 的中间量构建 SimulationBreakdown（JSON 可序列化）：factors 从 pools 提取，
+ * baseDps/levelCurve/carryDps 用游戏记数法字符串。提取自 scoreFormation 尾段；语义零改变。
+ */
+function buildSimulationBreakdown(data: BreakdownData, bestCarryDps: GameNumberValue): SimulationBreakdown {
+  const { carryEntry, carryLevel, pools, critFactor, vulnFactor, contributions } = data
+  const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
+  const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
+  const baseDps = new Decimal(baseDamage).mul(levelCurve)
+  // factors 从 pools 提取：damage:global/hero 池各外露为 globalBuff/heroDpsPool（unified = ability + 外部同 key 加法）；
+  // damagePool 为残余（非 global/hero 的 damage 池，当前结构性 =1）。
+  const globalBuff = pools.get('damage:global')?.poolMultiplier ?? 1
+  const heroDpsPool = pools.get('damage:hero')?.poolMultiplier ?? 1
+  let damagePool = 1
+  for (const [key, pool] of pools) {
+    if (key !== 'damage:global' && key !== 'damage:hero') damagePool *= pool.poolMultiplier
+  }
+  return {
+    carryHeroId: carryEntry.hero.heroId,
+    carrySlotId: carryEntry.slotId,
+    baseDps: formatGameNumber(baseDps),
+    levelCurve: formatGameNumber(levelCurve),
+    carryDps: formatGameNumber(bestCarryDps),
+    factors: {
+      crit: critFactor,
+      vulnerability: vulnFactor,
+      damagePool,
+      globalBuff,
+      heroDpsPool,
+    },
+    pools: [...pools.values()],
+    carryLevel,
+    contributions,
+  }
+}
+
+/**
+ * 外层 carry 候选循环：迭代 placedEntries，对每个候选调 scoreCarryCandidate，
+ * 返回 carryDps 最高的候选中间量。提取自 scoreFormation 以降主函数行数；语义零改变。
+ */
+function findBestCarry(
+  placedEntries: readonly PlacedEntry[],
+  input: ScoringInput,
+  aggregateProjection: AggregateProjection,
+  enemyTypeSet: Set<string>,
+): {
+  carryDps: GameNumberValue
+  warnings: string[]
+  carryHeroId: string | null
+  activeKinds: Set<HeroAbilityKind>
+  breakdownData: BreakdownData | null
+} {
+  let carryDps: GameNumberValue = ZERO
+  let warnings: string[] = []
+  let carryHeroId: string | null = null
+  let activeKinds: Set<HeroAbilityKind> = new Set()
+  let breakdownData: BreakdownData | null = null
+
+  for (const carryEntry of placedEntries) {
+    if (input.lockedCarryHeroId != null && input.lockedCarryHeroId !== '' && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
+      continue
+    }
+    const candidate = scoreCarryCandidate(carryEntry, placedEntries, input, aggregateProjection, enemyTypeSet)
+    if (compareGameNumbers(candidate.carryDps, carryDps) > 0) {
+      carryDps = candidate.carryDps
+      warnings = [...new Set(candidate.warnings)]
+      carryHeroId = carryEntry.hero.heroId
+      activeKinds = candidate.activeKinds
+      breakdownData = {
+        pools: candidate.pools,
+        carryEntry: candidate.carryEntry,
+        carryLevel: candidate.carryLevel,
+        critFactor: candidate.critFactor,
+        vulnFactor: candidate.vulnFactor,
+        contributions: candidate.contributions,
+      }
+    }
+  }
+
+  return { carryDps, warnings, carryHeroId, activeKinds, breakdownData }
+}
+
 export function scoreFormation(input: ScoringInput): ScoringResult {
   const placedEntries = Object.entries(input.placements)
     .map(([slotId, heroId]) => {
@@ -260,236 +592,15 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   }
 
   const aggregateProjection = input.aggregateProjection ?? 'absolute-dps'
-  let bestCarryDps: GameNumberValue = ZERO
-  let bestWarnings: string[] = []
-  let bestCarryHeroId: string | null = null
-  let bestActiveKinds: Set<HeroAbilityKind> = new Set()
-  // best carry 的拆解中间量；循环结束据此构建 SimulationBreakdown。
-  // globalBuff/heroDpsPool/damagePool 不预存——从 pools 提取（damage:global/hero 池 + 残余）。
-  let bestBreakdownData: {
-    carryEntry: PlacedEntry
-    carryLevel: number
-    pools: Map<string, AggregatedPool>
-    critFactor: number
-    vulnFactor: number
-    contributions: SimulationContribution[]
-  } | null = null
-
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
+  const { carryDps: bestCarryDps, warnings: bestWarnings, carryHeroId: bestCarryHeroId, activeKinds: bestActiveKinds, breakdownData: bestBreakdownData } = findBestCarry(placedEntries, input, aggregateProjection, enemyTypeSet)
 
-  for (const carryEntry of placedEntries) {
-    if (input.lockedCarryHeroId && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
-      continue
-    }
-    const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
-    const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
-    const activeKinds = new Set<HeroAbilityKind>()
-    // pool 在整队层面聚合：同一 dimension:scope 的 pool 跨所有支持位合并
-    // （addPercent 相加、multFactor 相乘），pool 间再相乘。
-    // 不能按支持位独立 pool 乘积再相乘——那会把不同位向同一 pool 的 additive 贡献变成累乘。
-    const sharedPools = new Map<string, AggregatedPool>()
-    const critParts: PlacementFitScorePart[] = []
-    const vulnParts: PlacementFitScorePart[] = []
-    const contributions: SimulationContribution[] = []
-
-    for (const supportEntry of placedEntries) {
-      // 一次跑 damage/crit/vulnerability 三维度（dimension 数组），signal 只迭代一遍 + 一次 qualifier 匹配，
-      // 避免原 3 次 evaluatePlacementFit 对同一批 signal 重复匹配（结构性加速 ~3x 内层）。
-      const fit = evaluatePlacementFit({
-        carryHero: carryEntry.hero,
-        carrySlotId: carryEntry.slotId,
-        supportHero: supportEntry.hero,
-        supportSlotId: supportEntry.slotId,
-        scenario: input.scenario,
-        placements: input.placements,
-        heroesById: input.heroesById,
-        dimension: ['damage', 'crit', 'vulnerability'],
-        aggregatePools: true,
-        manualStackCount: input.manualStackCount,
-        supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
-      })
-      warnings.push(...fit.warnings)
-      // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
-      mergePools(sharedPools, fit.pools.filter((pool) => pool.dimension === 'damage'))
-
-      // 按 dimension 拆 scoreBreakdown：crit 全量进 critParts；vuln 经 monsterTags 条件匹配进 vulnParts；
-      // damage/crit active + vuln(active 且匹配) 合并进 contributions。
-      const supportActiveParts: PlacementFitScorePart[] = []
-      for (const part of fit.scoreBreakdown) {
-        const dim = DIMENSION_BY_KIND[part.signalKind]
-        if (dim === 'crit') {
-          critParts.push(part)
-          if (part.active) {
-            activeKinds.add(part.signalKind)
-            supportActiveParts.push(part)
-          }
-        } else if (dim === 'vulnerability') {
-          // 条件性匹配（active + monsterTags 与场景 enemyTypes 相交）下沉到 isVulnerabilityMatched。
-          if (!isVulnerabilityMatched(part, enemyTypeSet)) {
-            continue
-          }
-          activeKinds.add(part.signalKind)
-          vulnParts.push(part)
-          supportActiveParts.push(part)
-        } else if (dim === 'damage' && part.active) {
-          activeKinds.add(part.signalKind)
-          supportActiveParts.push(part)
-        }
-      }
-
-      if (supportActiveParts.length > 0) {
-        contributions.push({
-          supportHeroId: supportEntry.hero.heroId,
-          supportSlotId: supportEntry.slotId,
-          signals: supportActiveParts,
-        })
-      }
-    }
-
-    const critFactor = computeCritFactor(critParts, carryEntry.hero.baseCritChancePercent, input.equipmentCritByHero?.get(carryEntry.hero.heroId))
-    const vulnFactor = computeVulnerabilityFactor(vulnParts)
-    const critVuln = critFactor * vulnFactor
-
-    // 阵型内 ability 加成池聚合（formation-buff 投影的 objective 与 breakdown 都用它）。
-    const abilityDamageAggregate = productOfPoolMultipliers(sharedPools)
-
-    // absolute-dps：外部加成（patron/blessing 的 global_dps、装备 + 外部 effect_def 的 hero_dps）与 ability
-    // 同 key 同池，IC 语义同 key 全来源加法（1 + Σ/100），非跨池相乘（A1，correctness-audit.md §2）。
-    // 注入 ability 池副本（mergePools 同 key addPercent 相加、保留 multFactor）得 unified 池。
-    // formation-buff 不注入（约束②：只取阵型内聚合，排除外部加成）。
-    let damageAggregate: number
-    let breakdownPools: Map<string, AggregatedPool>
-    if (aggregateProjection === 'formation-buff') {
-      damageAggregate = abilityDamageAggregate
-      breakdownPools = sharedPools
-    } else {
-      const externalPools: AggregatedPool[] = []
-      const globalBuffMultiplier = input.globalBuffMultiplier ?? 1
-      // 账号级 patron/blessing global_dps（不依赖 placed）+ 装备 global_dps（placement-aware，只计阵型内英雄）。
-      const globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
-      if (globalAddPercent !== 0) {
-        externalPools.push({ dimension: 'damage', scope: 'global', addPercent: globalAddPercent, multFactor: 1, poolMultiplier: 1 })
-      }
-      const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryEntry.hero.heroId) ?? 1
-      let externalHeroDpsAddPercent = 0
-      for (const contribution of input.externalHeroDpsContributions ?? []) {
-        if (matchesHeroQualifier(carryEntry.hero, contribution.qualifier)) {
-          externalHeroDpsAddPercent += contribution.value
-        }
-      }
-      const heroAddPercent = (equipmentAdjustment - 1) * 100 + externalHeroDpsAddPercent
-      if (heroAddPercent !== 0) {
-        externalPools.push({ dimension: 'damage', scope: 'hero', addPercent: heroAddPercent, multFactor: 1, poolMultiplier: 1 })
-      }
-      const unifiedPools = new Map<string, AggregatedPool>()
-      for (const [key, pool] of sharedPools) {
-        unifiedPools.set(key, { ...pool })
-      }
-      mergePools(unifiedPools, externalPools)
-      damageAggregate = productOfPoolMultipliers(unifiedPools)
-      breakdownPools = unifiedPools
-    }
-
-    // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。
-    const carryDps = aggregateProjection === 'formation-buff'
-      ? new Decimal(damageAggregate * critVuln)
-      : computeCarryDps(carryEntry.hero, carryLevel, damageAggregate * critVuln)
-
-    if (compareGameNumbers(carryDps, bestCarryDps) > 0) {
-      bestCarryDps = carryDps
-      bestWarnings = [...new Set(warnings)]
-      bestCarryHeroId = carryEntry.hero.heroId
-      bestActiveKinds = activeKinds
-      bestBreakdownData = {
-        carryEntry,
-        carryLevel,
-        pools: breakdownPools,
-        critFactor,
-        vulnFactor,
-        contributions,
-      }
-    }
-  }
-
-  let areaEstimate: AreaEstimationResult | null = null
   // formation-buff 模式 bestCarryDps 是阵型聚合倍率（非真实 DPS），BUD/推图层数估算无意义，跳过。
-  if (bestCarryHeroId && aggregateProjection === 'absolute-dps') {
-    const bestCarryEntry = placedEntries.find((entry) => entry.hero.heroId === bestCarryHeroId)
-    if (bestCarryEntry) {
-      const survivalPools = new Map<string, AggregatedPool>()
-      for (const supportEntry of placedEntries) {
-        const fit = evaluatePlacementFit({
-          carryHero: bestCarryEntry.hero,
-          carrySlotId: bestCarryEntry.slotId,
-          supportHero: supportEntry.hero,
-          supportSlotId: supportEntry.slotId,
-          scenario: input.scenario,
-          placements: input.placements,
-          heroesById: input.heroesById,
-          dimension: 'survival',
-          manualStackCount: input.manualStackCount,
-          supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
-        })
-        mergePools(survivalPools, fit.pools)
-      }
-      // 装备 health_mult（per-carry，hero-scoped）并入 carry 的 survival:hero 池（外部加成，同 ability survival 池加法）。
-      const equipmentHealthMult = input.equipmentHealthByHero?.get(bestCarryHeroId) ?? 1
-      const equipmentHealthAddPercent = (equipmentHealthMult - 1) * 100
-      if (equipmentHealthAddPercent !== 0) {
-        mergePools(survivalPools, [{ dimension: 'survival', scope: 'hero', addPercent: equipmentHealthAddPercent, multFactor: 1, poolMultiplier: 1 }])
-      }
-      const carryLevel = input.heroLevels?.get(bestCarryHeroId) ?? DEFAULT_CARRY_LEVEL
-      const effectiveHealth = computeEffectiveHealth(
-        bestCarryEntry.hero,
-        carryLevel,
-        productOfPoolMultipliers(survivalPools),
-      )
-      // ponytail: BUD 用 carry 单次伤害近似（carryDps × attackCooldown）；carry 通常设 BUD，
-      // 绝对值偏差归 7.5 BUD 实测校准。相对比较保序。
-      const bud = computeSingleHitDamage(bestCarryDps, bestCarryEntry.hero.baseAttackCooldown)
-      areaEstimate = estimateMaxArea({ bud, effectiveHealth })
-    }
-  }
+  const areaEstimate = bestCarryHeroId != null && bestCarryHeroId !== '' && aggregateProjection === 'absolute-dps'
+    ? computeAreaEstimateForBestCarry(bestCarryHeroId, bestCarryDps, placedEntries, input)
+    : null
 
-  let breakdown: SimulationBreakdown | null = null
-  if (bestBreakdownData) {
-    const {
-      carryEntry,
-      carryLevel,
-      pools,
-      critFactor,
-      vulnFactor,
-      contributions,
-    } = bestBreakdownData
-    const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
-    const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
-    const baseDps = new Decimal(baseDamage).mul(levelCurve)
-    // factors 从 pools 提取：damage:global/hero 池各外露为 globalBuff/heroDpsPool（unified = ability + 外部同 key 加法）；
-    // damagePool 为残余（非 global/hero 的 damage 池，当前结构性 =1）。
-    const globalBuff = pools.get('damage:global')?.poolMultiplier ?? 1
-    const heroDpsPool = pools.get('damage:hero')?.poolMultiplier ?? 1
-    let damagePool = 1
-    for (const [key, pool] of pools) {
-      if (key !== 'damage:global' && key !== 'damage:hero') damagePool *= pool.poolMultiplier
-    }
-    breakdown = {
-      carryHeroId: carryEntry.hero.heroId,
-      carrySlotId: carryEntry.slotId,
-      carryLevel,
-      baseDps: formatGameNumber(baseDps),
-      levelCurve: formatGameNumber(levelCurve),
-      carryDps: formatGameNumber(bestCarryDps),
-      factors: {
-        damagePool,
-        crit: critFactor,
-        vulnerability: vulnFactor,
-        globalBuff,
-        heroDpsPool,
-      },
-      pools: [...pools.values()],
-      contributions,
-    }
-  }
+  const breakdown = bestBreakdownData != null ? buildSimulationBreakdown(bestBreakdownData, bestCarryDps) : null
 
   return {
     objectiveValue: bestCarryDps,

@@ -29,6 +29,27 @@ interface BeamCandidate {
   usedSeats: Set<number>
 }
 
+function expandCandidates(
+  candidates: BeamCandidate[],
+  heroes: Array<{ heroId: string; seat: number }>,
+  slot: string,
+): BeamCandidate[] {
+  const nextCandidates: BeamCandidate[] = []
+  for (const candidate of candidates) {
+    for (const hero of heroes) {
+      if (candidate.usedHeroes.has(hero.heroId)) continue
+      if (candidate.usedSeats.has(hero.seat)) continue
+
+      nextCandidates.push({
+        placements: { ...candidate.placements, [slot]: hero.heroId },
+        usedHeroes: new Set([...candidate.usedHeroes, hero.heroId]),
+        usedSeats: new Set([...candidate.usedSeats, hero.seat]),
+      })
+    }
+  }
+  return nextCandidates
+}
+
 export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
   const { heroes, slots, beamWidth, scoreFormation } = input
 
@@ -54,21 +75,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
   ]
 
   for (const slot of slots) {
-    const nextCandidates: BeamCandidate[] = []
-
-    for (const candidate of candidates) {
-      for (const hero of heroes) {
-        if (candidate.usedHeroes.has(hero.heroId)) continue
-        if (candidate.usedSeats.has(hero.seat)) continue
-
-        const nextPlacements = { ...candidate.placements, [slot]: hero.heroId }
-        nextCandidates.push({
-          placements: nextPlacements,
-          usedHeroes: new Set([...candidate.usedHeroes, hero.heroId]),
-          usedSeats: new Set([...candidate.usedSeats, hero.seat]),
-        })
-      }
-    }
+    const nextCandidates = expandCandidates(candidates, heroes, slot)
 
     // Score and prune to beam width
     scored = nextCandidates

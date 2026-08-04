@@ -76,9 +76,14 @@ export function applyComputationMode(
 
   const keptSet = new Set<string>(forcedHeroIds)
   for (const group of bySeat.values()) {
-    group.sort(
-      (a, b) => compositeGain(b, scoringMode) - compositeGain(a, scoringMode) || a.heroId.localeCompare(b.heroId),
-    )
+    group.sort((a, b) => {
+      const diff = compositeGain(b, scoringMode) - compositeGain(a, scoringMode)
+      // 原 || 链视 0 和 NaN 为 falsy 回退 tiebreak；显式判断保持同语义。
+      if (diff === 0 || Number.isNaN(diff)) {
+        return a.heroId.localeCompare(b.heroId)
+      }
+      return diff
+    })
     const keepCount = Math.max(1, Math.ceil(group.length * fraction))
     for (const hero of group.slice(0, keepCount)) {
       keptSet.add(hero.heroId)

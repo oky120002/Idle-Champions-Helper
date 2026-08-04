@@ -1,4 +1,5 @@
-import Decimal from 'decimal.js'
+/* eslint-disable max-lines -- planner 推荐引擎主入口：evaluateFormation + buildPlannerRecommendation 两入口 + 9 个紧密协作的子函数（已全部 ≤50 行/max-lines-per-function 已清）。拆到多个文件会让推荐流程修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
+import { Decimal } from 'decimal.js'
 
 import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
@@ -22,7 +23,7 @@ import {
   type PlannerRecommendationBlocker,
   type PlannerResult,
 } from './recommendationTypes'
-import { scoreFormation, type AggregateProjection, type ScoringMode } from './steadyStateScoring'
+import { scoreFormation, type AggregateProjection, type ScoringMode, type ScoringResult } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
 
 const PLANNER_TOP_K = 3
@@ -38,7 +39,14 @@ const SCORE_ZERO: GameNumberValue = new Decimal(0)
 
 function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
   return [...scenario.slotTopology]
-    .sort((left, right) => left.row - right.row || left.column - right.column || left.slotId.localeCompare(right.slotId))
+    .sort((left, right) => {
+      // 行号差为 0 时进列号比较；列号同则按 slotId 字典序。row/column 是 JSON 解析的有限数，无 NaN 风险。
+      const rowDiff = left.row - right.row
+      if (rowDiff !== 0) return rowDiff
+      const colDiff = left.column - right.column
+      if (colDiff !== 0) return colDiff
+      return left.slotId.localeCompare(right.slotId)
+    })
     .map((slot) => slot.slotId)
 }
 
@@ -54,7 +62,7 @@ function toFormationSlots(scenario: ResolvedPlannerScenarioModel): FormationSlot
 function formatLegalityViolation(violation: LegalityViolation): string {
   switch (violation.kind) {
     case 'seatConflict':
-      return `seat ${violation.seat} 冲突：${violation.heroes.join(', ')}`
+      return `seat ${String(violation.seat)} 冲突：${violation.heroes.join(', ')}`
     case 'missingForced':
       return `缺少强制英雄：${violation.heroIds.join(', ')}`
   }
@@ -70,18 +78,20 @@ function buildPlacementEntries(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
 ): PlannerPlacementEntry[] {
   return slots
-    .filter((slotId) => placements[slotId] !== undefined)
-    .map((slotId) => {
-      const heroId = placements[slotId]!
+    .flatMap((slotId) => {
+      const heroId = placements[slotId]
+      if (heroId === undefined) {
+        return []
+      }
       const hero = heroById.get(heroId)
 
-      return {
+      return [{
         slotId,
-        slotLabel: slotId,
         heroId,
+        slotLabel: slotId,
         heroName: hero?.name.display ?? heroId,
         seat: hero?.seat ?? null,
-      }
+      }]
     })
 }
 
@@ -200,12 +210,13 @@ function resolvePlannerScenario(
   const scenarioRef: ScenarioRef = { kind: 'variant', id: selectedVariant.id }
 
   if (!profileSnapshot && candidateMode === 'owned-only') {
-    return { scenario: null, scenarioRef, blocker: 'missing-profile' }
+    return { scenario: null, blocker: 'missing-profile', scenarioRef }
   }
 
   const scenario = findPlannerScenarioForVariant(collections.plannerScenarios, selectedVariant)
-  if (!scenario || !scenario.formationLayoutId || scenario.slotTopology.length === 0) {
-    return { scenario: null, scenarioRef, blocker: 'missing-formation' }
+  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain -- scenario == null 前置守卫已类型收窄（后续 scenario.xxx 安全），改 optional chain 反成冗余（scenario == null || scenario?.formationLayoutId）。
+  if (scenario == null || scenario.formationLayoutId == null || scenario.formationLayoutId === '' || scenario.slotTopology.length === 0) {
+    return { scenario: null, blocker: 'missing-formation', scenarioRef }
   }
 
   return { scenario, scenarioRef, blocker: null }
@@ -240,7 +251,8 @@ function applyActiveFeats(
   const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
   for (const [heroId, profile] of heroById) {
     const owned = ownedById.get(heroId)
-    if (!owned || !owned.feats || owned.feats.length === 0) {
+    // owned.feats 类型恒为 string[]（非可选），无需运行时 truthy 检查；只判空数组
+    if (owned == null || owned.feats.length === 0) {
       continue
     }
     heroById.set(heroId, applyFeatsToProfile(profile, owned.feats, featCatalog[heroId]))
@@ -262,7 +274,8 @@ function applyActiveSpecializations(
   const ownedById = new Map(ownedHeroes.map((owned) => [owned.heroId, owned]))
   for (const [heroId, profile] of heroById) {
     const owned = ownedById.get(heroId)
-    if (!owned || !owned.specializations || owned.specializations.length === 0) {
+    // owned.specializations 类型恒为 string[]（非可选），无需运行时 truthy 检查；只判空数组
+    if (owned == null || owned.specializations.length === 0) {
       continue
     }
     heroById.set(heroId, applySpecializationsToProfile(profile, owned.specializations, specializationCatalog[heroId]))
@@ -346,58 +359,18 @@ function scorePlannerFormation(
   })
 }
 
-export function evaluateFormation({
-  variant: selectedVariant,
-  collections,
-  profileSnapshot,
-  placements = {},
-  options = {},
-}: PlannerInput): FormationEvaluation {
-  const scoringMode = options.scoringMode ?? 'carry-dps'
-  const candidateMode = options.candidateMode ?? 'owned-only'
-  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
-
-  // owned-only 模式下 resolvePlannerScenario 保证 profileSnapshot 非空；all-hypothetical 模式 profileSnapshot 可为 null。
-  if (!scenario || !scenarioRef || blocker) {
-    return { result: null, layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
-  }
-
-  // evaluateFormation 不做候选过滤——用户已显式指定阵型，heroById 用全量英雄保证放置的英雄都能解析。
-  const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
-  const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
-  const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
-  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
-  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
-  applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
-  attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
-  const candidateIds = new Set(
-    buildCandidatePool({
-      mode: candidateMode,
-      ownedHeroes,
-      allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
-    }),
-  )
-  // heroLevels 覆盖所有已拥有英雄；放置但未拥有的英雄由下方 restrictionWarnings 标记（按 level 1 估算）。
-  // 原 .filter(owned => candidateIds.has) 是死代码——owned-only 与 all-hypothetical 两模式下 candidateIds
-  // 均包含全部 ownedHeroIds，filter 永不剔项。
-  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
-
-  const variantRules: VariantRuleResult = {
-    constraints: [
-      ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
-    ],
-    warnings: scenario.scenarioWarnings,
-  }
-  const legality = checkFormationLegality({
-    placements,
-    heroSeats,
-    variantRules,
-  })
-  const legalityWarnings = legality.legal ? [] : legality.violations.map(formatLegalityViolation)
-
-  // evaluateFormation 不做候选过滤（用户显式指定阵型），但须把 build 候选阶段的限制语义以 warning 体现，
-  // 否则两入口语义不对称：build 过滤掉非白名单/未拥有英雄，evaluate 却静默接受并按 level 1 估算。
-  // 强制英雄（forcedHeroes）豁免——其未拥有/不在白名单是 force_use_heroes 的设计预期。
+/**
+ * evaluateFormation 专用：按 build 候选阶段的限制语义检查 placements 里的英雄是否合规，
+ * 不合规项以 warning 体现（两入口语义对称：build 过滤掉非白名单/未拥有英雄，evaluate 须显式提示）。
+ * 强制英雄（forcedHeroes）豁免——其未拥有/不在白名单是 force_use_heroes 的设计预期。
+ * 提取自 evaluateFormation 以降主函数复杂度；语义零改变。
+ */
+function collectEvaluationRestrictionWarnings(
+  placements: Record<string, string>,
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  candidateIds: Set<string>,
+  scenario: ResolvedPlannerScenarioModel,
+): string[] {
   const forcedHeroSet = new Set(scenario.forcedHeroes)
   const allowedHeroSet = new Set(scenario.allowedHeroes)
   const allowedTagSet = new Set(scenario.allowedTags)
@@ -419,15 +392,29 @@ export function evaluateFormation({
       }
     }
   }
+  return restrictionWarnings
+}
 
+/**
+ * evaluateFormation 尾段：scorePlannerFormation 求值 → 组装 PlannerResult + FormationEvaluation 返回。
+ * 提取自 evaluateFormation 以降主函数复杂度；语义零改变（变量传递完全对称）。
+ */
+function buildEvaluationFormationResult(
+  placements: Record<string, string>,
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  scenario: ResolvedPlannerScenarioModel,
+  heroLevels: Map<string, number>,
+  scoringMode: ScoringMode,
+  options: PlannerRecommendationOptions,
+  scenarioRef: ScenarioRef,
+  legalityWarnings: string[],
+  restrictionWarnings: string[],
+): FormationEvaluation {
   const scoring = scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
-
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
   const result: PlannerResult = {
     objectiveValue: formatGameNumber(scoring.objectiveValue),
     carryHeroId: scoring.carryHeroId,
-    placements,
-    placementEntries,
     explanations: buildPlannerExplanations(
       scenario,
       placementEntries,
@@ -440,15 +427,274 @@ export function evaluateFormation({
     warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
     areaEstimate: scoring.areaEstimate ?? null,
     breakdown: scoring.breakdown,
+    placements,
+    placementEntries,
   }
-
   return {
     result,
+    scenarioRef,
     layoutId: scenario.formationLayoutId,
     slots: toFormationSlots(scenario),
-    scenarioRef,
     blocker: null,
   }
+}
+
+export function evaluateFormation({
+  variant: selectedVariant,
+  collections,
+  profileSnapshot,
+  placements = {},
+  options = {},
+}: PlannerInput): FormationEvaluation {
+  const scoringMode = options.scoringMode ?? 'carry-dps'
+  const candidateMode = options.candidateMode ?? 'owned-only'
+  const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
+
+  // owned-only 模式下 resolvePlannerScenario 保证 profileSnapshot 非空；all-hypothetical 模式 profileSnapshot 可为 null。
+  if (scenario == null || scenarioRef == null || blocker != null) {
+    return { result: null, layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
+  }
+
+  // evaluateFormation 不做候选过滤——用户已显式指定阵型，heroById 用全量英雄保证放置的英雄都能解析。
+  const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
+  const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
+  const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
+  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
+  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
+  applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
+  attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
+  const candidateIds = new Set(
+    buildCandidatePool({
+      mode: candidateMode,
+      allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
+      ownedHeroes,
+    }),
+  )
+  // heroLevels 覆盖所有已拥有英雄；放置但未拥有的英雄由 restrictionWarnings 标记（按 level 1 估算）。
+  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
+
+  const variantRules: VariantRuleResult = {
+    constraints: [
+      ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
+    ],
+    warnings: scenario.scenarioWarnings,
+  }
+  const legality = checkFormationLegality({ placements, heroSeats, variantRules })
+  const legalityWarnings = legality.legal ? [] : legality.violations.map(formatLegalityViolation)
+  const restrictionWarnings = collectEvaluationRestrictionWarnings(placements, heroById, candidateIds, scenario)
+
+  return buildEvaluationFormationResult(placements, heroById, scenario, heroLevels, scoringMode, options, scenarioRef, legalityWarnings, restrictionWarnings)
+}
+
+/**
+ * buildPlannerRecommendation 专用：按 forced/candidate/allowed 过滤候选英雄并按 seat+heroId 排序。
+ * 强制英雄无条件纳入（即使未拥有/不在白名单）；only_allow_crusaders 白名单 by_ids OR by_tags。
+ * 提取自 buildPlannerRecommendation 以降主函数复杂度；语义零改变。
+ */
+function filterAndSortCandidateHeroes(
+  plannerHeroes: readonly ResolvedHeroAbilityProfile[],
+  forcedHeroSet: Set<string>,
+  candidateIds: Set<string>,
+  hasAllowedRestriction: boolean,
+  allowedHeroSet: Set<string>,
+  allowedTagSet: Set<string>,
+): ResolvedHeroAbilityProfile[] {
+  return plannerHeroes
+    .filter((hero) => {
+      const isForceIncluded = forcedHeroSet.has(hero.heroId)
+      if (isForceIncluded) {
+        return true
+      }
+      if (!candidateIds.has(hero.heroId)) {
+        return false
+      }
+      return !hasAllowedRestriction
+        || allowedHeroSet.has(hero.heroId)
+        || hero.tags.some((tag) => allowedTagSet.has(tag))
+    })
+    .sort((left, right) => {
+      // seat 为有限数（JSON 解析），无 NaN 风险；差 0 时按 heroId 字典序
+      const seatDiff = left.seat - right.seat
+      if (seatDiff !== 0) return seatDiff
+      return left.heroId.localeCompare(right.heroId)
+    })
+}
+
+/**
+ * buildPlannerRecommendation 专用：从 collections + scenario + options 解析候选英雄与可用槽位。
+ * 含 only_allow_crusaders 白名单、强制英雄注入、被占格扣减。返回候选英雄列表、槽位、forcedHeroSet、
+ * 用户锁槽、ownedHeroes。提取自 buildPlannerRecommendation；语义零改变。
+ */
+function resolveCandidateSlots(
+  collections: PlannerCollections,
+  profileSnapshot: UserProfileSnapshot | null,
+  options: PlannerRecommendationOptions,
+  scenario: ResolvedPlannerScenarioModel,
+  candidateMode: CandidateMode,
+): {
+  heroes: ResolvedHeroAbilityProfile[]
+  slots: string[]
+  forcedHeroSet: Set<string>
+  userLockedSlots: Record<string, string>
+  ownedHeroes: readonly OwnedHero[]
+} {
+  const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
+  const candidateIds = new Set(
+    buildCandidatePool({
+      mode: candidateMode,
+      allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
+      ownedHeroes,
+    }),
+  )
+  // only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
+  const allowedHeroSet = new Set(scenario.allowedHeroes)
+  const allowedTagSet = new Set(scenario.allowedTags)
+  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
+  const userLockedSlots = options.lockedSlots ?? {}
+  const userLockedSlotSet = new Set(Object.keys(userLockedSlots))
+  const forcedHeroSet = new Set([
+    ...scenario.forcedHeroes,
+    ...(options.lockedCarryHeroId != null && options.lockedCarryHeroId !== '' ? [options.lockedCarryHeroId] : []),
+    ...Object.values(userLockedSlots),
+  ])
+  const heroes = filterAndSortCandidateHeroes(collections.plannerHeroes, forcedHeroSet, candidateIds, hasAllowedRestriction, allowedHeroSet, allowedTagSet)
+  // 可用容量扣减被占格 = slotTopology.length − occupiedSlotCount − 用户锁槽数。
+  // occupiedSlotCount 来自 restrictions 文本解析（小鸡/小鬼等非英雄实体占格数）；
+  // 取 sortSlots 前 availableCapacity 个近似——英雄数量正确，避免多填被占格高估 carryDps。
+  const availableCapacity = Math.max(0, scenario.slotTopology.length - scenario.occupiedSlotCount - userLockedSlotSet.size)
+  const slots = sortSlots(scenario).filter((slotId) => !userLockedSlotSet.has(slotId)).slice(0, availableCapacity)
+  return { heroes, slots, forcedHeroSet, userLockedSlots, ownedHeroes }
+}
+
+/**
+ * buildPlannerRecommendation 专用：对裁剪后的英雄列表应用 feat/专精/装备 buff/saveContext，
+ * 构建 heroById/heroSeats/heroLevels/scenarioVariantRules。提取自 buildPlannerRecommendation；语义零改变。
+ */
+function applyAugmentsAndBuildRules(
+  heroes: readonly ResolvedHeroAbilityProfile[],
+  ownedHeroes: readonly OwnedHero[],
+  collections: PlannerCollections,
+  options: PlannerRecommendationOptions,
+  profileSnapshot: UserProfileSnapshot | null,
+  scenario: ResolvedPlannerScenarioModel,
+): {
+  heroById: Map<string, ResolvedHeroAbilityProfile>
+  heroSeats: Record<string, number>
+  heroLevels: Map<string, number>
+  scenarioVariantRules: VariantRuleResult
+} {
+  const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
+  const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
+  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
+  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
+  applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
+  attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
+  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
+  const scenarioVariantRules: VariantRuleResult = {
+    constraints: [
+      ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
+    ],
+    warnings: scenario.scenarioWarnings,
+  }
+  return { heroById, heroSeats, heroLevels, scenarioVariantRules }
+}
+
+/**
+ * beamSearch 的 scoreFormation callback：先做合法性检查（非法返回 SCORE_ZERO + warning），
+ * 合法则调 scorePlannerFormation 求值。提取自 buildPlannerRecommendation 内联 callback；语义零改变。
+ */
+function scorePlannerFormationWithLegality(
+  placements: Record<string, string>,
+  variantRules: VariantRuleResult,
+  heroSeats: Record<string, number>,
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  scenario: ResolvedPlannerScenarioModel,
+  heroLevels: Map<string, number>,
+  scoringMode: ScoringMode,
+  options: PlannerRecommendationOptions,
+) {
+  const legality = checkFormationLegality({ variantRules, placements, heroSeats })
+  if (!legality.legal) {
+    return {
+      objectiveValue: SCORE_ZERO,
+      warnings: legality.violations.map(formatLegalityViolation),
+      carryHeroId: null,
+      activeSignalKinds: new Set<HeroAbilityKind>(),
+      breakdown: null,
+    }
+  }
+  return scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
+}
+
+/**
+ * distinct-carry Top K：beamSearch 结果先过滤非法（score≤0），按 carryHeroId 去重（每个 carry 取最高分），
+ * 再按 objectiveValue 降序取前 PLANNER_TOP_K。提取自 buildPlannerRecommendation；语义零改变。
+ */
+function selectTopKByCarry<T extends { objectiveValue: GameNumberValue; carryHeroId: string | null }>(
+  results: readonly T[],
+): T[] {
+  const legal = results.filter((result) => compareGameNumbers(result.objectiveValue, SCORE_ZERO) > 0)
+  const bestByCarry = new Map<string, T>()
+  for (const result of legal) {
+    const key = result.carryHeroId ?? '__none__'
+    const existing = bestByCarry.get(key)
+    if (existing === undefined || compareGameNumbers(result.objectiveValue, existing.objectiveValue) > 0) {
+      bestByCarry.set(key, result)
+    }
+  }
+  return [...bestByCarry.values()]
+    .sort((left, right) => compareGameNumbers(right.objectiveValue, left.objectiveValue))
+    .slice(0, PLANNER_TOP_K)
+}
+
+/**
+ * buildPlannerRecommendation 尾段：把 Top K 搜索结果组装成 PlannerResult[]（含 placementEntries 排序、
+ * warnings 合并、explanations 构建）。提取自 buildPlannerRecommendation；语义零改变。
+ */
+function buildRecommendationResults(
+  topResults: ReadonlyArray<ScoringResult & { placements: Record<string, string> }>,
+  scenario: ResolvedPlannerScenarioModel,
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  scoringMode: ScoringMode,
+  slots: string[],
+  userLockedSlots: Record<string, string>,
+  scenarioWarnings: string[],
+): PlannerResult[] {
+  // placementEntries 按场景槽位拓扑顺序（row/column/slotId）排序，让 locked 与搜索结果合并后
+  // 仍与棋盘格子在视觉上一一对应，而非 locked 追加末尾。
+  const slotOrder = new Map(sortSlots(scenario).map((slotId, index) => [slotId, index]))
+  const lockedPlacementEntries = Object.entries(userLockedSlots).map(([slotId, heroId]) => {
+    const hero = heroById.get(heroId)
+    return {
+      slotLabel: slotId,
+      heroName: hero?.name.display ?? heroId,
+      seat: hero?.seat ?? null,
+      slotId,
+      heroId,
+    }
+  })
+  return topResults.map((top) => {
+    const placementEntries = [...buildPlacementEntries(slots, top.placements, heroById), ...lockedPlacementEntries]
+      .sort((left, right) => (slotOrder.get(left.slotId) ?? Infinity) - (slotOrder.get(right.slotId) ?? Infinity))
+    return {
+      objectiveValue: formatGameNumber(top.objectiveValue),
+      carryHeroId: top.carryHeroId,
+      placements: top.placements,
+      explanations: buildPlannerExplanations(
+        scenario,
+        placementEntries,
+        heroById,
+        top.carryHeroId,
+        top.objectiveValue,
+        top.activeSignalKinds,
+        scoringMode,
+      ),
+      warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
+      areaEstimate: top.areaEstimate ?? null,
+      breakdown: top.breakdown,
+      placementEntries,
+    }
+  })
 }
 
 export function buildPlannerRecommendation({
@@ -463,180 +709,44 @@ export function buildPlannerRecommendation({
   const { scenario, scenarioRef, blocker } = resolvePlannerScenario(selectedVariant, collections, profileSnapshot, candidateMode)
 
   // owned-only 模式下 resolvePlannerScenario 保证 profileSnapshot 非空；all-hypothetical 模式 profileSnapshot 可为 null。
-  if (!scenario || !scenarioRef || blocker) {
+  if (scenario == null || scenarioRef == null || blocker != null) {
     return { result: null, results: [], layoutId: null, slots: [], scenarioRef: scenarioRef ?? null, blocker }
   }
 
-  const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
-  const candidateIds = new Set(
-    buildCandidatePool({
-      mode: candidateMode,
-      ownedHeroes,
-      allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
-    }),
-  )
-  // only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
-  const allowedHeroSet = new Set(scenario.allowedHeroes)
-  const allowedTagSet = new Set(scenario.allowedTags)
-  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
-  const userLockedSlots = options.lockedSlots ?? {}
-  const userLockedSlotSet = new Set(Object.keys(userLockedSlots))
-  const forcedHeroSet = new Set([
-    ...scenario.forcedHeroes,
-    ...(options.lockedCarryHeroId ? [options.lockedCarryHeroId] : []),
-    ...Object.values(userLockedSlots),
-  ])
-  let heroes = collections.plannerHeroes
-    .filter((hero) => {
-      const isForceIncluded = forcedHeroSet.has(hero.heroId)
-      if (isForceIncluded) {
-        return true
-      }
-      if (!candidateIds.has(hero.heroId)) {
-        return false
-      }
-      return !hasAllowedRestriction
-        || allowedHeroSet.has(hero.heroId)
-        || hero.tags.some((tag) => allowedTagSet.has(tag))
-    })
-    .sort((left, right) => left.seat - right.seat || left.heroId.localeCompare(right.heroId))
+  const { heroes: candidateHeroes, slots, forcedHeroSet, userLockedSlots, ownedHeroes } = resolveCandidateSlots(collections, profileSnapshot, options, scenario, candidateMode)
 
-  // 可用容量扣减被占格 = slotTopology.length − occupiedSlotCount − 用户锁槽数。
-  // occupiedSlotCount 来自 restrictions 文本解析（小鸡/小鬼等非英雄实体占格数）；
-  // 被占格具体位置不可知（诅咒「每 15 秒换格」等动态场景），无法精确过滤 slotId，
-  // 取 sortSlots 前 availableCapacity 个近似——英雄数量正确，避免多填被占格高估 carryDps。
-  const availableCapacity = Math.max(
-    0,
-    scenario.slotTopology.length - scenario.occupiedSlotCount - userLockedSlotSet.size,
-  )
-  const slots = sortSlots(scenario)
-    .filter((slotId) => !userLockedSlotSet.has(slotId))
-    .slice(0, availableCapacity)
-  if (heroes.length < slots.length) {
-    return {
-      result: null,
-      results: [],
-      layoutId: scenario.formationLayoutId,
-      slots: toFormationSlots(scenario),
-      scenarioRef,
-      blocker: 'insufficient-owned-heroes',
-    }
+  if (candidateHeroes.length < slots.length) {
+    return { result: null, results: [], layoutId: scenario.formationLayoutId, slots: toFormationSlots(scenario), blocker: 'insufficient-owned-heroes', scenarioRef }
   }
 
-  // 计算模式裁剪候选（默认 p50）：按席位复合收益取前比例，减少 beam search 评分次数。
-  // 在 insufficient 检查之后，确保裁剪不干扰「英雄够不够组队」判断；forced 英雄无条件保留。
-  heroes = applyComputationMode(heroes, computationMode, scoringMode, forcedHeroSet)
-
-  const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
-  const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
-  applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
-  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
-  applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
-  attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
-  // heroLevels 覆盖所有已拥有英雄（candidateIds 在两模式下均含全部 ownedHeroIds，原 .filter 是死代码）。
-  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
-  const scenarioVariantRules: VariantRuleResult = {
-    constraints: [
-      ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
-    ],
-    warnings: scenario.scenarioWarnings,
-  }
+  // 计算模式裁剪候选（默认 p50）：在 insufficient 检查之后，确保裁剪不干扰「英雄够不够组队」判断；forced 无条件保留。
+  const heroes = applyComputationMode(candidateHeroes, computationMode, scoringMode, forcedHeroSet)
+  const { heroById, heroSeats, heroLevels, scenarioVariantRules } = applyAugmentsAndBuildRules(heroes, ownedHeroes, collections, options, profileSnapshot, scenario)
 
   const results = beamSearch({
-    heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     slots,
+    heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     beamWidth: options.beamWidth ?? PLANNER_BEAM_WIDTH,
     lockedPlacements: userLockedSlots,
-    scoreFormation: (placements) => {
-      const legality = checkFormationLegality({
-        placements,
-        heroSeats,
-        variantRules: scenarioVariantRules,
-      })
-
-      if (!legality.legal) {
-        return {
-          objectiveValue: SCORE_ZERO,
-          warnings: legality.violations.map(formatLegalityViolation),
-          carryHeroId: null,
-          activeSignalKinds: new Set<HeroAbilityKind>(),
-          breakdown: null,
-        }
-      }
-
-      return scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
-    },
+    scoreFormation: (placements) => scorePlannerFormationWithLegality(placements, scenarioVariantRules, heroSeats, heroById, scenario, heroLevels, scoringMode, options),
   })
 
-  // distinct-carry Top K。beamSearch 已按 carryDps 降序；先过滤非法（score≤0），
-  // 再按 carryHeroId 去重（每个 carry 取最高分阵型），取前 PLANNER_TOP_K 作为多阵型输出。
-  const legal = results.filter((result) => compareGameNumbers(result.objectiveValue, SCORE_ZERO) > 0)
-  const bestByCarry = new Map<string, (typeof legal)[number]>()
-  for (const result of legal) {
-    const key = result.carryHeroId ?? '__none__'
-    const existing = bestByCarry.get(key)
-    if (!existing || compareGameNumbers(result.objectiveValue, existing.objectiveValue) > 0) {
-      bestByCarry.set(key, result)
-    }
-  }
-  const topResults = [...bestByCarry.values()]
-    .sort((left, right) => compareGameNumbers(right.objectiveValue, left.objectiveValue))
-    .slice(0, PLANNER_TOP_K)
+  // distinct-carry Top K（selectTopKByCarry 内部去重 + 取前 PLANNER_TOP_K）。
+  const topResults = selectTopKByCarry(results)
 
   if (topResults.length === 0) {
-    return {
-      result: null,
-      results: [],
-      layoutId: scenario.formationLayoutId,
-      slots: toFormationSlots(scenario),
-      scenarioRef,
-      blocker: 'no-legal-recommendation',
-    }
+    return { result: null, results: [], layoutId: scenario.formationLayoutId, slots: toFormationSlots(scenario), blocker: 'no-legal-recommendation', scenarioRef }
   }
 
   const scenarioWarnings = buildPlannerWarnings(scenario, profileSnapshot)
-  // placementEntries 按场景槽位拓扑顺序（row/column/slotId）排序，让 locked 与搜索结果合并后
-  // 仍与棋盘格子在视觉上一一对应，而非 locked 追加末尾。
-  const slotOrder = new Map(sortSlots(scenario).map((slotId, index) => [slotId, index]))
-  const lockedPlacementEntries = Object.entries(userLockedSlots).map(([slotId, heroId]) => {
-    const hero = heroById.get(heroId)
-    return {
-      slotId,
-      slotLabel: slotId,
-      heroId,
-      heroName: hero?.name.display ?? heroId,
-      seat: hero?.seat ?? null,
-    }
-  })
-  const plannerResults: PlannerResult[] = topResults.map((top) => {
-    const placementEntries = [...buildPlacementEntries(slots, top.placements, heroById), ...lockedPlacementEntries]
-      .sort((left, right) => (slotOrder.get(left.slotId) ?? Infinity) - (slotOrder.get(right.slotId) ?? Infinity))
-    return {
-      objectiveValue: formatGameNumber(top.objectiveValue),
-      carryHeroId: top.carryHeroId,
-      placements: top.placements,
-      placementEntries,
-      explanations: buildPlannerExplanations(
-        scenario,
-        placementEntries,
-        heroById,
-        top.carryHeroId,
-        top.objectiveValue,
-        top.activeSignalKinds,
-        scoringMode,
-      ),
-      warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
-      areaEstimate: top.areaEstimate ?? null,
-      breakdown: top.breakdown,
-    }
-  })
+  const plannerResults = buildRecommendationResults(topResults, scenario, heroById, scoringMode, slots, userLockedSlots, scenarioWarnings)
 
   return {
     result: plannerResults[0] ?? null,
     results: plannerResults,
     layoutId: scenario.formationLayoutId,
     slots: toFormationSlots(scenario),
-    scenarioRef,
     blocker: null,
+    scenarioRef,
   }
 }

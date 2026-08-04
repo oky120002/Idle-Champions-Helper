@@ -111,7 +111,7 @@ export class WorkerPlannerComputeRunner implements PlannerComputeRunner {
     }
     // worker import 失败 / 未捕获错误：reject 所有 pending，避免 UI 永久 loading。
     this.worker.onerror = (event: ErrorEvent) => {
-      const error = new Error(event.message || 'planner compute worker error')
+      const error = new Error(event.message !== '' ? event.message : 'planner compute worker error')
       for (const request of this.pending.values()) {
         request.reject(error)
       }
@@ -146,9 +146,7 @@ export class WorkerPlannerComputeRunner implements PlannerComputeRunner {
   }
 
   private handleMessage(message: PlannerComputeOutbound): void {
-    if (message.type !== 'result') {
-      return
-    }
+    // PlannerComputeOutbound 两成员 type 恒为 'result'，无需运行时再判。
     const request = this.pending.get(message.requestId)
     if (!request) {
       // 过期请求的回包（已被 dispose 或新请求顶替）——静默丢弃，防污染。
@@ -220,19 +218,19 @@ export function processPlannerComputeInbound(
     const result = message.type === 'recommend'
       ? buildPlannerRecommendation({
           variant: message.variant,
-          collections,
           profileSnapshot: message.profileSnapshot,
           options: message.options,
+          collections,
         })
       : evaluateFormation({
           variant: message.variant,
-          collections,
           profileSnapshot: message.profileSnapshot,
           placements: message.placements,
           options: message.options,
+          collections,
         })
-    return { type: 'result', requestId, ok: true, result }
+    return { type: 'result', ok: true, requestId, result }
   } catch (error) {
-    return { type: 'result', requestId, ok: false, error: error instanceof Error ? error.message : String(error) }
+    return { type: 'result', ok: false, error: error instanceof Error ? error.message : String(error), requestId }
   }
 }

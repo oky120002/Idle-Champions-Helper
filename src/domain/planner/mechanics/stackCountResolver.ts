@@ -1,4 +1,5 @@
 import type { HeroAbilitySignal } from '../../abilities/abilityModel'
+// eslint-disable-next-line import-x/no-cycle -- abilities↔planner 值环（signal 类型跨域引用），统一由阶段18破环收口
 import { matchesHeroQualifier } from '../../abilities/signalSemantics'
 import type { EvaluatePlacementFitInput } from '../placementFitTypes'
 import {
@@ -16,7 +17,7 @@ function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: HeroAbil
   const countRelation = signal.formationCountPositionQualifier?.relation ?? 'any'
 
   return Object.entries(input.placements).reduce((count, [slotId, heroId]) => {
-    if (signal.excludeSelf && heroId === input.supportHero.heroId) {
+    if (signal.excludeSelf === true && heroId === input.supportHero.heroId) {
       return count
     }
 
@@ -41,7 +42,7 @@ function countUpgradeTargets(input: EvaluatePlacementFitInput, signal: HeroAbili
   const relation = resolvePositionRelation(signal)
 
   return Object.entries(input.placements).reduce((count, [slotId, heroId]) => {
-    if (signal.excludeSelf && heroId === input.supportHero.heroId) {
+    if (signal.excludeSelf === true && heroId === input.supportHero.heroId) {
       return count
     }
 

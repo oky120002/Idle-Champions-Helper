@@ -10,6 +10,18 @@ import type { PlannerNarrativeLine, PlannerPlacementEntry } from './recommendati
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { ScoringMode } from './steadyStateScoring'
 
+function collectSupportChampionNames(
+  placementEntries: PlannerPlacementEntry[],
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
+  carryHeroId: string | null,
+): string[] {
+  return placementEntries
+    .map((entry) => heroById.get(entry.heroId))
+    .filter((hero): hero is ResolvedHeroAbilityProfile => hero != null && hero.heroId !== carryHeroId)
+    .slice(0, 4)
+    .map((hero) => hero.name.display)
+}
+
 export function buildPlannerExplanations(
   scenario: ResolvedPlannerScenarioModel,
   placementEntries: PlannerPlacementEntry[],
@@ -19,21 +31,17 @@ export function buildPlannerExplanations(
   activeSignalKinds: Set<HeroAbilityKind>,
   scoringMode: ScoringMode,
 ): PlannerNarrativeLine[] {
-  const leadChampion = carryHeroId
+  const leadChampion = carryHeroId != null && carryHeroId !== ''
     ? heroById.get(carryHeroId) ?? null
     : null
-  const supportChampions = placementEntries
-    .map((entry) => heroById.get(entry.heroId))
-    .filter((hero): hero is ResolvedHeroAbilityProfile => Boolean(hero) && hero!.heroId !== carryHeroId)
-    .slice(0, 4)
-    .map((hero) => hero.name.display)
+  const supportChampions = collectSupportChampionNames(placementEntries, heroById, carryHeroId)
 
   const hasHeroSignal = activeSignalKinds.has('heroDpsMultiplier')
 
   const explanations: PlannerNarrativeLine[] = [
     {
-      zh: `当前结果先填满 ${placementEntries.length} 个槽位，并确保每个 seat 只使用一名已拥有英雄。`,
-      en: `This result fills ${placementEntries.length} slots first and keeps each seat assigned to only one owned champion.`,
+      zh: `当前结果先填满 ${String(placementEntries.length)} 个槽位，并确保每个 seat 只使用一名已拥有英雄。`,
+      en: `This result fills ${String(placementEntries.length)} slots first and keeps each seat assigned to only one owned champion.`,
     },
   ]
 
@@ -50,8 +58,8 @@ export function buildPlannerExplanations(
     const supportSummaryEn = supportChampions.length > 0 ? supportChampions.join(', ') : 'the remaining owned champions'
 
     explanations.push({
-      zh: `核心输出位 ${leadChampion.name.display}（Seat ${leadChampion.seat}）的 carryDps 约 ${formatGameNumber(objectiveValue)}，再用 ${supportSummaryZh} 提供加成。`,
-      en: `Carry ${leadChampion.name.display} (Seat ${leadChampion.seat}) reaches ~${formatGameNumber(objectiveValue)} carryDps, with ${supportSummaryEn} providing buffs.`,
+      zh: `核心输出位 ${leadChampion.name.display}（Seat ${String(leadChampion.seat)}）的 carryDps 约 ${formatGameNumber(objectiveValue)}，再用 ${supportSummaryZh} 提供加成。`,
+      en: `Carry ${leadChampion.name.display} (Seat ${String(leadChampion.seat)}) reaches ~${formatGameNumber(objectiveValue)} carryDps, with ${supportSummaryEn} providing buffs.`,
     })
   }
 

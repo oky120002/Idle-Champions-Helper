@@ -43,6 +43,56 @@ export function computeSlotDistance(
   return null
 }
 
+function matchDistanceRelation(
+  relation: HeroPositionRelation,
+  slotDistance: number,
+): boolean {
+  if (relation === 'withinTwoSlots') return slotDistance >= 1 && slotDistance <= 2
+  if (relation === 'withinTwoSlotsOrSelf') return slotDistance <= 2
+  if (relation === 'withinThreeSlots') return slotDistance >= 1 && slotDistance <= 3
+  return slotDistance <= 3 // withinThreeSlotsOrSelf
+}
+
+const COLUMN_DELTA_MATCHERS: Partial<Record<HeroPositionRelation, (delta: number) => boolean>> = {
+  sameColumn: (d) => d === 0,
+  sameOrAheadColumns: (d) => d >= 0,
+  adjacentColumns: (d) => Math.abs(d) === 1,
+  aheadColumn: (d) => d === 1,
+  allAheadColumns: (d) => d >= 1,
+  behindColumn: (d) => d === -1,
+  aheadTwoColumns: (d) => d >= 1 && d <= 2,
+  behindTwoColumns: (d) => d <= -1 && d >= -2,
+  allBehindColumns: (d) => d <= -1,
+  sameOrBehindColumn: (d) => d === 0 || d === -1,
+  sameOrBehindColumns: (d) => d <= 0,
+  selfAndBehindTwoColumns: (d) => d === 0 || (d <= -1 && d >= -2),
+  exactlyBehindOneColumn: (d) => d === -1,
+  exactlyBehindTwoColumns: (d) => d === -2,
+  exactlyBehindThreeColumns: (d) => d === -3,
+  // 自身列 + 立即相邻两列（3 列宽带）
+  selfAndAheadAndBehindColumns: (d) => Math.abs(d) <= 1,
+}
+
+function matchColumnRelation(
+  relation: HeroPositionRelation,
+  delta: number,
+  targetColumn: number,
+  columns: number[],
+): boolean {
+  const deltaMatcher = COLUMN_DELTA_MATCHERS[relation]
+  if (deltaMatcher != null) {
+    return deltaMatcher(delta)
+  }
+  const frontColumns = columns.slice(-2)
+  const backColumns = columns.slice(0, 2)
+  if (relation === 'frontTwoColumns') return frontColumns.includes(targetColumn)
+  if (relation === 'backTwoColumns') return backColumns.includes(targetColumn)
+  if (relation === 'rearMostColumn') return targetColumn === columns[0]
+  if (relation === 'secondRearMostColumn') return columns.length >= 2 && targetColumn === columns[1]
+  if (relation === 'thirdRearMostColumn') return columns.length >= 3 && targetColumn === columns[2]
+  return false
+}
+
 export function matchesSlotRelation(
   scenario: ResolvedPlannerScenarioModel,
   sourceSlotId: string,
@@ -82,20 +132,7 @@ export function matchesSlotRelation(
     if (slotDistance === null) {
       return false
     }
-
-    if (relation === 'withinTwoSlots') {
-      return slotDistance >= 1 && slotDistance <= 2
-    }
-
-    if (relation === 'withinTwoSlotsOrSelf') {
-      return slotDistance <= 2
-    }
-
-    if (relation === 'withinThreeSlots') {
-      return slotDistance >= 1 && slotDistance <= 3
-    }
-
-    return slotDistance <= 3
+    return matchDistanceRelation(relation, slotDistance)
   }
 
   const sourceColumn = sourceSlot?.column
@@ -111,61 +148,14 @@ export function matchesSlotRelation(
     .map((slot) => slot.column)
     .filter((column, index, list) => Number.isFinite(column) && list.indexOf(column) === index)
     .sort((left, right) => left - right)
-  const frontColumns = columns.slice(-2)
-  const backColumns = columns.slice(0, 2)
 
-  switch (relation) {
-    case 'sameColumn':
-      return delta === 0
-    case 'sameOrAheadColumns':
-      return delta >= 0
-    case 'adjacentColumns':
-      return Math.abs(delta) === 1
-    case 'aheadColumn':
-      return delta === 1
-    case 'allAheadColumns':
-      return delta >= 1
-    case 'behindColumn':
-      return delta === -1
-    case 'aheadTwoColumns':
-      return delta >= 1 && delta <= 2
-    case 'behindTwoColumns':
-      return delta <= -1 && delta >= -2
-    case 'allBehindColumns':
-      return delta <= -1
-    case 'sameOrBehindColumn':
-      return delta === 0 || delta === -1
-    case 'sameOrBehindColumns':
-      return delta <= 0
-    case 'selfAndBehindTwoColumns':
-      return delta === 0 || (delta <= -1 && delta >= -2)
-    case 'exactlyBehindOneColumn':
-      return delta === -1
-    case 'exactlyBehindTwoColumns':
-      return delta === -2
-    case 'exactlyBehindThreeColumns':
-      return delta === -3
-    case 'frontTwoColumns':
-      return frontColumns.includes(targetColumn)
-    case 'backTwoColumns':
-      return backColumns.includes(targetColumn)
-    case 'selfAndAheadAndBehindColumns':
-      // 自身列 + 立即相邻两列（3 列宽带）
-      return Math.abs(delta) <= 1
-    case 'rearMostColumn':
-      return targetColumn === columns[0]
-    case 'secondRearMostColumn':
-      return columns.length >= 2 && targetColumn === columns[1]
-    case 'thirdRearMostColumn':
-      return columns.length >= 3 && targetColumn === columns[2]
-    default:
-      return false
-  }
+  return matchColumnRelation(relation, delta, targetColumn, columns)
 }
 
 export function resolvePositionRelation(signal: HeroAbilitySignal): HeroPositionRelation {
-  if (signal.positionQualifier?.relation) {
-    return signal.positionQualifier.relation
+  const relation = signal.positionQualifier?.relation
+  if (relation != null) {
+    return relation
   }
 
   if (signal.kind === 'heroDpsMultiplier') {
