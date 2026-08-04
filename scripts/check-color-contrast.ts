@@ -38,9 +38,9 @@ export const ACCENT_THRESHOLD = 3
 
 // OKLab → linear sRGB（Oklab 反变换，Björn Ottosson 标准）。
 const OKLAB_TO_LINEAR_SRGB: readonly (readonly [number, number, number])[] = [
-  [+4.0767416621, -3.3077115913, +0.2309699292],
-  [-1.2684380046, +2.6097574011, -0.3413193965],
-  [-0.0041960863, -0.7034186147, +1.7076147010],
+  [4.0767416621, -3.3077115913, 0.2309699292],
+  [-1.2684380046, 2.6097574011, -0.3413193965],
+  [-0.0041960863, -0.7034186147, 1.7076147010],
 ]
 
 function clampUnit(x: number): number {
@@ -63,9 +63,10 @@ function oklchToSrgb(L: number, C: number, hDeg: number): readonly [number, numb
   const l = l_ ** 3
   const m = m_ ** 3
   const s = s_ ** 3
-  const row0 = OKLAB_TO_LINEAR_SRGB[0]!
-  const row1 = OKLAB_TO_LINEAR_SRGB[1]!
-  const row2 = OKLAB_TO_LINEAR_SRGB[2]!
+  const [row0, row1, row2] = OKLAB_TO_LINEAR_SRGB
+  if (row0 === undefined || row1 === undefined || row2 === undefined) {
+    throw new Error('OKLAB_TO_LINEAR_SRGB 常量表不完整')
+  }
   const r = row0[0] * l + row0[1] * m + row0[2] * s
   const g = row1[0] * l + row1[1] * m + row1[2] * s
   const bl = row2[0] * l + row2[1] * m + row2[2] * s
@@ -98,8 +99,11 @@ export function alphaComposite(fg: Rgba, bg: Rgba): Rgba {
   }
 }
 
+// eslint-disable-next-line sonarjs/super-linear-regex -- CSS 颜色解析正则，输入来自 tokens.css 有限静态集，无对抗性输入
 const OKLCH_RE = /^oklch\(\s*([\d.]+)(%?)\s+([\d.eE+-]+)\s+([\d.eE+-]+)\s*(?:\/\s*([\d.]+)(%?))?\s*\)$/
+// eslint-disable-next-line sonarjs/super-linear-regex -- 同上，CSS 颜色解析，无对抗性输入
 const RGBA_MODERN_RE = /^rgba?\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+)(%?))?\s*\)$/
+// eslint-disable-next-line sonarjs/regex-complexity -- 逗号语法 rgba 必须匹配 4 个数字组，复杂度天然 +1
 const RGBA_LEGACY_RE = /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)$/
 
 /** 解析单条 CSS 颜色值；不识别 var()/color-mix()/命名色（返回 null）。 */
@@ -108,37 +112,40 @@ export function parseColor(raw: string): Rgba | null {
 
   const m1 = OKLCH_RE.exec(s)
   if (m1) {
-    const LRaw = m1[1]!
-    const lpct = m1[2]!
-    const CRaw = m1[3]!
-    const hRaw = m1[4]!
-    const aRaw = m1[5]
-    const apct = m1[6]
-    const L = lpct ? Number(LRaw) / 100 : Number(LRaw)
+    const [, LRaw, lpct, CRaw, hRaw, aRaw, apct] = m1
+    if (LRaw === undefined || lpct === undefined || CRaw === undefined || hRaw === undefined) {
+      throw new Error('oklch 正则匹配但缺少必要捕获组')
+    }
+    const L = lpct !== '' ? Number(LRaw) / 100 : Number(LRaw)
     const C = Number(CRaw)
     const h = Number(hRaw)
-    const alpha = aRaw === undefined ? 1 : apct ? Number(aRaw) / 100 : Number(aRaw)
+    let alpha = 1
+    if (aRaw !== undefined) {
+      alpha = apct != null && apct !== '' ? Number(aRaw) / 100 : Number(aRaw)
+    }
     const [r, g, b] = oklchToSrgb(L, C, h)
     return { r, g, b, a: clampUnit(alpha) }
   }
 
   const m2 = RGBA_MODERN_RE.exec(s)
   if (m2) {
-    const rRaw = m2[1]!
-    const gRaw = m2[2]!
-    const bRaw = m2[3]!
-    const aRaw = m2[4]
-    const apct = m2[5]
-    const alpha = aRaw === undefined ? 1 : apct ? Number(aRaw) / 100 : Number(aRaw)
+    const [, rRaw, gRaw, bRaw, aRaw, apct] = m2
+    if (rRaw === undefined || gRaw === undefined || bRaw === undefined) {
+      throw new Error('rgba modern 正则匹配但缺少必要捕获组')
+    }
+    let alpha = 1
+    if (aRaw !== undefined) {
+      alpha = apct != null && apct !== '' ? Number(aRaw) / 100 : Number(aRaw)
+    }
     return { r: Number(rRaw) / 255, g: Number(gRaw) / 255, b: Number(bRaw) / 255, a: clampUnit(alpha) }
   }
 
   const m3 = RGBA_LEGACY_RE.exec(s)
   if (m3) {
-    const rRaw = m3[1]!
-    const gRaw = m3[2]!
-    const bRaw = m3[3]!
-    const aRaw = m3[4]
+    const [, rRaw, gRaw, bRaw, aRaw] = m3
+    if (rRaw === undefined || gRaw === undefined || bRaw === undefined) {
+      throw new Error('rgba legacy 正则匹配但缺少必要捕获组')
+    }
     return { r: Number(rRaw) / 255, g: Number(gRaw) / 255, b: Number(bRaw) / 255, a: aRaw === undefined ? 1 : Number(aRaw) }
   }
 
@@ -155,7 +162,11 @@ export function extractTopLevelBlock(css: string, selector: string): string | nu
     // selector 前一个字符不得是标识符/方括号（否则如 `:root` 误匹配 `:root[...]` 的前缀）。
     const continuesBefore = before !== undefined && /[\w-[(]/.test(before)
     let j = found + selector.length
-    while (j < css.length && /\s/.test(css[j]!)) j++
+    while (j < css.length) {
+      const ws = css[j]
+      if (ws === undefined || !/\s/.test(ws)) break
+      j++
+    }
     const after = css[j]
     const continuesAfter = after !== undefined && /[\w-[(]/.test(after)
     if (!continuesBefore && after === '{' && !continuesAfter) {
@@ -163,7 +174,7 @@ export function extractTopLevelBlock(css: string, selector: string): string | nu
       let depth = 1
       let k = start
       while (k < css.length && depth > 0) {
-        const ch = css[k]!
+        const ch = css[k]
         if (ch === '{') depth++
         else if (ch === '}') depth--
         k++
@@ -175,6 +186,7 @@ export function extractTopLevelBlock(css: string, selector: string): string | nu
   return null
 }
 
+// eslint-disable-next-line sonarjs/super-linear-regex -- CSS 声明行正则，输入来自 tokens.css 有限静态集
 const DECL_RE = /^\s*(--[\w-]+)\s*:\s*([^;]+);\s*$/
 
 /** 解析主题块内所有可解析的 token；不可解析（var/color-mix/命名色）记为 null。 */
@@ -183,8 +195,8 @@ export function parseThemeBlock(block: string): Record<string, Rgba | null> {
   for (const line of block.split('\n')) {
     const m = DECL_RE.exec(line)
     if (!m) continue
-    const name = m[1]!
-    const value = m[2]!
+    const [, name, value] = m
+    if (name === undefined || value === undefined) continue
     tokens[name] = parseColor(value)
   }
   return tokens
@@ -254,11 +266,11 @@ export function findContrastViolations(
   const lightBlock = extractTopLevelBlock(css, ':root[data-theme="light"]')
 
   const themes: ResolvedTheme[] = []
-  if (darkBlock) {
+  if (darkBlock !== null) {
     const t = resolveTheme('dark', parseThemeBlock(darkBlock))
     if (t) themes.push(t)
   }
-  if (lightBlock) {
+  if (lightBlock !== null) {
     const t = resolveTheme('light', parseThemeBlock(lightBlock))
     if (t) themes.push(t)
   }
@@ -294,18 +306,19 @@ export function findContrastViolations(
 }
 
 function formatViolation(v: ContrastViolation): string {
-  return `  [${v.theme}] ${v.textToken} on ${v.bgToken}: ratio=${v.ratio.toFixed(2)} < ${v.threshold} (${v.role})`
+  return `  [${v.theme}] ${v.textToken} on ${v.bgToken}: ratio=${v.ratio.toFixed(2)} < ${String(v.threshold)} (${v.role})`
 }
 
 function main(): void {
+  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局，tsconfig.node.json types 含 node
   const tokensFile = join(process.cwd(), 'src/styles/foundations/tokens.css')
   const css = readFileSync(tokensFile, 'utf8')
   const violations = findContrastViolations(css)
 
   if (violations.length > 0) {
     console.error(
-      `✗ 发现 ${violations.length} 处文字/背景对比度低于 WCAG AA 门槛（深色 + 浅主题）。` +
-        ` 门槛：正文 ${BODY_THRESHOLD} / 装饰标签 ${ACCENT_THRESHOLD}。详见 .impeccable.md 与 tokens.css 注释。`,
+      `✗ 发现 ${String(violations.length)} 处文字/背景对比度低于 WCAG AA 门槛（深色 + 浅主题）。` +
+        ` 门槛：正文 ${String(BODY_THRESHOLD)} / 装饰标签 ${String(ACCENT_THRESHOLD)}。详见 .impeccable.md 与 tokens.css 注释。`,
     )
     for (const v of violations) {
       console.error(formatViolation(v))
@@ -316,6 +329,6 @@ function main(): void {
 }
 
 // vitest 运行时 process.env.VITEST 为 'true'，跳过 CLI；直接 tsx 运行时执行 main。
-if (!process.env.VITEST) {
+if (process.env.VITEST === undefined || process.env.VITEST === '') {
   main()
 }

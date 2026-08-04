@@ -778,12 +778,14 @@ describe('normalize-idle-champions-definitions', () => {
     const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-normalize-'))
 
     // 文件不存在应回退空默认，不抛错
-    await normalizeDefinitionsSnapshot({
-      input: path.resolve('scripts/fixtures/mock-definitions.json'),
-      localizedInput: path.resolve('scripts/fixtures/mock-definitions-zh.json'),
-      outputDir: path.join(tempDir, 'out'),
-      versionFile: path.join(tempDir, 'version.json'),
-      manualOverrides: path.join(tempDir, 'does-not-exist.json'),
-    })
+    await expect(
+      normalizeDefinitionsSnapshot({
+        input: path.resolve('scripts/fixtures/mock-definitions.json'),
+        localizedInput: path.resolve('scripts/fixtures/mock-definitions-zh.json'),
+        outputDir: path.join(tempDir, 'out'),
+        versionFile: path.join(tempDir, 'version.json'),
+        manualOverrides: path.join(tempDir, 'does-not-exist.json'),
+      }),
+    ).resolves.toBeDefined()
   })
 })

@@ -144,6 +144,7 @@ interface DownloadedPetAsset {
 }
 
 interface ProcessedPng {
+  // eslint-disable-next-line sonarjs/no-reference-error -- Buffer 是 Node.js 运行时全局类型，@types/node 已声明，sonarjs 静态分析未识别
   pngBuffer: Buffer
   width: number
   height: number
@@ -193,7 +194,7 @@ function buildPetAnimationAssetPath(currentVersion: string, petId: string): stri
 function toNonZeroText(value: unknown): string | null {
   const text = toText(value)
 
-  if (!text || text === '0') {
+  if (text == null || text === '' || text === '0') {
     return null
   }
 
@@ -208,7 +209,7 @@ function toNumber(value: unknown): number | null {
   if (typeof value === 'string') {
     const trimmed = value.trim()
 
-    if (!trimmed) {
+    if (trimmed === '') {
       return null
     }
 
@@ -239,7 +240,7 @@ function getUpdatedAt(rawDefinitions: GameDefinitions): string {
 }
 
 function canReusePetImage(existingImage: PetImage | null | undefined, expectedPath: string): boolean {
-  return existingImage?.path === expectedPath && existingImage?.format === 'png'
+  return existingImage?.path === expectedPath
 }
 
 function canReusePetAnimation(
@@ -253,12 +254,10 @@ function canReusePetAnimation(
   return (
     existingAnimation.id === task.petId &&
     existingAnimation.petId === task.petId &&
-    existingAnimation.sourceSlot === 'illustration' &&
     existingAnimation.sourceGraphicId === task.asset.graphicId &&
     existingAnimation.sourceGraphic === task.asset.sourceGraphic &&
     (existingAnimation.sourceVersion ?? null) === (task.asset.sourceVersion ?? null) &&
-    existingAnimation.asset?.path === task.outputPath &&
-    existingAnimation.asset?.format === 'skelanim-zlib'
+    existingAnimation.asset.path === task.outputPath
   )
 }
 
@@ -273,7 +272,7 @@ function buildPremiumRefsByFamiliarId(
     const effectList = Array.isArray(premiumItem.effect) ? premiumItem.effect : []
     for (const rawEffect of effectList) {
       const effect = asRecord(rawEffect)
-      if (!effect || effect.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
+      if (effect?.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
         continue
       }
 
@@ -301,7 +300,7 @@ function buildPatronRefsByFamiliarId(
     const effectList = Array.isArray(patronItem.effects) ? patronItem.effects : []
     for (const rawEffect of effectList) {
       const effect = asRecord(rawEffect)
-      if (!effect || effect.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
+      if (effect?.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
         continue
       }
 
@@ -332,15 +331,15 @@ function pickBestPremiumRef(
     const rawName = (toText(ref.raw.name) ?? '').trim().toLowerCase()
     let score = 0
 
-    if (premiumItemId && rawId === premiumItemId) {
+    if (premiumItemId != null && premiumItemId !== '' && rawId === premiumItemId) {
       score += 1000
     }
 
-    if (sourceItemId && rawId === sourceItemId) {
+    if (sourceItemId != null && sourceItemId !== '' && rawId === sourceItemId) {
       score += 900
     }
 
-    if (familiarName && rawName.includes(familiarName)) {
+    if (familiarName !== '' && rawName.includes(familiarName)) {
       score += 200
     }
 
@@ -426,15 +425,15 @@ function buildAcquisition(
     : null
 
   const patronId = toNonZeroText(sourceRecord?.patron_id ?? asRecord(patronRef?.raw)?.patron_id)
-  const patronDefinition = patronId ? (patronsById.get(patronId) ?? null) : null
-  const localizedPatronDefinition = patronId
+  const patronDefinition = patronId != null && patronId !== '' ? (patronsById.get(patronId) ?? null) : null
+  const localizedPatronDefinition = patronId != null && patronId !== ''
     ? (localizedPatronsById.get(patronId) ?? patronDefinition)
     : null
   const patronName = patronDefinition
     ? normalizeLocalizedText(
       patronDefinition.name,
       localizedPatronDefinition?.name,
-      `Patron ${patronId}`,
+      `Patron ${patronId ?? ''}`,
     )
     : null
   const patronCurrency = patronDefinition
@@ -448,22 +447,23 @@ function buildAcquisition(
     )
     : null
   const patronCost = patronRef ? toNumber(asRecord(patronRef.raw.cost)?.patron_currency) : null
-  const patronInfluence = patronRef
-    ? readPatronInfluenceRequirement(
-      Array.isArray(patronRef.raw.requirements) ? patronRef.raw.requirements : [],
-    )
+  const patronRequirements = patronRef != null && Array.isArray(patronRef.raw.requirements)
+    ? patronRef.raw.requirements
+    : []
+  const patronInfluence = patronRef != null
+    ? readPatronInfluenceRequirement(patronRequirements)
     : null
   const premiumPackName = premiumRef
     ? normalizeLocalizedText(
       premiumRef.raw.name,
-      premiumRef.localized?.name,
+      premiumRef.localized.name,
       `Premium item ${String(premiumRef.raw.id)}`,
     )
     : null
   const premiumPackDescription = premiumRef
     ? normalizeLocalizedText(
       premiumRef.raw.description,
-      premiumRef.localized?.description,
+      premiumRef.localized.description,
       premiumRef.raw.description ?? premiumRef.raw.name ?? '',
     )
     : null
@@ -574,9 +574,7 @@ function summarizeSequence(sequence: SkelAnimSequence): SequenceSummary {
       continue
     }
 
-    if (firstRenderableFrameIndex === null) {
-      firstRenderableFrameIndex = frameIndex
-    }
+    firstRenderableFrameIndex ??= frameIndex
 
     bounds = mergeBounds(bounds, frameBounds)
   }
@@ -638,7 +636,7 @@ async function renderPetSkelAnimPng(task: PetAssetTask, rawBuffer: Buffer): Prom
   const sequences = character.sequences.map(summarizeSequence)
   const defaultSequence = resolveDefaultSequence(sequences, task.preferredSequenceIndexes)
 
-  if (!defaultSequence || !defaultSequence.bounds) {
+  if (!defaultSequence?.bounds) {
     throw new Error('没有可渲染的 illustration sequence')
   }
 
@@ -666,10 +664,10 @@ function copyOpaqueRegion(
       const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const targetIndex = ((offsetY + y) * target.width + (offsetX + x)) * 4
 
-      target.data[targetIndex] = source.data[sourceIndex]!
-      target.data[targetIndex + 1] = source.data[sourceIndex + 1]!
-      target.data[targetIndex + 2] = source.data[sourceIndex + 2]!
-      target.data[targetIndex + 3] = source.data[sourceIndex + 3]!
+      target.data[targetIndex] = source.data[sourceIndex] ?? 0
+      target.data[targetIndex + 1] = source.data[sourceIndex + 1] ?? 0
+      target.data[targetIndex + 2] = source.data[sourceIndex + 2] ?? 0
+      target.data[targetIndex + 3] = source.data[sourceIndex + 3] ?? 0
     }
   }
 }
@@ -730,7 +728,9 @@ function processIllustrationPng(pngBuffer: Buffer): ProcessedPng {
 
 async function downloadRawAsset(task: { remoteUrl: string }): Promise<Buffer> {
   const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
+  const timer = setTimeout(() => {
+    controller.abort()
+  }, FETCH_TIMEOUT_MS)
 
   try {
     const response = await fetch(task.remoteUrl, {
@@ -739,7 +739,7 @@ async function downloadRawAsset(task: { remoteUrl: string }): Promise<Buffer> {
     })
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`)
+      throw new Error(`HTTP ${String(response.status)}`)
     }
 
     return Buffer.from(await response.arrayBuffer())
@@ -852,19 +852,19 @@ function buildSyncCounts(pets: readonly PetCatalogItem[], animations: number): S
   return {
     icons: pets.filter((pet) => Boolean(pet.icon)).length,
     illustrations: pets.filter((pet) => Boolean(pet.illustration)).length,
-    animations,
     gems: countAcquisitionKind(pets, 'gems'),
     premium: countAcquisitionKind(pets, 'premium'),
     patron: countAcquisitionKind(pets, 'patron'),
     unavailable: countAcquisitionKind(pets, 'not-yet-available'),
     unknown: countAcquisitionKind(pets, 'unknown'),
+    animations,
   }
 }
 
 export async function syncPetsCatalog(
   options: SyncPetsCatalogOptions = {},
 ): Promise<SyncPetsCatalogResult> {
-  if (!options.input) {
+  if (options.input == null || options.input === '') {
     throw new Error('缺少 --input，无法根据 definitions 快照同步宠物目录')
   }
 
@@ -873,7 +873,7 @@ export async function syncPetsCatalog(
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const rawDefinitions = (await readJson(input)) as GameDefinitions
-  const localizedDefinitions = options.localizedInput
+  const localizedDefinitions = options.localizedInput != null && options.localizedInput !== ''
     ? ((await readJson(path.resolve(options.localizedInput))) as GameDefinitions)
     : rawDefinitions
   const updatedAt = getUpdatedAt(rawDefinitions)
@@ -953,8 +953,8 @@ export async function syncPetsCatalog(
       Boolean(definition.is_available ?? propertiesRecord?.is_available ?? false)
     const iconGraphicId = toNonZeroText(definition.graphic_id)
     const illustrationGraphicId = toNonZeroText(propertiesRecord?.xl_graphic_id)
-    const iconGraphic = iconGraphicId ? (graphicMap.get(iconGraphicId) ?? null) : null
-    const illustrationGraphic = illustrationGraphicId ? (graphicMap.get(illustrationGraphicId) ?? null) : null
+    const iconGraphic = iconGraphicId != null && iconGraphicId !== '' ? (graphicMap.get(iconGraphicId) ?? null) : null
+    const illustrationGraphic = illustrationGraphicId != null && illustrationGraphicId !== '' ? (graphicMap.get(illustrationGraphicId) ?? null) : null
     const iconAsset = iconGraphic ? buildPetGraphicAsset(iconGraphic, assetBaseUrl) : null
     const illustrationAsset = illustrationGraphic ? buildPetGraphicAsset(illustrationGraphic, assetBaseUrl) : null
 
@@ -962,17 +962,14 @@ export async function syncPetsCatalog(
       id: petId,
       name: normalizeLocalizedText(
         definition.name,
-        localizedDefinition?.name,
+        localizedDefinition.name,
         `Pet ${petId}`,
       ) ?? { original: `Pet ${petId}`, display: `Pet ${petId}` },
       description: normalizeLocalizedText(
         definition.description,
-        localizedDefinition?.description,
+        localizedDefinition.description,
         definition.description ?? definition.name ?? `Pet ${petId}`,
       ),
-      isAvailable,
-      iconGraphicId,
-      illustrationGraphicId,
       acquisition: buildAcquisition(
         definition,
         premiumRef,
@@ -986,6 +983,9 @@ export async function syncPetsCatalog(
       iconSourceVersion: iconAsset?.sourceVersion ?? null,
       illustrationSourceGraphic: illustrationAsset?.sourceGraphic ?? null,
       illustrationSourceVersion: illustrationAsset?.sourceVersion ?? null,
+      isAvailable,
+      iconGraphicId,
+      illustrationGraphicId,
     }
     const existingPet = existingPetById.get(petId) ?? null
 
@@ -997,8 +997,9 @@ export async function syncPetsCatalog(
     const animationOutputPath = buildPetAnimationAssetPath(currentVersion, petId)
 
     if (
-      iconAsset?.sourceGraphic &&
-      existingPet &&
+      iconAsset != null && iconAsset.sourceGraphic !== '' &&
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain -- 保留 existingPet != null 类型守卫，以收窄类型供 canReusePetImage(existingPet.icon) 与 if 体 pet.icon 赋值使用；改 ?. 会破坏类型收窄
+      existingPet != null &&
       existingPet.iconSourceGraphic === iconAsset.sourceGraphic &&
       (existingPet.iconSourceVersion ?? null) === (iconAsset.sourceVersion ?? null) &&
       canReusePetImage(existingPet.icon, iconOutputPath) &&
@@ -1007,7 +1008,7 @@ export async function syncPetsCatalog(
       pet.icon = existingPet.icon
     }
 
-    if (!pet.icon && iconAsset?.sourceGraphic) {
+    if (!pet.icon && iconAsset?.sourceGraphic != null && iconAsset.sourceGraphic !== '') {
       tasks.push({
         petId,
         variant: 'icon',
@@ -1021,8 +1022,9 @@ export async function syncPetsCatalog(
     }
 
     if (
-      illustrationAsset?.sourceGraphic &&
-      existingPet &&
+      illustrationAsset != null && illustrationAsset.sourceGraphic !== '' &&
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain -- 保留 existingPet != null 类型守卫，以收窄类型供 canReusePetImage(existingPet.illustration) 与 if 体 pet.illustration 赋值使用
+      existingPet != null &&
       existingPet.illustrationSourceGraphic === illustrationAsset.sourceGraphic &&
       (existingPet.illustrationSourceVersion ?? null) === (illustrationAsset.sourceVersion ?? null) &&
       canReusePetImage(existingPet.illustration, illustrationOutputPath) &&
@@ -1031,7 +1033,7 @@ export async function syncPetsCatalog(
       pet.illustration = existingPet.illustration
     }
 
-    if (illustrationAsset?.sourceGraphic && !pet.illustration) {
+    if (illustrationAsset?.sourceGraphic != null && illustrationAsset.sourceGraphic !== '' && !pet.illustration) {
       tasks.push({
         petId,
         variant: 'illustration',
@@ -1044,7 +1046,7 @@ export async function syncPetsCatalog(
       })
     }
 
-    if (illustrationAsset?.sourceGraphic && isSkelAnimGraphicDefinition(illustrationGraphic)) {
+    if (illustrationAsset?.sourceGraphic != null && illustrationAsset.sourceGraphic !== '' && isSkelAnimGraphicDefinition(illustrationGraphic)) {
       const animationTask: PetAnimationTask = {
         petId,
         name: pet.name,
@@ -1087,12 +1089,14 @@ export async function syncPetsCatalog(
     }
   }
 
-  const sortedPets = [...pets].sort(
-    (left, right) => compareLocalizedText(left.name, right.name) || Number(left.id) - Number(right.id),
-  )
-  const sortedAnimations = [...animations].sort(
-    (left, right) => compareLocalizedText(left.name, right.name) || Number(left.petId) - Number(right.petId),
-  )
+  const sortedPets = [...pets].sort((left, right) => {
+    const byName = compareLocalizedText(left.name, right.name)
+    return byName !== 0 ? byName : Number(left.id) - Number(right.id)
+  })
+  const sortedAnimations = [...animations].sort((left, right) => {
+    const byName = compareLocalizedText(left.name, right.name)
+    return byName !== 0 ? byName : Number(left.petId) - Number(right.petId)
+  })
   await removeUnexpectedFiles(iconDir, new Set(sortedPets.filter((pet) => pet.icon).map((pet) => `${pet.id}.png`)))
   await removeUnexpectedFiles(
     illustrationDir,
@@ -1128,7 +1132,7 @@ function printUsage(): void {
   --outputDir <dir>          输出目录，默认 ${DEFAULT_OUTPUT_DIR}
   --currentVersion <name>    pets.json 中写入的版本目录，默认 ${DEFAULT_CURRENT_VERSION}
   --masterApiUrl <url>       远端 mobile_assets 基础地址，默认 ${DEFAULT_MASTER_API_URL}
-  --concurrency <n>          并发下载数，默认 ${DEFAULT_CONCURRENCY}
+  --concurrency <n>          并发下载数，默认 ${String(DEFAULT_CONCURRENCY)}
   --help                     显示帮助
 `)
 }
@@ -1146,7 +1150,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -1154,19 +1158,21 @@ async function main(): Promise<void> {
   const result = await syncPetsCatalog(values)
 
   console.log('宠物目录同步完成：')
-  console.log(`- pets: ${result.count}`)
-  console.log(`- local assets: ${result.assetCount}`)
-  console.log(`- icons: ${result.counts.icons}`)
-  console.log(`- illustrations: ${result.counts.illustrations}`)
-  console.log(`- animations: ${result.counts.animations}`)
-  console.log(`- gems: ${result.counts.gems}`)
-  console.log(`- premium: ${result.counts.premium}`)
-  console.log(`- patron: ${result.counts.patron}`)
-  console.log(`- unavailable: ${result.counts.unavailable}`)
-  console.log(`- unknown: ${result.counts.unknown}`)
+  console.log(`- pets: ${String(result.count)}`)
+  console.log(`- local assets: ${String(result.assetCount)}`)
+  console.log(`- icons: ${String(result.counts.icons)}`)
+  console.log(`- illustrations: ${String(result.counts.illustrations)}`)
+  console.log(`- animations: ${String(result.counts.animations)}`)
+  console.log(`- gems: ${String(result.counts.gems)}`)
+  console.log(`- premium: ${String(result.counts.premium)}`)
+  console.log(`- patron: ${String(result.counts.patron)}`)
+  console.log(`- unavailable: ${String(result.counts.unavailable)}`)
+  console.log(`- unknown: ${String(result.counts.unknown)}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+// eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 运行时全局，@types/node 已声明，sonarjs 静态分析未识别
+const argv1 = process.argv[1]
+if (argv1 !== undefined && import.meta.url === pathToFileURL(argv1).href) {
   main().catch((error: unknown) => {
     console.error(`同步宠物目录失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

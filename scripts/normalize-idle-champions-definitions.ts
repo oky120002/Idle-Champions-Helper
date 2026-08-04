@@ -2,6 +2,7 @@ import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import process from 'node:process'
 import type { LocalizedText } from '../src/domain/types/common.ts'
 import { readJson, readJsonIfExists, writeJson } from './data/io-utils.ts'
 import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './data/resource-sync-policy.ts'
@@ -89,7 +90,7 @@ function buildLootCatalog(lootDefines: RawDefinition[]): Array<{
     const effects = asRawArray(loot.effects)
     for (const effect of effects) {
       const effectString = typeof effect.effect_string === 'string' ? effect.effect_string : ''
-      if (!effectString) continue
+      if (effectString === '') continue
       catalog.push({ heroId, slotId, rarity, effectString })
     }
   }
@@ -102,10 +103,12 @@ const DEFAULT_MANUAL_OVERRIDES = 'scripts/data/manual-overrides.json'
 const DEFAULT_CURRENT_VERSION = 'v1'
 
 interface ManualOverrides {
-  readonly championOverrides: Readonly<Record<string, Readonly<Record<string, unknown>>>>
+  // 三字段均来自手工维护的 manual-overrides.json；readManualOverrides 仅在文件缺失时给默认值，
+  // 文件存在时按 ManualOverrides 断言 cast，字段可能缺失——标 optional 让 ?? / ?. 的防御守卫合法。
+  readonly championOverrides?: Readonly<Record<string, Readonly<Record<string, unknown>>>>
   // manual-overrides.json 的 variants 字段运行时形状与 NormalizedVariant 对齐（手工覆写层）。
-  readonly variants: readonly NormalizedVariant[]
-  readonly formations: readonly RawDefinition[]
+  readonly variants?: readonly NormalizedVariant[]
+  readonly formations?: readonly RawDefinition[]
 }
 
 interface EnumEntry {
@@ -241,8 +244,8 @@ function normalizeEnums(
     .map(([, value]) => value)
     .sort((left, right) => Number(left.id) - Number(right.id))
   const modes = uniqueStrings([
-    ...adventures.flatMap((adventure) => adventure.modeTags ?? []),
-    ...variants.flatMap((variant) => variant.modeTags ?? []),
+    ...adventures.flatMap((adventure) => adventure.modeTags),
+    ...variants.flatMap((variant) => variant.modeTags),
   ]).sort((left, right) => left.localeCompare(right))
 
   return [
@@ -287,7 +290,7 @@ async function readManualOverrides(filePath: string): Promise<ManualOverrides> {
 export async function normalizeDefinitionsSnapshot(
   options: NormalizeDefinitionsOptions = {},
 ): Promise<NormalizeDefinitionsResult> {
-  if (!options.input) {
+  if (options.input == null || options.input === '') {
     throw new Error('缺少 --input，无法归一化原始 definitions 快照')
   }
 
@@ -300,9 +303,10 @@ export async function normalizeDefinitionsSnapshot(
   )
 
   const rawDefinitions = (await readJson(input)) as RawDefinition
-  const localizedDefinitions = options.localizedInput
-    ? ((await readJson(path.resolve(options.localizedInput))) as RawDefinition)
-    : rawDefinitions
+  const localizedDefinitions =
+    options.localizedInput != null && options.localizedInput !== ''
+      ? ((await readJson(path.resolve(options.localizedInput))) as RawDefinition)
+      : rawDefinitions
   const masterApiUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
@@ -327,7 +331,7 @@ export async function normalizeDefinitionsSnapshot(
       })
     ) {
       console.log(
-        `normalize skipped: raw checksum=${nextRawChecksum ?? '?'}, pipelineHash=${nextPipelineHash}（FORCE_DATA_REBUILD=1 可强制重跑）`,
+        `normalize skipped: raw checksum=${String(nextRawChecksum ?? '?')}, pipelineHash=${nextPipelineHash}（FORCE_DATA_REBUILD=1 可强制重跑）`,
       )
       return {
         outputDir,
@@ -439,12 +443,13 @@ export async function normalizeDefinitionsSnapshot(
   const patronPerkTiers = asRawArray(rawDefinitions.patron_perk_tier_defines)
     .map((definition) => normalizePatronPerkTierDefinition(definition))
     .filter((value): value is NonNullable<typeof value> => value !== null)
-    .sort(
-      (left, right) =>
-        Number(left.patronId) - Number(right.patronId) ||
-        Number(left.tierId) - Number(right.tierId) ||
-        Number(left.id) - Number(right.id),
-    )
+    .sort((left, right) => {
+      const byPatron = Number(left.patronId) - Number(right.patronId)
+      if (byPatron !== 0) return byPatron
+      const byTier = Number(left.tierId) - Number(right.tierId)
+      if (byTier !== 0) return byTier
+      return Number(left.id) - Number(right.id)
+    })
   const patronPerks = asRawArray(rawDefinitions.patron_perk_defines)
     .map((definition) =>
       normalizePatronPerkDefinition(
@@ -453,12 +458,13 @@ export async function normalizeDefinitionsSnapshot(
       ),
     )
     .filter((value): value is NonNullable<typeof value> => value !== null)
-    .sort(
-      (left, right) =>
-        Number(left.patronId) - Number(right.patronId) ||
-        Number(left.tierId) - Number(right.tierId) ||
-        Number(left.id) - Number(right.id),
-    )
+    .sort((left, right) => {
+      const byPatron = Number(left.patronId) - Number(right.patronId)
+      if (byPatron !== 0) return byPatron
+      const byTier = Number(left.tierId) - Number(right.tierId)
+      if (byTier !== 0) return byTier
+      return Number(left.id) - Number(right.id)
+    })
   const trialsRoles = asRawArray(rawDefinitions.trials_role_defines)
     .map((definition) =>
       normalizeTrialsRoleDefinition(
@@ -491,12 +497,13 @@ export async function normalizeDefinitionsSnapshot(
         manualOverrides.championOverrides?.[toStr(definition.id)] ?? {},
       ),
     )
-    .sort(
-      (left, right) =>
-        left.seat - right.seat ||
-        left.name.display.localeCompare(right.name.display) ||
-        Number(left.id) - Number(right.id),
-    )
+    .sort((left, right) => {
+      const bySeat = left.seat - right.seat
+      if (bySeat !== 0) return bySeat
+      const byName = left.name.display.localeCompare(right.name.display)
+      if (byName !== 0) return byName
+      return Number(left.id) - Number(right.id)
+    })
   const championDefinitionsById = new Map(
     playableChampionDefinitions.map((definition) => [toStr(definition.id), definition]),
   )
@@ -528,16 +535,20 @@ export async function normalizeDefinitionsSnapshot(
     .filter((definition) => !looksLikeVariant(definition))
     .map((definition) => {
       const normalizedAdventure = adventureMap.get(toStr(definition.id))
+      if (normalizedAdventure == null) {
+        throw new Error(`adventure ${toStr(definition.id)} 缺失于 adventureMap`)
+      }
+      const locationId = normalizedAdventure.locationId
       const sceneKey =
-        normalizedAdventure?.locationId
-          ? `${normalizedAdventure.campaign.id}:${normalizedAdventure.locationId}`
+        locationId != null && locationId !== ''
+          ? `${normalizedAdventure.campaign.id}:${locationId}`
           : null
 
       return normalizeAdventure(
         definition,
         localizedVariantsById.get(toStr(definition.id)),
-        normalizedAdventure!,
-        sceneKey ? sceneMap.get(sceneKey) ?? null : null,
+        normalizedAdventure,
+        sceneKey != null && sceneKey !== '' ? sceneMap.get(sceneKey) ?? null : null,
       )
     })
     .sort((left, right) => Number(left.id) - Number(right.id))
@@ -573,12 +584,13 @@ export async function normalizeDefinitionsSnapshot(
             masterApiUrl,
           ),
         )
-        .sort(
-          (left, right) =>
-            left.name.display.localeCompare(right.name.display) ||
-            left.name.original.localeCompare(right.name.original) ||
-            Number(left.id) - Number(right.id),
-        )
+        .sort((left, right) => {
+          const byDisplay = left.name.display.localeCompare(right.name.display)
+          if (byDisplay !== 0) return byDisplay
+          const byOriginal = left.name.original.localeCompare(right.name.original)
+          if (byOriginal !== 0) return byOriginal
+          return Number(left.id) - Number(right.id)
+        })
 
       return normalizeChampionVisual(
         definition,
@@ -590,12 +602,13 @@ export async function normalizeDefinitionsSnapshot(
         masterApiUrl,
       )
     })
-    .sort(
-      (left, right) =>
-        left.seat - right.seat ||
-        left.name.display.localeCompare(right.name.display) ||
-        Number(left.championId) - Number(right.championId),
-    )
+    .sort((left, right) => {
+      const bySeat = left.seat - right.seat
+      if (bySeat !== 0) return bySeat
+      const byName = left.name.display.localeCompare(right.name.display)
+      if (byName !== 0) return byName
+      return Number(left.championId) - Number(right.championId)
+    })
 
   await writeJson(path.join(outputDir, 'champions.json'), {
     items: champions,
@@ -671,8 +684,8 @@ export async function normalizeDefinitionsSnapshot(
     updatedAt,
   })
   await writeJson(versionFile, {
-    current: currentVersion,
     updatedAt,
+    current: currentVersion,
     rawChecksum: getRawChecksum(rawDefinitions),
     pipelineHash: nextPipelineHash,
     counts: {
@@ -748,7 +761,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -761,12 +774,13 @@ async function main(): Promise<void> {
   console.log(`- updatedAt: ${result.updatedAt}`)
   console.log(
     result.counts
-      ? `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, adventures=${result.counts.adventures}, patrons=${result.counts.patrons}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`
+      ? `- counts: champions=${String(result.counts.champions)}, championVisuals=${String(result.counts.championVisuals)}, championDetails=${String(result.counts.championDetails)}, adventures=${String(result.counts.adventures)}, patrons=${String(result.counts.patrons)}, variants=${String(result.counts.variants)}, formations=${String(result.counts.formations)}, enums=${String(result.counts.enums)}`
       : '- counts: (skipped: raw + pipelineHash 未变；FORCE_DATA_REBUILD=1 强制重跑)',
   )
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const scriptPath = process.argv[1]
+if (scriptPath != null && import.meta.url === pathToFileURL(scriptPath).href) {
   main().catch((error: unknown) => {
     console.error(`归一化 definitions 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

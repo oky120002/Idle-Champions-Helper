@@ -49,7 +49,7 @@
 
 - [x] 阶段 1: scripts/data 产品源码（340 违规，27 个非 test 文件；首批 7 大头 `0000d860` + 本批其余 20 个）—— 验证：`npx eslint scripts/data/*.ts`（非 test）0 + tsc 0 + scripts/data 227 单测全过 + diff 复核关键改动语义等价（unknown 判空 / feat-catalog 死守卫清理靠完备 Record+result.ok / io-utils 有界 throw 死代码 / Zod4 .loose() 等价）
 - [x] 阶段 2: scripts/data 测试 + effect-resolvers（151 违规，23 文件：3 大 test + effect-resolvers 11 + 9 小 test）—— 验证：`npx eslint scripts/data/**/*.ts` 全清（scripts/data 至此 0 违规）+ tsc 0 + 227 单测全过 + diff 复核 build-models.test signalPreset 类型修正与生产 effect-helpers.ts:44 一致
-- [ ] 阶段 3: scripts/sync + check-color-contrast（~174：sync-pets 59、sync-portraits 43、check-color-contrast 38、normalize-definitions 34）
+- [x] 阶段 3: scripts/sync-pets/portraits + check-color-contrast/colors + normalize-definitions（180 违规，6 文件）—— 验证：6 文件 eslint 0 + tsc 0 + 相关单测 27 全过（check-color-contrast 18/normalize-definitions 4/check-colors 5）+ diff 复核 PetImage.format 字面量使删比较安全、像素循环 `?? 0` 与原 `!` 在 OOB 均强转 0 等价
 - [ ] 阶段 4: scripts/ 其他（~245：sync-animations/illustrations/console-portraits 27/25/24、audit-animations 20、build-data 19、sync-equipment/specialization 19/19、private-user-data 53、simulator 37）
 - [ ] 阶段 5: src/domain/abilities（~100：heroPredicate 44、signalSemantics 23）
 - [ ] 阶段 6: src/domain/planner 产品 + references（~120：recommendationEngine 35、references tests 17+21、PlannerScenarioSelection 18、compute）

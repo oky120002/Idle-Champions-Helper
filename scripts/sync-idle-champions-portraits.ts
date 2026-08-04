@@ -33,6 +33,7 @@ const DEFAULT_CONCURRENCY = 8
 const PORTRAIT_MANIFEST_FILE_NAME = 'champion-portraits.manifest.json'
 
 interface TrimmedCenteredPng {
+  // eslint-disable-next-line sonarjs/no-reference-error -- Buffer 是 Node.js 全局，tsconfig.node.json types 含 node
   pngBuffer: Buffer
   width: number
   height: number
@@ -129,10 +130,17 @@ function trimTransparentAreaAndCenter(pngBuffer: Buffer): TrimmedCenteredPng {
       const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const outputIndex = ((offsetY + y) * output.width + (offsetX + x)) * 4
 
-      output.data[outputIndex] = source.data[sourceIndex]!
-      output.data[outputIndex + 1] = source.data[sourceIndex + 1]!
-      output.data[outputIndex + 2] = source.data[sourceIndex + 2]!
-      output.data[outputIndex + 3] = source.data[sourceIndex + 3]!
+      const r = source.data[sourceIndex]
+      const g = source.data[sourceIndex + 1]
+      const b = source.data[sourceIndex + 2]
+      const a = source.data[sourceIndex + 3]
+      if (r === undefined || g === undefined || b === undefined || a === undefined) {
+        throw new Error('像素索引越界：source.data 访问超出 bounds 范围')
+      }
+      output.data[outputIndex] = r
+      output.data[outputIndex + 1] = g
+      output.data[outputIndex + 2] = b
+      output.data[outputIndex + 3] = a
     }
   }
 
@@ -154,16 +162,16 @@ async function downloadChampionPortrait(
   task: ChampionPortraitSource,
   options: DownloadOptions,
 ): Promise<PortraitItem> {
-  const existingItem = options.existingItemsByChampionId.get(String(task.championId)) ?? null
+  const existingItem = options.existingItemsByChampionId.get(task.championId) ?? null
   const nextImagePath = buildChampionPortraitPath(options.currentVersion, task.championId)
 
   if (
     existingItem
     && canReuseGeneratedImage({
       existingItem,
+      nextImagePath,
       nextSourceGraphic: task.graphic,
       nextSourceVersion: task.version,
-      nextImagePath,
     })
   ) {
     const outputFile = path.join(options.outputDir, CHAMPION_PORTRAIT_DIR_NAME, `${task.championId}.png`)
@@ -178,7 +186,7 @@ async function downloadChampionPortrait(
   const response = await fetch(url, { cache: 'no-store' })
 
   if (!response.ok) {
-    throw new Error(`下载 ${task.graphic} 失败：HTTP ${response.status}`)
+    throw new Error(`下载 ${task.graphic} 失败：HTTP ${String(response.status)}`)
   }
 
   const rawBuffer = Buffer.from(await response.arrayBuffer())
@@ -222,7 +230,7 @@ async function downloadChampionPortrait(
 export async function syncChampionPortraits(
   options: SyncPortraitsOptions = {},
 ): Promise<PortraitSyncResult> {
-  if (!options.input) {
+  if (options.input === undefined || options.input === '') {
     throw new Error('缺少 --input，无法根据 definitions 快照同步英雄头像')
   }
 
@@ -258,7 +266,7 @@ export async function syncChampionPortraits(
   const existingItemsByChampionId = new Map<string, PortraitItem>(
     (existingManifest?.items ?? []).map(
       (item): [string, PortraitItem] => [
-        String((item as PortraitItem).championId),
+        (item as PortraitItem).championId,
         item as PortraitItem,
       ],
     ),
@@ -269,9 +277,9 @@ export async function syncChampionPortraits(
   const portraits = await runWithConcurrency(tasks, concurrency, (task) =>
     downloadChampionPortrait(task, {
       outputDir,
+      existingItemsByChampionId,
       currentVersion: options.currentVersion ?? 'v1',
       masterApiUrl: options.masterApiUrl,
-      existingItemsByChampionId,
     }),
   )
 
@@ -293,19 +301,23 @@ export async function syncChampionPortraits(
 
   portraits.forEach((portrait) => {
     const dimensionKey =
-      portrait.width && portrait.height ? `${portrait.width}x${portrait.height}` : 'unknown'
+      portrait.width !== 0 && portrait.height !== 0
+        ? `${String(portrait.width)}x${String(portrait.height)}`
+        : 'unknown'
     dimensionSummary.set(dimensionKey, (dimensionSummary.get(dimensionKey) ?? 0) + 1)
+    const sw = portrait.sourceWidth
+    const sh = portrait.sourceHeight
     const sourceDimensionKey =
-      portrait.sourceWidth && portrait.sourceHeight
-        ? `${portrait.sourceWidth}x${portrait.sourceHeight}`
+      sw != null && sw !== 0 && sh != null && sh !== 0
+        ? `${String(sw)}x${String(sh)}`
         : 'unknown'
     sourceDimensionSummary.set(
       sourceDimensionKey,
       (sourceDimensionSummary.get(sourceDimensionKey) ?? 0) + 1,
     )
     const contentDimensionKey =
-      portrait.contentWidth && portrait.contentHeight
-        ? `${portrait.contentWidth}x${portrait.contentHeight}`
+      portrait.contentWidth !== 0 && portrait.contentHeight !== 0
+        ? `${String(portrait.contentWidth)}x${String(portrait.contentHeight)}`
         : 'unknown'
     contentDimensionSummary.set(
       contentDimensionKey,
@@ -323,8 +335,6 @@ export async function syncChampionPortraits(
   return {
     outputDir: path.join(outputDir, CHAMPION_PORTRAIT_DIR_NAME),
     count: portraits.length,
-    portraits,
-    trimmedCount,
     sourceDimensions: Array.from(sourceDimensionSummary.entries())
       .sort((left, right) => left[0].localeCompare(right[0]))
       .map(([size, count]) => ({ size, count })),
@@ -337,6 +347,8 @@ export async function syncChampionPortraits(
     wrappedBytes: Array.from(wrappedBytesSummary.entries())
       .sort((left, right) => Number(left[0]) - Number(right[0]))
       .map(([bytes, count]) => ({ bytes: Number(bytes), count })),
+    portraits,
+    trimmedCount,
   }
 }
 
@@ -348,7 +360,7 @@ function printUsage(): void {
   --input <file>             官方 definitions 快照 JSON
   --outputDir <dir>          头像输出根目录，默认 ${DEFAULT_OUTPUT_DIR}
   --masterApiUrl <url>       官方 mobile_assets 根地址，默认 ${DEFAULT_MASTER_API_URL}
-  --concurrency <n>          并发下载数，默认 ${DEFAULT_CONCURRENCY}
+  --concurrency <n>          并发下载数，默认 ${String(DEFAULT_CONCURRENCY)}
   --help                     显示帮助
 `)
 }
@@ -364,7 +376,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -373,23 +385,29 @@ async function main(): Promise<void> {
 
   console.log('英雄头像同步完成：')
   console.log(`- 输出目录: ${result.outputDir}`)
-  console.log(`- 数量: ${result.count}`)
-  console.log(`- 已裁切透明边数量: ${result.trimmedCount}`)
-  console.log(
-    `- 原始尺寸分布: ${result.sourceDimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
-  )
-  console.log(
-    `- 有效内容尺寸: ${result.contentDimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
-  )
-  console.log(
-    `- 尺寸分布: ${result.dimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
-  )
-  console.log(
-    `- 外层包装字节: ${result.wrappedBytes.map((item) => `${item.bytes} (${item.count})`).join(', ') || '无'}`,
-  )
+  console.log(`- 数量: ${String(result.count)}`)
+  console.log(`- 已裁切透明边数量: ${String(result.trimmedCount)}`)
+  const sourceDims = result.sourceDimensions
+    .map((item) => `${item.size} (${String(item.count)})`)
+    .join(', ')
+  console.log(`- 原始尺寸分布: ${sourceDims !== '' ? sourceDims : '无'}`)
+  const contentDims = result.contentDimensions
+    .map((item) => `${item.size} (${String(item.count)})`)
+    .join(', ')
+  console.log(`- 有效内容尺寸: ${contentDims !== '' ? contentDims : '无'}`)
+  const dims = result.dimensions
+    .map((item) => `${item.size} (${String(item.count)})`)
+    .join(', ')
+  console.log(`- 尺寸分布: ${dims !== '' ? dims : '无'}`)
+  const wrappedBytesStr = result.wrappedBytes
+    .map((item) => `${String(item.bytes)} (${String(item.count)})`)
+    .join(', ')
+  console.log(`- 外层包装字节: ${wrappedBytesStr !== '' ? wrappedBytesStr : '无'}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+// eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局，tsconfig.node.json types 含 node
+const argv1 = process.argv[1]
+if (argv1 !== undefined && import.meta.url === pathToFileURL(argv1).href) {
   main().catch((error: unknown) => {
     console.error(`同步英雄头像失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
