@@ -15,7 +15,7 @@ export async function readUserProfileSnapshot(): Promise<UserProfileSnapshot | n
     await waitForTransaction(transaction)
     // 腐蚀校验：stale 跨版本快照或 IDB 腐蚀（如 OwnedHero.level=NaN）会让 scoreFormation 静默零分（#4），
     // 读出处统一校验失败即 throw，由 resolveUserProfileSnapshot 内部 catch 降级为 null。
-    return raw ? parseStoredRecord<UserProfileSnapshot>(raw, userProfileSnapshotSchema, 'user profile snapshot') : null
+    return raw != null ? (parseStoredRecord(raw, userProfileSnapshotSchema, 'user profile snapshot') as UserProfileSnapshot) : null
   } finally {
     database.close()
   }

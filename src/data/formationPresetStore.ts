@@ -23,7 +23,7 @@ export async function listFormationPresets(): Promise<FormationPreset[]> {
     const store = transaction.objectStore(APP_STORE_NAMES.formationPresets)
     const raw = await requestToPromise(store.getAll() as IDBRequest<unknown[]>)
     await waitForTransaction(transaction)
-    const presets = parseStoredRecord<FormationPreset[]>(raw, formationPresetArraySchema, 'formation presets')
+    const presets = parseStoredRecord(raw, formationPresetArraySchema, 'formation presets') as FormationPreset[]
     return sortByUpdatedAtDescending(presets)
   } finally {
     database.close()
