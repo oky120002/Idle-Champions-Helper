@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { SpecializationEntry } from '../../domain/abilities/specializationSignals'
 import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import {
   applyTierSelection,
   availableSpecializations,
@@ -21,9 +22,9 @@ function makeEntry(
 ): SpecializationEntry {
   return {
     upgradeId,
-    specializationName: { original: display, display },
     requiredLevel,
     requiredUpgradeId,
+    specializationName: { original: display, display },
     signals: [{
       dimension: 'damage',
       bucket: 'carrySignals',
@@ -51,7 +52,8 @@ describe('mergeSpecializationOverrides', () => {
     const merged = mergeSpecializationOverrides(snap, { '88': ['6840', '6978'] })
     expect(merged).not.toBe(snap)
     expect(merged).not.toBeNull()
-    const byId = new Map(merged!.ownedHeroes.map((hero) => [hero.heroId, hero]))
+    const mergedSnap = unwrap(merged, 'merged should be non-null')
+    const byId = new Map(mergedSnap.ownedHeroes.map((hero) => [hero.heroId, hero]))
     expect(byId.get('7')).toBe(hero7)
     expect(byId.get('7')?.specializations).toEqual(['109'])
     expect(byId.get('88')?.specializations).toEqual(['6840', '6978'])
@@ -63,7 +65,7 @@ describe('mergeSpecializationOverrides', () => {
     })
     const merged = mergeSpecializationOverrides(snap, { '7': [] })
     expect(merged).not.toBeNull()
-    expect(specOf(merged!, '7')).toEqual([])
+    expect(specOf(unwrap(merged, 'merged should be non-null'), '7')).toEqual([])
   })
 
   it('不修改原 snapshot（不可变）', () => {
@@ -89,7 +91,8 @@ describe('groupSpecializationsByTier', () => {
       makeEntry('201', 20),
     ])
     expect(tiers.map((tier) => tier.requiredLevel)).toEqual([20, 50, 120])
-    expect(tiers.find((tier) => tier.requiredLevel === 50)!.entries.map((entry) => entry.upgradeId)).toEqual(['109', '110'])
+    const tier50 = unwrap(tiers.find((tier) => tier.requiredLevel === 50), 'tier 50 missing')
+    expect(tier50.entries.map((entry) => entry.upgradeId)).toEqual(['109', '110'])
   })
 
   it('requiredLevel 缺失（null）归入同一组并排在末尾', () => {
@@ -99,7 +102,8 @@ describe('groupSpecializationsByTier', () => {
       makeEntry('c', null),
     ])
     expect(tiers.map((tier) => tier.requiredLevel)).toEqual([50, null])
-    expect(tiers.find((tier) => tier.requiredLevel === null)!.entries.map((entry) => entry.upgradeId)).toEqual(['a', 'c'])
+    const nullTier = unwrap(tiers.find((tier) => tier.requiredLevel === null), 'null tier missing')
+    expect(nullTier.entries.map((entry) => entry.upgradeId)).toEqual(['a', 'c'])
   })
 
   it('空 → 空', () => {
@@ -136,9 +140,9 @@ describe('availableSpecializations', () => {
       makeEntry('300', 120, '300', '999'), // 999 非 catalog 选项 → 视为恒满足
     ]
     // 选中 100 → 依赖 100 的 200/201 可用；300 的 gate 999 非 catalog → 恒可用
-    expect(availableSpecializations(entries, ['100']).map((e) => e.upgradeId).sort()).toEqual(['100', '200', '201', '300'])
+    expect(availableSpecializations(entries, ['100']).map((e) => e.upgradeId).sort((a, b) => a.localeCompare(b))).toEqual(['100', '200', '201', '300'])
     // 未选任何 → 200/201（gate 100 未选）不可用；100、300 可用
-    expect(availableSpecializations(entries, []).map((e) => e.upgradeId).sort()).toEqual(['100', '300'])
+    expect(availableSpecializations(entries, []).map((e) => e.upgradeId).sort((a, b) => a.localeCompare(b))).toEqual(['100', '300'])
   })
 
   it('空 entries → 空', () => {
@@ -154,11 +158,11 @@ describe('pruneOrphanedSpecializations', () => {
       makeEntry('3', 120, '3', '2'),
     ]
     // 全链完整 → 全保留
-    expect(pruneOrphanedSpecializations(['1', '2', '3'], entries).sort()).toEqual(['1', '2', '3'])
+    expect(pruneOrphanedSpecializations(['1', '2', '3'], entries).sort((a, b) => a.localeCompare(b))).toEqual(['1', '2', '3'])
     // 缺 1 → 2 孤立移除 → 3 随之孤立移除（迭代到稳定）
     expect(pruneOrphanedSpecializations(['2', '3'], entries)).toEqual([])
     // 缺 2（但 1 在）→ 3 孤立移除，1/2 保留
-    expect(pruneOrphanedSpecializations(['1', '3'], entries).sort()).toEqual(['1'])
+    expect(pruneOrphanedSpecializations(['1', '3'], entries).sort((a, b) => a.localeCompare(b))).toEqual(['1'])
   })
 
   it('前置指向非 catalog 选项（普通升级 gate）→ 不视为孤立', () => {
@@ -168,11 +172,11 @@ describe('pruneOrphanedSpecializations', () => {
 
   it('catalog 外的选中 id 原样保留（存档值/engine 语义，不归此函数管）', () => {
     const entries = [makeEntry('100', 50)]
-    expect(pruneOrphanedSpecializations(['100', 'legacy-id'], entries).sort()).toEqual(['100', 'legacy-id'])
+    expect(pruneOrphanedSpecializations(['100', 'legacy-id'], entries).sort((a, b) => a.localeCompare(b))).toEqual(['100', 'legacy-id'])
   })
 
   it('无依赖（全顶层）→ 原样返回', () => {
     const entries = [makeEntry('100', 50), makeEntry('200', 50)]
-    expect(pruneOrphanedSpecializations(['100', '200'], entries).sort()).toEqual(['100', '200'])
+    expect(pruneOrphanedSpecializations(['100', '200'], entries).sort((a, b) => a.localeCompare(b))).toEqual(['100', '200'])
   })
 })

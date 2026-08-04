@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { PlannerComputeRunner } from '../../domain/planner/compute/plannerCompute'
 import type { FormationEvaluation, PlannerRecommendationOptions } from '../../domain/planner/recommendationEngine'
 import type { PlannerCollections, PlannerRecommendation } from '../../domain/planner/recommendationTypes'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { usePlannerEvaluation, usePlannerRecommendation } from './usePlannerCompute'
 
 const collections: PlannerCollections = {
@@ -39,7 +40,10 @@ function createControllableRunner(): ControllableRunner {
   }
   return {
     runner,
-    resolveRecommend: (index, value) => recommendResolvers.at(index)!(value),
+    resolveRecommend: (index, value) => {
+      const resolver = unwrap(recommendResolvers.at(index), `resolver at ${String(index)} missing`)
+      resolver(value)
+    },
   }
 }
 

@@ -22,6 +22,7 @@ const EMPTY_RECOMMENDATION: PlannerRecommendation = {
   blocker: null,
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级状态聚合 hook（view model）：9 个 useState + 多个 memo/callback 围绕单一推荐流程编排；无纯逻辑可提取（全是 hook 声明），拆子 hook 会横跨 options memo 增加耦合且降低一跳命中率
 export function usePlannerPageModel() {
   const {
     collections,
@@ -52,7 +53,9 @@ export function usePlannerPageModel() {
 
   // runner 单例：浏览器用 worker 卸载 beam search（UI 不冻）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
-  useEffect(() => () => runner.dispose(), [runner])
+  useEffect(() => () => {
+    runner.dispose()
+  }, [runner])
 
   // 切换场景时锁槽/指定 carry 失效（slotId 随场景变）；模式/候选变化只 reset Top K 选中。
   // reset 放事件回调（非 effect），避免 setState-in-effect 级联渲染。
@@ -147,11 +150,7 @@ export function usePlannerPageModel() {
     setLockedSlots((current) => ({ ...current, [slotId]: heroId }))
   }, [])
   const clearSlotLock = useCallback((slotId: string) => {
-    setLockedSlots((current) => {
-      const next = { ...current }
-      delete next[slotId]
-      return next
-    })
+    setLockedSlots((current) => Object.fromEntries(Object.entries(current).filter(([key]) => key !== slotId)))
   }, [])
   const selectResultIndex = useCallback((index: number) => {
     setSelectedResultIndex(index)
@@ -162,9 +161,7 @@ export function usePlannerPageModel() {
   const clearHeroSpecializationOverride = useCallback((heroId: string) => {
     setSpecializationOverrides((current) => {
       if (!Object.prototype.hasOwnProperty.call(current, heroId)) return current
-      const next = { ...current }
-      delete next[heroId]
-      return next
+      return Object.fromEntries(Object.entries(current).filter(([key]) => key !== heroId))
     })
   }, [])
 
@@ -180,7 +177,6 @@ export function usePlannerPageModel() {
     loadError,
     loadState,
     manualStackCount,
-    plannerRecommendation: result ?? EMPTY_RECOMMENDATION,
     profileSnapshot,
     recommendLoading,
     recommendError,
@@ -201,5 +197,6 @@ export function usePlannerPageModel() {
     selectScoringMode,
     setHeroSpecializationOverride,
     lockSlot,
+    plannerRecommendation: result ?? EMPTY_RECOMMENDATION,
   }
 }

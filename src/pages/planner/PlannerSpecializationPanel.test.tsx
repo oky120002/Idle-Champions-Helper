@@ -6,14 +6,15 @@ import { I18nProvider } from '../../app/i18n'
 import type { Champion } from '../../domain/types'
 import type { SpecializationCatalog, SpecializationEntry } from '../../domain/abilities/specializationSignals'
 import { createOwnedHero } from '../../domain/user-profile/fixtures'
+import { queryOrFail } from '../../../tests/utils/dom-assertions'
 import { PlannerSpecializationPanel } from './PlannerSpecializationPanel'
 import type { SpecializationOverrideMap } from './specializationSelection'
 
 function makeEntry(upgradeId: string, requiredLevel: number | null, display: string): SpecializationEntry {
   return {
     upgradeId,
-    specializationName: { original: display, display },
     requiredLevel,
+    specializationName: { original: display, display },
     signals: [{
       dimension: 'damage',
       bucket: 'carrySignals',
@@ -105,7 +106,7 @@ describe('PlannerSpecializationPanel', () => {
       ownedHeroes: [createOwnedHero({ heroId: '7', specializations: [] })],
       onSetOverride,
     })
-    await user.click(container.querySelector('[data-spec-option="109"]')!)
+    await user.click(queryOrFail(container, '[data-spec-option="109"]'))
     expect(onSetOverride).toHaveBeenCalledWith('7', ['109'])
   })
 
@@ -115,7 +116,7 @@ describe('PlannerSpecializationPanel', () => {
       ownedHeroes: [createOwnedHero({ heroId: '7', specializations: ['109'] })],
       onSetOverride,
     })
-    await user.click(container.querySelector('[data-spec-option="none"]')!)
+    await user.click(queryOrFail(container, '[data-spec-option="none"]'))
     expect(onSetOverride).toHaveBeenCalledWith('7', [])
   })
 
@@ -127,7 +128,7 @@ describe('PlannerSpecializationPanel', () => {
       onSetOverride,
     })
     // 选第二层（解锁等级 50）的 6840：应保留第一层 6838
-    await user.click(container.querySelector('[data-spec-option="6840"]')!)
+    await user.click(queryOrFail(container, '[data-spec-option="6840"]'))
     expect(onSetOverride).toHaveBeenLastCalledWith('88', ['6838', '6840'])
   })
 
@@ -140,7 +141,7 @@ describe('PlannerSpecializationPanel', () => {
     })
     const resetBtn = container.querySelector('[data-reset-hero="7"]')
     expect(resetBtn).not.toBeNull()
-    await user.click(resetBtn!)
+    await user.click(queryOrFail(container, '[data-reset-hero="7"]'))
     expect(onClearOverride).toHaveBeenCalledWith('7')
   })
 

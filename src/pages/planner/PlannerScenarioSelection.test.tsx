@@ -97,9 +97,9 @@ describe('PlannerScenarioSelection', () => {
   })
 
   it('默认精简显示结果，并允许显式展开全部匹配项', async () => {
-    const variants = Array.from({ length: 13 }, (_, index) => createVariant(`variant-${index + 1}`, {
+    const variants = Array.from({ length: 13 }, (_, index) => createVariant(`variant-${String(index + 1)}`, {
       campaign: option('campaign-a', 'Grand Tour', '剑湾之旅'),
-      name: text(`Variant ${index + 1}`, `关卡 ${index + 1}`),
+      name: text(`Variant ${String(index + 1)}`, `关卡 ${String(index + 1)}`),
       objectiveArea: 75 + index,
     }))
 

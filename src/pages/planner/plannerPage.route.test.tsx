@@ -248,7 +248,7 @@ describe('planner route and navigation', () => {
     expect(within(result).getByText(/^核心英雄 DPS$/)).toBeInTheDocument()
 
     const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
-      .map((item) => item.textContent ?? '')
+      .map((item) => item.textContent)
     expect(placementTexts).toHaveLength(4)
     expect(placementTexts.some((text) => text.includes('bruenor'))).toBe(true)
     expect(placementTexts.some((text) => text.includes('celeste'))).toBe(true)
@@ -283,7 +283,7 @@ describe('planner route and navigation', () => {
 
     const result = await screen.findByRole('article', { name: /推荐结果/ })
     const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
-      .map((item) => item.textContent ?? '')
+      .map((item) => item.textContent)
     const seatOneHeroes = placementTexts.filter((text) => text.includes('bruenor') || text.includes('asharra'))
     expect(seatOneHeroes).toHaveLength(1)
   })

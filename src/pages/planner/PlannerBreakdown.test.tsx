@@ -94,7 +94,7 @@ describe('PlannerBreakdown', () => {
   it('每位英雄超过 3 条加成时折叠为 +N', () => {
     const signals: PlacementFitScorePart[] = Array.from({ length: 5 }, (_, index) => ({
       signalKind: 'heroDpsMultiplier',
-      rawEffect: `e,${index}`,
+      rawEffect: `e,${String(index)}`,
       multiplier: 2,
       active: true,
       reasonCode: 'carry-self-match',
