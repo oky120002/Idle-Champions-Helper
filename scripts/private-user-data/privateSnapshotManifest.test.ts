@@ -38,21 +38,21 @@ describe('private snapshot manifest', () => {
   })
 
   it('拒绝 tmp/private-user-data 之外的目标路径', () => {
-    expect(() =>
+    expect(() => {
       writeManifest({
         targetDir: 'src/data/snapshots',
         manifest: stubManifest,
-      }),
-    ).toThrow(/tmp[/\\]private-user-data/)
+      })
+    }).toThrow(/tmp[/\\]private-user-data/)
   })
 
   it('拒绝空路径', () => {
-    expect(() =>
+    expect(() => {
       writeManifest({
         targetDir: '',
         manifest: stubManifest,
-      }),
-    ).toThrow()
+      })
+    }).toThrow()
   })
 
   it('manifest 包含 payload 名称和时间戳', () => {

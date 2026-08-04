@@ -1,6 +1,8 @@
+import type { Buffer } from 'node:buffer'
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import { access, readFile, stat } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 const MIME_TYPES: Record<string, string> = {
@@ -71,6 +73,7 @@ function sendResponse(
   response.end(body)
 }
 
+// eslint-disable-next-line sonarjs/function-return-type -- 多态返回是调用方区分 redirect/403/404/路径 的既有契约，重构需同步改调用方，超出 lint 范围
 function resolveFilePath(distDirectory: string, pathname: string): ResolveFilePathResult {
   if (pathname === '/' || pathname === BASE_PATH.slice(0, -1)) {
     return { redirect: BASE_PATH }
@@ -81,7 +84,7 @@ function resolveFilePath(distDirectory: string, pathname: string): ResolveFilePa
   }
 
   const relativePath = pathname.slice(BASE_PATH.length)
-  const normalizedRelativePath = path.normalize(relativePath || 'index.html')
+  const normalizedRelativePath = path.normalize(relativePath !== '' ? relativePath : 'index.html')
   const targetPath = path.resolve(distDirectory, normalizedRelativePath)
 
   if (!targetPath.startsWith(distDirectory)) {
@@ -107,7 +110,7 @@ async function tryReadFile(filePath: string): Promise<ServedFile | null> {
       contentType: MIME_TYPES[extension] ?? 'application/octet-stream',
     }
   } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'ENOENT') {
       return null
     }
 
@@ -122,7 +125,7 @@ async function handleRequest(
   host: string,
   port: number,
 ): Promise<void> {
-  if (!request.url) {
+  if (request.url === undefined || request.url === '') {
     sendResponse(response, 400, 'Bad Request', { 'Content-Type': 'text/plain; charset=utf-8' })
     return
   }
@@ -135,7 +138,7 @@ async function handleRequest(
     return
   }
 
-  const hostHeader = typeof request.headers.host === 'string' ? request.headers.host : `${host}:${port}`
+  const hostHeader = typeof request.headers.host === 'string' ? request.headers.host : `${host}:${String(port)}`
   const url = new URL(request.url, `http://${hostHeader}`)
   const pathname = decodeURIComponent(url.pathname)
   const resolvedPath = resolveFilePath(distDirectory, pathname)
@@ -171,7 +174,7 @@ async function handleRequest(
     return
   }
 
-  if (!path.extname(resolvedPath)) {
+  if (path.extname(resolvedPath) === '') {
     const fallbackFile = await tryReadFile(path.resolve(distDirectory, 'index.html'))
 
     if (fallbackFile) {
@@ -205,5 +208,5 @@ const server: Server = createServer((request, response) => {
 })
 
 server.listen(port, host, () => {
-  console.log(`GitHub Pages 预览已启动：http://${host}:${port}${BASE_PATH}`)
+  console.log(`GitHub Pages 预览已启动：http://${host}:${String(port)}${BASE_PATH}`)
 })

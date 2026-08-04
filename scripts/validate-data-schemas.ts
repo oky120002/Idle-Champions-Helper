@@ -1,6 +1,7 @@
 import { readdir } from 'node:fs/promises'
 import path from 'node:path'
-import type { ZodTypeAny } from 'zod'
+import process from 'node:process'
+import type { ZodType } from 'zod'
 
 import {
   adventuresCollectionSchema,
@@ -23,7 +24,7 @@ const DEFAULT_DATA_DIR = 'public/data/v1'
 
 interface CollectionCheck {
   name: string
-  schema: ZodTypeAny
+  schema: ZodType
 }
 
 interface ValidationFailure {
@@ -114,7 +115,7 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log(`data schema 校验：${checked} 目标，${failures.length} 失败`)
+  console.log(`data schema 校验：${String(checked)} 目标，${String(failures.length)} 失败`)
 
   if (failures.length > 0) {
     for (const failure of failures) {

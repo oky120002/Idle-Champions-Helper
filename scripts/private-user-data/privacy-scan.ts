@@ -10,6 +10,8 @@
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import process from 'node:process'
+
 import { scanContent } from './sensitive-output-scanner.ts'
 
 const SCAN_DIRS: readonly string[] = ['src']
@@ -61,7 +63,7 @@ function runScan(): void {
 
         if (result.hasFindings) {
           for (const finding of result.findings) {
-            console.error(`[PRIVACY] ${finding.filePath}:${finding.line} — ${finding.description}`)
+            console.error(`[PRIVACY] ${finding.filePath}:${String(finding.line)} — ${finding.description}`)
             totalFindings += 1
           }
         }
@@ -72,7 +74,7 @@ function runScan(): void {
   }
 
   if (totalFindings > 0) {
-    console.error(`\nPrivacy scan found ${totalFindings} issue(s).`)
+    console.error(`\nPrivacy scan found ${String(totalFindings)} issue(s).`)
     process.exit(1)
   }
 

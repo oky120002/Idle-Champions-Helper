@@ -47,8 +47,8 @@ describe('private user profile payload fetcher', () => {
       })
 
     const result = await fetchAndStorePrivateUserProfilePayloads({
-      cwd,
       env: {},
+      cwd,
       fetchImpl,
     })
 
@@ -107,8 +107,8 @@ describe('private user profile payload fetcher', () => {
       })
 
     await fetchAndStorePrivateUserProfilePayloads({
-      cwd,
       env: {},
+      cwd,
       fetchImpl,
     })
 
@@ -144,10 +144,10 @@ describe('private user profile payload fetcher', () => {
       })
 
     await fetchAndStorePrivateUserProfilePayloads({
-      cwd,
       env: {},
-      fetchImpl,
       baseUrl: 'https://ps28.idlechampions.com/~idledragons/',
+      cwd,
+      fetchImpl,
     })
 
     expect(String(fetchImpl.mock.calls[0]?.[0])).toContain('https://ps28.idlechampions.com/~idledragons/')

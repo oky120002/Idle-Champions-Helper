@@ -13,6 +13,7 @@
  */
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 
 import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel.ts'
 import type { OfficialPlannerScenarioModel } from '../../src/domain/planner/plannerModel.ts'
@@ -86,7 +87,7 @@ function parseArgs(argv: string[]): CliArgs {
       profilePath = args[++i] ?? null
     } else if (arg === '--placements') {
       placements = JSON.parse(args[++i] ?? '{}') as Record<string, string>
-    } else if (arg?.startsWith('--')) {
+    } else if (arg?.startsWith('--') === true) {
       throw new Error(`未知参数：${arg}`)
     } else {
       variantId = arg ?? null
@@ -105,27 +106,29 @@ async function main() {
 
   const collections = await loadCollections()
   const variant =
-    (variantId && collections.variants.find((item) => item.id === variantId)) ?? collections.variants[0] ?? null
-  if (!variant) {
+    (variantId != null && variantId !== '' ? collections.variants.find((item) => item.id === variantId) : null) ??
+    collections.variants[0] ??
+    null
+  if (variant === null) {
     throw new Error('未找到任何 variant（public/data/v1/variants.json 为空）')
   }
-  if (variantId && variant.id !== variantId) {
+  if (variantId != null && variantId !== '' && variant.id !== variantId) {
     process.stderr.write(`[simulate] 未找到 variant ${variantId}，回退首个 variant：${variant.id}\n`)
   }
 
-  const profile = profilePath
+  const profile = profilePath != null && profilePath !== ''
     ? (JSON.parse(await readFile(profilePath, 'utf8')) as UserProfileSnapshot)
     : synthesizeAllOwnedProfile(collections)
 
   const output =
     mode === 'evaluate'
-      ? evaluateFormation({ variant, collections, profileSnapshot: profile, placements: placements ?? {}, options })
-      : buildPlannerRecommendation({ variant, collections, profileSnapshot: profile, options })
+      ? evaluateFormation({ variant, collections, options, profileSnapshot: profile, placements: placements ?? {} })
+      : buildPlannerRecommendation({ variant, collections, options, profileSnapshot: profile })
 
   process.stdout.write(`${JSON.stringify(output, null, 2)}\n`)
 }
 
-main().catch((error) => {
+main().catch((error: unknown) => {
   process.stderr.write(`[simulate] ${error instanceof Error ? error.message : String(error)}\n`)
   process.exit(1)
 })

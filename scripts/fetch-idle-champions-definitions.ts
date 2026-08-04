@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 
@@ -14,15 +15,16 @@ function ensureTrailingSlash(value: string): string {
 
 function buildFileSuffix(languageId: unknown, fileLabel?: string): string {
   const langText = typeof languageId === 'string' || typeof languageId === 'number' ? languageId : null
-  const langPart = langText ? `lang-${langText}` : ''
+  const langPart = langText != null && langText !== '' && langText !== 0 ? `lang-${String(langText)}` : ''
   const rawValue = fileLabel ?? langPart
-  const normalized = String(rawValue)
+  const normalized = rawValue
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .split(/[^a-z0-9]+/)
+    .filter((part) => part !== '')
+    .join('-')
 
-  return normalized ? `-${normalized}` : ''
+  return normalized !== '' ? `-${normalized}` : ''
 }
 
 function buildTimestampLabel(date: Date): string {
@@ -33,17 +35,19 @@ async function fetchJson(url: string): Promise<unknown> {
   const response = await fetch(url)
 
   if (!response.ok) {
-    throw new Error(`请求失败：${response.status} ${response.statusText}`)
+    throw new Error(`请求失败：${String(response.status)} ${response.statusText}`)
   }
 
   return response.json()
 }
 
+type StringOrNumber = string | number
+
 export interface FetchDefinitionsOptions {
   masterApiUrl?: string | undefined
-  playserverClientVersion?: string | number | undefined
-  definitionsClientVersion?: string | number | undefined
-  languageId?: string | number | undefined
+  playserverClientVersion?: StringOrNumber | undefined
+  definitionsClientVersion?: StringOrNumber | undefined
+  languageId?: StringOrNumber | undefined
   fileLabel?: string | undefined
   outDir?: string | undefined
 }
@@ -77,7 +81,7 @@ export async function fetchDefinitionsPayload(
   const definitionsClientVersion = String(
     options.definitionsClientVersion ?? DEFAULT_DEFINITIONS_CLIENT_VERSION,
   )
-  const languageId = options.languageId ? String(options.languageId) : null
+  const languageId = options.languageId != null && options.languageId !== '' && options.languageId !== 0 ? String(options.languageId) : null
 
   const discoveryQuery = new URLSearchParams({
     call: 'getPlayServerForDefinitions',
@@ -89,7 +93,7 @@ export async function fetchDefinitionsPayload(
   const playServerRaw = (discoveryPayload as Record<string, unknown>).play_server
   const playServer = ensureTrailingSlash(typeof playServerRaw === 'string' ? playServerRaw : '')
 
-  if (!playServer) {
+  if (playServer === '') {
     throw new Error('未从 getPlayServerForDefinitions 返回中拿到 play_server')
   }
 
@@ -99,7 +103,7 @@ export async function fetchDefinitionsPayload(
     mobile_client_version: definitionsClientVersion,
   })
 
-  if (languageId) {
+  if (languageId != null && languageId !== '') {
     definitionsQuery.set('language_id', languageId)
   }
 
@@ -120,9 +124,9 @@ export async function fetchDefinitionsPayload(
     definitionsPayload,
     meta,
     playServer,
-    fetchedAt: meta.fetchedAt,
     discoveryUrl,
     definitionsUrl,
+    fetchedAt: meta.fetchedAt,
   }
 }
 
@@ -190,7 +194,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     printUsage()
     return
   }
@@ -203,7 +207,8 @@ async function main(): Promise<void> {
   console.log(`- Play server: ${result.playServer}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryScript = process.argv[1]
+if (entryScript !== undefined && import.meta.url === pathToFileURL(entryScript).href) {
   main().catch((error: unknown) => {
     console.error(`抓取 definitions 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

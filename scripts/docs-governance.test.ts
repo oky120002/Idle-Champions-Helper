@@ -3,6 +3,8 @@ import { dirname, extname, resolve } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../tests/utils/dom-assertions.ts'
+
 const repositoryRoot = resolve(import.meta.dirname, '..')
 const docsRoot = resolve(repositoryRoot, 'docs')
 const activeDocumentDirectories = ['specs', 'research', 'decisions', 'changes', 'runbooks']
@@ -55,12 +57,13 @@ describe('documentation governance', () => {
 
     for (const file of markdownFiles(docsRoot)) {
       const markdown = readFileSync(file, 'utf8')
+      // eslint-disable-next-line sonarjs/super-linear-regex -- 两个互斥字符类量词无嵌套无重叠，star-height=1，实测无回溯爆炸；保留原字符集以维持对跨行链接的覆盖
       for (const match of markdown.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
         const rawTarget = match[1]?.trim().replace(/^<|>$/g, '') ?? ''
-        if (!rawTarget || /^(?:https?:|mailto:|#)/.test(rawTarget)) continue
+        if (rawTarget === '' || /^(?:https?:|mailto:|#)/.test(rawTarget)) continue
 
         const target = decodeURI(rawTarget.split('#')[0] ?? '')
-        if (target && !existsSync(resolve(dirname(file), target))) {
+        if (target !== '' && !existsSync(resolve(dirname(file), target))) {
           brokenLinks.push(`${relativeToRepository(file)} -> ${rawTarget}`)
         }
       }
@@ -75,7 +78,7 @@ describe('documentation governance', () => {
     for (const file of markdownFiles(docsRoot).filter((path) => !path.includes('/archive/'))) {
       const lineCount = readFileSync(file, 'utf8').split('\n').length
       const limit = file.endsWith('/README.md') ? 90 : 180
-      if (lineCount > limit) oversized.push(`${relativeToRepository(file)}: ${lineCount} > ${limit}`)
+      if (lineCount > limit) oversized.push(`${relativeToRepository(file)}: ${String(lineCount)} > ${String(limit)}`)
     }
 
     expect(oversized).toEqual([])
@@ -133,7 +136,7 @@ describe('documentation governance', () => {
       const targetCell = row.split('|')[3] ?? ''
       for (const match of targetCell.matchAll(/`(docs\/[^`]+\.md)`/g)) {
         const target = match[1]
-        if (target && !existsSync(resolve(repositoryRoot, target))) missingTargets.push(target)
+        if (target != null && target !== '' && !existsSync(resolve(repositoryRoot, target))) missingTargets.push(target)
       }
     }
 
@@ -214,10 +217,10 @@ describe('documentation governance', () => {
     }
 
     expect(
-      readFileSync(resolve(repositoryRoot, evidenceDocuments[0]!), 'utf8'),
+      readFileSync(resolve(repositoryRoot, unwrap(evidenceDocuments[0], '缺少 evidence document 0')), 'utf8'),
     ).toContain('decisions/0005-deployment-github-pages.md')
     expect(
-      readFileSync(resolve(repositoryRoot, evidenceDocuments[3]!), 'utf8'),
+      readFileSync(resolve(repositoryRoot, unwrap(evidenceDocuments[3], '缺少 evidence document 3')), 'utf8'),
     ).toContain('decisions/0002-data-source-strategy.md')
   })
 
@@ -241,7 +244,7 @@ describe('documentation governance', () => {
     const plannedTitles: string[] = []
 
     for (const file of markdownFiles(resolve(docsRoot, 'specs'))) {
-      const title = readFileSync(file, 'utf8').match(/^# (.+)$/m)?.[1] ?? ''
+      const title = /^# (.+)$/m.exec(readFileSync(file, 'utf8'))?.[1] ?? ''
       if (/(?:目标架构|设计稿|实施边界)/.test(title)) plannedTitles.push(relativeToRepository(file))
     }
 

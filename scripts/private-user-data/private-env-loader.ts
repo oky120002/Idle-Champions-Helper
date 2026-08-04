@@ -34,10 +34,10 @@ export function loadPrivateCredentials({ env }: PrivateEnvSource): PrivateCreden
   const userId = env[USER_ID_KEY]
   const hash = env[HASH_KEY]
 
-  if (!userId || !hash) {
+  if ((userId === undefined || userId === '') || (hash === undefined || hash === '')) {
     const missing: string[] = []
-    if (!userId) missing.push(USER_ID_KEY)
-    if (!hash) missing.push(HASH_KEY)
+    if (userId === undefined || userId === '') missing.push(USER_ID_KEY)
+    if (hash === undefined || hash === '') missing.push(HASH_KEY)
     return {
       error: `Missing required credential(s): ${missing.join(', ')}. Set them in your environment or .env.local file.`,
     }
@@ -54,7 +54,7 @@ export function parseLocalEnvFile(content: string): Record<string, string> {
 
   for (const line of content.split('\n')) {
     const trimmed = line.trim()
-    if (!trimmed || trimmed.startsWith('#')) continue
+    if (trimmed === '' || trimmed.startsWith('#')) continue
 
     const eqIndex = trimmed.indexOf('=')
     if (eqIndex === -1) continue

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import process from 'node:process'
+
 import {
   DEFAULT_PRIVATE_ENV_FILE,
   DEFAULT_PRIVATE_LATEST_DIR,
@@ -20,7 +22,8 @@ function parseArgs(argv: readonly string[]): ParsedArgs {
   }
 
   for (let index = 0; index < argv.length; index += 1) {
-    const token = argv[index]!
+    const token = argv[index]
+    if (token === undefined) break
 
     if (token === '--env-file') {
       args.envFile = argv[index + 1] ?? args.envFile
@@ -66,7 +69,7 @@ Options:
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2))
-  if (args.help) {
+  if (args.help === true) {
     printHelp()
     return
   }

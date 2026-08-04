@@ -47,18 +47,20 @@ export function scanContent(content: string, filePath: string): SensitiveScanRes
   const lines = content.split('\n')
 
   for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i]!
+    const line = lines[i]
+    if (line === undefined) break
     const lineNum = i + 1
 
     for (const match of line.matchAll(CREDENTIAL_VALUE_RE)) {
-      const credential = match[1]!
+      const credential = match[1]
+      if (credential === undefined) continue
       if (KNOWN_SAMPLE_VALUES.has(credential)) continue
       findings.push({
         kind: 'numeric-user-id',
-        filePath,
         line: lineNum,
         match: credential,
         description: `Numeric credential value "${credential}" appears to be a real user ID or hash`,
+        filePath,
       })
     }
 
@@ -67,10 +69,10 @@ export function scanContent(content: string, filePath: string): SensitiveScanRes
       if (KNOWN_SAMPLE_VALUES.has(hexHash)) continue
       findings.push({
         kind: 'hex-hash',
-        filePath,
         line: lineNum,
         match: hexHash,
         description: `32-character hex hash "${hexHash}" looks like a real credential hash`,
+        filePath,
       })
     }
 
@@ -78,10 +80,10 @@ export function scanContent(content: string, filePath: string): SensitiveScanRes
       const pathRef = match[0]
       findings.push({
         kind: 'private-path-reference',
-        filePath,
         line: lineNum,
         match: pathRef,
         description: `Reference to private data path "${pathRef}" should not appear in committed source`,
+        filePath,
       })
     }
   }

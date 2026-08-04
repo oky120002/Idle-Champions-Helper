@@ -17,7 +17,7 @@ for (const [name, cmd] of Object.entries(pkg.scripts ?? {})) {
   let m: RegExpExecArray | null;
   while ((m = re.exec(cmd)) !== null) {
     const target = m[1];
-    if (target) nodeTargets.push({ name, target });
+    if (target != null && target !== '') nodeTargets.push({ name, target });
   }
 }
 

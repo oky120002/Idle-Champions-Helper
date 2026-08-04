@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import process from 'node:process'
 import { describe, expect, it } from 'vitest'
+import { unwrap } from '../tests/utils/dom-assertions.ts'
 import {
   alphaComposite,
   contrastRatio,
@@ -15,8 +17,8 @@ import {
 describe('check-color-contrast 颜色数学', () => {
   it('oklch 纯白/纯黑 → sRGB 端点', () => {
     // L=100% 为纯白，L=0% 为纯黑。
-    const white = parseColor('oklch(100% 0 0)')!
-    const black = parseColor('oklch(0% 0 0)')!
+    const white = unwrap(parseColor('oklch(100% 0 0)'), 'oklch 纯白应可解析')
+    const black = unwrap(parseColor('oklch(0% 0 0)'), 'oklch 纯黑应可解析')
     expect(white.r).toBeCloseTo(1, 4)
     expect(white.g).toBeCloseTo(1, 4)
     expect(white.b).toBeCloseTo(1, 4)
@@ -56,18 +58,18 @@ describe('check-color-contrast 颜色数学', () => {
 
 describe('check-color-contrast parseColor', () => {
   it('解析 oklch 百分比 + alpha', () => {
-    const c = parseColor('oklch(48% 0.13 72 / 0.5)')!
+    const c = unwrap(parseColor('oklch(48% 0.13 72 / 0.5)'), 'oklch 百分比应可解析')
     expect(c.a).toBeCloseTo(0.5, 4)
   })
 
   it('解析 oklch 小数 L 无 alpha', () => {
-    const c = parseColor('oklch(0.48 0.13 72)')!
+    const c = unwrap(parseColor('oklch(0.48 0.13 72)'), 'oklch 小数 L 应可解析')
     expect(c.a).toBe(1)
   })
 
   it('解析 modern 语法 rgb/rgba 与 legacy 逗号语法', () => {
-    const modern = parseColor('rgb(10 20 30)')!
-    const legacy = parseColor('rgba(10, 20, 30, 0.5)')!
+    const modern = unwrap(parseColor('rgb(10 20 30)'), 'modern rgb 应可解析')
+    const legacy = unwrap(parseColor('rgba(10, 20, 30, 0.5)'), 'legacy rgba 应可解析')
     expect(modern.r).toBeCloseTo(10 / 255, 4)
     expect(legacy.a).toBeCloseTo(0.5, 4)
   })
@@ -95,14 +97,14 @@ describe('check-color-contrast extractTopLevelBlock', () => {
   ].join('\n')
 
   it('取到 :root 顶层块且不吞并 [data-theme="light"] 与 @media 内同名块', () => {
-    const dark = extractTopLevelBlock(CSS, ':root')!
+    const dark = unwrap(extractTopLevelBlock(CSS, ':root'), '应找到 :root 块')
     expect(dark).toContain('--a: oklch(50% 0 0)')
     expect(dark).not.toContain('80% 0 0')
     expect(dark).not.toContain('--layout')
   })
 
   it('取到 :root[data-theme="light"] 块', () => {
-    const light = extractTopLevelBlock(CSS, ':root[data-theme="light"]')!
+    const light = unwrap(extractTopLevelBlock(CSS, ':root[data-theme="light"]'), '应找到 light 块')
     expect(light).toContain('80% 0 0')
     expect(light).not.toContain('50% 0 0')
   })
@@ -176,8 +178,9 @@ describe('check-color-contrast findContrastViolations', () => {
     const v = findContrastViolations(css)
     const copperViolation = v.find((x) => x.textToken === '--color-copper')
     expect(copperViolation).toBeDefined()
-    expect(copperViolation!.role).toBe('accent')
-    expect(copperViolation!.threshold).toBe(3)
+    const copper = unwrap(copperViolation, '应找到 copper 对比度违规')
+    expect(copper.role).toBe('accent')
+    expect(copper.threshold).toBe(3)
     const textViolation = v.find((x) => x.textToken === '--color-text')
     expect(textViolation).toBeUndefined()
   })
@@ -193,8 +196,9 @@ describe('check-color-contrast findContrastViolations', () => {
     const v = findContrastViolations(css)
     expect(v.length).toBeGreaterThan(0)
     const keys: (keyof ContrastViolation)[] = ['theme', 'textToken', 'bgToken', 'ratio', 'threshold', 'role']
+    const first = unwrap(v[0], '应至少有一条违规')
     for (const k of keys) {
-      expect(v[0]![k]).toBeDefined()
+      expect(first[k]).toBeDefined()
     }
   })
 })
@@ -208,15 +212,16 @@ describe('check-color-contrast 真实 tokens.css', () => {
     // 仅断言能跑通；列出当前失败组合（守护脚本上线时不一定为 0，作为基线）。
     const themes = new Set(v.map((x) => x.theme))
     expect(themes.size === 1 || themes.size === 2 || v.length === 0).toBe(true)
-    // 装饰色门槛与正文门槛正确分发
-    for (const item of v) {
-      if (item.textToken.startsWith('--color-text')) {
-        expect(item.role).toBe('body')
-        expect(item.threshold).toBe(4.5)
-      } else {
-        expect(item.role).toBe('accent')
-        expect(item.threshold).toBe(3)
-      }
+    // 装饰色门槛与正文门槛正确分发：按 token 前缀分组断言，避免条件分支内 expect
+    const bodyItems = v.filter((x) => x.textToken.startsWith('--color-text'))
+    const accentItems = v.filter((x) => !x.textToken.startsWith('--color-text'))
+    for (const item of bodyItems) {
+      expect(item.role).toBe('body')
+      expect(item.threshold).toBe(4.5)
+    }
+    for (const item of accentItems) {
+      expect(item.role).toBe('accent')
+      expect(item.threshold).toBe(3)
     }
   })
 })

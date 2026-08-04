@@ -51,7 +51,7 @@ export function createManifest({
  * @throws {Error} if the target directory is outside the allowed path
  */
 export function writeManifest({ targetDir }: WriteManifestOptions): void {
-  if (!targetDir) {
+  if (targetDir === '') {
     throw new Error('Target directory must not be empty')
   }
 

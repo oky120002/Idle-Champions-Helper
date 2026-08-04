@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
@@ -69,8 +70,8 @@ it('syncChampionPortraits 会生成头像文件与同步 manifest', async (ctx) 
 
   const result = await syncChampionPortraits({
     input: inputFile,
-    outputDir,
     masterApiUrl: 'https://example.test/',
+    outputDir,
   })
 
   expect(result.count).toBe(1)
@@ -177,8 +178,8 @@ it('syncChampionPortraits 在单头像 source 未变化时复用已有 PNG', asy
 
   const result = await syncChampionPortraits({
     input: inputFile,
-    outputDir,
     masterApiUrl: 'https://example.test/',
+    outputDir,
   })
 
   expect(result.count).toBe(1)

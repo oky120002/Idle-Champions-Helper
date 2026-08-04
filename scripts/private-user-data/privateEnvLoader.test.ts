@@ -41,10 +41,9 @@ describe('private env loader', () => {
     expect(result.error).toBeTruthy()
     expect(result.userId).toBeUndefined()
     expect(result.hash).toBeUndefined()
-    if (result.error) {
-      expect(result.error).not.toMatch(/12345678/)
-      expect(result.error).not.toMatch(/[0-9a-f]{32}/)
-    }
+    const errorMessage = result.error ?? ''
+    expect(errorMessage).not.toMatch(/12345678/)
+    expect(errorMessage).not.toMatch(/[0-9a-f]{32}/)
   })
 
   it('拒绝 VITE_ 开头的 key 作为私人凭证', () => {

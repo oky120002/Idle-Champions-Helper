@@ -1,5 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
+
 import { loadPrivateCredentials, parseLocalEnvFile } from './private-env-loader.ts'
 import {
   createReadonlyFetchOptions,
@@ -84,7 +86,7 @@ async function readOptionalEnvFile(envFilePath: string): Promise<string | null> 
   try {
     return await fs.readFile(envFilePath, 'utf8')
   } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'ENOENT') {
       return null
     }
 
@@ -140,14 +142,14 @@ async function fetchReadonlyJson({
   )
 
   if (!response.ok) {
-    throw new Error(`Official endpoint "${endpoint}" returned HTTP ${response.status}.`)
+    throw new Error(`Official endpoint "${endpoint}" returned HTTP ${String(response.status)}.`)
   }
 
   return response.json()
 }
 
 function hasPayloadValue(payload: unknown, key: string): boolean {
-  return Boolean(payload && typeof payload === 'object' && key in payload)
+  return payload !== null && typeof payload === 'object' && key in payload
 }
 
 function isPayloadReady(endpoint: string, payload: unknown): boolean {
@@ -181,15 +183,15 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch({
 
   while (true) {
     const payload = await fetchReadonlyJson({
+      baseUrl: currentBaseUrl,
       endpoint,
       credentials,
-      baseUrl: currentBaseUrl,
       params,
       fetchImpl,
     })
     const switchPlayServer = readSwitchPlayServer(payload)
 
-    if (switchPlayServer && !isPayloadReady(endpoint, payload)) {
+    if (switchPlayServer !== null && switchPlayServer !== '' && !isPayloadReady(endpoint, payload)) {
       if (switchCount >= PRIVATE_PLAY_SERVER_SWITCH_LIMIT) {
         throw new Error('Official endpoint requested too many play server switches.')
       }
@@ -211,13 +213,13 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch({
 }
 
 function readInstanceId(userDetails: unknown): string | null {
-  if (!userDetails || typeof userDetails !== 'object') {
+  if (userDetails === null || typeof userDetails !== 'object') {
     return null
   }
 
   const root = userDetails as Record<string, unknown>
   const detailsRaw = root.details
-  const details = detailsRaw && typeof detailsRaw === 'object'
+  const details = detailsRaw !== null && typeof detailsRaw === 'object'
     ? (detailsRaw as Record<string, unknown>)
     : null
   const value: unknown = details?.instance_id ?? root.instance_id
@@ -241,23 +243,23 @@ async function fetchPrivateUserProfilePayloadsFromBaseUrl({
 }): Promise<UserProfilePayloads> {
   const userDetailsResult = await fetchReadonlyJsonFollowingPlayServerSwitch({
     endpoint: 'getuserdetails',
+    params: { instance_key: '1' },
     credentials,
     baseUrl,
-    params: { instance_key: '1' },
     fetchImpl,
   })
   const campaignDetailsResult = await fetchReadonlyJsonFollowingPlayServerSwitch({
     endpoint: 'getcampaigndetails',
-    credentials,
-    baseUrl: userDetailsResult.baseUrl,
     params: { game_instance_id: '1', instance_id: '1' },
+    baseUrl: userDetailsResult.baseUrl,
+    credentials,
     fetchImpl,
   })
   const formationSavesResult = await fetchReadonlyJsonFollowingPlayServerSwitch({
     endpoint: 'getallformationsaves',
-    credentials,
-    baseUrl: campaignDetailsResult.baseUrl,
     params: { instance_id: readInstanceId(userDetailsResult.payload) },
+    baseUrl: campaignDetailsResult.baseUrl,
+    credentials,
     fetchImpl,
   })
 
@@ -281,8 +283,8 @@ export async function fetchPrivateUserProfilePayloads({
   for (const candidateBaseUrl of baseUrls) {
     try {
       return await fetchPrivateUserProfilePayloadsFromBaseUrl({
-        credentials,
         baseUrl: candidateBaseUrl,
+        credentials,
         fetchImpl,
       })
     } catch {
@@ -309,7 +311,7 @@ export async function fetchAndStorePrivateUserProfilePayloads({
 }: FetchAndStorePrivateUserProfilePayloadsOptions = {}): Promise<FetchAndStoreResult> {
   const envFilePath = path.resolve(cwd, envFile)
   const envFileContent = await readOptionalEnvFile(envFilePath)
-  const fileEnv = envFileContent ? parseLocalEnvFile(envFileContent) : {}
+  const fileEnv = envFileContent !== null ? parseLocalEnvFile(envFileContent) : {}
   const credentialsResult = loadPrivateCredentials({
     env: {
       ...fileEnv,
@@ -318,7 +320,7 @@ export async function fetchAndStorePrivateUserProfilePayloads({
   })
 
   const { error, userId, hash } = credentialsResult
-  if (error || !userId || !hash) {
+  if ((error != null && error !== '') || userId == null || userId === '' || hash == null || hash === '') {
     throw new Error(error ?? 'Missing private credentials.')
   }
 

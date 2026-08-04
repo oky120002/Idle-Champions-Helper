@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -387,10 +388,10 @@ it('输出宠物目录、获取方式与本地图像', async (ctx) => {
   const result = (await syncPetsCatalog({
     input: inputFile,
     localizedInput: localizedInputFile,
-    outputDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
     concurrency: '2',
+    outputDir,
   })) as SyncPetsResult
 
   expect(result.count).toBe(5)
@@ -559,10 +560,10 @@ it('会把 type=3 的宠物分件资源离线合成为单张 PNG', async (ctx) =
 
   const result = (await syncPetsCatalog({
     input: inputFile,
-    outputDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
     concurrency: '1',
+    outputDir,
   })) as SyncPetsResult
 
   expect(result.count).toBe(1)
@@ -662,8 +663,8 @@ it('在集合 updatedAt 未变新时整批跳过，不删除现有动画 bin', a
 
   const result = (await syncPetsCatalog({
     input: inputFile,
-    outputDir,
     currentVersion: 'v1',
+    outputDir,
   })) as SyncPetsResult
 
   expect(result.skipped).toBe(true)
@@ -759,10 +760,10 @@ it('在源资源未变化时复用已有宠物静态图与动画 bin', async (ct
 
   const result = (await syncPetsCatalog({
     input: inputFile,
-    outputDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
     concurrency: '1',
+    outputDir,
   })) as SyncPetsResult
 
   expect(result.assetCount).toBe(0)

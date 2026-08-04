@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.ts'
@@ -42,7 +43,7 @@ async function main(): Promise<void> {
     },
   })
 
-  if (values.help) {
+  if (values.help === true) {
     console.log(`用法：
   node scripts/build-idle-champions-data.ts [--outDir <raw-dir>] [--outputDir <data-dir>]
 
@@ -95,9 +96,9 @@ async function main(): Promise<void> {
     input: fetched.rawFile,
     localizedInput: localizedFetched.rawFile,
     outputDir: values.outputDir,
-    versionFile,
     currentVersion: values.currentVersion,
     manualOverrides: values.manualOverrides,
+    versionFile,
   })
   const plannerModels = await buildModels({
     versionDir: normalized.outputDir,
@@ -113,13 +114,13 @@ async function main(): Promise<void> {
   if (shouldSkipAllResourceDownloads) {
     console.log('官方基座数据流水线完成：')
     console.log(
-      `- resources skipped: resource-sync-state.updatedAt=${previousResourceUpdatedAt}, next=${normalized.updatedAt}`,
+      `- resources skipped: resource-sync-state.updatedAt=${String(previousResourceUpdatedAt)}, next=${normalized.updatedAt}`,
     )
     console.log(`- source raw: ${fetched.rawFile}`)
     console.log(`- display raw: ${localizedFetched.rawFile}`)
     console.log(`- normalized dir: ${normalized.outputDir}`)
-    console.log(`- planner models: heroes ${plannerModels.heroCount}, scenarios ${plannerModels.scenarioCount}`)
-    console.log(`- search index: heroes ${searchIndex.heroCount}, chars ${searchIndex.totalChars}`)
+    console.log(`- planner models: heroes ${String(plannerModels.heroCount)}, scenarios ${String(plannerModels.scenarioCount)}`)
+    console.log(`- search index: heroes ${String(searchIndex.heroCount)}, chars ${String(searchIndex.totalChars)}`)
     console.log(`- version file: ${normalized.versionFile}`)
     console.log(`- resource sync state: ${resourceSyncStateFile}`)
     return
@@ -195,21 +196,22 @@ async function main(): Promise<void> {
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
-  console.log(`- planner models: heroes ${plannerModels.heroCount}, scenarios ${plannerModels.scenarioCount}`)
-  console.log(`- search index: heroes ${searchIndex.heroCount}, chars ${searchIndex.totalChars}`)
+  console.log(`- planner models: heroes ${String(plannerModels.heroCount)}, scenarios ${String(plannerModels.scenarioCount)}`)
+  console.log(`- search index: heroes ${String(searchIndex.heroCount)}, chars ${String(searchIndex.totalChars)}`)
   console.log(`- portraits dir: ${portraits.outputDir}`)
   console.log(`- console portraits dir: ${consolePortraits.outputDir}`)
   console.log(`- specialization graphics dir: ${specializationGraphics.outputDir}`)
-  console.log(`- equipment icons dir: ${equipmentIcons.outputDir} (${equipmentIcons.count} items)`)
+  console.log(`- equipment icons dir: ${equipmentIcons.outputDir} (${String(equipmentIcons.count)} items)`)
   console.log(`- illustrations dir: ${illustrations.outputDir}`)
-  console.log(`- animations dir: ${animations.outputDir} (${animations.count} items)`)
-  console.log(`- animation audit: ${animationAudit.auditFile} (${animationAudit.reviewedCount} flagged)`)
-  console.log(`- pets: ${pets.count} (assets ${pets.assetCount}, animations ${pets.counts.animations})`)
+  console.log(`- animations dir: ${animations.outputDir} (${String(animations.count)} items)`)
+  console.log(`- animation audit: ${animationAudit.auditFile} (${String(animationAudit.reviewedCount)} flagged)`)
+  console.log(`- pets: ${String(pets.count)} (assets ${String(pets.assetCount)}, animations ${String(pets.counts.animations)})`)
   console.log(`- version file: ${normalized.versionFile}`)
   console.log(`- resource sync state: ${resourceSyncStateFile}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+const entryScript = process.argv[1]
+if (entryScript !== undefined && import.meta.url === pathToFileURL(entryScript).href) {
   main().catch((error: unknown) => {
     console.error(`构建公共数据失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1

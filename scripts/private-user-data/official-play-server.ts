@@ -2,13 +2,13 @@
 const OFFICIAL_PLAY_SERVER_HOSTNAME_PATTERN = /^ps[a-z0-9]+\.idlechampions\.com$/i
 const OFFICIAL_PLAY_SERVER_PATHNAME = '/~idledragons/'
 
-const OFFICIAL_PLAY_SERVER_NUMBERS: readonly number[] = [28, 29, 30, 27]
+const OFFICIAL_PLAY_SERVER_NUMBERS = [28, 29, 30, 27] as const
 
 export const DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION: string = '999'
 export const PRIVATE_MASTER_API_BASE_URL: string = 'https://master.idlechampions.com/~idledragons/'
 export const PRIVATE_PLAY_SERVER_SWITCH_LIMIT: number = 2
 export const DEFAULT_PRIVATE_BASE_URL: string = buildOfficialPlayServerBaseUrl(
-  OFFICIAL_PLAY_SERVER_NUMBERS[0]!,
+  OFFICIAL_PLAY_SERVER_NUMBERS[0],
 )
 export const PRIVATE_PLAY_SERVER_FALLBACK_BASE_URLS: string[] = OFFICIAL_PLAY_SERVER_NUMBERS.map(
   (serverNumber) => buildOfficialPlayServerBaseUrl(serverNumber),
@@ -19,9 +19,10 @@ function ensureTrailingSlash(value: string): string {
 }
 
 export function buildOfficialPlayServerBaseUrl(serverNumber: number): string {
-  return `https://ps${serverNumber}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
+  return `https://ps${String(serverNumber)}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
 }
 
+// eslint-disable-next-line sonarjs/no-reference-error -- RequestInit 是 @types/node 全局类型（Node 18+ 全局 fetch），从 undici 导入会与全局 fetch 签名冲突
 export function createReadonlyFetchOptions(): RequestInit {
   return {
     credentials: 'omit',
@@ -45,7 +46,7 @@ export function normalizeOfficialPlayServerBaseUrl(value: string): string {
 }
 
 export function readSwitchPlayServer(payload: unknown): string | null {
-  if (!payload || typeof payload !== 'object') {
+  if (payload === null || typeof payload !== 'object') {
     return null
   }
 
@@ -72,11 +73,11 @@ export async function discoverOfficialPlayServer(
   )
 
   if (!response.ok) {
-    throw new Error(`Official play server discovery returned HTTP ${response.status}`)
+    throw new Error(`Official play server discovery returned HTTP ${String(response.status)}`)
   }
 
   const payload: unknown = await response.json()
-  const playServer = payload && typeof payload === 'object'
+  const playServer = payload !== null && typeof payload === 'object'
     ? (payload as Record<string, unknown>).play_server
     : null
 
@@ -103,7 +104,7 @@ export interface ResolveOfficialPlayServerBaseUrlsOptions {
 export async function resolveOfficialPlayServerBaseUrls(
   { fetchImpl = fetch, baseUrl }: ResolveOfficialPlayServerBaseUrlsOptions = {},
 ): Promise<string[]> {
-  if (baseUrl) {
+  if (baseUrl !== undefined && baseUrl !== '') {
     return [normalizeOfficialPlayServerBaseUrl(baseUrl)]
   }
 

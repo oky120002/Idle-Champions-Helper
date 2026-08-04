@@ -2,6 +2,8 @@
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import process from 'node:process'
+
 import { scanBuildContent } from './production-boundary-scanner.ts'
 
 const DIST_DIR = 'dist'
@@ -57,7 +59,7 @@ function runScan(): void {
       }
 
       for (const finding of result.findings) {
-        console.error(`[PROD-BOUNDARY] ${finding.filePath}:${finding.line} — ${finding.description}`)
+        console.error(`[PROD-BOUNDARY] ${finding.filePath}:${String(finding.line)} — ${finding.description}`)
         totalFindings += 1
       }
     } catch {
@@ -66,7 +68,7 @@ function runScan(): void {
   }
 
   if (totalFindings > 0) {
-    console.error(`\nProduction boundary scan found ${totalFindings} issue(s).`)
+    console.error(`\nProduction boundary scan found ${String(totalFindings)} issue(s).`)
     process.exit(1)
   }
 
