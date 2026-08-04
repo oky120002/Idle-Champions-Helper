@@ -1,0 +1,104 @@
+# Lint 违规渐进式修复
+
+**Status**: Accepted
+**Type**: milestone
+**Scope**: system
+**Created**: 2026-08-04
+
+## 目标
+
+修复接入代码质量 lint 套件（typescript-eslint `strictTypeChecked` + sonarjs/jsx-a11y/import-x/@vitest/eslint-plugin）后暴露的 3088 违规。严格按 lint message 对症修复（禁自由发挥/禁统一模板），恢复 lint 全绿。配置基于行业共识（详见 memory `lint-rule-industry-consensus`）。
+
+## 范围
+
+- 3088 违规，62 规则，494 文件（src/ + scripts/ + tests/）。
+- 配置就绪（eslint.config.js strictTypeChecked + 共识选项，committed `eb18bdb8`）。
+- import 格式已修（`56279af1`，纯格式零语义风险）。
+- typecheck 0（健康基线）。
+- **修法依据**：`2026-08-system-lint-fix-rules.md`（配套修法表，同目录）。
+- **配置共识**：memory `lint-rule-industry-consensus`。
+
+## 核心原则（新 session 必读，违反会重蹈覆辙）
+
+1. **按 message 对症**：每条违规先读 message（类型词/场景），查 `2026-08-system-lint-fix-rules.md` 选修法。strict-boolean 看 message 类型词：`string`→带 `!== ''`、`number`→带 `!== 0`、`object`→`!= null`、`any`→先缩类型。
+2. **禁统一模板**：**禁止**机械套 `!== null && !== undefined`（对 string 漏 `''`、对纯 string 用错——上次回退的根因，commit `2e338c21`）。
+3. **禁 sd/sed/perl 批量替换**（`\1` 反向引用出错破坏代码）：所有修改用 **Edit 工具逐处精确**。
+4. **helper**：`tests/utils/dom-assertions.ts` 提供 `unwrap<T>(value, msg): T`（替代 `!`）、`queryOrFail(container, selector): Element`。
+5. **每文件双重验证**：`npx eslint <file>`（该文件 0 违规）+ `npx tsc -b --pretty false 2>&1 | grep <file>`（无新 typecheck 错）。
+6. **每阶段 commit + 勾选**：阶段完成后 `git commit`（中文 Conventional Commits），勾选本 checklist。
+
+## 边界
+
+- **只修 lint 违规**，不顺手重构无关代码。
+- **不改 eslint.config.js / package.json / tsconfig**（配置已基于共识定稿）。
+- **strict-boolean 配置**：`allowString: false`、`allowNumber: false`（''/0 会误会要明确）+ 默认（nullable+any 报，nullable object 不报，纯 boolean 固有允许）。
+- **语义存疑不硬改**：表未覆盖或判断不准的，用行内 `// eslint-disable-next-line <rule>` **带理由注释**，或本文件记 TODO，不机械改。
+- **不创建新文件**（除非自然重构提取，且完整通过 typecheck）。
+- 配置文件（vite/vitest/playwright.config.ts）注意 globals（node vs browser）。
+
+## 阶段 Checklist（17 批，每批独立 commit）
+
+每阶段派 Agent（general-purpose）修该批文件，prompt 嵌入下方"Agent 通用指南"。Agent 完成后主智能体体检（typecheck + `\1` 残留 + 破坏）+ 修复破坏 + commit + 勾选。
+
+**并行**：不同批次目录不重叠，可派多 Agent 并行（建议一次 2-3 个，避免 API 速率限制）。**每批独立 commit**。
+
+- [ ] 阶段 1: scripts/data 产品源码（~220 违规：official-rule-helpers 56、normalize-adventures 37、formation-layout-helpers 35、effect-helpers 29、normalize-champions 26、signal-coverage 21、build-search-index 17）—— 验证：`npx eslint 'scripts/data/*.ts'`（非 test）0 违规
+- [ ] 阶段 2: scripts/data 测试 + effect-resolvers（~200：build-models.test 28、skelanim.test 20、dpsResolver.test 19、normalize-champions.test 18、gold/speed/vulnerability Resolver test、mobile-asset-codec、restrictions-parser、io-utils）
+- [ ] 阶段 3: scripts/sync + check-color-contrast（~174：sync-pets 59、sync-portraits 43、check-color-contrast 38、normalize-definitions 34）
+- [ ] 阶段 4: scripts/ 其他（~245：sync-animations/illustrations/console-portraits 27/25/24、audit-animations 20、build-data 19、sync-equipment/specialization 19/19、private-user-data 53、simulator 37）
+- [ ] 阶段 5: src/domain/abilities（~100：heroPredicate 44、signalSemantics 23）
+- [ ] 阶段 6: src/domain/planner 产品 + references（~120：recommendationEngine 35、references tests 17+21、PlannerScenarioSelection 18、compute）
+- [ ] 阶段 7: src/domain/planner 测试 + domain 其他（~200：steadyStateScoring.test 43、buffs、effects、types、simulator、variant-model 21、localizedText）
+- [ ] 阶段 8: src/pages/champion-detail（~150：effect-payload 28、effect-targets 20、upgrade-presentation-model 20、DetailUpgradeSection 17、detail-cards）
+- [ ] 阶段 9: src/pages/animation-audit + variants（~120：useAnimationAuditPageModel.test 33、variant-model 21、VariantAdventureSection 20、useVariantsPageModel 26）
+- [ ] 阶段 10: src/pages/planner + 根（~100：PlannerEvaluatePage 26、usePlannerPageModel、plannerEvaluate.route.test、plannerPage.route.test）
+- [ ] 阶段 11: src/pages/formation + champions + illustrations + pets（~200）
+- [ ] 阶段 12: src/pages/user-data + user-heroes + presets + 其他（~120）
+- [ ] 阶段 13: src/components（~191：workbench、ChampionAvatar、filter-sidebar 等）
+- [ ] 阶段 14: src/features（~162：champion-filters/filter-action-builder 38、skelanim-player/browser-codec.test 20）
+- [ ] 阶段 15: src/data + src/app + src/rules（~125）
+- [ ] 阶段 16: tests/ + 配置文件（~30：tests/e2e、vite/vitest/playwright.config、src/main.tsx）
+- [ ] 阶段 17: 收尾验证 + 文档同步 —— 验证：`npx eslint .` 0 违规 + `npm run test:regression` 全绿
+
+## Agent 通用指南（每阶段派 Agent 时嵌入 prompt）
+
+```
+修复 <文件列表或目录> 的所有 ESLint 违规。工作目录是仓库根。
+
+铁律：
+1. 绝对禁止 sd/sed/perl 批量替换（\1 出错）。所有修改用 Edit 工具。
+2. 每条违规先读 message，按 docs/changes/2026-08-system-lint-fix-rules.md 对症。
+   - strict-boolean 看 message 类型词：string→!== ''，number→!== 0，object→!= null，any→缩类型。
+   - 禁止统一 !== null && !== undefined（对 string 漏 ''）。
+3. 不创建新文件。每改一文件跑 npx eslint <file>（0 违规）+ npx tsc -b（无新错误）。
+4. 不改 eslint.config.js/package.json/tsconfig。
+5. helper：tests/utils/dom-assertions.ts（unwrap/queryOrFail 替代 !）。
+6. 语义存疑不硬改：行内 // eslint-disable-next-line <rule> 带理由。
+
+背景：配置 strictTypeChecked + 行业共识选项。typecheck 当前 0。
+报告：修了哪些文件、每文件主要规则、残留什么（标注原因）。
+```
+
+## 验收（DoD）
+
+- `npx eslint .` 0 违规（或仅剩带理由的行内豁免）
+- `npm run typecheck` 0 错误
+- `npm run test:regression`（lint + typecheck + vitest + data + e2e）全绿
+- 本 milestone 17 阶段全勾选
+
+## 落地后
+
+- specs/ 更新点：
+  - `docs/specs/guidelines/ai-first-ts-tsx.md`：§3 补"函数复杂度门禁"（complexity/cognitive/expression-complexity/max-lines-per-function 阈值 + 分层），§5 a11y 要求标注"由 jsx-a11y 静态强制"
+  - `docs/specs/guidelines/testing.md`：§4 补完整 lint 策略（strictTypeChecked + sonarjs 分层 + jsx-a11y + import-x + @vitest/eslint-plugin + tseslint 选项共识）
+- 本 change Status → Landed → 移 `archive/changes/`
+- **specs/ 永不引用本 milestone**
+
+## 失败恢复（新 session 接手）
+
+1. 读本 milestone（目标 + 原则 + 边界 + 进度）。
+2. 读 `2026-08-system-lint-fix-rules.md`（修法）。
+3. 读 memory `lint-rule-industry-consensus`（配置共识，MEMORY.md 索引自动加载）。
+4. 看"阶段 Checklist"哪些勾选，从第一个未勾选阶段继续。
+5. 跑 `npx eslint . --format json | jq '[.[].messages[]]|length'` 确认当前违规数（对照进度）。
+6. 派 Agent 修下一阶段（嵌入"Agent 通用指南"）+ 体检 + commit + 勾选。
