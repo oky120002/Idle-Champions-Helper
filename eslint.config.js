@@ -89,6 +89,10 @@ const sonarjsOff = {
   'sonarjs/deprecation': 'off', // 依赖废弃 API 海量噪音
   'sonarjs/disabled-auto-escaping': 'off', // React 默认转义
   'sonarjs/no-nested-functions': 'off', // React 内联 handler 冲突
+  // 测试规则（vitest 项目用 @vitest/eslint-plugin，sonarjs 测试规则针对 jest/mocha，关闭——行业共识）
+  'sonarjs/prefer-specific-assertions': 'off',
+  'sonarjs/no-trivial-assertions': 'off',
+  'sonarjs/parameterized-tests': 'off',
 }
 
 // sonarjs 非 recommended 的精选增量（复杂度 + 代码规范 + 类型误用）。
@@ -128,17 +132,27 @@ const sonarjsOn = {
   'sonarjs/no-regex-spaces': 'error',
 }
 
-// typescript-eslint 零依赖增强（💭 需类型，已配 projectService）。
+// strictTypeChecked 不含的规则手动开；含的规则按需覆盖选项（行业共识）。
 const tseslintOn = {
-  '@typescript-eslint/no-unnecessary-condition': 'error',
+  // === strictTypeChecked 不含，手动开（默认选项即共识）===
+  // strict-boolean-expressions：''/0 等 falsy 易误会，纯 string/number 也要明确（显式 !== '' / !== 0）；
+  // 对象/纯 boolean 无 falsy 误判，可直接 if（默认 allowNullableObject: true，纯 boolean 总允许）
+  '@typescript-eslint/strict-boolean-expressions': ['error', {
+    allowString: false, // '' 误会，要求显式 str !== ''
+    allowNumber: false, // 0 误会，要求显式 num !== 0
+  }],
   '@typescript-eslint/prefer-optional-chain': 'error',
-  '@typescript-eslint/prefer-nullish-coalescing': 'error',
-  '@typescript-eslint/strict-boolean-expressions': 'error',
-  '@typescript-eslint/no-confusing-void-expression': 'error',
-  '@typescript-eslint/no-non-null-assertion': 'error',
-  '@typescript-eslint/no-unnecessary-type-arguments': 'error',
   '@typescript-eslint/prefer-readonly': 'error',
-  eqeqeq: ['error', 'smart'],
+  // === 选项共识（覆盖 strictTypeChecked 默认）===
+  // prefer-nullish-coalescing：ignorePrimitives（原始类型 || 保留，对象改 ??）
+  '@typescript-eslint/prefer-nullish-coalescing': ['error', {
+    ignorePrimitives: { string: true, number: true, boolean: true, bigint: true },
+  }],
+  // no-confusing-void-expression：ignoreVoidOperator（社区共识，允许 void fn() 显式标记意图）
+  '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreVoidOperator: true }],
+  // no-unnecessary-condition：allowConstantLoopConditions（社区共识，允许 while(true) 等字面量惯用法）
+  '@typescript-eslint/no-unnecessary-condition': ['error', { allowConstantLoopConditions: 'only-allowed-literals' }],
+  eqeqeq: ['error', 'smart'], // core：smart 允许 == null（nullish 检查，与 strict-boolean 一致）
 }
 
 // import-x 非 recommended 的精选（模块边界 + 导入卫生）。
@@ -174,7 +188,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.strictTypeChecked,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       sonarjs.configs.recommended,
