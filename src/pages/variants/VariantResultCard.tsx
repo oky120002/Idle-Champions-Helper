@@ -4,8 +4,8 @@ import { getAreaHighlightLabel, getMechanicLabel } from './variant-labels'
 import type { VariantsPageModel } from './types'
 
 type VariantResultCardProps = {
-  model: Pick<VariantsPageModel, 'locale' | 't'>
-  variant: Variant
+  readonly model: Pick<VariantsPageModel, 'locale' | 't'>
+  readonly variant: Variant
 }
 
 export function VariantResultCard({ model, variant }: VariantResultCardProps) {
@@ -36,12 +36,12 @@ export function VariantResultCard({ model, variant }: VariantResultCardProps) {
         <div className="variant-entry__facts">
           {variant.objectiveArea !== null ? (
             <span className="variant-meta-pill variant-meta-pill--small">
-              {locale === 'zh-CN' ? `${variant.objectiveArea} 区完成` : `Finish at ${variant.objectiveArea}`}
+              {locale === 'zh-CN' ? `${String(variant.objectiveArea)} 区完成` : `Finish at ${String(variant.objectiveArea)}`}
             </span>
           ) : null}
           {variant.escortCount > 0 ? (
             <span className="variant-meta-pill variant-meta-pill--small variant-meta-pill--accent">
-              {locale === 'zh-CN' ? `${variant.escortCount} 个护送占位` : `${variant.escortCount} escorts`}
+              {locale === 'zh-CN' ? `${String(variant.escortCount)} 个护送占位` : `${String(variant.escortCount)} escorts`}
             </span>
           ) : null}
         </div>

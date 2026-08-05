@@ -4,9 +4,9 @@ import { getFormationBoardMetrics } from '../../domain/formationLayout'
 import type { FormationLayout } from '../../domain/types'
 
 type VariantFormationMiniBoardProps = {
-  formation: FormationLayout | null
-  locale: AppLocale
-  t: (text: LocaleText) => string
+  readonly formation: FormationLayout | null
+  readonly locale: AppLocale
+  readonly t: (text: LocaleText) => string
 }
 
 export function VariantFormationMiniBoard({ formation, locale, t }: VariantFormationMiniBoardProps) {
@@ -32,8 +32,8 @@ export function VariantFormationMiniBoard({ formation, locale, t }: VariantForma
         <strong>{t({ zh: '阵型图', en: 'Formation' })}</strong>
         <span>
           {locale === 'zh-CN'
-            ? `${formation.slots.length} 槽`
-            : `${formation.slots.length} slots`}
+            ? `${String(formation.slots.length)} 槽`
+            : `${String(formation.slots.length)} slots`}
         </span>
       </div>
       <div className="variant-mini-board" style={style} aria-hidden="true">

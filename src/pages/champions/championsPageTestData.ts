@@ -92,15 +92,23 @@ const generatedAffiliationGroups = [[hall], [adversaries], [oxventurers]] as con
 
 export const manyChampionsFixture: DataCollection<Champion> = {
   updatedAt: '2026-04-13',
-  items: Array.from({ length: 60 }, (_, index) => ({
-    id: `generated-${index + 1}`,
-    name: localized(`Generated Hero ${index + 1}`, `测试英雄 ${index + 1}`),
-    seat: (index % 12) + 1,
-    roles: [...generatedRoleGroups[index % generatedRoleGroups.length]!],
-    affiliations: [...generatedAffiliationGroups[index % generatedAffiliationGroups.length]!],
-    tags: [`tag-${index + 1}`],
-    patronEligibility: emptyPatronEligibility,
-  })),
+  items: Array.from({ length: 60 }, (_, index) => {
+    const heroNumber = String(index + 1)
+    const roleGroup = generatedRoleGroups[index % generatedRoleGroups.length]
+    const affiliationGroup = generatedAffiliationGroups[index % generatedAffiliationGroups.length]
+    if (roleGroup === undefined || affiliationGroup === undefined) {
+      throw new Error('generated group lookup failed')
+    }
+    return {
+      id: `generated-${heroNumber}`,
+      name: localized(`Generated Hero ${heroNumber}`, `测试英雄 ${heroNumber}`),
+      seat: (index % 12) + 1,
+      roles: [...roleGroup],
+      affiliations: [...affiliationGroup],
+      tags: [`tag-${heroNumber}`],
+      patronEligibility: emptyPatronEligibility,
+    }
+  }),
 }
 
 export type ChampionsPageCollectionOverrides = {

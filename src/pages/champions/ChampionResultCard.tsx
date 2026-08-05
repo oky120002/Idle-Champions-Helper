@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 英雄搜索结果卡是内聚组件：两个自适应缩放 effect 和 JSX 紧耦合，拆分会制造人为边界 */
 import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
@@ -10,8 +11,41 @@ import { buildChampionCardAttributePills } from './champion-card-model'
 import type { ChampionsPageModel } from './types'
 
 interface ChampionResultCardProps {
-  champion: Champion
-  model: ChampionsPageModel
+  readonly champion: Champion
+  readonly model: ChampionsPageModel
+}
+
+function watchElementScale(element: HTMLDivElement, applyScale: () => void): () => void {
+  applyScale()
+
+  if (typeof ResizeObserver === 'undefined') {
+    return () => {}
+  }
+
+  let frameId: number | null = null
+  const scheduleScale = () => {
+    if (frameId !== null) {
+      window.cancelAnimationFrame(frameId)
+    }
+
+    frameId = window.requestAnimationFrame(() => {
+      frameId = null
+      applyScale()
+    })
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    scheduleScale()
+  })
+  resizeObserver.observe(element)
+
+  return () => {
+    if (frameId !== null) {
+      window.cancelAnimationFrame(frameId)
+    }
+
+    resizeObserver.disconnect()
+  }
 }
 
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
@@ -25,7 +59,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
   const roleKey = champion.roles.join('|')
   const attributeKeys = attributePills.map((pill) => pill.key).join('|')
   const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
-  const seatLabel = t({ zh: `${champion.seat}位`, en: `Seat ${champion.seat}` })
+  const seatLabel = t({ zh: `${String(champion.seat)}位`, en: `Seat ${String(champion.seat)}` })
   const affiliationText =
     champion.affiliations.length > 0
       ? champion.affiliations.map((affiliation) => getPrimaryLocalizedText(affiliation, locale)).join(' / ')
@@ -39,7 +73,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
     const element = roleRowRef.current
 
     if (element === null) {
-      return
+      return undefined
     }
 
     const MIN_SCALE = 0.58
@@ -73,46 +107,17 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
       }
 
       currentScale = nextScale
-      target.style.setProperty('--champion-card-role-scale', `${nextScale}`)
+      target.style.setProperty('--champion-card-role-scale', String(nextScale))
     }
 
-    applyScale()
-
-    if (typeof ResizeObserver === 'undefined') {
-      return
-    }
-
-    let frameId: number | null = null
-    const scheduleScale = () => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
-      }
-
-      frameId = window.requestAnimationFrame(() => {
-        frameId = null
-        applyScale()
-      })
-    }
-
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleScale()
-    })
-    resizeObserver.observe(element)
-
-    return () => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
-      }
-
-      resizeObserver.disconnect()
-    }
+    return watchElementScale(element, applyScale)
   }, [champion.id, roleKey, locale])
 
   useLayoutEffect(() => {
     const element = attributeTrailRef.current
 
     if (element === null) {
-      return
+      return undefined
     }
 
     const MIN_SCALE = 0.5
@@ -128,7 +133,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
       let nextScale = 1
 
       for (let iteration = 0; iteration < 4; iteration += 1) {
-        target.style.setProperty('--champion-card-attribute-scale', `${nextScale}`)
+        target.style.setProperty('--champion-card-attribute-scale', String(nextScale))
 
         const availableHeight = target.clientHeight
         const naturalHeight = target.scrollHeight
@@ -141,7 +146,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
 
         if (Math.abs(candidateScale - nextScale) < 0.01) {
           nextScale = candidateScale
-          target.style.setProperty('--champion-card-attribute-scale', `${nextScale}`)
+          target.style.setProperty('--champion-card-attribute-scale', String(nextScale))
           break
         }
 
@@ -153,39 +158,10 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
       }
 
       currentScale = nextScale
-      target.style.setProperty('--champion-card-attribute-scale', `${nextScale}`)
+      target.style.setProperty('--champion-card-attribute-scale', String(nextScale))
     }
 
-    applyScale()
-
-    if (typeof ResizeObserver === 'undefined') {
-      return
-    }
-
-    let frameId: number | null = null
-    const scheduleScale = () => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
-      }
-
-      frameId = window.requestAnimationFrame(() => {
-        frameId = null
-        applyScale()
-      })
-    }
-
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleScale()
-    })
-    resizeObserver.observe(element)
-
-    return () => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
-      }
-
-      resizeObserver.disconnect()
-    }
+    return watchElementScale(element, applyScale)
   }, [attributeKeys, champion.id, locale])
 
   return (
@@ -226,7 +202,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
             eyebrow={seatLabel}
             avatarClassName="champion-avatar--spotlight"
             supporting={
-              affiliationText ? (
+              affiliationText != null && affiliationText !== '' ? (
                 <ChampionCardAffiliationText
                   text={affiliationText}
                   title={affiliationTitle ?? affiliationText}

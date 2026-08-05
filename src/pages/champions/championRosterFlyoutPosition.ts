@@ -27,6 +27,21 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
+function resolvePreferAbove(spaceAbove: number, spaceBelow: number, flyoutHeight: number): boolean {
+  const fitsAbove = spaceAbove >= flyoutHeight
+  const fitsBelow = spaceBelow >= flyoutHeight
+  if (fitsAbove && fitsBelow) {
+    return spaceAbove > spaceBelow
+  }
+  if (fitsAbove) {
+    return true
+  }
+  if (fitsBelow) {
+    return false
+  }
+  return spaceAbove >= spaceBelow
+}
+
 const FLYOUT_ANCHOR_GAP = 12
 
 export function calculateChampionRosterFlyoutPosition({
@@ -58,22 +73,14 @@ export function calculateChampionRosterFlyoutPosition({
 
   if (isCompactViewport) {
     const compactMaxHeight = Math.max(220, Math.max(spaceAbove, spaceBelow))
-    const fitsAbove = spaceAbove >= flyoutHeight
-    const fitsBelow = spaceBelow >= flyoutHeight
-    const preferAbove = fitsAbove && fitsBelow
-      ? spaceAbove > spaceBelow
-      : fitsAbove
-        ? true
-        : fitsBelow
-          ? false
-          : spaceAbove >= spaceBelow
+    const preferAbove = resolvePreferAbove(spaceAbove, spaceBelow, flyoutHeight)
     const top = preferAbove
       ? clamp(anchorRect.top - Math.min(flyoutHeight, compactMaxHeight) - FLYOUT_ANCHOR_GAP, viewportGutter, maxTop)
       : clamp(anchorRect.bottom + FLYOUT_ANCHOR_GAP, viewportGutter, maxTop)
 
     return {
-      left: clamp(left, minLeft, maxLeft),
       top,
+      left: clamp(left, minLeft, maxLeft),
       maxHeight: compactMaxHeight,
     }
   }

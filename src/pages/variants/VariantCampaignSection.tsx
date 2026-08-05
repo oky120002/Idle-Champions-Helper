@@ -3,8 +3,8 @@ import type { VariantsPageModel, VariantCampaignGroup } from './types'
 import { VariantAdventureSection } from './VariantAdventureSection'
 
 type VariantCampaignSectionProps = {
-  model: Pick<VariantsPageModel, 'locale' | 't'>
-  group: VariantCampaignGroup
+  readonly model: Pick<VariantsPageModel, 'locale' | 't'>
+  readonly group: VariantCampaignGroup
 }
 
 export function VariantCampaignSection({ model, group }: VariantCampaignSectionProps) {
@@ -29,8 +29,8 @@ export function VariantCampaignSection({ model, group }: VariantCampaignSectionP
           />
           <p className="variant-campaign-group__summary">
             {t({
-              zh: `当前可见 ${group.adventures.length} 个冒险分支，共 ${group.variantCount} 个变体。`,
-              en: `${group.adventures.length} visible adventures with ${group.variantCount} variants in this campaign.`,
+              zh: `当前可见 ${String(group.adventures.length)} 个冒险分支，共 ${String(group.variantCount)} 个变体。`,
+              en: `${String(group.adventures.length)} visible adventures with ${String(group.variantCount)} variants in this campaign.`,
             })}
           </p>
         </div>

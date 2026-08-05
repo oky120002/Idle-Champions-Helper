@@ -4,19 +4,22 @@ import type { ChampionEquipmentIcon } from '../../domain/types'
 import type { ChampionEquipmentSlotViewModel } from './championRoster'
 
 interface ChampionRosterSlotProps {
-  slot: ChampionEquipmentSlotViewModel
-  equipmentIcon: ChampionEquipmentIcon | null
+  readonly slot: ChampionEquipmentSlotViewModel
+  readonly equipmentIcon: ChampionEquipmentIcon | null
 }
 
 export function ChampionRosterSlot({ slot, equipmentIcon }: ChampionRosterSlotProps) {
-  const levelPercent = slot.levelCap && slot.levelCap > 0 ? Math.min((slot.enchant / slot.levelCap) * 100, 100) : 0
+  const gildSuffix = String(slot.gild)
+  const raritySuffix = String(slot.rarity)
+  const levelPercent = slot.levelCap != null && slot.levelCap > 0 ? Math.min((slot.enchant / slot.levelCap) * 100, 100) : 0
   const legendaryPercent = slot.legendaryCap > 0 ? (slot.legendaryLevel / slot.legendaryCap) * 100 : 0
+  const hasLevelCap = slot.levelCap != null && slot.levelCap !== 0
 
   return (
     <article
-      className={`champion-roster-slot champion-roster-slot--gild-${slot.gild} ${equipmentIcon ? 'champion-roster-slot--has-icon' : ''}`}
+      className={`champion-roster-slot champion-roster-slot--gild-${gildSuffix} ${equipmentIcon != null ? 'champion-roster-slot--has-icon' : ''}`}
     >
-      {equipmentIcon ? (
+      {equipmentIcon != null ? (
         <div
           className="champion-roster-slot__icon"
           aria-hidden="true"
@@ -31,21 +34,21 @@ export function ChampionRosterSlot({ slot, equipmentIcon }: ChampionRosterSlotPr
           <p className="champion-roster-slot__eyebrow">槽位 {slot.slotId}</p>
           <h3 className="champion-roster-slot__title">{slot.name}</h3>
         </div>
-        <span className={`champion-roster-slot__rarity champion-roster-slot__rarity--${slot.rarity}`}>
-          稀有度 {slot.rarity}/4
+        <span className={`champion-roster-slot__rarity champion-roster-slot__rarity--${raritySuffix}`}>
+          稀有度 {raritySuffix}/4
         </span>
       </div>
       <div className="champion-roster-slot__stats">
-        <span>{slot.levelCap ? `装备等级 ${slot.enchant}/${slot.levelCap}` : `装备等级 ${slot.enchant}`}</span>
+        <span>{hasLevelCap ? `装备等级 ${String(slot.enchant)}/${String(slot.levelCap)}` : `装备等级 ${String(slot.enchant)}`}</span>
         {slot.gild > 0 ? (
-          <span className={`champion-roster-slot__gild champion-roster-slot__gild--${slot.gild}`}>
+          <span className={`champion-roster-slot__gild champion-roster-slot__gild--${gildSuffix}`}>
             {slot.gild === 2 ? '金装' : '闪耀'}
           </span>
         ) : null}
       </div>
-      {slot.levelCap ? (
+      {hasLevelCap ? (
         <div className="champion-roster-slot__meter" aria-hidden="true">
-          <span className="champion-roster-slot__meter-fill" style={{ width: `${levelPercent}%` }} />
+          <span className="champion-roster-slot__meter-fill" style={{ width: `${String(levelPercent)}%` }} />
         </div>
       ) : null}
       {slot.legendaryCap > 0 ? (
@@ -57,7 +60,7 @@ export function ChampionRosterSlot({ slot, equipmentIcon }: ChampionRosterSlotPr
             </span>
           </div>
           <div className="champion-roster-slot__meter champion-roster-slot__meter--legendary" aria-hidden="true">
-            <span className="champion-roster-slot__meter-fill" style={{ width: `${legendaryPercent}%` }} />
+            <span className="champion-roster-slot__meter-fill" style={{ width: `${String(legendaryPercent)}%` }} />
           </div>
         </>
       ) : null}

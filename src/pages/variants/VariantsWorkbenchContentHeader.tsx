@@ -3,7 +3,7 @@ import { createWorkbenchShowingMetricItem } from '../../components/workbench/wor
 import type { VariantsPageModel } from './types'
 
 interface VariantsWorkbenchContentHeaderProps {
-  model: VariantsPageModel
+  readonly model: VariantsPageModel
 }
 
 export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchContentHeaderProps) {
@@ -21,7 +21,7 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
           { label: t({ zh: '可见冒险分组', en: 'Adventure groups' }), value: model.adventuresWithResults },
           {
             label: t({ zh: '覆盖战役 / 场景', en: 'Campaigns / scenes' }),
-            value: `${model.campaignsWithResults} / ${model.scenesWithResults}`,
+            value: `${String(model.campaignsWithResults)} / ${String(model.scenesWithResults)}`,
           },
         ]
       : []

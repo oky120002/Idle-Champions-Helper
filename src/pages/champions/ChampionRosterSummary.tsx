@@ -1,13 +1,13 @@
 import type { ChampionRosterSummary as ChampionRosterSummaryModel } from './championRoster'
 
 interface ChampionRosterSummaryProps {
-  summary: ChampionRosterSummaryModel | null
-  sourceLabel?: string
-  eyebrow?: string
-  title?: string
-  highlightLabel?: string
-  activeMetricId?: string | null
-  onMetricToggle?: (metricId: string) => void
+  readonly summary: ChampionRosterSummaryModel | null
+  readonly sourceLabel?: string
+  readonly eyebrow?: string
+  readonly title?: string
+  readonly highlightLabel?: string
+  readonly activeMetricId?: string | null
+  readonly onMetricToggle?: (metricId: string) => void
 }
 
 export function ChampionRosterSummary({
@@ -58,7 +58,7 @@ export function ChampionRosterSummary({
                 </span>
               </div>
               <div className="champion-roster-summary__meter" aria-hidden="true">
-                <span className="champion-roster-summary__meter-fill" style={{ width: `${percent}%` }} />
+                <span className="champion-roster-summary__meter-fill" style={{ width: `${String(percent)}%` }} />
               </div>
               <p className="champion-roster-summary__metric-detail">{metric.description}</p>
             </button>

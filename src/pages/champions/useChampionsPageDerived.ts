@@ -15,6 +15,22 @@ type UseChampionsPageDerivedOptions = {
   randomOrderSeed: number | null
 }
 
+function hasAnyActiveFilters(filters: ChampionsFilterState): boolean {
+  const selectedGroups = [
+    filters.selectedSeats,
+    filters.selectedRoles,
+    filters.selectedAffiliations,
+    filters.selectedRaces,
+    filters.selectedGenders,
+    filters.selectedAlignments,
+    filters.selectedProfessions,
+    filters.selectedAcquisitions,
+    filters.selectedMechanics,
+  ]
+  return filters.search.trim().length > 0 || selectedGroups.some((values) => values.length > 0)
+}
+
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 派生 hook：useMemo 编排 + 简单派生赋值，无纯逻辑可提取
 export function useChampionsPageDerived({
   locale,
   t,
@@ -105,17 +121,7 @@ export function useChampionsPageDerived({
     orderedSelectedMechanics,
   })
   const activeFilters = activeFilterChips.map((chip) => chip.label)
-  const hasActiveFilters =
-    filters.search.trim().length > 0 ||
-    filters.selectedSeats.length > 0 ||
-    filters.selectedRoles.length > 0 ||
-    filters.selectedAffiliations.length > 0 ||
-    filters.selectedRaces.length > 0 ||
-    filters.selectedGenders.length > 0 ||
-    filters.selectedAlignments.length > 0 ||
-    filters.selectedProfessions.length > 0 ||
-    filters.selectedAcquisitions.length > 0 ||
-    filters.selectedMechanics.length > 0
+  const hasActiveFilters = hasAnyActiveFilters(filters)
   const canToggleResultVisibility = filteredChampions.length > MAX_VISIBLE_RESULTS
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =

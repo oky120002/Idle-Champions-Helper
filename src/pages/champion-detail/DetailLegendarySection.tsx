@@ -4,14 +4,14 @@ import { describeEffectItem } from './summary-model'
 import type { EffectContext } from './types'
 
 type DetailLegendarySectionProps = {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  effectContext: EffectContext
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly effectContext: EffectContext
 }
 
 export function DetailLegendarySection({ detail, locale, t, effectContext }: DetailLegendarySectionProps) {
-  const legendaryEffects = detail.legendaryEffects ?? []
+  const legendaryEffects = detail.legendaryEffects
 
   return (
     <SurfaceCard className="detail-section detail-section--legendary detail-section--headerless">
@@ -25,10 +25,10 @@ export function DetailLegendarySection({ detail, locale, t, effectContext }: Det
               : []
 
             return (
-              <article key={`${item.slotId}-${item.id}`} className="detail-subcard legendary-card">
+              <article key={`${String(item.slotId)}-${item.id}`} className="detail-subcard legendary-card">
                 <div className="legendary-card__topline">
                   <p className="detail-subcard__eyebrow">
-                    {locale === 'zh-CN' ? `槽位 ${item.slotId}` : `Slot ${item.slotId}`}
+                    {locale === 'zh-CN' ? `槽位 ${String(item.slotId)}` : `Slot ${String(item.slotId)}`}
                   </p>
                   <span className="detail-badge">#{item.id}</span>
                 </div>

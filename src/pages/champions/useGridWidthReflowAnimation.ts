@@ -24,7 +24,7 @@ function measureGridItems(grid: HTMLElement): Map<string, GridItemSnapshot> {
   grid.querySelectorAll<HTMLElement>('[data-grid-motion-key]').forEach((element) => {
     const key = element.dataset.gridMotionKey
 
-    if (!key) {
+    if (key == null || key === '') {
       return
     }
 
@@ -39,12 +39,46 @@ function measureGridItems(grid: HTMLElement): Map<string, GridItemSnapshot> {
   return snapshots
 }
 
+function applyReflowAnimations(
+  previousItems: Map<string, GridItemSnapshot>,
+  nextItems: Map<string, GridItemSnapshot>,
+): void {
+  nextItems.forEach((item, key) => {
+    const previousItem = previousItems.get(key)
+
+    if (previousItem === undefined) {
+      return
+    }
+
+    const deltaX = previousItem.left - item.left
+    const deltaY = previousItem.top - item.top
+
+    if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) {
+      return
+    }
+
+    item.element.getAnimations().forEach((animation) => {
+      animation.cancel()
+    })
+    item.element.animate(
+      [
+        { transform: `translate(${String(deltaX)}px, ${String(deltaY)}px)` },
+        { transform: 'translate(0, 0)' },
+      ],
+      {
+        duration: GRID_REFLOW_ANIMATION_MS,
+        easing: GRID_REFLOW_EASE,
+      },
+    )
+  })
+}
+
 export function useGridWidthReflowAnimation(gridRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const grid = gridRef.current
 
     if (grid === null || typeof ResizeObserver === 'undefined') {
-      return
+      return undefined
     }
 
     let frameId: number | null = null
@@ -67,32 +101,7 @@ export function useGridWidthReflowAnimation(gridRef: RefObject<HTMLElement | nul
         const nextItems = measureGridItems(grid)
 
         if (shouldAnimateGridReflow() && nextWidth < width - GRID_REFLOW_WIDTH_DELTA) {
-          nextItems.forEach((item, key) => {
-            const previousItem = previousItems.get(key)
-
-            if (previousItem === undefined) {
-              return
-            }
-
-            const deltaX = previousItem.left - item.left
-            const deltaY = previousItem.top - item.top
-
-            if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) {
-              return
-            }
-
-            item.element.getAnimations().forEach((animation) => animation.cancel())
-            item.element.animate(
-              [
-                { transform: `translate(${deltaX}px, ${deltaY}px)` },
-                { transform: 'translate(0, 0)' },
-              ],
-              {
-                duration: GRID_REFLOW_ANIMATION_MS,
-                easing: GRID_REFLOW_EASE,
-              },
-            )
-          })
+          applyReflowAnimations(previousItems, nextItems)
         }
 
         width = nextWidth

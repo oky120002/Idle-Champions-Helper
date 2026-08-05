@@ -29,35 +29,35 @@ export type ChampionDetailState =
   | { status: 'error'; championId: string; message: string }
 
 export interface DetailFieldProps {
-  label: string
-  value: ReactNode
-  hint?: ReactNode | null
-  variant?: 'default' | 'compact'
+  readonly label: string
+  readonly value: ReactNode
+  readonly hint?: ReactNode | null
+  readonly variant?: 'default' | 'compact'
 }
 
 export interface AttackPanelProps {
-  title: ReactNode
-  attack: ChampionAttackDetail | null
-  locale: AppLocale
+  readonly title: ReactNode
+  readonly attack: ChampionAttackDetail | null
+  readonly locale: AppLocale
 }
 
 export interface UpgradeCardProps {
-  upgrade: ChampionUpgradeDetail
-  presentation: UpgradePresentation
-  locale: AppLocale
-  specializationGraphic: ChampionSpecializationGraphic | null
+  readonly upgrade: ChampionUpgradeDetail
+  readonly presentation: UpgradePresentation
+  readonly locale: AppLocale
+  readonly specializationGraphic: ChampionSpecializationGraphic | null
 }
 
 export interface NumericUpgradeRowProps {
-  upgrade: ChampionUpgradeDetail
-  presentation: UpgradePresentation
-  locale: AppLocale
+  readonly upgrade: ChampionUpgradeDetail
+  readonly presentation: UpgradePresentation
+  readonly locale: AppLocale
 }
 
 export interface FeatCardProps {
-  feat: ChampionFeatDetail
-  locale: AppLocale
-  effectContext: EffectContext
+  readonly feat: ChampionFeatDetail
+  readonly locale: AppLocale
+  readonly effectContext: EffectContext
 }
 
 export interface DetailSectionBadge {
@@ -66,15 +66,15 @@ export interface DetailSectionBadge {
 }
 
 export interface DetailSectionHeaderProps {
-  eyebrow?: string
-  description?: string
-  title: string
-  badges: DetailSectionBadge[]
+  readonly eyebrow?: string
+  readonly description?: string
+  readonly title: string
+  readonly badges: DetailSectionBadge[]
 }
 
 export interface SummaryTagGroupProps {
-  label: string
-  items: string[]
+  readonly label: string
+  readonly items: string[]
 }
 
 export interface FeatEffectEntry {
@@ -83,8 +83,8 @@ export interface FeatEffectEntry {
 }
 
 export interface UpgradeSpecializationArtProps {
-  src: string
-  alt: string
+  readonly src: string
+  readonly alt: string
 }
 
 export interface SkinArtworkIds {

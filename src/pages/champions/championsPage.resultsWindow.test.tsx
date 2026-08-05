@@ -16,7 +16,7 @@ const mockedLoadVersion = vi.mocked(loadVersion)
 function readVisibleChampionNames() {
   return within(screen.getByLabelText('英雄筛选结果'))
     .getAllByRole('heading', { level: 3 })
-    .map((heading) => heading.textContent ?? '')
+    .map((heading) => heading.textContent)
 }
 
 describe('ChampionsPage results window', () => {
@@ -75,6 +75,8 @@ describe('ChampionsPage results window', () => {
 
     expect(afterShuffle).toHaveLength(15)
     expect(afterShuffle).not.toEqual(beforeShuffle)
-    expect([...afterShuffle].sort()).toEqual([...beforeShuffle].sort())
+    expect([...afterShuffle].sort((a, b) => a.localeCompare(b))).toEqual(
+      [...beforeShuffle].sort((a, b) => a.localeCompare(b)),
+    )
   }, 10000)
 })

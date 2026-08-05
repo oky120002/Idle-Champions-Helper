@@ -6,14 +6,14 @@ import { describeEffectItem } from './summary-model'
 import type { EffectContext } from './types'
 
 type DetailLootSectionProps = {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  effectContext: EffectContext
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly effectContext: EffectContext
 }
 
 export function DetailLootSection({ detail, locale, t, effectContext }: DetailLootSectionProps) {
-  const loot = detail.loot ?? []
+  const loot = detail.loot
 
   return (
     <SurfaceCard className="detail-section detail-section--loot detail-section--headerless">
@@ -32,8 +32,8 @@ export function DetailLootSection({ detail, locale, t, effectContext }: DetailLo
                   <div>
                     <p className="detail-subcard__eyebrow">
                       {locale === 'zh-CN'
-                        ? `槽位 ${item.slotId ?? '-'}`
-                        : `Slot ${item.slotId ?? '-'}`}
+                        ? `槽位 ${String(item.slotId ?? '-')}`
+                        : `Slot ${String(item.slotId ?? '-')}`}
                     </p>
                     <h3 className="detail-subcard__title">{getPrimaryLocalizedText(item.name, locale)}</h3>
                   </div>

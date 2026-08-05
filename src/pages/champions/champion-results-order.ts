@@ -1,7 +1,7 @@
 import type { Champion } from '../../domain/types'
 
 function createSeededRandom(seed: number) {
-  let value = seed || 1
+  let value = seed !== 0 && !Number.isNaN(seed) ? seed : 1
 
   return () => {
     value = (value * 16807) % 2147483647

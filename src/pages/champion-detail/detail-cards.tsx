@@ -1,4 +1,6 @@
+/* eslint-disable max-lines -- 冠军详情卡片组件同构内聚，拆分会增加常见修改的打开文件数 */
 import { resolveDataUrl } from '../../data/client'
+import type { ChampionUpgradeDetail } from '../../domain/types'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import { buildFeatEffectEntries, buildFeatTagGroups, buildSummaryTagText } from './summary-model'
 import { buildRarityLabel } from './detail-card-model'
@@ -13,10 +15,33 @@ import type {
   AttackPanelProps,
   FeatCardProps,
   NumericUpgradeRowProps,
+  UpgradePresentation,
   UpgradeCardProps,
 } from './types'
 
 export { DetailField, LocalizedTextStack, SummaryTagGroup, UpgradeSpecializationArt } from './detail-primitives'
+
+function buildUpgradeMetaItems(
+  upgrade: ChampionUpgradeDetail,
+  presentation: UpgradePresentation,
+  locale: 'zh-CN' | 'en-US',
+): string[] {
+  const prerequisiteLabel = locale === 'zh-CN' ? '前置' : 'Prerequisite'
+  const multiplierLabel = locale === 'zh-CN' ? '倍率' : 'Multiplier'
+  const defaultDisabledLabel = locale === 'zh-CN' ? '默认关闭' : 'Disabled by default'
+
+  const items: string[] = []
+  if (upgrade.requiredUpgradeId != null && upgrade.requiredUpgradeId !== '') {
+    items.push(buildSummaryTagText(prerequisiteLabel, presentation.prerequisiteLabel, locale))
+  }
+  if (presentation.staticMultiplierLabel != null && presentation.staticMultiplierLabel !== '') {
+    items.push(buildSummaryTagText(multiplierLabel, presentation.staticMultiplierLabel, locale))
+  }
+  if (!upgrade.defaultEnabled) {
+    items.push(defaultDisabledLabel)
+  }
+  return items
+}
 
 export function AttackPanel({ title, attack, locale }: AttackPanelProps) {
   if (!attack) {
@@ -101,23 +126,7 @@ export function AttackPanel({ title, attack, locale }: AttackPanelProps) {
 
 export function UpgradeCard({ upgrade, presentation, locale, specializationGraphic }: UpgradeCardProps) {
   const isCompact = upgrade.upgradeType === 'unlock_ability' || upgrade.upgradeType === 'unlock_ultimate'
-  const metaItems = [
-    upgrade.requiredUpgradeId
-      ? buildSummaryTagText(
-          locale === 'zh-CN' ? '前置' : 'Prerequisite',
-          presentation.prerequisiteLabel,
-          locale,
-        )
-      : null,
-    presentation.staticMultiplierLabel
-      ? buildSummaryTagText(
-          locale === 'zh-CN' ? '倍率' : 'Multiplier',
-          presentation.staticMultiplierLabel,
-          locale,
-        )
-      : null,
-    !upgrade.defaultEnabled ? (locale === 'zh-CN' ? '默认关闭' : 'Disabled by default') : null,
-  ].filter((value): value is string => Boolean(value))
+  const metaItems = buildUpgradeMetaItems(upgrade, presentation, locale)
   const noteItems = [presentation.targetHint, ...presentation.detailLines].filter(
     (value, index, list): value is string =>
       Boolean(value) && value !== presentation.summary && list.indexOf(value) === index,
@@ -147,7 +156,9 @@ export function UpgradeCard({ upgrade, presentation, locale, specializationGraph
           <h3 className="detail-subcard__title">{presentation.title}</h3>
         </div>
       </div>
-      {presentation.summary ? <p className="upgrade-card__summary">{presentation.summary}</p> : null}
+      {presentation.summary != null && presentation.summary !== '' ? (
+        <p className="upgrade-card__summary">{presentation.summary}</p>
+      ) : null}
 
       {metaItems.length > 0 ? (
         <div className="upgrade-card__tag-row">
@@ -220,7 +231,9 @@ export function FeatCard({ feat, locale, effectContext }: FeatCardProps) {
           {effectEntries.map((entry) => (
             <article key={`${entry.summary}-${entry.detail ?? ''}`} className="feat-card__effect-item">
               <p className="feat-card__effect-summary">{entry.summary}</p>
-              {entry.detail ? <p className="feat-card__effect-detail">{entry.detail}</p> : null}
+              {entry.detail != null && entry.detail !== '' ? (
+                <p className="feat-card__effect-detail">{entry.detail}</p>
+              ) : null}
             </article>
           ))}
         </div>

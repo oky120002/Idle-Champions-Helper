@@ -6,7 +6,7 @@ import {
 import type { ChampionsPageModel } from './types'
 
 interface ChampionsPrimaryFiltersProps {
-  model: ChampionsPageModel
+  readonly model: ChampionsPageModel
 }
 
 const championsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {

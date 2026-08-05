@@ -4,7 +4,7 @@ import { collectChampionFacetSummary } from '../../features/champion-filters/hea
 import type { ChampionsPageModel } from './types'
 
 interface ChampionsWorkbenchContentHeaderProps {
-  model: ChampionsPageModel
+  readonly model: ChampionsPageModel
 }
 
 export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchContentHeaderProps) {

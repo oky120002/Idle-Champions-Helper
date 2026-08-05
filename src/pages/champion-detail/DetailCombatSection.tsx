@@ -7,19 +7,19 @@ import { formatDigitString, formatNumber } from './detail-value-formatters'
 import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
 type DetailCombatSectionProps = {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  ledgerRows: LedgerUpgradeRow[]
-  ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
-  activeLedgerFilterKeySet: Set<string>
-  visibleLedgerRows: LedgerUpgradeRow[]
-  hiddenLedgerSummary: string
-  hasCustomLedgerFilterState: boolean
-  isShowingAllLedgerTypes: boolean
-  toggleLedgerFilter: (key: string) => void
-  resetLedgerFilters: () => void
-  enableAllLedgerFilters: () => void
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly ledgerRows: LedgerUpgradeRow[]
+  readonly ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
+  readonly activeLedgerFilterKeySet: Set<string>
+  readonly visibleLedgerRows: LedgerUpgradeRow[]
+  readonly hiddenLedgerSummary: string
+  readonly hasCustomLedgerFilterState: boolean
+  readonly isShowingAllLedgerTypes: boolean
+  readonly toggleLedgerFilter: (key: string) => void
+  readonly resetLedgerFilters: () => void
+  readonly enableAllLedgerFilters: () => void
 }
 
 export function DetailCombatSection({
@@ -94,7 +94,9 @@ export function DetailCombatSection({
                       type="button"
                       className={isActive ? 'upgrade-filter-chip upgrade-filter-chip--active' : 'upgrade-filter-chip'}
                       aria-pressed={isActive}
-                      onClick={() => toggleLedgerFilter(option.key)}
+                      onClick={() => {
+                        toggleLedgerFilter(option.key)
+                      }}
                     >
                       <span className="upgrade-filter-chip__label">{option.label}</span>
                       <span className="upgrade-filter-chip__count">{formatNumber(option.count, locale)}</span>

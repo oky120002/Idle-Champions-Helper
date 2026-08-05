@@ -13,7 +13,7 @@ import { VariantAdventureTabs } from './VariantAdventureTabs'
 import { VariantFormationMiniBoard } from './VariantFormationMiniBoard'
 
 type VariantAdventureDetailProps = {
-  model: VariantsPageModel
+  readonly model: VariantsPageModel
 }
 
 export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
@@ -56,13 +56,13 @@ export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
             <span className="variant-meta-pill">{sceneLabel}</span>
             <span className="variant-meta-pill">
               {locale === 'zh-CN'
-                ? `${selectedAdventureGroup.variants.length} 个变体`
-                : `${selectedAdventureGroup.variants.length} variants`}
+                ? `${String(selectedAdventureGroup.variants.length)} 个变体`
+                : `${String(selectedAdventureGroup.variants.length)} variants`}
             </span>
             <span className="variant-meta-pill variant-meta-pill--accent">
               {locale === 'zh-CN'
-                ? `${selectedAdventureGroup.areaMilestones.length} 个区域节点`
-                : `${selectedAdventureGroup.areaMilestones.length} area nodes`}
+                ? `${String(selectedAdventureGroup.areaMilestones.length)} 个区域节点`
+                : `${String(selectedAdventureGroup.areaMilestones.length)} area nodes`}
             </span>
           </div>
         </div>

@@ -9,7 +9,7 @@ export interface VariantsFilterChipGroupOption {
 }
 
 interface VariantsFilterChipGroupProps {
-  options: VariantsFilterChipGroupOption[]
+  readonly options: VariantsFilterChipGroupOption[]
 }
 
 export function VariantsFilterChipGroup({ options }: VariantsFilterChipGroupProps) {

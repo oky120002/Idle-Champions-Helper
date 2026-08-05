@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import { deflateSync } from 'node:zlib'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'

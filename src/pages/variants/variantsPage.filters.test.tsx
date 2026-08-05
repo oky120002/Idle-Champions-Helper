@@ -117,12 +117,12 @@ const crowdedVariantsFixture: DataCollection<Variant> = {
 
     return createVariant(String(sequence), {
       campaign,
-      name: text(`Variant ${sequence}`, `变体 ${sequence}`),
-      adventureId: `${campaign.id}-adventure-${Math.floor(index / 2)}`,
-      adventure: text(`Adventure ${sequence}`, `冒险 ${sequence}`),
+      name: text(`Variant ${String(sequence)}`, `变体 ${String(sequence)}`),
+      adventureId: `${campaign.id}-adventure-${String(Math.floor(index / 2))}`,
+      adventure: text(`Adventure ${String(sequence)}`, `冒险 ${String(sequence)}`),
       objectiveArea: 75 + index,
       scene: isCampaignA ? sceneFarm : sceneCatacombs,
-      restrictions: [text(`Restriction ${sequence}`, `限制 ${sequence}`)],
+      restrictions: [text(`Restriction ${String(sequence)}`, `限制 ${String(sequence)}`)],
       enemyTypes: [isCampaignA ? 'undead' : 'dragon'],
       attackMix: { melee: 2, ranged: 1, magic: 0, other: 0 },
       specialEnemyCount: 8 + (index % 6),

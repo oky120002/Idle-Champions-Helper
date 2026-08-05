@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+/* eslint-disable max-lines -- 装备浮层是内聚的单文件组件：数据加载、定位、事件、JSX 紧耦合 */
+import { type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { loadChampionDetail, loadCollection } from '../../data/client'
@@ -11,20 +12,20 @@ import { calculateChampionRosterFlyoutPosition } from './championRosterFlyoutPos
 import { ChampionRosterSlot } from './ChampionRosterSlot'
 
 interface ChampionRosterFlyoutProps {
-  champion: Champion
-  ownedHero: OwnedHero | null
-  legendaryLevelCap: number
-  locale: 'zh-CN' | 'en-US'
-  locationSearch: string
-  navigationTo?: string
-  returnToPath?: string
-  returnLabel?: {
+  readonly champion: Champion
+  readonly ownedHero: OwnedHero | null
+  readonly legendaryLevelCap: number
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly locationSearch: string
+  readonly navigationTo?: string
+  readonly returnToPath?: string
+  readonly returnLabel?: {
     zh: string
     en: string
   }
-  anchorRect: DOMRect
-  onClose: () => void
-  onNavigate: () => void
+  readonly anchorRect: DOMRect
+  readonly onClose: () => void
+  readonly onNavigate: () => void
 }
 
 const FLYOUT_VIEWPORT_GUTTER = 14
@@ -39,6 +40,7 @@ interface FlyoutPosition {
   ready: boolean
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 浮层组件内聚状态加载、定位与事件处理，拆分会制造人工边界
 export function ChampionRosterFlyout({
   champion,
   ownedHero,
@@ -167,7 +169,8 @@ export function ChampionRosterFlyout({
       const width = isCompactViewport
         ? maxWidth
         : Math.min(FLYOUT_MAX_WIDTH, maxWidth)
-      const measuredHeight = element.getBoundingClientRect().height || FLYOUT_FALLBACK_HEIGHT
+      const rectHeight = element.getBoundingClientRect().height
+      const measuredHeight = rectHeight > 0 ? rectHeight : FLYOUT_FALLBACK_HEIGHT
       const nextPosition = calculateChampionRosterFlyoutPosition({
         anchorRect,
         viewportWidth,
@@ -178,9 +181,9 @@ export function ChampionRosterFlyout({
       })
 
       setPosition({
+        width,
         top: nextPosition.top,
         left: nextPosition.left,
-        width,
         maxHeight: nextPosition.maxHeight,
         ready: true,
       })
@@ -200,6 +203,36 @@ export function ChampionRosterFlyout({
     width: position.width,
     maxHeight: position.maxHeight,
     opacity: position.ready ? 1 : 0,
+  }
+
+  let rosterContent: ReactNode
+  if (ownedHero === null) {
+    rosterContent = (
+      <div className="champion-roster-flyout__empty">
+        当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。
+      </div>
+    )
+  } else if (status === 'error') {
+    rosterContent = (
+      <div className="champion-roster-flyout__empty">
+        读取这名英雄的装备定义失败，稍后重试即可。
+      </div>
+    )
+  } else if (status === 'loading') {
+    rosterContent = (
+      <div className="champion-roster-flyout__empty">
+        正在读取装备槽位定义…
+      </div>
+    )
+  } else {
+    rosterContent = (
+      <div className="champion-roster-flyout__slot-grid">
+        {slots.map((slot) => {
+          const equipmentIcon = slot.graphicId != null && slot.graphicId !== '' ? equipmentIconsById.get(slot.graphicId) ?? null : null
+          return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} />
+        })}
+      </div>
+    )
   }
 
   const flyoutContent = (
@@ -237,26 +270,7 @@ export function ChampionRosterFlyout({
         </button>
       </div>
 
-      {!ownedHero ? (
-        <div className="champion-roster-flyout__empty">
-          当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。
-        </div>
-      ) : status === 'error' ? (
-        <div className="champion-roster-flyout__empty">
-          读取这名英雄的装备定义失败，稍后重试即可。
-        </div>
-      ) : status === 'loading' ? (
-        <div className="champion-roster-flyout__empty">
-          正在读取装备槽位定义…
-        </div>
-      ) : (
-        <div className="champion-roster-flyout__slot-grid">
-          {slots.map((slot) => {
-            const equipmentIcon = slot.graphicId ? equipmentIconsById.get(slot.graphicId) ?? null : null
-            return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} />
-          })}
-        </div>
-      )}
+      {rosterContent}
     </div>
   )
 

@@ -3,8 +3,8 @@ import { useLayoutEffect, useRef } from 'react'
 const MIN_FONT_SCALE = 0.72
 
 interface ChampionCardAffiliationTextProps {
-  text: string
-  title?: string | null
+  readonly text: string
+  readonly title?: string | null
 }
 
 export function ChampionCardAffiliationText({
@@ -18,7 +18,7 @@ export function ChampionCardAffiliationText({
     const element = textRef.current
 
     if (element === null) {
-      return
+      return undefined
     }
 
     const baseFontSize = baseFontSizeRef.current ?? parseFloat(window.getComputedStyle(element).fontSize)
@@ -31,7 +31,7 @@ export function ChampionCardAffiliationText({
         return
       }
 
-      target.style.fontSize = `${baseFontSize}px`
+      target.style.fontSize = `${String(baseFontSize)}px`
 
       const availableWidth = target.clientWidth
       const naturalWidth = target.scrollWidth
@@ -41,13 +41,13 @@ export function ChampionCardAffiliationText({
       }
 
       const nextFontSize = Math.max(baseFontSize * MIN_FONT_SCALE, (baseFontSize * availableWidth) / naturalWidth)
-      target.style.fontSize = `${nextFontSize}px`
+      target.style.fontSize = `${String(nextFontSize)}px`
     }
 
     applyFontSize()
 
     if (typeof ResizeObserver === 'undefined') {
-      return
+      return undefined
     }
 
     const resizeObserver = new ResizeObserver(() => {

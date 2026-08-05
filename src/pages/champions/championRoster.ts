@@ -1,4 +1,5 @@
-import type { Champion, ChampionDetail, ChampionLootDetail } from '../../domain/types'
+/* eslint-disable max-lines -- 阵型英雄列表构建模块：tile/summary/equipment-slot 视图模型紧耦合，拆文件增加跨文件跳转 */
+import type { Champion, ChampionDetail, ChampionLootDetail, LocalizedText } from '../../domain/types'
 import type { OwnedHero } from '../../domain/user-profile/types'
 
 export interface ChampionRosterTile {
@@ -59,7 +60,7 @@ export interface ChampionEquipmentSlotViewModel {
 
 const SEAT_ORDER = Array.from({ length: 12 }, (_, index) => index + 1)
 
-function toNumber(value: string | number | null | undefined): number {
+function toNumber(value: unknown): number {
   if (typeof value === 'number') {
     return value
   }
@@ -123,10 +124,11 @@ function buildEquipmentLevelCapsBySlot(detail: ChampionDetail | null): Map<strin
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- 类型声明 raw 为必填，但测试和运行时数据可能缺该字段，保留 ?. 防御
   for (const item of detail?.raw?.loot ?? []) {
     const slotId = extractSlotIdFromRawLootEntry(item)
 
-    if (!slotId || capsBySlot.has(slotId)) {
+    if (slotId == null || slotId === '' || capsBySlot.has(slotId)) {
       continue
     }
 
@@ -155,6 +157,13 @@ export function buildOwnedHeroById(ownedHeroes: OwnedHero[]): Map<string, OwnedH
   return new Map(ownedHeroes.map((hero) => [hero.heroId, hero]))
 }
 
+function resolveRosterTileEmphasis(isOwned: boolean, matchesFilters: boolean): ChampionRosterTile['emphasis'] {
+  if (!isOwned) {
+    return 'dim-unowned'
+  }
+  return matchesFilters ? 'match' : 'dim-owned'
+}
+
 export function buildChampionRosterSeatColumns(
   champions: Champion[],
   matchedChampionIds: ReadonlySet<string>,
@@ -177,28 +186,19 @@ export function buildChampionRosterSeatColumns(
           ownedHero,
           isOwned,
           matchesFilters,
-          emphasis: !isOwned
-            ? 'dim-unowned'
-            : matchesFilters
-              ? 'match'
-              : 'dim-owned',
+          emphasis: resolveRosterTileEmphasis(isOwned, matchesFilters),
         }
       }),
     }
   })
 }
 
-export function buildChampionRosterSummary(
-  champions: Champion[],
-  ownedHeroes: OwnedHero[],
-  matchedChampionIds: ReadonlySet<string>,
-): ChampionRosterSummary {
-  const ownedHeroById = buildOwnedHeroById(ownedHeroes)
-  const ownedChampionCount = ownedHeroes.length
-  const totalChampionCount = champions.length
-  const matchedOwnedChampionCount = Array.from(matchedChampionIds).filter((championId) => ownedHeroById.has(championId)).length
-  const totalOwnedSlots = ownedChampionCount * 6
-
+function countRosterSlotMetrics(ownedHeroes: OwnedHero[]): {
+  epicSlots: number
+  shinySlots: number
+  goldenSlots: number
+  legendarySlots: number
+} {
   let epicSlots = 0
   let shinySlots = 0
   let goldenSlots = 0
@@ -222,49 +222,90 @@ export function buildChampionRosterSummary(
     legendarySlots += Object.keys(hero.legendaryBySlot).length
   }
 
+  return { epicSlots, shinySlots, goldenSlots, legendarySlots }
+}
+
+function buildRosterSummaryMetrics(
+  ownedChampionCount: number,
+  totalChampionCount: number,
+  totalOwnedSlots: number,
+  slotCounts: ReturnType<typeof countRosterSlotMetrics>,
+): ChampionRosterSummaryMetric[] {
+  return [
+    {
+      id: 'owned',
+      label: '已拥有英雄',
+      value: ownedChampionCount,
+      total: totalChampionCount,
+      description: '当前快照里已经解锁并可投入阵型的英雄数量。',
+    },
+    {
+      id: 'epic-slots',
+      label: '史诗装备槽位',
+      value: slotCounts.epicSlots,
+      total: totalOwnedSlots,
+      description: '已拥有英雄的装备槽里，达到史诗稀有度的总槽位。',
+    },
+    {
+      id: 'shiny-slots',
+      label: '闪耀槽位',
+      value: slotCounts.shinySlots,
+      total: totalOwnedSlots,
+      description: '当前已拥有的闪耀装备槽位数量。',
+    },
+    {
+      id: 'golden-slots',
+      label: '金装槽位',
+      value: slotCounts.goldenSlots,
+      total: totalOwnedSlots,
+      description: '当前已拥有的 Golden 装备槽位数量。',
+    },
+    {
+      id: 'legendary-slots',
+      label: '传奇装备位',
+      value: slotCounts.legendarySlots,
+      total: totalOwnedSlots,
+      description: '已经激活传奇等级的装备槽位数量。',
+    },
+  ]
+}
+
+export function buildChampionRosterSummary(
+  champions: Champion[],
+  ownedHeroes: OwnedHero[],
+  matchedChampionIds: ReadonlySet<string>,
+): ChampionRosterSummary {
+  const ownedHeroById = buildOwnedHeroById(ownedHeroes)
+  const ownedChampionCount = ownedHeroes.length
+  const totalChampionCount = champions.length
+  const matchedOwnedChampionCount = Array.from(matchedChampionIds).filter((championId) => ownedHeroById.has(championId)).length
+  const totalOwnedSlots = ownedChampionCount * 6
+  const slotCounts = countRosterSlotMetrics(ownedHeroes)
+
   return {
     ownedChampionCount,
     totalChampionCount,
     matchedOwnedChampionCount,
     matchedChampionCount: matchedChampionIds.size,
-    metrics: [
-      {
-        id: 'owned',
-        label: '已拥有英雄',
-        value: ownedChampionCount,
-        total: totalChampionCount,
-        description: '当前快照里已经解锁并可投入阵型的英雄数量。',
-      },
-      {
-        id: 'epic-slots',
-        label: '史诗装备槽位',
-        value: epicSlots,
-        total: totalOwnedSlots,
-        description: '已拥有英雄的装备槽里，达到史诗稀有度的总槽位。',
-      },
-      {
-        id: 'shiny-slots',
-        label: '闪耀槽位',
-        value: shinySlots,
-        total: totalOwnedSlots,
-        description: '当前已拥有的闪耀装备槽位数量。',
-      },
-      {
-        id: 'golden-slots',
-        label: '金装槽位',
-        value: goldenSlots,
-        total: totalOwnedSlots,
-        description: '当前已拥有的 Golden 装备槽位数量。',
-      },
-      {
-        id: 'legendary-slots',
-        label: '传奇装备位',
-        value: legendarySlots,
-        total: totalOwnedSlots,
-        description: '已经激活传奇等级的装备槽位数量。',
-      },
-    ],
+    metrics: buildRosterSummaryMetrics(ownedChampionCount, totalChampionCount, totalOwnedSlots, slotCounts),
   }
+}
+
+function computeLootWeight(rarity: number, isGoldenEpic: boolean): number {
+  return rarity * 10 + (isGoldenEpic ? 0 : 1)
+}
+
+function pickLocalizedDisplayText(text: LocalizedText | null): string | null {
+  if (text === null) {
+    return null
+  }
+  if (text.display !== '') {
+    return text.display
+  }
+  if (text.original !== '') {
+    return text.original
+  }
+  return null
 }
 
 function choosePreferredLootDetailBySlot(
@@ -280,9 +321,9 @@ function choosePreferredLootDetailBySlot(
 
     const slotId = String(item.slotId)
     const current = definitions.get(slotId)
-    const currentWeight = current ? current.rarity * 10 + (current.isGoldenEpic ? 0 : 1) : -1
+    const currentWeight = current ? computeLootWeight(current.rarity, current.isGoldenEpic) : -1
     const nextRarity = toNumber(item.rarity)
-    const nextWeight = nextRarity * 10 + (item.isGoldenEpic ? 0 : 1)
+    const nextWeight = computeLootWeight(nextRarity, item.isGoldenEpic)
 
     if (nextWeight <= currentWeight) {
       continue
@@ -290,8 +331,8 @@ function choosePreferredLootDetailBySlot(
 
     definitions.set(slotId, {
       slotId,
-      name: item.name.display || item.name.original,
-      description: item.description?.display || item.description?.original || null,
+      name: item.name.display !== '' ? item.name.display : item.name.original,
+      description: pickLocalizedDisplayText(item.description),
       rarity: nextRarity,
       maxLevel: normalizeEquipmentLevelCaps(item.maxLevel) ?? levelCapsBySlot.get(slotId) ?? null,
       graphicId: item.graphicId,
@@ -303,6 +344,58 @@ function choosePreferredLootDetailBySlot(
   return definitions
 }
 
+function buildEquipmentSlotViewModel(
+  slotId: string,
+  ownedHero: OwnedHero | null,
+  detailDefinitions: ReadonlyMap<string, ChampionEquipmentSlotDefinition>,
+  levelCapsBySlot: ReadonlyMap<string, number[]>,
+  legendaryLevelCap: number,
+): ChampionEquipmentSlotViewModel {
+  const slot = ownedHero?.lootBySlot[slotId] ?? null
+  const definition = detailDefinitions.get(slotId) ?? null
+  const legendary = ownedHero?.legendaryBySlot[slotId] ?? null
+
+  const fallbackMaxLevel = levelCapsBySlot.get(slotId) ?? null
+  const maxLevel = definition !== null && definition.maxLevel !== null
+    ? definition.maxLevel
+    : fallbackMaxLevel
+  const gild = slot === null ? 0 : slot.gild
+  const levelCap = resolveEquipmentLevelCap(maxLevel, gild)
+
+  const name = definition === null ? `槽位 ${slotId}` : definition.name
+  const description = definition === null ? null : definition.description
+  let rarity: number
+  if (slot !== null) {
+    rarity = slot.rarity
+  } else if (definition !== null) {
+    rarity = definition.rarity
+  } else {
+    rarity = 0
+  }
+  const enchant = slot === null ? 0 : slot.enchant
+  const pigment = slot === null ? 0 : slot.pigment
+  const found = slot === null ? {} : slot.found
+  const graphicId = definition === null ? null : definition.graphicId
+  const legendaryLevel = legendary === null ? 0 : legendary.level
+  const legendaryCap = legendary === null ? 0 : legendaryLevelCap
+
+  return {
+    slotId,
+    levelCap,
+    name,
+    description,
+    rarity,
+    gild,
+    enchant,
+    pigment,
+    found,
+    graphicId,
+    legendaryLevel,
+    legendaryCap,
+    hasIconBackground: Boolean(graphicId),
+  }
+}
+
 export function buildChampionEquipmentSlots(
   detail: ChampionDetail | null,
   ownedHero: OwnedHero | null,
@@ -310,7 +403,7 @@ export function buildChampionEquipmentSlots(
 ): ChampionEquipmentSlotViewModel[] {
   const levelCapsBySlot = buildEquipmentLevelCapsBySlot(detail)
   const detailDefinitions = detail
-    ? choosePreferredLootDetailBySlot(detail.loot ?? [], levelCapsBySlot)
+    ? choosePreferredLootDetailBySlot(detail.loot, levelCapsBySlot)
     : new Map<string, ChampionEquipmentSlotDefinition>()
   const slotIds = new Set<string>([
     ...Object.keys(ownedHero?.lootBySlot ?? {}),
@@ -319,29 +412,5 @@ export function buildChampionEquipmentSlots(
 
   return Array.from(slotIds)
     .sort((left, right) => Number(left) - Number(right))
-    .map((slotId) => {
-      const slot = ownedHero?.lootBySlot[slotId] ?? null
-      const definition = detailDefinitions.get(slotId) ?? null
-      const legendary = ownedHero?.legendaryBySlot[slotId] ?? null
-      const levelCap = resolveEquipmentLevelCap(
-        definition?.maxLevel ?? levelCapsBySlot.get(slotId) ?? null,
-        slot?.gild ?? 0,
-      )
-
-      return {
-        slotId,
-        name: definition?.name ?? `槽位 ${slotId}`,
-        description: definition?.description ?? null,
-        rarity: slot?.rarity ?? definition?.rarity ?? 0,
-        gild: slot?.gild ?? 0,
-        enchant: slot?.enchant ?? 0,
-        pigment: slot?.pigment ?? 0,
-        found: slot?.found ?? {},
-        hasIconBackground: Boolean(definition?.graphicId),
-        graphicId: definition?.graphicId ?? null,
-        levelCap,
-        legendaryLevel: legendary?.level ?? 0,
-        legendaryCap: legendary ? legendaryLevelCap : 0,
-      }
-    })
+    .map((slotId) => buildEquipmentSlotViewModel(slotId, ownedHero, detailDefinitions, levelCapsBySlot, legendaryLevelCap))
 }

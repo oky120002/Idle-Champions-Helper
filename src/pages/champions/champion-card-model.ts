@@ -23,6 +23,8 @@ export interface ChampionCardAttributePill {
 export function getChampionCardVisibleAttributeGroupIds(
   filters: ChampionCardFilterState,
 ): ChampionAttributeGroupId[] {
+  // 当前固定返回默认清单；保留 filters 入参以维持公开签名与现有测试契约
+  // eslint-disable-next-line sonarjs/void-use -- 显式标记故意不用的入参
   void filters
 
   return DEFAULT_VISIBLE_ATTRIBUTE_GROUPS

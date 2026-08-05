@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 内聚的 DossierSection：4 个 dossier 专属助手函数（isJsonRecord/readConsolePortraitGraphicId/resolveDetailDataVersion/formatAbilityModifier）+ portrait IIFE 均为此组件服务，外移会破坏一跳命中率 */
 import { useState } from 'react'
 import { Images } from 'lucide-react'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
@@ -8,11 +9,11 @@ import { DetailField, LocalizedTextStack } from './detail-cards'
 import { formatNumber } from './detail-value-formatters'
 
 interface DossierSectionProps {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  heroIllustration: ChampionIllustration | null
-  openArtworkDialog: (skinId?: string) => void
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly heroIllustration: ChampionIllustration | null
+  readonly openArtworkDialog: (skinId?: string) => void
 }
 
 const ABILITY_SCORE_KEYS: AbilityScoreKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
@@ -32,7 +33,7 @@ function readConsolePortraitGraphicId(detail: ChampionDetail): string | null {
     return String(graphicId)
   }
 
-  if (typeof graphicId === 'string' && graphicId.trim() && graphicId !== '0') {
+  if (typeof graphicId === 'string' && graphicId.trim() !== '' && graphicId !== '0') {
     return graphicId.trim()
   }
 
@@ -43,7 +44,7 @@ function resolveDetailDataVersion(detail: ChampionDetail, heroIllustration: Cham
   const candidatePath = detail.summary.portrait?.path ?? heroIllustration?.image.path ?? ''
   const [version] = candidatePath.split('/')
 
-  return version || 'v1'
+  return version != null && version !== '' ? version : 'v1'
 }
 
 function formatAbilityModifier(score: number | null | undefined): string {
@@ -53,7 +54,7 @@ function formatAbilityModifier(score: number | null | undefined): string {
 
   const modifier = Math.floor((score - 10) / 2)
 
-  return modifier >= 0 ? `+${modifier}` : `${modifier}`
+  return modifier >= 0 ? `+${String(modifier)}` : String(modifier)
 }
 
 export function DossierSection({
@@ -69,30 +70,52 @@ export function DossierSection({
   const seatValue = formatNumber(detail.summary.seat, locale)
   const seatLabel = locale === 'zh-CN' ? `${seatValue} 号位` : `Seat ${seatValue}`
   const consolePortraitGraphicId = readConsolePortraitGraphicId(detail)
-  const consolePortraitPath = consolePortraitGraphicId
-    ? `${resolveDetailDataVersion(detail, heroIllustration)}/${CONSOLE_PORTRAIT_DIR_NAME}/${detail.summary.id}.png`
-    : null
+  const consolePortraitPath =
+    consolePortraitGraphicId != null && consolePortraitGraphicId !== ''
+      ? `${resolveDetailDataVersion(detail, heroIllustration)}/${CONSOLE_PORTRAIT_DIR_NAME}/${detail.summary.id}.png`
+      : null
   const [failedConsolePortraitPath, setFailedConsolePortraitPath] = useState<string | null>(null)
-  const portrait = consolePortraitPath && failedConsolePortraitPath !== consolePortraitPath ? (
-    <img
-      className="champion-dossier__console-portrait"
-      src={resolveDataUrl(consolePortraitPath)}
-      alt={locale === 'zh-CN' ? `${primaryName}正面图` : `${primaryName} front portrait`}
-      loading="eager"
-      onError={() => setFailedConsolePortraitPath(consolePortraitPath)}
-    />
-  ) : heroIllustration ? (
-    <img
-      className="champion-dossier__hero-art"
-      src={resolveDataUrl(heroIllustration.image.path)}
-      alt={locale === 'zh-CN' ? `${primaryName}正面立绘` : `${primaryName} front artwork`}
-      loading="eager"
-      width={heroIllustration.image.width}
-      height={heroIllustration.image.height}
-    />
-  ) : (
-    <ChampionAvatar champion={detail.summary} locale={locale} className="champion-avatar--dossier" loading="eager" />
-  )
+  const portrait = (() => {
+    if (
+      consolePortraitPath != null &&
+      consolePortraitPath !== '' &&
+      failedConsolePortraitPath !== consolePortraitPath
+    ) {
+      return (
+        <img
+          className="champion-dossier__console-portrait"
+          src={resolveDataUrl(consolePortraitPath)}
+          alt={locale === 'zh-CN' ? `${primaryName}正面图` : `${primaryName} front portrait`}
+          loading="eager"
+          onError={() => {
+            setFailedConsolePortraitPath(consolePortraitPath)
+          }}
+        />
+      )
+    }
+
+    if (heroIllustration != null) {
+      return (
+        <img
+          className="champion-dossier__hero-art"
+          src={resolveDataUrl(heroIllustration.image.path)}
+          alt={locale === 'zh-CN' ? `${primaryName}正面立绘` : `${primaryName} front artwork`}
+          loading="eager"
+          width={heroIllustration.image.width}
+          height={heroIllustration.image.height}
+        />
+      )
+    }
+
+    return (
+      <ChampionAvatar
+        champion={detail.summary}
+        locale={locale}
+        className="champion-avatar--dossier"
+        loading="eager"
+      />
+    )
+  })()
 
   return (
     <div className="champion-dossier" role="group" aria-label={t({ zh: '英雄资料栏', en: 'Champion dossier' })}>
@@ -102,7 +125,9 @@ export function DossierSection({
             type="button"
             className="champion-dossier__portrait-action"
             aria-label={t({ zh: '打开皮肤立绘预览', en: 'Open skin artwork preview' })}
-            onClick={() => openArtworkDialog()}
+            onClick={() => {
+              openArtworkDialog()
+            }}
           >
             {portrait}
             <span aria-hidden="true" className="champion-dossier__portrait-action-icon">

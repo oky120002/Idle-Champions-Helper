@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 专精升级区三组件同构内聚，拆分会增加常见修改的打开文件数 */
 import { resolveDataUrl } from '../../data/client'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { ChampionSpecializationGraphic } from '../../domain/types'
@@ -10,9 +11,9 @@ import type {
 } from './types'
 
 type DetailUpgradeSectionProps = {
-  locale: 'zh-CN' | 'en-US'
-  specializationColumns: SpecializationUpgradeColumn[]
-  specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly specializationColumns: SpecializationUpgradeColumn[]
+  readonly specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
 }
 
 function buildEntryNotes(entry: SpecializationUpgradeEntry): string[] {
@@ -63,39 +64,53 @@ function buildUpgradeTypeBadge(
   }
 }
 
+function buildEntryMetaItems(
+  entry: SpecializationUpgradeEntry,
+  locale: 'zh-CN' | 'en-US',
+): string[] {
+  const targetWord = locale === 'zh-CN' ? '对象' : 'Target'
+  const multiplierWord = locale === 'zh-CN' ? '倍率' : 'Multiplier'
+  const prerequisiteWord = locale === 'zh-CN' ? '前置' : 'Prerequisite'
+  const defaultDisabledLabel = locale === 'zh-CN' ? '默认关闭' : 'Disabled by default'
+
+  const items: string[] = []
+  if (entry.presentation.targetLabel != null && entry.presentation.targetLabel !== '') {
+    items.push(`${targetWord} · ${entry.presentation.targetLabel}`)
+  }
+  if (entry.presentation.staticMultiplierLabel != null && entry.presentation.staticMultiplierLabel !== '') {
+    items.push(`${multiplierWord} · ${entry.presentation.staticMultiplierLabel}`)
+  }
+  if (entry.upgrade.requiredUpgradeId != null && entry.upgrade.requiredUpgradeId !== '') {
+    items.push(`${prerequisiteWord} · ${entry.presentation.prerequisiteLabel}`)
+  }
+  if (!entry.upgrade.defaultEnabled) {
+    items.push(defaultDisabledLabel)
+  }
+  return items
+}
+
 function SpecializationColumnEntryCard({
   entry,
   locale,
   iconGraphic,
 }: {
-  entry: SpecializationUpgradeEntry
-  locale: 'zh-CN' | 'en-US'
-  iconGraphic: ChampionSpecializationGraphic | null
+  readonly entry: SpecializationUpgradeEntry
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly iconGraphic: ChampionSpecializationGraphic | null
 }) {
   const notes = buildEntryNotes(entry)
-  const metaItems = [
-    entry.presentation.targetLabel
-      ? `${locale === 'zh-CN' ? '对象' : 'Target'} · ${entry.presentation.targetLabel}`
-      : null,
-    entry.presentation.staticMultiplierLabel
-      ? `${locale === 'zh-CN' ? '倍率' : 'Multiplier'} · ${entry.presentation.staticMultiplierLabel}`
-      : null,
-    entry.upgrade.requiredUpgradeId
-      ? `${locale === 'zh-CN' ? '前置' : 'Prerequisite'} · ${entry.presentation.prerequisiteLabel}`
-      : null,
-    !entry.upgrade.defaultEnabled ? (locale === 'zh-CN' ? '默认关闭' : 'Disabled by default') : null,
-  ].filter((value): value is string => Boolean(value))
+  const metaItems = buildEntryMetaItems(entry, locale)
   const typeBadge = buildUpgradeTypeBadge(entry)
   const title = entry.relation === 'primary' ? formatSpecTitle(entry.presentation.title, locale) : entry.presentation.title
+  const entryClassName =
+    entry.relation === 'primary'
+      ? 'specialization-column__entry specialization-column__entry--primary'
+      : 'specialization-column__entry'
+  const iconAlt =
+    locale === 'zh-CN' ? `${entry.presentation.title}图标` : `${entry.presentation.title} icon`
 
   return (
-    <article
-      className={
-        entry.relation === 'primary'
-          ? 'specialization-column__entry specialization-column__entry--primary'
-          : 'specialization-column__entry'
-      }
-    >
+    <article className={entryClassName}>
       <div className="specialization-column__entry-topbar">
         <div className="specialization-column__entry-topline">
           <span className="upgrade-card__level-pill">{formatUpgradeLevel(entry, locale)}</span>
@@ -105,11 +120,11 @@ function SpecializationColumnEntryCard({
         {iconGraphic ? (
           <UpgradeSpecializationArt
             src={resolveDataUrl(iconGraphic.image.path)}
-            alt={locale === 'zh-CN' ? `${entry.presentation.title}图标` : `${entry.presentation.title} icon`}
+            alt={iconAlt}
           />
         ) : null}
       </div>
-      {entry.presentation.summary ? (
+      {entry.presentation.summary != null && entry.presentation.summary !== '' ? (
         <p className="specialization-column__entry-summary">{entry.presentation.summary}</p>
       ) : null}
       {metaItems.length > 0 ? (
@@ -136,12 +151,13 @@ function SpecializationColumnCard({
   specializationGraphic,
   specializationGraphicsById,
 }: {
-  column: SpecializationUpgradeColumn
-  locale: 'zh-CN' | 'en-US'
-  specializationGraphic: ChampionSpecializationGraphic | null
-  specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
+  readonly column: SpecializationUpgradeColumn
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly specializationGraphic: ChampionSpecializationGraphic | null
+  readonly specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
 }) {
   const primaryEntry = column.entries.find((entry) => entry.relation === 'primary')
+  const targetFallback = locale === 'zh-CN' ? '当前英雄' : 'Current champion'
   const metricItems = [
     {
       label: locale === 'zh-CN' ? '解锁等级' : 'Unlocks',
@@ -153,9 +169,9 @@ function SpecializationColumnCard({
     },
     {
       label: locale === 'zh-CN' ? '作用对象' : 'Target',
-      value: column.targetLabel ?? (locale === 'zh-CN' ? '当前英雄' : 'Current champion'),
+      value: column.targetLabel ?? targetFallback,
     },
-    ...(column.staticMultiplierLabel
+    ...(column.staticMultiplierLabel != null && column.staticMultiplierLabel !== ''
       ? [
           {
             label: locale === 'zh-CN' ? '倍率' : 'Multiplier',
@@ -166,6 +182,8 @@ function SpecializationColumnCard({
   ]
   const columnTypeBadge = buildUpgradeTypeBadge(primaryEntry)
   const columnTitle = formatSpecTitle(column.title, locale)
+  const specializationArtAlt =
+    locale === 'zh-CN' ? `${column.title}专精图` : `${column.title} specialization art`
 
   return (
     <article className="specialization-column">
@@ -176,12 +194,14 @@ function SpecializationColumnCard({
             <h3 className="specialization-column__title">{columnTitle}</h3>
             {columnTypeBadge ? <span className={columnTypeBadge.className}>{columnTypeBadge.label}</span> : null}
           </div>
-          {column.summary ? <p className="specialization-column__summary">{column.summary}</p> : null}
+          {column.summary != null && column.summary !== '' ? (
+            <p className="specialization-column__summary">{column.summary}</p>
+          ) : null}
         </div>
         {specializationGraphic ? (
           <UpgradeSpecializationArt
             src={resolveDataUrl(specializationGraphic.image.path)}
-            alt={locale === 'zh-CN' ? `${column.title}专精图` : `${column.title} specialization art`}
+            alt={specializationArtAlt}
           />
         ) : null}
       </header>
@@ -210,7 +230,9 @@ function SpecializationColumnCard({
             entry={entry}
             locale={locale}
             iconGraphic={
-              entry.iconGraphicId ? specializationGraphicsById.get(entry.iconGraphicId) ?? null : null
+              entry.iconGraphicId != null && entry.iconGraphicId !== ''
+                ? (specializationGraphicsById.get(entry.iconGraphicId) ?? null)
+                : null
             }
           />
         ))}
@@ -240,8 +262,8 @@ export function DetailUpgradeSection({
               locale={locale}
               specializationGraphicsById={specializationGraphicsById}
               specializationGraphic={
-                column.specializationGraphicId
-                  ? specializationGraphicsById.get(column.specializationGraphicId) ?? null
+                column.specializationGraphicId != null && column.specializationGraphicId !== ''
+                  ? (specializationGraphicsById.get(column.specializationGraphicId) ?? null)
                   : null
               }
             />

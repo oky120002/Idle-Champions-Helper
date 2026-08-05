@@ -50,7 +50,7 @@ export function buildFilterSearchParams(filters: ChampionsFilterState): URLSearc
 }
 
 export function buildScrollRestoreKey(search: string): string {
-  return `champions-pane-scroll:${search || DEFAULT_SCROLL_KEY}`
+  return `champions-pane-scroll:${search !== '' ? search : DEFAULT_SCROLL_KEY}`
 }
 
 export function saveChampionListScroll(search: string, scrollTop: number): void {

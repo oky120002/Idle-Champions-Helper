@@ -7,17 +7,17 @@ import { formatNullableText } from './detail-value-formatters'
 import type { SkinArtworkIds } from './types'
 
 interface SkinArtworkDialogProps {
-  detail: ChampionDetail
-  locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
-  isArtworkDialogOpen: boolean
-  selectedSkin: ChampionSkinDetail | null
-  selectedSkinAnimation: ChampionAnimation | null
-  selectedSkinIllustration: ChampionIllustration | null
-  selectedSkinArtworkIds: SkinArtworkIds | null
-  selectedSkinPreviewUrl: string | null
-  closeArtworkDialog: () => void
-  setSelectedSkinId: (skinId: string | null) => void
+  readonly detail: ChampionDetail
+  readonly locale: 'zh-CN' | 'en-US'
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly isArtworkDialogOpen: boolean
+  readonly selectedSkin: ChampionSkinDetail | null
+  readonly selectedSkinAnimation: ChampionAnimation | null
+  readonly selectedSkinIllustration: ChampionIllustration | null
+  readonly selectedSkinArtworkIds: SkinArtworkIds | null
+  readonly selectedSkinPreviewUrl: string | null
+  readonly closeArtworkDialog: () => void
+  readonly setSelectedSkinId: (skinId: string | null) => void
 }
 
 export function SkinArtworkDialog({
@@ -43,10 +43,14 @@ export function SkinArtworkDialog({
       role="dialog"
       aria-modal="true"
       aria-label={t({ zh: '皮肤立绘预览', en: 'Skin artwork preview' })}
-      onClick={closeArtworkDialog}
     >
-      <div className="skin-artwork-dialog__backdrop" aria-hidden="true" />
-      <div className="skin-artwork-dialog__panel" onClick={(event) => event.stopPropagation()}>
+      <button
+        type="button"
+        className="skin-artwork-dialog__backdrop"
+        aria-label={t({ zh: '关闭皮肤立绘预览', en: 'Close skin artwork preview' })}
+        onClick={closeArtworkDialog}
+      />
+      <div className="skin-artwork-dialog__panel">
         <div className="skin-artwork-dialog__header">
           <div className="skin-artwork-dialog__copy">
             <p className="champion-detail-sidebar__eyebrow">{t({ zh: '皮肤立绘预览', en: 'Skin artwork preview' })}</p>
@@ -75,7 +79,7 @@ export function SkinArtworkDialog({
         <div className="skin-artwork-dialog__body">
           <div className="skin-artwork-dialog__stage">
             <div className="skin-artwork-dialog__canvas">
-              {selectedSkinPreviewUrl ? (
+              {selectedSkinPreviewUrl != null && selectedSkinPreviewUrl !== '' ? (
                 <SkelAnimCanvas
                   key={selectedSkin.id}
                   animation={selectedSkinAnimation}
@@ -113,6 +117,13 @@ export function SkinArtworkDialog({
             <div className="skin-artwork-dialog__tabs">
               {detail.skins.map((skin) => {
                 const artworkIds = getSkinArtworkIds(skin)
+                const primaryGraphicId =
+                  artworkIds.largeGraphicId ?? artworkIds.xlGraphicId ?? artworkIds.portraitGraphicId
+                const hasGraphicId = [
+                  artworkIds.largeGraphicId,
+                  artworkIds.xlGraphicId,
+                  artworkIds.portraitGraphicId,
+                ].some((id) => id != null && id !== '')
 
                 return (
                   <button
@@ -129,12 +140,14 @@ export function SkinArtworkDialog({
                         : `Switch skin: ${getPrimaryLocalizedText(skin.name, locale)}`
                     }
                     aria-pressed={selectedSkin.id === skin.id}
-                    onClick={() => setSelectedSkinId(skin.id)}
+                    onClick={() => {
+                      setSelectedSkinId(skin.id)
+                    }}
                   >
                     <span className="skin-artwork-dialog__tab-title">{getPrimaryLocalizedText(skin.name, locale)}</span>
                     <span className="skin-artwork-dialog__tab-meta">
-                      {artworkIds.largeGraphicId || artworkIds.xlGraphicId || artworkIds.portraitGraphicId
-                        ? `ID ${artworkIds.largeGraphicId ?? artworkIds.xlGraphicId ?? artworkIds.portraitGraphicId}`
+                      {hasGraphicId && primaryGraphicId != null
+                        ? `ID ${primaryGraphicId}`
                         : t({ zh: '暂无图像字段', en: 'No graphic id' })}
                     </span>
                   </button>

@@ -11,8 +11,8 @@ import { VariantFormationMiniBoard } from './VariantFormationMiniBoard'
 import { VariantResultCard } from './VariantResultCard'
 
 type VariantAdventureSectionProps = {
-  model: Pick<VariantsPageModel, 'locale' | 't'>
-  group: VariantAdventureGroup
+  readonly model: Pick<VariantsPageModel, 'locale' | 't'>
+  readonly group: VariantAdventureGroup
 }
 
 function getObjectiveAreaSummaryLabel(group: VariantAdventureGroup, locale: 'zh-CN' | 'en-US'): string | null {
@@ -22,8 +22,8 @@ function getObjectiveAreaSummaryLabel(group: VariantAdventureGroup, locale: 'zh-
 
   if (group.objectiveAreas.length <= 3) {
     const joined = group.objectiveAreas
-      .map((area) => (locale === 'zh-CN' ? `${area} 区` : `Area ${area}`))
-      .join(locale === 'zh-CN' ? ' / ' : ' / ')
+      .map((area) => (locale === 'zh-CN' ? `${String(area)} 区` : `Area ${String(area)}`))
+      .join(' / ')
 
     return locale === 'zh-CN' ? `目标 ${joined}` : `Targets ${joined}`
   }
@@ -36,20 +36,20 @@ function getObjectiveAreaSummaryLabel(group: VariantAdventureGroup, locale: 'zh-
   }
 
   return locale === 'zh-CN'
-    ? `目标 ${firstArea}-${lastArea} 区`
-    : `Targets ${firstArea}-${lastArea}`
+    ? `目标 ${String(firstArea)}-${String(lastArea)} 区`
+    : `Targets ${String(firstArea)}-${String(lastArea)}`
 }
 
 function getSpecialEnemySummaryLabel(group: VariantAdventureGroup, locale: 'zh-CN' | 'en-US'): string {
   if (group.specialEnemyMin === group.specialEnemyMax) {
     return locale === 'zh-CN'
-      ? `${group.specialEnemyMax} 个特别敌人`
-      : `${group.specialEnemyMax} special enemies`
+      ? `${String(group.specialEnemyMax)} 个特别敌人`
+      : `${String(group.specialEnemyMax)} special enemies`
   }
 
   return locale === 'zh-CN'
-    ? `${group.specialEnemyMin}-${group.specialEnemyMax} 个特别敌人`
-    : `${group.specialEnemyMin}-${group.specialEnemyMax} special enemies`
+    ? `${String(group.specialEnemyMin)}-${String(group.specialEnemyMax)} 个特别敌人`
+    : `${String(group.specialEnemyMin)}-${String(group.specialEnemyMax)} special enemies`
 }
 
 function getGroupAreaHighlights(group: VariantAdventureGroup): VariantAreaHighlight[] {
@@ -63,9 +63,10 @@ function getGroupAreaHighlights(group: VariantAdventureGroup): VariantAreaHighli
     }
   }
 
-  return Array.from(byId.values()).sort(
-    (left, right) => left.start - right.start || left.kind.localeCompare(right.kind),
-  )
+  return Array.from(byId.values()).sort((left, right) => {
+    const diff = left.start - right.start
+    return diff === 0 || Number.isNaN(diff) ? left.kind.localeCompare(right.kind) : diff
+  })
 }
 
 export function VariantAdventureSection({ model, group }: VariantAdventureSectionProps) {
@@ -98,8 +99,8 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
           </p>
 
           <div className="variant-meta-row">
-            {sceneLabel ? <span className="variant-meta-pill">{sceneLabel}</span> : null}
-            {objectiveAreaSummary ? <span className="variant-meta-pill">{objectiveAreaSummary}</span> : null}
+            {sceneLabel != null && sceneLabel !== '' ? <span className="variant-meta-pill">{sceneLabel}</span> : null}
+            {objectiveAreaSummary != null && objectiveAreaSummary !== '' ? <span className="variant-meta-pill">{objectiveAreaSummary}</span> : null}
             <span className="variant-meta-pill variant-meta-pill--accent">
               {getSpecialEnemySummaryLabel(group, locale)}
             </span>
@@ -144,8 +145,8 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
           <span className="variant-adventure__intel-label">{t({ zh: '区域（Area）', en: 'Areas' })}</span>
           <div className="variant-chip-row">
             {group.areaMilestones.slice(0, 6).map((area) => (
-              <span key={`${group.id}-area-${area}`} className="variant-chip variant-chip--soft">
-                {locale === 'zh-CN' ? `${area} 区` : `Area ${area}`}
+              <span key={`${group.id}-area-${String(area)}`} className="variant-chip variant-chip--soft">
+                {locale === 'zh-CN' ? `${String(area)} 区` : `Area ${String(area)}`}
               </span>
             ))}
             {areaHighlights.slice(0, 3).map((highlight) => (

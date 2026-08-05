@@ -4,6 +4,7 @@ import { buildChampionsTransitionKey } from './champion-filter-model'
 import { buildFilterSearchParams, readInitialFilterExpansion, readInitialFilterState } from './query-state'
 import type { ChampionsFilterState } from './types'
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 筛选状态 hook：hook 声明 + URL 同步 effect + 模型组装
 export function useChampionsFilterState() {
   const location = useLocation()
   const [, setSearchParams] = useSearchParams()
@@ -81,7 +82,7 @@ export function useChampionsFilterState() {
 
   useLayoutEffect(() => {
     if (normalizedLocationSearch === lastAppliedLocationSearchRef.current) {
-      return
+      return undefined
     }
 
     lastAppliedLocationSearchRef.current = normalizedLocationSearch
@@ -89,7 +90,7 @@ export function useChampionsFilterState() {
 
     if (currentFilterSearch === normalizedLocationSearch) {
       pendingLocationSyncSearchRef.current = null
-      return
+      return undefined
     }
 
     const nextFilters = readInitialFilterState(location.search)

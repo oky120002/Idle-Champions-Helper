@@ -3,7 +3,7 @@ import type { VariantDetailTabId, VariantsPageModel } from './types'
 import { VariantResultCard } from './VariantResultCard'
 
 type VariantAdventureTabsProps = {
-  model: VariantsPageModel
+  readonly model: VariantsPageModel
 }
 
 const TAB_IDS: VariantDetailTabId[] = ['variants', 'areas', 'story']
@@ -43,7 +43,9 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
                 ? 'variant-detail-tabs__button variant-detail-tabs__button--active'
                 : 'variant-detail-tabs__button'
             }
-            onClick={() => selectDetailTab(tabId)}
+            onClick={() => {
+              selectDetailTab(tabId)
+            }}
           >
             {getTabLabel(tabId, locale)}
           </button>
@@ -65,7 +67,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
             <div className="variant-chip-row">
               {selectedAdventureGroup.areaMilestones.map((area) => (
                 <span key={area} className="variant-chip">
-                  {locale === 'zh-CN' ? `${area} 区` : `Area ${area}`}
+                  {locale === 'zh-CN' ? `${String(area)} 区` : `Area ${String(area)}`}
                 </span>
               ))}
             </div>

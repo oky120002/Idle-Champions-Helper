@@ -6,7 +6,7 @@ import type {
   UpgradeSpecializationArtProps,
 } from './types'
 
-export function LocalizedTextStack({ value }: { value: LocalizedText }) {
+export function LocalizedTextStack({ value }: { readonly value: LocalizedText }) {
   const hasSecondary = value.display.trim() !== value.original.trim()
 
   return (
@@ -21,9 +21,13 @@ export function DetailSectionHeader({ eyebrow, description, title, badges }: Det
   return (
     <header className="detail-section-header">
       <div className="detail-section-header__copy">
-        {eyebrow ? <p className="detail-section-header__eyebrow">{eyebrow}</p> : null}
+        {eyebrow != null && eyebrow !== '' ? (
+          <p className="detail-section-header__eyebrow">{eyebrow}</p>
+        ) : null}
         <h2 className="detail-section-header__title">{title}</h2>
-        {description ? <p className="detail-section-header__description">{description}</p> : null}
+        {description != null && description !== '' ? (
+          <p className="detail-section-header__description">{description}</p>
+        ) : null}
       </div>
       {badges.length > 0 ? (
         <div className="detail-section-header__badge-row">
@@ -71,7 +75,7 @@ export function DetailField({ label, value, hint, variant = 'default' }: DetailF
     <article className={variant === 'compact' ? 'detail-field detail-field--compact' : 'detail-field'}>
       <span className="detail-field__label">{label}</span>
       <div className="detail-field__value">{value}</div>
-      {hint ? <span className="detail-field__hint">{hint}</span> : null}
+      {hint != null ? <span className="detail-field__hint">{hint}</span> : null}
     </article>
   )
 }
