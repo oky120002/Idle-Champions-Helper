@@ -14,6 +14,7 @@ import { usePetsFilterState } from './usePetsFilterState'
 const EMPTY_PETS: Pet[] = []
 const EMPTY_ANIMATIONS: PetAnimation[] = []
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook 编排多源状态（collection/filter/motion/shareLink），行数源于 hook 声明与协调逻辑，无纯逻辑可独立提取
 export function usePetsPageModel(): PetsPageModel {
   const location = useLocation()
   const { locale, t } = useI18n()
@@ -86,6 +87,8 @@ export function usePetsPageModel(): PetsPageModel {
     locale,
     t,
     state,
+    summary,
+    activeFilterCount,
     filters: filterState.filters,
     ui: {
       shareLinkState,
@@ -98,14 +101,24 @@ export function usePetsPageModel(): PetsPageModel {
       animationByPetId,
       canToggleResultVisibility,
     },
-    summary,
-    activeFilterCount,
     totalPets: pets.length,
     resultsPaneRef: motion.resultsPaneRef,
     actions: {
-      updateQuery: (value) => runFilterMutation(() => filterState.setQuery(value)),
-      updateSourceFilter: (value) => runFilterMutation(() => filterState.setSourceFilter(value)),
-      updateAssetFilter: (value) => runFilterMutation(() => filterState.setAssetFilter(value)),
+      updateQuery: (value) => {
+        runFilterMutation(() => {
+          filterState.setQuery(value)
+        })
+      },
+      updateSourceFilter: (value) => {
+        runFilterMutation(() => {
+          filterState.setSourceFilter(value)
+        })
+      },
+      updateAssetFilter: (value) => {
+        runFilterMutation(() => {
+          filterState.setAssetFilter(value)
+        })
+      },
       clearAllFilters: () => {
         motion.prepareResultsViewportTransition('filters')
         filterState.setShowAllResults(false)
@@ -117,7 +130,9 @@ export function usePetsPageModel(): PetsPageModel {
         motion.prepareResultsViewportTransition('visibility')
         filterState.setShowAllResults((current) => !current)
       },
-      randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
+      randomizeResultOrder: () => {
+        setRandomOrderSeed((current) => (current === null ? 1 : current + 1))
+      },
       scrollResultsToTop: motion.scrollResultsToTop,
       copyCurrentLink,
     },

@@ -160,7 +160,7 @@ function renderPetsPage(initialEntries: string[] = ['/pets']) {
 function getPetOrder() {
   return within(screen.getByLabelText('宠物筛选结果'))
     .getAllByRole('heading', { level: 3 })
-    .map((heading) => heading.textContent?.trim() ?? '')
+    .map((heading) => heading.textContent.trim())
 }
 
 describe('PetsPage state', () => {
@@ -226,7 +226,7 @@ describe('PetsPage state', () => {
     await user.click(screen.getByRole('button', { name: '付费购买' }))
 
     await waitFor(() => {
-      const searchParams = new URLSearchParams(screen.getByTestId('location-search').textContent ?? '')
+      const searchParams = new URLSearchParams(screen.getByTestId('location-search').textContent)
 
       expect(searchParams.get('q')).toBe('owl')
       expect(searchParams.get('source')).toBe('premium')
@@ -262,10 +262,10 @@ describe('PetsPage state', () => {
 
     const shuffledOrder = within(results)
       .getAllByRole('heading', { level: 3 })
-      .map((heading) => heading.textContent?.trim() ?? '')
+      .map((heading) => heading.textContent.trim())
 
     expect(shuffledOrder).not.toEqual(initialOrder)
-    expect(shuffledOrder.slice().sort()).toEqual(initialOrder.slice().sort())
+    expect(shuffledOrder.slice().sort((a, b) => a.localeCompare(b))).toEqual(initialOrder.slice().sort((a, b) => a.localeCompare(b)))
   })
 
   it('默认仅展示首批结果，展开后在筛选变更时回到默认窗口', async () => {
@@ -275,12 +275,12 @@ describe('PetsPage state', () => {
       pets: {
         updatedAt: '2026-04-23T00:00:00.000Z',
         items: Array.from({ length: 52 }, (_, index) => ({
-          id: `pet-fixture-${index + 1}`,
-          name: { original: `Fixture Pet ${index + 1}`, display: `测试宠物 ${index + 1}` },
-          description: { original: `Fixture ${index + 1}`, display: `测试描述 ${index + 1}` },
+          id: `pet-fixture-${String(index + 1)}`,
+          name: { original: `Fixture Pet ${String(index + 1)}`, display: `测试宠物 ${String(index + 1)}` },
+          description: { original: `Fixture ${String(index + 1)}`, display: `测试描述 ${String(index + 1)}` },
           isAvailable: true,
-          iconGraphicId: `${200 + index}`,
-          illustrationGraphicId: `${500 + index}`,
+          iconGraphicId: String(200 + index),
+          illustrationGraphicId: String(500 + index),
           acquisition: {
             kind: 'gems',
             sourceType: 'shop',
@@ -292,8 +292,8 @@ describe('PetsPage state', () => {
             patronCost: null,
             patronInfluence: null,
           },
-          icon: { path: `v1/pets/icons/fixture-${index + 1}.png`, width: 128, height: 128, bytes: 1024, format: 'png' },
-          illustration: { path: `v1/pets/illustrations/fixture-${index + 1}.png`, width: 512, height: 512, bytes: 4096, format: 'png' },
+          icon: { path: `v1/pets/icons/fixture-${String(index + 1)}.png`, width: 128, height: 128, bytes: 1024, format: 'png' },
+          illustration: { path: `v1/pets/illustrations/fixture-${String(index + 1)}.png`, width: 512, height: 512, bytes: 4096, format: 'png' },
         })),
       },
     })
@@ -303,7 +303,7 @@ describe('PetsPage state', () => {
     const results = await screen.findByLabelText('宠物筛选结果')
     expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(MAX_VISIBLE_PETS)
 
-    await user.click(screen.getByRole('button', { name: `显示全部 52（默认 ${MAX_VISIBLE_PETS}）` }))
+    await user.click(screen.getByRole('button', { name: `显示全部 52（默认 ${String(MAX_VISIBLE_PETS)}）` }))
 
     await waitFor(() => {
       expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(52)

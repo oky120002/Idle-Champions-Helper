@@ -1,7 +1,8 @@
 import type { Pet } from '../../domain/types'
 
 function createSeededRandom(seed: number) {
-  let value = seed || 1
+  // ponytail: 0 与 NaN 视作无效种子回退到 1，保持原 `seed || 1` 的 falsy 语义
+  let value = seed !== 0 && !Number.isNaN(seed) ? seed : 1
 
   return () => {
     value = (value * 16807) % 2147483647

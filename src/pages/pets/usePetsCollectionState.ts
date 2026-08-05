@@ -3,6 +3,7 @@ import { loadCollection } from '../../data/client'
 import type { Pet, PetAnimation } from '../../domain/types'
 import type { PetState } from './types'
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 纯 React hook 声明，effect 内闭包多 ref/state，无可提取的纯逻辑
 export function usePetsCollectionState(): PetState {
   const [state, setState] = useState<PetState>({ status: 'loading' })
   const animationCacheRef = useRef<PetAnimation[] | null>(null)

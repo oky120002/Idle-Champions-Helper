@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 立绘图鉴模型层，内聚构建/统计/筛选 chip 函数，拆分会降低一跳命中率 */
 import { formatSeatLabel, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { Champion, ChampionIllustration, ChampionIllustrationKind, LocalizedText } from '../../domain/types'
@@ -40,7 +41,8 @@ export function countIllustrationEntriesByKind(entries: FilterableIllustration[]
 }
 
 function createSeededRandom(seed: number) {
-  let value = seed || 1
+  const effectiveSeed = seed === 0 || Number.isNaN(seed) ? 1 : seed
+  let value = effectiveSeed
 
   return () => {
     value = (value * 16807) % 2147483647
@@ -69,19 +71,19 @@ export function shuffleIllustrationEntries(entries: FilterableIllustration[], se
 }
 
 export function hasActiveIllustrationFilters(filters: IllustrationsFilterState): boolean {
-  return (
-    filters.search.trim().length > 0 ||
-    filters.scope !== 'all' ||
-    filters.selectedSeats.length > 0 ||
-    filters.selectedRoles.length > 0 ||
-    filters.selectedAffiliations.length > 0 ||
-    filters.selectedRaces.length > 0 ||
-    filters.selectedGenders.length > 0 ||
-    filters.selectedAlignments.length > 0 ||
-    filters.selectedProfessions.length > 0 ||
-    filters.selectedAcquisitions.length > 0 ||
-    filters.selectedMechanics.length > 0
-  )
+  return [
+    filters.search.trim().length > 0,
+    filters.scope !== 'all',
+    filters.selectedSeats.length > 0,
+    filters.selectedRoles.length > 0,
+    filters.selectedAffiliations.length > 0,
+    filters.selectedRaces.length > 0,
+    filters.selectedGenders.length > 0,
+    filters.selectedAlignments.length > 0,
+    filters.selectedProfessions.length > 0,
+    filters.selectedAcquisitions.length > 0,
+    filters.selectedMechanics.length > 0,
+  ].some(Boolean)
 }
 
 export function buildIllustrationAlt(illustration: ChampionIllustration, locale: 'zh-CN' | 'en-US'): string {
@@ -106,9 +108,9 @@ export function buildIllustrationCardTitle(
   const secondary = illustration.kind === 'skin' && illustrationName !== championName ? championName : null
 
   return {
-    primary: illustrationName,
     secondary,
-    text: secondary ? `${illustrationName} · ${secondary}` : illustrationName,
+    primary: illustrationName,
+    text: secondary != null ? `${illustrationName} · ${secondary}` : illustrationName,
   }
 }
 
@@ -155,6 +157,7 @@ type BuildActiveFilterChipsOptions = {
   orderedSelectedMechanics: string[]
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 单一 return 表达式，10 个筛选 chip 的内联构建；拆分反而降低可读性
 export function buildActiveIllustrationFilterChips({
   locale,
   t,
@@ -172,7 +175,7 @@ export function buildActiveIllustrationFilterChips({
   const trimmedSearch = filters.search.trim()
 
   return [
-    trimmedSearch
+    trimmedSearch !== ''
       ? {
           id: 'search',
           label: t({ zh: `关键词：${trimmedSearch}`, en: `Keyword: ${trimmedSearch}` }),

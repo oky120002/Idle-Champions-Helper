@@ -6,17 +6,19 @@ const SEARCH_PARAM_ASSET = 'asset'
 const SEARCH_PARAM_VIEW = 'view'
 const RESULTS_VIEW_ALL = 'all'
 
+const VALID_SOURCE_FILTERS: ReadonlySet<string> = new Set([
+  'gems',
+  'premium',
+  'patron',
+  'not-yet-available',
+  'unknown',
+])
+
 function readSourceFilter(searchParams: URLSearchParams): SourceFilter {
   const sourceFilter = searchParams.get(SEARCH_PARAM_SOURCE)
 
-  if (
-    sourceFilter === 'gems' ||
-    sourceFilter === 'premium' ||
-    sourceFilter === 'patron' ||
-    sourceFilter === 'not-yet-available' ||
-    sourceFilter === 'unknown'
-  ) {
-    return sourceFilter
+  if (sourceFilter !== null && VALID_SOURCE_FILTERS.has(sourceFilter)) {
+    return sourceFilter as SourceFilter
   }
 
   return 'all'

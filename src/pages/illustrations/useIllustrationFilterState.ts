@@ -24,6 +24,7 @@ export type IllustrationFilterStateController = {
   toggleMetaFiltersExpanded: () => void
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级筛选状态 hook，主体是 hook 声明+两个 effect 同步 URL，拆分会破坏内聚
 export function useIllustrationFilterState(): IllustrationFilterStateController {
   const location = useLocation()
   const [, setSearchParams] = useSearchParams()
@@ -50,8 +51,8 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
 
   const filters = useMemo<IllustrationsFilterState>(
     () => ({
-      search,
       scope: viewFilter,
+      search,
       selectedSeats,
       selectedRoles,
       selectedAffiliations,
@@ -100,7 +101,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
 
   useLayoutEffect(() => {
     if (normalizedSearchString === lastAppliedSearchStringRef.current) {
-      return
+      return undefined
     }
 
     lastAppliedSearchStringRef.current = normalizedSearchString
@@ -108,7 +109,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
 
     if (currentFilterSearch === normalizedSearchString) {
       pendingLocationSyncSearchRef.current = null
-      return
+      return undefined
     }
 
     const nextFilters = readInitialFilterState(location.search)
@@ -158,7 +159,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     setSelectedAcquisitions,
     setSelectedMechanics,
     setShowAllResults,
-    toggleIdentityFiltersExpanded: () => setIdentityFiltersExpanded((current) => !current),
-    toggleMetaFiltersExpanded: () => setMetaFiltersExpanded((current) => !current),
+    toggleIdentityFiltersExpanded: () => { setIdentityFiltersExpanded((current) => !current) },
+    toggleMetaFiltersExpanded: () => { setMetaFiltersExpanded((current) => !current) },
   }
 }

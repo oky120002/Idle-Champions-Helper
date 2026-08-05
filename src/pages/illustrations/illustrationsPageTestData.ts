@@ -29,13 +29,13 @@ export function createIllustration(
     (overrides.kind === 'hero-base' ? localized('Bruenor', '布鲁诺') : localized('Pirate Bruenor', '海盗布鲁诺'))
 
   return {
+    championName,
+    illustrationName,
     id: overrides.id,
     championId: overrides.championId,
     skinId: overrides.skinId ?? null,
     kind: overrides.kind,
     seat: overrides.seat,
-    championName,
-    illustrationName,
     portraitPath: overrides.portraitPath ?? 'v1/champion-portraits/default.png',
     sourceSlot: overrides.sourceSlot ?? (overrides.kind === 'hero-base' ? 'base' : 'large'),
     sourceGraphicId: overrides.sourceGraphicId ?? `graphic-${overrides.id}`,
@@ -78,13 +78,13 @@ export function createAnimation(
     (overrides.kind === 'hero-base' ? localized('Bruenor', '布鲁诺') : localized('Pirate Bruenor', '海盗布鲁诺'))
 
   return {
+    championName,
+    illustrationName,
     id: overrides.id,
     championId: overrides.championId,
     skinId: overrides.skinId ?? null,
     kind: overrides.kind,
     seat: overrides.seat,
-    championName,
-    illustrationName,
     sourceSlot: overrides.sourceSlot ?? (overrides.kind === 'hero-base' ? 'base' : 'large'),
     sourceGraphicId: overrides.sourceGraphicId ?? `graphic-${overrides.id}`,
     sourceGraphic: overrides.sourceGraphic ?? `Characters/${overrides.id}`,
@@ -252,18 +252,28 @@ export const animationFixture: DataCollection<ChampionAnimation> = {
 }
 
 export function buildBruenorOnlyChampionsFixture(updatedAt = '2026-04-16'): DataCollection<Champion> {
+  const firstChampion = championsFixture.items[0]
+  if (!firstChampion) {
+    throw new Error('championsFixture 需要至少一个英雄用于构建精简夹具')
+  }
+
   return {
     updatedAt,
-    items: [championsFixture.items[0]!],
+    items: [firstChampion],
   }
 }
 
 export function buildBruenorOnlyEnumsFixture(
   updatedAt = '2026-04-16',
 ): DataCollection<StringEnumGroup | LocalizedEnumGroup> {
+  const firstEnumGroup = enumsFixture.items[0]
+  if (!firstEnumGroup) {
+    throw new Error('enumsFixture 需要至少一个枚举组用于构建精简夹具')
+  }
+
   return {
     updatedAt,
-    items: [enumsFixture.items[0]!, { id: 'affiliations', values: [hall] }],
+    items: [firstEnumGroup, { id: 'affiliations', values: [hall] }],
   }
 }
 
@@ -286,19 +296,20 @@ export function buildCrowdedIllustrationsFixture({
 }: CrowdedIllustrationFixtureOptions): DataCollection<ChampionIllustration> {
   return {
     updatedAt,
-    items: Array.from({ length: count }, (_, index) =>
-      createIllustration({
-        id: `${idPrefix}-${index + 1}`,
+    items: Array.from({ length: count }, (_, index) => {
+      const indexLabel = String(index + 1)
+      return createIllustration({
+        id: `${idPrefix}-${indexLabel}`,
         championId: '1',
         kind: 'skin',
         seat: 1,
-        skinId: `${idPrefix}-skin-${index + 1}`,
+        skinId: `${idPrefix}-skin-${indexLabel}`,
         championName: localized('Bruenor', '布鲁诺'),
-        illustrationName: localized(`${englishNamePrefix} ${index + 1}`, `${chineseNamePrefix} ${index + 1}`),
-        sourceGraphicId: `${idPrefix}-g-${index + 1}`,
-        sourceGraphic: `${sourceGraphicPrefix}_${index + 1}`,
-      }),
-    ),
+        illustrationName: localized(`${englishNamePrefix} ${indexLabel}`, `${chineseNamePrefix} ${indexLabel}`),
+        sourceGraphicId: `${idPrefix}-g-${indexLabel}`,
+        sourceGraphic: `${sourceGraphicPrefix}_${indexLabel}`,
+      })
+    }),
   }
 }
 

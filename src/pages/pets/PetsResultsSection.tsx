@@ -3,7 +3,7 @@ import { PetResultsGrid } from './PetResultsGrid'
 import type { PetsPageModel } from './types'
 
 interface PetsResultsSectionProps {
-  model: PetsPageModel
+  readonly model: PetsPageModel
 }
 
 export function PetsResultsSection({ model }: PetsResultsSectionProps) {

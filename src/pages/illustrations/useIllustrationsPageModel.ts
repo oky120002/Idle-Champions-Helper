@@ -28,6 +28,7 @@ const EMPTY_CHAMPIONS: Champion[] = []
 const EMPTY_STRINGS: string[] = []
 const EMPTY_LOCALIZED_TEXTS: LocalizedText[] = []
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级模型 hook，主体是 hook 声明+派生数据，拆分会破坏内聚
 export function useIllustrationsPageModel(): IllustrationsPageModel {
   const location = useLocation()
   const { locale, t } = useI18n()
@@ -186,7 +187,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       motion.prepareResultsViewportTransition('visibility')
       setShowAllResults((current) => !current)
     },
-    randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
+    randomizeResultOrder: () => { setRandomOrderSeed((current) => (current === null ? 1 : current + 1)) },
     saveListScroll,
     scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,
@@ -197,6 +198,13 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     t,
     state,
     filters,
+    animationByIllustrationId,
+    activeFilterChips,
+    activeFilters,
+    hasActiveFilters,
+    identityFiltersSelectedCount,
+    metaFiltersSelectedCount,
+    actions,
     ui: {
       isIdentityFiltersExpanded,
       isMetaFiltersExpanded,
@@ -217,21 +225,14 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     },
     results: {
       illustrations,
-      filteredIllustrationEntries: orderedIllustrationEntries,
       visibleIllustrationEntries,
       totalHeroCount,
       totalSkinCount,
+      filteredIllustrationEntries: orderedIllustrationEntries,
       filteredHeroCount: filteredKindCounts.totalHeroCount,
       filteredSkinCount: filteredKindCounts.totalSkinCount,
       canToggleResultVisibility: orderedIllustrationEntries.length > MAX_VISIBLE_ILLUSTRATIONS,
     },
-    animationByIllustrationId,
-    activeFilterChips,
-    activeFilters,
-    hasActiveFilters,
-    identityFiltersSelectedCount,
-    metaFiltersSelectedCount,
     resultsPaneRef: motion.resultsPaneRef,
-    actions,
   }
 }

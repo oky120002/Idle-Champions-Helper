@@ -2,7 +2,7 @@ import { matchesLocalizedText } from '../../domain/localizedText'
 import type { Pet } from '../../domain/types'
 
 export function matchesPetQuery(pet: Pet, query: string) {
-  if (!query.trim()) {
+  if (query.trim() === '') {
     return true
   }
 

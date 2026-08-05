@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 动画审计对比行：变体网格 + 反馈面板紧耦合，拆分会增加常见修改的打开文件数 */
 import { useState } from 'react'
 import { Pause, Play } from 'lucide-react'
 import type { AppLocale } from '../../app/i18n'
@@ -11,24 +12,25 @@ import type {
   AnimationAuditFeedbackTag,
   AnimationAuditFeedbackVerdict,
   AnimationAuditSequenceMetrics,
+  AnimationAuditSuspicionLevel,
   AnimationAuditVariant,
 } from './types'
 
 interface AnimationAuditComparisonRowProps {
-  entry: AnimationAuditEntry
-  animation: ChampionAnimation
-  fallbackSrc: string | null
-  locale: AppLocale
-  t: (text: { zh: string; en: string }) => string
-  feedback: AnimationAuditFeedbackDraft
-  onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
-  onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
-  onNoteChange: (entryId: string, note: string) => void
-  onClearFeedback: (entryId: string) => void
+  readonly entry: AnimationAuditEntry
+  readonly animation: ChampionAnimation
+  readonly fallbackSrc: string | null
+  readonly locale: AppLocale
+  readonly t: (text: { zh: string; en: string }) => string
+  readonly feedback: AnimationAuditFeedbackDraft
+  readonly onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
+  readonly onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
+  readonly onNoteChange: (entryId: string, note: string) => void
+  readonly onClearFeedback: (entryId: string) => void
 }
 
 function formatPercent(value: number) {
-  return `${Math.round(value * 100)}%`
+  return `${String(Math.round(value * 100))}%`
 }
 
 function formatMotion(value: number) {
@@ -54,6 +56,22 @@ function buildSignalLabel(signal: string, t: AnimationAuditComparisonRowProps['t
   }
 }
 
+function buildSuspicionLevelLabel(
+  level: AnimationAuditSuspicionLevel,
+  t: AnimationAuditComparisonRowProps['t'],
+) {
+  switch (level) {
+    case 'high':
+      return t({ zh: '高疑似', en: 'High suspicion' })
+    case 'medium':
+      return t({ zh: '中疑似', en: 'Medium suspicion' })
+    case 'low':
+      return t({ zh: '低疑似', en: 'Low suspicion' })
+    case 'none':
+      return t({ zh: '暂不复核', en: 'Keep' })
+  }
+}
+
 function buildVariant(
   baseAnimation: ChampionAnimation,
   metrics: AnimationAuditSequenceMetrics,
@@ -61,7 +79,7 @@ function buildVariant(
   badge?: string,
 ): AnimationAuditVariant {
   return {
-    key: `${baseAnimation.id}:${label}:${metrics.sequenceIndex}`,
+    key: `${baseAnimation.id}:${label}:${String(metrics.sequenceIndex)}`,
     label,
     metrics,
     animation: {
@@ -69,7 +87,7 @@ function buildVariant(
       defaultSequenceIndex: metrics.sequenceIndex,
       defaultFrameIndex: metrics.frameIndex,
     },
-    ...(badge ? { badge } : {}),
+    ...(badge != null && badge !== '' ? { badge } : {}),
   }
 }
 
@@ -116,25 +134,21 @@ export function AnimationAuditComparisonRow({
           <div className="animation-audit-row__eyebrow-row">
             <span className="animation-audit-row__kind">{entry.kind === 'hero-base' ? t({ zh: '英雄本体', en: 'Hero base' }) : t({ zh: '皮肤', en: 'Skin' })}</span>
             <span className={`animation-audit-row__level animation-audit-row__level--${entry.suspicionLevel}`}>
-              {entry.suspicionLevel === 'high'
-                ? t({ zh: '高疑似', en: 'High suspicion' })
-                : entry.suspicionLevel === 'medium'
-                  ? t({ zh: '中疑似', en: 'Medium suspicion' })
-                  : entry.suspicionLevel === 'low'
-                    ? t({ zh: '低疑似', en: 'Low suspicion' })
-                    : t({ zh: '暂不复核', en: 'Keep' })}
+              {buildSuspicionLevelLabel(entry.suspicionLevel, t)}
             </span>
             <span className="animation-audit-row__score">Δ {entry.suspicionScore.toFixed(2)}</span>
           </div>
           <h2 className="animation-audit-row__title">{title}</h2>
           <p className="animation-audit-row__subtitle">
-            {subtitle} · {t({ zh: `座位 ${entry.seat}`, en: `Seat ${entry.seat}` })} · {t({ zh: `${entry.sequenceCount} 条 sequence`, en: `${entry.sequenceCount} sequences` })}
+            {subtitle} · {t({ zh: `座位 ${String(entry.seat)}`, en: `Seat ${String(entry.seat)}` })} · {t({ zh: `${String(entry.sequenceCount)} 条 sequence`, en: `${String(entry.sequenceCount)} sequences` })}
           </p>
         </div>
         <button
           type="button"
           className="animation-audit-row__toggle"
-          onClick={() => setIsPlaying((value) => !value)}
+          onClick={() => {
+            setIsPlaying((value) => !value)
+          }}
         >
           {isPlaying ? <Pause aria-hidden="true" strokeWidth={1.9} /> : <Play aria-hidden="true" strokeWidth={1.9} />}
           {isPlaying ? t({ zh: '暂停这一行', en: 'Pause row' }) : t({ zh: '播放这一行', en: 'Play row' })}
@@ -152,7 +166,17 @@ export function AnimationAuditComparisonRow({
       ) : null}
 
       <div className="animation-audit-row__comparison-grid">
-        {variants.map((variant) => (
+        {variants.map((variant) => {
+          const facts: ReadonlyArray<{ label: string; value: string }> = [
+            { label: t({ zh: '可见率', en: 'Visibility' }), value: formatPercent(variant.metrics.averageVisiblePieceRatio) },
+            { label: t({ zh: '持续部件', en: 'Persistent' }), value: formatPercent(variant.metrics.persistentPieceRatio) },
+            { label: t({ zh: '轮廓覆盖', en: 'Coverage' }), value: formatPercent(variant.metrics.boundsAreaRatio) },
+            { label: t({ zh: '运动强度', en: 'Motion' }), value: formatMotion(variant.metrics.averageMotion) },
+            { label: t({ zh: '评分', en: 'Score' }), value: variant.metrics.score.toFixed(2) },
+            { label: t({ zh: '部件数', en: 'Pieces' }), value: String(variant.metrics.pieceCount) },
+          ]
+
+          return (
           <section key={variant.key} className="animation-audit-variant">
             <div className="animation-audit-variant__header">
               <div>
@@ -161,7 +185,7 @@ export function AnimationAuditComparisonRow({
                   seq {variant.metrics.sequenceIndex} · frame {variant.metrics.frameIndex}
                 </p>
               </div>
-              {variant.badge ? <span className="animation-audit-variant__badge">{variant.badge}</span> : null}
+              {variant.badge != null && variant.badge !== '' ? <span className="animation-audit-variant__badge">{variant.badge}</span> : null}
             </div>
 
             <div className="animation-audit-variant__stage">
@@ -185,33 +209,16 @@ export function AnimationAuditComparisonRow({
             </div>
 
             <dl className="animation-audit-variant__facts">
-              <div>
-                <dt>{t({ zh: '可见率', en: 'Visibility' })}</dt>
-                <dd>{formatPercent(variant.metrics.averageVisiblePieceRatio)}</dd>
-              </div>
-              <div>
-                <dt>{t({ zh: '持续部件', en: 'Persistent' })}</dt>
-                <dd>{formatPercent(variant.metrics.persistentPieceRatio)}</dd>
-              </div>
-              <div>
-                <dt>{t({ zh: '轮廓覆盖', en: 'Coverage' })}</dt>
-                <dd>{formatPercent(variant.metrics.boundsAreaRatio)}</dd>
-              </div>
-              <div>
-                <dt>{t({ zh: '运动强度', en: 'Motion' })}</dt>
-                <dd>{formatMotion(variant.metrics.averageMotion)}</dd>
-              </div>
-              <div>
-                <dt>{t({ zh: '评分', en: 'Score' })}</dt>
-                <dd>{variant.metrics.score.toFixed(2)}</dd>
-              </div>
-              <div>
-                <dt>{t({ zh: '部件数', en: 'Pieces' })}</dt>
-                <dd>{variant.metrics.pieceCount}</dd>
-              </div>
+              {facts.map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
             </dl>
           </section>
-        ))}
+          )
+        })}
       </div>
 
       <AnimationAuditRowFeedback

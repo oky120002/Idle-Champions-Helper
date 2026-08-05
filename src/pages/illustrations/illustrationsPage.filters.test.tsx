@@ -107,7 +107,7 @@ describe('IllustrationsPage filters', () => {
     await user.click(screen.getByRole('button', { name: '皮肤' }))
     await user.click(screen.getByRole('button', { name: '辅助' }))
 
-    const searchParams = new URLSearchParams(screen.getByTestId('location-search').textContent ?? '')
+    const searchParams = new URLSearchParams(screen.getByTestId('location-search').textContent)
 
     expect(searchParams.get('scope')).toBe('skin')
     expect(searchParams.getAll('role')).toEqual(['support'])

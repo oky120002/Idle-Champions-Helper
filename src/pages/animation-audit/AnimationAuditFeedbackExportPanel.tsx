@@ -2,18 +2,18 @@ import { ChevronDown, Clipboard, Eraser } from 'lucide-react'
 import type { AnimationAuditCopyState } from './types'
 
 interface AnimationAuditFeedbackExportPanelProps {
-  feedbackSummary: {
+  readonly feedbackSummary: {
     selected: number
     withVerdict: number
     withTags: number
     withNotes: number
   }
-  hasFeedback: boolean
-  feedbackCopyState: AnimationAuditCopyState
-  feedbackPreviewJson: string
-  onCopy: () => void
-  onClearAll: () => void
-  t: (text: { zh: string; en: string }) => string
+  readonly hasFeedback: boolean
+  readonly feedbackCopyState: AnimationAuditCopyState
+  readonly feedbackPreviewJson: string
+  readonly onCopy: () => void
+  readonly onClearAll: () => void
+  readonly t: (text: { zh: string; en: string }) => string
 }
 
 function buildFeedbackCopyStateLabel(
@@ -27,6 +27,17 @@ function buildFeedbackCopyStateLabel(
       return t({ zh: '已复制到剪贴板，直接贴给我就行。', en: 'Copied to clipboard. Paste it back to me.' })
     case 'error':
       return t({ zh: '复制失败，可先展开下面的 JSON 手动复制。', en: 'Copy failed. Expand the JSON preview and copy it manually.' })
+  }
+}
+
+function buildFeedbackStatusClassName(state: AnimationAuditCopyState) {
+  switch (state) {
+    case 'error':
+      return 'animation-audit-feedback-export__status animation-audit-feedback-export__status--error'
+    case 'success':
+      return 'animation-audit-feedback-export__status animation-audit-feedback-export__status--success'
+    case 'idle':
+      return 'animation-audit-feedback-export__status'
   }
 }
 
@@ -92,15 +103,7 @@ export function AnimationAuditFeedbackExportPanel({
         </button>
       </div>
 
-      <p
-        className={
-          feedbackCopyState === 'error'
-            ? 'animation-audit-feedback-export__status animation-audit-feedback-export__status--error'
-            : feedbackCopyState === 'success'
-              ? 'animation-audit-feedback-export__status animation-audit-feedback-export__status--success'
-              : 'animation-audit-feedback-export__status'
-        }
-      >
+      <p className={buildFeedbackStatusClassName(feedbackCopyState)}>
         {buildFeedbackCopyStateLabel(feedbackCopyState, t)}
       </p>
 

@@ -23,7 +23,7 @@ export function useVisibleIllustrationEntries(
 
   useEffect(() => {
     if (!shouldProgressivelyReveal) {
-      return
+      return undefined
     }
 
     let cancelled = false
@@ -56,7 +56,7 @@ export function useVisibleIllustrationEntries(
     return () => {
       cancelled = true
 
-      if (frameId) {
+      if (frameId !== 0) {
         window.cancelAnimationFrame(frameId)
       }
     }

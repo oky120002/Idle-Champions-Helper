@@ -81,7 +81,8 @@ const petAnimationsFixture: DataCollection<PetAnimation> = {
 }
 
 function buildPet(index: number): Pet {
-  const id = index + 1
+  const idNumber = index + 1
+  const id = String(idNumber)
   const name = `测试宠物 ${id}`
 
   return {
@@ -89,12 +90,12 @@ function buildPet(index: number): Pet {
     name: { original: `Test Pet ${id}`, display: name },
     description: { original: `Fixture pet ${id}`, display: `${name} 的测试描述。` },
     isAvailable: true,
-    iconGraphicId: `${100 + id}`,
-    illustrationGraphicId: `${200 + id}`,
+    iconGraphicId: String(100 + idNumber),
+    illustrationGraphicId: String(200 + idNumber),
     acquisition: {
       kind: 'gems',
       sourceType: 'shop',
-      gemCost: 50000 + id,
+      gemCost: 50000 + idNumber,
       premiumPackName: null,
       premiumPackDescription: null,
       patronName: null,
