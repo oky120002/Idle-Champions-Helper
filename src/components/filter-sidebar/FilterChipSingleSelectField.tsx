@@ -8,13 +8,13 @@ interface FilterChipSingleSelectOption<T extends string> {
 }
 
 interface FilterChipSingleSelectFieldProps<T extends string> {
-  label: ReactNode
-  value: T
-  options: Array<FilterChipSingleSelectOption<T>>
-  onChange: (value: T) => void
-  groupLabel: string
-  hint?: ReactNode
-  className?: string
+  readonly label: ReactNode
+  readonly value: T
+  readonly options: Array<FilterChipSingleSelectOption<T>>
+  readonly onChange: (value: T) => void
+  readonly groupLabel: string
+  readonly hint?: ReactNode
+  readonly className?: string
 }
 
 export function FilterChipSingleSelectField<T extends string>({
@@ -35,7 +35,9 @@ export function FilterChipSingleSelectField<T extends string>({
             type="button"
             className={value === option.value ? 'filter-chip filter-chip--active' : 'filter-chip'}
             aria-pressed={value === option.value}
-            onClick={() => onChange(option.value)}
+            onClick={() => {
+              onChange(option.value)
+            }}
           >
             {option.label}
             {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}

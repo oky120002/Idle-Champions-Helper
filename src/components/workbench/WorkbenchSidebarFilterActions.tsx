@@ -2,9 +2,9 @@ import { ActionButton } from '../ActionButton'
 import { WorkbenchSidebarFilterStatus } from './WorkbenchSidebarFilterStatus'
 
 interface WorkbenchSidebarFilterActionsProps {
-  activeCount: number
-  clearLabel: string
-  onClear?: () => void
+  readonly activeCount: number
+  readonly clearLabel: string
+  readonly onClear?: () => void
 }
 
 export function WorkbenchSidebarFilterActions({

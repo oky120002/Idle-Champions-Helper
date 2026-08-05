@@ -255,7 +255,6 @@ export interface RenderSkelAnimPoseOptions extends SkelAnimPoseOptions {
 }
 
 export interface RenderedSkelAnimPose {
-  // eslint-disable-next-line sonarjs/no-reference-error -- Buffer 是 Node.js 全局类型（tsconfig.node.json types:["node"]），sonarjs 未识别 Node 全白名单
   bytes: Buffer
   width: number
   height: number

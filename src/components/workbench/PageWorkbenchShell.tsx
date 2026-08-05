@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 工作台 shell 是内聚组件，拆文件降低常用任务一跳命中率 */
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode, type RefObject } from 'react'
 import { SidebarToggleIcon } from '../../app/AppIcons'
 import { useI18n } from '../../app/i18n'
@@ -18,71 +19,110 @@ function shouldAnimateSidebarLayout(): boolean {
   )
 }
 
-interface PageWorkbenchShellProps {
-  storageKey: string
-  ariaLabel?: string
+interface ShellClassNameOptions {
+  hasSidebar: boolean
+  isLayoutCollapsed: boolean
+  isLayoutSyncing: boolean
+  isOpening: boolean
+  isSidebarCollapsed: boolean
+  isAnimating: boolean
+  className: string | undefined
+}
+
+function buildShellClassName(opts: ShellClassNameOptions): string {
+  return [
+    'page-workbench',
+    opts.hasSidebar && opts.isLayoutCollapsed ? 'page-workbench--layout-collapsed' : '',
+    opts.isLayoutSyncing ? 'page-workbench--layout-syncing' : '',
+    opts.isOpening ? 'page-workbench--opening' : '',
+    opts.isSidebarCollapsed ? 'page-workbench--collapsed' : '',
+    opts.isAnimating ? 'page-workbench--animating' : '',
+    opts.hasSidebar ? '' : 'page-workbench--sidebarless',
+    opts.className,
+  ].filter(Boolean).join(' ')
+}
+
+interface ToolbarLeadGroupProps {
+  hasSidebar: boolean
+  isSidebarCollapsed: boolean
+  toggleCollapsed: () => void
+  toggleLabel: string
+  sidebarId: string
   toolbarLead?: ReactNode
-  toolbarPrimary: ReactNode
-  toolbarActions?: ReactNode
-  sidebarHeader?: ReactNode
-  sidebar?: ReactNode
-  contentHeader?: ReactNode
-  contentOverlay?: ReactNode
-  children: ReactNode
-  className?: string
-  contentScrollRef?: RefObject<HTMLDivElement | null>
+}
+
+function renderToolbarLeadGroup({
+  hasSidebar,
+  isSidebarCollapsed,
+  toggleCollapsed,
+  toggleLabel,
+  sidebarId,
+  toolbarLead,
+}: ToolbarLeadGroupProps) {
+  return (
+    <div className="page-workbench__toolbar-region-group">
+      {hasSidebar ? (
+        <WorkbenchToolbarActionButton
+          onClick={toggleCollapsed}
+          icon={<SidebarToggleIcon isCollapsed={isSidebarCollapsed} />}
+          iconOnly
+          tone="share"
+          ariaExpanded={!isSidebarCollapsed}
+          ariaControls={sidebarId}
+          ariaLabel={toggleLabel}
+          title={toggleLabel}
+          className={[
+            'page-workbench__toolbar-toggle',
+            isSidebarCollapsed ? 'page-workbench__toolbar-toggle--collapsed' : 'page-workbench__toolbar-toggle--expanded',
+          ].join(' ')}
+        >
+          {''}
+        </WorkbenchToolbarActionButton>
+      ) : null}
+
+      {toolbarLead !== undefined ? (
+        <div className="page-workbench__toolbar-region-copy">{toolbarLead}</div>
+      ) : null}
+    </div>
+  )
+}
+
+interface PageWorkbenchShellProps {
+  readonly storageKey: string
+  readonly ariaLabel?: string
+  readonly toolbarLead?: ReactNode
+  readonly toolbarPrimary: ReactNode
+  readonly toolbarActions?: ReactNode
+  readonly sidebarHeader?: ReactNode
+  readonly sidebar?: ReactNode
+  readonly contentHeader?: ReactNode
+  readonly contentOverlay?: ReactNode
+  readonly children: ReactNode
+  readonly className?: string
+  readonly contentScrollRef?: RefObject<HTMLDivElement | null>
 }
 
 type ToolbarRegion = 'lead' | 'primary' | 'actions'
 
 interface ToolbarRegionSlotProps {
-  region: ToolbarRegion
-  children?: ReactNode
-  className?: string
+  readonly region: ToolbarRegion
+  readonly children?: ReactNode
+  readonly className?: string
 }
 
-function renderToolbarRegionSlot({
-  region,
-  children,
-  className,
-}: ToolbarRegionSlotProps) {
-  if (children === undefined || children === null) {
-    return null
-  }
-
-  return (
-    <div
-      className={[
-        'page-workbench__toolbar-region',
-        `page-workbench__toolbar-region--${region}`,
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-    >
-      {children}
-    </div>
-  )
+interface SidebarAnimationApi {
+  isLayoutCollapsed: boolean
+  isLayoutSyncing: boolean
+  isOpening: boolean
+  isAnimating: boolean
+  toggleCollapsed: () => void
 }
 
-export function PageWorkbenchShell({
-  storageKey,
-  ariaLabel,
-  toolbarLead,
-  toolbarPrimary,
-  toolbarActions,
-  sidebarHeader,
-  sidebar,
-  contentHeader,
-  contentOverlay,
-  children,
-  className,
-  contentScrollRef,
-}: PageWorkbenchShellProps) {
-  const { t } = useI18n()
-  const sidebarId = useId()
-  const hasSidebar = sidebar !== undefined && sidebar !== null
-  const { isCollapsed, setCollapsed } = useWorkbenchSidebarCollapse(storageKey)
+function useSidebarToggleAnimation(
+  hasSidebar: boolean,
+  isCollapsed: boolean,
+  setCollapsed: (value: boolean) => void,
+): SidebarAnimationApi {
   const [isLayoutCollapsed, setIsLayoutCollapsed] = useState(isCollapsed)
   const [isLayoutSyncing, setIsLayoutSyncing] = useState(false)
   const [isOpening, setIsOpening] = useState(false)
@@ -90,7 +130,7 @@ export function PageWorkbenchShell({
   const animationTimeoutRef = useRef<number | null>(null)
   const openingWidthReleaseTimeoutRef = useRef<number | null>(null)
   const animationFrameRef = useRef<number | null>(null)
-  const isSidebarCollapsed = hasSidebar ? isCollapsed : false
+
   const clearPendingAnimation = useCallback(() => {
     if (animationTimeoutRef.current !== null) {
       window.clearTimeout(animationTimeoutRef.current)
@@ -168,48 +208,87 @@ export function PageWorkbenchShell({
     })
   }, [clearPendingAnimation, hasSidebar, isAnimating, isCollapsed, setCollapsed])
 
-  const shellClassName = [
-    'page-workbench',
-    hasSidebar && isLayoutCollapsed ? 'page-workbench--layout-collapsed' : '',
-    isLayoutSyncing ? 'page-workbench--layout-syncing' : '',
-    isOpening ? 'page-workbench--opening' : '',
-    isSidebarCollapsed ? 'page-workbench--collapsed' : '',
-    isAnimating ? 'page-workbench--animating' : '',
-    hasSidebar ? '' : 'page-workbench--sidebarless',
+  return {
+    isLayoutCollapsed,
+    isLayoutSyncing,
+    isOpening,
+    isAnimating,
+    toggleCollapsed,
+  }
+}
+
+function renderToolbarRegionSlot({
+  region,
+  children,
+  className,
+}: ToolbarRegionSlotProps) {
+  if (children === undefined || children === null) {
+    return null
+  }
+
+  return (
+    <div
+      className={[
+        'page-workbench__toolbar-region',
+        `page-workbench__toolbar-region--${region}`,
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      {children}
+    </div>
+  )
+}
+
+export function PageWorkbenchShell({
+  storageKey,
+  ariaLabel,
+  toolbarLead,
+  toolbarPrimary,
+  toolbarActions,
+  sidebarHeader,
+  sidebar,
+  contentHeader,
+  contentOverlay,
+  children,
+  className,
+  contentScrollRef,
+}: PageWorkbenchShellProps) {
+  const { t } = useI18n()
+  const sidebarId = useId()
+  const hasSidebar = sidebar !== undefined && sidebar !== null
+  const { isCollapsed, setCollapsed } = useWorkbenchSidebarCollapse(storageKey)
+  const {
+    isLayoutCollapsed,
+    isLayoutSyncing,
+    isOpening,
+    isAnimating,
+    toggleCollapsed,
+  } = useSidebarToggleAnimation(hasSidebar, isCollapsed, setCollapsed)
+  const isSidebarCollapsed = hasSidebar ? isCollapsed : false
+
+  const shellClassName = buildShellClassName({
+    hasSidebar,
+    isLayoutCollapsed,
+    isLayoutSyncing,
+    isOpening,
+    isSidebarCollapsed,
+    isAnimating,
     className,
-  ]
-    .filter(Boolean)
-    .join(' ')
+  })
   const toggleLabel = isSidebarCollapsed
     ? t({ zh: '展开左侧面板', en: 'Open left pane' })
     : t({ zh: '收起左侧面板', en: 'Collapse left pane' })
-
-  const renderToolbarLeadGroup = () => (
-    <div className="page-workbench__toolbar-region-group">
-      {hasSidebar ? (
-        <WorkbenchToolbarActionButton
-          onClick={toggleCollapsed}
-          icon={<SidebarToggleIcon isCollapsed={isSidebarCollapsed} />}
-          iconOnly
-          tone="share"
-          ariaExpanded={!isSidebarCollapsed}
-          ariaControls={sidebarId}
-          ariaLabel={toggleLabel}
-          title={toggleLabel}
-          className={[
-            'page-workbench__toolbar-toggle',
-            isSidebarCollapsed ? 'page-workbench__toolbar-toggle--collapsed' : 'page-workbench__toolbar-toggle--expanded',
-          ].join(' ')}
-        >
-          {''}
-        </WorkbenchToolbarActionButton>
-      ) : null}
-
-      {toolbarLead !== undefined ? (
-        <div className="page-workbench__toolbar-region-copy">{toolbarLead}</div>
-      ) : null}
-    </div>
-  )
+  const leadGroup = renderToolbarLeadGroup({
+    hasSidebar,
+    isSidebarCollapsed,
+    toggleCollapsed,
+    toggleLabel,
+    sidebarId,
+    toolbarLead,
+  })
+  const inlineLeadContent = hasSidebar ? leadGroup : toolbarLead
 
   return (
     <section
@@ -222,11 +301,11 @@ export function PageWorkbenchShell({
         {hasSidebar ? (
           <aside className="page-workbench__pane page-workbench__pane--sidebar page-workbench__sidebar">
             <div className="page-workbench__chrome page-workbench__chrome-sidebar">
-              {!isSidebarCollapsed && (hasSidebar || toolbarLead !== undefined) ? (
+              {!isSidebarCollapsed ? (
                 renderToolbarRegionSlot({
                   region: 'lead',
                   className: 'page-workbench__toolbar-region--sidebar',
-                  children: renderToolbarLeadGroup(),
+                  children: leadGroup,
                 })
               ) : null}
             </div>
@@ -250,7 +329,7 @@ export function PageWorkbenchShell({
               renderToolbarRegionSlot({
                 region: 'lead',
                 className: 'page-workbench__toolbar-region--inline',
-                children: hasSidebar ? renderToolbarLeadGroup() : toolbarLead,
+                children: inlineLeadContent,
               })
             ) : null}
             {renderToolbarRegionSlot({ region: 'primary', children: toolbarPrimary })}

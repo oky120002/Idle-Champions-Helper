@@ -10,7 +10,6 @@ import { useChampionsFilterState } from './useChampionsFilterState'
 import { useChampionsPageDerived } from './useChampionsPageDerived'
 import type { ChampionsPageModel } from './types'
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 编排 hook：hook 声明 + 模型组装，无纯逻辑可提取
 export function useChampionsPageModel(): ChampionsPageModel {
   const { locale, t } = useI18n()
   const location = useLocation()

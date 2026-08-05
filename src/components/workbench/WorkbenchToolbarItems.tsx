@@ -41,13 +41,65 @@ export type WorkbenchToolbarItemConfig =
   | WorkbenchToolbarBadgeAction
 
 interface WorkbenchToolbarItemsProps {
-  items: WorkbenchToolbarItemConfig[]
-  layout?: 'inline' | 'cluster'
-  className?: string
+  readonly items: WorkbenchToolbarItemConfig[]
+  readonly layout?: 'inline' | 'cluster'
+  readonly className?: string
 }
 
 function joinClasses(...classNames: Array<string | undefined | false>) {
   return classNames.filter(Boolean).join(' ')
+}
+
+function renderBadgeItem(item: WorkbenchToolbarBadgeAction) {
+  return (
+    <WorkbenchToolbarBadge
+      key={item.id}
+      {...(item.variant !== undefined ? { variant: item.variant } : {})}
+      {...(item.tone !== undefined ? { tone: item.tone } : {})}
+    >
+      {item.label}
+    </WorkbenchToolbarBadge>
+  )
+}
+
+function renderButtonItem(
+  item: WorkbenchToolbarButtonAction,
+  hasVisibleLabel: boolean,
+  ariaLabel: string | undefined,
+) {
+  return (
+    <WorkbenchToolbarActionButton
+      key={item.id}
+      onClick={item.onClick}
+      {...(item.icon !== undefined ? { icon: item.icon } : {})}
+      iconOnly={!hasVisibleLabel}
+      {...(ariaLabel !== undefined ? { ariaLabel } : {})}
+      {...(item.variant !== undefined ? { variant: item.variant } : {})}
+      {...(item.isActive !== undefined ? { isActive: item.isActive } : {})}
+      {...(item.ariaPressed !== undefined ? { ariaPressed: item.ariaPressed } : {})}
+      {...(item.title !== undefined ? { title: item.title } : {})}
+      {...(item.tone !== undefined ? { tone: item.tone } : {})}
+      {...(item.state !== undefined ? { state: item.state } : {})}
+      {...(item.className !== undefined ? { className: item.className } : {})}
+    >
+      {item.label}
+    </WorkbenchToolbarActionButton>
+  )
+}
+
+function renderToolbarItem(item: WorkbenchToolbarItemConfig) {
+  if (item.kind === 'badge') {
+    return renderBadgeItem(item)
+  }
+
+  const hasVisibleLabel = typeof item.label === 'string'
+    ? item.label.length > 0
+    : item.label != null
+  const ariaLabel = typeof item.label === 'string' && item.label.length > 0
+    ? item.label
+    : item.title
+
+  return renderButtonItem(item, hasVisibleLabel, ariaLabel)
 }
 
 export function WorkbenchToolbarItems({
@@ -55,51 +107,13 @@ export function WorkbenchToolbarItems({
   layout = 'inline',
   className,
 }: WorkbenchToolbarItemsProps) {
-  const visibleItems = items.filter((item) => !item.hidden)
+  const visibleItems = items.filter((item) => item.hidden !== true)
 
   if (visibleItems.length === 0) {
     return null
   }
 
-  const renderedItems = visibleItems.map((item) => {
-    if (item.kind === 'badge') {
-      return (
-        <WorkbenchToolbarBadge
-          key={item.id}
-          {...(item.variant !== undefined ? { variant: item.variant } : {})}
-          {...(item.tone !== undefined ? { tone: item.tone } : {})}
-        >
-          {item.label}
-        </WorkbenchToolbarBadge>
-      )
-    }
-
-    const hasVisibleLabel = typeof item.label === 'string'
-      ? item.label.length > 0
-      : item.label != null
-    const ariaLabel = typeof item.label === 'string' && item.label.length > 0
-      ? item.label
-      : item.title
-
-    return (
-      <WorkbenchToolbarActionButton
-        key={item.id}
-        onClick={item.onClick}
-        {...(item.icon !== undefined ? { icon: item.icon } : {})}
-        iconOnly={!hasVisibleLabel}
-        {...(ariaLabel !== undefined ? { ariaLabel } : {})}
-        {...(item.variant !== undefined ? { variant: item.variant } : {})}
-        {...(item.isActive !== undefined ? { isActive: item.isActive } : {})}
-        {...(item.ariaPressed !== undefined ? { ariaPressed: item.ariaPressed } : {})}
-        {...(item.title !== undefined ? { title: item.title } : {})}
-        {...(item.tone !== undefined ? { tone: item.tone } : {})}
-        {...(item.state !== undefined ? { state: item.state } : {})}
-        {...(item.className !== undefined ? { className: item.className } : {})}
-      >
-        {item.label}
-      </WorkbenchToolbarActionButton>
-    )
-  })
+  const renderedItems = visibleItems.map(renderToolbarItem)
 
   if (layout === 'cluster') {
     return (

@@ -12,6 +12,12 @@ const defaultValue: PresetFormFieldValue = {
   priority: 'medium',
 }
 
+function getPriorityLabel(option: PresetPriority): string {
+  if (option === 'high') return '高优先'
+  if (option === 'low') return '备用'
+  return '常用'
+}
+
 function renderPresetFormFields(
   overrides: Partial<ComponentProps<typeof PresetFormFields>> = {},
 ) {
@@ -28,9 +34,7 @@ function renderPresetFormFields(
       descriptionLabel="方案备注"
       tagsLabel="场景标签"
       priorityLabel="优先级"
-      getPriorityOptionLabel={(option: PresetPriority) =>
-        option === 'high' ? '高优先' : option === 'low' ? '备用' : '常用'
-      }
+      getPriorityOptionLabel={getPriorityLabel}
       onChange={onChange}
       {...overrides}
     />,

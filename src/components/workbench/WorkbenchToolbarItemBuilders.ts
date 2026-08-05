@@ -80,21 +80,21 @@ export function createWorkbenchResultVisibilityItem({
   onClick,
 }: WorkbenchResultVisibilityItemOptions): WorkbenchToolbarItemConfig {
   const label = showAllResults
-    ? t({ zh: `收起到默认 ${defaultVisibleCount}`, en: `Collapse to default ${defaultVisibleCount}` })
+    ? t({ zh: `收起到默认 ${String(defaultVisibleCount)}`, en: `Collapse to default ${String(defaultVisibleCount)}` })
     : t({
-        zh: `显示全部 ${filteredCount}（默认 ${defaultVisibleCount}）`,
-        en: `Show all ${filteredCount} (default ${defaultVisibleCount})`,
+        zh: `显示全部 ${String(filteredCount)}（默认 ${String(defaultVisibleCount)}）`,
+        en: `Show all ${String(filteredCount)} (default ${String(defaultVisibleCount)})`,
       })
 
   return {
     id: 'toggle-visibility',
-    label,
     icon: createElement(showAllResults ? EyeOff : Eye, { 'aria-hidden': true, strokeWidth: 1.9 }),
-    onClick,
     isActive: showAllResults,
     ariaPressed: showAllResults,
     variant: 'prominent',
     hidden: !isReady || !canToggle,
+    label,
+    onClick,
   }
 }
 
@@ -111,9 +111,9 @@ export function createWorkbenchShuffleItem({
       ? t({ zh: '重新随机', en: 'Reshuffle' })
       : t({ zh: '随机排序', en: 'Shuffle order' }),
     icon: createElement(Shuffle, { 'aria-hidden': true, strokeWidth: 1.9 }),
-    onClick,
     isActive: hasRandomOrder,
     hidden: !isReady || resultCount <= 1,
+    onClick,
   }
 }
 
@@ -122,29 +122,29 @@ export function createWorkbenchShareItem({
   state,
   onCopy,
 }: WorkbenchShareItemOptions): WorkbenchToolbarItemConfig {
-  const label =
-    state === 'success'
-      ? t({ zh: '已复制链接', en: 'Link copied' })
-      : state === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : ''
-  const title =
-    state === 'success'
-      ? t({ zh: '链接已复制到剪贴板', en: 'Link copied to clipboard' })
-      : state === 'error'
-        ? t({ zh: '复制失败，点击重试', en: 'Copy failed. Click to retry' })
-        : t({ zh: '复制当前页面链接', en: 'Copy current page link' })
+  let label: string
+  let title: string
+  if (state === 'success') {
+    label = t({ zh: '已复制链接', en: 'Link copied' })
+    title = t({ zh: '链接已复制到剪贴板', en: 'Link copied to clipboard' })
+  } else if (state === 'error') {
+    label = t({ zh: '复制失败', en: 'Copy failed' })
+    title = t({ zh: '复制失败，点击重试', en: 'Copy failed. Click to retry' })
+  } else {
+    label = ''
+    title = t({ zh: '复制当前页面链接', en: 'Copy current page link' })
+  }
 
   return {
     id: 'share-link',
     kind: 'button',
-    label,
-    title,
     icon: createElement(Link2, { 'aria-hidden': true, strokeWidth: 2.2 }),
     onClick: onCopy,
     tone: 'share',
-    state,
     isActive: state === 'success',
+    label,
+    title,
+    state,
   }
 }
 
@@ -174,17 +174,17 @@ export function createWorkbenchFilterToolbarItems({
       ? [
           createWorkbenchShuffleItem({
             t,
+            isReady,
             resultCount: filteredCount,
             hasRandomOrder: shuffle.hasRandomOrder,
-            isReady,
             onClick: shuffle.onShuffle,
           }),
         ]
       : []),
     createWorkbenchShareItem({
       t,
-      state: shareState,
       onCopy,
+      state: shareState,
     }),
   ]
 }

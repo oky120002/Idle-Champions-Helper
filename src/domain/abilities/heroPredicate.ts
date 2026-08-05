@@ -134,7 +134,7 @@ function getHeroStatValue(hero: ResolvedHeroAbilityProfile, stat: HeroStatKey): 
 
 // functional 叶子：HasTag/GetStat/age/hero_id/HasAttackDamageType(+ has_base_attack_dmg_type_ 别名)/base_attack_cooldown/is_undead/true/as_int。
 // 非 boolean 叶子（min/max/floor 等数值表达式）返回 null。
-// eslint-disable-next-line sonarjs/cognitive-complexity, sonarjs/max-lines-per-function -- 14 种正则叶子顺序匹配，线性结构天然超规模/超长度，拆子函数会损害一跳命中率
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 英雄谓词叶子节点分派，分支多但每条简单
 function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
   if (expr === 'true') {
     return { op: 'true' }
@@ -302,7 +302,7 @@ export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect)
   return null
 }
 
-// eslint-disable-next-line complexity, sonarjs/cognitive-complexity, sonarjs/max-lines-per-function -- AST eval 大 switch，14 分支线性分派，拆子函数会损害一跳命中率
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity -- 谓词 AST 求值器，分支由 AST 节点类型决定，拆工会丢失可追溯性
 function evalNode(
   ast: HeroPredicateAST,
   hero: ResolvedHeroAbilityProfile,

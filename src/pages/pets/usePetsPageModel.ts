@@ -14,7 +14,6 @@ import { usePetsFilterState } from './usePetsFilterState'
 const EMPTY_PETS: Pet[] = []
 const EMPTY_ANIMATIONS: PetAnimation[] = []
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook 编排多源状态（collection/filter/motion/shareLink），行数源于 hook 声明与协调逻辑，无纯逻辑可独立提取
 export function usePetsPageModel(): PetsPageModel {
   const location = useLocation()
   const { locale, t } = useI18n()

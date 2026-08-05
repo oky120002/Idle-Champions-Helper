@@ -14,7 +14,6 @@ const EMPTY_UNKNOWN_COLLECTION: DataCollection<unknown> = {
   items: [],
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 数据加载 hook，两个 effect 各管一个集合的获取/降级，拆分会破坏内聚
 export function useIllustrationCollectionState(): IllustrationState {
   const [state, setState] = useState<IllustrationState>({ status: 'loading' })
   const animationCacheRef = useRef<ChampionAnimation[] | null>(null)

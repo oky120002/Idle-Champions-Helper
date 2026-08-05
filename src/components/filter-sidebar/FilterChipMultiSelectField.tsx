@@ -8,14 +8,14 @@ interface FilterChipOption<T extends string | number> {
 }
 
 interface FilterChipMultiSelectFieldProps<T extends string | number> {
-  label: ReactNode
-  hint?: ReactNode
-  options: Array<FilterChipOption<T>>
-  selectedValues: T[]
-  onReset: () => void
-  onToggle: (value: T) => void
-  allLabel: ReactNode
-  className?: string
+  readonly label: ReactNode
+  readonly hint?: ReactNode
+  readonly options: Array<FilterChipOption<T>>
+  readonly selectedValues: T[]
+  readonly onReset: () => void
+  readonly onToggle: (value: T) => void
+  readonly allLabel: ReactNode
+  readonly className?: string
 }
 
 export function FilterChipMultiSelectField<T extends string | number>({
@@ -45,7 +45,9 @@ export function FilterChipMultiSelectField<T extends string | number>({
             type="button"
             className={selectedValues.includes(option.id) ? 'filter-chip filter-chip--active' : 'filter-chip'}
             aria-pressed={selectedValues.includes(option.id)}
-            onClick={() => onToggle(option.id)}
+            onClick={() => {
+              onToggle(option.id)
+            }}
           >
             {option.label}
             {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}

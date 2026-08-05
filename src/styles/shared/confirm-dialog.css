@@ -10,6 +10,9 @@
 .confirm-dialog__backdrop {
   position: absolute;
   inset: 0;
+  padding: 0;
+  border: 0;
+  cursor: default;
   background:
     radial-gradient(circle at top, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 36%),
     var(--color-backdrop);

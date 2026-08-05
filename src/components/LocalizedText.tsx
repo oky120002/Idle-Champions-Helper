@@ -6,15 +6,15 @@ import type { LocalizedText as LocalizedTextValue } from '../domain/types'
 export type LocalizedTextMode = 'primary' | 'pair' | 'stacked'
 
 interface LocalizedTextProps {
-  text: LocalizedTextValue
-  mode?: LocalizedTextMode
-  as?: ElementType
-  className?: string
-  primaryAs?: ElementType
-  primaryClassName?: string
-  secondaryAs?: ElementType
-  secondaryClassName?: string
-  separator?: string
+  readonly text: LocalizedTextValue
+  readonly mode?: LocalizedTextMode
+  readonly as?: ElementType
+  readonly className?: string
+  readonly primaryAs?: ElementType
+  readonly primaryClassName?: string
+  readonly secondaryAs?: ElementType
+  readonly secondaryClassName?: string
+  readonly separator?: string
 }
 
 export function LocalizedText({
@@ -43,7 +43,7 @@ export function LocalizedText({
 
   return createElement(wrapperTag, { className }, [
     createElement(primaryAs, { key: 'primary', className: primaryClassName }, primary),
-    secondary
+    secondary != null && secondary !== ''
       ? createElement(secondaryAs, { key: 'secondary', className: secondaryClassName }, secondary)
       : null,
   ])

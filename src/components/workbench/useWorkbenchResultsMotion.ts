@@ -24,7 +24,7 @@ type PendingResultsTransition = {
 }
 
 function buildWorkbenchScrollRestoreKey(storageKey: string, search: string): string {
-  return `workbench-pane-scroll:${storageKey}:${search || DEFAULT_SCROLL_KEY}`
+  return `workbench-pane-scroll:${storageKey}:${search !== '' ? search : DEFAULT_SCROLL_KEY}`
 }
 
 function getResultsPaneTargetTop(): number {
@@ -37,7 +37,7 @@ function getResultsPaneTargetBottom(pane: HTMLElement): number {
 
 function scrollPaneTo(pane: HTMLElement, targetTop: number, onComplete?: () => void) {
   if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    pane.scrollTo?.({ top: targetTop, behavior: 'auto' })
+    pane.scrollTo({ top: targetTop, behavior: 'auto' })
     pane.scrollTop = targetTop
     onComplete?.()
     return () => undefined
@@ -56,14 +56,12 @@ function scrollPaneTo(pane: HTMLElement, targetTop: number, onComplete?: () => v
   const easeOutQuart = (progress: number) => 1 - (1 - progress) ** 4
 
   const step = (now: number) => {
-    if (startTime === null) {
-      startTime = now
-    }
+    startTime ??= now
 
     const progress = Math.min((now - startTime) / RESULTS_SCROLL_DURATION_MS, 1)
     const nextTop = startTop + distance * easeOutQuart(progress)
 
-    pane.scrollTo?.({ top: nextTop, behavior: 'auto' })
+    pane.scrollTo({ top: nextTop, behavior: 'auto' })
     pane.scrollTop = nextTop
 
     if (progress < 1) {
@@ -154,21 +152,21 @@ export function useWorkbenchResultsMotion({
 
   useEffect(() => {
     if (stateStatus !== 'ready' || hasAttemptedScrollRestoreRef.current || typeof window === 'undefined') {
-      return
+      return () => undefined
     }
 
     hasAttemptedScrollRestoreRef.current = true
     const stored = window.sessionStorage.getItem(storageRestoreKey)
 
-    if (!stored) {
-      return
+    if (stored == null || stored === '') {
+      return () => undefined
     }
 
     const scrollTop = Number.parseFloat(stored)
 
     if (!Number.isFinite(scrollTop)) {
       window.sessionStorage.removeItem(storageRestoreKey)
-      return
+      return () => undefined
     }
 
     let frameId: number | null = null
@@ -193,7 +191,7 @@ export function useWorkbenchResultsMotion({
         return
       }
 
-      pane.scrollTo?.({ top: scrollTop, behavior: 'auto' })
+      pane.scrollTo({ top: scrollTop, behavior: 'auto' })
       pane.scrollTop = scrollTop
 
       if (Math.abs(pane.scrollTop - scrollTop) <= 2 || attemptCount >= maxAttempts) {

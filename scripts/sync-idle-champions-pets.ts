@@ -144,7 +144,6 @@ interface DownloadedPetAsset {
 }
 
 interface ProcessedPng {
-  // eslint-disable-next-line sonarjs/no-reference-error -- Buffer 是 Node.js 运行时全局类型，@types/node 已声明，sonarjs 静态分析未识别
   pngBuffer: Buffer
   width: number
   height: number
@@ -1170,7 +1169,6 @@ async function main(): Promise<void> {
   console.log(`- unknown: ${String(result.counts.unknown)}`)
 }
 
-// eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 运行时全局，@types/node 已声明，sonarjs 静态分析未识别
 const argv1 = process.argv[1]
 if (argv1 !== undefined && import.meta.url === pathToFileURL(argv1).href) {
   main().catch((error: unknown) => {

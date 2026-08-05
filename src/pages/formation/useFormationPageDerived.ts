@@ -37,7 +37,6 @@ interface UseFormationPageDerivedOptions {
   presetForm: PresetFormState
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级状态聚合 hook：主体为 useMemo 声明，已提取全部纯函数到模块级，剩余均为 hook 调用与返回值组装
 export function useFormationPageDerived({
   state,
   selectedLayoutId,

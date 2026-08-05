@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 内聚的 workbench 呈现组件集合，拆分会增加跨文件跳转 */
 import type { CSSProperties, ReactNode } from 'react'
 import { useI18n } from '../../app/i18n'
 
@@ -6,67 +7,67 @@ export type WorkbenchBadgeVariant = 'chrome' | 'filter'; export type WorkbenchBa
 export type WorkbenchShareState = 'idle' | 'success' | 'error'
 
 interface WorkbenchToolbarMarkProps {
-  label: string
-  accentTone?: WorkbenchAccentTone
-  className?: string
+  readonly label: string
+  readonly accentTone?: WorkbenchAccentTone
+  readonly className?: string
 }
 
 interface WorkbenchToolbarLeadStatusProps {
-  label: string
-  status: ReactNode
-  statusTitle?: string
-  accentTone?: WorkbenchAccentTone
-  className?: string
+  readonly label: string
+  readonly status: ReactNode
+  readonly statusTitle?: string
+  readonly accentTone?: WorkbenchAccentTone
+  readonly className?: string
 }
 
 interface WorkbenchToolbarFilterStatusProps {
-  label: string
-  activeCount: number
-  accentTone?: WorkbenchAccentTone
-  className?: string
+  readonly label: string
+  readonly activeCount: number
+  readonly accentTone?: WorkbenchAccentTone
+  readonly className?: string
 }
 
 interface WorkbenchToolbarCopyProps {
-  kicker?: ReactNode
-  title: ReactNode
-  detail?: ReactNode
-  className?: string
+  readonly kicker?: ReactNode
+  readonly title: ReactNode
+  readonly detail?: ReactNode
+  readonly className?: string
 }
 
 interface WorkbenchToolbarActionClusterProps {
-  children: ReactNode
-  className?: string
+  readonly children: ReactNode
+  readonly className?: string
 }
 
 interface WorkbenchToolbarBadgeProps {
-  children: ReactNode
-  variant?: WorkbenchBadgeVariant
-  tone?: WorkbenchBadgeTone
-  className?: string
+  readonly children: ReactNode
+  readonly variant?: WorkbenchBadgeVariant
+  readonly tone?: WorkbenchBadgeTone
+  readonly className?: string
 }
 
 interface WorkbenchSidebarHeaderProps {
-  kicker: ReactNode
-  title?: ReactNode
-  description?: ReactNode
-  status?: ReactNode
-  statusLabel?: string
-  className?: string
+  readonly kicker: ReactNode
+  readonly title?: ReactNode
+  readonly description?: ReactNode
+  readonly status?: ReactNode
+  readonly statusLabel?: string
+  readonly className?: string
 }
 
 interface WorkbenchContentStackProps {
-  children: ReactNode
-  className?: string
+  readonly children: ReactNode
+  readonly className?: string
 }
 
 interface WorkbenchFilterResultsHeaderProps {
-  eyebrow?: string
-  title?: ReactNode
-  description?: ReactNode
-  metrics?: ReactNode
-  filterSummary?: ReactNode
-  reserveFilterSummarySpace?: boolean
-  className?: string
+  readonly eyebrow?: string
+  readonly title?: ReactNode
+  readonly description?: ReactNode
+  readonly metrics?: ReactNode
+  readonly filterSummary?: ReactNode
+  readonly reserveFilterSummarySpace?: boolean
+  readonly className?: string
 }
 
 const ACCENT_TONE_COLOR: Record<WorkbenchAccentTone, string> = {
@@ -123,11 +124,12 @@ export function WorkbenchToolbarFilterStatus({
   className,
 }: WorkbenchToolbarFilterStatusProps) {
   const { t } = useI18n()
+  const countText = String(activeCount)
   const status = activeCount > 0
-    ? t({ zh: `${activeCount} 项条件`, en: `${activeCount} active` })
+    ? t({ zh: `${countText} 项条件`, en: `${countText} active` })
     : t({ zh: '条件待命', en: 'Filters idle' })
   const statusTitle = activeCount > 0
-    ? t({ zh: `${activeCount} 项筛选条件已启用`, en: `${activeCount} active filters enabled` })
+    ? t({ zh: `${countText} 项筛选条件已启用`, en: `${countText} active filters enabled` })
     : status
 
   return (
@@ -206,7 +208,7 @@ export function WorkbenchSidebarHeader({
   )
 }
 
-export function WorkbenchSidebarLoading({ className }: { className?: string }) {
+export function WorkbenchSidebarLoading({ className }: { readonly className?: string }) {
   return <div className={joinClasses('workbench-page__sidebar-loading', className)} aria-hidden="true" />
 }
 
@@ -221,6 +223,9 @@ export function WorkbenchFilterResultsHeader({
   eyebrow, title, description, metrics, filterSummary, reserveFilterSummarySpace = false, className,
 }: WorkbenchFilterResultsHeaderProps) {
   const hasCopy = eyebrow != null || title != null || description != null
+  const summaryAriaProps = filterSummary !== undefined
+    ? { 'aria-live': 'polite' as const }
+    : { 'aria-hidden': true as const }
 
   return (
     <div
@@ -255,7 +260,7 @@ export function WorkbenchFilterResultsHeader({
         {filterSummary !== undefined || reserveFilterSummarySpace ? (
           <p
             className="results-panel__filter-summary workbench-filter-header__filter-summary"
-            {...(filterSummary !== undefined ? { 'aria-live': 'polite' } : { 'aria-hidden': true })}
+            {...summaryAriaProps}
             data-empty={filterSummary === undefined ? 'true' : undefined}
           >
             {filterSummary ?? '\u00A0'}

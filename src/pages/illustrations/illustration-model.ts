@@ -157,7 +157,6 @@ type BuildActiveFilterChipsOptions = {
   orderedSelectedMechanics: string[]
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 单一 return 表达式，10 个筛选 chip 的内联构建；拆分反而降低可读性
 export function buildActiveIllustrationFilterChips({
   locale,
   t,

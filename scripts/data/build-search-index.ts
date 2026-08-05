@@ -321,7 +321,6 @@ async function dumpExtract(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局变量，运行时存在；sonarjs 静态分析误报
   if (process.argv.slice(2).includes('--dump')) {
     await dumpExtract()
     return

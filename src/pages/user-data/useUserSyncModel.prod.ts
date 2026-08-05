@@ -22,7 +22,6 @@ export type SyncState =
 
 export type LocalDevRefreshState = { status: 'idle' }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 useState/useRef/useCallback 声明与竞态守卫，无可提取的纯逻辑
 export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)

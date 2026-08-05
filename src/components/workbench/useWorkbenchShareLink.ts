@@ -35,7 +35,9 @@ export function useWorkbenchShareLink(pathname: string, search: string, hash: st
   const copyCurrentLink = useCallback(async () => {
     const shareUrl = buildWorkbenchShareUrl(pathname, search, hash)
 
-    if (!shareUrl || typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+    // clipboard API 在非安全上下文（HTTP/旧浏览器）运行时缺失，DOM 类型未建模，保留运行时守卫
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+    if (shareUrl == null || shareUrl === '' || typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
       setShareLinkState('error')
       return
     }

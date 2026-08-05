@@ -96,8 +96,21 @@
 ## 落地后
 
 - specs/ 更新点：
-  - `docs/specs/guidelines/ai-first-ts-tsx.md`：§3 补"函数复杂度门禁"（complexity/cognitive/expression-complexity/max-lines-per-function 阈值 + 分层），§5 a11y 要求标注"由 jsx-a11y 静态强制"
-  - `docs/specs/guidelines/testing.md`：§4 补完整 lint 策略（strictTypeChecked + sonarjs 分层 + jsx-a11y + import-x + @vitest/eslint-plugin + tseslint 选项共识）
+  - `docs/specs/guidelines/ai-first-ts-tsx.md`：§3 补"函数复杂度门禁"（complexity/cognitive/max-lines-per-function 阈值 + 分层），§5 a11y 要求标注"由 jsx-a11y 静态强制"
+  - `docs/specs/guidelines/testing.md`：§4 补完整 lint 策略（strictTypeChecked + sonarjs recommended + jsx-a11y + import-x + @vitest/eslint-plugin + tseslint 选项共识）
+  - `docs/specs/guidelines/ai-first-ts-tsx.md`：补"历史 lint 债务"段落——以下写法因前配置（已关闭的形式主义规则）遗留，碰到时顺手简化：
+    - **高优先**（高频，明显降低可读性）：
+      - `() => { fn() }`（void block body）→ `() => fn()`（箭头简写；no-confusing-void-expression 遗留）
+      - 私有字段 `readonly` → 删除（prefer-readonly 遗留，非必要标注）
+      - `[...].some(Boolean)` 替代 `||` 链 → 回 `a || b || c`（expression-complexity 遗留，`||` 更直观）
+    - **中优先**（适度改善）：
+      - 对象属性顺序被 shorthand-property-grouping 重排 → 回自然顺序
+      - 参数类型 `unknown` → 恢复原联合类型（max-union-size 遗留，丢了类型信息）
+      - 失效的 `eslint-disable` 注释 → 删除（max-lines-per-function 等已关闭规则的残留）
+    - **低优先**（少数实例，可选）：
+      - `return undefined` → bare `return`（no-inconsistent-returns 遗留）
+      - 显式返回类型标注 → 删（function-return-type 遗留，TS 可推断）
+    - **保留**（改动本身是良好实践）：`import { Buffer } from 'node:buffer'`（Node.js 正确写法）、`??` 替代 `||`（prefer-nullish-coalescing 仍启用）
 - 本 change Status → Landed → 移 `archive/changes/`
 - **specs/ 永不引用本 milestone**
 

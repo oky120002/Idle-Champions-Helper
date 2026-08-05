@@ -23,7 +23,6 @@ export function buildChampionsTransitionKey(filters: ChampionsFilterState): stri
   return JSON.stringify(filters)
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 各筛种 chip 按 parallel 结构枚举，无重复逻辑可抽
 export function buildActiveFilterChips({
   locale,
   t,

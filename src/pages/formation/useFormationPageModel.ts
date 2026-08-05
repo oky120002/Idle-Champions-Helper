@@ -11,7 +11,6 @@ import { useFormationPageDerived } from './useFormationPageDerived'
 import { useFormationPageState } from './useFormationPageState'
 import type { FormationPageLocationState, FormationPageModel } from './types'
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 纯 hook 编排与 builder 接线，无独立逻辑可提取
 export function useFormationPageModel(): FormationPageModel {
   const { locale, t } = useI18n()
   const navigate = useNavigate()

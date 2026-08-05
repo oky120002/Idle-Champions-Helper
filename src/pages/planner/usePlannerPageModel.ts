@@ -22,7 +22,6 @@ const EMPTY_RECOMMENDATION: PlannerRecommendation = {
   blocker: null,
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级状态聚合 hook（view model）：9 个 useState + 多个 memo/callback 围绕单一推荐流程编排；无纯逻辑可提取（全是 hook 声明），拆子 hook 会横跨 options memo 增加耦合且降低一跳命中率
 export function usePlannerPageModel() {
   const {
     collections,

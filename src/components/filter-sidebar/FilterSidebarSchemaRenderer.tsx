@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 内聚的筛选侧栏 schema 渲染器：类型定义、renderField 分派与组件本身紧耦合，拆文件会增加跨文件跳转 */
 import { Fragment, type ReactNode } from 'react'
 import { FilterDisclosureSection } from '../FilterDisclosureSection'
 import { FilterChipMultiSelectField } from './FilterChipMultiSelectField'
@@ -109,76 +110,96 @@ export type FilterSidebarGroupSchema =
   | FilterSidebarDisclosureGroupSchema
 
 interface FilterSidebarSchemaRendererProps {
-  groups: FilterSidebarGroupSchema[]
+  readonly groups: FilterSidebarGroupSchema[]
+}
+
+function renderSearchField(field: FilterSidebarSearchFieldSchema) {
+  return (
+    <FilterSearchField
+      key={field.id}
+      label={field.label}
+      value={field.value}
+      onChange={field.onChange}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+      {...(field.type !== undefined ? { type: field.type } : {})}
+    />
+  )
+}
+
+function renderSegmentedField(field: FilterSidebarSegmentedFieldSchema) {
+  return (
+    <FilterSegmentedField
+      key={field.id}
+      label={field.label}
+      value={field.value}
+      options={field.options}
+      onChange={field.onChange}
+      groupLabel={field.groupLabel}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+    />
+  )
+}
+
+function renderSelectField(field: FilterSidebarSelectFieldSchema) {
+  return (
+    <FilterSingleSelectField
+      key={field.id}
+      label={field.label}
+      value={field.value}
+      options={field.options}
+      onChange={field.onChange}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+    />
+  )
+}
+
+function renderChipSingleField(field: FilterSidebarChipSingleFieldSchema) {
+  return (
+    <FilterChipSingleSelectField
+      key={field.id}
+      label={field.label}
+      value={field.value}
+      options={field.options}
+      onChange={field.onChange}
+      groupLabel={field.groupLabel}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+    />
+  )
+}
+
+function renderChipMultiField(field: FilterSidebarChipMultiFieldSchema) {
+  return (
+    <FilterChipMultiSelectField
+      key={field.id}
+      label={field.label}
+      options={field.options}
+      selectedValues={field.selectedValues}
+      onReset={field.onReset}
+      onToggle={field.onToggle}
+      allLabel={field.allLabel}
+      {...(field.hint !== undefined ? { hint: field.hint } : {})}
+      {...(field.className !== undefined ? { className: field.className } : {})}
+    />
+  )
 }
 
 function renderField(field: FilterSidebarFieldSchema) {
   switch (field.kind) {
     case 'search':
-      return (
-        <FilterSearchField
-          key={field.id}
-          label={field.label}
-          value={field.value}
-          onChange={field.onChange}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-          {...(field.type !== undefined ? { type: field.type } : {})}
-        />
-      )
+      return renderSearchField(field)
     case 'segmented':
-      return (
-        <FilterSegmentedField
-          key={field.id}
-          label={field.label}
-          value={field.value}
-          options={field.options}
-          onChange={field.onChange}
-          groupLabel={field.groupLabel}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-        />
-      )
+      return renderSegmentedField(field)
     case 'select':
-      return (
-        <FilterSingleSelectField
-          key={field.id}
-          label={field.label}
-          value={field.value}
-          options={field.options}
-          onChange={field.onChange}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-        />
-      )
+      return renderSelectField(field)
     case 'chip-single':
-      return (
-        <FilterChipSingleSelectField
-          key={field.id}
-          label={field.label}
-          value={field.value}
-          options={field.options}
-          onChange={field.onChange}
-          groupLabel={field.groupLabel}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-        />
-      )
+      return renderChipSingleField(field)
     case 'chip-multi':
-      return (
-        <FilterChipMultiSelectField
-          key={field.id}
-          label={field.label}
-          options={field.options}
-          selectedValues={field.selectedValues}
-          onReset={field.onReset}
-          onToggle={field.onToggle}
-          allLabel={field.allLabel}
-          {...(field.hint !== undefined ? { hint: field.hint } : {})}
-          {...(field.className !== undefined ? { className: field.className } : {})}
-        />
-      )
+      return renderChipMultiField(field)
     case 'custom':
       return <Fragment key={field.id}>{field.render()}</Fragment>
   }

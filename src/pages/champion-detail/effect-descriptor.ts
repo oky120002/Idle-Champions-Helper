@@ -12,7 +12,7 @@ function localizeEffectTag(value: string | null | undefined, locale: 'zh-CN' | '
   return TAG_LABELS[value.trim().toLowerCase()]?.[locale] ?? value
 }
 
-// eslint-disable-next-line complexity, sonarjs/cognitive-complexity, sonarjs/max-lines-per-function -- 20+ case effect-kind 分派器，拆子函数损一跳命中率
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity -- 效果描述生成器，分支由 effect kind 决定（领域复杂度）
 export function describeEffectPayload(
   payload: ParsedEffectPayload,
   effectContext: EffectContext,

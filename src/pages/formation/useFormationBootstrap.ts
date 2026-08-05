@@ -12,7 +12,6 @@ interface UseFormationBootstrapOptions extends FormationBootstrapSetters {
   pendingPresetRestoreRef: RefObject<FormationPreset | null>
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook 编排，多为 setter 接线，无独立逻辑可提取
 export function useFormationBootstrap({
   navigate,
   pendingPresetRestoreRef,

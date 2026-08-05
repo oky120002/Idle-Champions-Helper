@@ -12,7 +12,6 @@ import {
 } from './user-import-model'
 import type { ParseState, UserDataPageModel } from './types'
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 useState/useMemo 声明与依赖闭包的 handler，无可提取的纯逻辑
 export function useUserDataPageModel(): UserDataPageModel {
   const { locale, t } = useI18n()
   const [method, setMethod] = useState<UserImportMethod>('supportUrl')

@@ -409,7 +409,6 @@ export function diffCoverageBaseline(expected: CoverageBaseline, actual: Coverag
 }
 
 async function main(): Promise<void> {
-  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 运行时全局，sonarjs 静态分析未识别 Node 全局导致误报
   const args = process.argv.slice(2)
   const versionDir = args.find((arg) => !arg.startsWith('--')) ?? DEFAULT_VERSION_DIR
   const report = await generateSignalCoverageFromVersionDir(versionDir)

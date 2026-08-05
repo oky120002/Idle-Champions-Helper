@@ -3,7 +3,6 @@ import { useLocation, useSearchParams } from 'react-router-dom'
 import { buildPetsFilterSearchParams, readInitialPetsFilterState } from './query-state'
 import type { AssetFilter, PetsFilterState, SourceFilter } from './types'
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 纯 React hook 声明（useState/useMemo/useEffect/useLayoutEffect），无可提取的纯逻辑
 export function usePetsFilterState() {
   const location = useLocation()
   const [, setSearchParams] = useSearchParams()

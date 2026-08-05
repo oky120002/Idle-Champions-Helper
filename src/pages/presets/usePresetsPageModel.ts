@@ -19,7 +19,6 @@ import {
 } from './preset-model'
 import type { PresetEditorState, PresetView, PresetsPageModel, PresetsState, StatusMessage } from './types'
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级自定义 hook，内聚状态+派生操作，拆分需透传全部 setter 反增复杂度
 export function usePresetsPageModel(): PresetsPageModel {
   const { locale, t } = useI18n()
   const navigate = useNavigate()

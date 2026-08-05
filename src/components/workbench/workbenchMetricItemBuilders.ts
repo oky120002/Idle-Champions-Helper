@@ -20,8 +20,8 @@ export function createWorkbenchShowingMetricItem({
   return {
     label: t({ zh: '当前展示', en: 'Showing' }),
     value: t({
-      zh: `${visibleCount} / ${filteredCount}`,
-      en: `${visibleCount} / ${filteredCount} ${enUnitLabel}`,
+      zh: `${String(visibleCount)} / ${String(filteredCount)}`,
+      en: `${String(visibleCount)} / ${String(filteredCount)} ${enUnitLabel}`,
     }),
   }
 }

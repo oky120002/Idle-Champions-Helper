@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react'
 
 /**
- * 通用确认弹窗（受控）：遮罩点击关闭、面板内点击不冒泡。
+ * 通用确认弹窗（受控）：遮罩按钮关闭、面板内点击不冒泡。
  * 复用 SkinArtworkDialog 的 dialog/backdrop/panel 三层结构，但样式独立（shared.controls 层）。
  * title 走 aria-label 供屏阅读器；正文与按钮区由调用方经 children 自由组织。
  */
 interface ConfirmDialogProps {
-  open: boolean
-  title: string
-  onClose: () => void
-  children: ReactNode
+  readonly open: boolean
+  readonly title: string
+  readonly onClose: () => void
+  readonly children: ReactNode
 }
 
 export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogProps) {
@@ -23,10 +23,14 @@ export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogP
       role="dialog"
       aria-modal="true"
       aria-label={title}
-      onClick={onClose}
     >
-      <div className="confirm-dialog__backdrop" aria-hidden="true" />
-      <div className="confirm-dialog__panel" onClick={(event) => event.stopPropagation()}>
+      <button
+        type="button"
+        className="confirm-dialog__backdrop"
+        aria-label="关闭"
+        onClick={onClose}
+      />
+      <div className="confirm-dialog__panel">
         <h2 className="confirm-dialog__title">{title}</h2>
         {children}
       </div>

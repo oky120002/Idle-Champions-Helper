@@ -310,7 +310,6 @@ function formatViolation(v: ContrastViolation): string {
 }
 
 function main(): void {
-  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局，tsconfig.node.json types 含 node
   const tokensFile = join(process.cwd(), 'src/styles/foundations/tokens.css')
   const css = readFileSync(tokensFile, 'utf8')
   const violations = findContrastViolations(css)

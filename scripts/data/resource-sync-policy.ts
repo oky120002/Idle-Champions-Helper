@@ -242,7 +242,6 @@ export async function computePipelineHash(): Promise<string> {
 
 /** 手动强制重跑逃生口：`FORCE_DATA_REBUILD=1` 跳过所有增量判定。 */
 export function isForceDataRebuild(): boolean {
-  // eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局，@types/node 已声明类型
   return process.env.FORCE_DATA_REBUILD === '1' || process.env.FORCE_DATA_REBUILD === 'true'
 }
 

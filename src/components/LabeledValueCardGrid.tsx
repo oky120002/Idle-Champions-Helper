@@ -9,11 +9,11 @@ export interface LabeledValueCardItem {
 }
 
 interface LabeledValueCardGridProps {
-  items: LabeledValueCardItem[]
-  gridClassName: string
-  cardClassName: string
-  labelClassName: string
-  valueClassName: string
+  readonly items: LabeledValueCardItem[]
+  readonly gridClassName: string
+  readonly cardClassName: string
+  readonly labelClassName: string
+  readonly valueClassName: string
 }
 
 function joinClasses(...classNames: Array<string | undefined>) {

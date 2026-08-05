@@ -465,7 +465,6 @@ function EvaluateReadyContent({
   )
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- React 页面组件：hooks 集中声明 + 早返回分支 + 渲染调度，复杂逻辑已提取到模块级组件
 export function PlannerEvaluatePage() {
   const { t, locale } = useI18n()
   const location = useLocation()

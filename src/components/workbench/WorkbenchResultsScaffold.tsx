@@ -2,17 +2,17 @@ import type { ReactNode } from 'react'
 import { StatusBanner } from '../StatusBanner'
 
 interface WorkbenchResultsScaffoldProps {
-  ariaLabel: string
-  sectionClassName: string
-  isEmpty: boolean
-  emptyState: {
-    title?: ReactNode
-    detail?: ReactNode
-    children?: ReactNode
+  readonly ariaLabel: string
+  readonly sectionClassName: string
+  readonly isEmpty: boolean
+  readonly emptyState: {
+    readonly title?: ReactNode
+    readonly detail?: ReactNode
+    readonly children?: ReactNode
   }
-  children: ReactNode
-  shellClassName?: string
-  panelClassName?: string
+  readonly children: ReactNode
+  readonly shellClassName?: string
+  readonly panelClassName?: string
 }
 
 export function WorkbenchResultsScaffold({
@@ -24,12 +24,15 @@ export function WorkbenchResultsScaffold({
   shellClassName,
   panelClassName,
 }: WorkbenchResultsScaffoldProps) {
+  const emptyStateProps = {
+    ...(emptyState.title !== undefined ? { title: emptyState.title } : {}),
+    ...(emptyState.detail !== undefined ? { detail: emptyState.detail } : {}),
+  }
   const content = isEmpty ? (
     <div className="results-panel__empty">
       <StatusBanner
         tone="info"
-        {...(emptyState.title !== undefined ? { title: emptyState.title } : {})}
-        {...(emptyState.detail !== undefined ? { detail: emptyState.detail } : {})}
+        {...emptyStateProps}
       >
         {emptyState.children}
       </StatusBanner>

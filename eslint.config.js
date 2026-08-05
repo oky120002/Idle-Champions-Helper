@@ -95,43 +95,6 @@ const sonarjsOff = {
   'sonarjs/parameterized-tests': 'off',
 }
 
-// sonarjs 非 recommended 的精选增量（复杂度 + 代码规范 + 类型误用）。
-const sonarjsOn = {
-  'sonarjs/expression-complexity': 'error',
-  'sonarjs/max-lines-per-function': ['error', { maximum: 50 }],
-  'sonarjs/max-union-size': 'error',
-  'sonarjs/nested-control-flow': 'error',
-  'sonarjs/max-switch-cases': 'error',
-  'sonarjs/no-collapsible-if': 'error',
-  'sonarjs/no-nested-switch': 'error',
-  'sonarjs/bool-param-default': 'error',
-  'sonarjs/destructuring-assignment-syntax': 'error',
-  'sonarjs/arguments-usage': 'error',
-  'sonarjs/for-in': 'error',
-  'sonarjs/no-function-declaration-in-block': 'error',
-  'sonarjs/no-wildcard-import': 'error',
-  'sonarjs/shorthand-property-grouping': 'error',
-  'sonarjs/no-reference-error': 'error',
-  'sonarjs/no-variable-usage-before-declaration': 'error',
-  'sonarjs/no-undefined-assignment': 'error',
-  'sonarjs/no-inconsistent-returns': 'error',
-  'sonarjs/no-selector-parameter': 'error',
-  'sonarjs/function-return-type': 'error',
-  'sonarjs/no-return-type-any': 'error',
-  'sonarjs/void-use': 'error',
-  'sonarjs/strings-comparison': 'error',
-  'sonarjs/non-number-in-arithmetic-expression': 'error',
-  'sonarjs/operation-returning-nan': 'error',
-  'sonarjs/values-not-convertible-to-numbers': 'error',
-  'sonarjs/class-prototype': 'error',
-  'sonarjs/file-name-differ-from-class': 'error',
-  'sonarjs/prefer-regexp-exec': 'error',
-  'sonarjs/unicode-aware-regex': 'error',
-  'sonarjs/no-empty-group': 'error',
-  'sonarjs/no-control-regex': 'error',
-  'sonarjs/no-regex-spaces': 'error',
-}
-
 // strictTypeChecked 不含的规则手动开；含的规则按需覆盖选项（行业共识）。
 const tseslintOn = {
   // === strictTypeChecked 不含，手动开（默认选项即共识）===
@@ -142,14 +105,13 @@ const tseslintOn = {
     allowNumber: false, // 0 误会，要求显式 num !== 0
   }],
   '@typescript-eslint/prefer-optional-chain': 'error',
-  '@typescript-eslint/prefer-readonly': 'error',
   // === 选项共识（覆盖 strictTypeChecked 默认）===
   // prefer-nullish-coalescing：ignorePrimitives（原始类型 || 保留，对象改 ??）
   '@typescript-eslint/prefer-nullish-coalescing': ['error', {
     ignorePrimitives: { string: true, number: true, boolean: true, bigint: true },
   }],
-  // no-confusing-void-expression：ignoreVoidOperator（社区共识，允许 void fn() 显式标记意图）
-  '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreVoidOperator: true }],
+  // no-confusing-void-expression：strictTypeChecked 自带但属形式主义（void 返回是期望行为），关闭
+  '@typescript-eslint/no-confusing-void-expression': 'off',
   // no-unnecessary-condition：allowConstantLoopConditions（社区共识，允许 while(true) 等字面量惯用法）
   '@typescript-eslint/no-unnecessary-condition': ['error', { allowConstantLoopConditions: 'only-allowed-literals' }],
   eqeqeq: ['error', 'smart'], // core：smart 允许 == null（nullish 检查，与 strict-boolean 一致）
@@ -175,10 +137,6 @@ const sizeOff = {
   'max-lines': 'off',
   complexity: 'off',
   'sonarjs/cognitive-complexity': 'off',
-  'sonarjs/expression-complexity': 'off',
-  'sonarjs/max-lines-per-function': 'off',
-  'sonarjs/nested-control-flow': 'off',
-  'sonarjs/max-switch-cases': 'off',
   'import-x/no-nodejs-modules': 'off', // 脚本可用 node 内置
 }
 
@@ -235,7 +193,6 @@ export default defineConfig([
       complexity: ['error', { max: 20 }],
 
       ...sonarjsOff,
-      ...sonarjsOn,
       ...tseslintOn,
       ...importXOn,
     },

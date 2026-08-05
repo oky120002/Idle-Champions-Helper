@@ -1,13 +1,39 @@
-import type { PropsWithChildren, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
-interface SurfaceCardProps extends PropsWithChildren {
-  eyebrow?: string
-  title?: string
-  description?: string
-  headerAside?: ReactNode
-  headerContent?: ReactNode
-  footer?: ReactNode
-  className?: string
+interface SurfaceCardProps {
+  readonly eyebrow?: string
+  readonly title?: string
+  readonly description?: string
+  readonly headerAside?: ReactNode
+  readonly headerContent?: ReactNode
+  readonly footer?: ReactNode
+  readonly className?: string
+  readonly children?: ReactNode
+}
+
+interface SurfaceCardHeaderPartsProps {
+  readonly eyebrow: string | undefined
+  readonly title: string | undefined
+  readonly description: string | undefined
+  readonly headerAside: ReactNode | undefined
+}
+
+function SurfaceCardHeaderParts({ eyebrow, title, description, headerAside }: SurfaceCardHeaderPartsProps) {
+  const hasEyebrow = eyebrow != null && eyebrow !== ''
+  const hasTitle = title != null && title !== ''
+  const hasDescription = description != null && description !== ''
+  const hasHeaderAside = Boolean(headerAside)
+
+  return (
+    <>
+      <div className="surface-card__header-copy">
+        {hasEyebrow ? <p className="surface-card__eyebrow">{eyebrow}</p> : null}
+        {hasTitle ? <h2 className="surface-card__title">{title}</h2> : null}
+        {hasDescription ? <p className="surface-card__description">{description}</p> : null}
+      </div>
+      {hasHeaderAside ? <div className="surface-card__header-aside">{headerAside}</div> : null}
+    </>
+  )
 }
 
 export function SurfaceCard({
@@ -20,28 +46,34 @@ export function SurfaceCard({
   className,
   children,
 }: SurfaceCardProps) {
-  const resolvedHeader =
-    headerContent ??
-    (eyebrow || title || description || headerAside ? (
-      <>
-        <div className="surface-card__header-copy">
-          {eyebrow ? <p className="surface-card__eyebrow">{eyebrow}</p> : null}
-          {title ? <h2 className="surface-card__title">{title}</h2> : null}
-          {description ? <p className="surface-card__description">{description}</p> : null}
-        </div>
-        {headerAside ? <div className="surface-card__header-aside">{headerAside}</div> : null}
-      </>
-    ) : null)
+  const hasEyebrow = eyebrow != null && eyebrow !== ''
+  const hasTitle = title != null && title !== ''
+  const hasDescription = description != null && description !== ''
+  const hasHeaderAside = Boolean(headerAside)
+  const hasHeaderParts = hasEyebrow || hasTitle || hasDescription || hasHeaderAside
 
-  const surfaceCardClassName = ['surface-card', !resolvedHeader ? 'surface-card--headerless' : '', className]
+  const fallbackHeader = hasHeaderParts ? (
+    <SurfaceCardHeaderParts
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      headerAside={headerAside}
+    />
+  ) : null
+
+  const resolvedHeader = headerContent ?? fallbackHeader
+  const hasHeader = resolvedHeader != null
+  const hasFooter = footer != null
+
+  const surfaceCardClassName = ['surface-card', hasHeader ? '' : 'surface-card--headerless', className]
     .filter(Boolean)
     .join(' ')
 
   return (
     <section className={surfaceCardClassName}>
-      {resolvedHeader ? <div className="surface-card__header">{resolvedHeader}</div> : null}
+      {hasHeader ? <div className="surface-card__header">{resolvedHeader}</div> : null}
       <div className="surface-card__body">{children}</div>
-      {footer ? <div className="surface-card__footer">{footer}</div> : null}
+      {hasFooter ? <div className="surface-card__footer">{footer}</div> : null}
     </section>
   )
 }

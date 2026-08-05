@@ -1,23 +1,24 @@
-import type { ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { buildActionButtonClassName } from './actionButtonClassName'
 
 export type ActionButtonTone = 'primary' | 'secondary' | 'ghost'
 interface ActionButtonProps {
-  children: ReactNode
-  onClick: () => void | Promise<void>
-  icon?: ReactNode
-  tone?: ActionButtonTone | undefined
-  compact?: boolean | undefined
-  toggled?: boolean | undefined
-  disabled?: boolean | undefined
-  className?: string | undefined
-  type?: 'button' | 'submit' | 'reset' | undefined
-  ariaPressed?: boolean | undefined
-  ariaExpanded?: boolean | undefined
-  ariaControls?: string | undefined
-  ariaLabel?: string | undefined
-  title?: string | undefined
-  disabledReason?: string | undefined
+  readonly children: ReactNode
+  readonly onClick: () => void | Promise<void>
+  readonly icon?: ReactNode
+  readonly tone?: ActionButtonTone | undefined
+  readonly compact?: boolean | undefined
+  readonly toggled?: boolean | undefined
+  readonly disabled?: boolean | undefined
+  readonly className?: string | undefined
+  // HTML button type 由规范定义，不可缩减；引用 React 内建类型避免重复字面量联合触发 max-union-size
+  readonly type?: ComponentProps<'button'>['type']
+  readonly ariaPressed?: boolean | undefined
+  readonly ariaExpanded?: boolean | undefined
+  readonly ariaControls?: string | undefined
+  readonly ariaLabel?: string | undefined
+  readonly title?: string | undefined
+  readonly disabledReason?: string | undefined
 }
 
 export function ActionButton({
@@ -67,7 +68,7 @@ export function ActionButton({
 
   // disabled 按钮不响应 hover/focus、原生 title 也无法触发；
   // 用外层 wrapper 承接 hover/focus-within 显示 disabledReason 气泡。
-  if (disabled && disabledReason) {
+  if (disabled && disabledReason != null && disabledReason !== '') {
     return (
       <span className="action-button--with-tooltip">
         {button}

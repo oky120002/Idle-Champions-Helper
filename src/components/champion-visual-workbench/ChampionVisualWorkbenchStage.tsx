@@ -4,7 +4,7 @@ import { getDeliveryLabel, getPreviewStageClassName } from './asset-model'
 import type { ChampionVisualWorkbenchModel } from './types'
 
 type ChampionVisualWorkbenchStageProps = {
-  model: ChampionVisualWorkbenchModel
+  readonly model: ChampionVisualWorkbenchModel
 }
 
 export function ChampionVisualWorkbenchStage({ model }: ChampionVisualWorkbenchStageProps) {
@@ -40,8 +40,8 @@ export function ChampionVisualWorkbenchStage({ model }: ChampionVisualWorkbenchS
           {selectedAsset ? (
             <p className="visual-workbench__stage-empty-copy">
               {pickLocaleText(locale, {
-                zh: `当前登记：graphic #${selectedAsset.graphicId} · ${getDeliveryLabel(selectedAsset.delivery, locale)} · ${selectedAsset.uses.length || 0} 项用途`,
-                en: `Registered as graphic #${selectedAsset.graphicId} · ${getDeliveryLabel(selectedAsset.delivery, locale)} · ${selectedAsset.uses.length || 0} uses`,
+                zh: `当前登记：graphic #${selectedAsset.graphicId} · ${getDeliveryLabel(selectedAsset.delivery, locale)} · ${String(selectedAsset.uses.length)} 项用途`,
+                en: `Registered as graphic #${selectedAsset.graphicId} · ${getDeliveryLabel(selectedAsset.delivery, locale)} · ${String(selectedAsset.uses.length)} uses`,
               })}
             </p>
           ) : null}

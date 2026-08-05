@@ -73,7 +73,6 @@ function getRosterMetricChipLabel(
   }
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 10 个 useMemo 声明 + 派生装配，拆分会增加间接层级且不改善一跳命中率
 export function useUserHeroesPageDerived({
   locale,
   t,

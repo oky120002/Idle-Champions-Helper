@@ -40,7 +40,6 @@ interface FlyoutPosition {
   ready: boolean
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 浮层组件内聚状态加载、定位与事件处理，拆分会制造人工边界
 export function ChampionRosterFlyout({
   champion,
   ownedHero,

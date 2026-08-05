@@ -30,7 +30,6 @@ function hasAnyActiveFilters(filters: ChampionsFilterState): boolean {
   return filters.search.trim().length > 0 || selectedGroups.some((values) => values.length > 0)
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 派生 hook：useMemo 编排 + 简单派生赋值，无纯逻辑可提取
 export function useChampionsPageDerived({
   locale,
   t,

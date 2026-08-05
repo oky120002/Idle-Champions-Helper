@@ -4,15 +4,15 @@ import type { Champion } from '../domain/types'
 import { ChampionAvatar } from './ChampionAvatar'
 
 interface ChampionPillProps {
-  champion: Champion
-  locale: AppLocale
-  label?: string
+  readonly champion: Champion
+  readonly locale: AppLocale
+  readonly label?: string
 }
 
 function buildDefaultLabel(champion: Champion, locale: AppLocale) {
   return locale === 'zh-CN'
-    ? `${champion.seat} 号位 · ${getLocalizedTextPair(champion.name, locale)}`
-    : `Seat ${champion.seat} · ${getLocalizedTextPair(champion.name, locale)}`
+    ? `${String(champion.seat)} 号位 · ${getLocalizedTextPair(champion.name, locale)}`
+    : `Seat ${String(champion.seat)} · ${getLocalizedTextPair(champion.name, locale)}`
 }
 
 export function ChampionPill({ champion, locale, label }: ChampionPillProps) {

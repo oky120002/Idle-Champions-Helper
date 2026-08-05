@@ -14,7 +14,6 @@ export interface PlacementFitScorePart {
   multiplier: number
   active: boolean
   reasonCode:
-    // eslint-disable-next-line sonarjs/max-union-size -- 阵型匹配原因码是单一领域枚举，拆工会丢失可穷举性保证
     | 'global-match'
     | 'carry-self-match'
     | 'adjacent-match'

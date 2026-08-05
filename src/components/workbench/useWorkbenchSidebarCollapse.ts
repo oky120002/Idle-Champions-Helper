@@ -9,7 +9,7 @@ function getStorage(): Storage | null {
 
   const storage = window.localStorage
 
-  if (typeof storage?.getItem !== 'function' || typeof storage?.setItem !== 'function') {
+  if (typeof storage.getItem !== 'function' || typeof storage.setItem !== 'function') {
     return null
   }
 

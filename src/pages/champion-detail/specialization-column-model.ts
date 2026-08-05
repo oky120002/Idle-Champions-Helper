@@ -121,7 +121,6 @@ function resolveUpgradeIconGraphicId(detail: ChampionDetail, upgrade: ChampionUp
   return normalizeGraphicId(detail.attacks.ultimate?.graphicId)
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 列构建编排函数，含两轮遍历+种子映射
 export function buildSpecializationUpgradeColumns(
   detail: ChampionDetail | null,
   spotlightUpgrades: ChampionUpgradeDetail[],

@@ -33,7 +33,6 @@ const DEFAULT_CONCURRENCY = 8
 const PORTRAIT_MANIFEST_FILE_NAME = 'champion-portraits.manifest.json'
 
 interface TrimmedCenteredPng {
-  // eslint-disable-next-line sonarjs/no-reference-error -- Buffer 是 Node.js 全局，tsconfig.node.json types 含 node
   pngBuffer: Buffer
   width: number
   height: number
@@ -405,7 +404,6 @@ async function main(): Promise<void> {
   console.log(`- 外层包装字节: ${wrappedBytesStr !== '' ? wrappedBytesStr : '无'}`)
 }
 
-// eslint-disable-next-line sonarjs/no-reference-error -- process 是 Node.js 全局，tsconfig.node.json types 含 node
 const argv1 = process.argv[1]
 if (argv1 !== undefined && import.meta.url === pathToFileURL(argv1).href) {
   main().catch((error: unknown) => {

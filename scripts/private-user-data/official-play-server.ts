@@ -22,7 +22,6 @@ export function buildOfficialPlayServerBaseUrl(serverNumber: number): string {
   return `https://ps${String(serverNumber)}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
 }
 
-// eslint-disable-next-line sonarjs/no-reference-error -- RequestInit 是 @types/node 全局类型（Node 18+ 全局 fetch），从 undici 导入会与全局 fetch 签名冲突
 export function createReadonlyFetchOptions(): RequestInit {
   return {
     credentials: 'omit',

@@ -24,7 +24,6 @@ export type IllustrationFilterStateController = {
   toggleMetaFiltersExpanded: () => void
 }
 
-// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级筛选状态 hook，主体是 hook 声明+两个 effect 同步 URL，拆分会破坏内聚
 export function useIllustrationFilterState(): IllustrationFilterStateController {
   const location = useLocation()
   const [, setSearchParams] = useSearchParams()

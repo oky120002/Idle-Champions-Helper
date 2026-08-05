@@ -119,7 +119,7 @@ export function buildUpgradeReferenceLabel(
   return locale === 'zh-CN' ? `升级 #${upgrade.id}` : `Upgrade #${upgrade.id}`
 }
 
-// eslint-disable-next-line complexity, sonarjs/max-lines-per-function -- 展示模型构建，自然条件分支
+// eslint-disable-next-line complexity -- 升级展示模型构建，分支由升级类型决定
 export function buildUpgradePresentation(
   upgrade: ChampionUpgradeDetail,
   effectContext: EffectContext,
