@@ -1,4 +1,6 @@
+/* eslint-disable max-lines -- 骨骼动画 Canvas 组件集成资源加载+渲染循环+播放控制+尺寸观察，紧密编排不宜拆分 */
 import { useEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { prepareSkelAnim, readReducedMotionPreference } from './asset-loader'
 import {
   buildSkelAnimRootClassName,
@@ -18,6 +20,7 @@ import type {
 } from './types'
 import { useReducedMotionPreference } from './useReducedMotionPreference'
 
+// eslint-disable-next-line complexity -- 组件编排三个独立 effect（加载/观察/渲染），判定来自各自清晰职责而非嵌套逻辑
 export function SkelAnimCanvas({
   animation,
   fallbackSrc,
@@ -29,7 +32,7 @@ export function SkelAnimCanvas({
   showControls = true,
   playbackMode = 'manual',
   sequenceIntent = 'default',
-}: SkelAnimCanvasProps) {
+}: Readonly<SkelAnimCanvasProps>) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const assetPath = animation?.asset.path ?? null
   const [preparedEntry, setPreparedEntry] = useState<PreparedSkelAnimEntry | null>(null)
@@ -39,7 +42,7 @@ export function SkelAnimCanvas({
   const [isPlaybackEnabled, setIsPlaybackEnabled] = useState(() => !readReducedMotionPreference())
 
   useEffect(() => {
-    if (!assetPath) {
+    if (assetPath == null || assetPath === '') {
       return undefined
     }
 
@@ -81,7 +84,7 @@ export function SkelAnimCanvas({
     prefersReducedMotion,
     isPlaybackEnabled,
   )
-  const showCanvas = Boolean(animation && prepared && sequenceSelection && !loadError)
+  const showCanvas = Boolean(animation && prepared && sequenceSelection && (loadError == null || loadError === ''))
   const statusText = buildSkelAnimStatusText({
     loadError,
     showCanvas,
@@ -133,7 +136,7 @@ export function SkelAnimCanvas({
   }, [assetPath, showCanvas])
 
   useEffect(() => {
-    if (!assetPath || !prepared || !sequenceSelection || !canvasRef.current) {
+    if ((assetPath == null || assetPath === '') || !prepared || !sequenceSelection || !canvasRef.current) {
       return undefined
     }
 
@@ -156,7 +159,8 @@ export function SkelAnimCanvas({
     const rasterScale = resolveCanvasRasterScale(viewportLayout.renderBounds, displaySize)
     const textureById = new Map(prepared.textures.map((texture) => [texture.textureId, texture.image]))
     const frameDuration = 1000 / Math.max(1, animation?.fps ?? 1)
-    const pixelRatio = Math.max(1, typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1)
+    const rawPixelRatio = typeof window === 'undefined' ? 1 : window.devicePixelRatio
+    const pixelRatio = Math.max(1, rawPixelRatio > 0 ? rawPixelRatio : 1)
     let currentFrameIndex = sequenceSelection.startFrameIndex
     let lastTick = 0
     let frameHandle = 0
@@ -200,7 +204,7 @@ export function SkelAnimCanvas({
     }
 
     const tick = (timestamp: number) => {
-      if (!lastTick) {
+      if (lastTick === 0) {
         lastTick = timestamp
       }
 
@@ -220,7 +224,7 @@ export function SkelAnimCanvas({
     }
 
     return () => {
-      if (frameHandle) {
+      if (frameHandle !== 0) {
         window.cancelAnimationFrame(frameHandle)
       }
     }
@@ -236,23 +240,27 @@ export function SkelAnimCanvas({
     viewportBounds,
   ])
 
+  let stageContent: ReactNode
+  if (showCanvas) {
+    stageContent = (
+      <canvas ref={canvasRef} className="skelanim-player__canvas" role="img" aria-label={alt} />
+    )
+  } else if (fallbackSrc != null && fallbackSrc !== '') {
+    stageContent = (
+      <img
+        className="skelanim-player__fallback-image skin-artwork-dialog__image"
+        src={fallbackSrc}
+        alt={alt}
+        loading="eager"
+      />
+    )
+  } else {
+    stageContent = <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
+  }
+
   return (
     <div className={rootClassName}>
-      <div className="skelanim-player__stage">
-        {showCanvas ? (
-          <canvas ref={canvasRef} className="skelanim-player__canvas" role="img" aria-label={alt} />
-        ) : fallbackSrc ? (
-          <img
-            className="skelanim-player__fallback-image skin-artwork-dialog__image"
-            src={fallbackSrc}
-            alt={alt}
-            loading="eager"
-          />
-        ) : (
-          <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
-        )}
-
-      </div>
+      <div className="skelanim-player__stage">{stageContent}</div>
 
       {showStatus || (showControls && showCanvas) ? (
         <div className="skelanim-player__toolbar">

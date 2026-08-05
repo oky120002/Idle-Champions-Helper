@@ -20,12 +20,12 @@ export function GlobalSearchBox() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const trimmed = query.trim()
-  const results = !engine || !trimmed ? [] : debouncedHits
+  const results = engine === null || trimmed === '' ? [] : debouncedHits
   const open = isFocused && trimmed.length > 0
   const loading = status === 'loading'
 
   useEffect(() => {
-    if (!engine || !trimmed) {
+    if (engine === null || trimmed === '') {
       return
     }
     const handle = window.setTimeout(() => {
@@ -47,7 +47,7 @@ export function GlobalSearchBox() {
   }
 
   const goToAll = () => {
-    if (!trimmed) {
+    if (trimmed === '') {
       return
     }
     void navigate(`/search?q=${encodeURIComponent(trimmed)}`)

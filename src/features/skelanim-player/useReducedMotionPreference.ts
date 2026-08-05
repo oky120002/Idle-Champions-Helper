@@ -21,8 +21,10 @@ export function useReducedMotionPreference() {
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- 旧浏览器（Safari < 14）无 addEventListener，保留 addListener 回退确保语义不变
     mediaQuery.addListener(handleChange)
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- 见上 addEventListener 缺失时的成对回退
       mediaQuery.removeListener(handleChange)
     }
   }, [])

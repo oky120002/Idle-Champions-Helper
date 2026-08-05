@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 补充筛选 schema 声明式内联（6 个 chip-multi 段 + mechanics 自定义段），结构化数据不宜拆分 */
 import type { ReactNode } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
 import {
@@ -74,7 +75,7 @@ interface ChampionAdditionalFilterSectionsProps {
 
 function buildSectionStatus(selectedCount: number, t: (text: LocaleText) => string): string {
   return selectedCount > 0
-    ? t({ zh: `已选 ${selectedCount}`, en: `${selectedCount} selected` })
+    ? t({ zh: `已选 ${String(selectedCount)}`, en: `${String(selectedCount)} selected` })
     : t({ zh: '默认收起', en: 'Folded' })
 }
 
@@ -87,7 +88,7 @@ export function ChampionAdditionalFilterSections({
   ui,
   actions,
   mechanicGroupHint,
-}: ChampionAdditionalFilterSectionsProps) {
+}: Readonly<ChampionAdditionalFilterSectionsProps>) {
   const groups: FilterSidebarGroupSchema[] = [
     {
       kind: 'disclosure-group',

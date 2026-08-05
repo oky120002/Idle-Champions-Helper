@@ -67,7 +67,7 @@ export function ChampionPrimaryFilterSections({
   buildAffiliationLabel,
   extraFields = [],
   searchType = 'search',
-}: ChampionPrimaryFilterSectionsProps) {
+}: Readonly<ChampionPrimaryFilterSectionsProps>) {
   const groups: FilterSidebarGroupSchema[] = [
     {
       kind: 'plain',

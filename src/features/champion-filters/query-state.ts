@@ -43,7 +43,7 @@ export function appendCommonFilterSearchParams(
 ): URLSearchParams {
   const normalizedSearch = filters.search.trim()
 
-  if (normalizedSearch) {
+  if (normalizedSearch !== '') {
     searchParams.set(keys.query, normalizedSearch)
   }
 

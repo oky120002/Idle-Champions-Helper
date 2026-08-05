@@ -13,7 +13,7 @@ export function ActiveFilterChipBar({
   onClearChip,
   title,
   hint,
-}: ActiveFilterChipBarProps) {
+}: Readonly<ActiveFilterChipBarProps>) {
   const { t } = useI18n()
 
   if (chips.length === 0) {

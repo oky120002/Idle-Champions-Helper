@@ -42,7 +42,7 @@ export function buildHighlightedSnippet(
   const terms = matchedTerms.filter(Boolean)
   const fallback = bucketText.slice(0, windowChars)
 
-  if (!bucketText || terms.length === 0) {
+  if (bucketText === '' || terms.length === 0) {
     return [{ text: fallback, match: false }]
   }
 
@@ -72,7 +72,7 @@ export function buildHighlightedSnippet(
 
   let lastIndex = 0
   for (const match of window.matchAll(pattern)) {
-    const index = match.index ?? 0
+    const index = match.index
     if (index > lastIndex) {
       segments.push({ text: window.slice(lastIndex, index), match: false })
     }

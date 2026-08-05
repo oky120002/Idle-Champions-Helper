@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import type { SkelAnimManifest } from '../../domain/types'
 import { resolveWalkSequenceSelection } from './walk-selection'
 import type { PreparedSkelAnimData, SkelAnimFrame, SkelAnimPiece, SkelAnimSequence } from './types'
@@ -87,8 +88,9 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 1), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.sequence.sequenceIndex).toBe(0)
-    expect(result!.startFrameIndex).toBe(0)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.sequence.sequenceIndex).toBe(0)
+    expect(selected.startFrameIndex).toBe(0)
   })
 
   it('viewport bounds 被 pad 向外但不超出 manifest 声明的 fallback bounds（clamp 生效）', () => {
@@ -99,12 +101,13 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 1), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.bounds.minX).toBeGreaterThanOrEqual(0)
-    expect(result!.bounds.minY).toBeGreaterThanOrEqual(0)
-    expect(result!.bounds.maxX).toBeGreaterThan(2)
-    expect(result!.bounds.maxX).toBeLessThan(10)
-    expect(result!.bounds.maxY).toBeGreaterThan(2)
-    expect(result!.bounds.maxY).toBeLessThan(10)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.bounds.minX).toBeGreaterThanOrEqual(0)
+    expect(selected.bounds.minY).toBeGreaterThanOrEqual(0)
+    expect(selected.bounds.maxX).toBeGreaterThan(2)
+    expect(selected.bounds.maxX).toBeLessThan(10)
+    expect(selected.bounds.maxY).toBeGreaterThan(2)
+    expect(selected.bounds.maxY).toBeLessThan(10)
   })
 
   it('defaultFrameIndex 指向非 0 的可渲染帧时，fallback 取该帧索引', () => {
@@ -116,8 +119,9 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(0, 1, 1), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.sequence.sequenceIndex).toBe(0)
-    expect(result!.startFrameIndex).toBe(1)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.sequence.sequenceIndex).toBe(0)
+    expect(selected.startFrameIndex).toBe(1)
   })
 
   it('default 序列不在可渲染集合时，current 回退到首个可渲染序列', () => {
@@ -127,7 +131,8 @@ describe('resolveWalkSequenceSelection · fallback 路径（无合格候选）',
     const result = resolveWalkSequenceSelection(buildManifest(9, 0, 1), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.sequence.sequenceIndex).toBe(0)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.sequence.sequenceIndex).toBe(0)
   })
 })
 
@@ -143,7 +148,8 @@ describe('resolveWalkSequenceSelection · 候选选择路径', () => {
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 2), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.sequence.sequenceIndex).toBe(1)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.sequence.sequenceIndex).toBe(1)
   })
 
   it('候选 motion 不高于 current 时不入选，回落 fallback 返回 default', () => {
@@ -156,7 +162,8 @@ describe('resolveWalkSequenceSelection · 候选选择路径', () => {
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 2), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.sequence.sequenceIndex).toBe(0)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.sequence.sequenceIndex).toBe(0)
   })
 
   it('候选帧数<=1 时不满足 frameCount>1，回落 fallback', () => {
@@ -169,6 +176,7 @@ describe('resolveWalkSequenceSelection · 候选选择路径', () => {
     const result = resolveWalkSequenceSelection(buildManifest(0, 0, 2), prepared)
 
     expect(result).not.toBeNull()
-    expect(result!.sequence.sequenceIndex).toBe(0)
+    const selected = unwrap(result, 'resolveWalkSequenceSelection result')
+    expect(selected.sequence.sequenceIndex).toBe(0)
   })
 })

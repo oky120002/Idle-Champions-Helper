@@ -45,7 +45,7 @@ export function buildEngine(collection: SearchDocumentCollection): SearchEngine 
   return {
     search(query: string, limit: number): SearchHit[] {
       const trimmed = query.trim()
-      if (!trimmed) {
+      if (trimmed === '') {
         return []
       }
 
@@ -83,14 +83,12 @@ let enginePromise: Promise<SearchEngine | null> | null = null
 
 // 模块级单例：首次调用才加载文档并建索引，之后复用。失败时重置以便重试。
 export function getSearchEngine(): Promise<SearchEngine | null> {
-  if (!enginePromise) {
-    enginePromise = loadSearchDocuments()
-      .then((collection) => buildEngine(collection))
-      .catch((error) => {
-        console.error('加载搜索索引失败', error)
-        enginePromise = null
-        return null
-      })
-  }
+  enginePromise ??= loadSearchDocuments()
+    .then((collection) => buildEngine(collection))
+    .catch((error: unknown) => {
+      console.error('加载搜索索引失败', error)
+      enginePromise = null
+      return null
+    })
   return enginePromise
 }

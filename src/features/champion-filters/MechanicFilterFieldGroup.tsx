@@ -31,7 +31,7 @@ export function MechanicFilterFieldGroup({
   allLabel,
   groupHint,
   className = 'filter-group',
-}: MechanicFilterFieldGroupProps) {
+}: Readonly<MechanicFilterFieldGroupProps>) {
   return (
     <FieldGroup label={label} hint={hint} className={className}>
       <div className="filter-chip-grid">

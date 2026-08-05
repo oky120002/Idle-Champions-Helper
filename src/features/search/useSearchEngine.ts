@@ -35,6 +35,15 @@ export function useSearchEngine(enabled: boolean): UseSearchEngineResult {
     }
   }, [enabled, engine, failed])
 
-  const status: SearchEngineStatus = engine ? 'ready' : failed ? 'error' : enabled ? 'loading' : 'idle'
+  let status: SearchEngineStatus
+  if (engine !== null) {
+    status = 'ready'
+  } else if (failed) {
+    status = 'error'
+  } else if (enabled) {
+    status = 'loading'
+  } else {
+    status = 'idle'
+  }
   return { status, engine }
 }

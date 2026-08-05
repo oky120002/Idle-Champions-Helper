@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- walk-selection 是步行动画选择的紧密编排模块（评分+筛选+视口回退），拆分会破坏内聚且无可复用拆点 */
 import type { SkelAnimManifest } from '../../domain/types'
 import { computeFrameBounds, resolveRenderableFrameIndex } from './model'
 import type { PreparedSkelAnimData, SkelAnimBounds, SkelAnimSequence } from './types'
@@ -80,33 +81,13 @@ function summarizeWalkSequenceMetrics(sequence: SkelAnimSequence): WalkSequenceM
     renderableFrameCount += 1
     bounds = mergeBounds(bounds, frameBounds)
 
-    if (firstRenderableFrameIndex === null) {
-      firstRenderableFrameIndex = frameIndex
-    }
+    firstRenderableFrameIndex ??= frameIndex
   }
 
   for (const piece of sequence.pieces) {
-    let visibleCount = 0
-    let previousFrame = null
+    const { visibleCount, motionContribution } = summarizePieceMotion(piece)
 
-    for (const frame of piece.frames) {
-      if (!frame) {
-        continue
-      }
-
-      visibleCount += 1
-
-      if (previousFrame) {
-        motionTotal +=
-          Math.abs(frame.x - previousFrame.x) +
-          Math.abs(frame.y - previousFrame.y) +
-          Math.abs(frame.rotation - previousFrame.rotation) * 12 +
-          Math.abs(frame.scaleX - previousFrame.scaleX) * 40 +
-          Math.abs(frame.scaleY - previousFrame.scaleY) * 40
-      }
-
-      previousFrame = frame
-    }
+    motionTotal += motionContribution
 
     if (visibleCount > 1) {
       motionPairCount += visibleCount - 1
@@ -135,6 +116,36 @@ function summarizeWalkSequenceMetrics(sequence: SkelAnimSequence): WalkSequenceM
     averageMotion: motionPairCount > 0 ? motionTotal / motionPairCount : 0,
     boundsArea: buildBoundsArea(bounds),
   }
+}
+
+function summarizePieceMotion(piece: SkelAnimSequence['pieces'][number]): {
+  visibleCount: number
+  motionContribution: number
+} {
+  let visibleCount = 0
+  let motionContribution = 0
+  let previousFrame = null
+
+  for (const frame of piece.frames) {
+    if (!frame) {
+      continue
+    }
+
+    visibleCount += 1
+
+    if (previousFrame) {
+      motionContribution +=
+        Math.abs(frame.x - previousFrame.x) +
+        Math.abs(frame.y - previousFrame.y) +
+        Math.abs(frame.rotation - previousFrame.rotation) * 12 +
+        Math.abs(frame.scaleX - previousFrame.scaleX) * 40 +
+        Math.abs(frame.scaleY - previousFrame.scaleY) * 40
+    }
+
+    previousFrame = frame
+  }
+
+  return { visibleCount, motionContribution }
 }
 
 function resolveRenderableMetrics(manifest: SkelAnimManifest, prepared: PreparedSkelAnimData) {
@@ -245,6 +256,7 @@ export function resolveWalkSequenceSelection(
     renderableMetrics[0] ??
     null
 
+  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain -- 保留显式 null 守卫以收窄 current 类型（optional chain 不缩窄原变量，下游 current.firstRenderableFrameIndex 等需非空）
   if (!current || current.firstRenderableFrameIndex === null || !current.bounds) {
     return null
   }
@@ -256,12 +268,15 @@ export function resolveWalkSequenceSelection(
         ...item,
         walkCandidateScore: buildWalkCandidateScore(item, current),
       }))
-      .sort(
-        (left, right) =>
-          right.walkCandidateScore - left.walkCandidateScore ||
-          left.sequence.sequenceIndex - right.sequence.sequenceIndex,
-      )[0] ?? null
+      .sort((left, right) => {
+        const scoreDiff = right.walkCandidateScore - left.walkCandidateScore
+        if (scoreDiff === 0 || Number.isNaN(scoreDiff)) {
+          return left.sequence.sequenceIndex - right.sequence.sequenceIndex
+        }
+        return scoreDiff
+      })[0] ?? null
 
+  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain -- 同上：收窄 candidate 类型供下游非空访问
   if (!candidate || candidate.firstRenderableFrameIndex === null || !candidate.bounds) {
     const fallbackFrameIndex = resolveWalkFallbackFrameIndex(
       manifest,
