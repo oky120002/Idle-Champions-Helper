@@ -1,4 +1,5 @@
-import { DIMENSION_BY_KIND, POOL_SCOPE_BY_KIND, type HeroAbilityDimension, type HeroAbilitySignal } from '../abilities/abilityModel'
+import { DIMENSION_BY_KIND, type HeroAbilityDimension, type HeroAbilitySignal } from '../abilities/abilityModel'
+import { POOL_SCOPE_BY_KIND } from '../abilities/poolScope'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import type {
   AggregatedPool,

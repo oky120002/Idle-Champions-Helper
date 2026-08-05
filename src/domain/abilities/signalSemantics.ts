@@ -8,8 +8,7 @@ import type {
   HeroStatQualifier,
   ResolvedHeroAbilityProfile,
 } from './abilityModel'
-// eslint-disable-next-line import-x/no-cycle -- 循环依赖 signalSemantics→abilityModel→stackCountResolver→signalSemantics；打断需重构模块边界（scorer 能力下沉），超出 lint 写法修复范围
-import { POOL_SCOPE_BY_KIND } from './abilityModel'
+import { POOL_SCOPE_BY_KIND } from './poolScope'
 import { evalHeroPredicate, parseHeroPredicate } from './heroPredicate.ts'
 import { isFilterLikeTarget, isUnknownArray, normalizeExplicitTargeting } from './heroTargetingRelation'
 

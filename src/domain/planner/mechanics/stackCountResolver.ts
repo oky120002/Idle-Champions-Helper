@@ -1,5 +1,4 @@
 import type { HeroAbilitySignal } from '../../abilities/abilityModel'
-// eslint-disable-next-line import-x/no-cycle -- abilities↔planner 值环（signal 类型跨域引用），统一由阶段18破环收口
 import { matchesHeroQualifier } from '../../abilities/signalSemantics'
 import type { EvaluatePlacementFitInput } from '../placementFitTypes'
 import {

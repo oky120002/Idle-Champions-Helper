@@ -64,7 +64,7 @@
 - [x] 阶段 15: src/data + src/app + src/rules + src/domain（`db9c98f`）—— 验证：全局 eslint 0 + tsc 0 + vitest 1418。4 Agent 修 28 文件 101→0（formationLayout 提取 4 helper 解 cognitive-complexity、championPlacement/排序 NaN 保 falsy、app theme matchMedia typeof 守卫、rules complexity 降级）
 - [x] 阶段 16: tests/ + 配置文件（`db9c98f`）—— 验证：同阶段15 commit。5 文件 16→0（e2e unwrap、playwright port string、vitest.setup localStorage 守卫、main.tsx 本地 throw）
 - [x] 阶段 17: 收尾验证（`d528508`）—— 验证：**`npx eslint .` = 0 违规** + `npx tsc -b` = 0 错误 + `npx vitest run` = 1418/1418 全绿。修复 useWorkbenchResultsMotion scrollTo jsdom 兼容（no-unnecessary-condition 误报：TS 标注必有但 jsdom 未实现，恢复 ?. + disable 带理由）
-- [ ] 阶段 18: no-cycle 破环重构 —— abilities↔planner 值环（`REGISTERED_STACK_FUNCS`/`POOL_SCOPE_BY_KIND` 运行时常量）打断：常量下沉叶子模块或依赖反转；移除 abilityModel.ts/signalSemantics.ts/stackCountResolver.ts 的 `import-x/no-cycle` disable，恢复修法表「no-cycle 不豁免」。需专门设计 + abilities/planner 全量单测验证。阶段 6-17 遇该环另一端同样临时 disable 带理由，由本阶段统一收口
+- [x] 阶段 18: no-cycle 破环重构 —— abilities↔planner 三方值环（signalSemantics→abilityModel→stackCountResolver→signalSemantics）打断。环有三条值边，**破 Edge B**（最省）：`POOL_SCOPE_BY_KIND`+`HeroAbilityPoolScope` 下沉新叶子 `src/domain/abilities/poolScope.ts`，signalSemantics 不再值导入 abilityModel，三方环全断。`REGISTERED_STACK_FUNCS`（gain 镜像评分必要依赖，见 modeling-pitfalls）与 `matchesHeroQualifier`（3 planner 调用者）两值边保留——断 B 后 signalSemantics→abilityModel 仅余 `import type`（不计值环），两值边均不再成环。移除 3 处 `import-x/no-cycle` disable（abilityModel/signalSemantics/stackCountResolver）。导入方同步更新：placementFit/placementFitTypes/resolverShared/abilityModel.test。验证：全局 `npx eslint .` = 0 + `npx tsc -b` = 0 + `npx vitest run` = 1418/1418 全绿
 
 ## Agent 通用指南（每阶段派 Agent 时嵌入 prompt）
 

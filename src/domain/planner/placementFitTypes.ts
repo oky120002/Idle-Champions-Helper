@@ -1,11 +1,11 @@
 import type {
   HeroAbilityAmountFunc,
   HeroAbilityDimension,
-  HeroAbilityPoolScope,
   HeroAbilitySignal,
   HeroAbilitySource,
   ResolvedHeroAbilityProfile,
 } from '../abilities/abilityModel'
+import type { HeroAbilityPoolScope } from '../abilities/poolScope'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 export interface PlacementFitScorePart {

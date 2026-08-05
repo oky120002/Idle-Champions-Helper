@@ -5,7 +5,6 @@ import {
 import { normalizeExplicitTargeting } from '../../../src/domain/abilities/signalSemantics.ts'
 import { parseHeroPredicate } from '../../../src/domain/abilities/heroPredicate.ts'
 import {
-  POOL_SCOPE_BY_KIND,
   type HeroAbilityAmountFunc,
   type HeroAbilityKind,
   type HeroAbilitySignal,
@@ -14,6 +13,7 @@ import {
   type HeroQualifier,
   type HeroUnsupportedSignal,
 } from '../../../src/domain/abilities/abilityModel'
+import { POOL_SCOPE_BY_KIND } from '../../../src/domain/abilities/poolScope'
 
 // === Shared resolver types ===
 

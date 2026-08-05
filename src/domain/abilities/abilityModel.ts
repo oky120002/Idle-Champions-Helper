@@ -1,6 +1,5 @@
 /* eslint-disable max-lines -- 英雄能力共享模型（kind/dimension/pool/signal 类型+常量集中），拆分损害一跳命中率，与 heroPredicate.ts 同处置 */
 import type { AbilityScoreKey, DataCollection, LocalizedText } from '../types'
-// eslint-disable-next-line import-x/no-cycle -- 循环依赖 abilityModel→stackCountResolver→signalSemantics→abilityModel；打断需重构模块边界（scorer 能力下沉），超出 lint 写法修复范围
 import { REGISTERED_STACK_FUNCS } from '../planner/mechanics/stackCountResolver'
 
 /**
@@ -266,30 +265,6 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   enemyVulnerability: 'vulnerability',
   attackSpeedMult: 'speed',
   cooldownReduction: 'cooldown',
-}
-
-/**
- * 加成归属 pool：global 影响全局池（所有英雄），hero 仅作用于 carry 自身。
- * 加成聚合时同一 pool 内 additive 百分比相加、multiplicative 因子相乘；global 与 hero pool 间相乘。
- * pool 聚合实现见 src/domain/planner/placementFit.ts evaluatePlacementFit；
- * 加成聚合与 DPS 公式见 docs/specs/modules/planner/simulator.md「加成聚合与 DPS 公式」。
- */
-export type HeroAbilityPoolScope = 'global' | 'hero'
-
-export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> = {
-  globalDpsMultiplier: 'global',
-  heroDpsMultiplier: 'hero',
-  globalGoldMultiplier: 'global',
-  globalCritChance: 'global',
-  heroCritChance: 'hero',
-  globalCritDamage: 'global',
-  heroCritDamage: 'hero',
-  globalHealthMultiplier: 'global',
-  heroHealthMultiplier: 'hero',
-  damageReduction: 'global',
-  enemyVulnerability: 'global',
-  attackSpeedMult: 'hero',
-  cooldownReduction: 'global',
 }
 
 /**

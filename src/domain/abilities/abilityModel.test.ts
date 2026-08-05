@@ -4,13 +4,12 @@ import {
   applyHeroAbilityPatch,
   computeHeroGainProfile,
   DIMENSION_BY_KIND,
-  POOL_SCOPE_BY_KIND,
   type HeroAbilityDimension,
   type HeroAbilityKind,
-  type HeroAbilityPoolScope,
   type HeroAbilityProfile,
   type HeroAbilitySignal,
 } from './abilityModel'
+import { POOL_SCOPE_BY_KIND, type HeroAbilityPoolScope } from './poolScope'
 
 describe('HeroAbilityKind 维度与 pool 归属映射', () => {
   it('每个 kind 都在 DIMENSION_BY_KIND 登记维度（穷尽守护）', () => {
