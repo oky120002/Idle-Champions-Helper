@@ -1,7 +1,7 @@
 import type { UserProfileResolution } from '../../data/user-profile-store'
 
 export function getUserHeroProfileSourceLabel(profileResolution: UserProfileResolution | null): string {
-  if (!profileResolution?.resolvedSource) {
+  if (profileResolution?.resolvedSource == null) {
     return '未同步账号快照'
   }
 

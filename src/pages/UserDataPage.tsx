@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 单一内聚页面组件，拆分将降低一跳命中率 */
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
@@ -24,6 +25,14 @@ export function UserDataPage() {
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
+  let parseStatusLabel: string
+  if (model.parseState.status === 'success') {
+    parseStatusLabel = model.t({ zh: '解析成功', en: 'Parsed' })
+  } else if (model.parseState.status === 'error') {
+    parseStatusLabel = model.t({ zh: '需要修正', en: 'Needs fixes' })
+  } else {
+    parseStatusLabel = model.t({ zh: '等待输入', en: 'Waiting for input' })
+  }
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'selected-method',
@@ -32,11 +41,7 @@ export function UserDataPage() {
     createWorkbenchBadgeItem({
       id: 'parse-status',
       tone: 'muted',
-      label: model.parseState.status === 'success'
-        ? model.t({ zh: '解析成功', en: 'Parsed' })
-        : model.parseState.status === 'error'
-          ? model.t({ zh: '需要修正', en: 'Needs fixes' })
-          : model.t({ zh: '等待输入', en: 'Waiting for input' }),
+      label: parseStatusLabel,
     }),
     createWorkbenchShareItem({
       t: model.t,

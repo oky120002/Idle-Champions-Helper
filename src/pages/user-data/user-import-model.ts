@@ -7,7 +7,7 @@ import {
   SUPPORT_URL_SAMPLE,
   WEB_REQUEST_LOG_SAMPLE,
 } from '../../data/userImport'
-import type { UserImportMethod } from '../../domain/types'
+import type { UserImportMethod, UserImportParseResult } from '../../domain/types'
 import type { ImportMethodOption, ParseState, UserDataPageTranslator } from './types'
 
 type ParseUserImportOptions = {
@@ -95,12 +95,14 @@ export function parseUserImport({
   webRequestLog,
   messages,
 }: ParseUserImportOptions): ParseState {
-  const result =
-    method === 'supportUrl'
-      ? parseSupportUrl(supportUrl, messages)
-      : method === 'manual'
-        ? parseManualCredentials(manualUserId, manualHash, messages)
-        : parseWebRequestLog(webRequestLog, messages)
+  let result: UserImportParseResult
+  if (method === 'supportUrl') {
+    result = parseSupportUrl(supportUrl, messages)
+  } else if (method === 'manual') {
+    result = parseManualCredentials(manualUserId, manualHash, messages)
+  } else {
+    result = parseWebRequestLog(webRequestLog, messages)
+  }
 
   if (!result.ok) {
     return {
@@ -112,8 +114,8 @@ export function parseUserImport({
   return {
     status: 'success',
     credentials: result.value,
-    method,
     network: method === 'supportUrl' ? getSupportUrlNetwork(supportUrl) : null,
+    method,
   }
 }
 

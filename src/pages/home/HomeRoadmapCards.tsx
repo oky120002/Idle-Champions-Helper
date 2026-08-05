@@ -25,7 +25,7 @@ export function HomeRoadmapCards() {
         {
           id: 'shipped-items',
           items: shippedItems.map((item, index) => ({
-            id: `shipped-${index}`,
+            id: `shipped-${String(index)}`,
             content: t(item),
           })),
         },
@@ -44,7 +44,7 @@ export function HomeRoadmapCards() {
           id: 'next-steps',
           listVariant: 'ordered' as const,
           items: nextSteps.map((item, index) => ({
-            id: `next-${index}`,
+            id: `next-${String(index)}`,
             content: t(item),
           })),
         },
@@ -62,7 +62,7 @@ export function HomeRoadmapCards() {
         {
           id: 'non-goals',
           items: nonGoals.map((item, index) => ({
-            id: `non-goal-${index}`,
+            id: `non-goal-${String(index)}`,
             content: t(item),
           })),
         },

@@ -19,7 +19,7 @@ export function VariantsPage() {
     error: {
       title: t({ zh: '变体数据读取失败', en: 'Variant data failed to load' }),
       ...(state.status === 'error'
-        ? { detail: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
+        ? { detail: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
         : {}),
     },
   })
@@ -28,23 +28,23 @@ export function VariantsPage() {
       id: 'campaign-count',
       label:
         state.status === 'ready'
-          ? t({ zh: `${model.allCampaignGroups.length} 地图`, en: `${model.allCampaignGroups.length} campaigns` })
+          ? t({ zh: `${String(model.allCampaignGroups.length)} 地图`, en: `${String(model.allCampaignGroups.length)} campaigns` })
           : t({ zh: '读取中', en: 'Loading' }),
       tone: 'muted',
     }),
     createWorkbenchBadgeItem({
       id: 'adventure-count',
       label: t({
-        zh: `${model.selectedCampaignGroup?.adventures.length ?? 0} 关卡`,
-        en: `${model.selectedCampaignGroup?.adventures.length ?? 0} adventures`,
+        zh: `${String(model.selectedCampaignGroup?.adventures.length ?? 0)} 关卡`,
+        en: `${String(model.selectedCampaignGroup?.adventures.length ?? 0)} adventures`,
       }),
       hidden: state.status !== 'ready',
     }),
     createWorkbenchBadgeItem({
       id: 'variant-count',
       label: t({
-        zh: `${model.selectedAdventureGroup?.variants.length ?? 0} 变体`,
-        en: `${model.selectedAdventureGroup?.variants.length ?? 0} variants`,
+        zh: `${String(model.selectedAdventureGroup?.variants.length ?? 0)} 变体`,
+        en: `${String(model.selectedAdventureGroup?.variants.length ?? 0)} variants`,
       }),
       hidden: state.status !== 'ready',
     }),

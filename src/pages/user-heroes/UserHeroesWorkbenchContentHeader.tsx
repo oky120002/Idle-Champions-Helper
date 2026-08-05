@@ -3,7 +3,7 @@ import { createWorkbenchShowingMetricItem } from '../../components/workbench/wor
 import type { UserHeroesPageModel } from './types'
 
 interface UserHeroesWorkbenchContentHeaderProps {
-  model: UserHeroesPageModel
+  readonly model: UserHeroesPageModel
 }
 
 export function UserHeroesWorkbenchContentHeader({ model }: UserHeroesWorkbenchContentHeaderProps) {

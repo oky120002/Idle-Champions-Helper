@@ -29,14 +29,14 @@ export function UserHeroesPage() {
     error: {
       title: t({ zh: '用户英雄页读取失败', en: 'User heroes page failed to load' }),
       ...(state.status === 'error'
-        ? { detail: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
+        ? { detail: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
         : {}),
     },
   })
   const toolbarItems = [
     createWorkbenchBadgeItem({
       id: 'user-hero-match-count',
-      label: t({ zh: `${filteredChampions.length} 个命中`, en: `${filteredChampions.length} matches` }),
+      label: t({ zh: `${String(filteredChampions.length)} 个命中`, en: `${String(filteredChampions.length)} matches` }),
       tone: 'muted',
       hidden: state.status !== 'ready',
     }),

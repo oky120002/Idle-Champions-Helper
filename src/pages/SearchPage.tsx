@@ -17,13 +17,16 @@ export function SearchPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const trimmed = query.trim()
   const loading = status === 'loading'
+  const searchReady = !loading && engineReady
+  const showStartHint = !loading && trimmed === ''
+  const showNoMatchesHint = searchReady && trimmed !== '' && results.length === 0
 
   const toolbarItems: WorkbenchToolbarItemConfig[] =
-    trimmed && results.length > 0
+    trimmed !== '' && results.length > 0
       ? [
           createWorkbenchBadgeItem({
             id: 'result-count',
-            label: t({ zh: `${results.length} 个结果`, en: `${results.length} results` }),
+            label: t({ zh: `${String(results.length)} 个结果`, en: `${String(results.length)} results` }),
           }),
         ]
       : []
@@ -52,8 +55,9 @@ export function SearchPage() {
               type="search"
               value={query}
               placeholder={t({ zh: '搜索英雄、技能、描述…', en: 'Search heroes, skills, text…' })}
-              autoFocus
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => {
+                setQuery(event.target.value)
+              }}
             />
           </span>
         </div>
@@ -83,10 +87,10 @@ export function SearchPage() {
         {loading && (
           <p className="search-page__hint">{t({ zh: '正在加载索引…', en: 'Loading index…' })}</p>
         )}
-        {!loading && !trimmed && (
+        {showStartHint && (
           <p className="search-page__hint">{t({ zh: '输入关键词开始搜索。', en: 'Type to start searching.' })}</p>
         )}
-        {!loading && engineReady && trimmed && results.length === 0 && (
+        {showNoMatchesHint && (
           <p className="search-page__hint">{t({ zh: '未找到匹配的英雄。', en: 'No matching heroes.' })}</p>
         )}
         {results.map((hit) => (

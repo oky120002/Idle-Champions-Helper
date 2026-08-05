@@ -73,6 +73,7 @@ function getRosterMetricChipLabel(
   }
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 10 个 useMemo 声明 + 派生装配，拆分会增加间接层级且不改善一跳命中率
 export function useUserHeroesPageDerived({
   locale,
   t,
@@ -183,7 +184,7 @@ export function useUserHeroesPageDerived({
     orderedSelectedAcquisitions,
     orderedSelectedMechanics,
   })
-  const rosterMetricChip: ActiveFilterChip | null = activeRosterMetricFilterId
+  const rosterMetricChip: ActiveFilterChip | null = activeRosterMetricFilterId != null
     ? {
         id: 'roster-metric',
         label: getRosterMetricChipLabel(activeRosterMetricFilterId, t),
@@ -197,16 +198,18 @@ export function useUserHeroesPageDerived({
   const activeFilters = activeFilterChips.map((chip) => chip.label)
   const hasActiveFilters =
     filters.search.trim().length > 0 ||
-    filters.selectedSeats.length > 0 ||
-    filters.selectedRoles.length > 0 ||
-    filters.selectedAffiliations.length > 0 ||
-    filters.selectedRaces.length > 0 ||
-    filters.selectedGenders.length > 0 ||
-    filters.selectedAlignments.length > 0 ||
-    filters.selectedProfessions.length > 0 ||
-    filters.selectedAcquisitions.length > 0 ||
-    filters.selectedMechanics.length > 0 ||
-    activeRosterMetricFilterId !== null
+    activeRosterMetricFilterId !== null ||
+    [
+      filters.selectedSeats,
+      filters.selectedRoles,
+      filters.selectedAffiliations,
+      filters.selectedRaces,
+      filters.selectedGenders,
+      filters.selectedAlignments,
+      filters.selectedProfessions,
+      filters.selectedAcquisitions,
+      filters.selectedMechanics,
+    ].some((group) => group.length > 0)
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =
     filters.selectedRaces.length + filters.selectedGenders.length + filters.selectedAlignments.length

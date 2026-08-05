@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 单一内聚页面组件，拆分将降低一跳命中率 */
 import { useMemo, useRef } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
@@ -8,10 +9,36 @@ import { createWorkbenchBadgeItem, createWorkbenchShareItem } from '../component
 import type { WorkbenchToolbarItemConfig } from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
+import type { ChampionAnimation } from '../domain/types'
 import { AnimationAuditComparisonRow } from './animation-audit/AnimationAuditComparisonRow'
 import { AnimationAuditFeedbackExportPanel } from './animation-audit/AnimationAuditFeedbackExportPanel'
 import { useAnimationAuditPageModel } from './animation-audit/useAnimationAuditPageModel'
 import { buildKindLabel, buildLevelLabel, KIND_FILTERS, LEVEL_FILTERS } from './animation-audit/animationAuditFilterLabels'
+import type { AnimationAuditEntry, AnimationAuditState } from './animation-audit/types'
+
+type ReadyAnimationAuditState = Extract<AnimationAuditState, { status: 'ready' }>
+
+interface VisibleAnimationRow {
+  entry: AnimationAuditEntry
+  animation: ChampionAnimation
+  fallbackSrc: string | null
+}
+
+function buildVisibleAnimationRows(
+  visibleEntries: readonly AnimationAuditEntry[],
+  readyState: ReadyAnimationAuditState | null,
+): VisibleAnimationRow[] {
+  if (readyState === null) {
+    return []
+  }
+  return visibleEntries
+    .map((entry) => ({
+      entry,
+      animation: readyState.animationsById.get(entry.id) ?? null,
+      fallbackSrc: readyState.fallbackImageById.get(entry.id) ?? null,
+    }))
+    .filter((row): row is VisibleAnimationRow => row.animation !== null)
+}
 
 export function AnimationAuditPage() {
   const { locale, t } = useI18n()
@@ -21,34 +48,19 @@ export function AnimationAuditPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchBadgeItem({ id: 'flagged', label: t({ zh: `待复核 ${model.summary.flagged}`, en: `Flagged ${model.summary.flagged}` }) }),
-    createWorkbenchBadgeItem({ id: 'high', tone: 'muted', label: t({ zh: `高疑似 ${model.summary.high}`, en: `High ${model.summary.high}` }) }),
-    createWorkbenchBadgeItem({ id: 'medium', tone: 'muted', label: t({ zh: `中疑似 ${model.summary.medium}`, en: `Medium ${model.summary.medium}` }) }),
+    createWorkbenchBadgeItem({ id: 'flagged', label: t({ zh: `待复核 ${String(model.summary.flagged)}`, en: `Flagged ${String(model.summary.flagged)}` }) }),
+    createWorkbenchBadgeItem({ id: 'high', tone: 'muted', label: t({ zh: `高疑似 ${String(model.summary.high)}`, en: `High ${String(model.summary.high)}` }) }),
+    createWorkbenchBadgeItem({ id: 'medium', tone: 'muted', label: t({ zh: `中疑似 ${String(model.summary.medium)}`, en: `Medium ${String(model.summary.medium)}` }) }),
     createWorkbenchShareItem({ t, state: shareLinkState, onCopy: copyCurrentLink }),
   ]
   const readyState = model.state.status === 'ready' ? model.state : null
-  const visibleRows = useMemo(() => {
-    if (!readyState) {
-      return []
-    }
-
-    return model.visibleEntries
-      .map((entry) => ({
-        entry,
-        animation: readyState.animationsById.get(entry.id) ?? null,
-        fallbackSrc: readyState.fallbackImageById.get(entry.id) ?? null,
-      }))
-      .filter(
-        (
-          item,
-        ): item is {
-          entry: typeof item.entry
-          animation: NonNullable<typeof item.animation>
-          fallbackSrc: string | null
-        } => item.animation !== null,
-      )
-  }, [model.visibleEntries, readyState])
+  const visibleRows = useMemo(
+    () => buildVisibleAnimationRows(model.visibleEntries, readyState),
+    [model.visibleEntries, readyState],
+  )
   const missingAnimationCount = readyState ? model.visibleEntries.length - visibleRows.length : 0
+  const showAllIcon = model.showAll ? <EyeOff aria-hidden="true" strokeWidth={1.9} /> : <Eye aria-hidden="true" strokeWidth={1.9} />
+  const showAllLabel = model.showAll ? t({ zh: '收回短名单', en: 'Collapse shortlist' }) : t({ zh: '展开全部结果', en: 'Show all results' })
 
   return (
     <ConfiguredWorkbenchPage
@@ -199,7 +211,7 @@ export function AnimationAuditPage() {
               <div>
                 <p className="animation-audit-results__eyebrow">{t({ zh: '短名单', en: 'Shortlist' })}</p>
                 <h2 className="animation-audit-results__title">
-                  {t({ zh: `当前显示 ${visibleRows.length} 行`, en: `Showing ${visibleRows.length} rows` })}
+                  {t({ zh: `当前显示 ${String(visibleRows.length)} 行`, en: `Showing ${String(visibleRows.length)} rows` })}
                 </h2>
                 <p className="animation-audit-results__description">
                   {t({ zh: '默认先只给你短名单；如果这一轮不够，再点展开。', en: 'The page starts with a short list first; expand only when you need more.' })}
@@ -209,17 +221,19 @@ export function AnimationAuditPage() {
                 <button
                   type="button"
                   className="animation-audit-results__show-more"
-                  onClick={() => model.setShowAll((value) => !value)}
+                  onClick={() => {
+                    model.setShowAll((value) => !value)
+                  }}
                 >
-                  {model.showAll ? <EyeOff aria-hidden="true" strokeWidth={1.9} /> : <Eye aria-hidden="true" strokeWidth={1.9} />}
-                  {model.showAll ? t({ zh: '收回短名单', en: 'Collapse shortlist' }) : t({ zh: '展开全部结果', en: 'Show all results' })}
+                  {showAllIcon}
+                  {showAllLabel}
                 </button>
               ) : null}
             </div>
 
             {missingAnimationCount > 0 ? (
               <p className="animation-audit-results__notice">
-                {t({ zh: `${missingAnimationCount} 行缺少基础动画清单，已跳过展示。`, en: `${missingAnimationCount} rows are missing a base animation manifest and were skipped.` })}
+                {t({ zh: `${String(missingAnimationCount)} 行缺少基础动画清单，已跳过展示。`, en: `${String(missingAnimationCount)} rows are missing a base animation manifest and were skipped.` })}
               </p>
             ) : null}
 

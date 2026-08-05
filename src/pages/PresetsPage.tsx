@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 单一内聚页面组件，拆分将降低一跳命中率 */
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
@@ -81,12 +82,12 @@ export function PresetsPage() {
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'preset-total',
-      label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }),
+      label: t({ zh: `${String(metrics.total)} 条命名方案`, en: `${String(metrics.total)} presets` }),
     }),
     createWorkbenchBadgeItem({
       id: 'preset-recoverable',
       tone: 'muted',
-      label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }),
+      label: t({ zh: `${String(metrics.recoverable)} 条可恢复`, en: `${String(metrics.recoverable)} recoverable` }),
     }),
     createWorkbenchShareItem({
       t,

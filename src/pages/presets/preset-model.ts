@@ -13,7 +13,7 @@ export function getErrorMessage(error: unknown): string {
 
 // 错误信息 LocaleText：原始 error.message 不可本地化，zh/en 同串；仅兜底文案双语。
 export function errorMessageLocaleText(error: unknown): LocaleText {
-  if (error instanceof Error && error.message) {
+  if (error instanceof Error && error.message !== '') {
     return { zh: error.message, en: error.message }
   }
   return { zh: '未知错误', en: 'Unknown error' }

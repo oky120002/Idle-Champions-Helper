@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 单一内聚页面组件，拆分将降低一跳命中率 */
 import { useRef } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BackNavigationIcon } from '../app/AppIcons'
@@ -78,10 +79,10 @@ export function ChampionDetailPage() {
   const shareHash = detail ? `#${DETAIL_HASH_PREFIX}${activeSectionId}` : location.hash
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, shareHash)
   const actionToolbarItems = buildChampionDetailActionToolbarItems({
-    t,
     backLabel: t(backLabel),
     backIcon: <BackNavigationIcon />,
     onBack: navigateBackToChampions,
+    t,
     shareLinkState,
     copyCurrentLink,
   })
@@ -136,7 +137,7 @@ export function ChampionDetailPage() {
           id: 'error-banner',
           tone: 'error',
           ...(state.status === 'error' && state.championId === championId
-            ? { children: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
+            ? { children: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
             : {}),
         },
       ],

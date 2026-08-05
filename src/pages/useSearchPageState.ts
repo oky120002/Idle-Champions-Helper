@@ -6,10 +6,12 @@ import type { SearchHit } from '../features/search/searchTypes'
 const DEBOUNCE_MS = 160
 const RESULT_LIMIT = 100
 
+type SearchStatus = 'idle' | 'loading' | 'ready' | 'error'
+
 export interface UseSearchPageStateResult {
   query: string
   setQuery: (value: string) => void
-  status: 'idle' | 'loading' | 'ready' | 'error'
+  status: SearchStatus
   results: SearchHit[]
   engineReady: boolean
 }
@@ -26,17 +28,21 @@ export function useSearchPageState(): UseSearchPageStateResult {
 
   // 查询 -> 结果（防抖）
   useEffect(() => {
-    if (!engine || !trimmed) {
-      return
+    if (engine === null || trimmed === '') {
+      return undefined
     }
-    const handle = window.setTimeout(() => setResults(engine.search(trimmed, RESULT_LIMIT)), DEBOUNCE_MS)
-    return () => window.clearTimeout(handle)
+    const handle = window.setTimeout(() => {
+      setResults(engine.search(trimmed, RESULT_LIMIT))
+    }, DEBOUNCE_MS)
+    return () => {
+      window.clearTimeout(handle)
+    }
   }, [engine, trimmed])
 
   // 查询 -> URL（replace，避免堆历史）
   useEffect(() => {
     const next = new URLSearchParams(searchParams)
-    if (trimmed) {
+    if (trimmed !== '') {
       next.set('q', trimmed)
     } else {
       next.delete('q')
@@ -49,10 +55,12 @@ export function useSearchPageState(): UseSearchPageStateResult {
   // URL -> 查询（浏览器前进/后退）；microtask 推迟 setState
   const urlQuery = searchParams.get('q') ?? ''
   useEffect(() => {
-    queueMicrotask(() => setQuery((current) => (current === urlQuery ? current : urlQuery)))
+    queueMicrotask(() => {
+      setQuery((current) => (current === urlQuery ? current : urlQuery))
+    })
   }, [urlQuery])
 
-  const visibleResults = !engine || !trimmed ? [] : results
+  const visibleResults = engine === null || trimmed === '' ? [] : results
 
   return { query, setQuery, status, results: visibleResults, engineReady: engine !== null }
 }

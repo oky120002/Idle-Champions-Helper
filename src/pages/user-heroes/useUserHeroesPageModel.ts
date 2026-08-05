@@ -11,6 +11,7 @@ import { useChampionsFilterState } from '../champions/useChampionsFilterState'
 import type { UserHeroesPageModel, UserHeroesRosterMetricFilterId } from './types'
 import { useUserHeroesPageDerived } from './useUserHeroesPageDerived'
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 hook 声明 + 闭包函数 + 返回对象装配，无独立可提取纯逻辑
 export function useUserHeroesPageModel(): UserHeroesPageModel {
   const { locale, t } = useI18n()
   const location = useLocation()
@@ -43,9 +44,9 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     locale,
     t,
     state,
+    activeRosterMetricFilterId,
     filters: filterState.filters,
     ownedHeroes: profileResolution?.snapshot?.ownedHeroes ?? [],
-    activeRosterMetricFilterId,
   })
   const motion = useWorkbenchResultsMotion({
     storageKey: 'user-heroes',
@@ -75,9 +76,13 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     setSelectedProfessions: filterState.setSelectedProfessions,
     setSelectedAcquisitions: filterState.setSelectedAcquisitions,
     setSelectedMechanics: filterState.setSelectedMechanics,
-    resetExtraFilters: () => setActiveRosterMetricFilterId(null),
+    resetExtraFilters: () => {
+      setActiveRosterMetricFilterId(null)
+    },
     extraChipMutations: {
-      'roster-metric': () => setActiveRosterMetricFilterId(null),
+      'roster-metric': () => {
+        setActiveRosterMetricFilterId(null)
+      },
     },
   })
 

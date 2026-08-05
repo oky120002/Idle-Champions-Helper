@@ -21,19 +21,21 @@ type PresetCardProps = {
   view: PresetView
 }
 
-export function PresetCard({ model, view }: PresetCardProps) {
+export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
   const { locale, t, editingPresetId, deleteConfirmId, startEditingPreset, openDeleteConfirm, clearDeleteConfirm, restorePreset, deletePreset } = model
   const getScenarioLabel = useScenarioLabelLookup()
   const championSummary = buildChampionSummary(view)
   const showCompatibilityNotice = isCompatibleRestore(view) || hasDroppedReferences(view)
   const isEditing = editingPresetId === view.preset.id
   const isDeleteConfirming = deleteConfirmId === view.preset.id
-  const activeStatus =
-    view.prompt.kind === 'invalid'
-      ? 'invalid'
-      : view.prompt.kind === 'restore' && showCompatibilityNotice
-        ? 'compatibility'
-        : 'none'
+  let activeStatus: 'invalid' | 'compatibility' | 'none'
+  if (view.prompt.kind === 'invalid') {
+    activeStatus = 'invalid'
+  } else if (showCompatibilityNotice) {
+    activeStatus = 'compatibility'
+  } else {
+    activeStatus = 'none'
+  }
   const statusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
     status: activeStatus,
     items: [
@@ -68,11 +70,12 @@ export function PresetCard({ model, view }: PresetCardProps) {
       </div>
 
       <p className="supporting-text">
-        {view.preset.description ||
-          t({
-            zh: '当前还没有备注，可在这里补充这套阵容适合的目标和限制。',
-            en: 'There are no notes yet. Add what this formation is for and what constraints matter.',
-          })}
+        {view.preset.description !== ''
+          ? view.preset.description
+          : t({
+              zh: '当前还没有备注，可在这里补充这套阵容适合的目标和限制。',
+              en: 'There are no notes yet. Add what this formation is for and what constraints matter.',
+            })}
       </p>
 
       <div className="tag-row">
@@ -104,7 +107,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
       {championSummary.length > 0 ? (
         <div className="tag-row result-card__section">
           {championSummary.map((champion, index) => (
-            <ChampionPill key={`${champion.id}-${index}`} champion={champion} locale={locale} />
+            <ChampionPill key={`${champion.id}-${String(index)}`} champion={champion} locale={locale} />
           ))}
         </div>
       ) : null}
@@ -120,21 +123,21 @@ export function PresetCard({ model, view }: PresetCardProps) {
             icon: <ArchiveRestore aria-hidden="true" strokeWidth={1.9} />,
             tone: 'secondary',
             disabled: view.prompt.kind !== 'restore',
-            onClick: () => restorePreset(view),
+            onClick: () => { restorePreset(view) },
           },
           {
             id: 'edit-preset',
             label: t({ zh: '编辑', en: 'Edit' }),
             icon: <Pencil aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
-            onClick: () => startEditingPreset(view.preset),
+            onClick: () => { startEditingPreset(view.preset) },
           },
           {
             id: 'confirm-delete',
             label: t({ zh: '确认删除', en: 'Confirm delete' }),
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             hidden: !isDeleteConfirming,
-            onClick: () => deletePreset(view.preset),
+            onClick: () => { deletePreset(view.preset) },
           },
           {
             id: 'cancel-delete',
@@ -150,7 +153,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: isDeleteConfirming,
-            onClick: () => openDeleteConfirm(view.preset.id),
+            onClick: () => { openDeleteConfirm(view.preset.id) },
           },
         ]}
       />

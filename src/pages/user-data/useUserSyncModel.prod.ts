@@ -22,6 +22,7 @@ export type SyncState =
 
 export type LocalDevRefreshState = { status: 'idle' }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 useState/useRef/useCallback 声明与竞态守卫，无可提取的纯逻辑
 export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)
@@ -123,19 +124,19 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [loadProfileResolution])
 
   return {
-    syncState,
-    busy,
     canSync: Boolean(credentials) && !busy,
     canLoadLocalDevSnapshot: false,
     showLocalDevSnapshotAction: false,
-    profileResolution,
     selectedProfileSource: 'browser-sync' as UserProfileSourceKind,
     localDevRefreshState: { status: 'idle' } as LocalDevRefreshState,
-    handleSync,
     handleSelectProfileSource: (_nextSource: UserProfileSourceKind) => {},
     handleSelectLocalDevSnapshot: () => {},
     handleRefreshLocalDevSnapshot: async () => {},
-    handleDelete,
     reload: loadSnapshot,
+    syncState,
+    busy,
+    profileResolution,
+    handleSync,
+    handleDelete,
   }
 }

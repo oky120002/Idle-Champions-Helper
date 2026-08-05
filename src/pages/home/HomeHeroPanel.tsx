@@ -3,7 +3,7 @@ import { useI18n } from '../../app/i18n'
 import type { DataVersion } from '../../domain/types'
 
 interface HomeHeroPanelProps {
-  versionState: {
+  readonly versionState: {
     status: 'loading' | 'ready' | 'error'
     data: DataVersion | null
     errorMessage: string | null

@@ -26,8 +26,8 @@ export function HomePage() {
 
         setVersionState({
           status: 'ready',
-          data,
           errorMessage: null,
+          data,
         })
       })
       .catch((error: unknown) => {

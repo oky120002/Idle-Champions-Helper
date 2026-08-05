@@ -94,13 +94,13 @@ export function mockUserHeroesProfile({
   mockedResolveUserProfileSnapshot.mockResolvedValue({
     selectedSource,
     resolvedSource,
-    snapshot: resolvedSource
+    errorMessage,
+    snapshot: resolvedSource != null
       ? createUserProfileSnapshot({
           ownedHeroes,
           legendaryLevelCap,
         })
       : null,
-    errorMessage,
     persisted: resolvedSource === 'browser-sync',
   })
 }

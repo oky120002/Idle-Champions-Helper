@@ -12,6 +12,7 @@ import {
 } from './user-import-model'
 import type { ParseState, UserDataPageModel } from './types'
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook：主体为 useState/useMemo 声明与依赖闭包的 handler，无可提取的纯逻辑
 export function useUserDataPageModel(): UserDataPageModel {
   const { locale, t } = useI18n()
   const [method, setMethod] = useState<UserImportMethod>('supportUrl')
@@ -43,12 +44,15 @@ export function useUserDataPageModel(): UserDataPageModel {
   function handleFillSample() {
     const sampleInput = buildSampleInput(method)
 
-    if (sampleInput.supportUrl) {
+    if (sampleInput.supportUrl != null && sampleInput.supportUrl !== '') {
       setSupportUrl(sampleInput.supportUrl)
       return
     }
 
-    if (sampleInput.manualUserId && sampleInput.manualHash) {
+    if (
+      sampleInput.manualUserId != null && sampleInput.manualUserId !== '' &&
+      sampleInput.manualHash != null && sampleInput.manualHash !== ''
+    ) {
       setManualUserId(sampleInput.manualUserId)
       setManualHash(sampleInput.manualHash)
       return
@@ -76,6 +80,10 @@ export function useUserDataPageModel(): UserDataPageModel {
   }
 
   return {
+    updateSupportUrl: setSupportUrl,
+    updateManualUserId: setManualUserId,
+    updateManualHash: setManualHash,
+    updateWebRequestLog: setWebRequestLog,
     locale,
     t,
     method,
@@ -88,10 +96,6 @@ export function useUserDataPageModel(): UserDataPageModel {
     importMethodLabels,
     selectedMethod,
     maskedCredentials,
-    updateSupportUrl: setSupportUrl,
-    updateManualUserId: setManualUserId,
-    updateManualHash: setManualHash,
-    updateWebRequestLog: setWebRequestLog,
     handleParse,
     handleFillSample,
     handleClear,
