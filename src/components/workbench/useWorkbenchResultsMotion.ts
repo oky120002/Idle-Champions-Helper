@@ -37,7 +37,8 @@ function getResultsPaneTargetBottom(pane: HTMLElement): number {
 
 function scrollPaneTo(pane: HTMLElement, targetTop: number, onComplete?: () => void) {
   if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    pane.scrollTo({ top: targetTop, behavior: 'auto' })
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- jsdom 未实现 scrollTo
+    pane.scrollTo?.({ top: targetTop, behavior: 'auto' })
     pane.scrollTop = targetTop
     onComplete?.()
     return () => undefined
@@ -61,7 +62,8 @@ function scrollPaneTo(pane: HTMLElement, targetTop: number, onComplete?: () => v
     const progress = Math.min((now - startTime) / RESULTS_SCROLL_DURATION_MS, 1)
     const nextTop = startTop + distance * easeOutQuart(progress)
 
-    pane.scrollTo({ top: nextTop, behavior: 'auto' })
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- jsdom 未实现 scrollTo
+    pane.scrollTo?.({ top: nextTop, behavior: 'auto' })
     pane.scrollTop = nextTop
 
     if (progress < 1) {
@@ -191,7 +193,8 @@ export function useWorkbenchResultsMotion({
         return
       }
 
-      pane.scrollTo({ top: scrollTop, behavior: 'auto' })
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- jsdom 未实现 scrollTo，生产浏览器有
+      pane.scrollTo?.({ top: scrollTop, behavior: 'auto' })
       pane.scrollTop = scrollTop
 
       if (Math.abs(pane.scrollTop - scrollTop) <= 2 || attemptCount >= maxAttempts) {
