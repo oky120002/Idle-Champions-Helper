@@ -40,7 +40,7 @@ function getLocaleStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
 
   const storage = window.localStorage
 
-  if (typeof storage?.getItem !== 'function' || typeof storage?.setItem !== 'function') {
+  if (typeof storage.getItem !== 'function' || typeof storage.setItem !== 'function') {
     return null
   }
 
@@ -51,7 +51,7 @@ export function pickLocaleText(locale: AppLocale, text: LocaleText): string {
   return locale === 'zh-CN' ? text.zh : text.en
 }
 
-export function I18nProvider({ children }: PropsWithChildren) {
+export function I18nProvider({ children }: Readonly<PropsWithChildren>) {
   const [locale, setLocale] = useState<AppLocale>(() => {
     return parseStoredLocale(getLocaleStorage()?.getItem(STORAGE_KEY) ?? null)
   })

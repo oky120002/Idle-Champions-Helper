@@ -2,10 +2,10 @@ import type { AppLocale } from './i18n'
 import type { TranslationFn } from './appNavigation'
 
 interface LocaleSwitcherProps {
-  locale: AppLocale
-  onSelect: (locale: AppLocale) => void
-  t: TranslationFn
-  surface: 'toolbar' | 'panel'
+  readonly locale: AppLocale
+  readonly onSelect: (locale: AppLocale) => void
+  readonly t: TranslationFn
+  readonly surface: 'toolbar' | 'panel'
 }
 
 function buildNextLocale(locale: AppLocale): AppLocale {
@@ -51,9 +51,9 @@ function LocaleSwitcher({ locale, onSelect, t, surface }: LocaleSwitcherProps) {
 }
 
 interface ToolbarLocaleSwitcherProps {
-  locale: AppLocale
-  onSelect: (locale: AppLocale) => void
-  t: TranslationFn
+  readonly locale: AppLocale
+  readonly onSelect: (locale: AppLocale) => void
+  readonly t: TranslationFn
 }
 
 export function ToolbarLocaleSwitcher(props: ToolbarLocaleSwitcherProps) {
@@ -61,9 +61,9 @@ export function ToolbarLocaleSwitcher(props: ToolbarLocaleSwitcherProps) {
 }
 
 interface PanelLocaleSwitcherProps {
-  locale: AppLocale
-  onSelect: (locale: AppLocale) => void
-  t: TranslationFn
+  readonly locale: AppLocale
+  readonly onSelect: (locale: AppLocale) => void
+  readonly t: TranslationFn
 }
 
 export function PanelLocaleSwitcher(props: PanelLocaleSwitcherProps) {

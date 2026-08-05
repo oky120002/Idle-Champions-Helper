@@ -16,7 +16,7 @@ export function ensureTrailingSlash(value: string): string {
 }
 
 export function buildOfficialPlayServerBaseUrl(serverNumber: number): string {
-  return `https://ps${serverNumber}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
+  return `https://ps${String(serverNumber)}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
 }
 
 export function createReadonlyFetchOptions(): RequestInit {
@@ -42,7 +42,7 @@ export function normalizeOfficialPlayServerBaseUrl(value: string): string {
 }
 
 export function readSwitchPlayServer(payload: unknown): string | null {
-  if (!payload || typeof payload !== 'object') {
+  if (payload == null || typeof payload !== 'object') {
     return null
   }
 
@@ -69,11 +69,11 @@ export async function discoverOfficialPlayServer(
   )
 
   if (!response.ok) {
-    throw new Error(`Official play server discovery returned HTTP ${response.status}`)
+    throw new Error(`Official play server discovery returned HTTP ${String(response.status)}`)
   }
 
   const payload: unknown = await response.json()
-  const playServer = payload && typeof payload === 'object'
+  const playServer = payload != null && typeof payload === 'object'
     ? (payload as Record<string, unknown>).play_server
     : null
 
@@ -98,7 +98,7 @@ export async function resolveOfficialPlayServerBaseUrls(options: {
 } = {}): Promise<string[]> {
   const fetchImpl = options.fetchImpl ?? fetch
 
-  if (options.baseUrl) {
+  if (options.baseUrl != null && options.baseUrl !== '') {
     return [normalizeOfficialPlayServerBaseUrl(options.baseUrl)]
   }
 

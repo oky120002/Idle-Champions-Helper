@@ -14,49 +14,55 @@ export interface ChampionFilters {
   mechanics: string[]
 }
 
+/**
+ * 公共模式：过滤值为空 → 通过；否则至少一项命中。
+ * 收口空过滤短路，避免每个 tag 类过滤各写一次 length === 0 || some。
+ */
+function matchesTagFilter(
+  filterValues: readonly string[],
+  predicate: (value: string) => boolean,
+): boolean {
+  if (filterValues.length === 0) {
+    return true
+  }
+  return filterValues.some(predicate)
+}
+
+function matchesAllChampionFilters(champion: Champion, filters: ChampionFilters, query: string): boolean {
+  const matchesSearch =
+    query === '' ||
+    matchesLocalizedText(champion.name, query) ||
+    champion.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+    champion.affiliations.some((affiliation) => matchesLocalizedText(affiliation, query))
+
+  const matchesSeat = filters.seats.length === 0 || filters.seats.includes(champion.seat)
+  const matchesRole = matchesTagFilter(filters.roles, (role) => champion.roles.includes(role))
+  const matchesAffiliation = matchesTagFilter(filters.affiliations, (selected) =>
+    champion.affiliations.some((affiliation) => affiliation.original === selected),
+  )
+  const matchesRace = matchesTagFilter(filters.races, (race) => champion.tags.includes(race))
+  const matchesGender = matchesTagFilter(filters.genders, (gender) => champion.tags.includes(gender))
+  const matchesProfession = matchesTagFilter(filters.professions, (profession) => champion.tags.includes(profession))
+  const matchesAlignment = matchesTagFilter(filters.alignments, (alignment) => champion.tags.includes(alignment))
+  const matchesAcquisition = matchesTagFilter(filters.acquisitions, (acquisition) => champion.tags.includes(acquisition))
+  const matchesMechanic = matchesTagFilter(filters.mechanics, (mechanic) => champion.tags.includes(mechanic))
+
+  return (
+    matchesSearch &&
+    matchesSeat &&
+    matchesRole &&
+    matchesAffiliation &&
+    matchesRace &&
+    matchesGender &&
+    matchesProfession &&
+    matchesAlignment &&
+    matchesAcquisition &&
+    matchesMechanic
+  )
+}
+
 export function filterChampions(champions: Champion[], filters: ChampionFilters): Champion[] {
   const query = filters.search.trim().toLowerCase()
 
-  return champions.filter((champion) => {
-    const matchesSearch =
-      !query ||
-      matchesLocalizedText(champion.name, query) ||
-      champion.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-      champion.affiliations.some((affiliation) => matchesLocalizedText(affiliation, query))
-
-    const matchesSeat = filters.seats.length === 0 || filters.seats.includes(champion.seat)
-    const matchesRole = filters.roles.length === 0 || filters.roles.some((role) => champion.roles.includes(role))
-    const matchesAffiliation =
-      filters.affiliations.length === 0 ||
-      filters.affiliations.some((selectedAffiliation) =>
-        champion.affiliations.some((affiliation) => affiliation.original === selectedAffiliation),
-      )
-    const matchesRace = filters.races.length === 0 || filters.races.some((race) => champion.tags.includes(race))
-    const matchesGender =
-      filters.genders.length === 0 || filters.genders.some((gender) => champion.tags.includes(gender))
-    const matchesProfession =
-      filters.professions.length === 0 ||
-      filters.professions.some((profession) => champion.tags.includes(profession))
-    const matchesAlignment =
-      filters.alignments.length === 0 ||
-      filters.alignments.some((alignment) => champion.tags.includes(alignment))
-    const matchesAcquisition =
-      filters.acquisitions.length === 0 ||
-      filters.acquisitions.some((acquisition) => champion.tags.includes(acquisition))
-    const matchesMechanic =
-      filters.mechanics.length === 0 || filters.mechanics.some((mechanic) => champion.tags.includes(mechanic))
-
-    return (
-      matchesSearch &&
-      matchesSeat &&
-      matchesRole &&
-      matchesAffiliation &&
-      matchesRace &&
-      matchesGender &&
-      matchesProfession &&
-      matchesAlignment &&
-      matchesAcquisition &&
-      matchesMechanic
-    )
-  })
+  return champions.filter((champion) => matchesAllChampionFilters(champion, filters, query))
 }

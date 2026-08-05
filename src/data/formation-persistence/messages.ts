@@ -9,13 +9,13 @@ export function buildDroppedReferenceDetail(
   const enParts: string[] = []
 
   if (invalidSlotIds.length > 0) {
-    zhParts.push(`${invalidSlotIds.length} 个槽位引用已失效`)
-    enParts.push(`${invalidSlotIds.length} slot reference(s) invalid`)
+    zhParts.push(`${String(invalidSlotIds.length)} 个槽位引用已失效`)
+    enParts.push(`${String(invalidSlotIds.length)} slot reference(s) invalid`)
   }
 
   if (invalidChampionIds.length > 0) {
-    zhParts.push(`${invalidChampionIds.length} 个英雄引用已失效`)
-    enParts.push(`${invalidChampionIds.length} champion reference(s) invalid`)
+    zhParts.push(`${String(invalidChampionIds.length)} 个英雄引用已失效`)
+    enParts.push(`${String(invalidChampionIds.length)} champion reference(s) invalid`)
   }
 
   if (zhParts.length === 0) {

@@ -42,21 +42,21 @@ function getThemeStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
 }
 
 function getSystemTheme(): ResolvedTheme {
-  if (typeof window === 'undefined' || !window.matchMedia) {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
     return 'dark'
   }
 
   return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
 }
 
-export function ThemeProvider({ children }: PropsWithChildren) {
+export function ThemeProvider({ children }: Readonly<PropsWithChildren>) {
   const [preference, setPreference] = useState<ThemePreference>(() => {
     return parseStoredPreference(getThemeStorage()?.getItem(STORAGE_KEY) ?? null)
   })
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(getSystemTheme)
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
       return
     }
 

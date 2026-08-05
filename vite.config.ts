@@ -125,7 +125,7 @@ async function handleSnapshotRefresh(
   try {
     const result = await fetchAndStorePrivateUserProfilePayloads({
       latestDir: options.relativeSnapshotDir,
-      payloadFilename: options.snapshotFilename || DEFAULT_PRIVATE_PAYLOAD_FILENAME,
+      payloadFilename: options.snapshotFilename !== '' ? options.snapshotFilename : DEFAULT_PRIVATE_PAYLOAD_FILENAME,
     })
     respondJson(response, 200, { manifest: result.manifest })
   } catch (error) {

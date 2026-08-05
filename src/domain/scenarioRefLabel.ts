@@ -24,6 +24,7 @@ function pickLocalized(text: LocalizedText | null | undefined, locale: AppLocale
   return locale === 'zh-CN' ? text.display : text.original
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 按 kind 分派的领域调度器，分支多但每条简单
 export function formatScenarioRefLabel(
   ref: ScenarioRef,
   lookup: ScenarioLabelLookup,
@@ -34,7 +35,7 @@ export function formatScenarioRefLabel(
     if (variant) {
       const variantName = pickLocalized(variant.name, locale)
       const adventureName = pickLocalized(variant.adventure, locale)
-      if (variantName && adventureName) {
+      if (variantName != null && variantName !== '' && adventureName != null && adventureName !== '') {
         return `${variantName} · ${adventureName}`
       }
       return variantName ?? ref.id

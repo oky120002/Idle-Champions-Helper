@@ -60,15 +60,18 @@ export function normalizeStringArrayRecord(value: unknown): Record<string, strin
   }
 
   return Object.fromEntries(
-    Object.entries(value).map(([key, item]) => [
-      key,
-      Array.isArray(item)
-        ? item.map((entry) => toStringValue(entry))
-        : item === null || item === undefined || item === ''
-          ? []
-          : [toStringValue(item)],
-    ]),
+    Object.entries(value).map(([key, item]) => [key, toStringArray(item)]),
   )
+}
+
+function toStringArray(item: unknown): string[] {
+  if (Array.isArray(item)) {
+    return item.map((entry) => toStringValue(entry))
+  }
+  if (item === null || item === undefined || item === '') {
+    return []
+  }
+  return [toStringValue(item)]
 }
 
 export function normalizeObjectArray(value: unknown): JsonRecord[] {

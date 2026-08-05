@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import {
   buildUserProfileSnapshot,
   normalizeCampaignDetails,
@@ -242,7 +243,7 @@ describe('user payload normalizer', () => {
       const result = normalizeFormationSaves(payload)
 
       expect(result.formations).toHaveLength(1)
-      const save = result.formations[0]!
+      const save = unwrap(result.formations[0], 'result.formations[0] should exist')
       expect(save.formationId).toBe('fm-1')
       expect(save.layoutId).toBe('layout-grand-hero')
       expect(save.scenarioRef).toEqual({ kind: 'adventure', id: '10' })
@@ -304,7 +305,7 @@ describe('user payload normalizer', () => {
         ],
       })
 
-      const save = result.formations[0]!
+      const save = unwrap(result.formations[0], 'result.formations[0] should exist')
       expect(save.scenarioRef).toEqual({ kind: 'variant', id: '42' })
       expect(save.specializations['24']).toBe('support-spec')
       expect(save.feats['12']).toHaveLength(2)

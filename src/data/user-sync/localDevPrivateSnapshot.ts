@@ -69,7 +69,7 @@ export async function refreshLocalDevPrivateSnapshot(
   }
 
   const timestamp = typeof manifest.timestamp === 'string' ? manifest.timestamp : null
-  return timestamp
+  return timestamp != null && timestamp !== ''
     ? `已刷新本地开发快照（${timestamp}）。浏览器 IndexedDB 未被覆盖。`
     : '已刷新本地开发快照。浏览器 IndexedDB 未被覆盖。'
 }

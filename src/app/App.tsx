@@ -54,12 +54,8 @@ export function App() {
             matches: false,
             addEventListener: undefined as ((type: 'change', listener: MediaQueryListener) => void) | undefined,
             removeEventListener: undefined as ((type: 'change', listener: MediaQueryListener) => void) | undefined,
-            addListener: (listener: MediaQueryListener) => {
-              void listener
-            },
-            removeListener: (listener: MediaQueryListener) => {
-              void listener
-            },
+            addListener: (_listener: MediaQueryListener) => {},
+            removeListener: (_listener: MediaQueryListener) => {},
           }
     const syncScrollLock = () => {
       const shouldLockScroll = isWorkbench && mediaQuery.matches

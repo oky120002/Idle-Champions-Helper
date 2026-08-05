@@ -17,7 +17,7 @@ export async function fetchJson<T>(relativePath: string, init?: RequestInit): Pr
   const response = await fetch(resolveDataUrl(relativePath), init)
 
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`)
+    throw new Error(`HTTP ${String(response.status)}`)
   }
 
   return (await response.json()) as T
@@ -27,7 +27,7 @@ async function fetchArrayBuffer(relativePath: string, init?: RequestInit): Promi
   const response = await fetch(resolveDataUrl(relativePath), init)
 
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`)
+    throw new Error(`HTTP ${String(response.status)}`)
   }
 
   return response.arrayBuffer()
@@ -37,7 +37,7 @@ export async function loadVersion(): Promise<DataVersion> {
   const cacheKey = 'version'
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached != null) {
     return cached as DataVersion
   }
 
@@ -108,7 +108,7 @@ export async function loadCollectionAtVersion<T>(version: string, name: string):
   const cacheKey = `${version}:${name}`
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached != null) {
     return cached as DataCollection<T>
   }
 
@@ -133,7 +133,7 @@ export async function loadBinaryData(relativePath: string): Promise<ArrayBuffer>
   const cacheKey = `binary:${relativePath}`
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached != null) {
     return cached as ArrayBuffer
   }
 
@@ -149,7 +149,7 @@ export async function loadChampionDetailAtVersion(
   const cacheKey = `${version}:champion-details:${championId}`
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached != null) {
     return cached as ChampionDetail
   }
 
@@ -167,7 +167,7 @@ export async function loadSearchDocuments(): Promise<SearchDocumentCollection> {
   const cacheKey = 'search-documents'
   const cached = memoryCache.get(cacheKey)
 
-  if (cached) {
+  if (cached != null) {
     return cached as SearchDocumentCollection
   }
 

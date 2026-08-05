@@ -12,7 +12,7 @@ export interface IllustrationFilters extends ChampionFilters {
 }
 
 function matchesIllustrationSearch(entry: FilterableIllustration, query: string): boolean {
-  if (!query) {
+  if (query === '') {
     return true
   }
 
@@ -31,55 +31,72 @@ function matchesIllustrationSearch(entry: FilterableIllustration, query: string)
   )
 }
 
+/**
+ * 公共模式：过滤值为空 → 通过；否则需要 champion 非空且至少一项命中。
+ * 收口 champion null 守卫与空过滤短路，避免每个 tag 类过滤各写一次。
+ */
+function matchesChampionFilter(
+  champion: Champion | null,
+  filterValues: readonly string[],
+  predicate: (champion: Champion, value: string) => boolean,
+): boolean {
+  if (filterValues.length === 0) {
+    return true
+  }
+  if (champion === null) {
+    return false
+  }
+  return filterValues.some((value) => predicate(champion, value))
+}
+
+function matchesAllIllustrationFilters(
+  entry: FilterableIllustration,
+  filters: IllustrationFilters,
+  query: string,
+): boolean {
+  const { champion, illustration } = entry
+  const matchesSearch = matchesIllustrationSearch(entry, query)
+  const matchesSeat = filters.seats.length === 0 || filters.seats.includes(illustration.seat)
+  const matchesKind = filters.kinds.length === 0 || filters.kinds.includes(illustration.kind)
+  const matchesRole = matchesChampionFilter(champion, filters.roles, (c, role) => c.roles.includes(role))
+  const matchesAffiliation = matchesChampionFilter(champion, filters.affiliations, (c, selected) =>
+    c.affiliations.some((affiliation) => affiliation.original === selected),
+  )
+  const matchesRace = matchesChampionFilter(champion, filters.races, (c, race) => c.tags.includes(race))
+  const matchesGender = matchesChampionFilter(champion, filters.genders, (c, gender) => c.tags.includes(gender))
+  const matchesProfession = matchesChampionFilter(champion, filters.professions, (c, profession) =>
+    c.tags.includes(profession),
+  )
+  const matchesAlignment = matchesChampionFilter(champion, filters.alignments, (c, alignment) =>
+    c.tags.includes(alignment),
+  )
+  const matchesAcquisition = matchesChampionFilter(champion, filters.acquisitions, (c, acquisition) =>
+    c.tags.includes(acquisition),
+  )
+  const matchesMechanic = matchesChampionFilter(champion, filters.mechanics, (c, mechanic) =>
+    c.tags.includes(mechanic),
+  )
+
+  return (
+    matchesSearch &&
+    matchesSeat &&
+    matchesKind &&
+    matchesRole &&
+    matchesAffiliation &&
+    matchesRace &&
+    matchesGender &&
+    matchesProfession &&
+    matchesAlignment &&
+    matchesAcquisition &&
+    matchesMechanic
+  )
+}
+
 export function filterIllustrations(
   entries: FilterableIllustration[],
   filters: IllustrationFilters,
 ): FilterableIllustration[] {
   const query = filters.search.trim().toLowerCase()
 
-  return entries.filter((entry) => {
-    const { champion, illustration } = entry
-    const matchesSearch = matchesIllustrationSearch(entry, query)
-    const matchesSeat = filters.seats.length === 0 || filters.seats.includes(illustration.seat)
-    const matchesKind = filters.kinds.length === 0 || filters.kinds.includes(illustration.kind)
-    const matchesRole =
-      filters.roles.length === 0 || (champion !== null && filters.roles.some((role) => champion.roles.includes(role)))
-    const matchesAffiliation =
-      filters.affiliations.length === 0 ||
-      (champion !== null &&
-        filters.affiliations.some((selectedAffiliation) =>
-          champion.affiliations.some((affiliation) => affiliation.original === selectedAffiliation),
-        ))
-    const matchesRace =
-      filters.races.length === 0 || (champion !== null && filters.races.some((race) => champion.tags.includes(race)))
-    const matchesGender =
-      filters.genders.length === 0 ||
-      (champion !== null && filters.genders.some((gender) => champion.tags.includes(gender)))
-    const matchesProfession =
-      filters.professions.length === 0 ||
-      (champion !== null && filters.professions.some((profession) => champion.tags.includes(profession)))
-    const matchesAlignment =
-      filters.alignments.length === 0 ||
-      (champion !== null && filters.alignments.some((alignment) => champion.tags.includes(alignment)))
-    const matchesAcquisition =
-      filters.acquisitions.length === 0 ||
-      (champion !== null && filters.acquisitions.some((acquisition) => champion.tags.includes(acquisition)))
-    const matchesMechanic =
-      filters.mechanics.length === 0 ||
-      (champion !== null && filters.mechanics.some((mechanic) => champion.tags.includes(mechanic)))
-
-    return (
-      matchesSearch &&
-      matchesSeat &&
-      matchesKind &&
-      matchesRole &&
-      matchesAffiliation &&
-      matchesRace &&
-      matchesGender &&
-      matchesProfession &&
-      matchesAlignment &&
-      matchesAcquisition &&
-      matchesMechanic
-    )
-  })
+  return entries.filter((entry) => matchesAllIllustrationFilters(entry, filters, query))
 }

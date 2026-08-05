@@ -6,17 +6,17 @@ import { ThemeToggle } from './ThemeToggle'
 import { ToolbarLocaleSwitcher } from './LocaleSwitcher'
 
 interface HeaderTopbarProps {
-  activeNavigationItem: AppNavigationItem
-  dataUpdatedAt: string | null
-  isMobileNavOpen: boolean
-  locale: AppLocale
-  onLocaleSelect: (locale: AppLocale) => void
-  onMobileNavToggle: () => void
-  t: TranslationFn
+  readonly activeNavigationItem: AppNavigationItem
+  readonly dataUpdatedAt: string | null
+  readonly isMobileNavOpen: boolean
+  readonly locale: AppLocale
+  readonly onLocaleSelect: (locale: AppLocale) => void
+  readonly onMobileNavToggle: () => void
+  readonly t: TranslationFn
 }
 
 function formatDataSyncDate(value: string | null, locale: AppLocale): string {
-  if (!value) {
+  if (value == null || value === '') {
     return locale === 'zh-CN' ? '待确认' : 'pending'
   }
 

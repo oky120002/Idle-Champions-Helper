@@ -15,23 +15,21 @@ interface EnumGroup {
 let cachedLookup: Promise<ScenarioLabelLookup> | null = null
 
 function loadScenarioLabelLookup(): Promise<ScenarioLabelLookup> {
-  if (!cachedLookup) {
-    cachedLookup = Promise.all([
-      loadCollection<Variant>('variants'),
-      loadCollection<Adventure>('adventures'),
-      loadCollection<EnumGroup>('enums'),
-    ])
-      .then(([variantCol, adventureCol, enumCol]) => {
-        const campaigns = enumCol.items.find((item) => item.id === 'campaigns')?.values ?? []
-        return buildScenarioLabelLookup(variantCol.items, adventureCol.items, campaigns)
-      })
-      .catch(() => {
-        // 加载失败（离线/集合缺失/测试 mock 未覆盖）→ 回退空表，调用方降级显示原始 kind:id。
-        // 不缓存 rejected promise：清缓存使后续重试有机会成功。
-        cachedLookup = null
-        return buildScenarioLabelLookup([], [], [])
-      })
-  }
+  cachedLookup ??= Promise.all([
+    loadCollection<Variant>('variants'),
+    loadCollection<Adventure>('adventures'),
+    loadCollection<EnumGroup>('enums'),
+  ])
+    .then(([variantCol, adventureCol, enumCol]) => {
+      const campaigns = enumCol.items.find((item) => item.id === 'campaigns')?.values ?? []
+      return buildScenarioLabelLookup(variantCol.items, adventureCol.items, campaigns)
+    })
+    .catch(() => {
+      // 加载失败（离线/集合缺失/测试 mock 未覆盖）→ 回退空表，调用方降级显示原始 kind:id。
+      // 不缓存 rejected promise：清缓存使后续重试有机会成功。
+      cachedLookup = null
+      return buildScenarioLabelLookup([], [], [])
+    })
   return cachedLookup
 }
 

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { unwrap } from '../../tests/utils/dom-assertions'
 import { buildScenarioLabelLookup, formatScenarioRefLabel } from './scenarioRefLabel'
 import type { Adventure, LocalizedOption, Variant } from './types'
 import type { ScenarioLabelLookup } from './scenarioRefLabel'
@@ -41,7 +42,7 @@ describe('formatScenarioRefLabel', () => {
 
   it('variant 缺 adventure → 仅变体名', () => {
     const noAdv = buildScenarioLabelLookup(
-      [{ ...variants[0]!, adventure: null }],
+      [{ ...unwrap(variants[0], 'variants[0] 应存在'), adventure: null }],
       adventures,
       campaigns,
     )

@@ -78,7 +78,7 @@ export function parseSupportUrl(
 ): UserImportParseResult {
   const trimmed = value.trim()
 
-  if (!trimmed) {
+  if (trimmed === '') {
     return {
       ok: false,
       error: messages.missingSupportUrl,
@@ -105,7 +105,7 @@ export function parseSupportUrl(
 export function getSupportUrlNetwork(value: string): string | null {
   const trimmed = value.trim()
 
-  if (!trimmed) {
+  if (trimmed === '') {
     return null
   }
 
@@ -121,7 +121,7 @@ export function parseManualCredentials(
   hash: string,
   messages: UserImportMessages = DEFAULT_MESSAGES,
 ): UserImportParseResult {
-  if (!userId.trim() || !hash.trim()) {
+  if (userId.trim() === '' || hash.trim() === '') {
     return {
       ok: false,
       error: messages.missingManualCredentials,
@@ -137,7 +137,7 @@ export function parseWebRequestLog(
 ): UserImportParseResult {
   const trimmed = value.trim()
 
-  if (!trimmed) {
+  if (trimmed === '') {
     return {
       ok: false,
       error: messages.missingLogText,
@@ -145,8 +145,10 @@ export function parseWebRequestLog(
   }
 
   const directMatch =
-    trimmed.match(/user_id=(\d+)[\s\S]*?(?:device_hash|hash)=([a-f0-9]+)/i) ??
-    trimmed.match(/(?:device_hash|hash)=([a-f0-9]+)[\s\S]*?user_id=(\d+)/i)
+    // eslint-disable-next-line sonarjs/super-linear-regex -- 用户粘贴的日志文本长度有限，回溯风险可接受
+    /user_id=(\d+)[\s\S]*?(?:device_hash|hash)=([a-f0-9]+)/i.exec(trimmed) ??
+    // eslint-disable-next-line sonarjs/super-linear-regex -- 同上，hash 在前 user_id 在后的场景
+    /(?:device_hash|hash)=([a-f0-9]+)[\s\S]*?user_id=(\d+)/i.exec(trimmed)
 
   if (!directMatch) {
     return {
@@ -165,7 +167,7 @@ export function parseWebRequestLog(
   const first = directMatch[1]
   const second = directMatch[2]
 
-  if (!first || !second) {
+  if (first == null || first === '' || second == null || second === '') {
     return {
       ok: false,
       error: messages.logIncompleteCredentials,

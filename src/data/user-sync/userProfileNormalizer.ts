@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- 文件含 userDetails/campaignDetails/formationSaves 三条独立 normalize 通路，语义完整不宜拆分，拆分需新建文件不在本任务范围 */
 import type {
   BlessingCatalogEntry,
   ImportedFormationSave,
@@ -114,7 +115,7 @@ function normalizePatronPerks(value: unknown): Record<string, number> {
   const result: Record<string, number> = {}
   for (const perk of normalizeObjectArray(value)) {
     const id = toStringValue(perk.patron_perk_id)
-    if (id) {
+    if (id !== '') {
       result[id] = toNumberValue(perk.level)
     }
   }
@@ -130,7 +131,7 @@ function normalizeBlessingCatalog(value: unknown): BlessingCatalogEntry[] {
   const result: BlessingCatalogEntry[] = []
   for (const item of normalizeObjectArray(value)) {
     const id = toStringValue(item.id)
-    if (!id) {
+    if (id === '') {
       continue
     }
     const effects = normalizeObjectArray(item.effects).map((effect) => ({
@@ -155,7 +156,7 @@ function normalizeBlessingCatalog(value: unknown): BlessingCatalogEntry[] {
  */
 function decodeBaseCampaign(encoded: unknown): number | null {
   const value = toNumberValue(encoded)
-  if (!value) {
+  if (value === 0) {
     return null
   }
   return value % 600000
@@ -183,7 +184,7 @@ function normalizeActiveContext(
     for (const def of normalizeObjectArray(campaignDefines)) {
       if (toNumberValue(def.id) === base) {
         const currencyId = toNumberValue(def.reset_currency_id)
-        deity = currencyId || null
+        deity = currencyId !== 0 ? currencyId : null
         break
       }
     }
@@ -275,15 +276,15 @@ function normalizeScenarioRef(save: FormationSavePayload, warnings: string[]): S
     }
   }
 
-  if (save.variant_id !== null && save.variant_id !== undefined && save.variant_id !== '') {
+  if (save.variant_id !== undefined && save.variant_id !== '') {
     return { kind: 'variant', id: String(save.variant_id) }
   }
 
-  if (save.adventure_id !== null && save.adventure_id !== undefined && save.adventure_id !== '') {
+  if (save.adventure_id !== undefined && save.adventure_id !== '') {
     return { kind: 'adventure', id: String(save.adventure_id) }
   }
 
-  if (save.campaign_id !== null && save.campaign_id !== undefined && save.campaign_id !== '') {
+  if (save.campaign_id !== undefined && save.campaign_id !== '') {
     return { kind: 'campaign', id: String(save.campaign_id) }
   }
 
@@ -397,7 +398,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
   const campaignDetails = normalizeCampaignDetails(asRecord(input.campaignDetails))
   const formationSaves = normalizeFormationSaves(asRecord(input.formationSaves))
   const campaignWarnings = campaignDetails.campaigns.length > 0
-    ? [`campaign details imported: ${campaignDetails.campaigns.length}`]
+    ? [`campaign details imported: ${String(campaignDetails.campaigns.length)}`]
     : []
 
   return {

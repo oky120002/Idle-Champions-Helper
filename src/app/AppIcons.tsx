@@ -6,12 +6,12 @@ import {
   X,
 } from 'lucide-react'
 
-export function MobileMenuIcon({ isOpen }: { isOpen: boolean }) {
+export function MobileMenuIcon({ isOpen }: { readonly isOpen: boolean }) {
   const Icon = isOpen ? X : Menu
   return <Icon aria-hidden="true" strokeWidth={1.9} />
 }
 
-export function SidebarToggleIcon({ isCollapsed }: { isCollapsed: boolean }) {
+export function SidebarToggleIcon({ isCollapsed }: { readonly isCollapsed: boolean }) {
   const Icon = isCollapsed ? PanelLeftOpen : PanelLeftClose
   return <Icon aria-hidden="true" strokeWidth={1.8} />
 }

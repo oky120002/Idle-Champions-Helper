@@ -4,7 +4,7 @@ import type { LocalizedText } from './types'
 export function matchesLocalizedText(value: LocalizedText, query: string): boolean {
   const normalizedQuery = query.trim().toLowerCase()
 
-  if (!normalizedQuery) {
+  if (normalizedQuery === '') {
     return true
   }
 
@@ -30,11 +30,13 @@ export function getLocalizedTextPair(value: LocalizedText, locale: AppLocale, se
   const primary = getPrimaryLocalizedText(value, locale)
   const secondary = getSecondaryLocalizedText(value, locale)
 
-  return secondary ? `${primary}${separator}${secondary}` : primary
+  return secondary != null && secondary !== ''
+    ? `${primary}${separator}${secondary}`
+    : primary
 }
 
 export function formatSeatLabel(seat: number, locale: AppLocale): string {
-  return locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`
+  return locale === 'zh-CN' ? `${String(seat)} 号位` : `Seat ${String(seat)}`
 }
 
 const ROLE_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {

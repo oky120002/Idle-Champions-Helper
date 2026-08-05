@@ -6,11 +6,11 @@ import { PrimaryNavigation } from './PrimaryNavigation'
 import { useSiteHeaderState } from './useSiteHeaderState'
 
 interface SiteHeaderProps {
-  activeNavigationItem: AppNavigationItem
-  locale: AppLocale
-  setLocale: (locale: AppLocale) => void
-  pathname: string
-  t: (text: { zh: string; en: string }) => string
+  readonly activeNavigationItem: AppNavigationItem
+  readonly locale: AppLocale
+  readonly setLocale: (locale: AppLocale) => void
+  readonly pathname: string
+  readonly t: (text: { zh: string; en: string }) => string
 }
 
 export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, t }: SiteHeaderProps) {

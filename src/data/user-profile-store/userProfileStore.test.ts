@@ -3,6 +3,7 @@ import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 import { createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import { APP_DATABASE_NAME, APP_STORE_NAMES, openAppDatabase } from '../localDatabase'
 import {
   deleteUserProfileData,
@@ -63,8 +64,9 @@ describe('user profile store', () => {
     const loaded = await readUserProfileSnapshot()
 
     expect(loaded).not.toBeNull()
-    expect(loaded!.updatedAt).toBe('2026-05-03T00:00:00.000Z')
-    expect(loaded!.schemaVersion).toBe(1)
+    const loadedSnapshot = unwrap(loaded, 'loaded should not be null')
+    expect(loadedSnapshot.updatedAt).toBe('2026-05-03T00:00:00.000Z')
+    expect(loadedSnapshot.schemaVersion).toBe(1)
   })
 
   it('credential opt-in 为 false 时 vault 保持为空', async () => {

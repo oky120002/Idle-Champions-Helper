@@ -26,8 +26,8 @@ export async function buildFormationSnapshotPrompt<T extends FormationSnapshotLi
         en: `${sourceLabel.en} version is too old to restore directly`,
       },
       detail: {
-        zh: `当前只识别 schemaVersion=${expectedSchemaVersion} 的${sourceLabel.zh}；检测到旧版本为 ${snapshot.schemaVersion}。`,
-        en: `Only schemaVersion=${expectedSchemaVersion} ${sourceLabel.en} is supported; detected old version ${snapshot.schemaVersion}.`,
+        zh: `当前只识别 schemaVersion=${String(expectedSchemaVersion)} 的${sourceLabel.zh}；检测到旧版本为 ${String(snapshot.schemaVersion)}。`,
+        en: `Only schemaVersion=${String(expectedSchemaVersion)} ${sourceLabel.en} is supported; detected old version ${String(snapshot.schemaVersion)}.`,
       },
     }
   }

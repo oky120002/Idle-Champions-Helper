@@ -33,6 +33,65 @@ export function getFormationBoardMetrics(layout: FormationLayout): FormationBoar
   }
 }
 
+type ContextKindCounts = Record<FormationContext['kind'], number>
+
+function buildContextKindCounts(contexts: readonly FormationContext[]): ContextKindCounts {
+  return contexts.reduce(
+    (result: ContextKindCounts, context) => {
+      result[context.kind] += 1
+      return result
+    },
+    { campaign: 0, adventure: 0, variant: 0, trial: 0, timeGate: 0 },
+  )
+}
+
+function buildCountParts(counts: ContextKindCounts, locale: AppLocale): string[] {
+  if (locale === 'zh-CN') {
+    return [
+      counts.campaign > 0 ? `${String(counts.campaign)} 个战役` : null,
+      counts.adventure > 0 ? `${String(counts.adventure)} 个冒险` : null,
+      counts.variant > 0 ? `${String(counts.variant)} 个变体` : null,
+    ].filter((part): part is string => part !== null)
+  }
+  return [
+    counts.campaign > 0
+      ? `${String(counts.campaign)} ${buildCountLabel(counts.campaign, 'campaign', 'campaigns')}`
+      : null,
+    counts.adventure > 0
+      ? `${String(counts.adventure)} ${buildCountLabel(counts.adventure, 'adventure', 'adventures')}`
+      : null,
+    counts.variant > 0
+      ? `${String(counts.variant)} ${buildCountLabel(counts.variant, 'variant', 'variants')}`
+      : null,
+  ].filter((part): part is string => part !== null)
+}
+
+function formatZhContextSummary(
+  primaryContext: FormationContext,
+  countParts: string[],
+  extraNames: string[],
+  sourceCount: number,
+  locale: AppLocale,
+): string {
+  const moreSuffix = sourceCount > 4 ? ' 等。' : '。'
+  const extraPart =
+    extraNames.length > 0 ? ` 其他关联：${extraNames.join('、')}${moreSuffix}` : ''
+  return `默认来源：${getLocalizedTextPair(primaryContext.name, locale)}。当前关联 ${countParts.join(' / ')}。${extraPart}`.trim()
+}
+
+function formatEnContextSummary(
+  primaryContext: FormationContext,
+  countParts: string[],
+  extraNames: string[],
+  sourceCount: number,
+  locale: AppLocale,
+): string {
+  const moreSuffix = sourceCount > 4 ? ', and more.' : '.'
+  const extraPart =
+    extraNames.length > 0 ? ` Other linked contexts: ${extraNames.join(', ')}${moreSuffix}` : ''
+  return `Primary source: ${getLocalizedTextPair(primaryContext.name, locale)}. Linked to ${countParts.join(' / ')}.${extraPart}`.trim()
+}
+
 export function getFormationLayoutContextSummary(
   layout: FormationLayout,
   locale: AppLocale,
@@ -48,50 +107,13 @@ export function getFormationLayoutContextSummary(
     return layout.notes ? getPrimaryLocalizedText(layout.notes, locale) : null
   }
 
-  const counts = sourceContexts.reduce(
-    (result: Record<FormationContext['kind'], number>, context) => {
-      result[context.kind] += 1
-      return result
-    },
-    { campaign: 0, adventure: 0, variant: 0, trial: 0, timeGate: 0 },
-  )
-
-  const countParts =
-    locale === 'zh-CN'
-      ? [
-          counts.campaign > 0 ? `${counts.campaign} 个战役` : null,
-          counts.adventure > 0 ? `${counts.adventure} 个冒险` : null,
-          counts.variant > 0 ? `${counts.variant} 个变体` : null,
-        ].filter(Boolean)
-      : [
-          counts.campaign > 0
-            ? `${counts.campaign} ${buildCountLabel(counts.campaign, 'campaign', 'campaigns')}`
-            : null,
-          counts.adventure > 0
-            ? `${counts.adventure} ${buildCountLabel(counts.adventure, 'adventure', 'adventures')}`
-            : null,
-          counts.variant > 0
-            ? `${counts.variant} ${buildCountLabel(counts.variant, 'variant', 'variants')}`
-            : null,
-        ].filter(Boolean)
-
+  const counts = buildContextKindCounts(sourceContexts)
+  const countParts = buildCountParts(counts, locale)
   const extraNames = sourceContexts
     .slice(1, 4)
     .map((context) => getLocalizedTextPair(context.name, locale))
 
-  if (locale === 'zh-CN') {
-    const extraPart =
-      extraNames.length > 0
-        ? ` 其他关联：${extraNames.join('、')}${sourceContexts.length > 4 ? ' 等。' : '。'}`
-        : ''
-
-    return `默认来源：${getLocalizedTextPair(primaryContext.name, locale)}。当前关联 ${countParts.join(' / ')}。${extraPart}`.trim()
-  }
-
-  const extraPart =
-    extraNames.length > 0
-      ? ` Other linked contexts: ${extraNames.join(', ')}${sourceContexts.length > 4 ? ', and more.' : '.'}`
-      : ''
-
-  return `Primary source: ${getLocalizedTextPair(primaryContext.name, locale)}. Linked to ${countParts.join(' / ')}.${extraPart}`.trim()
+  return locale === 'zh-CN'
+    ? formatZhContextSummary(primaryContext, countParts, extraNames, sourceContexts.length, locale)
+    : formatEnContextSummary(primaryContext, countParts, extraNames, sourceContexts.length, locale)
 }

@@ -7,7 +7,7 @@ configure({ asyncUtilTimeout: 5000 })
 
 afterEach(() => {
   cleanup()
-  if (window.localStorage && typeof window.localStorage.clear === 'function') {
+  if (typeof window.localStorage.clear === 'function') {
     window.localStorage.clear()
   }
   document.documentElement.removeAttribute('lang')

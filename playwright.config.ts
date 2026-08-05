@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const port = 4173
+const port = '4173'
 const isCI = process.env.CI === 'true'
 
 // Playwright injects FORCE_COLOR into worker and webServer children.
