@@ -43,21 +43,11 @@ export function buildFormationBoardActions({
 
   function handleAssignChampion(slotId: string, championId: string) {
     setPlacements((current) => {
-      if (!championId) {
-        const next = { ...current }
-        delete next[slotId]
-        return next
+      if (championId === '') {
+        return removePlacementEntry(current, slotId)
       }
-
       // 槽位间拖动原子清原 slot——hero 已在别处则清原位，避免同英雄重复占 seat。
-      const next = { ...current }
-      for (const [existingSlotId, existingHeroId] of Object.entries(next)) {
-        if (existingHeroId === championId && existingSlotId !== slotId) {
-          delete next[existingSlotId]
-        }
-      }
-      next[slotId] = championId
-      return next
+      return mergePlacementEntry(current, slotId, championId)
     })
     setPresetStatus(null)
     bumpEditRevision()
@@ -78,4 +68,27 @@ export function buildFormationBoardActions({
     handleAssignChampion,
     handleClear,
   }
+}
+
+function removePlacementEntry(
+  placements: Record<string, string>,
+  slotId: string,
+): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(placements).filter(([key]) => key !== slotId),
+  )
+}
+
+function mergePlacementEntry(
+  placements: Record<string, string>,
+  slotId: string,
+  championId: string,
+): Record<string, string> {
+  return Object.fromEntries([
+    ...Object.entries(placements).filter(
+      ([existingSlotId, existingHeroId]) =>
+        !(existingHeroId === championId && existingSlotId !== slotId),
+    ),
+    [slotId, championId],
+  ])
 }

@@ -6,7 +6,7 @@ import { LAYOUT_FILTER_OPTIONS, type FormationPageModel, type LayoutFilterKind }
 import { FormationLayoutLibraryScaffold } from './FormationLayoutLibraryScaffold'
 
 interface FormationLayoutFiltersProps {
-  model: FormationPageModel
+  readonly model: FormationPageModel
 }
 
 export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
@@ -62,7 +62,7 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       id: 'scenario-type',
       label: t({ zh: '场景类型', en: 'Scenario type' }),
       value: selectedContextKind,
-      onChange: (value: string) => setSelectedContextKind(value as LayoutFilterKind),
+      onChange: (value: string) => { setSelectedContextKind(value as LayoutFilterKind) },
       hint: t({
         zh: '筛选只影响布局库，不会自动清空正在编辑的布局。',
         en: 'Filters only affect the library and never clear the layout currently being edited.',
@@ -79,7 +79,7 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
     ? [
         {
           id: 'slot-count',
-          label: locale === 'zh-CN' ? `${selectedLayout.slots.length} 槽` : `${selectedLayout.slots.length} slots`,
+          label: locale === 'zh-CN' ? `${String(selectedLayout.slots.length)} 槽` : `${String(selectedLayout.slots.length)} slots`,
         },
         ...selectedLayoutKinds.map((kind) => ({
           id: kind,
@@ -97,20 +97,20 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       id: layout.id,
       ariaLabel: getFormationLayoutLabel(layout, locale),
       title: getFormationLayoutLabel(layout, locale),
-      countLabel: locale === 'zh-CN' ? `${layout.slots.length} 槽` : `${layout.slots.length} slots`,
+      countLabel: locale === 'zh-CN' ? `${String(layout.slots.length)} 槽` : `${String(layout.slots.length)} slots`,
       sourceLabel: primarySource ?? t({ zh: '当前没有来源场景标记', en: 'No source context label yet' }),
       metaPills: kinds.map((kind) => ({
         id: `${layout.id}-${kind}`,
         label: getLayoutFilterLabel(kind),
       })),
       isActive: isSelected,
-      onSelect: () => handleSelectLayout(layout.id),
+      onSelect: () => { handleSelectLayout(layout.id) },
     }
   })
   const resultsDescription = filteredLayouts.length > 0
     ? t({
-        zh: `按当前条件命中 ${filteredLayouts.length} 个布局，选中后下方画板会立即切换。`,
-        en: `${filteredLayouts.length} layouts match the current filters, and the board below switches immediately once you pick one.`,
+        zh: `按当前条件命中 ${String(filteredLayouts.length)} 个布局，选中后下方画板会立即切换。`,
+        en: `${String(filteredLayouts.length)} layouts match the current filters, and the board below switches immediately once you pick one.`,
       })
     : t({
         zh: '当前没有匹配布局，可以先放宽关键词或场景类型。',
@@ -132,7 +132,7 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       selection={{
         kicker: t({ zh: '当前编辑布局', en: 'Editing now' }),
         title: selectedLayoutLabel ?? t({ zh: '未选择布局', en: 'No layout selected' }),
-        description: selectedLayoutSource
+        description: (selectedLayoutSource != null && selectedLayoutSource !== '')
           ? t({
               zh: `默认来源：${selectedLayoutSource}`,
               en: `Primary source: ${selectedLayoutSource}`,

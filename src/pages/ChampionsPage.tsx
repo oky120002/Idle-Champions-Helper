@@ -34,15 +34,15 @@ export function ChampionsPage() {
     error: {
       title: t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' }),
       ...(state.status === 'error'
-        ? { detail: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
+        ? { detail: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
         : {}),
     },
   })
   const toolbarItems = createWorkbenchFilterToolbarItems({
     t,
+    showAllResults,
     defaultVisibleCount: MAX_VISIBLE_RESULTS,
     filteredCount: filteredChampions.length,
-    showAllResults,
     canToggle: canToggleResultVisibility,
     isReady: state.status === 'ready',
     onToggleVisibility: toggleResultVisibility,

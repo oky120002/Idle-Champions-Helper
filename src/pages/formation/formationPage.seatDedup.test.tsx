@@ -16,6 +16,7 @@ vi.mock('../../data/client', async () => {
 })
 
 import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import {
   mockFormationPageCollections,
   mockedLoadCollection,
@@ -56,9 +57,9 @@ function portrait(id: string) {
 function champion(id: string, seat: number, roles: string[] = []): Champion {
   return {
     id,
-    name: { original: id, display: id },
     seat,
     roles,
+    name: { original: id, display: id },
     affiliations: [],
     tags: [],
     portrait: portrait(id),
@@ -102,10 +103,12 @@ describe('formation slot seat dedup', () => {
     renderFormationPage()
 
     const selects = await screen.findAllByRole('combobox')
-    await user.selectOptions(selects[0]!, 'bruenor')
+    const select0 = unwrap(selects[0], 'expected first combobox')
+    const select1 = unwrap(selects[1], 'expected second combobox')
+    await user.selectOptions(select0, 'bruenor')
 
     await waitFor(() => {
-      const slot2 = optionValues(selects[1]!)
+      const slot2 = optionValues(select1)
       expect(slot2).not.toContain('asharra')
       expect(slot2).toContain('celeste')
       expect(slot2).toContain('nayeli')
@@ -117,10 +120,11 @@ describe('formation slot seat dedup', () => {
     renderFormationPage()
 
     const selects = await screen.findAllByRole('combobox')
-    await user.selectOptions(selects[0]!, 'bruenor')
+    const select0 = unwrap(selects[0], 'expected first combobox')
+    await user.selectOptions(select0, 'bruenor')
 
     await waitFor(() => {
-      const slot1 = optionValues(selects[0]!)
+      const slot1 = optionValues(select0)
       expect(slot1).toContain('bruenor')
     })
   })
@@ -130,16 +134,18 @@ describe('formation slot seat dedup', () => {
     renderFormationPage()
 
     const selects = await screen.findAllByRole('combobox')
-    await user.selectOptions(selects[0]!, 'bruenor')
+    const select0 = unwrap(selects[0], 'expected first combobox')
+    const select1 = unwrap(selects[1], 'expected second combobox')
+    await user.selectOptions(select0, 'bruenor')
 
     await waitFor(() => {
-      expect(optionValues(selects[1]!)).not.toContain('asharra')
+      expect(optionValues(select1)).not.toContain('asharra')
     })
 
-    await user.selectOptions(selects[0]!, '')
+    await user.selectOptions(select0, '')
 
     await waitFor(() => {
-      expect(optionValues(selects[1]!)).toContain('asharra')
+      expect(optionValues(select1)).toContain('asharra')
     })
   })
 })

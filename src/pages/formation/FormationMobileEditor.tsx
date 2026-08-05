@@ -5,7 +5,7 @@ import { HeroPicker } from './HeroPicker'
 import type { FormationPageModel } from './types'
 
 interface FormationMobileEditorProps {
-  model: FormationPageModel
+  readonly model: FormationPageModel
 }
 
 export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
@@ -48,7 +48,9 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
           <ActionButton
             tone="ghost"
             className="formation-mobile-editor__clear"
-            onClick={() => handleAssignChampion(activeMobileSlot.id, '')}
+            onClick={() => {
+              handleAssignChampion(activeMobileSlot.id, '')
+            }}
           >
             {t({ zh: '清空槽位', en: 'Clear slot' })}
           </ActionButton>
@@ -58,7 +60,9 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
       <HeroPicker
         champions={getAvailableChampionsForSlot(activeMobileSlot.id)}
         value={activeMobileChampionId}
-        onChange={(heroId) => handleAssignChampion(activeMobileSlot.id, heroId)}
+        onChange={(heroId) => {
+          handleAssignChampion(activeMobileSlot.id, heroId)
+        }}
       />
 
       {activeMobileChampion ? (

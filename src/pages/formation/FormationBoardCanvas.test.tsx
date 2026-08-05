@@ -1,8 +1,10 @@
 import { createEvent, fireEvent, render } from '@testing-library/react'
+import type { ComponentProps } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
 import type { Champion, FormationSlot } from '../../domain/types'
+import { queryOrFail } from '../../../tests/utils/dom-assertions'
 import { FormationBoardCanvas } from './FormationBoardCanvas'
 
 const slots: FormationSlot[] = [
@@ -21,7 +23,7 @@ const bruenor: Champion = {
 
 const championById = new Map<string, Champion>([['bruenor', bruenor]])
 
-function renderCanvas(overrides: Partial<React.ComponentProps<typeof FormationBoardCanvas>> = {}) {
+function renderCanvas(overrides: Partial<ComponentProps<typeof FormationBoardCanvas>> = {}) {
   return render(
     <I18nProvider>
       <FormationBoardCanvas
@@ -97,7 +99,7 @@ describe('FormationBoardCanvas', () => {
   it('传入 onSlotDrop 时 drop 被 preventDefault 且触发回调', () => {
     const onSlotDrop = vi.fn()
     const { container } = renderCanvas({ onSlotDrop })
-    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const slot = queryOrFail(container, '[data-slot-id="slot-a"]')
     const event = createEvent.drop(slot)
 
     fireEvent(slot, event)
@@ -108,7 +110,7 @@ describe('FormationBoardCanvas', () => {
 
   it('未传 onSlotDrop 时只读棋盘不拦截 drop（planner 结果卡片不应成为 drop 目标）', () => {
     const { container } = renderCanvas()
-    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const slot = queryOrFail(container, '[data-slot-id="slot-a"]')
     const event = createEvent.drop(slot)
 
     fireEvent(slot, event)
@@ -118,21 +120,21 @@ describe('FormationBoardCanvas', () => {
 
   it('传 onSlotDrop 时已放置英雄 badge 可拖（slot→slot / 拖出移除）', () => {
     const { container } = renderCanvas({ onSlotDrop: vi.fn() })
-    const badge = container.querySelector('[data-slot-id="slot-a"] .formation-slot__summary-badge')!
+    const badge = queryOrFail(container, '[data-slot-id="slot-a"] .formation-slot__summary-badge')
 
     expect(badge).toHaveAttribute('draggable', 'true')
   })
 
   it('未传 onSlotDrop 时已放置英雄 badge 不可拖（planner 只读棋盘）', () => {
     const { container } = renderCanvas()
-    const badge = container.querySelector('[data-slot-id="slot-a"] .formation-slot__summary-badge')!
+    const badge = queryOrFail(container, '[data-slot-id="slot-a"] .formation-slot__summary-badge')
 
     expect(badge).not.toHaveAttribute('draggable')
   })
 
   it('dragOver 槽位时加 data-drag-over 视觉反馈，drop 后清除', () => {
     const { container } = renderCanvas({ onSlotDrop: vi.fn() })
-    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const slot = queryOrFail(container, '[data-slot-id="slot-a"]')
 
     expect(slot).not.toHaveAttribute('data-drag-over')
 
@@ -145,8 +147,8 @@ describe('FormationBoardCanvas', () => {
 
   it('切换 dragOver 到另一槽位时，旧槽位高亮转移到新槽位', () => {
     const { container } = renderCanvas({ onSlotDrop: vi.fn() })
-    const slotA = container.querySelector('[data-slot-id="slot-a"]')!
-    const slotB = container.querySelector('[data-slot-id="slot-b"]')!
+    const slotA = queryOrFail(container, '[data-slot-id="slot-a"]')
+    const slotB = queryOrFail(container, '[data-slot-id="slot-b"]')
 
     fireEvent(slotA, createEvent.dragOver(slotA))
     expect(slotA).toHaveAttribute('data-drag-over', 'true')
@@ -158,8 +160,8 @@ describe('FormationBoardCanvas', () => {
 
   it('dragEnd 清除 dragOver 高亮（拖出 board 松开场景）', () => {
     const { container } = renderCanvas({ onSlotDrop: vi.fn() })
-    const slot = container.querySelector('[data-slot-id="slot-a"]')!
-    const board = container.querySelector('.formation-board')!
+    const slot = queryOrFail(container, '[data-slot-id="slot-a"]')
+    const board = queryOrFail(container, '.formation-board')
 
     fireEvent(slot, createEvent.dragOver(slot))
     expect(container.querySelector('[data-drag-over="true"]')).not.toBeNull()
@@ -170,7 +172,7 @@ describe('FormationBoardCanvas', () => {
 
   it('未传 onSlotDrop 时只读棋盘不响应 dragOver（不设 data-drag-over）', () => {
     const { container } = renderCanvas()
-    const slot = container.querySelector('[data-slot-id="slot-a"]')!
+    const slot = queryOrFail(container, '[data-slot-id="slot-a"]')
 
     fireEvent(slot, createEvent.dragOver(slot))
     expect(slot).not.toHaveAttribute('data-drag-over')

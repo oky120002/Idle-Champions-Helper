@@ -30,7 +30,7 @@ export function FormationPage() {
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const activeSidebarFilterCount = (model.layoutSearch.trim() ? 1 : 0) + (model.selectedContextKind === 'all' ? 0 : 1)
+  const activeSidebarFilterCount = (model.layoutSearch.trim() !== '' ? 1 : 0) + (model.selectedContextKind === 'all' ? 0 : 1)
   const contentStatusItems = createAsyncStatusBannerItems({
     status: model.state.status,
     loading: {
@@ -49,7 +49,7 @@ export function FormationPage() {
     createWorkbenchBadgeItem({
       id: 'placed-count',
       tone: 'muted',
-      label: model.t({ zh: `${model.selectedChampions.length} 名已放置`, en: `${model.selectedChampions.length} placed` }),
+      label: model.t({ zh: `${String(model.selectedChampions.length)} 名已放置`, en: `${String(model.selectedChampions.length)} placed` }),
     }),
     createWorkbenchShareItem({
       t: model.t,
@@ -108,7 +108,7 @@ export function FormationPage() {
             status={(
               <WorkbenchToolbarBadge>
                 {activeSidebarFilterCount > 0
-                  ? model.t({ zh: `${activeSidebarFilterCount} 项条件`, en: `${activeSidebarFilterCount} active` })
+                  ? model.t({ zh: `${String(activeSidebarFilterCount)} 项条件`, en: `${String(activeSidebarFilterCount)} active` })
                   : model.t({ zh: '布局筛选待命', en: 'Filters idle' })}
               </WorkbenchToolbarBadge>
             )}

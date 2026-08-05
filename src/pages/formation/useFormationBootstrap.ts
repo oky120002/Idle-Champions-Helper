@@ -1,4 +1,4 @@
-import { useEffect, type MutableRefObject } from 'react'
+import { useEffect, type RefObject } from 'react'
 import type { NavigateFunction } from 'react-router-dom'
 import type { FormationPreset } from '../../domain/types'
 import { getErrorMessage } from './formation-model-helpers'
@@ -9,9 +9,10 @@ import {
 
 interface UseFormationBootstrapOptions extends FormationBootstrapSetters {
   navigate: NavigateFunction
-  pendingPresetRestoreRef: MutableRefObject<FormationPreset | null>
+  pendingPresetRestoreRef: RefObject<FormationPreset | null>
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook 编排，多为 setter 接线，无独立逻辑可提取
 export function useFormationBootstrap({
   navigate,
   pendingPresetRestoreRef,
@@ -29,9 +30,9 @@ export function useFormationBootstrap({
     const isDisposed = () => disposed
 
     void loadFormationBootstrapData({
+      pendingPresetRestore: pendingPresetRestoreRef.current,
       isDisposed,
       navigate,
-      pendingPresetRestore: pendingPresetRestoreRef.current,
       setState,
       setSelectedLayoutId,
       setPlacements,

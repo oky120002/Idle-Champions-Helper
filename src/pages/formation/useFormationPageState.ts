@@ -9,6 +9,7 @@ import {
   type StatusMessage,
 } from './types'
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- React hook 纯 useState 编排，无独立逻辑可提取
 export function useFormationPageState() {
   const [state, setState] = useState<FormationState>({ status: 'loading' })
   const [selectedLayoutId, setSelectedLayoutId] = useState('')

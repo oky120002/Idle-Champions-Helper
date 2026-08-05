@@ -16,6 +16,7 @@ vi.mock('../../data/client', async () => {
 })
 
 import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import {
   mockFormationPageCollections,
   mockedLoadCollection,
@@ -209,7 +210,7 @@ describe('FormationPage layout filters', () => {
     renderFormationPage()
 
     await user.click(await screen.findByRole('button', { name: '变体网格' }))
-    await user.selectOptions(screen.getAllByRole('combobox')[0]!, 'bruenor')
+    await user.selectOptions(unwrap(screen.getAllByRole('combobox')[0], 'expected first combobox'), 'bruenor')
     await user.click(screen.getByRole('button', { name: '战役' }))
 
     expect(screen.getByText('当前正在编辑的布局不在筛选结果中')).toBeInTheDocument()

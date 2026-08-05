@@ -26,7 +26,7 @@ export function IllustrationsPage() {
       title: t({ zh: '立绘目录加载失败', en: 'Failed to load illustration catalog' }),
       ...(state.status === 'error'
         ? {
-            detail: state.message
+            detail: state.message !== ''
               ? t({
                   zh: `无法读取立绘目录数据：${state.message}`,
                   en: `Unable to read illustration catalog data: ${state.message}`,

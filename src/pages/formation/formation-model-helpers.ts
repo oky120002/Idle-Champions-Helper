@@ -26,7 +26,7 @@ export function getErrorMessage(error: unknown): string {
 // 错误信息 LocaleText：原始 error.message 不可本地化（多为运行时/IO 报错），zh/en 同串；
 // 仅兜底文案「未知错误/Unknown error」双语。供 StatusMessage detail 在事件处理中直接传双语对。
 export function errorMessageLocaleText(error: unknown): LocaleText {
-  if (error instanceof Error && error.message) {
+  if (error instanceof Error && error.message !== '') {
     return { zh: error.message, en: error.message }
   }
   return { zh: '未知错误', en: 'Unknown error' }
@@ -60,7 +60,7 @@ export function buildPresetId(): string {
     return crypto.randomUUID()
   }
 
-  return `preset-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+  return `preset-${String(Date.now())}-${Math.random().toString(36).slice(2, 10)}`
 }
 
 export function convertPresetToDraft(preset: FormationPreset): FormationDraft {
@@ -97,13 +97,13 @@ export function buildDraftPromptSummary(
 
   const championCount = Object.keys(draftPrompt.preview.placements).length
   const championCountLabel =
-    locale === 'zh-CN' ? `${championCount} 名英雄` : `${championCount} champions`
+    locale === 'zh-CN' ? `${String(championCount)} 名英雄` : `${String(championCount)} champions`
 
   return `${formatDateTime(draftPrompt.preview.snapshot.updatedAt, locale)} · ${championCountLabel}`
 }
 
 export function matchesLayoutSearch(layout: FormationLayout, query: string): boolean {
-  if (!query.trim()) {
+  if (query.trim() === '') {
     return true
   }
 

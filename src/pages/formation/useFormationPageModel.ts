@@ -11,6 +11,7 @@ import { useFormationPageDerived } from './useFormationPageDerived'
 import { useFormationPageState } from './useFormationPageState'
 import type { FormationPageLocationState, FormationPageModel } from './types'
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 纯 hook 编排与 builder 接线，无独立逻辑可提取
 export function useFormationPageModel(): FormationPageModel {
   const { locale, t } = useI18n()
   const navigate = useNavigate()
@@ -33,28 +34,28 @@ export function useFormationPageModel(): FormationPageModel {
   })
 
   useFormationDraftPersistence({
-    state: pageState.state,
     editRevision: pageState.editRevision,
     isDraftPersistenceArmed: pageState.isDraftPersistenceArmed,
+    setDraftStatus: pageState.setDraftStatus,
+    state: pageState.state,
     placements: pageState.placements,
     scenarioRef: pageState.scenarioRef,
     selectedLayoutId: pageState.selectedLayoutId,
     locale,
-    setDraftStatus: pageState.setDraftStatus,
   })
 
   const derived = useFormationPageDerived({
+    layoutSearch: pageState.layoutSearch,
+    selectedContextKind: pageState.selectedContextKind,
+    activeMobileSlotId: pageState.activeMobileSlotId,
+    isSavingPreset: pageState.isSavingPreset,
+    presetForm: pageState.presetForm,
     state: pageState.state,
     selectedLayoutId: pageState.selectedLayoutId,
     placements: pageState.placements,
     draftPrompt: pageState.draftPrompt,
     locale,
     t,
-    layoutSearch: pageState.layoutSearch,
-    selectedContextKind: pageState.selectedContextKind,
-    activeMobileSlotId: pageState.activeMobileSlotId,
-    isSavingPreset: pageState.isSavingPreset,
-    presetForm: pageState.presetForm,
   })
 
   const boardActions = buildFormationBoardActions({
@@ -93,6 +94,24 @@ export function useFormationPageModel(): FormationPageModel {
     updatePresetForm: pageState.updatePresetForm,
   })
 
+  return assembleFormationPageModel({
+    locale, t, pageState, derived, boardActions, draftPromptActions, presetActions,
+  })
+}
+
+interface AssembleFormationPageModelOptions {
+  locale: 'zh-CN' | 'en-US'
+  t: ReturnType<typeof useI18n>['t']
+  pageState: ReturnType<typeof useFormationPageState>
+  derived: ReturnType<typeof useFormationPageDerived>
+  boardActions: ReturnType<typeof buildFormationBoardActions>
+  draftPromptActions: ReturnType<typeof buildFormationDraftPromptActions>
+  presetActions: ReturnType<typeof buildFormationPresetActions>
+}
+
+function assembleFormationPageModel({
+  locale, t, pageState, derived, boardActions, draftPromptActions, presetActions,
+}: AssembleFormationPageModelOptions): FormationPageModel {
   return {
     locale,
     t,

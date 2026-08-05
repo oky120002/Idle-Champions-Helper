@@ -10,9 +10,14 @@ import {
   buildFormationSnapshotPrompt,
   buildRestoreStatusDetail,
 } from '../../data/formationPersistence'
+import type {
+  FormationSnapshotPreview,
+  FormationSnapshotPrompt,
+} from '../../data/formation-persistence/types'
 import { readRecentFormationDraft, saveRecentFormationDraft } from '../../data/formationDraftStore'
 import type {
   Champion,
+  FormationDraft,
   FormationLayout,
   FormationPreset,
   ScenarioRef,
@@ -66,19 +71,8 @@ interface LoadStoredDraftPromptOptions extends BootstrapLifecycleOptions {
   champions: Champion[]
 }
 
-export async function loadFormationBootstrapData({
-  isDisposed,
-  navigate,
-  pendingPresetRestore,
-  setState,
-  setSelectedLayoutId,
-  setPlacements,
-  setScenarioRef,
-  setDraftPrompt,
-  setDraftStatus,
-  setIsDraftPersistenceArmed,
-  setActiveMobileSlotId,
-}: LoadFormationBootstrapDataOptions) {
+export async function loadFormationBootstrapData(opts: LoadFormationBootstrapDataOptions) {
+  const { isDisposed, pendingPresetRestore } = opts
   const version = await loadVersion()
   const [formationCollection, championCollection] = await Promise.all([
     loadCollectionAtVersion<FormationLayout>(version.current, 'formations'),
@@ -91,74 +85,39 @@ export async function loadFormationBootstrapData({
 
   const initialLayout = formationCollection.items[0] ?? null
 
-  setState(
+  opts.setState(
     buildReadyFormationState(
       version.current,
       formationCollection.items,
       championCollection.items,
     ),
   )
-  setSelectedLayoutId(initialLayout?.id ?? '')
-  setActiveMobileSlotId(pickPreferredSlotId(initialLayout))
-  setDraftStatus(
+  opts.setSelectedLayoutId(initialLayout?.id ?? '')
+  opts.setActiveMobileSlotId(pickPreferredSlotId(initialLayout))
+  opts.setDraftStatus(
     createInfoStatusMessage(
       { zh: '最近草稿会自动保存在当前浏览器', en: 'Recent drafts auto-save in this browser' },
       { zh: '介质为 IndexedDB；只保存在本地，不上传到外部服务。', en: 'Stored in IndexedDB; kept locally only, never uploaded.' },
     ),
   )
 
-  if (pendingPresetRestore) {
-    await restorePendingPreset({
-      isDisposed,
-      navigate,
-      pendingPresetRestore,
-      version: version.current,
-      formations: formationCollection.items,
-      champions: championCollection.items,
-      setState,
-      setSelectedLayoutId,
-      setPlacements,
-      setScenarioRef,
-      setDraftPrompt,
-      setDraftStatus,
-      setIsDraftPersistenceArmed,
-      setActiveMobileSlotId,
-    })
-    return
-  }
-
-  await loadStoredDraftPrompt({
-    isDisposed,
+  const extra = {
     version: version.current,
     formations: formationCollection.items,
     champions: championCollection.items,
-    setState,
-    setSelectedLayoutId,
-    setPlacements,
-    setScenarioRef,
-    setDraftPrompt,
-    setDraftStatus,
-    setIsDraftPersistenceArmed,
-    setActiveMobileSlotId,
-  })
+  }
+
+  if (pendingPresetRestore) {
+    await restorePendingPreset({ ...opts, ...extra, pendingPresetRestore })
+    return
+  }
+
+  await loadStoredDraftPrompt({ ...opts, ...extra })
 }
 
-export async function restorePendingPreset({
-  isDisposed,
-  navigate,
-  pendingPresetRestore,
-  version,
-  formations,
-  champions,
-  setState,
-  setSelectedLayoutId,
-  setPlacements,
-  setScenarioRef,
-  setDraftPrompt,
-  setDraftStatus,
-  setIsDraftPersistenceArmed,
-  setActiveMobileSlotId,
-}: RestorePendingPresetOptions) {
+export async function restorePendingPreset(opts: RestorePendingPresetOptions) {
+  const { isDisposed, navigate, pendingPresetRestore, version, formations, champions } = opts
+
   void navigate('/formation', { replace: true, state: null })
 
   const pendingPrompt = await buildFormationSnapshotPrompt(
@@ -173,6 +132,15 @@ export async function restorePendingPreset({
   if (isDisposed()) {
     return
   }
+
+  await applyPendingPresetOutcome(opts, pendingPrompt)
+}
+
+async function applyPendingPresetOutcome(
+  opts: RestorePendingPresetOptions,
+  pendingPrompt: FormationSnapshotPrompt<FormationDraft>,
+) {
+  const { isDisposed, pendingPresetRestore, setDraftStatus, setIsDraftPersistenceArmed } = opts
 
   if (pendingPrompt.kind !== 'restore') {
     setIsDraftPersistenceArmed(true)
@@ -200,24 +168,7 @@ export async function restorePendingPreset({
     return
   }
 
-  setState(
-    buildReadyFormationState(
-      pendingPrompt.preview.dataVersion,
-      pendingPrompt.preview.formations,
-      pendingPrompt.preview.champions,
-    ),
-  )
-  setSelectedLayoutId(restoredDraft.layoutId)
-  setPlacements(restoredDraft.placements)
-  setActiveMobileSlotId(
-    pickPreferredSlotId(
-      pendingPrompt.preview.formations.find((layout) => layout.id === restoredDraft.layoutId) ?? null,
-      restoredDraft.placements,
-    ),
-  )
-  setScenarioRef(restoredDraft.scenarioRef)
-  setIsDraftPersistenceArmed(true)
-  setDraftPrompt(null)
+  applyRestoredDraftState(pendingPrompt.preview, restoredDraft, opts)
 
   if (writeBackFailureDetail) {
     setDraftStatus(createErrorStatusMessage(
@@ -233,6 +184,31 @@ export async function restorePendingPreset({
       buildRestoreStatusDetail(pendingPrompt.preview),
     ),
   )
+}
+
+function applyRestoredDraftState(
+  preview: FormationSnapshotPreview<FormationDraft>,
+  restoredDraft: FormationDraft,
+  setters: FormationBootstrapSetters,
+) {
+  setters.setState(
+    buildReadyFormationState(
+      preview.dataVersion,
+      preview.formations,
+      preview.champions,
+    ),
+  )
+  setters.setSelectedLayoutId(restoredDraft.layoutId)
+  setters.setPlacements(restoredDraft.placements)
+  setters.setActiveMobileSlotId(
+    pickPreferredSlotId(
+      preview.formations.find((layout) => layout.id === restoredDraft.layoutId) ?? null,
+      restoredDraft.placements,
+    ),
+  )
+  setters.setScenarioRef(restoredDraft.scenarioRef)
+  setters.setIsDraftPersistenceArmed(true)
+  setters.setDraftPrompt(null)
 }
 
 export async function loadStoredDraftPrompt({

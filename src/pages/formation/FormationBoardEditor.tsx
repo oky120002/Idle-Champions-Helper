@@ -9,7 +9,7 @@ import { FormationMobileEditor } from './FormationMobileEditor'
 import type { FormationPageModel } from './types'
 
 interface FormationBoardEditorProps {
-  model: FormationPageModel
+  readonly model: FormationPageModel
 }
 
 export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
@@ -120,11 +120,13 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
       <div
         className="formation-remove-zone"
         data-testid="formation-remove-zone"
-        onDragOver={(event) => event.preventDefault()}
+        onDragOver={(event) => {
+          event.preventDefault()
+        }}
         onDrop={(event) => {
           event.preventDefault()
-          const heroId = event.dataTransfer?.getData('text/plain')
-          if (!heroId) return
+          const heroId = event.dataTransfer.getData('text/plain')
+          if (heroId === '') return
           // 仅已放置英雄可移除；HeroPicker 未放置英雄拖入此处为 no-op。
           const placement = model.selectedChampions.find((item) => item.champion.id === heroId)
           if (placement) {

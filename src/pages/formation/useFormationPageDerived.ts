@@ -37,6 +37,7 @@ interface UseFormationPageDerivedOptions {
   presetForm: PresetFormState
 }
 
+// eslint-disable-next-line sonarjs/max-lines-per-function -- 页面级状态聚合 hook：主体为 useMemo 声明，已提取全部纯函数到模块级，剩余均为 hook 调用与返回值组装
 export function useFormationPageDerived({
   state,
   selectedLayoutId,
@@ -71,9 +72,9 @@ export function useFormationPageDerived({
     const metrics = getFormationBoardMetrics(selectedLayout)
 
     return {
-      gridTemplateColumns: `repeat(${metrics.columnCount}, minmax(0, 1fr))`,
-      width: `${metrics.widthPx}px`,
-      minWidth: `${metrics.minWidthPx}px`,
+      gridTemplateColumns: `repeat(${String(metrics.columnCount)}, minmax(0, 1fr))`,
+      width: `${String(metrics.widthPx)}px`,
+      minWidth: `${String(metrics.minWidthPx)}px`,
     }
   }, [selectedLayout])
 
@@ -96,12 +97,13 @@ export function useFormationPageDerived({
       return []
     }
 
-    return [...state.champions].sort(
-      (left, right) =>
-        left.seat - right.seat ||
-        getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale)) ||
-        left.name.original.localeCompare(right.name.original),
-    )
+    return [...state.champions].sort((left, right) => {
+      const seatDiff = left.seat - right.seat
+      if (seatDiff !== 0 && !Number.isNaN(seatDiff)) return seatDiff
+      const nameDiff = getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale))
+      if (nameDiff !== 0 && !Number.isNaN(nameDiff)) return nameDiff
+      return left.name.original.localeCompare(right.name.original)
+    })
   }, [locale, state])
 
   const championById = useMemo(() => {
@@ -121,7 +123,7 @@ export function useFormationPageDerived({
       .map((slot) => {
         const championId = placements[slot.id]
 
-        if (!championId) {
+        if (championId == null || championId === '') {
           return null
         }
 
@@ -142,7 +144,7 @@ export function useFormationPageDerived({
   const activeMobileSlot =
     selectedLayout?.slots.find((slot) => slot.id === activeMobileSlotId) ?? selectedLayout?.slots[0] ?? null
   const activeMobileChampionId = activeMobileSlot ? placements[activeMobileSlot.id] ?? '' : ''
-  const activeMobileChampion = activeMobileChampionId ? championById.get(activeMobileChampionId) ?? null : null
+  const activeMobileChampion = activeMobileChampionId !== '' ? championById.get(activeMobileChampionId) ?? null : null
 
   const conflictingSeats = useMemo(
     () => findSeatConflicts(selectedChampions.map((item) => item.champion.seat)),
@@ -150,7 +152,7 @@ export function useFormationPageDerived({
   )
 
   const draftPromptChampions = useMemo(() => {
-    if (!draftPrompt || draftPrompt.kind !== 'restore') {
+    if (draftPrompt?.kind !== 'restore') {
       return []
     }
 
@@ -162,50 +164,6 @@ export function useFormationPageDerived({
 
   const canSavePreset =
     selectedChampions.length > 0 && presetForm.name.trim().length > 0 && !isSavingPreset
-
-  function getAvailableChampionsForSlot(slotId: string): Champion[] {
-    const currentHeroId = selectedChampions.find((p) => p.slotId === slotId)?.champion.id
-    const occupiedOtherSeats = new Set(
-      selectedChampions
-        .filter((p) => p.slotId !== slotId)
-        .map((p) => p.champion.seat),
-    )
-    return championOptions.filter(
-      (champion) => champion.id === currentHeroId || !occupiedOtherSeats.has(champion.seat),
-    )
-  }
-
-  function getChampionOptionLabel(champion: Champion): string {
-    return `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`
-  }
-
-  function getPresetPriorityLabel(priority: PresetPriority): string {
-    if (priority === 'high') {
-      return t({ zh: '高优先', en: 'High' })
-    }
-
-    if (priority === 'low') {
-      return t({ zh: '备用', en: 'Fallback' })
-    }
-
-    return t({ zh: '常用', en: 'Regular' })
-  }
-
-  function getLayoutFilterLabel(kind: LayoutFilterKind): string {
-    if (kind === 'campaign') {
-      return t({ zh: '战役', en: 'Campaign' })
-    }
-
-    if (kind === 'adventure') {
-      return t({ zh: '冒险', en: 'Adventure' })
-    }
-
-    if (kind === 'variant') {
-      return t({ zh: '变体', en: 'Variant' })
-    }
-
-    return t({ zh: '全部', en: 'All' })
-  }
 
   return {
     selectedLayout,
@@ -223,9 +181,57 @@ export function useFormationPageDerived({
     conflictingSeats,
     draftPromptChampions,
     canSavePreset,
-    getAvailableChampionsForSlot,
-    getChampionOptionLabel,
-    getPresetPriorityLabel,
-    getLayoutFilterLabel,
+    getAvailableChampionsForSlot: (slotId: string) => filterAvailableChampionsForSlot(slotId, selectedChampions, championOptions),
+    getChampionOptionLabel: (champion: Champion) => formatChampionOptionLabel(champion, locale),
+    getPresetPriorityLabel: (priority: PresetPriority) => formatPresetPriorityLabel(priority, t),
+    getLayoutFilterLabel: (kind: LayoutFilterKind) => formatLayoutFilterLabel(kind, t),
   }
+}
+
+function filterAvailableChampionsForSlot(
+  slotId: string,
+  selectedChampions: SelectedChampionPlacement[],
+  championOptions: Champion[],
+): Champion[] {
+  const currentHeroId = selectedChampions.find((p) => p.slotId === slotId)?.champion.id
+  const occupiedOtherSeats = new Set(
+    selectedChampions
+      .filter((p) => p.slotId !== slotId)
+      .map((p) => p.champion.seat),
+  )
+  return championOptions.filter(
+    (champion) => champion.id === currentHeroId || !occupiedOtherSeats.has(champion.seat),
+  )
+}
+
+function formatChampionOptionLabel(champion: Champion, locale: AppLocale): string {
+  return `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`
+}
+
+function formatPresetPriorityLabel(priority: PresetPriority, t: FormationPageTranslator): string {
+  if (priority === 'high') {
+    return t({ zh: '高优先', en: 'High' })
+  }
+
+  if (priority === 'low') {
+    return t({ zh: '备用', en: 'Fallback' })
+  }
+
+  return t({ zh: '常用', en: 'Regular' })
+}
+
+function formatLayoutFilterLabel(kind: LayoutFilterKind, t: FormationPageTranslator): string {
+  if (kind === 'campaign') {
+    return t({ zh: '战役', en: 'Campaign' })
+  }
+
+  if (kind === 'adventure') {
+    return t({ zh: '冒险', en: 'Adventure' })
+  }
+
+  if (kind === 'variant') {
+    return t({ zh: '变体', en: 'Variant' })
+  }
+
+  return t({ zh: '全部', en: 'All' })
 }

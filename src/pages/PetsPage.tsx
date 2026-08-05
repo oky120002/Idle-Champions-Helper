@@ -25,7 +25,7 @@ export function PetsPage() {
       title: t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' }),
       ...(state.status === 'error'
         ? {
-            detail: state.message
+            detail: state.message !== ''
               ? t({
                   zh: `无法读取 pets 数据：${state.message}`,
                   en: `Unable to read pets data: ${state.message}`,
