@@ -55,11 +55,7 @@ export function buildSharedFilterActions({
   }
 
   return {
-    updateSearch: (value: string) => {
-      runFilterMutation(() => {
-        setSearch(value)
-      })
-    },
+    updateSearch: (value: string) => runFilterMutation(() => setSearch(value)),
     clearAllFilters: () => {
       runFilterMutation(() => {
         setSearch('')
@@ -86,48 +82,30 @@ export function buildSharedFilterActions({
     },
     resetSeats: () => runFilterMutation(() => setSelectedSeats([])),
     toggleSeat: (seat: number) =>
-      runFilterMutation(() => {
-        setSelectedSeats((current) => toggleSelectionValue(current, seat))
-      }),
+      runFilterMutation(() => setSelectedSeats((current) => toggleSelectionValue(current, seat))),
     resetRole: () => runFilterMutation(() => setSelectedRoles([])),
     toggleRole: (role: string) =>
-      runFilterMutation(() => {
-        setSelectedRoles((current) => toggleSelectionValue(current, role))
-      }),
+      runFilterMutation(() => setSelectedRoles((current) => toggleSelectionValue(current, role))),
     resetAffiliation: () => runFilterMutation(() => setSelectedAffiliations([])),
     toggleAffiliation: (affiliation: string) =>
-      runFilterMutation(() => {
-        setSelectedAffiliations((current) => toggleSelectionValue(current, affiliation))
-      }),
+      runFilterMutation(() => setSelectedAffiliations((current) => toggleSelectionValue(current, affiliation))),
     resetRace: () => runFilterMutation(() => setSelectedRaces([])),
     toggleRace: (race: string) =>
-      runFilterMutation(() => {
-        setSelectedRaces((current) => toggleSelectionValue(current, race))
-      }),
+      runFilterMutation(() => setSelectedRaces((current) => toggleSelectionValue(current, race))),
     resetGender: () => runFilterMutation(() => setSelectedGenders([])),
     toggleGender: (gender: string) =>
-      runFilterMutation(() => {
-        setSelectedGenders((current) => toggleSelectionValue(current, gender))
-      }),
+      runFilterMutation(() => setSelectedGenders((current) => toggleSelectionValue(current, gender))),
     resetAlignment: () => runFilterMutation(() => setSelectedAlignments([])),
     toggleAlignment: (alignment: string) =>
-      runFilterMutation(() => {
-        setSelectedAlignments((current) => toggleSelectionValue(current, alignment))
-      }),
+      runFilterMutation(() => setSelectedAlignments((current) => toggleSelectionValue(current, alignment))),
     resetProfession: () => runFilterMutation(() => setSelectedProfessions([])),
     toggleProfession: (profession: string) =>
-      runFilterMutation(() => {
-        setSelectedProfessions((current) => toggleSelectionValue(current, profession))
-      }),
+      runFilterMutation(() => setSelectedProfessions((current) => toggleSelectionValue(current, profession))),
     resetAcquisition: () => runFilterMutation(() => setSelectedAcquisitions([])),
     toggleAcquisition: (acquisition: string) =>
-      runFilterMutation(() => {
-        setSelectedAcquisitions((current) => toggleSelectionValue(current, acquisition))
-      }),
+      runFilterMutation(() => setSelectedAcquisitions((current) => toggleSelectionValue(current, acquisition))),
     resetMechanic: () => runFilterMutation(() => setSelectedMechanics([])),
     toggleMechanic: (mechanic: string) =>
-      runFilterMutation(() => {
-        setSelectedMechanics((current) => toggleSelectionValue(current, mechanic))
-      }),
+      runFilterMutation(() => setSelectedMechanics((current) => toggleSelectionValue(current, mechanic))),
   }
 }

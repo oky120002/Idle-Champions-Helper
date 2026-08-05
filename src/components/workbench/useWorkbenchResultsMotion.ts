@@ -148,9 +148,7 @@ export function useWorkbenchResultsMotion({
     }
   }, [])
 
-  const scrollResultsToTop = useCallback(() => {
-    animatePaneScroll(getResultsPaneTargetTop())
-  }, [animatePaneScroll])
+  const scrollResultsToTop = useCallback(() => animatePaneScroll(getResultsPaneTargetTop()), [animatePaneScroll])
 
   useEffect(() => {
     if (stateStatus !== 'ready' || hasAttemptedScrollRestoreRef.current || typeof window === 'undefined') {

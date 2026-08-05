@@ -17,13 +17,9 @@ function renderUserDataPage() {
 }
 
 describe('UserDataPage import modes', () => {
-  beforeEach(() => {
-    window.localStorage.clear()
-  })
+  beforeEach(() => window.localStorage.clear())
 
-  afterEach(() => {
-    window.localStorage.clear()
-  })
+  afterEach(() => window.localStorage.clear())
 
   it('切换导入方式会重置解析状态，并且示例只填当前方式字段', async () => {
     const user = userEvent.setup()
@@ -71,9 +67,7 @@ describe('UserDataPage import modes', () => {
     await user.click(screen.getByRole('button', { name: '填入脱敏示例' }))
     await user.click(screen.getByRole('button', { name: '读取并校验' }))
 
-    await waitFor(() => {
-      expect(screen.getByText('导入方式')).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText('导入方式')).toBeInTheDocument())
 
     expect(screen.queryByText('推断 network')).not.toBeInTheDocument()
     expect(screen.queryByText('mobile')).not.toBeInTheDocument()

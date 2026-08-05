@@ -38,9 +38,7 @@ describe('collectHeroDpsContributions', () => {
     expect(c).toEqual([{ value: 100, qualifier: null }])
   })
 
-  it('global_dps effect_def 不收（属 globalBuff 通道）', () => {
-    expect(collectHeroDpsContributions([effect('effect_def,930', 100, 1)], templates)).toEqual([])
-  })
+  it('global_dps effect_def 不收（属 globalBuff 通道）', () => expect(collectHeroDpsContributions([effect('effect_def,930', 100, 1)], templates)).toEqual([]))
 
   it('targets type:heroes 白名单 → 收集为 heroId 限定（atd_3f8b5d17e2）', () => {
     // {type:"heroes",hero_ids:[...]} 经 isFilterLikeTarget 解析为 heroId OR 谓词 + position=any。
@@ -57,16 +55,10 @@ describe('collectHeroDpsContributions', () => {
     })
   })
 
-  it('slots 位置限定（非 filter-like）→ 保守丢弃', () => {
-    expect(collectHeroDpsContributions([effect('effect_def,192', 50, 40)], templates)).toEqual([])
-  })
+  it('slots 位置限定（非 filter-like）→ 保守丢弃', () => expect(collectHeroDpsContributions([effect('effect_def,192', 50, 40)], templates)).toEqual([]))
 
-  it('裸 effect_string（非 effect_def 引用）不收', () => {
-    expect(collectHeroDpsContributions([effect('hero_dps_multiplier_mult,$replace', 100, 1)], templates)).toEqual([])
-  })
+  it('裸 effect_string（非 effect_def 引用）不收', () => expect(collectHeroDpsContributions([effect('hero_dps_multiplier_mult,$replace', 100, 1)], templates)).toEqual([]))
 
-  it('无 templates → 全部跳过（向后兼容）', () => {
-    expect(collectHeroDpsContributions([effect('effect_def,455', 100, 1)], null)).toEqual([])
-  })
+  it('无 templates → 全部跳过（向后兼容）', () => expect(collectHeroDpsContributions([effect('effect_def,455', 100, 1)], null)).toEqual([]))
 })
 

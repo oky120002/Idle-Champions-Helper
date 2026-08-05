@@ -50,11 +50,7 @@ describe('buildEngine', () => {
     expect(unwrap(hits[0], '应命中 伤害').bucket).toBe('body')
   })
 
-  it('空查询返回空', () => {
-    expect(buildEngine(collection).search('   ', 5)).toEqual([])
-  })
+  it('空查询返回空', () => expect(buildEngine(collection).search('   ', 5)).toEqual([]))
 
-  it('limit 截断结果', () => {
-    expect(buildEngine(collection).search('布鲁诺', 0)).toEqual([])
-  })
+  it('limit 截断结果', () => expect(buildEngine(collection).search('布鲁诺', 0)).toEqual([]))
 })

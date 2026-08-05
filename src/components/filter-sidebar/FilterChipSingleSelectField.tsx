@@ -35,9 +35,7 @@ export function FilterChipSingleSelectField<T extends string>({
             type="button"
             className={value === option.value ? 'filter-chip filter-chip--active' : 'filter-chip'}
             aria-pressed={value === option.value}
-            onClick={() => {
-              onChange(option.value)
-            }}
+            onClick={() => onChange(option.value)}
           >
             {option.label}
             {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}

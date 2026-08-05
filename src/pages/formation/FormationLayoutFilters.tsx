@@ -62,7 +62,7 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       id: 'scenario-type',
       label: t({ zh: '场景类型', en: 'Scenario type' }),
       value: selectedContextKind,
-      onChange: (value: string) => { setSelectedContextKind(value as LayoutFilterKind) },
+      onChange: (value: string) => setSelectedContextKind(value as LayoutFilterKind),
       hint: t({
         zh: '筛选只影响布局库，不会自动清空正在编辑的布局。',
         en: 'Filters only affect the library and never clear the layout currently being edited.',
@@ -104,7 +104,7 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
         label: getLayoutFilterLabel(kind),
       })),
       isActive: isSelected,
-      onSelect: () => { handleSelectLayout(layout.id) },
+      onSelect: () => handleSelectLayout(layout.id),
     }
   })
   const resultsDescription = filteredLayouts.length > 0

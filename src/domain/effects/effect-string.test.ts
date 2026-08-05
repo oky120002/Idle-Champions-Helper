@@ -11,9 +11,7 @@ describe('parseEffectPayload', () => {
     expect(payload?.args).toEqual(['100'])
   })
 
-  it('非法 kind（数字开头）仍返回 null', () => {
-    expect(parseEffectPayload('123_bad,100')).toBeNull()
-  })
+  it('非法 kind（数字开头）仍返回 null', () => expect(parseEffectPayload('123_bad,100')).toBeNull())
 
   it('空串与纯空白返回 null', () => {
     expect(parseEffectPayload('')).toBeNull()

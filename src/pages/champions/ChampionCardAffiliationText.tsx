@@ -18,7 +18,7 @@ export function ChampionCardAffiliationText({
     const element = textRef.current
 
     if (element === null) {
-      return undefined
+      return
     }
 
     const baseFontSize = baseFontSizeRef.current ?? parseFloat(window.getComputedStyle(element).fontSize)
@@ -47,17 +47,13 @@ export function ChampionCardAffiliationText({
     applyFontSize()
 
     if (typeof ResizeObserver === 'undefined') {
-      return undefined
+      return
     }
 
-    const resizeObserver = new ResizeObserver(() => {
-      applyFontSize()
-    })
+    const resizeObserver = new ResizeObserver(() => applyFontSize())
     resizeObserver.observe(element)
 
-    return () => {
-      resizeObserver.disconnect()
-    }
+    return () => resizeObserver.disconnect()
   }, [text])
 
   return (

@@ -65,7 +65,7 @@ export function useFormationPageDerived({
 
   const formationBoardStyle = useMemo(() => {
     if (!selectedLayout) {
-      return undefined
+      return
     }
 
     const metrics = getFormationBoardMetrics(selectedLayout)

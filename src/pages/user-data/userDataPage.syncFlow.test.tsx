@@ -53,11 +53,11 @@ async function resetDatabase(): Promise<void> {
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-    request.onerror = () => { reject(request.error ?? new Error('删除测试数据库失败。')) }
+    request.onerror = () => reject(request.error ?? new Error('删除测试数据库失败。'))
     // 阻塞即失败（与其余测试文件 plannerOverridesStore/formationStores/client 一致）：
     // 假装成功（resolve）会放过未删的库，残留状态泄漏到下一测。阻塞说明有未关连接，需暴露而非掩盖。
-    request.onblocked = () => { reject(new Error('删除测试数据库被阻塞。')) }
-    request.onsuccess = () => { resolve() }
+    request.onblocked = () => reject(new Error('删除测试数据库被阻塞。'))
+    request.onsuccess = () => resolve()
   })
 }
 
@@ -369,16 +369,12 @@ describe('user data sync flow', () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: '使用本地开发快照' }))
 
-    await waitFor(() => {
-      expect(screen.getByText(/当前选中源拥有英雄 1 个/)).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText(/当前选中源拥有英雄 1 个/)).toBeInTheDocument())
 
     await user.click(screen.getByRole('button', { name: '刷新本地开发快照' }))
 
     expect(await screen.findByRole('status')).toHaveTextContent('已刷新本地开发快照')
-    await waitFor(() => {
-      expect(screen.getByText(/当前选中源拥有英雄 2 个/)).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText(/当前选中源拥有英雄 2 个/)).toBeInTheDocument())
 
     expect(fetchMock).toHaveBeenNthCalledWith(1, '/__dev/private-user-data/user-profile-payloads', {
       cache: 'no-store',

@@ -66,9 +66,7 @@ describe('ChampionsPage filters', () => {
 
     await user.click(screen.getByRole('button', { name: '1 号位' }))
 
-    await waitFor(() => {
-      expect(screen.queryByText('阿尔法')).not.toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.queryByText('阿尔法')).not.toBeInTheDocument())
 
     expect(screen.getByText('贝塔')).toBeInTheDocument()
     expect(screen.getByText('伽马')).toBeInTheDocument()
@@ -212,9 +210,7 @@ describe('ChampionsPage filters', () => {
 
     await user.click(screen.getByRole('button', { name: '清空特殊机制：减速控制' }))
 
-    await waitFor(() => {
-      expect(screen.getByText('贝塔')).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText('贝塔')).toBeInTheDocument())
 
     expect(screen.getByText('阿尔法')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: '清空特殊机制：减速控制' })).not.toBeInTheDocument()

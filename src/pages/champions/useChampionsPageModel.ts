@@ -104,15 +104,11 @@ export function useChampionsPageModel(): ChampionsPageModel {
       motion.prepareResultsViewportTransition('visibility')
       filterState.setShowAllResults((current) => !current)
     },
-    randomizeResultOrder: () => {
-      setRandomOrderSeed((current) => (current === null ? 1 : current + 1))
-    },
+    randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
     scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,
     getMechanicCategoryHint: (groupId) => getMechanicCategoryHint(groupId, t),
-    saveListScroll: () => {
-      saveWorkbenchResultsPaneScroll('champions', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0)
-    },
+    saveListScroll: () => saveWorkbenchResultsPaneScroll('champions', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0),
     locationSearch: filterState.locationSearch,
   }
 }

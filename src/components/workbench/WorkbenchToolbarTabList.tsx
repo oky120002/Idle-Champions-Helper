@@ -37,9 +37,7 @@ export function WorkbenchToolbarTabList({
                 ? 'workbench-page__toolbar-tab workbench-page__toolbar-tab--active'
                 : 'workbench-page__toolbar-tab'
             }
-            onClick={() => {
-              onChange(item.id)
-            }}
+            onClick={() => onChange(item.id)}
           >
             {item.label}
           </button>

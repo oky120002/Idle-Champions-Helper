@@ -48,9 +48,7 @@ describe('ChampionDetailPage navigation', () => {
     expect(specializationsTab).toHaveAttribute('aria-selected', 'true')
     expect(abilitiesTab).toHaveAttribute('aria-selected', 'false')
     expect(screen.queryByText('快速索引')).not.toBeInTheDocument()
-    await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-specializations')
-    })
+    await waitFor(() => expect(window.location.hash).toBe('#/champions/7#section-specializations'))
   })
 
   it('点击 tab 后会同步高亮和 hash', async () => {
@@ -62,9 +60,7 @@ describe('ChampionDetailPage navigation', () => {
 
     expect(screen.getByRole('tab', { name: '天赋' })).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-selected', 'false')
-    await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-feats')
-    })
+    await waitFor(() => expect(window.location.hash).toBe('#/champions/7#section-feats'))
   })
 
   it('带旧分区 hash 进入时会映射到新 tab', async () => {
@@ -76,9 +72,7 @@ describe('ChampionDetailPage navigation', () => {
     await waitFor(() => {
       expect(screen.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-selected', 'true')
     })
-    await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-abilities')
-    })
+    await waitFor(() => expect(window.location.hash).toBe('#/champions/7#section-abilities'))
   })
 
   it('切换 tab 后不会再被初始 hash 定位拉回原处', async () => {
@@ -110,8 +104,6 @@ describe('ChampionDetailPage navigation', () => {
       expect(screen.getByRole('tab', { name: '天赋' })).toHaveAttribute('aria-selected', 'true')
     })
 
-    await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-feats')
-    })
+    await waitFor(() => expect(window.location.hash).toBe('#/champions/7#section-feats'))
   })
 })

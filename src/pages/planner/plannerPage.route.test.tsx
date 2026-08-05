@@ -183,9 +183,9 @@ async function resetDatabase(): Promise<void> {
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-    request.onerror = () => { reject(request.error ?? new Error('delete failed')) }
-    request.onblocked = () => { resolve() }
-    request.onsuccess = () => { resolve() }
+    request.onerror = () => reject(request.error ?? new Error('delete failed'))
+    request.onblocked = () => resolve()
+    request.onsuccess = () => resolve()
   })
 }
 

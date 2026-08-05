@@ -77,7 +77,5 @@ describe('normalizeChampionAbility', () => {
     expect(a.effects).toEqual(['hero_dps_multiplier_mult,0'])
   })
 
-  it('无 ability → null', () => {
-    expect(normalizeChampionAbility(undefined, new Map())).toBeNull()
-  })
+  it('无 ability → null', () => expect(normalizeChampionAbility(undefined, new Map())).toBeNull())
 })

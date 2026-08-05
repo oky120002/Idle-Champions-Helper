@@ -41,9 +41,7 @@ export function SegmentedButtonGroup<T extends string>({
             }
             {...(isTablist ? { role: 'tab', 'aria-selected': isActive } : { 'aria-pressed': isActive })}
             {...(item.disabled === true ? { disabled: true } : {})}
-            onClick={() => {
-              onChange(item.value)
-            }}
+            onClick={() => onChange(item.value)}
           >
             {item.label}
           </button>

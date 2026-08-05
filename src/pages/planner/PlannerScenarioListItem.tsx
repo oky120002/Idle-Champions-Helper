@@ -15,7 +15,7 @@ export function PlannerScenarioListItem({ record, isSelected, onSelect }: Planne
       <button
         type="button"
         className={`planner-scenario-selection__item${isSelected ? ' planner-scenario-selection__item--selected' : ''}`}
-        onClick={() => { onSelect(record.id) }}
+        onClick={() => onSelect(record.id)}
       >
         <span className="planner-scenario-selection__item-topline">
           <span className="planner-scenario-selection__item-name">{record.name}</span>

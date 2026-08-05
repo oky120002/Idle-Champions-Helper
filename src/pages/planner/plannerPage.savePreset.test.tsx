@@ -19,9 +19,9 @@ async function resetDatabase(): Promise<void> {
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-    request.onerror = () => { reject(request.error ?? new Error('delete failed')) }
-    request.onblocked = () => { resolve() }
-    request.onsuccess = () => { resolve() }
+    request.onerror = () => reject(request.error ?? new Error('delete failed'))
+    request.onblocked = () => resolve()
+    request.onsuccess = () => resolve()
   })
 }
 
@@ -62,9 +62,7 @@ describe('save planner result as preset', () => {
 
     await user.click(screen.getByRole('button', { name: /保存/i }))
 
-    await waitFor(() => {
-      expect(screen.getByText(/已保存/i)).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText(/已保存/i)).toBeInTheDocument())
     await expect(listFormationPresets()).resolves.toHaveLength(1)
   })
 
@@ -75,9 +73,7 @@ describe('save planner result as preset', () => {
 
     await user.click(screen.getByRole('button', { name: /保存/i }))
 
-    await waitFor(() => {
-      expect(screen.getByText(/已保存/i)).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText(/已保存/i)).toBeInTheDocument())
 
     const presets = await listFormationPresets()
     expect(presets[0]).toMatchObject({

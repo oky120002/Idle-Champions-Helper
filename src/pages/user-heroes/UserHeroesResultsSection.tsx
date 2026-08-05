@@ -25,17 +25,13 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
     const pane = model.resultsPaneRef.current
 
     if (!pane || !openFlyout) {
-      return undefined
+      return
     }
 
-    const handleScroll = () => {
-      setOpenFlyout(null)
-    }
+    const handleScroll = () => setOpenFlyout(null)
 
     pane.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      pane.removeEventListener('scroll', handleScroll)
-    }
+    return () => pane.removeEventListener('scroll', handleScroll)
   }, [model.resultsPaneRef, openFlyout])
 
   const openTile = useMemo(() => {
@@ -72,9 +68,7 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
         title="用户英雄矩阵"
         highlightLabel="高亮已拥有"
         activeMetricId={model.activeRosterMetricFilterId}
-        onMetricToggle={(metricId) => {
-          model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId)
-        }}
+        onMetricToggle={(metricId) => model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId)}
       />
 
       {!hasMatches ? (
@@ -145,9 +139,7 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
           returnToPath="/user-heroes"
           returnLabel={{ zh: '返回用户英雄', en: 'Back to user heroes' }}
           anchorRect={openFlyout.anchorRect}
-          onClose={() => {
-            setOpenFlyout(null)
-          }}
+          onClose={() => setOpenFlyout(null)}
           onNavigate={model.saveListScroll}
         />
       ) : null}

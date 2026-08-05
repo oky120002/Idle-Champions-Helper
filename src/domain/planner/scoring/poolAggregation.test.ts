@@ -67,7 +67,5 @@ describe('productOfPoolMultipliers', () => {
     expect(productOfPoolMultipliers(shared)).toBe(12)
   })
 
-  it('空 Map → 1', () => {
-    expect(productOfPoolMultipliers(new Map())).toBe(1)
-  })
+  it('空 Map → 1', () => expect(productOfPoolMultipliers(new Map())).toBe(1))
 })

@@ -50,9 +50,7 @@ export function PlannerTopLineups({ results, selectedIndex, championById, onSele
                 ]
                   .filter(Boolean)
                   .join(' ')}
-                onClick={() => {
-                  onSelect(index)
-                }}
+                onClick={() => onSelect(index)}
               >
                 <span className="planner-top-lineups__tab-carry">{carryName}</span>
                 <span className="planner-top-lineups__tab-score">{result.objectiveValue}</span>

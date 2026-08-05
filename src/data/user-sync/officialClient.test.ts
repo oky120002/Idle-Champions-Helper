@@ -8,33 +8,19 @@ import {
 } from './officialClient'
 
 describe('official read-only client', () => {
-  it('允许 getuserdetails 调用', () => {
-    expect(isAllowedEndpoint('getuserdetails')).toBe(true)
-  })
+  it('允许 getuserdetails 调用', () => expect(isAllowedEndpoint('getuserdetails')).toBe(true))
 
-  it('允许 getcampaigndetails 调用', () => {
-    expect(isAllowedEndpoint('getcampaigndetails')).toBe(true)
-  })
+  it('允许 getcampaigndetails 调用', () => expect(isAllowedEndpoint('getcampaigndetails')).toBe(true))
 
-  it('允许 getallformationsaves 调用', () => {
-    expect(isAllowedEndpoint('getallformationsaves')).toBe(true)
-  })
+  it('允许 getallformationsaves 调用', () => expect(isAllowedEndpoint('getallformationsaves')).toBe(true))
 
-  it('拒绝 claim 写入式调用', () => {
-    expect(isAllowedEndpoint('claim')).toBe(false)
-  })
+  it('拒绝 claim 写入式调用', () => expect(isAllowedEndpoint('claim')).toBe(false))
 
-  it('拒绝 purchase 写入式调用', () => {
-    expect(isAllowedEndpoint('purchase')).toBe(false)
-  })
+  it('拒绝 purchase 写入式调用', () => expect(isAllowedEndpoint('purchase')).toBe(false))
 
-  it('拒绝 save 写入式调用', () => {
-    expect(isAllowedEndpoint('save')).toBe(false)
-  })
+  it('拒绝 save 写入式调用', () => expect(isAllowedEndpoint('save')).toBe(false))
 
-  it('拒绝 redeem 写入式调用', () => {
-    expect(isAllowedEndpoint('redeem')).toBe(false)
-  })
+  it('拒绝 redeem 写入式调用', () => expect(isAllowedEndpoint('redeem')).toBe(false))
 
   it('buildOfficialUrl 对允许端点返回 URL', () => {
     const url = buildOfficialUrl({

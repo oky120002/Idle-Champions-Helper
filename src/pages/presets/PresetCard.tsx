@@ -123,21 +123,21 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
             icon: <ArchiveRestore aria-hidden="true" strokeWidth={1.9} />,
             tone: 'secondary',
             disabled: view.prompt.kind !== 'restore',
-            onClick: () => { restorePreset(view) },
+            onClick: () => restorePreset(view),
           },
           {
             id: 'edit-preset',
             label: t({ zh: '编辑', en: 'Edit' }),
             icon: <Pencil aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
-            onClick: () => { startEditingPreset(view.preset) },
+            onClick: () => startEditingPreset(view.preset),
           },
           {
             id: 'confirm-delete',
             label: t({ zh: '确认删除', en: 'Confirm delete' }),
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             hidden: !isDeleteConfirming,
-            onClick: () => { deletePreset(view.preset) },
+            onClick: () => deletePreset(view.preset),
           },
           {
             id: 'cancel-delete',
@@ -153,7 +153,7 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: isDeleteConfirming,
-            onClick: () => { openDeleteConfirm(view.preset.id) },
+            onClick: () => openDeleteConfirm(view.preset.id),
           },
         ]}
       />

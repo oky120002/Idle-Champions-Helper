@@ -727,9 +727,7 @@ function processIllustrationPng(pngBuffer: Buffer): ProcessedPng {
 
 async function downloadRawAsset(task: { remoteUrl: string }): Promise<Buffer> {
   const controller = new AbortController()
-  const timer = setTimeout(() => {
-    controller.abort()
-  }, FETCH_TIMEOUT_MS)
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
 
   try {
     const response = await fetch(task.remoteUrl, {

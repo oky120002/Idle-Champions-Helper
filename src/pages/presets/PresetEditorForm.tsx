@@ -35,7 +35,7 @@ export function PresetEditorForm({ model, view }: Readonly<PresetEditorFormProps
             label: t({ zh: '保存修改', en: 'Save changes' }),
             tone: 'secondary',
             disabled: editor.name.trim().length === 0,
-            onClick: () => { savePresetEdit(view.preset) },
+            onClick: () => savePresetEdit(view.preset),
           },
           {
             id: 'cancel-edit',

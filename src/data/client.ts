@@ -60,7 +60,7 @@ async function withCollectionStore<R>(
   try {
     database = await openAppDatabase()
   } catch {
-    return undefined
+    return
   }
 
   try {
@@ -69,7 +69,7 @@ async function withCollectionStore<R>(
     await waitForTransaction(transaction)
     return result
   } catch {
-    return undefined
+    return
   } finally {
     database.close()
   }
@@ -80,7 +80,7 @@ async function readCollectionCache<T>(cacheKey: string, name: string): Promise<D
     requestToPromise(store.get(cacheKey) as IDBRequest<unknown>),
   )
   if (raw === undefined) {
-    return undefined
+    return
   }
 
   const result = getCollectionReadSchema(name).safeParse(raw)

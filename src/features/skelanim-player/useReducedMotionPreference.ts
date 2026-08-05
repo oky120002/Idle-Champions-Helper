@@ -6,19 +6,15 @@ export function useReducedMotionPreference() {
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-      return undefined
+      return
     }
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const handleChange = (event: MediaQueryListEvent) => {
-      setPrefersReducedMotion(event.matches)
-    }
+    const handleChange = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches)
 
     if (typeof mediaQuery.addEventListener === 'function') {
       mediaQuery.addEventListener('change', handleChange)
-      return () => {
-        mediaQuery.removeEventListener('change', handleChange)
-      }
+      return () => mediaQuery.removeEventListener('change', handleChange)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-deprecated -- 旧浏览器（Safari < 14）无 addEventListener，保留 addListener 回退确保语义不变

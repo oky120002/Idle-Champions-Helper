@@ -43,9 +43,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
                 ? 'variant-detail-tabs__button variant-detail-tabs__button--active'
                 : 'variant-detail-tabs__button'
             }
-            onClick={() => {
-              selectDetailTab(tabId)
-            }}
+            onClick={() => selectDetailTab(tabId)}
           >
             {getTabLabel(tabId, locale)}
           </button>

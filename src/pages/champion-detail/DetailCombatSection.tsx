@@ -94,9 +94,7 @@ export function DetailCombatSection({
                       type="button"
                       className={isActive ? 'upgrade-filter-chip upgrade-filter-chip--active' : 'upgrade-filter-chip'}
                       aria-pressed={isActive}
-                      onClick={() => {
-                        toggleLedgerFilter(option.key)
-                      }}
+                      onClick={() => toggleLedgerFilter(option.key)}
                     >
                       <span className="upgrade-filter-chip__label">{option.label}</span>
                       <span className="upgrade-filter-chip__count">{formatNumber(option.count, locale)}</span>

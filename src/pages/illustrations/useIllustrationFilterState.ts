@@ -100,7 +100,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
 
   useLayoutEffect(() => {
     if (normalizedSearchString === lastAppliedSearchStringRef.current) {
-      return undefined
+      return
     }
 
     lastAppliedSearchStringRef.current = normalizedSearchString
@@ -108,7 +108,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
 
     if (currentFilterSearch === normalizedSearchString) {
       pendingLocationSyncSearchRef.current = null
-      return undefined
+      return
     }
 
     const nextFilters = readInitialFilterState(location.search)
@@ -158,7 +158,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     setSelectedAcquisitions,
     setSelectedMechanics,
     setShowAllResults,
-    toggleIdentityFiltersExpanded: () => { setIdentityFiltersExpanded((current) => !current) },
-    toggleMetaFiltersExpanded: () => { setMetaFiltersExpanded((current) => !current) },
+    toggleIdentityFiltersExpanded: () => setIdentityFiltersExpanded((current) => !current),
+    toggleMetaFiltersExpanded: () => setMetaFiltersExpanded((current) => !current),
   }
 }

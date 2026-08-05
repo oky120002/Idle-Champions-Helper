@@ -70,9 +70,7 @@ describe('computeActualBlessingGlobalBuff', () => {
 })
 
 describe('combineGlobalBuffMultipliers', () => {
-  it('空 → 1', () => {
-    expect(combineGlobalBuffMultipliers([])).toBe(1)
-  })
+  it('空 → 1', () => expect(combineGlobalBuffMultipliers([])).toBe(1))
 
   it('patron(55.7) + blessing(68) add pool 合并 → 122.7（非相乘）', () => {
     const patron = 1 + 5470 / 100
@@ -80,11 +78,7 @@ describe('combineGlobalBuffMultipliers', () => {
     expect(combineGlobalBuffMultipliers([patron, blessing])).toBeCloseTo(1 + (5470 + 6700) / 100, 1)
   })
 
-  it('单个 mult → 原值', () => {
-    expect(combineGlobalBuffMultipliers([55.7])).toBeCloseTo(55.7, 5)
-  })
+  it('单个 mult → 原值', () => expect(combineGlobalBuffMultipliers([55.7])).toBeCloseTo(55.7, 5))
 
-  it('全是 1 → 1', () => {
-    expect(combineGlobalBuffMultipliers([1, 1])).toBe(1)
-  })
+  it('全是 1 → 1', () => expect(combineGlobalBuffMultipliers([1, 1])).toBe(1))
 })

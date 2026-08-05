@@ -25,9 +25,7 @@ export function FilterSingleSelectField<T extends string>({
 }: FilterSingleSelectFieldProps<T>) {
   return (
     <FieldGroup label={label} hint={hint} as="label" className={className}>
-      <select className="select-input" value={value} onChange={(event) => {
-        onChange(event.target.value as T)
-      }}>
+      <select className="select-input" value={value} onChange={(event) => onChange(event.target.value as T)}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

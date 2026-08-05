@@ -102,12 +102,8 @@ export function ChampionsAdditionalFilters({ model }: ChampionsAdditionalFilters
         isMetaExpanded: isMetaFiltersExpanded,
       }}
       actions={{
-        toggleIdentityExpanded: () => {
-          setIdentityFiltersExpanded(!isIdentityFiltersExpanded)
-        },
-        toggleMetaExpanded: () => {
-          setMetaFiltersExpanded(!isMetaFiltersExpanded)
-        },
+        toggleIdentityExpanded: () => setIdentityFiltersExpanded(!isIdentityFiltersExpanded),
+        toggleMetaExpanded: () => setMetaFiltersExpanded(!isMetaFiltersExpanded),
         resetRace,
         toggleRace,
         resetGender,

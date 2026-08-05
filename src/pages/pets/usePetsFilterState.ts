@@ -51,7 +51,7 @@ export function usePetsFilterState() {
 
   useLayoutEffect(() => {
     if (normalizedLocationSearch === lastAppliedLocationSearchRef.current) {
-      return undefined
+      return
     }
 
     lastAppliedLocationSearchRef.current = normalizedLocationSearch
@@ -59,7 +59,7 @@ export function usePetsFilterState() {
 
     if (currentFilterSearch === normalizedLocationSearch) {
       pendingLocationSyncSearchRef.current = null
-      return undefined
+      return
     }
 
     const nextFilters = readInitialPetsFilterState(location.search)

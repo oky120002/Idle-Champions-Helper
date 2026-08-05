@@ -27,13 +27,9 @@ describe('resolveEffectDefinitionKeys', () => {
     ])
   })
 
-  it('裸 effect_string → null（调用方按裸逻辑处理）', () => {
-    expect(resolveEffectDefinitionKeys('global_dps_multiplier_mult,$replace', templates)).toBeNull()
-  })
+  it('裸 effect_string → null（调用方按裸逻辑处理）', () => expect(resolveEffectDefinitionKeys('global_dps_multiplier_mult,$replace', templates)).toBeNull())
 
-  it('template 缺该 id → null', () => {
-    expect(resolveEffectDefinitionKeys('effect_def,999', templates)).toBeNull()
-  })
+  it('template 缺该 id → null', () => expect(resolveEffectDefinitionKeys('effect_def,999', templates)).toBeNull())
 
   it('无 templates → null（向后兼容：未导入 effect-definitions）', () => {
     expect(resolveEffectDefinitionKeys('effect_def,930', null)).toBeNull()
@@ -47,13 +43,9 @@ describe('resolveEffectKeyValue', () => {
     expect(resolveEffectKeyValue('hero_dps_multiplier_mult,$replace', 50, 40)).toBe(2000)
   })
 
-  it('固定值 → effect_string 内的数值', () => {
-    expect(resolveEffectKeyValue('hero_dps_multiplier_mult,400', 0, 1)).toBe(400)
-  })
+  it('固定值 → effect_string 内的数值', () => expect(resolveEffectKeyValue('hero_dps_multiplier_mult,400', 0, 1)).toBe(400))
 
-  it('非法 effect_string → 0', () => {
-    expect(resolveEffectKeyValue('hero_dps_multiplier_mult', 100, 1)).toBe(0)
-  })
+  it('非法 effect_string → 0', () => expect(resolveEffectKeyValue('hero_dps_multiplier_mult', 100, 1)).toBe(0))
 })
 
 describe('parseEffectKind', () => {
@@ -63,7 +55,5 @@ describe('parseEffectKind', () => {
     expect(parseEffectKind('hero_dps_multiplier_mult,400')).toBe('hero_dps_multiplier_mult')
   })
 
-  it('非法 → null', () => {
-    expect(parseEffectKind('')).toBeNull()
-  })
+  it('非法 → null', () => expect(parseEffectKind('')).toBeNull())
 })

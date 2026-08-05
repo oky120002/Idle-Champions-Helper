@@ -12,9 +12,7 @@ const validDetail = {
   upgrades: [],
 }
 
-it('championDetailsSchema 接受合法核心字段', () => {
-  expect(championDetailsSchema.safeParse(validDetail).success).toBe(true)
-})
+it('championDetailsSchema 接受合法核心字段', () => expect(championDetailsSchema.safeParse(validDetail).success).toBe(true))
 
 it('championDetailsSchema 拦截 baseDamage 类型错误', () => {
   const result = championDetailsSchema.safeParse({ ...validDetail, baseDamage: 123 })

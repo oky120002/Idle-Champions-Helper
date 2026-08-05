@@ -5,9 +5,7 @@ import { I18nProvider } from '../../app/i18n'
 import { FilterWorkbenchPage } from './FilterWorkbenchPage'
 
 describe('FilterWorkbenchPage', () => {
-  afterEach(() => {
-    window.localStorage.clear()
-  })
+  afterEach(() => window.localStorage.clear())
 
   it('根据配置自动渲染工具条 intro、按钮组和回顶按钮', async () => {
     const user = userEvent.setup()

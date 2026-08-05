@@ -43,7 +43,7 @@ export function SkelAnimCanvas({
 
   useEffect(() => {
     if (assetPath == null || assetPath === '') {
-      return undefined
+      return
     }
 
     let cancelled = false
@@ -95,7 +95,7 @@ export function SkelAnimCanvas({
 
   useEffect(() => {
     if (!showCanvas || !canvasRef.current) {
-      return undefined
+      return
     }
 
     const canvasElement = canvasRef.current
@@ -121,23 +121,19 @@ export function SkelAnimCanvas({
     updateDisplaySize()
 
     if (typeof ResizeObserver !== 'function') {
-      return undefined
+      return
     }
 
-    const observer = new ResizeObserver(() => {
-      updateDisplaySize()
-    })
+    const observer = new ResizeObserver(() => updateDisplaySize())
 
     observer.observe(canvasElement)
 
-    return () => {
-      observer.disconnect()
-    }
+    return () => observer.disconnect()
   }, [assetPath, showCanvas])
 
   useEffect(() => {
     if ((assetPath == null || assetPath === '') || !prepared || !sequenceSelection || !canvasRef.current) {
-      return undefined
+      return
     }
 
     const context = canvasRef.current.getContext('2d')
@@ -149,7 +145,7 @@ export function SkelAnimCanvas({
           message: labels.error,
         })
       })
-      return undefined
+      return
     }
 
     context.imageSmoothingEnabled = false

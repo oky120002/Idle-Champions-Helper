@@ -53,8 +53,6 @@ export function useWorkbenchSidebarCollapse(storageKey: string) {
   return {
     isCollapsed,
     setCollapsed: setIsCollapsed,
-    toggleCollapsed: () => {
-      setIsCollapsed((current) => !current)
-    },
+    toggleCollapsed: () => setIsCollapsed((current) => !current),
   }
 }

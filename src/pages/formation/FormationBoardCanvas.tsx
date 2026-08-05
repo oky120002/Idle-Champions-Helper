@@ -51,7 +51,7 @@ export function FormationBoardCanvas({
         className="formation-board"
         data-testid={testId}
         style={boardStyle}
-        onDragEnd={() => { setDragOverSlotId(null) }}
+        onDragEnd={() => setDragOverSlotId(null)}
       >
         {slots.map((slot) => (
           <FormationBoardSlot
@@ -172,9 +172,7 @@ function FormationSlotSummary({
       {...(showDragBadge
         ? {
             draggable: true,
-            onDragStart: (event: DragEvent<HTMLDivElement>) => {
-              event.dataTransfer.setData('text/plain', champion.id)
-            },
+            onDragStart: (event: DragEvent<HTMLDivElement>) => event.dataTransfer.setData('text/plain', champion.id),
           }
         : undefined)}
     >

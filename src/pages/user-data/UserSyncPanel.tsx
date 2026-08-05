@@ -64,7 +64,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
         {syncState.status !== 'no-snapshot' && (
           <button
             type="button"
-            onClick={() => { setDeleteConfirmOpen(true) }}
+            onClick={() => setDeleteConfirmOpen(true)}
             disabled={busy}
           >
             删除
@@ -75,7 +75,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
       <ConfirmDialog
         open={isDeleteConfirmOpen}
         title="删除个人数据"
-        onClose={() => { setDeleteConfirmOpen(false) }}
+        onClose={() => setDeleteConfirmOpen(false)}
       >
         <p className="confirm-dialog__message">
           将清除浏览器同步快照与凭证。是否同时删除手动配置的英雄能力覆盖（planner 里手调的能力数据）？
@@ -84,7 +84,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           <button
             type="button"
             className="confirm-dialog__action confirm-dialog__action--danger"
-            onClick={() => { confirmDelete(true) }}
+            onClick={() => confirmDelete(true)}
             disabled={busy}
           >
             同时清除覆盖
@@ -92,7 +92,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           <button
             type="button"
             className="confirm-dialog__action"
-            onClick={() => { confirmDelete(false) }}
+            onClick={() => confirmDelete(false)}
             disabled={busy}
           >
             保留覆盖
@@ -100,7 +100,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           <button
             type="button"
             className="confirm-dialog__action"
-            onClick={() => { setDeleteConfirmOpen(false) }}
+            onClick={() => setDeleteConfirmOpen(false)}
             disabled={busy}
           >
             取消
@@ -114,7 +114,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           profileResolution={profileResolution}
           selectedProfileSource={selectedProfileSource}
           localDevRefreshState={localDevRefreshState}
-          onSelectBrowserSnapshot={() => { handleSelectProfileSource('browser-sync') }}
+          onSelectBrowserSnapshot={() => handleSelectProfileSource('browser-sync')}
           onSelectLocalDevSnapshot={handleSelectLocalDevSnapshot}
           onRefreshLocalDevSnapshot={() => void handleRefreshLocalDevSnapshot()}
         />

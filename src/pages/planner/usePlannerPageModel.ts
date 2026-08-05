@@ -52,9 +52,7 @@ export function usePlannerPageModel() {
 
   // runner 单例：浏览器用 worker 卸载 beam search（UI 不冻）；jsdom（测试无 Worker）降级 Sync。
   const runner = useMemo(() => createPlannerComputeRunner(), [])
-  useEffect(() => () => {
-    runner.dispose()
-  }, [runner])
+  useEffect(() => () => runner.dispose(), [runner])
 
   // 切换场景时锁槽/指定 carry 失效（slotId 随场景变）；模式/候选变化只 reset Top K 选中。
   // reset 放事件回调（非 effect），避免 setState-in-effect 级联渲染。
@@ -142,18 +140,12 @@ export function usePlannerPageModel() {
     setEquipmentEnchant(enchant)
     setSelectedResultIndex(0)
   }, [])
-  const selectLockedCarryHeroId = useCallback((heroId: string | null) => {
-    setLockedCarryHeroId(heroId)
-  }, [])
+  const selectLockedCarryHeroId = useCallback((heroId: string | null) => setLockedCarryHeroId(heroId), [])
   const lockSlot = useCallback((slotId: string, heroId: string) => {
     setLockedSlots((current) => ({ ...current, [slotId]: heroId }))
   }, [])
-  const clearSlotLock = useCallback((slotId: string) => {
-    setLockedSlots((current) => Object.fromEntries(Object.entries(current).filter(([key]) => key !== slotId)))
-  }, [])
-  const selectResultIndex = useCallback((index: number) => {
-    setSelectedResultIndex(index)
-  }, [])
+  const clearSlotLock = useCallback((slotId: string) => setLockedSlots((current) => Object.fromEntries(Object.entries(current).filter(([key]) => key !== slotId))), [])
+  const selectResultIndex = useCallback((index: number) => setSelectedResultIndex(index), [])
   const setHeroSpecializationOverride = useCallback((heroId: string, upgradeIds: string[]) => {
     setSpecializationOverrides((current) => ({ ...current, [heroId]: upgradeIds }))
   }, [])

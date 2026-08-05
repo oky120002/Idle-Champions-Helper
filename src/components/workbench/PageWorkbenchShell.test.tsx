@@ -22,9 +22,7 @@ function renderPageWorkbenchShell(storageKey: string) {
 }
 
 describe('PageWorkbenchShell', () => {
-  afterEach(() => {
-    window.localStorage.clear()
-  })
+  afterEach(() => window.localStorage.clear())
 
   it('支持收起后持久化，并在重新挂载时恢复状态', async () => {
     const user = userEvent.setup()

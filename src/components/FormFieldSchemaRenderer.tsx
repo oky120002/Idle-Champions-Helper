@@ -125,9 +125,7 @@ function renderTextareaField(field: FormFieldTextareaSchema): ReactNode {
         rows={field.rows ?? 4}
         value={field.value}
         {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
-        onChange={(event) => {
-          field.onChange(event.target.value)
-        }}
+        onChange={(event) => field.onChange(event.target.value)}
       />
     </FieldGroup>
   )
@@ -143,9 +141,7 @@ function renderInputField(field: FormFieldInputSchema): ReactNode {
       value={field.value}
       {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
       {...(field.inputMode !== undefined ? { inputMode: field.inputMode } : {})}
-      onChange={(event) => {
-        field.onChange(event.target.value)
-      }}
+      onChange={(event) => field.onChange(event.target.value)}
     />
   )
 

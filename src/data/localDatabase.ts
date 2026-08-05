@@ -24,9 +24,7 @@ export function openAppDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDb.open(APP_DATABASE_NAME, APP_DATABASE_VERSION)
 
-    request.onerror = () => {
-      reject(request.error ?? new Error('打开 IndexedDB 失败。'))
-    }
+    request.onerror = () => reject(request.error ?? new Error('打开 IndexedDB 失败。'))
 
     request.onupgradeneeded = () => {
       const database = request.result
@@ -56,36 +54,24 @@ export function openAppDatabase(): Promise<IDBDatabase> {
       }
     }
 
-    request.onsuccess = () => {
-      resolve(request.result)
-    }
+    request.onsuccess = () => resolve(request.result)
   })
 }
 
 export function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
-    request.onerror = () => {
-      reject(request.error ?? new Error('IndexedDB 请求失败。'))
-    }
+    request.onerror = () => reject(request.error ?? new Error('IndexedDB 请求失败。'))
 
-    request.onsuccess = () => {
-      resolve(request.result)
-    }
+    request.onsuccess = () => resolve(request.result)
   })
 }
 
 export function waitForTransaction(transaction: IDBTransaction): Promise<void> {
   return new Promise((resolve, reject) => {
-    transaction.oncomplete = () => {
-      resolve()
-    }
+    transaction.oncomplete = () => resolve()
 
-    transaction.onerror = () => {
-      reject(transaction.error ?? new Error('IndexedDB 事务失败。'))
-    }
+    transaction.onerror = () => reject(transaction.error ?? new Error('IndexedDB 事务失败。'))
 
-    transaction.onabort = () => {
-      reject(transaction.error ?? new Error('IndexedDB 事务已中止。'))
-    }
+    transaction.onabort = () => reject(transaction.error ?? new Error('IndexedDB 事务已中止。'))
   })
 }

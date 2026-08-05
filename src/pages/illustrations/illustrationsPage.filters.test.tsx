@@ -161,9 +161,7 @@ describe('IllustrationsPage filters', () => {
 
     await user.click(screen.getByRole('button', { name: '复制当前页面链接' }))
 
-    await waitFor(() => {
-      expect(writeTextSpy).toHaveBeenCalledTimes(1)
-    })
+    await waitFor(() => expect(writeTextSpy).toHaveBeenCalledTimes(1))
 
     const copiedUrl = writeTextSpy.mock.calls[0]?.[0]
 

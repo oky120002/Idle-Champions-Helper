@@ -140,9 +140,7 @@ export function SkinArtworkDialog({
                         : `Switch skin: ${getPrimaryLocalizedText(skin.name, locale)}`
                     }
                     aria-pressed={selectedSkin.id === skin.id}
-                    onClick={() => {
-                      setSelectedSkinId(skin.id)
-                    }}
+                    onClick={() => setSelectedSkinId(skin.id)}
                   >
                     <span className="skin-artwork-dialog__tab-title">{getPrimaryLocalizedText(skin.name, locale)}</span>
                     <span className="skin-artwork-dialog__tab-meta">

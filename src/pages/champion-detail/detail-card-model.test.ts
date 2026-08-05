@@ -47,11 +47,7 @@ function createSkinIllustration(): ChampionIllustration {
 }
 
 describe('detail-card-model', () => {
-  it('优先返回站内动画导出的皮肤立绘路径', () => {
-    expect(resolveSkinPreviewUrl(createSkinIllustration())).toBe('/data/v1/champion-illustrations/skins/4.png')
-  })
+  it('优先返回站内动画导出的皮肤立绘路径', () => expect(resolveSkinPreviewUrl(createSkinIllustration())).toBe('/data/v1/champion-illustrations/skins/4.png'))
 
-  it('缺少本地皮肤立绘时不再回退英雄头像', () => {
-    expect(resolveSkinPreviewUrl(null)).toBeNull()
-  })
+  it('缺少本地皮肤立绘时不再回退英雄头像', () => expect(resolveSkinPreviewUrl(null)).toBeNull())
 })

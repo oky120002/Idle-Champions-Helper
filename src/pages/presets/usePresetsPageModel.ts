@@ -195,7 +195,7 @@ export function usePresetsPageModel(): PresetsPageModel {
     savePresetEdit,
     deletePreset,
     priorityOptions: PRESET_PRIORITY_OPTIONS,
-    openDeleteConfirm: (presetId: string) => { setDeleteConfirmId(presetId) },
-    clearDeleteConfirm: () => { setDeleteConfirmId(null) },
+    openDeleteConfirm: (presetId: string) => setDeleteConfirmId(presetId),
+    clearDeleteConfirm: () => setDeleteConfirmId(null),
   }
 }

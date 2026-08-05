@@ -55,9 +55,7 @@ export function SearchPage() {
               type="search"
               value={query}
               placeholder={t({ zh: '搜索英雄、技能、描述…', en: 'Search heroes, skills, text…' })}
-              onChange={(event) => {
-                setQuery(event.target.value)
-              }}
+              onChange={(event) => setQuery(event.target.value)}
             />
           </span>
         </div>

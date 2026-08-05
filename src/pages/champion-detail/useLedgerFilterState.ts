@@ -130,11 +130,7 @@ export function useLedgerFilterState({ ledgerRows, ledgerFilterOptions, locale, 
     hasCustomLedgerFilterState,
     isShowingAllLedgerTypes,
     toggleLedgerFilter,
-    resetLedgerFilters: () => {
-      setLedgerFilterSelection(null)
-    },
-    enableAllLedgerFilters: () => {
-      setLedgerFilterSelection(allFilterKeys(ledgerFilterOptions, ledgerFilterSignature))
-    },
+    resetLedgerFilters: () => setLedgerFilterSelection(null),
+    enableAllLedgerFilters: () => setLedgerFilterSelection(allFilterKeys(ledgerFilterOptions, ledgerFilterSignature)),
   }
 }

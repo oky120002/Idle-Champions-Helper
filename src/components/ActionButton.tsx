@@ -53,9 +53,7 @@ export function ActionButton({
       {...(ariaControls !== undefined ? { 'aria-controls': ariaControls } : {})}
       {...(ariaLabel !== undefined ? { 'aria-label': ariaLabel } : {})}
       {...(title !== undefined ? { title } : {})}
-      onClick={() => {
-        void onClick()
-      }}
+      onClick={() => void onClick()}
     >
       {icon !== undefined ? (
         <span className="action-button__icon" aria-hidden="true">

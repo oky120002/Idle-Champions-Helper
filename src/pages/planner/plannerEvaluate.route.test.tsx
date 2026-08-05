@@ -191,15 +191,9 @@ async function resetDatabase(): Promise<void> {
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-    request.onerror = () => {
-      resolve()
-    }
-    request.onblocked = () => {
-      resolve()
-    }
-    request.onsuccess = () => {
-      resolve()
-    }
+    request.onerror = () => resolve()
+    request.onblocked = () => resolve()
+    request.onsuccess = () => resolve()
   })
 }
 
@@ -303,9 +297,7 @@ describe('planner evaluate route', () => {
     expect(lockBtn).toHaveAttribute('aria-pressed', 'true')
 
     const fillBtn = await screen.findByTestId('planner-evaluate-fill-remaining')
-    await waitFor(() => {
-      expect(fillBtn).not.toBeDisabled()
-    })
+    await waitFor(() => expect(fillBtn).not.toBeDisabled())
     await user.click(fillBtn)
 
     const board = screen.getByTestId('planner-evaluate-board')

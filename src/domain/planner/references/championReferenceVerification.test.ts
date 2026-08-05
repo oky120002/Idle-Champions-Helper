@@ -205,9 +205,7 @@ describe('抽象阈值守护（dps-mechanic-abstraction.md）', () => {
     [...registry.matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => unwrap(m[1], 'regex match group 1 未捕获')),
   )
 
-  it('注册表机制数 ≤ 10（>10 触发策略注册表升级，见 dps-mechanic-abstraction.md）', () => {
-    expect(registryIds.size).toBeLessThanOrEqual(10)
-  })
+  it('注册表机制数 ≤ 10（>10 触发策略注册表升级，见 dps-mechanic-abstraction.md）', () => expect(registryIds.size).toBeLessThanOrEqual(10))
 })
 
 describe('关联一致性（mechanicId 三处一致）', () => {

@@ -80,13 +80,9 @@ export function buildVariantsFilterSearchParams(filters: VariantsFilterState): U
     searchParams.set(SEARCH_PARAM_ADVENTURE, filters.selectedAdventureId.trim())
   }
 
-  filters.selectedSceneIds.forEach((sceneId) => {
-    searchParams.append(SEARCH_PARAM_SCENE, sceneId)
-  })
+  filters.selectedSceneIds.forEach((sceneId) => searchParams.append(SEARCH_PARAM_SCENE, sceneId))
 
-  filters.selectedEnemyTypeIds.forEach((enemyTypeId) => {
-    searchParams.append(SEARCH_PARAM_ENEMY, enemyTypeId)
-  })
+  filters.selectedEnemyTypeIds.forEach((enemyTypeId) => searchParams.append(SEARCH_PARAM_ENEMY, enemyTypeId))
 
   if (filters.selectedAttackProfile !== '__all__') {
     searchParams.set(SEARCH_PARAM_ATTACK, filters.selectedAttackProfile)

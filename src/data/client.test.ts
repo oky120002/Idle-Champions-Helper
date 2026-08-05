@@ -67,9 +67,7 @@ beforeEach(async () => {
   vi.stubGlobal('fetch', fetchMock)
 })
 
-afterEach(() => {
-  vi.unstubAllGlobals()
-})
+afterEach(() => vi.unstubAllGlobals())
 
 describe('collection IndexedDB 持久缓存（C2）', () => {
   it('打开数据库时创建 dataCollections 仓库（DB v6）', async () => {

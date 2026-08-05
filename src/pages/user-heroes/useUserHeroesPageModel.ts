@@ -75,20 +75,14 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     setSelectedProfessions: filterState.setSelectedProfessions,
     setSelectedAcquisitions: filterState.setSelectedAcquisitions,
     setSelectedMechanics: filterState.setSelectedMechanics,
-    resetExtraFilters: () => {
-      setActiveRosterMetricFilterId(null)
-    },
+    resetExtraFilters: () => setActiveRosterMetricFilterId(null),
     extraChipMutations: {
-      'roster-metric': () => {
-        setActiveRosterMetricFilterId(null)
-      },
+      'roster-metric': () => setActiveRosterMetricFilterId(null),
     },
   })
 
   function toggleRosterMetricFilter(id: UserHeroesRosterMetricFilterId) {
-    runFilterMutation(() => {
-      setActiveRosterMetricFilterId((current) => (current === id ? null : id))
-    })
+    runFilterMutation(() => setActiveRosterMetricFilterId((current) => (current === id ? null : id)))
   }
 
   return {
@@ -144,9 +138,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,
     getMechanicCategoryHint: (groupId) => getMechanicCategoryHint(groupId, t),
-    saveListScroll: () => {
-      saveWorkbenchResultsPaneScroll('user-heroes', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0)
-    },
+    saveListScroll: () => saveWorkbenchResultsPaneScroll('user-heroes', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0),
     locationSearch: filterState.locationSearch,
   }
 }

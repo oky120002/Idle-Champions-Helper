@@ -5,9 +5,7 @@ import { buildScorePart } from './scoringTestFixtures'
 // BASE_CRIT_FACTOR = 1 + 0.025 × (2−1) = 1.025
 
 describe('computeCritFactor', () => {
-  it('无 crit signal → 1.0（基线归一抵消，非 crit 阵型 carryDps 不变）', () => {
-    expect(computeCritFactor([])).toBe(1)
-  })
+  it('无 crit signal → 1.0（基线归一抵消，非 crit 阵型 carryDps 不变）', () => expect(computeCritFactor([])).toBe(1))
 
   it('非 active 的 crit part 不计入 → 1.0', () => {
     const parts = [buildScorePart({ signalKind: 'heroCritChance', multiplier: 2, active: false })]

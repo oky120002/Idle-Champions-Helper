@@ -50,17 +50,13 @@ export function VariantsFilterBar({ model }: VariantsFilterBarProps) {
       key: 'all',
       label: t({ zh: '全部', en: 'All' }),
       isActive: filters.areaSearch.length === 0,
-      onSelect: () => {
-        updateAreaSearch('')
-      },
+      onSelect: () => updateAreaSearch(''),
     },
     ...commonObjectiveAreas.map((area) => ({
       key: area,
       label: locale === 'zh-CN' ? `${String(area)} 区` : `Area ${String(area)}`,
       isActive: filters.areaSearch === String(area),
-      onSelect: () => {
-        updateAreaSearch(String(area))
-      },
+      onSelect: () => updateAreaSearch(String(area)),
     })),
   ]
   const groups: FilterSidebarGroupSchema[] = [
@@ -114,9 +110,7 @@ export function VariantsFilterBar({ model }: VariantsFilterBarProps) {
                   inputMode="numeric"
                   placeholder={t({ zh: '例如 75 / 125 / 175', en: 'For example 75 / 125 / 175' })}
                   value={filters.areaSearch}
-                  onChange={(event) => {
-                    updateAreaSearch(event.target.value.replace(/\D/g, ''))
-                  }}
+                  onChange={(event) => updateAreaSearch(event.target.value.replace(/\D/g, ''))}
                 />
                 <VariantsFilterChipGroup options={areaOptions} />
               </div>
@@ -139,9 +133,7 @@ export function VariantsFilterBar({ model }: VariantsFilterBarProps) {
           selectedValues: filters.selectedSceneIds,
           allLabel: t({ zh: '全部', en: 'All' }),
           onReset: resetScenes,
-          onToggle: (value) => {
-            toggleScene(String(value))
-          },
+          onToggle: (value) => toggleScene(String(value)),
         },
         {
           kind: 'chip-multi',
@@ -159,18 +151,14 @@ export function VariantsFilterBar({ model }: VariantsFilterBarProps) {
           selectedValues: filters.selectedEnemyTypeIds,
           allLabel: t({ zh: '全部', en: 'All' }),
           onReset: resetEnemyTypes,
-          onToggle: (value) => {
-            toggleEnemyType(String(value))
-          },
+          onToggle: (value) => toggleEnemyType(String(value)),
         },
         {
           kind: 'chip-single',
           id: 'attack-profile',
           label: t({ zh: '攻击占比', en: 'Attack mix' }),
           value: filters.selectedAttackProfile,
-          onChange: (value) => {
-            updateAttackProfile(value as AttackProfileFilterId)
-          },
+          onChange: (value) => updateAttackProfile(value as AttackProfileFilterId),
           groupLabel: t({ zh: '攻击占比', en: 'Attack mix' }),
           hint: t({
             zh: '把官方怪物池归并成近战主导、远程威胁和近远混编三种节奏。',
@@ -186,9 +174,7 @@ export function VariantsFilterBar({ model }: VariantsFilterBarProps) {
           id: 'special-enemy-range',
           label: t({ zh: '特别敌人数', en: 'Special enemy count' }),
           value: filters.selectedSpecialEnemyRange,
-          onChange: (value) => {
-            updateSpecialEnemyRange(value as SpecialEnemyFilterId)
-          },
+          onChange: (value) => updateSpecialEnemyRange(value as SpecialEnemyFilterId),
           groupLabel: t({ zh: '特别敌人数', en: 'Special enemy count' }),
           hint: t({
             zh: '把 Boss / 护送 / hits-based / armor-based / static 这类特殊敌人统一折算成一个密度过滤。',

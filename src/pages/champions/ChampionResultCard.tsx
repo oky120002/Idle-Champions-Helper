@@ -34,9 +34,7 @@ function watchElementScale(element: HTMLDivElement, applyScale: () => void): () 
     })
   }
 
-  const resizeObserver = new ResizeObserver(() => {
-    scheduleScale()
-  })
+  const resizeObserver = new ResizeObserver(() => scheduleScale())
   resizeObserver.observe(element)
 
   return () => {
@@ -73,7 +71,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
     const element = roleRowRef.current
 
     if (element === null) {
-      return undefined
+      return
     }
 
     const MIN_SCALE = 0.58
@@ -117,7 +115,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
     const element = attributeTrailRef.current
 
     if (element === null) {
-      return undefined
+      return
     }
 
     const MIN_SCALE = 0.5

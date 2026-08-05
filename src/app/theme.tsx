@@ -61,9 +61,7 @@ export function ThemeProvider({ children }: Readonly<PropsWithChildren>) {
     }
 
     const mql = window.matchMedia('(prefers-color-scheme: light)')
-    const onChange = (event: MediaQueryListEvent) => {
-      setSystemTheme(event.matches ? 'light' : 'dark')
-    }
+    const onChange = (event: MediaQueryListEvent) => setSystemTheme(event.matches ? 'light' : 'dark')
 
     mql.addEventListener('change', onChange)
     return () => mql.removeEventListener('change', onChange)

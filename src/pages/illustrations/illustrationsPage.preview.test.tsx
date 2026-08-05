@@ -58,9 +58,7 @@ describe('IllustrationsPage hover preview', () => {
     renderIllustrationsPage()
 
     const cardLink = await screen.findByRole('link', { name: '查看英雄：布鲁诺（布鲁诺）' })
-    await waitFor(() => {
-      expect(mockedLoadCollection).toHaveBeenCalledWith('champion-animations')
-    })
+    await waitFor(() => expect(mockedLoadCollection).toHaveBeenCalledWith('champion-animations'))
 
     const preview = () => within(cardLink).getByTestId('skelanim-preview')
 
@@ -77,8 +75,6 @@ describe('IllustrationsPage hover preview', () => {
 
     await user.unhover(cardLink)
 
-    await waitFor(() => {
-      expect(preview()).toHaveAttribute('data-playback-mode', 'pause')
-    })
+    await waitFor(() => expect(preview()).toHaveAttribute('data-playback-mode', 'pause'))
   })
 })

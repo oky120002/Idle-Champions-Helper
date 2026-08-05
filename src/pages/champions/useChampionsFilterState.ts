@@ -81,7 +81,7 @@ export function useChampionsFilterState() {
 
   useLayoutEffect(() => {
     if (normalizedLocationSearch === lastAppliedLocationSearchRef.current) {
-      return undefined
+      return
     }
 
     lastAppliedLocationSearchRef.current = normalizedLocationSearch
@@ -89,7 +89,7 @@ export function useChampionsFilterState() {
 
     if (currentFilterSearch === normalizedLocationSearch) {
       pendingLocationSyncSearchRef.current = null
-      return undefined
+      return
     }
 
     const nextFilters = readInitialFilterState(location.search)

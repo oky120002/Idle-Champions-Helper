@@ -50,9 +50,7 @@ function createLayout(id: string, slotIds: string[]): FormationLayout {
 
 const mockedLoadCollectionAtVersion = vi.mocked(loadCollectionAtVersion)
 
-afterEach(() => {
-  mockedLoadCollectionAtVersion.mockReset()
-})
+afterEach(() => mockedLoadCollectionAtVersion.mockReset())
 
 describe('formationPersistence helpers', () => {
   it('校验放置结果时会保留合法引用并标记失效槽位和英雄', () => {

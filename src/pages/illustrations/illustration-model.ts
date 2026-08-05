@@ -71,19 +71,19 @@ export function shuffleIllustrationEntries(entries: FilterableIllustration[], se
 }
 
 export function hasActiveIllustrationFilters(filters: IllustrationsFilterState): boolean {
-  return [
-    filters.search.trim().length > 0,
-    filters.scope !== 'all',
-    filters.selectedSeats.length > 0,
-    filters.selectedRoles.length > 0,
-    filters.selectedAffiliations.length > 0,
-    filters.selectedRaces.length > 0,
-    filters.selectedGenders.length > 0,
-    filters.selectedAlignments.length > 0,
-    filters.selectedProfessions.length > 0,
-    filters.selectedAcquisitions.length > 0,
-    filters.selectedMechanics.length > 0,
-  ].some(Boolean)
+  return (
+    filters.search.trim().length > 0 ||
+    filters.scope !== 'all' ||
+    filters.selectedSeats.length > 0 ||
+    filters.selectedRoles.length > 0 ||
+    filters.selectedAffiliations.length > 0 ||
+    filters.selectedRaces.length > 0 ||
+    filters.selectedGenders.length > 0 ||
+    filters.selectedAlignments.length > 0 ||
+    filters.selectedProfessions.length > 0 ||
+    filters.selectedAcquisitions.length > 0 ||
+    filters.selectedMechanics.length > 0
+  )
 }
 
 export function buildIllustrationAlt(illustration: ChampionIllustration, locale: 'zh-CN' | 'en-US'): string {

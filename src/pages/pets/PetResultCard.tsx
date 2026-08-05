@@ -83,8 +83,8 @@ export function PetResultCard({ pet, animation }: PetResultCardProps) {
   return (
     <article
       className={animation !== null ? 'pet-card pet-card--animated' : 'pet-card'}
-      onMouseEnter={animation !== null ? () => { setPreviewActive(true) } : undefined}
-      onMouseLeave={animation !== null ? () => { setPreviewActive(false) } : undefined}
+      onMouseEnter={animation !== null ? () => setPreviewActive(true) : undefined}
+      onMouseLeave={animation !== null ? () => setPreviewActive(false) : undefined}
     >
       <div className="pet-card__stage">
         <div className="pet-card__stage-grid" aria-hidden="true" />

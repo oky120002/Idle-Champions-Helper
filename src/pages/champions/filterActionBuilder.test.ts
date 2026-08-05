@@ -28,9 +28,7 @@ function createFilterActionHarness() {
   const selectedProfessions = createStateSetter<string[]>(['warlock'])
   const selectedAcquisitions = createStateSetter<string[]>(['event'])
   const selectedMechanics = createStateSetter<string[]>(['control_slow'])
-  const runFilterMutation = vi.fn((mutation: () => void) => {
-    mutation()
-  })
+  const runFilterMutation = vi.fn((mutation: () => void) => mutation())
 
   return {
     runFilterMutation,

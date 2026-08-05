@@ -121,9 +121,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
     }
   }, [])
 
-  const selectVariantId = useCallback((variantId: string | null) => {
-    setSelectedVariantId(variantId)
-  }, [])
+  const selectVariantId = useCallback((variantId: string | null) => setSelectedVariantId(variantId), [])
 
   return {
     collections, profileSnapshot, lootCatalog, patronPerkCatalog,

@@ -151,7 +151,7 @@ export function ChampionRosterFlyout({
 
   useLayoutEffect(() => {
     if (typeof window === 'undefined') {
-      return undefined
+      return
     }
 
     const updatePosition = () => {
@@ -191,9 +191,7 @@ export function ChampionRosterFlyout({
     updatePosition()
     window.addEventListener('resize', updatePosition)
 
-    return () => {
-      window.removeEventListener('resize', updatePosition)
-    }
+    return () => window.removeEventListener('resize', updatePosition)
   }, [anchorRect, slots.length, status])
 
   const style = {

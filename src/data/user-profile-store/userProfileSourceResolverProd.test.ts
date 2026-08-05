@@ -16,17 +16,11 @@ async function resetDatabase(): Promise<void> {
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
 
-    request.onerror = () => {
-      reject(request.error ?? new Error('删除测试数据库失败。'))
-    }
+    request.onerror = () => reject(request.error ?? new Error('删除测试数据库失败。'))
 
-    request.onblocked = () => {
-      resolve()
-    }
+    request.onblocked = () => resolve()
 
-    request.onsuccess = () => {
-      resolve()
-    }
+    request.onsuccess = () => resolve()
   })
 }
 

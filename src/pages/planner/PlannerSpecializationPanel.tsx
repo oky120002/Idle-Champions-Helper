@@ -83,9 +83,7 @@ export function PlannerSpecializationPanel({
                     type="button"
                     className="planner-specialization-row__reset"
                     data-reset-hero={hero.heroId}
-                    onClick={() => {
-                      onClearOverride(hero.heroId)
-                    }}
+                    onClick={() => onClearOverride(hero.heroId)}
                   >
                     {t({ zh: '恢复存档', en: 'Reset' })}
                   </button>
@@ -151,9 +149,7 @@ function SpecializationTierRadios({
           name={groupName}
           value=""
           checked={selectedId === null}
-          onChange={() => {
-            onSelect(null)
-          }}
+          onChange={() => onSelect(null)}
           data-spec-option="none"
         />
         <span>{t({ zh: '无', en: 'None' })}</span>
@@ -165,9 +161,7 @@ function SpecializationTierRadios({
             name={groupName}
             value={entry.upgradeId}
             checked={selectedId === entry.upgradeId}
-            onChange={() => {
-              onSelect(entry.upgradeId)
-            }}
+            onChange={() => onSelect(entry.upgradeId)}
             data-spec-option={entry.upgradeId}
           />
           <span>{entry.specializationName?.display ?? entry.upgradeId}</span>

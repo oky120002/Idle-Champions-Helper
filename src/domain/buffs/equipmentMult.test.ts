@@ -38,12 +38,8 @@ describe('parseLootEffect', () => {
   it('health_mult → {kind, value}', () => {
     expect(parseLootEffect('health_mult,100')).toEqual({ kind: 'health_mult', value: 100 })
   })
-  it('非单参数 effect（buff_upgrade 元加成）→ null', () => {
-    expect(parseLootEffect('buff_upgrade,275,2192')).toBeNull()
-  })
-  it('未接入 effect（reduce_ultimate_cooldown 冷却）→ null', () => {
-    expect(parseLootEffect('reduce_ultimate_cooldown,45')).toBeNull()
-  })
+  it('非单参数 effect（buff_upgrade 元加成）→ null', () => expect(parseLootEffect('buff_upgrade,275,2192')).toBeNull())
+  it('未接入 effect（reduce_ultimate_cooldown 冷却）→ null', () => expect(parseLootEffect('reduce_ultimate_cooldown,45')).toBeNull())
 })
 
 describe('computeEquipmentMult', () => {
@@ -230,9 +226,7 @@ describe('computeEquipmentAdjustmentByHero', () => {
     expect(map.has('8')).toBe(false)
   })
 
-  it('空 ownedHeroes → 空 map', () => {
-    expect(computeEquipmentAdjustmentByHero([], MINSC_CATALOG).size).toBe(0)
-  })
+  it('空 ownedHeroes → 空 map', () => expect(computeEquipmentAdjustmentByHero([], MINSC_CATALOG).size).toBe(0))
 })
 
 describe('parseBuffUpgradeEffect', () => {
@@ -254,17 +248,11 @@ describe('parseBuffUpgradeEffect', () => {
     })
   })
 
-  it('非 buff_upgrade effect（加性 hero_dps）→ null', () => {
-    expect(parseBuffUpgradeEffect('hero_dps_multiplier_mult,350')).toBeNull()
-  })
+  it('非 buff_upgrade effect（加性 hero_dps）→ null', () => expect(parseBuffUpgradeEffect('hero_dps_multiplier_mult,350')).toBeNull())
 
-  it('复杂 buff_upgrade 变体（per_tagged，依赖 build 期 stack 元数据）→ null（runtime 不构造）', () => {
-    expect(parseBuffUpgradeEffect('buff_upgrade_per_any_tagged_crusader_mult,200,12345,evil')).toBeNull()
-  })
+  it('复杂 buff_upgrade 变体（per_tagged，依赖 build 期 stack 元数据）→ null（runtime 不构造）', () => expect(parseBuffUpgradeEffect('buff_upgrade_per_any_tagged_crusader_mult,200,12345,evil')).toBeNull())
 
-  it('reduce_ultimate_cooldown（非 DPS）→ null', () => {
-    expect(parseBuffUpgradeEffect('reduce_ultimate_cooldown,45')).toBeNull()
-  })
+  it('reduce_ultimate_cooldown（非 DPS）→ null', () => expect(parseBuffUpgradeEffect('reduce_ultimate_cooldown,45')).toBeNull())
 })
 
 describe('collectEquipmentBuffsByHero', () => {

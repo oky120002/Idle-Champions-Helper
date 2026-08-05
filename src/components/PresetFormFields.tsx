@@ -62,9 +62,7 @@ export function PresetFormFields({
           type="text"
           value={value.name}
           {...(namePlaceholder !== undefined ? { placeholder: namePlaceholder } : {})}
-          onChange={(event) => {
-            onChange('name', event.target.value)
-          }}
+          onChange={(event) => onChange('name', event.target.value)}
         />
       </FieldGroup>
 
@@ -75,9 +73,7 @@ export function PresetFormFields({
           rows={4}
           value={value.description}
           {...(descriptionPlaceholder !== undefined ? { placeholder: descriptionPlaceholder } : {})}
-          onChange={(event) => {
-            onChange('description', event.target.value)
-          }}
+          onChange={(event) => onChange('description', event.target.value)}
         />
       </FieldGroup>
 
@@ -92,9 +88,7 @@ export function PresetFormFields({
           type="text"
           value={value.scenarioTagsInput}
           {...(tagsPlaceholder !== undefined ? { placeholder: tagsPlaceholder } : {})}
-          onChange={(event) => {
-            onChange('scenarioTagsInput', event.target.value)
-          }}
+          onChange={(event) => onChange('scenarioTagsInput', event.target.value)}
         />
       </FieldGroup>
 
@@ -106,9 +100,7 @@ export function PresetFormFields({
             label: getPriorityOptionLabel(option),
           }))}
           ariaLabel={priorityLabel}
-          onChange={(nextPriority) => {
-            onChange('priority', nextPriority)
-          }}
+          onChange={(nextPriority) => onChange('priority', nextPriority)}
         />
       </FieldGroup>
     </div>

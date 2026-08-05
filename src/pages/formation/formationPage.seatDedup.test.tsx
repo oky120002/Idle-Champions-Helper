@@ -138,14 +138,10 @@ describe('formation slot seat dedup', () => {
     const select1 = unwrap(selects[1], 'expected second combobox')
     await user.selectOptions(select0, 'bruenor')
 
-    await waitFor(() => {
-      expect(optionValues(select1)).not.toContain('asharra')
-    })
+    await waitFor(() => expect(optionValues(select1)).not.toContain('asharra'))
 
     await user.selectOptions(select0, '')
 
-    await waitFor(() => {
-      expect(optionValues(select1)).toContain('asharra')
-    })
+    await waitFor(() => expect(optionValues(select1)).toContain('asharra'))
   })
 })

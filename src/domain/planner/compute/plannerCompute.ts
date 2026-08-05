@@ -106,9 +106,7 @@ export class WorkerPlannerComputeRunner implements PlannerComputeRunner {
 
   constructor(worker: Worker) {
     this.worker = worker
-    this.worker.onmessage = (event: MessageEvent) => {
-      this.handleMessage(event.data as PlannerComputeOutbound)
-    }
+    this.worker.onmessage = (event: MessageEvent) => this.handleMessage(event.data as PlannerComputeOutbound)
     // worker import 失败 / 未捕获错误：reject 所有 pending，避免 UI 永久 loading。
     this.worker.onerror = (event: ErrorEvent) => {
       const error = new Error(event.message !== '' ? event.message : 'planner compute worker error')

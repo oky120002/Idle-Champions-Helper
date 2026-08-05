@@ -88,14 +88,14 @@ export function WorkbenchFilterMetricsHeader({
     const element = metricsFitRef.current
 
     if (element === null) {
-      return undefined
+      return
     }
 
     const applyScale = createMetricsScaleApplier(metricsFitRef)
     applyScale()
 
     if (typeof ResizeObserver === 'undefined') {
-      return undefined
+      return
     }
 
     let frameId: number | null = null
@@ -110,9 +110,7 @@ export function WorkbenchFilterMetricsHeader({
       })
     }
 
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleScale()
-    })
+    const resizeObserver = new ResizeObserver(() => scheduleScale())
     resizeObserver.observe(element)
 
     return () => {

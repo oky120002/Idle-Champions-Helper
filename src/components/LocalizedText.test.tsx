@@ -20,7 +20,7 @@ function LocaleSwitchHarness() {
 
   return (
     <>
-      <button type="button" onClick={() => { setLocale('en-US') }}>
+      <button type="button" onClick={() => setLocale('en-US')}>
         切换到英文
       </button>
       <LocalizedText
@@ -42,7 +42,7 @@ function PrimaryModeHarness() {
 
   return (
     <>
-      <button type="button" onClick={() => { setLocale('en-US') }}>
+      <button type="button" onClick={() => setLocale('en-US')}>
         切到英文主文本
       </button>
       <LocalizedText text={briv} mode="primary" as="span" className="localized-primary" />

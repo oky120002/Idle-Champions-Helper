@@ -48,9 +48,7 @@ describe('ChampionsPage filter state', () => {
 
     await user.click(within(screen.getByRole('group', { name: '筛选状态操作' })).getByRole('button', { name: '清空全部' }))
 
-    await waitFor(() => {
-      expect(screen.getByText('阿尔法')).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText('阿尔法')).toBeInTheDocument())
 
     expect(screen.getByPlaceholderText('搜英雄名、标签、联动队伍')).toHaveValue('')
   })
@@ -101,17 +99,13 @@ describe('ChampionsPage filter state', () => {
 
     await user.click(screen.getByRole('button', { name: '显示全部 60（默认 50）' }))
 
-    await waitFor(() => {
-      expect(screen.getByText('测试英雄 60')).toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.getByText('测试英雄 60')).toBeInTheDocument())
 
     expect(getMetricByText('当前展示60 / 60')).toBeTruthy()
 
     await user.click(screen.getByRole('button', { name: '收起到默认 50' }))
 
-    await waitFor(() => {
-      expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument())
 
     expect(getMetricByText('当前展示50 / 60')).toBeTruthy()
   })

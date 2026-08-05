@@ -221,9 +221,7 @@ export function AnimationAuditPage() {
                 <button
                   type="button"
                   className="animation-audit-results__show-more"
-                  onClick={() => {
-                    model.setShowAll((value) => !value)
-                  }}
+                  onClick={() => model.setShowAll((value) => !value)}
                 >
                   {showAllIcon}
                   {showAllLabel}

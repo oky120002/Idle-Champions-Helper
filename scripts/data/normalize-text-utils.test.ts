@@ -77,9 +77,7 @@ it('toLocalizedOverrideList 递归展平字符串/对象', () => {
   ])
 })
 
-it('uniqueStrings 过滤非字符串与空白', () => {
-  expect(uniqueStrings(['a', '', 'b', null, 'a'])).toEqual(['a', 'b'])
-})
+it('uniqueStrings 过滤非字符串与空白', () => expect(uniqueStrings(['a', '', 'b', null, 'a'])).toEqual(['a', 'b']))
 
 it('uniqueNumbers 过滤负数、NaN、非数并排序', () => {
   expect(uniqueNumbers([3, 1, 2, -1, NaN, 'x', 2])).toEqual([1, 2, 3])

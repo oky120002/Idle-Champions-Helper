@@ -135,9 +135,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     setSelectedProfileSource(nextSource)
   }, [])
 
-  const handleSelectLocalDevSnapshot = useCallback(() => {
-    trySelectLocalDevSnapshot(handleSelectProfileSource)
-  }, [handleSelectProfileSource])
+  const handleSelectLocalDevSnapshot = useCallback(() => trySelectLocalDevSnapshot(handleSelectProfileSource), [handleSelectProfileSource])
 
   const handleDelete = useCallback(async (clearOverrides: boolean) => {
     // 接管 syncState：作废 mount 的 pending loadSnapshot（同 handleSync）。

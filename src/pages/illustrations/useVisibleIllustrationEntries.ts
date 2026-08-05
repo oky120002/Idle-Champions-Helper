@@ -23,7 +23,7 @@ export function useVisibleIllustrationEntries(
 
   useEffect(() => {
     if (!shouldProgressivelyReveal) {
-      return undefined
+      return
     }
 
     let cancelled = false

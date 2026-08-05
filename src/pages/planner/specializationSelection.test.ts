@@ -106,29 +106,19 @@ describe('groupSpecializationsByTier', () => {
     expect(nullTier.entries.map((entry) => entry.upgradeId)).toEqual(['a', 'c'])
   })
 
-  it('空 → 空', () => {
-    expect(groupSpecializationsByTier([])).toEqual([])
-  })
+  it('空 → 空', () => expect(groupSpecializationsByTier([])).toEqual([]))
 })
 
 describe('applyTierSelection', () => {
   const tier = ['108', '109', '110']
 
-  it('选本层一个：移除本层其它、加入选中，保留其它层选择', () => {
-    expect(applyTierSelection(['109', '200'], tier, '110')).toEqual(['200', '110'])
-  })
+  it('选本层一个：移除本层其它、加入选中，保留其它层选择', () => expect(applyTierSelection(['109', '200'], tier, '110')).toEqual(['200', '110']))
 
-  it('selected=null（选「无」）：仅移除本层，不加入', () => {
-    expect(applyTierSelection(['109', '200'], tier, null)).toEqual(['200'])
-  })
+  it('selected=null（选「无」）：仅移除本层，不加入', () => expect(applyTierSelection(['109', '200'], tier, null)).toEqual(['200']))
 
-  it('当前不含本层 id 时选一个 → 加入', () => {
-    expect(applyTierSelection(['200'], tier, '109')).toEqual(['200', '109'])
-  })
+  it('当前不含本层 id 时选一个 → 加入', () => expect(applyTierSelection(['200'], tier, '109')).toEqual(['200', '109']))
 
-  it('selected 不在本层 id 集合内（防御）→ 仍加入', () => {
-    expect(applyTierSelection(['200'], tier, '999')).toEqual(['200', '999'])
-  })
+  it('selected 不在本层 id 集合内（防御）→ 仍加入', () => expect(applyTierSelection(['200'], tier, '999')).toEqual(['200', '999']))
 })
 
 describe('availableSpecializations', () => {
@@ -145,9 +135,7 @@ describe('availableSpecializations', () => {
     expect(availableSpecializations(entries, []).map((e) => e.upgradeId).sort((a, b) => a.localeCompare(b))).toEqual(['100', '300'])
   })
 
-  it('空 entries → 空', () => {
-    expect(availableSpecializations([], ['100'])).toEqual([])
-  })
+  it('空 entries → 空', () => expect(availableSpecializations([], ['100'])).toEqual([]))
 })
 
 describe('pruneOrphanedSpecializations', () => {

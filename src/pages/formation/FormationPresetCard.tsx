@@ -179,7 +179,7 @@ function computeSaveDisabledReason({
   canSavePreset, isSavingPreset, selectedChampions, t,
 }: SaveDisabledReasonContext): string | undefined {
   if (canSavePreset || isSavingPreset) {
-    return undefined
+    return
   }
   if (selectedChampions.length === 0) {
     return t({ zh: '先放置至少 1 名英雄', en: 'Place at least one champion first' })

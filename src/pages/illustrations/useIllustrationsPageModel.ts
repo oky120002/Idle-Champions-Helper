@@ -153,9 +153,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     transitionKey,
   })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const saveListScroll = useCallback(() => {
-    saveWorkbenchResultsPaneScroll('illustrations', location.search, motion.resultsPaneRef.current?.scrollTop ?? 0)
-  }, [location.search, motion.resultsPaneRef])
+  const saveListScroll = useCallback(() => saveWorkbenchResultsPaneScroll('illustrations', location.search, motion.resultsPaneRef.current?.scrollTop ?? 0), [location.search, motion.resultsPaneRef])
 
   function runFilterMutation(mutation: () => void) {
     motion.prepareResultsViewportTransition('filters')
@@ -186,7 +184,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       motion.prepareResultsViewportTransition('visibility')
       setShowAllResults((current) => !current)
     },
-    randomizeResultOrder: () => { setRandomOrderSeed((current) => (current === null ? 1 : current + 1)) },
+    randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
     saveListScroll,
     scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,

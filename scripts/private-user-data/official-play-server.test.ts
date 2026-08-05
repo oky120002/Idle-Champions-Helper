@@ -22,15 +22,9 @@ describe('normalizeOfficialPlayServerBaseUrl', () => {
       .toBe('https://pslt4.idlechampions.com/~idledragons/')
   })
 
-  it('拒绝非 idlechampions.com 域（SSRF 防护）', () => {
-    expect(() => normalizeOfficialPlayServerBaseUrl('https://evil.example.com/~idledragons/')).toThrow()
-  })
+  it('拒绝非 idlechampions.com 域（SSRF 防护）', () => expect(() => normalizeOfficialPlayServerBaseUrl('https://evil.example.com/~idledragons/')).toThrow())
 
-  it('拒绝无 ps 前缀的 idlechampions 主机（如 master discovery API）', () => {
-    expect(() => normalizeOfficialPlayServerBaseUrl('https://master.idlechampions.com/~idledragons/')).toThrow()
-  })
+  it('拒绝无 ps 前缀的 idlechampions 主机（如 master discovery API）', () => expect(() => normalizeOfficialPlayServerBaseUrl('https://master.idlechampions.com/~idledragons/')).toThrow())
 
-  it('拒绝错误 pathname', () => {
-    expect(() => normalizeOfficialPlayServerBaseUrl('https://ps28.idlechampions.com/wrong/')).toThrow()
-  })
+  it('拒绝错误 pathname', () => expect(() => normalizeOfficialPlayServerBaseUrl('https://ps28.idlechampions.com/wrong/')).toThrow())
 })

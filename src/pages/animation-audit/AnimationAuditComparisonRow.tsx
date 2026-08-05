@@ -146,9 +146,7 @@ export function AnimationAuditComparisonRow({
         <button
           type="button"
           className="animation-audit-row__toggle"
-          onClick={() => {
-            setIsPlaying((value) => !value)
-          }}
+          onClick={() => setIsPlaying((value) => !value)}
         >
           {isPlaying ? <Pause aria-hidden="true" strokeWidth={1.9} /> : <Play aria-hidden="true" strokeWidth={1.9} />}
           {isPlaying ? t({ zh: '暂停这一行', en: 'Pause row' }) : t({ zh: '播放这一行', en: 'Play row' })}

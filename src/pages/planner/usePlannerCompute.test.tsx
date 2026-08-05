@@ -32,9 +32,7 @@ function createControllableRunner(): ControllableRunner {
   const recommendResolvers: Array<(value: PlannerRecommendation) => void> = []
   const runner = {
     updateCollections: vi.fn(),
-    recommend: vi.fn(() => new Promise<PlannerRecommendation>((resolve) => {
-      recommendResolvers.push(resolve)
-    })),
+    recommend: vi.fn(() => new Promise<PlannerRecommendation>((resolve) => recommendResolvers.push(resolve))),
     evaluate: vi.fn(() => Promise.resolve({} as FormationEvaluation)),
     dispose: vi.fn(),
   }
@@ -47,9 +45,7 @@ function createControllableRunner(): ControllableRunner {
   }
 }
 
-afterEach(() => {
-  vi.useRealTimers()
-})
+afterEach(() => vi.useRealTimers())
 
 describe('usePlannerRecommendation', () => {
   it('collections 变 → runner.updateCollections 调用', () => {
@@ -71,7 +67,7 @@ describe('usePlannerRecommendation', () => {
     await act(async () => { await vi.advanceTimersByTimeAsync(150) })
     expect(runner.recommend).toHaveBeenCalledTimes(1)
 
-    await act(async () => { resolveRecommend(0, emptyRec) })
+    await act(async () => resolveRecommend(0, emptyRec))
     expect(result.current.result).toEqual(emptyRec)
     expect(result.current.loading).toBe(false)
     expect(result.current.error).toBeNull()
@@ -109,11 +105,11 @@ describe('usePlannerRecommendation', () => {
     expect(runner.recommend).toHaveBeenCalledTimes(2)
 
     // 先回第二次（最新 requestId）→ 生效
-    await act(async () => { resolveRecommend(1, rec2) })
+    await act(async () => resolveRecommend(1, rec2))
     expect(result.current.result).toEqual(rec2)
 
     // 再回第一次（旧 requestId）→ 不覆盖
-    await act(async () => { resolveRecommend(0, rec1) })
+    await act(async () => resolveRecommend(0, rec1))
     expect(result.current.result).toEqual(rec2)
   })
 

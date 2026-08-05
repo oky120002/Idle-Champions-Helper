@@ -14,9 +14,7 @@ describe('computeClickDamage', () => {
     expect(computeClickDamage(bud).eq(bud.mul(DEFAULT_CLICK_SECONDS))).toBe(true)
   })
 
-  it('BUD 为 0 → click damage 0', () => {
-    expect(computeClickDamage(new Decimal(0), 5).eq(0)).toBe(true)
-  })
+  it('BUD 为 0 → click damage 0', () => expect(computeClickDamage(new Decimal(0), 5).eq(0)).toBe(true))
 
   it('更高 BUD → 更高 click damage（保序）', () => {
     const low = computeClickDamage(new Decimal(10), 1)

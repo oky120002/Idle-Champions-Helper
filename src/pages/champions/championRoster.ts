@@ -60,7 +60,7 @@ export interface ChampionEquipmentSlotViewModel {
 
 const SEAT_ORDER = Array.from({ length: 12 }, (_, index) => index + 1)
 
-function toNumber(value: unknown): number {
+function toNumber(value: string | number | null | undefined): number {
   if (typeof value === 'number') {
     return value
   }

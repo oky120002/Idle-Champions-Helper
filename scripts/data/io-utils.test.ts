@@ -63,9 +63,7 @@ it('runWithConcurrency 保持结果顺序且尊重并发上限', async () => {
   const results = await runWithConcurrency(items, 3, async (item) => {
     active += 1
     maxActive = Math.max(maxActive, active)
-    await new Promise<void>((resolve) => {
-      setTimeout(resolve, 5)
-    })
+    await new Promise<void>((resolve) => setTimeout(resolve, 5))
     active -= 1
     return item * 2
   })
@@ -73,9 +71,7 @@ it('runWithConcurrency 保持结果顺序且尊重并发上限', async () => {
   expect(maxActive).toBeLessThanOrEqual(3)
 })
 
-it('runWithConcurrency 空数组直接返回空数组', async () => {
-  expect(await runWithConcurrency([], 4, async (x) => x)).toEqual([])
-})
+it('runWithConcurrency 空数组直接返回空数组', async () => expect(await runWithConcurrency([], 4, async (x) => x)).toEqual([]))
 
 it('parseIdFilter 解析逗号分隔、去空白；空值返回 null', () => {
   expect(parseIdFilter('')).toBe(null)

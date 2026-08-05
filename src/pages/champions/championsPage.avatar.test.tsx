@@ -17,9 +17,7 @@ import { ChampionsPage } from '../ChampionsPage'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 
-afterEach(() => {
-  mockedLoadCollection.mockReset()
-})
+afterEach(() => mockedLoadCollection.mockReset())
 
 describe('ChampionsPage avatars', () => {
   it('渲染官方头像资源并带上版本化路径', async () => {

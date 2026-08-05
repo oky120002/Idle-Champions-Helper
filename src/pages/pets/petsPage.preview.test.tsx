@@ -127,17 +127,13 @@ describe('PetsPage hover preview', () => {
 
     const petHeading = await screen.findByRole('heading', { level: 3, name: '法师之手' })
 
-    await waitFor(() => {
-      expect(mockedLoadCollection).toHaveBeenCalledWith('pet-animations')
-    })
+    await waitFor(() => expect(mockedLoadCollection).toHaveBeenCalledWith('pet-animations'))
 
     expect(screen.queryByTestId('skelanim-preview')).not.toBeInTheDocument()
 
     await user.hover(petHeading.closest('article') as HTMLElement)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('skelanim-preview')).toHaveTextContent('法师之手立绘')
-    })
+    await waitFor(() => expect(screen.getByTestId('skelanim-preview')).toHaveTextContent('法师之手立绘'))
 
     await user.unhover(petHeading.closest('article') as HTMLElement)
 

@@ -49,9 +49,9 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
         en: `Open champion: ${championPrimaryName} (${title.primary})`,
       })}
       onMouseEnter={activatePreview}
-      onMouseLeave={() => { setPreviewActive(false) }}
+      onMouseLeave={() => setPreviewActive(false)}
       onFocus={activatePreview}
-      onBlur={() => { setPreviewActive(false) }}
+      onBlur={() => setPreviewActive(false)}
       onClick={onOpenChampion}
     >
       <div className="illustration-card__image-shell">

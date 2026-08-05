@@ -74,9 +74,7 @@ function scheduleDraftPersistence({
     })
   }, DRAFT_SAVE_DELAY_MS)
 
-  return () => {
-    window.clearTimeout(timeoutId)
-  }
+  return () => window.clearTimeout(timeoutId)
 }
 
 interface PersistDraftContext {

@@ -100,14 +100,14 @@ function renderFormationSlotControls(
         data-testid={`formation-mobile-slot-${slot.id}`}
         aria-label={slotAriaLabel}
         aria-pressed={isMobileSlotActive}
-        onClick={() => { model.setActiveMobileSlotId(slot.id) }}
+        onClick={() => model.setActiveMobileSlotId(slot.id)}
       />
       <div className="formation-slot__controls">
         <select
           className="slot-select"
           aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
           value={selectedChampionId}
-          onChange={(event) => { model.handleAssignChampion(slot.id, event.target.value) }}
+          onChange={(event) => model.handleAssignChampion(slot.id, event.target.value)}
         >
           <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
           {model.getAvailableChampionsForSlot(slot.id).map((item) => (

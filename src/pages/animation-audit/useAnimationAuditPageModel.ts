@@ -130,14 +130,10 @@ function useAnimationAuditData() {
 function useAnimationAuditFeedback() {
   const [feedbackById, setFeedbackById] = useState(() => readStoredAnimationAuditFeedback())
 
-  useEffect(() => {
-    writeStoredAnimationAuditFeedback(feedbackById)
-  }, [feedbackById])
+  useEffect(() => writeStoredAnimationAuditFeedback(feedbackById), [feedbackById])
 
   const setEntryFeedback = useCallback(
-    (entryId: string, updater: (draft: AnimationAuditFeedbackDraft) => AnimationAuditFeedbackDraft) => {
-      setFeedbackById((current) => applyFeedbackUpdate(current, entryId, updater))
-    },
+    (entryId: string, updater: (draft: AnimationAuditFeedbackDraft) => AnimationAuditFeedbackDraft) => setFeedbackById((current) => applyFeedbackUpdate(current, entryId, updater)),
     [],
   )
 
@@ -149,9 +145,7 @@ function useAnimationAuditFeedback() {
   )
 
   const toggleFeedbackTagById = useCallback(
-    (entryId: string, tag: AnimationAuditFeedbackTag) => {
-      setEntryFeedback(entryId, (draft) => toggleAnimationAuditFeedbackTag(draft, tag))
-    },
+    (entryId: string, tag: AnimationAuditFeedbackTag) => setEntryFeedback(entryId, (draft) => toggleAnimationAuditFeedbackTag(draft, tag)),
     [setEntryFeedback],
   )
 
@@ -162,9 +156,7 @@ function useAnimationAuditFeedback() {
     [setEntryFeedback],
   )
 
-  const clearFeedback = useCallback((entryId: string) => {
-    setFeedbackById((current) => removeFeedbackEntry(current, entryId))
-  }, [])
+  const clearFeedback = useCallback((entryId: string) => setFeedbackById((current) => removeFeedbackEntry(current, entryId)), [])
 
   const clearAllFeedback = useCallback(() => { setFeedbackById({}) }, [])
 
@@ -188,9 +180,9 @@ function useAnimationAuditFeedbackCopy(
   const [feedbackCopyState, setFeedbackCopyState] = useState<AnimationAuditCopyState>('idle')
 
   useEffect(() => {
-    if (feedbackCopyState === 'idle') return undefined
-    const timeoutId = window.setTimeout(() => { setFeedbackCopyState('idle') }, COPY_RESET_DELAY_MS)
-    return () => { window.clearTimeout(timeoutId) }
+    if (feedbackCopyState === 'idle') return
+    const timeoutId = window.setTimeout(() => setFeedbackCopyState('idle'), COPY_RESET_DELAY_MS)
+    return () => window.clearTimeout(timeoutId)
   }, [feedbackCopyState])
 
   const feedbackPreviewJson = useMemo(() => {

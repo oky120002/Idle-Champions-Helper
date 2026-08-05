@@ -36,9 +36,7 @@ export function DetailSkinSection({ detail, locale, t, effectContext, openArtwor
                   <button
                     type="button"
                     className="skin-list-card__preview-button"
-                    onClick={() => {
-                      openArtworkDialog(skin.id)
-                    }}
+                    onClick={() => openArtworkDialog(skin.id)}
                   >
                     {t({ zh: '预览', en: 'Preview' })}
                   </button>

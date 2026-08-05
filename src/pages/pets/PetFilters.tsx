@@ -45,9 +45,7 @@ export function PetFilters({
           id: 'source',
           label: t({ zh: '来源', en: 'Source' }),
           value: sourceFilter,
-          onChange: (value) => {
-            onSourceFilterChange(value as SourceFilter)
-          },
+          onChange: (value) => onSourceFilterChange(value as SourceFilter),
           groupLabel: t({ zh: '宠物来源', en: 'Pet source' }),
           hint: t({
             zh: '直接点来源芯片，快速切到宝石商店、付费包、赞助商商店或暂未开放条目。',
@@ -67,9 +65,7 @@ export function PetFilters({
           id: 'asset',
           label: t({ zh: '图像状态', en: 'Asset state' }),
           value: assetFilter,
-          onChange: (value) => {
-            onAssetFilterChange(value as AssetFilter)
-          },
+          onChange: (value) => onAssetFilterChange(value as AssetFilter),
           groupLabel: t({ zh: '图像状态', en: 'Asset state' }),
           hint: t({
             zh: '快速区分已有完整图像和仍待补全的宠物。',

@@ -170,9 +170,7 @@ describe('PetsPage filters', () => {
 
     await user.click(screen.getByRole('button', { name: '付费购买' }))
 
-    await waitFor(() => {
-      expect(screen.queryByText('发条小猫')).not.toBeInTheDocument()
-    })
+    await waitFor(() => expect(screen.queryByText('发条小猫')).not.toBeInTheDocument())
     expect(screen.getByText('秘法猫头鹰')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '缺图像' }))

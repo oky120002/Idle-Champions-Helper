@@ -42,11 +42,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
     <div className="variants-nav-sidebar">
       <div
         className="variants-campaign-combobox"
-        onBlur={() => {
-          window.setTimeout(() => {
-            setIsOpen(false)
-          }, 120)
-        }}
+        onBlur={() => window.setTimeout(() => setIsOpen(false), 120)}
       >
         <label className="variants-campaign-combobox__label" htmlFor="variants-campaign-search">
           {t({ zh: '地图 / 关卡', en: 'Campaign / adventure' })}
@@ -61,9 +57,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
             setQuery(event.target.value)
             setIsOpen(true)
           }}
-          onFocus={() => {
-            setIsOpen(true)
-          }}
+          onFocus={() => setIsOpen(true)}
         />
         <p className="variants-campaign-combobox__current">
           {t({ zh: `当前地图：${selectedCampaignLabel}`, en: `Current: ${selectedCampaignLabel}` })}
@@ -77,9 +71,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
                   <button
                     type="button"
                     className="variants-campaign-combobox__campaign"
-                    onMouseDown={(event) => {
-                      event.preventDefault()
-                    }}
+                    onMouseDown={(event) => event.preventDefault()}
                     onClick={() => {
                       selectCampaign(group.campaign.id)
                       setQuery('')
@@ -99,9 +91,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
                       key={adventure.id}
                       type="button"
                       className="variants-campaign-combobox__adventure"
-                      onMouseDown={(event) => {
-                      event.preventDefault()
-                    }}
+                      onMouseDown={(event) => event.preventDefault()}
                       onClick={() => {
                         selectAdventureTarget({
                           campaignId: group.campaign.id,
@@ -145,9 +135,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
                   ? 'variants-adventure-list__item variants-adventure-list__item--active'
                   : 'variants-adventure-list__item'
               }
-              onClick={() => {
-                selectAdventure(adventure.adventureId)
-              }}
+              onClick={() => selectAdventure(adventure.adventureId)}
             >
               <span>{getLocalizedTextPair(adventure.adventure, locale)}</span>
               <small>

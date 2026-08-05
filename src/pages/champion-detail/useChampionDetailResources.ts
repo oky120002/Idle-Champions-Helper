@@ -25,7 +25,7 @@ function computeIsLoading(state: ChampionDetailState, championId: string | undef
 
 function manageDialogScrollLock(isOpen: boolean, onClose: () => void): (() => void) | undefined {
   if (!isOpen || typeof window === 'undefined') {
-    return undefined
+    return
   }
 
   const previousOverflow = document.body.style.overflow
@@ -67,7 +67,7 @@ function useChampionDetailData(championId: string | undefined) {
     let disposed = false
 
     if (championId === undefined || championId === '') {
-      return undefined
+      return
     }
 
     loadChampionDetail(championId)

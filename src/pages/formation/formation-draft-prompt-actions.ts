@@ -36,12 +36,8 @@ export function buildFormationDraftPromptActions(options: BuildFormationDraftPro
 
   return {
     handleRestoreRecentDraft,
-    handleKeepDraftWithoutRestore: () => {
-      applyKeepDraftDecision(options)
-    },
-    handleDiscardRecentDraft: () => {
-      void discardRecentDraft(options)
-    },
+    handleKeepDraftWithoutRestore: () => applyKeepDraftDecision(options),
+    handleDiscardRecentDraft: () => void discardRecentDraft(options),
   }
 }
 

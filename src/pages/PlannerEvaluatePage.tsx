@@ -376,9 +376,7 @@ function EvaluateReadyContent({
             <Plus aria-hidden="true" strokeWidth={2} />
           </span>
         }
-        onSlotDrop={(slotId, event) => {
-          handleEvaluateSlotDrop(slotId, event, lockedSlots)
-        }}
+        onSlotDrop={(slotId, event) => handleEvaluateSlotDrop(slotId, event, lockedSlots)}
         slotExtras={(slot, champion) => (
           <EvaluateSlotControls
             slot={slot}
@@ -386,18 +384,12 @@ function EvaluateReadyContent({
             lockedSlotHero={lockedSlots[slot.id]}
             championOptions={championOptions}
             getOptionLabel={getOptionLabel}
-            onSelect={(heroId) => {
-              patchEvaluatePlacements(slot.id, heroId)
-            }}
-            onRemove={() => {
-              removeEvaluatePlacement(slot.id)
-            }}
+            onSelect={(heroId) => patchEvaluatePlacements(slot.id, heroId)}
+            onRemove={() => removeEvaluatePlacement(slot.id)}
             onLock={(slotId, championId) => {
               setLockedSlots((current) => ({ ...current, [slotId]: championId }))
             }}
-            onUnlock={(slotId) => {
-              setLockedSlots((current) => Object.fromEntries(Object.entries(current).filter(([key]) => key !== slotId)))
-            }}
+            onUnlock={(slotId) => setLockedSlots((current) => Object.fromEntries(Object.entries(current).filter(([key]) => key !== slotId)))}
           />
         )}
       />
@@ -449,12 +441,8 @@ function EvaluateReadyContent({
       <div
         className="formation-remove-zone"
         data-testid="planner-evaluate-remove-zone"
-        onDragOver={(event) => {
-          event.preventDefault()
-        }}
-        onDrop={(event) => {
-          handleEvaluateRemoveDrop(event, placements, lockedSlots)
-        }}
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={(event) => handleEvaluateRemoveDrop(event, placements, lockedSlots)}
       >
         <Eraser aria-hidden="true" strokeWidth={1.9} />
         {t({ zh: '拖到此处移除', en: 'Drop here to remove' })}
@@ -511,9 +499,7 @@ export function PlannerEvaluatePage() {
     [collections.variants, selectedVariantId],
   )
   const runner = useMemo(() => createPlannerComputeRunner(), [])
-  useEffect(() => () => {
-    runner.dispose()
-  }, [runner])
+  useEffect(() => () => runner.dispose(), [runner])
 
   const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
     () => buildScoringBonusInputs({
@@ -619,9 +605,7 @@ export function PlannerEvaluatePage() {
               icon: <BackNavigationIcon />,
               tone: 'share',
               className: 'planner-evaluate-workbench__toolbar-back',
-              onClick: () => {
-                void navigate(backTarget.pathname + backTarget.search)
-              },
+              onClick: () => void navigate(backTarget.pathname + backTarget.search),
             },
           ],
         },

@@ -120,9 +120,7 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
       <div
         className="formation-remove-zone"
         data-testid="formation-remove-zone"
-        onDragOver={(event) => {
-          event.preventDefault()
-        }}
+        onDragOver={(event) => event.preventDefault()}
         onDrop={(event) => {
           event.preventDefault()
           const heroId = event.dataTransfer.getData('text/plain')

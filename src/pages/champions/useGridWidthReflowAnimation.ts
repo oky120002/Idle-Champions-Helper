@@ -57,9 +57,7 @@ function applyReflowAnimations(
       return
     }
 
-    item.element.getAnimations().forEach((animation) => {
-      animation.cancel()
-    })
+    item.element.getAnimations().forEach((animation) => animation.cancel())
     item.element.animate(
       [
         { transform: `translate(${String(deltaX)}px, ${String(deltaY)}px)` },
@@ -78,7 +76,7 @@ export function useGridWidthReflowAnimation(gridRef: RefObject<HTMLElement | nul
     const grid = gridRef.current
 
     if (grid === null || typeof ResizeObserver === 'undefined') {
-      return undefined
+      return
     }
 
     let frameId: number | null = null
@@ -111,14 +109,10 @@ export function useGridWidthReflowAnimation(gridRef: RefObject<HTMLElement | nul
 
     refreshSnapshot()
 
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleSnapshot()
-    })
+    const resizeObserver = new ResizeObserver(() => scheduleSnapshot())
     resizeObserver.observe(grid)
 
-    const mutationObserver = new MutationObserver(() => {
-      scheduleSnapshot()
-    })
+    const mutationObserver = new MutationObserver(() => scheduleSnapshot())
     mutationObserver.observe(grid, { childList: true })
 
     return () => {

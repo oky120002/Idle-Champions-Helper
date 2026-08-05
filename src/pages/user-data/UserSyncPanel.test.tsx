@@ -31,9 +31,7 @@ function mockModel(overrides: Partial<ReturnType<typeof useUserSyncModel>> = {})
 }
 
 describe('UserSyncPanel 删除确认弹窗', () => {
-  beforeEach(() => {
-    vi.mocked(useUserSyncModel).mockReset()
-  })
+  beforeEach(() => vi.mocked(useUserSyncModel).mockReset())
 
   it('点击删除按钮打开确认弹窗', () => {
     mockModel()

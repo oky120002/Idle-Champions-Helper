@@ -79,7 +79,7 @@ function attachScrollTracker(
   setActiveSectionId: (id: DetailSectionId) => void,
 ): (() => void) | undefined {
   if (typeof window === 'undefined') {
-    return undefined
+    return
   }
 
   const scrollContainer = scrollContainerRef.current
@@ -118,13 +118,13 @@ function handleHashNavigation(
   setActiveSectionId: (id: DetailSectionId) => void,
 ): (() => void) | undefined {
   if (!detail || hashSectionId == null || typeof window === 'undefined') {
-    return undefined
+    return
   }
 
   const browserHash = window.location.hash
 
   if (handledSectionHashRef.current === browserHash) {
-    return undefined
+    return
   }
 
   handledSectionHashRef.current = browserHash
@@ -135,9 +135,7 @@ function handleHashNavigation(
     document.getElementById(hashSectionId)?.scrollIntoView({ behavior: 'auto', block: 'start' })
   })
 
-  return () => {
-    window.cancelAnimationFrame(frameId)
-  }
+  return () => window.cancelAnimationFrame(frameId)
 }
 
 function syncSectionHash(
@@ -225,9 +223,7 @@ export function useChampionDetailSectionState(
   const isLeavingPageRef = useRef(false)
   const prevDetailIdRef = useRef<string | undefined>(undefined)
 
-  useEffect(() => {
-    trackDetailChange(detail?.summary.id, prevDetailIdRef, pendingHashSectionIdRef, handledSectionHashRef, isLeavingPageRef)
-  }, [detail?.summary.id])
+  useEffect(() => trackDetailChange(detail?.summary.id, prevDetailIdRef, pendingHashSectionIdRef, handledSectionHashRef, isLeavingPageRef), [detail?.summary.id])
 
   const sectionLinks = buildSectionLinks(t)
   const activeSectionIndex = Math.max(sectionLinks.findIndex((s) => s.id === activeSectionId), 0)
@@ -241,13 +237,9 @@ export function useChampionDetailSectionState(
 
   useEffect(() => handleHashNavigation(detail, hashSectionId, handledSectionHashRef, pendingHashSectionIdRef, setActiveSectionId), [detail, hashSectionId])
 
-  useEffect(() => {
-    syncSectionHash(detail, activeSectionId, location.pathname, location.search, isLeavingPageRef, pendingHashSectionIdRef, handledSectionHashRef)
-  }, [activeSectionId, detail, location.pathname, location.search])
+  useEffect(() => syncSectionHash(detail, activeSectionId, location.pathname, location.search, isLeavingPageRef, pendingHashSectionIdRef, handledSectionHashRef), [activeSectionId, detail, location.pathname, location.search])
 
-  const scrollToSection = (id: string) => {
-    scrollToSectionImpl(id, location.pathname, location.search, pendingHashSectionIdRef, handledSectionHashRef, setActiveSectionId)
-  }
+  const scrollToSection = (id: string) => scrollToSectionImpl(id, location.pathname, location.search, pendingHashSectionIdRef, handledSectionHashRef, setActiveSectionId)
 
   const navigateBackToChampions = () => {
     isLeavingPageRef.current = true

@@ -45,9 +45,7 @@ export function FilterChipMultiSelectField<T extends string | number>({
             type="button"
             className={selectedValues.includes(option.id) ? 'filter-chip filter-chip--active' : 'filter-chip'}
             aria-pressed={selectedValues.includes(option.id)}
-            onClick={() => {
-              onToggle(option.id)
-            }}
+            onClick={() => onToggle(option.id)}
           >
             {option.label}
             {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}

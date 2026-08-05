@@ -156,7 +156,7 @@ function buildVariantsActions(motion: MotionApi, groups: VariantCampaignGroup[],
   }) }
   return {
     selectCampaign,
-    selectAdventure: (value: string) => { runFilterMutation(() => { fs.setSelectedAdventureId(value) }) },
+    selectAdventure: (value: string) => runFilterMutation(() => fs.setSelectedAdventureId(value)),
     selectAdventureTarget: (target: { campaignId: string; adventureId: string }) => {
       runFilterMutation(() => { fs.setSelectedCampaign(target.campaignId); fs.setSelectedAdventureId(target.adventureId) })
     },
@@ -164,16 +164,16 @@ function buildVariantsActions(motion: MotionApi, groups: VariantCampaignGroup[],
       motion.prepareResultsViewportTransition('filters')
       fs.setDetailTab(value)
     },
-    updateSearch: (value: string) => { runFilterMutation(() => { fs.setSearch(value) }) },
+    updateSearch: (value: string) => runFilterMutation(() => fs.setSearch(value)),
     updateSelectedCampaign: selectCampaign,
-    updateAreaSearch: (value: string) => { runFilterMutation(() => { fs.setAreaSearch(value) }) },
-    updateAttackProfile: (value: AttackProfileFilterId) => { runFilterMutation(() => { fs.setSelectedAttackProfile(value) }) },
-    updateSpecialEnemyRange: (value: SpecialEnemyFilterId) => { runFilterMutation(() => { fs.setSelectedSpecialEnemyRange(value) }) },
-    resetEnemyTypes: () => { runFilterMutation(() => { fs.setSelectedEnemyTypeIds([]) }) },
-    toggleEnemyType: (value: string) => { runFilterMutation(() => { fs.setSelectedEnemyTypeIds((current) => toggleVariantSelection(current, value)) }) },
-    resetScenes: () => { runFilterMutation(() => { fs.setSelectedSceneIds([]) }) },
-    toggleScene: (value: string) => { runFilterMutation(() => { fs.setSelectedSceneIds((current) => toggleVariantSelection(current, value)) }) },
-    clearAllFilters: () => { resetVariantFilters(motion, fs) },
+    updateAreaSearch: (value: string) => runFilterMutation(() => fs.setAreaSearch(value)),
+    updateAttackProfile: (value: AttackProfileFilterId) => runFilterMutation(() => fs.setSelectedAttackProfile(value)),
+    updateSpecialEnemyRange: (value: SpecialEnemyFilterId) => runFilterMutation(() => fs.setSelectedSpecialEnemyRange(value)),
+    resetEnemyTypes: () => runFilterMutation(() => fs.setSelectedEnemyTypeIds([])),
+    toggleEnemyType: (value: string) => runFilterMutation(() => fs.setSelectedEnemyTypeIds((current) => toggleVariantSelection(current, value))),
+    resetScenes: () => runFilterMutation(() => fs.setSelectedSceneIds([])),
+    toggleScene: (value: string) => runFilterMutation(() => fs.setSelectedSceneIds((current) => toggleVariantSelection(current, value))),
+    clearAllFilters: () => resetVariantFilters(motion, fs),
     toggleResultVisibility: () => {
       motion.prepareResultsViewportTransition('visibility')
       fs.setShowAllResults((current) => !current)

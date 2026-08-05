@@ -20,16 +20,12 @@ export function useWorkbenchShareLink(pathname: string, search: string, hash: st
 
   useEffect(() => {
     if (shareLinkState === 'idle') {
-      return undefined
+      return
     }
 
-    const timeoutId = window.setTimeout(() => {
-      setShareLinkState('idle')
-    }, SHARE_RESET_DELAY_MS)
+    const timeoutId = window.setTimeout(() => setShareLinkState('idle'), SHARE_RESET_DELAY_MS)
 
-    return () => {
-      window.clearTimeout(timeoutId)
-    }
+    return () => window.clearTimeout(timeoutId)
   }, [shareLinkState])
 
   const copyCurrentLink = useCallback(async () => {

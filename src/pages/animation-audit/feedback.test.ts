@@ -90,9 +90,7 @@ describe('createEmptyAnimationAuditFeedbackDraft', () => {
 })
 
 describe('normalizeAnimationAuditFeedbackDraft', () => {
-  it('全空草稿归一化为 null（不构成有效反馈）', () => {
-    expect(normalizeAnimationAuditFeedbackDraft(buildDraft())).toBeNull()
-  })
+  it('全空草稿归一化为 null（不构成有效反馈）', () => expect(normalizeAnimationAuditFeedbackDraft(buildDraft())).toBeNull())
 
   it('只有空白 note 时也归一化为 null（trim 后无内容）', () => {
     expect(normalizeAnimationAuditFeedbackDraft(buildDraft({ note: '   \t  ' }))).toBeNull()
@@ -137,13 +135,9 @@ describe('normalizeAnimationAuditFeedbackDraft', () => {
 })
 
 describe('isMeaningfulAnimationAuditFeedback', () => {
-  it('undefined 不是有效反馈（类型守卫收窄到 false）', () => {
-    expect(isMeaningfulAnimationAuditFeedback(undefined)).toBe(false)
-  })
+  it('undefined 不是有效反馈（类型守卫收窄到 false）', () => expect(isMeaningfulAnimationAuditFeedback(undefined)).toBe(false))
 
-  it('全空草稿不是有效反馈', () => {
-    expect(isMeaningfulAnimationAuditFeedback(buildDraft())).toBe(false)
-  })
+  it('全空草稿不是有效反馈', () => expect(isMeaningfulAnimationAuditFeedback(buildDraft())).toBe(false))
 
   it('带内容的草稿是有效反馈', () => {
     expect(isMeaningfulAnimationAuditFeedback(buildDraft({ verdict: 'current' }))).toBe(true)
@@ -333,9 +327,7 @@ describe('buildAnimationAuditFeedbackPayload', () => {
 // localStorage 读写依赖 window。node 环境下 window 未定义，先测守卫路径，
 // 再用 vi.stubGlobal 注入模拟 localStorage 测防御性解析。
 describe('readStoredAnimationAuditFeedback', () => {
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
+  afterEach(() => vi.unstubAllGlobals())
 
   it('window 未定义时返回空对象（SSR/Node 守卫）', () => {
     expect(readStoredAnimationAuditFeedback()).toEqual({})
@@ -345,9 +337,7 @@ describe('readStoredAnimationAuditFeedback', () => {
     vi.stubGlobal('window', {
       localStorage: {
         getItem: (key: string) => store.get(key) ?? null,
-        setItem: (key: string, value: string) => {
-          store.set(key, value)
-        },
+        setItem: (key: string, value: string) => store.set(key, value),
       },
     })
   }
@@ -443,9 +433,7 @@ describe('readStoredAnimationAuditFeedback', () => {
 })
 
 describe('writeStoredAnimationAuditFeedback', () => {
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
+  afterEach(() => vi.unstubAllGlobals())
 
   it('window 未定义时直接返回不抛错（SSR/Node 守卫）', () => {
     expect(() => {
@@ -458,9 +446,7 @@ describe('writeStoredAnimationAuditFeedback', () => {
     vi.stubGlobal('window', {
       localStorage: {
         getItem: (key: string) => store.get(key) ?? null,
-        setItem: (key: string, value: string) => {
-          store.set(key, value)
-        },
+        setItem: (key: string, value: string) => store.set(key, value),
       },
     })
 

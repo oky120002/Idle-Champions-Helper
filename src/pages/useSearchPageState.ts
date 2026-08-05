@@ -29,14 +29,10 @@ export function useSearchPageState(): UseSearchPageStateResult {
   // 查询 -> 结果（防抖）
   useEffect(() => {
     if (engine === null || trimmed === '') {
-      return undefined
+      return
     }
-    const handle = window.setTimeout(() => {
-      setResults(engine.search(trimmed, RESULT_LIMIT))
-    }, DEBOUNCE_MS)
-    return () => {
-      window.clearTimeout(handle)
-    }
+    const handle = window.setTimeout(() => setResults(engine.search(trimmed, RESULT_LIMIT)), DEBOUNCE_MS)
+    return () => window.clearTimeout(handle)
   }, [engine, trimmed])
 
   // 查询 -> URL（replace，避免堆历史）
@@ -54,11 +50,7 @@ export function useSearchPageState(): UseSearchPageStateResult {
 
   // URL -> 查询（浏览器前进/后退）；microtask 推迟 setState
   const urlQuery = searchParams.get('q') ?? ''
-  useEffect(() => {
-    queueMicrotask(() => {
-      setQuery((current) => (current === urlQuery ? current : urlQuery))
-    })
-  }, [urlQuery])
+  useEffect(() => queueMicrotask(() => setQuery((current) => (current === urlQuery ? current : urlQuery))), [urlQuery])
 
   const visibleResults = engine === null || trimmed === '' ? [] : results
 
