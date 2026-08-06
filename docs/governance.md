@@ -57,7 +57,7 @@
 
 ## 7. 文档类型与生命周期
 
-`docs/` 下有六类活跃资产与一类历史归档，各有独立目录与生命周期。各类的「怎么写/怎么加」细则在对应目录 README，本节只给跨类型总则。
+`docs/` 下有七类活跃资产与一类历史归档，各有独立目录与生命周期。各类的「怎么写/怎么加」细则在对应目录 README，本节只给跨类型总则。
 
 | 类型 | 目录 | 回答什么 | 生命周期 | 核心规则 |
 |---|---|---|---|---|
@@ -67,6 +67,7 @@
 | Decision 决策 | `decisions/` | 为什么这样选 | append-only | `**Status**: Draft/Accepted/Superseded`；superseded 不删，新 ADR 取代 |
 | Plan 计划 | `plans/` | 接下来按什么步骤改 | `Accepted→Landed` | 确认要做时才创建；落地后 `specs/` 更新，保留 `Landed` 状态并移入 `archives/plans/` |
 | Runbook 操作手册 | `runbooks/` | 当前怎样操作 | 随操作更新 | 写当前可执行步骤；不写事故经过或方案讨论 |
+| Audit 审计 | `audits/` | 验证/审计了什么 | 时点快照，保留作基线 | 一次性结构化排查；结论分流到对应类型；是时点快照，随项目演进过时属预期，当前态查 `specs/` |
 | Archive 归档 | `archives/` | 过去发生了什么 | 冷存储 | 仅考古读取；默认不进入 |
 
 **铁律**：活跃规范不引用 `plans/` 或里程碑，不描述「某次交付了什么」。Spec 可以链接 ADR 作为当前选择的依据，但不得复述决策历史。Requirement 和 Plan 是两个不同阶段：Requirement 是需求意图（可能永远不做），Plan 是执行计划（确认要做）。Requirement 被接受后在 `plans/` 新建对应执行计划，提案保留至实现完成；**一旦实现落地或被否决，必须立即将需求文件移入 `archives/requirements/` 并标记终态，禁止留在 `requirements/` 堆积**。多子项需求部分落地时原地更新剩余子项，全部终态后才整体归档；重复或无效提案直接删除，不归档。
@@ -103,6 +104,7 @@
 - 新决策 → `decisions/NNNN-<slug>.md`，使用该目录的 `_template.md`
 - 新执行计划/里程碑 → `plans/YYYY-MM-<scope>-<slug>.md`，使用该目录的 `_template.md`（提案被接受、准备执行时才创建）
 - 新操作手册 → `runbooks/<task>.md`，写前提、命令、判断和验证
+- 新审计报告 → `audits/<topic>-audit.md`（完整审计）或 `<topic>-recon.md`（侦察，真缺口 <2 不展开）
 - 新历史记录 → 仅从已完成的 Plan、Investigation 或已终态的 Requirement 移入 `archives/`，不为当前工作新建归档文档
 
 有 `_template.md` 的目录，新建文档必须从模板结构开始写。Decision 和 Plan 使用各自目录的 `_template.md`（ADR 有 Nygard 业界共识、Plan 多阶段 checklist 刚需）；Spec、Requirement、Research、Runbook 与 Archive 无统一模板共识，以相邻 README 的职责约定为准，不为形式化而强加模板。
@@ -130,4 +132,5 @@
 | [`archives/README.md`](./archives/README.md) | 归档总规则：子目录、何时移入、进入后不再更新 |
 | [`archives/requirements/README.md`](./archives/requirements/README.md) | 需求归档规则：终态标记、何时进入 |
 | [`scripts/docs-governance.test.ts`](../scripts/docs-governance.test.ts) | 可执行约束：目录结构、断链、体量、迁移叙事、Status |
-| [`decisions/0006-document-taxonomy.md`](./decisions/0006-document-taxonomy.md) | 六类分类决策依据（ADR） |
+| [`decisions/0006-document-taxonomy.md`](./decisions/0006-document-taxonomy.md) | 文档分类决策依据（ADR，六类基线） |
+| [`decisions/0018-audit-document-type.md`](./decisions/0018-audit-document-type.md) | 新增 Audit 第七类决策依据（ADR，扩展 0006） |

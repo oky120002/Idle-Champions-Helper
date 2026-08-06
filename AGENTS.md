@@ -42,6 +42,7 @@
 | 为什么这样选 | `docs/decisions/` |
 | 接下来按什么步骤改（即将执行） | `docs/plans/` |
 | 怎样操作 | `docs/runbooks/` |
+| 验证/审计了什么 | `docs/audits/` |
 
 关键区分：`requirements/` 是需求意图（可能永远不做），`plans/` 是执行计划（确认要做）。提案被接受后在 `plans/` 新建执行计划，提案保留至实现完成；**需求一旦落地或被否决，必须立即移入 `archives/requirements/` 并标记终态，禁止留在 `requirements/` 堆积**。详细分类规则、命名约定和生命周期见 `docs/README.md` 与 `docs/governance.md`。
 

@@ -7,7 +7,7 @@ import { unwrap } from '../tests/utils/dom-assertions.ts'
 
 const repositoryRoot = resolve(import.meta.dirname, '..')
 const docsRoot = resolve(repositoryRoot, 'docs')
-const activeDocumentDirectories = ['specs', 'requirements', 'research', 'decisions', 'plans', 'runbooks']
+const activeDocumentDirectories = ['specs', 'requirements', 'research', 'decisions', 'plans', 'runbooks', 'audits']
 const documentDirectories = [...activeDocumentDirectories, 'archives']
 
 function markdownFiles(root: string): string[] {
@@ -25,7 +25,7 @@ function relativeToRepository(path: string): string {
 }
 
 describe('documentation governance', () => {
-  it('keeps six active document types and archive as explicit top-level destinations', () => {
+  it('keeps seven active document types and archive as explicit top-level destinations', () => {
     for (const directory of documentDirectories) {
       expect(existsSync(resolve(docsRoot, directory)), `missing docs/${directory}/`).toBe(true)
     }
@@ -35,20 +35,20 @@ describe('documentation governance', () => {
     }
   })
 
-  it('keeps taxonomy wording aligned with the six active directories and archive', () => {
+  it('keeps taxonomy wording aligned with the seven active directories and archive', () => {
     const taxonomySources = [
       'docs/README.md',
       'docs/governance.md',
-      'docs/decisions/0006-document-taxonomy.md',
+      'docs/decisions/0018-audit-document-type.md',
     ]
 
     for (const source of taxonomySources) {
       if (!existsSync(resolve(repositoryRoot, source))) continue
       const markdown = readFileSync(resolve(repositoryRoot, source), 'utf8')
       expect(markdown, `${source} must distinguish active documents from archive`).toContain(
-        '六类活跃资产与一类历史归档',
+        '七类活跃资产与一类历史归档',
       )
-      expect(markdown, `${source} counts archive as an active document type`).not.toContain('七类活跃资产')
+      expect(markdown, `${source} counts archive as an active document type`).not.toContain('八类活跃资产')
     }
   })
 
