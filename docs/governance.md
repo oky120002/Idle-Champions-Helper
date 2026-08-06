@@ -64,7 +64,7 @@
 | Spec 活跃规范 | `specs/` | 系统现在是什么 | 随实现重写 | 禁迁移叙事；只描述「现在是什么」；**永不引用 plans/milestone** |
 | Requirement 需求 | `requirements/` | 将来可能做什么 | 落地/否决后立即归档 | 有明确需求描述和暂缓理由；不做排期；被接受后在 `plans/` 新建执行计划，提案保留至实现完成 |
 | Research 调研 | `research/` | 外部事实是什么 | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
-| Decision 决策 | `decisions/` | 为什么这样选 | append-only | `**Status**: Draft/Accepted/Superseded`；superseded 不删，新 ADR 取代 |
+| Decision 决策 | `decisions/` | 为什么这样选 | append-only | `**Status**: Draft/Accepted/Superseded`；推翻→新 ADR，细节更新→改原文（见 `decisions/README.md`） |
 | Plan 计划 | `plans/` | 接下来按什么步骤改 | `Accepted→Landed` | 确认要做时才创建；落地后 `specs/` 更新，保留 `Landed` 状态并移入 `archives/plans/` |
 | Runbook 操作手册 | `runbooks/` | 当前怎样操作 | 随操作更新 | 写当前可执行步骤；不写事故经过或方案讨论 |
 | Audit 审计 | `audits/` | 验证/审计了什么 | 时点快照，保留作基线 | 一次性结构化排查；结论分流到对应类型；是时点快照，随项目演进过时属预期，当前态查 `specs/` |
@@ -132,5 +132,4 @@
 | [`archives/README.md`](./archives/README.md) | 归档总规则：子目录、何时移入、进入后不再更新 |
 | [`archives/requirements/README.md`](./archives/requirements/README.md) | 需求归档规则：终态标记、何时进入 |
 | [`scripts/docs-governance.test.ts`](../scripts/docs-governance.test.ts) | 可执行约束：目录结构、断链、体量、迁移叙事、Status |
-| [`decisions/0006-document-taxonomy.md`](./decisions/0006-document-taxonomy.md) | 文档分类决策依据（ADR，六类基线） |
-| [`decisions/0018-audit-document-type.md`](./decisions/0018-audit-document-type.md) | 新增 Audit 第七类决策依据（ADR，扩展 0006） |
+| [`decisions/0006-document-taxonomy.md`](./decisions/0006-document-taxonomy.md) | 文档分类决策依据（ADR） |

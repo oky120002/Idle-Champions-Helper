@@ -1,6 +1,9 @@
 # decisions/ —— 决策记录（ADR）
 
-append-only。每个决策一个文件，编号 NNNN。**决策变了新开 ADR，旧的不删**（标 `Status: Superseded by NNNN`）。
+append-only。每个决策一个文件，编号 NNNN。区分两种变更：
+
+- **决策被推翻**（选了不同方案）→ 新开 ADR，旧的不删（标 `Status: Superseded by NNNN`）
+- **实施细节更新**（分类计数、术语、措辞、版本号）→ 直接改原 ADR，使其始终反映当前态，不新开 ADR
 
 ## 命名
 

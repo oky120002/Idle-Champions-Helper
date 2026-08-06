@@ -1,4 +1,4 @@
-# 0006. 文档采用六类活跃资产与一类历史归档
+# 0006. 文档采用七类活跃资产与一类历史归档
 
 **Status**: Accepted
 **Decided**: 2026-07-27
@@ -9,9 +9,11 @@
 
 ## 决策
 
-`docs/` 使用六类活跃资产 `specs/`、`requirements/`、`research/`、`decisions/`、`plans/`、`runbooks/`，以及一类历史归档 `archives/`：分别回答系统现在是什么、将来可能做什么、外部事实是什么、为什么选择、接下来按什么步骤改、现在怎样操作、过去发生了什么。
+`docs/` 使用七类活跃资产 `specs/`、`requirements/`、`research/`、`decisions/`、`plans/`、`runbooks/`、`audits/`，以及一类历史归档 `archives/`：分别回答系统现在是什么、将来可能做什么、外部事实是什么、为什么选择、接下来按什么步骤改、现在怎样操作、验证/审计了什么、过去发生了什么。
 
 Requirement 与 Plan 分离：Requirement 是需求意图（可能永远不做），Plan 是确认要做的执行计划。Spec 可以链接 ADR 作为依据，但不得复述决策历史；Spec 不链接 Plan。Research 不承载本项目的选择或实施顺序。Runbook 随代码与环境变化原地更新，不作为事故日志。
+
+Audit（审计）回答「某次审计发现了什么」，是时点快照——随项目推进会过时，这是固有特性而非缺陷；当前态归 Spec，审计报告保留作回归基线，不要求与当前态同步。
 
 ## 后果
 
@@ -21,4 +23,4 @@ Requirement 与 Plan 分离：Requirement 是需求意图（可能永远不做�
 ## 关联
 
 - 依据：`docs/research/documentation/framework-practices.md`
-- 落地：`docs/governance.md`
+- 落地：`docs/governance.md`、`docs/audits/README.md`

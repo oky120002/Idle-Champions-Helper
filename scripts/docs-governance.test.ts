@@ -39,7 +39,7 @@ describe('documentation governance', () => {
     const taxonomySources = [
       'docs/README.md',
       'docs/governance.md',
-      'docs/decisions/0018-audit-document-type.md',
+      'docs/decisions/0006-document-taxonomy.md',
     ]
 
     for (const source of taxonomySources) {
