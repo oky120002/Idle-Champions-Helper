@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { computeCumulativeLevelCost, computeGoldBudgetBaseline } from './goldBudgetBaseline'
+import { toGameNumber } from '../gameNumber'
+import {
+  computeAffordableLevel,
+  computeCumulativeLevelCost,
+  computeMaxGoldForLevel,
+} from './goldBudgetBaseline'
 
 describe('computeCumulativeLevelCost', () => {
   it('level=0 返回 0', () => {
@@ -11,20 +16,17 @@ describe('computeCumulativeLevelCost', () => {
   })
 
   it('Bruenor baseCost=5 rate=1.06 level=10 与手算一致', () => {
-    // 5 × (1.06^10 - 1) / 0.06 ≈ 65.9
     const expected = (5 * (Math.pow(1.06, 10) - 1)) / 0.06
     expect(computeCumulativeLevelCost(5, 1.06, 10).toNumber()).toBeCloseTo(expected, 1)
   })
 
   it('Bruenor baseCost=5 rate=1.06 level=100 与手算一致', () => {
-    // 1.06^100 ≈ 339.3；5 × 338.3 / 0.06 ≈ 28191
     const expected = (5 * (Math.pow(1.06, 100) - 1)) / 0.06
     expect(computeCumulativeLevelCost(5, 1.06, 100).toNumber()).toBeCloseTo(expected, 0)
   })
 
   it('超大 level=8000 不溢出（decimal.js 任意精度）', () => {
     const result = computeCumulativeLevelCost(5, 1.06, 8000)
-    // 1.06^8000 ≈ 10^200+
     expect(result.e).toBeGreaterThan(100)
     expect(result.isFinite()).toBe(true)
   })
@@ -36,60 +38,67 @@ describe('computeCumulativeLevelCost', () => {
   })
 })
 
-describe('gold budget baseline', () => {
-  it('cost curve 和预算能返回可负担等级', () => {
-    const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level),
-      goldBudget: 1e10,
-      specializationBaseline: 50,
-    })
-
-    expect(result.affordableLevel).toBeGreaterThan(0)
-    expect(result.affordableLevel).toBeLessThan(1000)
+describe('computeAffordableLevel', () => {
+  it('金币恰好等于 level 100 累计费用 → 返回 100', () => {
+    const cost = computeCumulativeLevelCost(5, 1.06, 100)
+    const level = computeAffordableLevel(5, { '1': 1.06 }, cost)
+    expect(level).toBe(100)
   })
 
-  it('低于专精要求的预算会标记 below-baseline', () => {
-    const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(2, level),
-      goldBudget: 100,
-      specializationBaseline: 50,
-    })
-
-    expect(result.belowBaseline).toBe(true)
-    expect(result.affordableLevel).toBeLessThan(50)
+  it('金币不足 level 1 → 返回 0', () => {
+    const level = computeAffordableLevel(5, { '1': 1.06 }, toGameNumber(3))
+    expect(level).toBe(0)
   })
 
-  it('UI 默认值不暴露 100 级模式', () => {
-    const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level),
-      goldBudget: 1e10,
-      specializationBaseline: 50,
-    })
-
-    // Result should not contain internal 100-level mode flag
-    expect(result).not.toHaveProperty('mode100')
-    expect(result).not.toHaveProperty('hardcoreMode')
+  it('金币恰好等于 level 1 → 返回 1', () => {
+    const level = computeAffordableLevel(5, { '1': 1.06 }, toGameNumber(5))
+    expect(level).toBe(1)
   })
 
-  it('零预算返回 0 级', () => {
-    const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level),
-      goldBudget: 0,
-      specializationBaseline: 50,
-    })
-
-    expect(result.affordableLevel).toBe(0)
-    expect(result.belowBaseline).toBe(true)
+  it('超大金币不无限搜索', () => {
+    const level = computeAffordableLevel(5, { '1': 1.06 }, toGameNumber('1e1000'))
+    expect(level).toBeGreaterThan(0)
+    expect(level).toBeLessThanOrEqual(10000)
   })
 
-  it('超大预算不崩溃', () => {
-    const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level),
-      goldBudget: 1e300,
-      specializationBaseline: 50,
-    })
+  it('零金币 → 返回 0', () => {
+    const level = computeAffordableLevel(5, { '1': 1.06 }, toGameNumber(0))
+    expect(level).toBe(0)
+  })
+})
 
-    expect(result.affordableLevel).toBeGreaterThan(0)
-    expect(result.belowBaseline).toBe(false)
+describe('computeMaxGoldForLevel', () => {
+  const heroes = [
+    { baseCost: 5, costCurves: { '1': 1.06 } },
+    { baseCost: 1000, costCurves: { '1': 1.15 } },
+    { baseCost: 50, costCurves: { '1': 1.1 } },
+  ]
+
+  it('level=0 → 返回 0', () => {
+    expect(computeMaxGoldForLevel(heroes, 0).eq(0)).toBe(true)
+  })
+
+  it('返回所有英雄中最贵的累计费用', () => {
+    const max = computeMaxGoldForLevel(heroes, 100)
+    // Nayeli (baseCost=1000, rate=1.15) 应该最贵
+    const nayeliCost = computeCumulativeLevelCost(1000, 1.15, 100)
+    expect(max.eq(nayeliCost)).toBe(true)
+  })
+
+  it('空英雄列表 → 返回 0', () => {
+    expect(computeMaxGoldForLevel([], 100).eq(0)).toBe(true)
+  })
+})
+
+describe('金币↔等级双向闭环', () => {
+  it('金币→等级→反算金币 >= 原金币（等级向下取整）', () => {
+    const originalGold = toGameNumber(50000)
+    const level = computeAffordableLevel(5, { '1': 1.06 }, originalGold)
+    const reverseGold = computeCumulativeLevelCost(5, 1.06, level)
+    // 反算金币 <= 原金币（因为等级向下取整）
+    expect(reverseGold.lte(originalGold)).toBe(true)
+    // 但下一个等级的费用 > 原金币
+    const nextLevelCost = computeCumulativeLevelCost(5, 1.06, level + 1)
+    expect(nextLevelCost.gt(originalGold)).toBe(true)
   })
 })

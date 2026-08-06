@@ -39,11 +39,10 @@
 - [x] 实现累计升级费用函数 `computeCumulativeLevelCost(baseCost, rate, targetLevel): GameNumberValue`（等比数列求和 `baseCost × (rate^X-1)/(rate-1)`，decimal.js）+ 新增 `subtractGameNumbers` wrapper —— 验证：单元测试 6 项（level=0/1/10/100/8000 + 多英雄保序）
 - [x] 校准验证：Bruenor(baseCost=5,rate=1.06) level=1/10/100 与手算精确一致；减法在 decimal.js 内完成避免 JS 浮点误差（`rate-1` 先算致 4.999... 偏差）
 
-### 阶段 2：金币 ↔ 等级双向换算
+### 阶段 2：金币 ↔ 等级双向换算 ✅
 
-- [ ] 重写 `goldBudgetBaseline.ts`：输入全局金币值（GameNumberValue）+ 英雄列表（baseCost, costCurves）→ 输出 per-hero 等级 Map。二分搜索用 decimal.js compare —— 验证：单元测试覆盖多英雄不同 baseCost/rate 同一金币下各自等级正确
-- [ ] 实现等级→金币反算：给定全局等级，对所有英雄算升到该等级的累计费用，取最大值 —— 验证：反算测试覆盖多英雄取 max
-- [ ] 双向闭环测试：金币→等级→反算金币，偏差在可接受范围内 —— 验证：往返测试
+- [x] 重写 `goldBudgetBaseline.ts`：`computeAffordableLevel`（金币→per-hero 等级二分搜索）+ `computeMaxGoldForLevel`（等级→最贵英雄累计费用），删除旧 `costCurve` 函数式接口（零引用） —— 验证：15 项测试（含多英雄取 max、零/超大金币、双向闭环向下取整一致性）
+- [x] 双向闭环测试：金币→等级→反算金币 ≤ 原金币（向下取整），下一级费用 > 原金币
 
 ### 阶段 3：专精按等级判断解锁
 
