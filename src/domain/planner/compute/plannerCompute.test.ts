@@ -5,10 +5,12 @@ import type { PlannerCollections, PlannerRecommendation } from '../recommendatio
 import {
   SyncPlannerComputeRunner,
   WorkerPlannerComputeRunner,
+  processConvertGoldLevel,
   processPlannerComputeInbound,
   type PlannerComputeInbound,
   type PlannerComputeOutbound,
 } from './plannerCompute'
+import type { ResolvedHeroAbilityProfile } from '../../abilities/abilityModel'
 
 // Fake Worker：捕获 postMessage、暴露 emit 模拟 worker 回包、记录 terminate。
 // node 环境无真 Worker，runner 测试用此替身覆盖协议与路由逻辑。
@@ -215,5 +217,60 @@ describe('processPlannerComputeInbound', () => {
       emptyState,
     )
     expect(response).toMatchObject({ type: 'result', requestId: 9, ok: true })
+  })
+})
+
+describe('processConvertGoldLevel', () => {
+  function makeHero(heroId: string, baseCost: number, rate: number): ResolvedHeroAbilityProfile {
+    return {
+      heroId,
+      name: { original: heroId, display: heroId },
+      seat: 1,
+      baseCost,
+      costCurves: { '1': rate },
+    } as unknown as ResolvedHeroAbilityProfile
+  }
+
+  const heroes = [
+    makeHero('bruenor', 5, 1.06),
+    makeHero('nayeli', 1000, 1.15),
+    makeHero('celeste', 50, 1.1),
+  ]
+
+  it('gold 模式：便宜英雄升到更高等级', () => {
+    const result = processConvertGoldLevel({ mode: 'gold', goldBudget: '50000' }, heroes)
+    const bruenor = result.heroes.find(h => h.heroId === 'bruenor')!
+    const nayeli = result.heroes.find(h => h.heroId === 'nayeli')!
+    expect(bruenor.level).toBeGreaterThan(nayeli.level)
+    expect(bruenor.level).toBeGreaterThan(0)
+  })
+
+  it('gold 模式：每个英雄 goldCost <= 预算（等级向下取整）', () => {
+    const result = processConvertGoldLevel({ mode: 'gold', goldBudget: '50000' }, heroes)
+    for (const entry of result.heroes) {
+      expect(parseFloat(entry.goldCost)).toBeLessThanOrEqual(50000)
+    }
+  })
+
+  it('level 模式：统一等级，贵英雄 goldCost 更高', () => {
+    const result = processConvertGoldLevel({ mode: 'level', level: 100 }, heroes)
+    for (const entry of result.heroes) {
+      expect(entry.level).toBe(100)
+    }
+    const nayeli = result.heroes.find(h => h.heroId === 'nayeli')!
+    const bruenor = result.heroes.find(h => h.heroId === 'bruenor')!
+    expect(parseFloat(nayeli.goldCost)).toBeGreaterThan(parseFloat(bruenor.goldCost))
+  })
+
+  it('level 模式：maxGold = 最贵英雄的累计费用', () => {
+    const result = processConvertGoldLevel({ mode: 'level', level: 100 }, heroes)
+    const nayeli = result.heroes.find(h => h.heroId === 'nayeli')!
+    expect(result.maxGold).toBe(nayeli.goldCost)
+  })
+
+  it('空英雄列表不崩溃', () => {
+    const result = processConvertGoldLevel({ mode: 'gold', goldBudget: '1000' }, [])
+    expect(result.heroes).toHaveLength(0)
+    expect(result.maxGold).toBe('0')
   })
 })
