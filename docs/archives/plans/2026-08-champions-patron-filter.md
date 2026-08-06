@@ -1,6 +1,6 @@
 # 英雄筛选：赞助人（Patron）过滤
 
-**Status**: Accepted
+**Status**: Landed
 **Type**: change
 **Scope**: champions
 **Created**: 2026-08-06
@@ -23,11 +23,11 @@
 
 ## 阶段 Checklist
 
-- [ ] 阶段 1: 规则层 —— `championFilter.ts` 加 `patrons: string[]` + `matchesPatron`（`eligiblePatronIds` 命中），co-located 单测覆盖 —— 验证：`npm run test:run`
-- [ ] 阶段 2: 数据加载 —— types/enumGroups 加 `IdLocalizedEnumGroup` 校验器，`useChampionCollectionState` 加载 patrons，`ChampionState` 加 patrons —— 验证：patrons 正确加载
-- [ ] 阶段 3: URL 状态 —— `query-state.ts` 加 patron param key + `selectedPatrons` 序列化/反序列化 + 测试 —— 验证：`query-state.test.ts` 通过
-- [ ] 阶段 4: UI —— 筛选项加 patron 多选组（同构 affiliations 渲染，id 匹配）+ active chip + 接线 —— 验证：`npm run build` + 浏览器交互
-- [ ] 阶段 5: 文档收口 —— `filter/rules.md` / `scope-and-data.md` 更新，`requirements/champion-filter-extensions.md` 子项 1 打钩 —— 验证：文档与代码一致
+- [x] 阶段 1: 规则层 —— `championFilter.ts` 加 `patrons: string[]` + `matchesPatron`（`eligiblePatronIds` 命中），co-located 单测覆盖 —— 验证：`npm run test:run`
+- [x] 阶段 2: 数据加载 —— types/enumGroups 加 `IdLocalizedEnumGroup` 校验器，`useChampionCollectionState` 加载 patrons，`ChampionState` 加 patrons —— 验证：patrons 正确加载
+- [x] 阶段 3: URL 状态 —— `query-state.ts` 加 patron param key + `selectedPatrons` 序列化/反序列化 + 测试 —— 验证：`query-state.test.ts` 通过
+- [x] 阶段 4: UI —— 筛选项加 patron 多选组（同构 affiliations 渲染，id 匹配）+ active chip + 接线 —— 验证：`npm run build` + 浏览器交互
+- [x] 阶段 5: 文档收口 —— `filter/rules.md` / `scope-and-data.md` 更新，`requirements/champion-filter-extensions.md` 子项 1 打钩 —— 验证：文档与代码一致
 
 ## 验收
 

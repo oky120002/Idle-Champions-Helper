@@ -13,7 +13,7 @@
 ### 当前输入
 
 - `public/data/v1/champions.json`：`id`、`name`、`seat`、`roles`、`affiliations`、`tags`、`patronEligibility`
-- `public/data/v1/enums.json`：`roles`、`affiliations`
+- `public/data/v1/enums.json`：`roles`、`affiliations`、`patrons`（`{id, original, display}` 格式，带独立 id）
 - `public/data/version.json`：当前数据版本
 
 ## 当前代码落点与页面结构
