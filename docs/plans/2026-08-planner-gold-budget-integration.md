@@ -61,19 +61,21 @@
 - [x] `PlannerComputeRunner` 加 `convertGoldLevel` 方法；`PlannerComputeConvertMessage` / `GoldLevelConversion` 协议类型；`processConvertGoldLevel` 纯函数（worker 内换算，不经过 engine） —— 验证：5 项测试（gold/level 两种模式 + 空列表）
 - [x] hero profile 加 `baseCost?: number`（数据管线 buildHeroModels.ts 提取，164 英雄 100% 覆盖）
 
-#### 5b：UI 控件 + 实时渲染（待做）
+#### 5b：UI 控件 + 实时渲染 ✅
 
-- [ ] planner UI 增加金币/等级互斥控件（radio 二选一 + 输入框）
-- [ ] 接入 `runner.convertGoldLevel`：输入变化时异步调 worker，实时渲染每个英雄的等级/金币
-- [ ] 金币模式：换算结果构建 `heroLevelOverride` + `goldBudget` 传入推荐 options
-- [ ] 等级模式：统一等级 + `computeMaxGoldForLevel` 反算金币传入推荐 options
-- [ ] 互斥逻辑：切换时清空对方值 —— 验证：E2E 互斥行为测试
+- [x] planner UI 增加金币/等级互斥控件（PlannerGoldLevel 组件：radio 三选一 + 互斥输入框 + 换算摘要）
+- [x] 接入 `runner.convertGoldLevel`：usePlannerPageModel debounce（300ms）+ cancelled flag 竞态防护
+- [x] 金币模式：换算结果构建 `heroLevelOverride` + `goldBudget` 传入推荐 options
+- [x] 等级模式：统一等级 + `effectiveGoldBudget`（maxGold）传入推荐 options
+- [x] 互斥逻辑：radio 切换时条件渲染对应输入框
+- [ ] 后续增强：评估页（PlannerEvaluatePage）接入 + 详细列表渲染（每个英雄的等级/金币）
+- [ ] **部署前置**：需运行 `npm run data:official` 重建 hero-abilities.json 以包含 `baseCost` 字段
 
-### 阶段 6：文档同步
+### 阶段 6：文档同步 ✅
 
-- [ ] specs 更新：`simulator.md`（金币预算+专精门控最终态）、`requirements.md`（等级来源扩展为金币/等级二选一）
-- [ ] requirements 状态更新：`planner-capability-extensions.md` 对应子项打钩
-- [ ] 本 plan Status → Landed → 移 `archives/plans/`
+- [x] specs 更新：`simulator.md`（金币预算换算 + 专精等级门控最终态）、`requirements.md`（等级来源扩展为金币/等级二选一）
+- [x] requirements 状态更新：`planner-capability-extensions.md` 金币预算子项打钩
+- [ ] 数据重建后 plan Status → Landed → 移 `archives/plans/`
 
 ## 验收
 

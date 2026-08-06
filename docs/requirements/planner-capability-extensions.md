@@ -21,10 +21,10 @@
   - 未做（英雄详情页有 Trials / Time Gate 展示，planner 未消费）
 - [ ] **手动参数**（部分）—— 金币预算、装备、专长、传奇与专精覆盖控件
   - [x] 装备假设配置（`synthesizeHypotheticalLootByHero`，无存档时按 UI 可调统一稀有度 + 附魔等级，默认毕业 4+2000）
-  - [x] 专精注入（专精信号池 + 级联依赖链修复）
+  - [x] 专精注入（专精信号池 + 级联依赖链修复 + 等级门控）
   - [x] 专长（feat）buff wrapper（反查 `buff_upgrade` 通道）
   - [x] 动态层数假设（`manualStackCount`，默认 1000，UI 透传）
-  - [ ] 金币预算（`goldBudgetBaseline` 模块已实现，未接入评分链路）
+  - [x] 金币预算（金币/等级互斥控件 → worker 换算 → `heroLevelOverride` + `goldBudget` + 专精门控，2026-08-06 落地）
 - [ ] **未建模加成源补建**（部分）—— modron（齿轮）/ 成就 / 药水 / gem 等伤害加成来源接入评分；逐类需核定 amount 与生效条件
   - [x] vulnerability 易伤（场景 `enemyTypes` 匹配 + add/mult pool 聚合，`src/domain/planner/scoring/vulnerabilityFactor.ts`）
   - [ ] modron 齿轮（simulator 层 `modronInfo.ts` 有数据，planner 未消费）
