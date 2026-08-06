@@ -8,7 +8,7 @@ import type {
   ChampionIllustrationKind,
   LocalizedText,
 } from '../../domain/types'
-import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champion-filters/types'
+import type { ActiveFilterChip, IdLocalizedOption, MechanicOptionGroup } from '../../features/champion-filters/types'
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
 
 export type ViewFilter = 'all' | ChampionIllustrationKind
@@ -22,6 +22,7 @@ export type IllustrationState =
       champions: Champion[]
       roles: string[]
       affiliations: LocalizedText[]
+      patrons: IdLocalizedOption[]
     }
   | { status: 'error'; message: string }
 
@@ -37,6 +38,7 @@ export type IllustrationsFilterState = {
   selectedProfessions: string[]
   selectedAcquisitions: string[]
   selectedMechanics: string[]
+  selectedPatrons: string[]
   showAllResults: boolean
 }
 
@@ -58,6 +60,7 @@ export type IllustrationsPageUiState = {
 export type IllustrationsPageOptions = {
   roleOptions: string[]
   affiliationOptions: LocalizedText[]
+  patronOptions: IdLocalizedOption[]
   raceOptions: string[]
   genderOptions: string[]
   alignmentOptions: string[]
@@ -101,6 +104,8 @@ export type IllustrationsPageActions = {
   toggleAcquisition: (acquisition: string) => void
   resetMechanic: () => void
   toggleMechanic: (mechanic: string) => void
+  resetPatron: () => void
+  togglePatron: (patron: string) => void
   toggleIdentityFiltersExpanded: () => void
   toggleMetaFiltersExpanded: () => void
   toggleResultVisibility: () => void

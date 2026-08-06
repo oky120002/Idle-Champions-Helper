@@ -1,9 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import type { Champion, LocalizedText } from '../domain/types'
+import type { Champion, ChampionPatronEligibility, LocalizedText } from '../domain/types'
 import { filterChampions } from './championFilter'
 
 function localized(original: string, display: string): LocalizedText {
   return { original, display }
+}
+
+function patronEligibility(...eligiblePatronIds: string[]): ChampionPatronEligibility {
+  return {
+    eligiblePatronIds,
+    ruleQualifiedPatronIds: [],
+    forcedEligiblePatronIds: [],
+    unsupportedPatronIds: [],
+  }
 }
 
 function createChampion(
@@ -12,6 +21,7 @@ function createChampion(
   roles: string[],
   affiliations: LocalizedText[],
   tags: string[] = [],
+  patronEligibility?: ChampionPatronEligibility,
 ): Champion {
   return {
     id,
@@ -20,6 +30,7 @@ function createChampion(
     roles,
     affiliations,
     tags,
+    ...(patronEligibility ? { patronEligibility } : {}),
   }
 }
 
@@ -28,10 +39,38 @@ const adversaries = localized('Absolute Adversaries', '绝对宿敌')
 const oxventurers = localized('Oxventurers Guild', '牛冒险者公会')
 
 const champions: Champion[] = [
-  createChampion('alpha', 1, ['support'], [hall], ['human', 'male', 'good', 'warlock', 'event', 'control_slow']),
-  createChampion('beta', 2, ['healing'], [hall], ['elf', 'female', 'good', 'cleric', 'event', 'spec_gold']),
-  createChampion('gamma', 2, ['dps'], [adversaries], ['drow', 'male', 'evil', 'rogue', 'event', 'control_stun']),
-  createChampion('delta', 3, ['tank'], [oxventurers], ['human', 'female', 'lawful', 'fighter', 'core', 'positional']),
+  createChampion(
+    'alpha',
+    1,
+    ['support'],
+    [hall],
+    ['human', 'male', 'good', 'warlock', 'event', 'control_slow'],
+    patronEligibility('1', '2'),
+  ),
+  createChampion(
+    'beta',
+    2,
+    ['healing'],
+    [hall],
+    ['elf', 'female', 'good', 'cleric', 'event', 'spec_gold'],
+    patronEligibility('1'),
+  ),
+  createChampion(
+    'gamma',
+    2,
+    ['dps'],
+    [adversaries],
+    ['drow', 'male', 'evil', 'rogue', 'event', 'control_stun'],
+    patronEligibility('2', '3'),
+  ),
+  createChampion('delta', 3, ['tank'], [oxventurers], [
+    'human',
+    'female',
+    'lawful',
+    'fighter',
+    'core',
+    'positional',
+  ]),
 ]
 
 describe('filterChampions', () => {
@@ -48,6 +87,7 @@ describe('filterChampions', () => {
         alignments: [],
         acquisitions: [],
         mechanics: [],
+        patrons: [],
       }).map((champion) => champion.id),
     ).toEqual(['alpha', 'beta', 'gamma'])
   })
@@ -65,6 +105,7 @@ describe('filterChampions', () => {
         alignments: [],
         acquisitions: [],
         mechanics: [],
+        patrons: [],
       }).map((champion) => champion.id),
     ).toEqual(['alpha', 'gamma'])
   })
@@ -82,6 +123,7 @@ describe('filterChampions', () => {
         alignments: [],
         acquisitions: [],
         mechanics: [],
+        patrons: [],
       }).map((champion) => champion.id),
     ).toEqual(['alpha', 'gamma'])
   })
@@ -99,7 +141,44 @@ describe('filterChampions', () => {
         alignments: ['good'],
         acquisitions: ['event'],
         mechanics: ['control_slow', 'spec_gold'],
+        patrons: [],
       }).map((champion) => champion.id),
     ).toEqual(['alpha', 'beta'])
+  })
+
+  it('赞助人过滤：命中 eligiblePatronIds 的英雄才显示，多选按或匹配', () => {
+    expect(
+      filterChampions(champions, {
+        search: '',
+        seats: [],
+        roles: [],
+        affiliations: [],
+        races: [],
+        genders: [],
+        professions: [],
+        alignments: [],
+        acquisitions: [],
+        mechanics: [],
+        patrons: ['1', '3'],
+      }).map((champion) => champion.id),
+    ).toEqual(['alpha', 'beta', 'gamma'])
+  })
+
+  it('赞助人过滤：无 patronEligibility 或未命中赞助人的英雄不显示', () => {
+    expect(
+      filterChampions(champions, {
+        search: '',
+        seats: [],
+        roles: [],
+        affiliations: [],
+        races: [],
+        genders: [],
+        professions: [],
+        alignments: [],
+        acquisitions: [],
+        mechanics: [],
+        patrons: ['5'],
+      }).map((champion) => champion.id),
+    ).toEqual([])
   })
 })

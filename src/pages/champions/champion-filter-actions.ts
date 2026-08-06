@@ -14,6 +14,7 @@ interface ChampionFilterActionOptions {
   setSelectedProfessions: Dispatch<SetStateAction<string[]>>
   setSelectedAcquisitions: Dispatch<SetStateAction<string[]>>
   setSelectedMechanics: Dispatch<SetStateAction<string[]>>
+  setSelectedPatrons: Dispatch<SetStateAction<string[]>>
   resetExtraFilters?: () => void
   extraChipMutations?: Record<ActiveFilterChip['id'], () => void>
 }
@@ -30,6 +31,7 @@ export function buildChampionFilterActions({
   setSelectedProfessions,
   setSelectedAcquisitions,
   setSelectedMechanics,
+  setSelectedPatrons,
   resetExtraFilters,
   extraChipMutations,
 }: ChampionFilterActionOptions) {
@@ -45,6 +47,7 @@ export function buildChampionFilterActions({
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    setSelectedPatrons,
     ...(resetExtraFilters ? { resetExtraFilters } : {}),
     ...(extraChipMutations ? { extraChipMutations } : {}),
   })

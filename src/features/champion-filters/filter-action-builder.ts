@@ -17,6 +17,7 @@ export interface SharedFilterActionOptions {
   setSelectedProfessions: SelectionSetter<string>
   setSelectedAcquisitions: SelectionSetter<string>
   setSelectedMechanics: SelectionSetter<string>
+  setSelectedPatrons: SelectionSetter<string>
   resetExtraFilters?: () => void
   extraChipMutations?: Record<string, FilterMutation>
 }
@@ -37,6 +38,7 @@ export function buildSharedFilterActions({
   setSelectedProfessions,
   setSelectedAcquisitions,
   setSelectedMechanics,
+  setSelectedPatrons,
   resetExtraFilters,
   extraChipMutations,
 }: SharedFilterActionOptions) {
@@ -51,6 +53,7 @@ export function buildSharedFilterActions({
     professions: () => setSelectedProfessions([]),
     acquisitions: () => setSelectedAcquisitions([]),
     mechanics: () => setSelectedMechanics([]),
+    patrons: () => setSelectedPatrons([]),
     ...extraChipMutations,
   }
 
@@ -68,6 +71,7 @@ export function buildSharedFilterActions({
         setSelectedProfessions([])
         setSelectedAcquisitions([])
         setSelectedMechanics([])
+        setSelectedPatrons([])
         resetExtraFilters?.()
       })
     },
@@ -107,5 +111,8 @@ export function buildSharedFilterActions({
     resetMechanic: () => runFilterMutation(() => setSelectedMechanics([])),
     toggleMechanic: (mechanic: string) =>
       runFilterMutation(() => setSelectedMechanics((current) => toggleSelectionValue(current, mechanic))),
+    resetPatron: () => runFilterMutation(() => setSelectedPatrons([])),
+    togglePatron: (patron: string) =>
+      runFilterMutation(() => setSelectedPatrons((current) => toggleSelectionValue(current, patron))),
   }
 }

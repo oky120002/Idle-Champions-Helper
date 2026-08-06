@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react'
 import { loadCollection } from '../../data/client'
 import type { Champion, ChampionIllustration, ChampionVisual } from '../../domain/types'
-import type { LocalizedEnumGroup, StringEnumGroup } from '../../features/champion-filters/types'
-import { isLocalizedEnumGroup, isStringEnumGroup } from '../../features/champion-filters/enumGroups'
+import type {
+  IdLocalizedEnumGroup,
+  LocalizedEnumGroup,
+  StringEnumGroup,
+} from '../../features/champion-filters/types'
+import {
+  isIdLocalizedEnumGroup,
+  isLocalizedEnumGroup,
+  isStringEnumGroup,
+} from '../../features/champion-filters/enumGroups'
 import type { ChampionState } from './types'
 
 export function useChampionCollectionState() {
@@ -13,7 +21,7 @@ export function useChampionCollectionState() {
 
     Promise.all([
       loadCollection<Champion>('champions'),
-      loadCollection<StringEnumGroup | LocalizedEnumGroup>('enums'),
+      loadCollection<StringEnumGroup | LocalizedEnumGroup | IdLocalizedEnumGroup>('enums'),
       loadCollection<ChampionVisual>('champion-visuals').catch(() => ({
         updatedAt: '',
         items: [],
@@ -30,8 +38,10 @@ export function useChampionCollectionState() {
 
         const stringGroups = enumCollection.items.filter(isStringEnumGroup)
         const localizedGroups = enumCollection.items.filter(isLocalizedEnumGroup)
+        const idLocalizedGroups = enumCollection.items.filter(isIdLocalizedEnumGroup)
         const roles = stringGroups.find((group) => group.id === 'roles')?.values ?? []
         const affiliations = localizedGroups.find((group) => group.id === 'affiliations')?.values ?? []
+        const patrons = idLocalizedGroups.find((group) => group.id === 'patrons')?.values ?? []
 
         setState({
           status: 'ready',
@@ -40,6 +50,7 @@ export function useChampionCollectionState() {
           heroIllustrations: illustrationCollection.items.filter((illustration) => illustration.kind === 'hero-base'),
           roles,
           affiliations,
+          patrons,
         })
       })
       .catch((error: unknown) => {

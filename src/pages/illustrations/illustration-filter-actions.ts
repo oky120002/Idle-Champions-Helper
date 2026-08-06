@@ -15,6 +15,7 @@ type IllustrationFilterActionOptions = {
   setSelectedProfessions: Dispatch<SetStateAction<string[]>>
   setSelectedAcquisitions: Dispatch<SetStateAction<string[]>>
   setSelectedMechanics: Dispatch<SetStateAction<string[]>>
+  setSelectedPatrons: Dispatch<SetStateAction<string[]>>
 }
 
 export function buildIllustrationFilterActions({
@@ -30,6 +31,7 @@ export function buildIllustrationFilterActions({
   setSelectedProfessions,
   setSelectedAcquisitions,
   setSelectedMechanics,
+  setSelectedPatrons,
 }: IllustrationFilterActionOptions) {
   const sharedActions = buildSharedFilterActions({
     runFilterMutation,
@@ -43,6 +45,7 @@ export function buildIllustrationFilterActions({
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    setSelectedPatrons,
     resetExtraFilters: () => setViewFilter('all'),
     extraChipMutations: {
       view: () => setViewFilter('all'),

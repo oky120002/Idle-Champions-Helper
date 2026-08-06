@@ -30,6 +30,10 @@ const championsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {
     zh: '支持多选；适合同时看多个联动队伍候选。',
     en: 'Multi-select is supported for comparing multiple affiliations at once.',
   },
+  patronHint: {
+    zh: '按赞助人合约筛选——只显示该赞助人允许上场的英雄。',
+    en: 'Filter by patron — only champions eligible under the selected patron(s) are shown.',
+  },
   activeChipHint: {
     zh: '点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。',
     en: 'Click any filter chip to clear that dimension only, then use the reset button above when you want a full reset.',
@@ -44,8 +48,10 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
     selectedSeats,
     selectedRoles,
     selectedAffiliations,
+    selectedPatrons,
     roles,
     affiliations,
+    patrons,
     activeFilterChips,
     updateSearch,
     clearActiveFilterChip,
@@ -55,6 +61,8 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
     toggleRole,
     resetAffiliation,
     toggleAffiliation,
+    resetPatron,
+    togglePatron,
   } = model
 
   return (
@@ -67,10 +75,12 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
         selectedSeats,
         selectedRoles,
         selectedAffiliations,
+        selectedPatrons,
       }}
       options={{
         roleOptions: roles,
         affiliationOptions: affiliations,
+        patronOptions: patrons,
       }}
       activeFilterChips={activeFilterChips}
       actions={{
@@ -82,8 +92,10 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
         toggleRole,
         resetAffiliation,
         toggleAffiliation,
+        resetPatron,
+        togglePatron,
       }}
-      buildAffiliationLabel={(affiliation) => <LocalizedText text={affiliation} mode="primary" />}
+      buildLocalizedLabel={(text) => <LocalizedText text={text} mode="primary" />}
       searchType="text"
     />
   )

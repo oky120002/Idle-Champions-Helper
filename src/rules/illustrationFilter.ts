@@ -76,6 +76,9 @@ function matchesAllIllustrationFilters(
   const matchesMechanic = matchesChampionFilter(champion, filters.mechanics, (c, mechanic) =>
     c.tags.includes(mechanic),
   )
+  const matchesPatron = matchesChampionFilter(champion, filters.patrons, (c, patronId) =>
+    (c.patronEligibility?.eligiblePatronIds ?? []).includes(patronId),
+  )
 
   return (
     matchesSearch &&
@@ -88,7 +91,8 @@ function matchesAllIllustrationFilters(
     matchesProfession &&
     matchesAlignment &&
     matchesAcquisition &&
-    matchesMechanic
+    matchesMechanic &&
+    matchesPatron
   )
 }
 

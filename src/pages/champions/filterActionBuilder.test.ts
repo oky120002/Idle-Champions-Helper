@@ -28,6 +28,7 @@ function createFilterActionHarness() {
   const selectedProfessions = createStateSetter<string[]>(['warlock'])
   const selectedAcquisitions = createStateSetter<string[]>(['event'])
   const selectedMechanics = createStateSetter<string[]>(['control_slow'])
+  const selectedPatrons = createStateSetter<string[]>([])
   const runFilterMutation = vi.fn((mutation: () => void) => mutation())
 
   return {
@@ -43,6 +44,7 @@ function createFilterActionHarness() {
     selectedProfessions,
     selectedAcquisitions,
     selectedMechanics,
+    selectedPatrons,
   }
 }
 
@@ -61,6 +63,7 @@ describe('filter action builders', () => {
       setSelectedProfessions: harness.selectedProfessions.setter,
       setSelectedAcquisitions: harness.selectedAcquisitions.setter,
       setSelectedMechanics: harness.selectedMechanics.setter,
+      setSelectedPatrons: harness.selectedPatrons.setter,
     })
 
     actions.clearAllFilters()
@@ -78,6 +81,7 @@ describe('filter action builders', () => {
     expect(harness.selectedProfessions.read()).toEqual([])
     expect(harness.selectedAcquisitions.read()).toEqual([])
     expect(harness.selectedMechanics.read()).toEqual([])
+    expect(harness.selectedPatrons.read()).toEqual([])
   })
 
   it('illustrations actions 会把 view 也纳入 clearAllFilters 和单 chip 清理', () => {
@@ -95,6 +99,7 @@ describe('filter action builders', () => {
       setSelectedProfessions: harness.selectedProfessions.setter,
       setSelectedAcquisitions: harness.selectedAcquisitions.setter,
       setSelectedMechanics: harness.selectedMechanics.setter,
+      setSelectedPatrons: harness.selectedPatrons.setter,
     })
 
     actions.clearActiveFilterChip('view')
@@ -115,6 +120,7 @@ describe('filter action builders', () => {
     expect(harness.selectedProfessions.read()).toEqual([])
     expect(harness.selectedAcquisitions.read()).toEqual([])
     expect(harness.selectedMechanics.read()).toEqual([])
+    expect(harness.selectedPatrons.read()).toEqual([])
   })
 
   it('未知 chip id 不会触发额外 mutation', () => {
@@ -131,6 +137,7 @@ describe('filter action builders', () => {
       setSelectedProfessions: harness.selectedProfessions.setter,
       setSelectedAcquisitions: harness.selectedAcquisitions.setter,
       setSelectedMechanics: harness.selectedMechanics.setter,
+      setSelectedPatrons: harness.selectedPatrons.setter,
     })
 
     actions.clearActiveFilterChip('unknown')

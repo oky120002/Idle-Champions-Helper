@@ -12,6 +12,7 @@ export interface ChampionFilters {
   alignments: string[]
   acquisitions: string[]
   mechanics: string[]
+  patrons: string[]
 }
 
 /**
@@ -46,6 +47,9 @@ function matchesAllChampionFilters(champion: Champion, filters: ChampionFilters,
   const matchesAlignment = matchesTagFilter(filters.alignments, (alignment) => champion.tags.includes(alignment))
   const matchesAcquisition = matchesTagFilter(filters.acquisitions, (acquisition) => champion.tags.includes(acquisition))
   const matchesMechanic = matchesTagFilter(filters.mechanics, (mechanic) => champion.tags.includes(mechanic))
+  const matchesPatron = matchesTagFilter(filters.patrons, (patronId) =>
+    (champion.patronEligibility?.eligiblePatronIds ?? []).includes(patronId),
+  )
 
   return (
     matchesSearch &&
@@ -57,7 +61,8 @@ function matchesAllChampionFilters(champion: Champion, filters: ChampionFilters,
     matchesProfession &&
     matchesAlignment &&
     matchesAcquisition &&
-    matchesMechanic
+    matchesMechanic &&
+    matchesPatron
   )
 }
 

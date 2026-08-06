@@ -19,6 +19,7 @@ export type IllustrationFilterStateController = {
   setSelectedProfessions: Dispatch<SetStateAction<string[]>>
   setSelectedAcquisitions: Dispatch<SetStateAction<string[]>>
   setSelectedMechanics: Dispatch<SetStateAction<string[]>>
+  setSelectedPatrons: Dispatch<SetStateAction<string[]>>
   setShowAllResults: Dispatch<SetStateAction<boolean>>
   toggleIdentityFiltersExpanded: () => void
   toggleMetaFiltersExpanded: () => void
@@ -44,6 +45,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
   const [selectedProfessions, setSelectedProfessions] = useState(initialFilters.selectedProfessions)
   const [selectedAcquisitions, setSelectedAcquisitions] = useState(initialFilters.selectedAcquisitions)
   const [selectedMechanics, setSelectedMechanics] = useState(initialFilters.selectedMechanics)
+  const [selectedPatrons, setSelectedPatrons] = useState(initialFilters.selectedPatrons)
   const [isIdentityFiltersExpanded, setIdentityFiltersExpanded] = useState(initialExpansion.identity)
   const [isMetaFiltersExpanded, setMetaFiltersExpanded] = useState(initialExpansion.meta)
   const [showAllResults, setShowAllResults] = useState(initialFilters.showAllResults)
@@ -61,6 +63,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
       selectedProfessions,
       selectedAcquisitions,
       selectedMechanics,
+      selectedPatrons,
       showAllResults,
     }),
     [
@@ -75,6 +78,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
       selectedProfessions,
       selectedAcquisitions,
       selectedMechanics,
+      selectedPatrons,
       showAllResults,
     ],
   )
@@ -132,6 +136,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
       setSelectedProfessions(nextFilters.selectedProfessions)
       setSelectedAcquisitions(nextFilters.selectedAcquisitions)
       setSelectedMechanics(nextFilters.selectedMechanics)
+      setSelectedPatrons(nextFilters.selectedPatrons)
       setShowAllResults(nextFilters.showAllResults)
       setIdentityFiltersExpanded(nextExpansion.identity)
       setMetaFiltersExpanded(nextExpansion.meta)
@@ -157,6 +162,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    setSelectedPatrons,
     setShowAllResults,
     toggleIdentityFiltersExpanded: () => setIdentityFiltersExpanded((current) => !current),
     toggleMetaFiltersExpanded: () => setMetaFiltersExpanded((current) => !current),

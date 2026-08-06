@@ -12,6 +12,7 @@ import {
   SEARCH_PARAM_ALIGNMENT,
   SEARCH_PARAM_GENDER,
   SEARCH_PARAM_MECHANIC,
+  SEARCH_PARAM_PATRON,
   SEARCH_PARAM_PROFESSION,
   SEARCH_PARAM_QUERY,
   SEARCH_PARAM_RACE,
@@ -32,6 +33,7 @@ const CHAMPION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
   profession: SEARCH_PARAM_PROFESSION,
   acquisition: SEARCH_PARAM_ACQUISITION,
   mechanic: SEARCH_PARAM_MECHANIC,
+  patron: SEARCH_PARAM_PATRON,
 }
 
 export function readShowAllResults(searchParams: URLSearchParams): boolean {

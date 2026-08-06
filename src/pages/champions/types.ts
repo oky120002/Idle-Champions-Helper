@@ -3,7 +3,7 @@ import type { AppLocale, LocaleText } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type { ChampionMechanicCategoryId } from '../../domain/champion-tags/types'
 import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
-import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champion-filters/types'
+import type { ActiveFilterChip, IdLocalizedOption, MechanicOptionGroup } from '../../features/champion-filters/types'
 
 export type ChampionState =
   | { status: 'loading' }
@@ -14,6 +14,7 @@ export type ChampionState =
       heroIllustrations: ChampionIllustration[]
       roles: string[]
       affiliations: LocalizedText[]
+      patrons: IdLocalizedOption[]
     }
   | {
       status: 'error'
@@ -31,6 +32,7 @@ export interface ChampionsFilterState {
   selectedProfessions: string[]
   selectedAcquisitions: string[]
   selectedMechanics: string[]
+  selectedPatrons: string[]
   showAllResults: boolean
 }
 
@@ -52,6 +54,7 @@ export interface ChampionsPageModel {
   selectedProfessions: string[]
   selectedAcquisitions: string[]
   selectedMechanics: string[]
+  selectedPatrons: string[]
   isIdentityFiltersExpanded: boolean
   isMetaFiltersExpanded: boolean
   activeFilterChips: ActiveFilterChip[]
@@ -69,6 +72,7 @@ export interface ChampionsPageModel {
   resultsPaneRef: RefObject<HTMLDivElement | null>
   roles: string[]
   affiliations: LocalizedText[]
+  patrons: IdLocalizedOption[]
   raceOptions: string[]
   genderOptions: string[]
   alignmentOptions: string[]
@@ -101,6 +105,8 @@ export interface ChampionsPageModel {
   toggleAcquisition: (acquisition: string) => void
   resetMechanic: () => void
   toggleMechanic: (mechanic: string) => void
+  resetPatron: () => void
+  togglePatron: (patron: string) => void
   toggleResultVisibility: () => void
   randomizeResultOrder: () => void
   scrollResultsToTop: () => void

@@ -97,6 +97,7 @@ export function useUserHeroesPageDerived({
       professions: filters.selectedProfessions,
       acquisitions: filters.selectedAcquisitions,
       mechanics: filters.selectedMechanics,
+      patrons: filters.selectedPatrons,
     })
   }, [filters, state])
   const ownedHeroById = useMemo(() => buildOwnedHeroById(ownedHeroes), [ownedHeroes])
@@ -142,6 +143,7 @@ export function useUserHeroesPageDerived({
 
   const roles = state.status === 'ready' ? state.roles : []
   const affiliations = state.status === 'ready' ? state.affiliations : []
+  const patrons = state.status === 'ready' ? state.patrons : []
   const raceOptions = state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'race', locale) : []
   const genderOptions = state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'gender', locale) : []
   const alignmentOptions =
@@ -168,6 +170,7 @@ export function useUserHeroesPageDerived({
     filters.selectedAcquisitions.includes(acquisition),
   )
   const orderedSelectedMechanics = mechanicOptions.filter((mechanic) => filters.selectedMechanics.includes(mechanic))
+  const orderedSelectedPatrons = patrons.filter((patron) => filters.selectedPatrons.includes(patron.id))
 
   const baseActiveFilterChips = buildActiveFilterChips({
     locale,
@@ -182,6 +185,7 @@ export function useUserHeroesPageDerived({
     orderedSelectedProfessions,
     orderedSelectedAcquisitions,
     orderedSelectedMechanics,
+    orderedSelectedPatrons,
   })
   const rosterMetricChip: ActiveFilterChip | null = activeRosterMetricFilterId != null
     ? {
@@ -208,6 +212,7 @@ export function useUserHeroesPageDerived({
       filters.selectedProfessions,
       filters.selectedAcquisitions,
       filters.selectedMechanics,
+      filters.selectedPatrons,
     ].some((group) => group.length > 0)
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =
@@ -223,6 +228,7 @@ export function useUserHeroesPageDerived({
     matchedSeats,
     roles,
     affiliations,
+    patrons,
     raceOptions,
     genderOptions,
     alignmentOptions,

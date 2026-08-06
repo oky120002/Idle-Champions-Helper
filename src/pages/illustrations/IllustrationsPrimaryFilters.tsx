@@ -32,7 +32,7 @@ const illustrationsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {
     en: 'Search names, skins, tags, or affiliations',
   },
   seatHint: {
-    zh: '支持多选；同一维度内按“或”匹配。',
+    zh: '支持多选；同一维度内按或匹配。',
     en: 'Multi-select is supported, and matches within this group use OR.',
   },
   roleHint: {
@@ -41,7 +41,11 @@ const illustrationsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {
   },
   affiliationHint: {
     zh: '仍然按英雄元数据多选过滤，方便快速切到固定队伍的皮肤资产。',
-    en: 'The affiliation filter still works off champion metadata, which is handy for browsing one team’s skins together.',
+    en: 'The affiliation filter still works off champion metadata, handy for browsing one team at a time.',
+  },
+  patronHint: {
+    zh: '按赞助人合约筛选。',
+    en: 'Filter by patron eligibility.',
   },
   activeChipHint: {
     zh: '点击任一条件即可单独回退对应维度；全量回退统一使用右上角的清空全部。',
@@ -80,10 +84,12 @@ export function IllustrationsPrimaryFilters({ model }: IllustrationsPrimaryFilte
         selectedSeats: filters.selectedSeats,
         selectedRoles: filters.selectedRoles,
         selectedAffiliations: filters.selectedAffiliations,
+        selectedPatrons: filters.selectedPatrons,
       }}
       options={{
         roleOptions: options.roleOptions,
         affiliationOptions: options.affiliationOptions,
+        patronOptions: options.patronOptions,
       }}
       activeFilterChips={activeFilterChips}
       actions={{
@@ -95,8 +101,10 @@ export function IllustrationsPrimaryFilters({ model }: IllustrationsPrimaryFilte
         toggleRole: actions.toggleRole,
         resetAffiliation: actions.resetAffiliation,
         toggleAffiliation: actions.toggleAffiliation,
+        resetPatron: actions.resetPatron,
+        togglePatron: actions.togglePatron,
       }}
-      buildAffiliationLabel={(affiliation) => getPrimaryLocalizedText(affiliation, locale)}
+      buildLocalizedLabel={(text) => getPrimaryLocalizedText(text, locale)}
       extraFields={extraFields}
     />
   )

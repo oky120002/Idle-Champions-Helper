@@ -2,7 +2,7 @@
 import { formatSeatLabel, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { Champion, ChampionIllustration, ChampionIllustrationKind, LocalizedText } from '../../domain/types'
-import type { ActiveFilterChip } from '../../features/champion-filters/types'
+import type { ActiveFilterChip, IdLocalizedOption } from '../../features/champion-filters/types'
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
 import type { IllustrationsFilterState, IllustrationsPageTranslator, ViewFilter } from './types'
 
@@ -82,7 +82,8 @@ export function hasActiveIllustrationFilters(filters: IllustrationsFilterState):
     filters.selectedAlignments.length > 0 ||
     filters.selectedProfessions.length > 0 ||
     filters.selectedAcquisitions.length > 0 ||
-    filters.selectedMechanics.length > 0
+    filters.selectedMechanics.length > 0 ||
+    filters.selectedPatrons.length > 0
   )
 }
 
@@ -155,6 +156,7 @@ type BuildActiveFilterChipsOptions = {
   orderedSelectedProfessions: string[]
   orderedSelectedAcquisitions: string[]
   orderedSelectedMechanics: string[]
+  orderedSelectedPatrons: IdLocalizedOption[]
 }
 
 export function buildActiveIllustrationFilterChips({
@@ -170,6 +172,7 @@ export function buildActiveIllustrationFilterChips({
   orderedSelectedProfessions,
   orderedSelectedAcquisitions,
   orderedSelectedMechanics,
+  orderedSelectedPatrons,
 }: BuildActiveFilterChipsOptions): ActiveFilterChip[] {
   const trimmedSearch = filters.search.trim()
 
@@ -290,6 +293,16 @@ export function buildActiveIllustrationFilterChips({
             en: `Mechanics: ${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join(' / ')}`,
           }),
           clearLabel: t({ zh: '清空机制筛选', en: 'Clear mechanics filter' }),
+        }
+      : null,
+    orderedSelectedPatrons.length > 0
+      ? {
+          id: 'patrons',
+          label: t({
+            zh: `赞助人：${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`,
+            en: `Patrons: ${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`,
+          }),
+          clearLabel: t({ zh: '清空赞助人筛选', en: 'Clear patron filter' }),
         }
       : null,
   ].filter((chip): chip is ActiveFilterChip => chip !== null)

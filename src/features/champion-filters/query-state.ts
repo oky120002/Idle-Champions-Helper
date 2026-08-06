@@ -16,6 +16,7 @@ export interface CommonFilterSearchParamKeys {
   profession: string
   acquisition: string
   mechanic: string
+  patron: string
 }
 
 export interface CommonFilterSearchState {
@@ -29,6 +30,7 @@ export interface CommonFilterSearchState {
   selectedProfessions: string[]
   selectedAcquisitions: string[]
   selectedMechanics: string[]
+  selectedPatrons: string[]
 }
 
 export interface CommonFilterExpansionState {
@@ -59,6 +61,7 @@ export function appendCommonFilterSearchParams(
   appendSortedStringValues(searchParams, keys.profession, filters.selectedProfessions)
   appendSortedStringValues(searchParams, keys.acquisition, filters.selectedAcquisitions)
   appendSortedStringValues(searchParams, keys.mechanic, filters.selectedMechanics)
+  appendSortedStringValues(searchParams, keys.patron, filters.selectedPatrons)
 
   return searchParams
 }
@@ -78,6 +81,7 @@ export function readCommonFilterState(
     selectedProfessions: readStringValues(searchParams, keys.profession),
     selectedAcquisitions: readStringValues(searchParams, keys.acquisition),
     selectedMechanics: readStringValues(searchParams, keys.mechanic),
+    selectedPatrons: readStringValues(searchParams, keys.patron),
   }
 }
 
