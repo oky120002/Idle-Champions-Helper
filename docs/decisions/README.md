@@ -35,4 +35,4 @@ append-only。每个决策一个文件，编号 NNNN。**决策变了新开 ADR�
 
 - 依据来自 `research/`（事实），不在 ADR 里重展调研
 - 落地到 `specs/`（规范描述最终态，引用 ADR 作为决策依据）
-- 变更计划在 `plans/`（change 引用相关 ADR）
+- 变更计划在 `plans/`（plan 引用相关 ADR）
