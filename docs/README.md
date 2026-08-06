@@ -7,7 +7,7 @@
 | 类型 | 目录 | 回答什么 | 何时进入 |
 |---|---|---|---|
 | Spec 活跃规范 | [`specs/`](./specs/) | 系统现在是什么 | 改代码 / 改规范前 |
-| Requirement 需求 | [`requirements/`](./requirements/) | 将来可能做什么（未承诺） | 有新需求想法但尚未确认启动 |
+| Requirement 需求库 | [`requirements/`](./requirements/) | 将来可能做什么（未承诺） | 有新需求想法但尚未确认启动 |
 | Research 调研 | [`research/`](./research/) | 外部事实是什么 | 确认数据源 / 部署 / 测试事实 |
 | Decision 决策 | [`decisions/`](./decisions/) | 为什么这样选 | 做技术选型时（ADR） |
 | Plan 计划 | [`plans/`](./plans/) | 接下来按什么步骤改 | 确认要做、准备执行时 |
