@@ -4,7 +4,7 @@
 
 - TS/TSX：`docs/specs/guidelines/ai-first-ts-tsx.md`
 - CSS：`docs/specs/guidelines/ai-first-css.md`
-- 文档：`docs/specs/guidelines/documentation-governance.md`
+- 文档：`docs/governance.md`
 - 测试：`docs/specs/guidelines/testing.md`
 - 数据归一化管线（资源同步 + normalize/build 增量跳过、数据源格式追溯）：`docs/specs/guidelines/data-normalization.md`
 - 私有用户数据：`docs/specs/modules/user-data/`
@@ -29,6 +29,21 @@
 
 - 根 `TODO.md`（`auto-todo` canonical 区块）只记「推进主目标时顺手发现、但与主目标不一致、暂不展开」的问题/优化/性能点；不是执行清单、Ralph 队列或模块私有 backlog；不维护 `docs/todo.md`。
 - `main` 只承载已验证可发布状态，日常开发在非 `main` 分支与对应工作树完成；改动后至少做最小充分验证，无法验证时明确缺口、风险和下一步。
+
+## 文档落库
+
+文档落库前必须先判断它回答什么问题，按下表归位；不确定时看 `docs/README.md` 分类表，不凭直觉落库：
+
+| 回答什么 | 去哪 |
+|---|---|
+| 系统现在是什么 | `docs/specs/` |
+| 将来可能做什么（未承诺） | `docs/requirements/` |
+| 外部事实是什么 | `docs/research/` |
+| 为什么这样选 | `docs/decisions/` |
+| 接下来按什么步骤改（即将执行） | `docs/plans/` |
+| 怎样操作 | `docs/runbooks/` |
+
+关键区分：`requirements/` 是需求意图（可能永远不做），`plans/` 是执行计划（确认要做）。提案被接受后在 `plans/` 新建执行计划，提案本身保留。详细分类规则、命名约定和生命周期见 `docs/README.md` 与 `docs/governance.md`。
 
 ## 测试与构建
 

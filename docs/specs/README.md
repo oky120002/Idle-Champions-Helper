@@ -11,7 +11,7 @@
 ## 核心规则
 
 - **只描述「现在是什么」**，不描述「曾经计划做什么」或「里程碑交付了什么」
-- **永不引用 `changes/` / milestone**（避免规范变谎言；计划落地后 specs 更新为最终态即可）
+- **永不引用 `plans/` / milestone**（避免规范变谎言；计划落地后 specs 更新为最终态即可）
 - 禁迁移叙事（历史对比、版本演进、已完成的迁移过程不写入）
 - 决策依据指向 `decisions/`（ADR），不在规范里嵌决策叙事
 - 外部事实指向 `research/`，不重展
@@ -20,11 +20,11 @@
 
 - 改代码前 → 读对应 `modules/<name>/` 或 `guidelines/`
 - 改产品定义 → 读 `product/`
-- 确认「现在系统是怎样」→ 这里（不是 `changes/` 或 `archive/`）
+- 确认「现在系统是怎样」→ 这里（不是 `plans/` 或 `archives/`）
 
 ## 何时写/更新
 
 - 实现了新功能/改了行为 → 更新对应 specs
-- change 落地（`changes/` Status: Landed）→ 按其「落地后」清单更新 specs
+- plan 落地（`plans/` Status: Landed）→ 按其「落地后」清单更新 specs
 
-详细的模块结构见 [`modules/README.md`](./modules/README.md)；跨类型写作与生命周期规则见 [`guidelines/documentation-governance.md`](./guidelines/documentation-governance.md)。
+详细的模块结构见 [`modules/README.md`](./modules/README.md)；跨类型写作与生命周期规则见 [`guidelines/documentation-governance.md`](../governance.md)。

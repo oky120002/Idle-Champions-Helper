@@ -1,6 +1,6 @@
 # 文档一致性审计
 
-度量基准日：2026-08-01（分支 `opencode/dev1`，commit `c377707d`）。本文件是轮 3 文档审计的 canonical 来源；体例沿用 `test-suite-audit.md`。判据对照 `docs/specs/guidelines/documentation-governance.md`：单一事实源（重复事实/漂移描述）、体量预算、迁移叙事残留、删除后术语残留、模块缺文档；**以代码为事实修正文档**。
+度量基准日：2026-08-01（分支 `opencode/dev1`，commit `c377707d`）。本文件是轮 3 文档审计的 canonical 来源；体例沿用 `test-suite-audit.md`。判据对照 `docs/governance.md`：单一事实源（重复事实/漂移描述）、体量预算、迁移叙事残留、删除后术语残留、模块缺文档；**以代码为事实修正文档**。
 
 ## 1. 审计范围与方法
 
@@ -41,7 +41,7 @@
 | 项 | 核查结论 |
 |----|----------|
 | 体量预算 | docs 最大 `architecture.md` 166 行（叶子「评估拆分」121-180 区间），但该文件是 planner 宪章 + ADR 决策索引 + 计算原则合集，多读者意图集中——拆开会让「理解 planner 全貌」多开文件，倾向保留。其余 spec 均 ≤120 或在评估区间下沿 |
-| 退役文件名残留 | `bud-verification.md` 仅在 `docs/archive/audits/2026-07-document-restructure-audit.md`（历史改名记录，archive 留痕合理）出现；活跃文档 0 引用 |
+| 退役文件名残留 | `bud-verification.md` 仅在 `docs/archives/audits/2026-07-document-restructure-audit.md`（历史改名记录，archive 留痕合理）出现；活跃文档 0 引用 |
 | 迁移叙事 | planner spec 未发现「曾经/原来/迁移前」式叙事残留（`docs/specs/README.md` 明令「只描述现在是什么」） |
 | 根级文档 | `AGENTS.md`/`CLAUDE.md` 各 48 行（CLAUDE.md 是 AGENTS.md 符号链接，单一信息源）；`TODO.md` 53 行；`.impeccable.md` 128 行（视觉专题叶子文档，评估区间）——均合理 |
 

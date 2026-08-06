@@ -28,11 +28,11 @@ append-only。每个决策一个文件，编号 NNNN。**决策变了新开 ADR�
 
 - 显而易见的实现细节 → 直接写 `specs/`
 - 当前操作、维护或排障步骤 → `runbooks/`
-- 临时调试/问题排查 → `archive/investigations/`
+- 临时调试/问题排查 → `archives/investigations/`
 - 单纯的事实调研（无决策）→ `research/`
 
 ## 与其他目录的关系
 
 - 依据来自 `research/`（事实），不在 ADR 里重展调研
 - 落地到 `specs/`（规范描述最终态，引用 ADR 作为决策依据）
-- 变更计划在 `changes/`（change 引用相关 ADR）
+- 变更计划在 `plans/`（change 引用相关 ADR）

@@ -28,4 +28,4 @@
 - 192MB 直接 commit 在 GitHub 推荐 <1GB 安全区（[disk quota](https://docs.github.com/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-personal-account-settings/managing-your-account/what-is-my-disk-quota)）。
 - lfs 不解决历史膨胀：当前版本挪到对象存储，历史版本的 lfs 对象仍算配额；真正解决的是「不在 git 历史留二进制 diff」，前提是 .bin 频繁更迭。
 
-后续若仓库体积成真痛点，候选方向（Release Assets / 外部 CDN / jsDelivr）已登记在 `docs/specs/product/future-features.md`。
+后续若仓库体积成真痛点，候选方向（Release Assets / 外部 CDN / jsDelivr）已登记在 `docs/requirements/animation-repo-size.md`。

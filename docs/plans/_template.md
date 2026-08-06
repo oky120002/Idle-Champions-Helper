@@ -1,0 +1,32 @@
+# <标题>
+
+**Status**: Accepted
+**Type**: change | milestone
+**Scope**: <模块名 | system>
+**Created**: YYYY-MM-DD
+
+## 目标
+
+<这次变更/里程碑要达成什么。一句话结论 + 用户/系统价值。>
+
+## 范围
+
+<涉及哪些模块、文件、数据流。不展开实现细节（细节在 specs/）。>
+
+## 阶段 Checklist
+
+- [ ] 阶段 1: <描述> —— 验证方式：<如何独立确认>
+- [ ] 阶段 2: <描述> —— 验证方式：<...>
+- [ ] 阶段 3: <描述> —— 验证方式：<...>
+
+## 验收
+
+<整体完成的判据。DoD。>
+
+## 落地后
+
+- specs/ 更新点：
+  - `<specs/path>`：<改什么>
+  - `<specs/path>`：<改什么>
+- 本 change Status → Landed → 移 `archives/plans/`
+- **specs/ 永不引用本 milestone**（规范描述最终态，不描述交付过程）

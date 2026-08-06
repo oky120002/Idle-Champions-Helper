@@ -46,6 +46,6 @@ npm run dev
 
 - 文档总索引：`docs/README.md`
 - 产品定义（价值 / 形态 / 技术模型 / 风险）：`docs/specs/product/README.md`
-- 文档职责与精简策略：`docs/specs/guidelines/documentation-governance.md`
+- 文档职责与精简策略：`docs/governance.md`
 - 操作与排障手册：`docs/runbooks/README.md`
-- 未来特性清单（需求库）：`docs/specs/product/future-features.md`
+- 需求提案库：`docs/requirements/`

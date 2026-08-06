@@ -88,7 +88,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 判定：**机制未缺失**（叠层乘算已建模），缺的是「每英雄每机制的合理默认 stack 值」。用户已知可手调（UI 按「当前冒险最高区域」设）。归类 P1-low（体验/默认值缺口，非正确性缺口）。
 
-✅ **维持现状登记不修**（A5，2026-08-01 用户决策）：默认 1000 + UI 按冒险区域手调；per-hero 默认值作为未来特性登记（`docs/specs/product/future-features.md`），优先级待评。
+✅ **维持现状登记不修**（A5，2026-08-01 用户决策）：默认 1000 + UI 按冒险区域手调；per-hero 默认值登记在 `docs/requirements/per-hero-stack-defaults.md`，优先级待评。
 
 ## 4. 逐 kind 语义判定表（头部 + 代表性长尾）
 

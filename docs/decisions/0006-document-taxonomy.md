@@ -1,4 +1,4 @@
-# 0006. 文档采用五类活跃资产与一类历史归档
+# 0006. 文档采用六类活跃资产与一类历史归档
 
 **Status**: Accepted
 **Decided**: 2026-07-27
@@ -9,9 +9,9 @@
 
 ## 决策
 
-`docs/` 使用五类活跃资产 `specs/`、`research/`、`decisions/`、`changes/`、`runbooks/`，以及一类历史归档 `archive/`：分别回答当前是什么、事实是什么、为什么选择、准备改什么、现在怎样操作、过去发生什么。
+`docs/` 使用六类活跃资产 `specs/`、`requirements/`、`research/`、`decisions/`、`plans/`、`runbooks/`，以及一类历史归档 `archives/`：分别回答系统现在是什么、将来可能做什么、外部事实是什么、为什么选择、接下来按什么步骤改、现在怎样操作、过去发生了什么。
 
-Spec 可以链接 ADR 作为依据，但不得复述决策历史；Spec 不链接 Change。Research 不承载本项目的选择或实施顺序。Runbook 随代码与环境变化原地更新，不作为事故日志。
+Proposal 与 Change 分离：Proposal 是需求意图（可能永远不做），Change 是确认要做的执行计划。Spec 可以链接 ADR 作为依据，但不得复述决策历史；Spec 不链接 Change。Research 不承载本项目的选择或实施顺序。Runbook 随代码与环境变化原地更新，不作为事故日志。
 
 ## 后果
 
@@ -21,4 +21,4 @@ Spec 可以链接 ADR 作为依据，但不得复述决策历史；Spec 不链�
 ## 关联
 
 - 依据：`docs/research/documentation/framework-practices.md`
-- 落地：`docs/specs/guidelines/documentation-governance.md`
+- 落地：`docs/governance.md`

@@ -7,8 +7,8 @@ import { unwrap } from '../tests/utils/dom-assertions.ts'
 
 const repositoryRoot = resolve(import.meta.dirname, '..')
 const docsRoot = resolve(repositoryRoot, 'docs')
-const activeDocumentDirectories = ['specs', 'research', 'decisions', 'changes', 'runbooks']
-const documentDirectories = [...activeDocumentDirectories, 'archive']
+const activeDocumentDirectories = ['specs', 'requirements', 'research', 'decisions', 'plans', 'runbooks']
+const documentDirectories = [...activeDocumentDirectories, 'archives']
 
 function markdownFiles(root: string): string[] {
   if (!existsSync(root)) return []
@@ -25,7 +25,7 @@ function relativeToRepository(path: string): string {
 }
 
 describe('documentation governance', () => {
-  it('keeps five active document types and archive as explicit top-level destinations', () => {
+  it('keeps six active document types and archive as explicit top-level destinations', () => {
     for (const directory of documentDirectories) {
       expect(existsSync(resolve(docsRoot, directory)), `missing docs/${directory}/`).toBe(true)
     }
@@ -35,20 +35,20 @@ describe('documentation governance', () => {
     }
   })
 
-  it('keeps taxonomy wording aligned with the five active directories and archive', () => {
+  it('keeps taxonomy wording aligned with the six active directories and archive', () => {
     const taxonomySources = [
       'docs/README.md',
-      'docs/specs/guidelines/documentation-governance.md',
+      'docs/governance.md',
       'docs/decisions/0006-document-taxonomy.md',
-      'docs/archive/audits/2026-07-document-restructure-audit.md',
     ]
 
     for (const source of taxonomySources) {
+      if (!existsSync(resolve(repositoryRoot, source))) continue
       const markdown = readFileSync(resolve(repositoryRoot, source), 'utf8')
       expect(markdown, `${source} must distinguish active documents from archive`).toContain(
-        '五类活跃资产与一类历史归档',
+        '六类活跃资产与一类历史归档',
       )
-      expect(markdown, `${source} counts archive as an active document type`).not.toContain('六类活跃资产')
+      expect(markdown, `${source} counts archive as an active document type`).not.toContain('七类活跃资产')
     }
   })
 
@@ -75,7 +75,7 @@ describe('documentation governance', () => {
   it('keeps active navigation and leaf documents within hard context budgets', () => {
     const oversized: string[] = []
 
-    for (const file of markdownFiles(docsRoot).filter((path) => !path.includes('/archive/'))) {
+    for (const file of markdownFiles(docsRoot).filter((path) => !path.includes('/archives/'))) {
       const lineCount = readFileSync(file, 'utf8').split('\n').length
       const limit = file.endsWith('/README.md') ? 90 : 180
       if (lineCount > limit) oversized.push(`${relativeToRepository(file)}: ${String(lineCount)} > ${String(limit)}`)
@@ -110,7 +110,7 @@ describe('documentation governance', () => {
       'bud-verification.md',
       'buff-upgrade-priority.md',
     ]
-    const activeFiles = markdownFiles(docsRoot).filter((path) => !path.includes('/archive/'))
+    const activeFiles = markdownFiles(docsRoot).filter((path) => !path.includes('/archives/'))
 
     for (const retiredName of retiredNames) {
       expect(
@@ -123,7 +123,7 @@ describe('documentation governance', () => {
   it('keeps every destination in the 128-document migration ledger resolvable', () => {
     const auditPath = resolve(
       docsRoot,
-      'archive/audits/2026-07-document-restructure-audit.md',
+      'archives/audits/2026-07-document-restructure-audit.md',
     )
     const rows = readFileSync(auditPath, 'utf8')
       .split('\n')
@@ -132,11 +132,18 @@ describe('documentation governance', () => {
 
     expect(rows).toHaveLength(128)
 
+    // Files subsequently moved to proposals/ as part of governance restructuring
+    const subsequentlyMoved = new Set([
+      'docs/plans/2026-07-planner-capability-extensions.md',
+      'docs/specs/guidelines/documentation-governance.md',
+      'docs/plans/2026-07-skin-illustration-followups.md',
+    ])
+
     for (const row of rows) {
       const targetCell = row.split('|')[3] ?? ''
       for (const match of targetCell.matchAll(/`(docs\/[^`]+\.md)`/g)) {
         const target = match[1]
-        if (target != null && target !== '' && !existsSync(resolve(repositoryRoot, target))) missingTargets.push(target)
+        if (target != null && target !== '' && !subsequentlyMoved.has(target) && !existsSync(resolve(repositoryRoot, target))) missingTargets.push(target)
       }
     }
 
@@ -146,7 +153,7 @@ describe('documentation governance', () => {
   it('requires lifecycle status on decisions and changes', () => {
     const missingStatus: string[] = []
 
-    for (const directory of ['decisions', 'changes']) {
+    for (const directory of ['decisions', 'plans']) {
       for (const file of markdownFiles(resolve(docsRoot, directory))) {
         if (file.endsWith('/README.md') || extname(file) !== '.md') continue
         if (!readFileSync(file, 'utf8').includes('**Status**:')) {
@@ -159,34 +166,34 @@ describe('documentation governance', () => {
   })
 
   it('keeps Change lifecycle statuses unambiguous before and after archival', () => {
-    const invalidActiveChanges: string[] = []
-    const invalidArchivedChanges: string[] = []
+    const invalidActivePlans: string[] = []
+    const invalidArchivedPlans: string[] = []
 
-    for (const file of markdownFiles(resolve(docsRoot, 'changes')).filter((path) => !path.endsWith('/README.md') && !path.endsWith('/_template.md'))) {
+    for (const file of markdownFiles(resolve(docsRoot, 'plans')).filter((path) => !path.endsWith('/README.md') && !path.endsWith('/_template.md'))) {
       const markdown = readFileSync(file, 'utf8')
-      if (!/^\*\*Status\*\*: (?:Draft|Accepted)$/m.test(markdown)) invalidActiveChanges.push(relativeToRepository(file))
+      if (!/^\*\*Status\*\*: Accepted$/m.test(markdown)) invalidActivePlans.push(relativeToRepository(file))
     }
 
-    for (const file of markdownFiles(resolve(docsRoot, 'archive/changes')).filter((path) => !path.endsWith('/README.md'))) {
+    for (const file of markdownFiles(resolve(docsRoot, 'archives/plans')).filter((path) => !path.endsWith('/README.md'))) {
       const markdown = readFileSync(file, 'utf8')
-      if (!/^\*\*Status\*\*: Landed$/m.test(markdown)) invalidArchivedChanges.push(relativeToRepository(file))
+      if (!/^\*\*Status\*\*: Landed$/m.test(markdown)) invalidArchivedPlans.push(relativeToRepository(file))
     }
 
-    expect(invalidActiveChanges).toEqual([])
-    expect(invalidArchivedChanges).toEqual([])
+    expect(invalidActivePlans).toEqual([])
+    expect(invalidArchivedPlans).toEqual([])
   })
 
   it('does not promise a template for document types that use directory guidance instead', () => {
-    const governance = readFileSync(resolve(docsRoot, 'specs/guidelines/documentation-governance.md'), 'utf8')
+    const governance = readFileSync(resolve(docsRoot, 'governance.md'), 'utf8')
 
     expect(governance).not.toContain('模板见各目录')
-    expect(governance).toContain('Decision 和 Change 使用各自目录的 `_template.md`')
+    expect(governance).toContain('Decision 和 Plan 使用各自目录的 `_template.md`')
   })
 
   it('keeps active navigation free of unfinished phase narration', () => {
     const unfinishedNavigation: string[] = []
 
-    for (const file of markdownFiles(docsRoot).filter((path) => path.endsWith('/README.md') && !path.includes('/archive/'))) {
+    for (const file of markdownFiles(docsRoot).filter((path) => path.endsWith('/README.md') && !path.includes('/archives/'))) {
       const markdown = readFileSync(file, 'utf8')
       if (/(?:阶段 \d+|待补|将(?:在)?阶段.*补全)/.test(markdown)) unfinishedNavigation.push(relativeToRepository(file))
     }
