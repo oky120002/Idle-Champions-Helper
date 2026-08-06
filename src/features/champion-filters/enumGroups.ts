@@ -1,5 +1,5 @@
 import type { LocalizedText } from '../../domain/types'
-import type { LocalizedEnumGroup, StringEnumGroup } from './types'
+import type { IdLocalizedEnumGroup, LocalizedEnumGroup, StringEnumGroup } from './types'
 
 export function isLocalizedText(value: unknown): value is LocalizedText {
   return (
@@ -20,6 +20,21 @@ export function isLocalizedEnumGroup(value: unknown): value is LocalizedEnumGrou
     'values' in value &&
     Array.isArray(value.values) &&
     value.values.every((item) => isLocalizedText(item))
+  )
+}
+
+export function isIdLocalizedEnumGroup(value: unknown): value is IdLocalizedEnumGroup {
+  if (
+    typeof value !== 'object' ||
+    value === null ||
+    !('id' in value) ||
+    !('values' in value) ||
+    !Array.isArray(value.values)
+  ) {
+    return false
+  }
+  return value.values.every(
+    (item) => isLocalizedText(item) && typeof (item as Record<string, unknown>).id === 'string',
   )
 }
 

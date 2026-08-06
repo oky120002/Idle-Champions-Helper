@@ -80,6 +80,7 @@ export function useChampionsPageDerived({
 
   const roles = state.status === 'ready' ? state.roles : []
   const affiliations = state.status === 'ready' ? state.affiliations : []
+  const patrons = state.status === 'ready' ? state.patrons : []
   const raceOptions = state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'race', locale) : []
   const genderOptions = state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'gender', locale) : []
   const alignmentOptions =
@@ -106,6 +107,7 @@ export function useChampionsPageDerived({
     filters.selectedAcquisitions.includes(acquisition),
   )
   const orderedSelectedMechanics = mechanicOptions.filter((mechanic) => filters.selectedMechanics.includes(mechanic))
+  const orderedSelectedPatrons = patrons.filter((patron) => filters.selectedPatrons.includes(patron.id))
 
   const activeFilterChips = buildActiveFilterChips({
     locale,
@@ -120,6 +122,7 @@ export function useChampionsPageDerived({
     orderedSelectedProfessions,
     orderedSelectedAcquisitions,
     orderedSelectedMechanics,
+    orderedSelectedPatrons,
   })
   const activeFilters = activeFilterChips.map((chip) => chip.label)
   const hasActiveFilters = hasAnyActiveFilters(filters)
@@ -137,6 +140,7 @@ export function useChampionsPageDerived({
     matchedSeats,
     roles,
     affiliations,
+    patrons,
     raceOptions,
     genderOptions,
     alignmentOptions,

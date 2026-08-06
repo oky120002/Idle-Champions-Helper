@@ -9,7 +9,7 @@ import { formatSeatLabel, getRoleLabel } from '../../domain/localizedText'
 import type { LocalizedText } from '../../domain/types'
 import { ActiveFilterChipBar } from './ActiveFilterChipBar'
 import { seatOptions } from './options'
-import type { ActiveFilterChip } from './types'
+import type { ActiveFilterChip, IdLocalizedOption } from './types'
 
 export interface ChampionPrimaryFilterCopy {
   searchHint: LocaleText
@@ -17,6 +17,7 @@ export interface ChampionPrimaryFilterCopy {
   seatHint: LocaleText
   roleHint: LocaleText
   affiliationHint: LocaleText
+  patronHint: LocaleText
   activeChipHint: LocaleText
 }
 
@@ -25,11 +26,13 @@ interface ChampionPrimaryFilterValues {
   selectedSeats: number[]
   selectedRoles: string[]
   selectedAffiliations: string[]
+  selectedPatrons: string[]
 }
 
 interface ChampionPrimaryFilterOptions {
   roleOptions: string[]
   affiliationOptions: LocalizedText[]
+  patronOptions: IdLocalizedOption[]
 }
 
 interface ChampionPrimaryFilterActions {
@@ -41,6 +44,8 @@ interface ChampionPrimaryFilterActions {
   toggleRole: (role: string) => void
   resetAffiliation: () => void
   toggleAffiliation: (affiliation: string) => void
+  resetPatron: () => void
+  togglePatron: (patron: string) => void
 }
 
 interface ChampionPrimaryFilterSectionsProps {
@@ -127,6 +132,24 @@ export function ChampionPrimaryFilterSections({
           onReset: actions.resetAffiliation,
           onToggle: (value) => actions.toggleAffiliation(String(value)),
         },
+        ...(options.patronOptions.length > 0
+          ? [
+              {
+                kind: 'chip-multi' as const,
+                id: 'patrons',
+                label: t({ zh: '赞助人', en: 'Patron' }),
+                hint: t(copy.patronHint),
+                options: options.patronOptions.map((patron) => ({
+                  id: patron.id,
+                  label: buildAffiliationLabel({ original: patron.original, display: patron.display }),
+                })),
+                selectedValues: values.selectedPatrons,
+                allLabel: t({ zh: '全部', en: 'All' }),
+                onReset: actions.resetPatron,
+                onToggle: (value: string | number) => actions.togglePatron(String(value)),
+              },
+            ]
+          : []),
       ],
     },
   ]

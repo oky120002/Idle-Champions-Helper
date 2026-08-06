@@ -48,6 +48,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    setSelectedPatrons,
     setShowAllResults,
     toggleIdentityFiltersExpanded,
     toggleMetaFiltersExpanded,
@@ -175,6 +176,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    setSelectedPatrons,
   })
 
   const actions: IllustrationsPageActions = {
@@ -213,6 +215,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     options: {
       roleOptions,
       affiliationOptions,
+      patronOptions: [],
       raceOptions,
       genderOptions,
       alignmentOptions,

@@ -19,6 +19,7 @@ export type IllustrationFilterStateController = {
   setSelectedProfessions: Dispatch<SetStateAction<string[]>>
   setSelectedAcquisitions: Dispatch<SetStateAction<string[]>>
   setSelectedMechanics: Dispatch<SetStateAction<string[]>>
+  setSelectedPatrons: Dispatch<SetStateAction<string[]>>
   setShowAllResults: Dispatch<SetStateAction<boolean>>
   toggleIdentityFiltersExpanded: () => void
   toggleMetaFiltersExpanded: () => void
@@ -161,6 +162,7 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    setSelectedPatrons,
     setShowAllResults,
     toggleIdentityFiltersExpanded: () => setIdentityFiltersExpanded((current) => !current),
     toggleMetaFiltersExpanded: () => setMetaFiltersExpanded((current) => !current),

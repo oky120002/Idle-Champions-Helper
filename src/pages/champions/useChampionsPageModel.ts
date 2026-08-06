@@ -53,6 +53,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     setSelectedProfessions: filterState.setSelectedProfessions,
     setSelectedAcquisitions: filterState.setSelectedAcquisitions,
     setSelectedMechanics: filterState.setSelectedMechanics,
+    setSelectedPatrons: filterState.setSelectedPatrons,
   })
 
   const showResultsQuickNavTop = motion.showResultsQuickNavTop
@@ -71,6 +72,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     selectedProfessions: filterState.selectedProfessions,
     selectedAcquisitions: filterState.selectedAcquisitions,
     selectedMechanics: filterState.selectedMechanics,
+    selectedPatrons: filterState.selectedPatrons,
     isIdentityFiltersExpanded: filterState.isIdentityFiltersExpanded,
     isMetaFiltersExpanded: filterState.isMetaFiltersExpanded,
     activeFilterChips: derived.activeFilterChips,
@@ -88,6 +90,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,
     affiliations: derived.affiliations,
+    patrons: derived.patrons,
     raceOptions: derived.raceOptions,
     genderOptions: derived.genderOptions,
     alignmentOptions: derived.alignmentOptions,

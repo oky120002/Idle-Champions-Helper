@@ -75,6 +75,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     setSelectedProfessions: filterState.setSelectedProfessions,
     setSelectedAcquisitions: filterState.setSelectedAcquisitions,
     setSelectedMechanics: filterState.setSelectedMechanics,
+    setSelectedPatrons: filterState.setSelectedPatrons,
     resetExtraFilters: () => setActiveRosterMetricFilterId(null),
     extraChipMutations: {
       'roster-metric': () => setActiveRosterMetricFilterId(null),
@@ -100,6 +101,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     selectedProfessions: filterState.selectedProfessions,
     selectedAcquisitions: filterState.selectedAcquisitions,
     selectedMechanics: filterState.selectedMechanics,
+    selectedPatrons: filterState.selectedPatrons,
     isIdentityFiltersExpanded: filterState.isIdentityFiltersExpanded,
     isMetaFiltersExpanded: filterState.isMetaFiltersExpanded,
     activeFilterChips: derived.activeFilterChips,
@@ -120,6 +122,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,
     affiliations: derived.affiliations,
+    patrons: derived.patrons,
     raceOptions: derived.raceOptions,
     genderOptions: derived.genderOptions,
     alignmentOptions: derived.alignmentOptions,

@@ -19,6 +19,17 @@ export interface LocalizedEnumGroup {
   values: LocalizedText[]
 }
 
+export interface IdLocalizedOption {
+  id: string
+  original: string
+  display: string
+}
+
+export interface IdLocalizedEnumGroup {
+  id: string
+  values: IdLocalizedOption[]
+}
+
 export interface MechanicOptionGroup {
   id: ChampionMechanicCategoryId
   options: string[]

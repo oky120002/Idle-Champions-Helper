@@ -1,6 +1,6 @@
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
 import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
-import type { ActiveFilterChip } from '../../features/champion-filters/types'
+import type { ActiveFilterChip, IdLocalizedOption } from '../../features/champion-filters/types'
 import type { AppLocale } from '../../app/i18n'
 import type { ChampionsPageTranslator, ChampionsFilterState } from './types'
 
@@ -17,6 +17,7 @@ interface ActiveChipOptions {
   orderedSelectedProfessions: string[]
   orderedSelectedAcquisitions: string[]
   orderedSelectedMechanics: string[]
+  orderedSelectedPatrons: IdLocalizedOption[]
 }
 
 export function buildChampionsTransitionKey(filters: ChampionsFilterState): string {
@@ -36,8 +37,12 @@ export function buildActiveFilterChips({
   orderedSelectedProfessions,
   orderedSelectedAcquisitions,
   orderedSelectedMechanics,
+  orderedSelectedPatrons,
 }: ActiveChipOptions): ActiveFilterChip[] {
   const trimmedSearch = filters.search.trim()
+  const patronLabels = orderedSelectedPatrons.map((patron) =>
+    getLocalizedTextPair({ original: patron.original, display: patron.display }, locale),
+  )
 
   return [
     trimmedSearch !== ''
@@ -177,6 +182,19 @@ export function buildActiveFilterChips({
             en: `Clear special mechanics: ${orderedSelectedMechanics
               .map((mechanic) => getChampionTagLabel(mechanic, locale))
               .join(', ')}`,
+          }),
+        }
+      : null,
+    orderedSelectedPatrons.length > 0
+      ? {
+          id: 'patrons',
+          label: t({
+            zh: `赞助人：${patronLabels.join('、')}`,
+            en: `Patrons: ${patronLabels.join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空赞助人：${patronLabels.join('、')}`,
+            en: `Clear patrons: ${patronLabels.join(', ')}`,
           }),
         }
       : null,
