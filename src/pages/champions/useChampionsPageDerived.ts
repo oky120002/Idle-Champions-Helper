@@ -26,6 +26,7 @@ function hasAnyActiveFilters(filters: ChampionsFilterState): boolean {
     filters.selectedProfessions,
     filters.selectedAcquisitions,
     filters.selectedMechanics,
+    filters.selectedPatrons,
   ]
   return filters.search.trim().length > 0 || selectedGroups.some((values) => values.length > 0)
 }
@@ -53,6 +54,7 @@ export function useChampionsPageDerived({
       professions: filters.selectedProfessions,
       acquisitions: filters.selectedAcquisitions,
       mechanics: filters.selectedMechanics,
+      patrons: filters.selectedPatrons,
     })
   }, [filters, state])
   const orderedChampions = useMemo(

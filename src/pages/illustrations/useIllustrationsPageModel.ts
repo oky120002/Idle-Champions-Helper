@@ -88,6 +88,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
         professions: filters.selectedProfessions,
         acquisitions: filters.selectedAcquisitions,
         mechanics: filters.selectedMechanics,
+        patrons: filters.selectedPatrons,
       }),
     [illustrationEntries, filters],
   )

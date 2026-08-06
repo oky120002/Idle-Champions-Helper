@@ -26,6 +26,7 @@ export function useChampionsFilterState() {
   const [selectedProfessions, setSelectedProfessions] = useState(initialFilters.selectedProfessions)
   const [selectedAcquisitions, setSelectedAcquisitions] = useState(initialFilters.selectedAcquisitions)
   const [selectedMechanics, setSelectedMechanics] = useState(initialFilters.selectedMechanics)
+  const [selectedPatrons, setSelectedPatrons] = useState(initialFilters.selectedPatrons)
   const [isIdentityFiltersExpanded, setIdentityFiltersExpanded] = useState(initialExpansion.identity)
   const [isMetaFiltersExpanded, setMetaFiltersExpanded] = useState(initialExpansion.meta)
   const [showAllResults, setShowAllResults] = useState(initialFilters.showAllResults)
@@ -42,6 +43,7 @@ export function useChampionsFilterState() {
       selectedProfessions,
       selectedAcquisitions,
       selectedMechanics,
+      selectedPatrons,
       showAllResults,
     }),
     [
@@ -55,6 +57,7 @@ export function useChampionsFilterState() {
       selectedProfessions,
       selectedAcquisitions,
       selectedMechanics,
+      selectedPatrons,
       showAllResults,
     ],
   )
@@ -112,6 +115,7 @@ export function useChampionsFilterState() {
       setSelectedProfessions(nextFilters.selectedProfessions)
       setSelectedAcquisitions(nextFilters.selectedAcquisitions)
       setSelectedMechanics(nextFilters.selectedMechanics)
+      setSelectedPatrons(nextFilters.selectedPatrons)
       setShowAllResults(nextFilters.showAllResults)
       setIdentityFiltersExpanded(nextExpansion.identity)
       setMetaFiltersExpanded(nextExpansion.meta)
@@ -146,6 +150,8 @@ export function useChampionsFilterState() {
     setSelectedAcquisitions,
     selectedMechanics,
     setSelectedMechanics,
+    selectedPatrons,
+    setSelectedPatrons,
     isIdentityFiltersExpanded,
     setIdentityFiltersExpanded,
     isMetaFiltersExpanded,

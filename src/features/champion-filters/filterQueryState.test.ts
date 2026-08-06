@@ -18,6 +18,7 @@ const FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
   profession: 'profession',
   acquisition: 'acquisition',
   mechanic: 'mechanic',
+  patron: 'patron',
 }
 
 describe('champion filter query-state helpers', () => {
@@ -33,6 +34,7 @@ describe('champion filter query-state helpers', () => {
       selectedProfessions: ['wizard', 'bard'],
       selectedAcquisitions: ['event'],
       selectedMechanics: ['spec_gold', 'control_stun'],
+      selectedPatrons: [],
     }
 
     const searchParams = appendCommonFilterSearchParams(new URLSearchParams(), filters, FILTER_PARAM_KEYS)
@@ -58,6 +60,7 @@ describe('champion filter query-state helpers', () => {
       selectedProfessions: ['cleric'],
       selectedAcquisitions: ['event'],
       selectedMechanics: ['spec_gold'],
+      selectedPatrons: [],
     })
     expect(readCommonFilterExpansion(searchParams, FILTER_PARAM_KEYS)).toEqual({
       identity: true,

@@ -97,6 +97,7 @@ export function useUserHeroesPageDerived({
       professions: filters.selectedProfessions,
       acquisitions: filters.selectedAcquisitions,
       mechanics: filters.selectedMechanics,
+      patrons: filters.selectedPatrons,
     })
   }, [filters, state])
   const ownedHeroById = useMemo(() => buildOwnedHeroById(ownedHeroes), [ownedHeroes])
@@ -208,6 +209,7 @@ export function useUserHeroesPageDerived({
       filters.selectedProfessions,
       filters.selectedAcquisitions,
       filters.selectedMechanics,
+      filters.selectedPatrons,
     ].some((group) => group.length > 0)
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =

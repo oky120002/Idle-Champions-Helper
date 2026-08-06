@@ -31,6 +31,7 @@ export interface ChampionsFilterState {
   selectedProfessions: string[]
   selectedAcquisitions: string[]
   selectedMechanics: string[]
+  selectedPatrons: string[]
   showAllResults: boolean
 }
 
