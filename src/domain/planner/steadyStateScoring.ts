@@ -99,6 +99,11 @@ export interface ScoringInput {
    * 且跳过 areaEstimate（非真实 DPS，BUD 估算无意义）。
    */
   aggregateProjection?: AggregateProjection | undefined
+  /**
+   * 金币预算值（评分链路暂不消费，预留扩展——未来金币相关加成建模时使用）。
+   * 由调用方从 options.goldBudget（游戏记数法字符串）解析后传入。
+   */
+  goldBudget?: GameNumberValue | undefined
 }
 
 export interface SimulationFactor {

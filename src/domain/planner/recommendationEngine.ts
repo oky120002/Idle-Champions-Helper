@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- planner 推荐引擎主入口：evaluateFormation + buildPlannerRecommendation 两入口 + 9 个紧密协作的子函数。拆到多个文件会让推荐流程修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
-import { toGameNumber, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
+import { toGameNumber, parseGameNumber, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
@@ -152,6 +152,16 @@ export interface PlannerRecommendationOptions {
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
   /**
+   * 全局金币预算（游戏记数法字符串，如 `"1.50e92"`）。评分链路暂不消费，预留扩展。
+   * 等级模式时由调用方反算（computeMaxGoldForLevel）后传入。
+   */
+  goldBudget?: string
+  /**
+   * 外部算好的 per-hero 等级覆盖（如金币预算换算结果）。覆盖 ownedHeroes 的等级，
+   * 同时影响专精等级门控。未覆盖的英雄保持 ownedHeroes 等级。
+   */
+  heroLevelOverride?: Map<string, number>
+  /**
    * 投影模式（约束②）；默认 'absolute-dps'。透传 scoreFormation。
    * 'formation-buff' = 只阵型内聚合，不乘 baseDamage/levelCurve/外部加成（见 architecture.md「投影模式」）。
    */
@@ -266,6 +276,7 @@ function applyActiveSpecializations(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   ownedHeroes: readonly OwnedHero[],
   specializationCatalog: SpecializationCatalog | undefined,
+  heroLevels: Map<string, number>,
 ): void {
   if (!specializationCatalog) {
     return
@@ -277,7 +288,8 @@ function applyActiveSpecializations(
     if (owned == null || owned.specializations.length === 0) {
       continue
     }
-    heroById.set(heroId, applySpecializationsToProfile(profile, owned.specializations, specializationCatalog[heroId], owned.level))
+    const level = heroLevels.get(heroId) ?? owned.level
+    heroById.set(heroId, applySpecializationsToProfile(profile, owned.specializations, specializationCatalog[heroId], level))
   }
 }
 
@@ -330,6 +342,12 @@ function attachOwnedSaveContext(
  * 抽成单一来源，结构性锁定两入口透传一致——否则新增透传字段（如 aggregateProjection）漏改一处，
  * evaluate 与 recommend 会对同一阵型算出不同 DPS 且无诊断。
  */
+function parseGoldBudget(value: string | undefined): GameNumberValue | undefined {
+  if (!value) return undefined
+  const result = parseGameNumber(value)
+  return result.ok ? result.value : undefined
+}
+
 function scorePlannerFormation(
   placements: Record<string, string>,
   heroesById: Map<string, ResolvedHeroAbilityProfile>,
@@ -355,6 +373,7 @@ function scorePlannerFormation(
     externalHeroDpsContributions: options.externalHeroDpsContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,
+    goldBudget: parseGoldBudget(options.goldBudget),
   })
 }
 
@@ -458,8 +477,15 @@ export function evaluateFormation({
   const heroById = new Map(collections.plannerHeroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(collections.plannerHeroes.map((hero) => [hero.heroId, hero.seat]))
   const ownedHeroes = profileSnapshot?.ownedHeroes ?? []
+  // heroLevels 在专精注入前构建（含 override），使等级门控用覆盖后的等级
+  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
+  if (options.heroLevelOverride) {
+    for (const [heroId, level] of options.heroLevelOverride) {
+      heroLevels.set(heroId, level)
+    }
+  }
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
-  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
+  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog, heroLevels)
   applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
   attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
   const candidateIds = new Set(
@@ -469,8 +495,6 @@ export function evaluateFormation({
       ownedHeroes,
     }),
   )
-  // heroLevels 覆盖所有已拥有英雄；放置但未拥有的英雄由 restrictionWarnings 标记（按 level 1 估算）。
-  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
 
   const variantRules: VariantRuleResult = {
     constraints: [
@@ -584,11 +608,17 @@ function applyAugmentsAndBuildRules(
 } {
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
+  // heroLevels 在专精注入前构建（含 override），使等级门控用覆盖后的等级
+  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
+  if (options.heroLevelOverride) {
+    for (const [heroId, level] of options.heroLevelOverride) {
+      heroLevels.set(heroId, level)
+    }
+  }
   applyActiveFeats(heroById, ownedHeroes, collections.featCatalog)
-  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog)
+  applyActiveSpecializations(heroById, ownedHeroes, collections.specializationCatalog, heroLevels)
   applyEquipmentBuffs(heroById, options.equipmentBuffsByHero)
   attachOwnedSaveContext(heroById, ownedHeroes, profileSnapshot?.activeContext?.patronId ?? null)
-  const heroLevels = new Map(ownedHeroes.map((owned) => [owned.heroId, owned.level]))
   const scenarioVariantRules: VariantRuleResult = {
     constraints: [
       ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),

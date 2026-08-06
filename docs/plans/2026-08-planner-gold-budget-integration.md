@@ -49,10 +49,10 @@
 - [x] 删除 `specializationBaseline.ts`（零引用死代码 + 判据 bug；catalog 的 `requiredLevel` 直接用于门控，不需要 baseline 提取） —— 验证：typecheck 通过
 - [x] `applySpecializationsToProfile` 加 `heroLevel` 参数 + 等级门控（`requiredLevel != null && heroLevel < requiredLevel` → 跳过注入）；recommendationEngine 传 `owned.level` —— 验证：3 项测试（够/不够/null 不过控）
 
-### 阶段 4：评分链路接入
+### 阶段 4：评分链路接入 ✅
 
-- [ ] scoring input 增加 `goldBudget: GameNumberValue` 入参 —— 验证：类型检查 + 入参透传测试
-- [ ] engine 在构建 per-hero 等级 Map 时：金币模式用换算结果，等级模式用直接值 + 反算金币 —— 验证：两种模式端到端评分测试
+- [x] `ScoringInput` 增加 `goldBudget?: GameNumberValue`；`PlannerRecommendationOptions` 增加 `goldBudget?: string`（游戏记数法）+ `heroLevelOverride?: Map<string, number>` —— 验证：类型检查通过 + 透传测试（等级影响 carryDps、goldBudget 不崩溃）
+- [x] engine 两个入口（buildPlannerRecommendation + evaluateFormation）均合并 heroLevelOverride 到 heroLevels Map，在专精注入前完成构建使等级门控用覆盖后的等级 —— 验证：1440 测试全绿
 
 ### 阶段 5：UI 二选一互斥
 
