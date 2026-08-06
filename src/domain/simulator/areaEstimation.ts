@@ -1,4 +1,4 @@
-import { compareGameNumbers, type GameNumberValue } from './gameNumber'
+import { compareGameNumbers, type GameNumberValue } from '../gameNumber'
 import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
 
 /**

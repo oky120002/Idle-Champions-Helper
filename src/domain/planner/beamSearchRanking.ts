@@ -1,6 +1,6 @@
 import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
-import { compareGameNumbers, type GameNumberValue } from '../simulator/gameNumber'
+import { compareGameNumbers, type GameNumberValue } from '../gameNumber'
 import type { ScoringResult, SimulationBreakdown } from './steadyStateScoring'
 
 export interface BeamSearchInput {

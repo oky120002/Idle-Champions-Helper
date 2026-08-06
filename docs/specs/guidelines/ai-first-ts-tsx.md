@@ -59,7 +59,15 @@
 
 - 多模式共用字段命名取超集概念，不用单模式量名或遗留泛名：被 carry-dps（carryDps）与 team-gold（teamGoldFind）共用的输出字段叫 `score` 会与已淘汰的启发式评分混淆、叫 `carryDps` 在 team-gold 模式名实不符——改 `objectiveValue`（优化目标量）模式中性、见名知意。内部管道（`ScoringResult`）同理：跨模式字段要么改中性别名，要么注释点明"当前模式目标量，非单模式量"。
 
-## 6. 例外与减债
+## 6. 大数计算（GameNumber / decimal.js）
+
+游戏数值可达 `1e1000`+，远超 JS number 上限。统一走 `gameNumber.ts`（ADR 0014）。
+
+- 库：`decimal.js`，封装为 `GameNumberValue`。**只有 `gameNumber.ts` 可直接 import，业务代码一律用 wrapper，禁止直接 import。**
+- wrapper：`parseGameNumber` / `formatGameNumber` / `multiplyGameNumbers` / `divideGameNumbers` / `powerGameNumber` / `addGameNumbers` / `compareGameNumbers`（排序用）/ `log10GameNumber`（仅离线校准）。
+- 序列化：可超大数边界的字段走游戏记数法字符串，禁止 `.toNumber()` 回退（见 §5）。
+
+## 7. 例外与减债
 
 - 长字符串、大型映射、生成代码、测试夹具可以适度豁免，但必须保持职责单一。
 - 超大文件按”触碰即减债”处理：本次改到它，就至少顺手拆出一层更自然的边界。

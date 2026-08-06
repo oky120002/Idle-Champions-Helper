@@ -1,4 +1,4 @@
-import type { GameNumberValue } from './gameNumber'
+import type { GameNumberValue } from '../gameNumber'
 
 /** profile 缺 baseAttackCooldown 时回退的默认攻击间隔（秒）。 */
 const DEFAULT_ATTACK_COOLDOWN = 1

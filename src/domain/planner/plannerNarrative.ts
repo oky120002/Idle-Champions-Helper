@@ -4,7 +4,7 @@
  * 与推荐引擎的搜索/评分逻辑解耦——文案措辞调整不波及引擎算法，反之亦然。
  * PlannerResult.explanations 被 UI 与 CLI 双消费（见 recommendationTypes），故留在 domain 层。
  */
-import { formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
+import { formatGameNumber, type GameNumberValue } from '../gameNumber'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { PlannerNarrativeLine, PlannerPlacementEntry } from './recommendationTypes'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'

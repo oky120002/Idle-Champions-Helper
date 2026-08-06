@@ -1,7 +1,6 @@
-import { Decimal } from 'decimal.js'
+import { toGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
-import type { GameNumberValue } from './gameNumber'
 
 /**
  * 生存（survival）计算。
@@ -24,7 +23,7 @@ function resolveHealthCurveRate(hero: ResolvedHeroAbilityProfile): number {
 }
 
 export function computeHealthLevelCurve(hero: ResolvedHeroAbilityProfile, level: number): GameNumberValue {
-  return new Decimal(resolveHealthCurveRate(hero)).pow(Math.max(0, level))
+  return toGameNumber(resolveHealthCurveRate(hero)).pow(Math.max(0, level))
 }
 
 export function computeEffectiveHealth(
@@ -35,5 +34,5 @@ export function computeEffectiveHealth(
   const baseHealth = hero.baseHealth > 0 ? hero.baseHealth : 1
   const levelCurve = computeHealthLevelCurve(hero, level)
   const mult = Number.isFinite(healthPoolMultiplier) && healthPoolMultiplier > 0 ? healthPoolMultiplier : 1
-  return new Decimal(baseHealth).mul(levelCurve).mul(mult)
+  return toGameNumber(baseHealth).mul(levelCurve).mul(mult)
 }

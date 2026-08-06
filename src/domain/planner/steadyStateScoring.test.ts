@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { unwrap } from '../../../tests/utils/dom-assertions'
-import { compareGameNumbers } from '../simulator/gameNumber'
+import { compareGameNumbers } from '../gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { scoreFormation } from './steadyStateScoring'
 import type { OfficialPlannerScenarioModel } from './plannerModel'

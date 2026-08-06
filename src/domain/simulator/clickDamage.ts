@@ -1,4 +1,4 @@
-import type { GameNumberValue } from './gameNumber'
+import type { GameNumberValue } from '../gameNumber'
 
 /**
  * Click damage 计算。

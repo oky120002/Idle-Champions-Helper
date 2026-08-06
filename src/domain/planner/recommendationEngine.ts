@@ -1,7 +1,6 @@
 /* eslint-disable max-lines -- planner 推荐引擎主入口：evaluateFormation + buildPlannerRecommendation 两入口 + 9 个紧密协作的子函数。拆到多个文件会让推荐流程修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
-import { Decimal } from 'decimal.js'
+import { toGameNumber, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
-import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
@@ -35,7 +34,7 @@ const PLANNER_TOP_K = 3
  * 调用方可经 PlannerRecommendationOptions.beamWidth 覆盖（CLI/测试/调优）。
  */
 const PLANNER_BEAM_WIDTH = 8
-const SCORE_ZERO: GameNumberValue = new Decimal(0)
+const SCORE_ZERO: GameNumberValue = toGameNumber(0)
 
 function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
   return [...scenario.slotTopology]

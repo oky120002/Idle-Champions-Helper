@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { Decimal } from 'decimal.js'
 import { unwrap } from '../../../tests/utils/dom-assertions'
-import { compareGameNumbers } from '../simulator/gameNumber'
+import { compareGameNumbers } from '../gameNumber'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
 import { beamSearch } from './beamSearchRanking'
 import type { ScoringResult } from './steadyStateScoring'

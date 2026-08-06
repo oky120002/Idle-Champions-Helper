@@ -1,7 +1,6 @@
-import { Decimal } from 'decimal.js'
+import { toGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
-import type { GameNumberValue } from './gameNumber'
 
 /**
  * 单英雄 carry DPS：baseDamage × levelCurve(level) × aggregate。
@@ -21,7 +20,7 @@ function resolveLevelCurveRate(hero: ResolvedHeroAbilityProfile): number {
 }
 
 export function computeLevelCurve(hero: ResolvedHeroAbilityProfile, level: number): GameNumberValue {
-  return new Decimal(resolveLevelCurveRate(hero)).pow(Math.max(0, level))
+  return toGameNumber(resolveLevelCurveRate(hero)).pow(Math.max(0, level))
 }
 
 export function computeCarryDps(
@@ -32,5 +31,5 @@ export function computeCarryDps(
   const baseDamage = hero.baseDamage > 0 ? hero.baseDamage : 1
   const levelCurve = computeLevelCurve(hero, level)
   const aggregate = Number.isFinite(damageAggregate) && damageAggregate > 0 ? damageAggregate : 1
-  return new Decimal(baseDamage).mul(levelCurve).mul(aggregate)
+  return toGameNumber(baseDamage).mul(levelCurve).mul(aggregate)
 }
