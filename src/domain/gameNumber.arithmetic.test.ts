@@ -8,6 +8,7 @@ import {
   parseGameNumber,
   powerGameNumber,
   sortGameNumbers,
+  subtractGameNumbers,
 } from './gameNumber'
 
 function gn(input: string) {
@@ -80,5 +81,21 @@ describe('game number arithmetic', () => {
     const product = multiplyGameNumbers(a, zero)
 
     expect(product.eq(0)).toBe(true)
+  })
+
+  it('减法：大数减小数保持预期量级', () => {
+    const a = gn('1e100')
+    const b = gn('1e50')
+    const result = subtractGameNumbers(a, b)
+
+    expect(result.e).toBe(100)
+  })
+
+  it('减法：相近值精确计算', () => {
+    const a = gn('10')
+    const b = gn('3')
+    const result = subtractGameNumbers(a, b)
+
+    expect(result.toNumber()).toBe(7)
   })
 })

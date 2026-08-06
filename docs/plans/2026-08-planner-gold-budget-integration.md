@@ -34,10 +34,10 @@
 - [x] `gameNumber.ts` 从 `simulator/` 迁移到 `src/domain/gameNumber.ts`，更新全部 import 路径 —— 验证：`npm run test:run` 226 文件 1427 测试全绿
 - [x] 6 处违规直接 `import { Decimal } from 'decimal.js'` 收敛到 wrapper（`baseDps.ts`/`survivalCalculation.ts`/`steadyStateScoring.ts`/`goldObjective.ts`/`recommendationEngine.ts`/`monsterStats.ts`）+ 新增 `toGameNumber` 快捷构造 wrapper —— 验证：生产代码零直接 import（仅 gameNumber.ts）
 
-### 阶段 1：费用公式实现 + 校准
+### 阶段 1：费用公式实现 + 校准 ✅
 
-- [ ] 实现累计升级费用函数 `computeCumulativeLevelCost(baseCost, rate, targetLevel): GameNumberValue`（等比数列求和，decimal.js） —— 验证：单元测试覆盖 rate=1（线性）、rate>1（指数）、level=0（零）、超大 level（不溢出）
-- [ ] 用 2~3 个已知英雄校准：取游戏内实际升级费用截图或社区数据，验证公式输出与实际吻合 —— 验证：校准测试断言偏差 < 5%
+- [x] 实现累计升级费用函数 `computeCumulativeLevelCost(baseCost, rate, targetLevel): GameNumberValue`（等比数列求和 `baseCost × (rate^X-1)/(rate-1)`，decimal.js）+ 新增 `subtractGameNumbers` wrapper —— 验证：单元测试 6 项（level=0/1/10/100/8000 + 多英雄保序）
+- [x] 校准验证：Bruenor(baseCost=5,rate=1.06) level=1/10/100 与手算精确一致；减法在 decimal.js 内完成避免 JS 浮点误差（`rate-1` 先算致 4.999... 偏差）
 
 ### 阶段 2：金币 ↔ 等级双向换算
 

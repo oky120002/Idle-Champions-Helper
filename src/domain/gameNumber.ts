@@ -198,3 +198,7 @@ export function addGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumb
 
   return a.add(b)
 }
+
+export function subtractGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumberValue {
+  return a.sub(b)
+}
