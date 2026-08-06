@@ -56,7 +56,7 @@ interface ChampionPrimaryFilterSectionsProps {
   options: ChampionPrimaryFilterOptions
   activeFilterChips: ActiveFilterChip[]
   actions: ChampionPrimaryFilterActions
-  buildAffiliationLabel: (affiliation: LocalizedText) => ReactNode
+  buildLocalizedLabel: (text: LocalizedText) => ReactNode
   extraFields?: FilterSidebarFieldSchema[]
   searchType?: 'search' | 'text'
 }
@@ -69,7 +69,7 @@ export function ChampionPrimaryFilterSections({
   options,
   activeFilterChips,
   actions,
-  buildAffiliationLabel,
+  buildLocalizedLabel,
   extraFields = [],
   searchType = 'search',
 }: Readonly<ChampionPrimaryFilterSectionsProps>) {
@@ -125,7 +125,7 @@ export function ChampionPrimaryFilterSections({
           hint: t(copy.affiliationHint),
           options: options.affiliationOptions.map((affiliation) => ({
             id: affiliation.original,
-            label: buildAffiliationLabel(affiliation),
+            label: buildLocalizedLabel(affiliation),
           })),
           selectedValues: values.selectedAffiliations,
           allLabel: t({ zh: '全部', en: 'All' }),
@@ -141,7 +141,7 @@ export function ChampionPrimaryFilterSections({
                 hint: t(copy.patronHint),
                 options: options.patronOptions.map((patron) => ({
                   id: patron.id,
-                  label: buildAffiliationLabel({ original: patron.original, display: patron.display }),
+                  label: buildLocalizedLabel({ original: patron.original, display: patron.display }),
                 })),
                 selectedValues: values.selectedPatrons,
                 allLabel: t({ zh: '全部', en: 'All' }),

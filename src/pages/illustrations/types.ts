@@ -22,6 +22,7 @@ export type IllustrationState =
       champions: Champion[]
       roles: string[]
       affiliations: LocalizedText[]
+      patrons: IdLocalizedOption[]
     }
   | { status: 'error'; message: string }
 

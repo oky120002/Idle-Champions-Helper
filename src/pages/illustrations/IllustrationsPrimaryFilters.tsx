@@ -104,7 +104,7 @@ export function IllustrationsPrimaryFilters({ model }: IllustrationsPrimaryFilte
         resetPatron: actions.resetPatron,
         togglePatron: actions.togglePatron,
       }}
-      buildAffiliationLabel={(affiliation) => getPrimaryLocalizedText(affiliation, locale)}
+      buildLocalizedLabel={(text) => getPrimaryLocalizedText(text, locale)}
       extraFields={extraFields}
     />
   )

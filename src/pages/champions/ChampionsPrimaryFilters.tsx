@@ -95,7 +95,7 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
         resetPatron,
         togglePatron,
       }}
-      buildAffiliationLabel={(affiliation) => <LocalizedText text={affiliation} mode="primary" />}
+      buildLocalizedLabel={(text) => <LocalizedText text={text} mode="primary" />}
       searchType="text"
     />
   )

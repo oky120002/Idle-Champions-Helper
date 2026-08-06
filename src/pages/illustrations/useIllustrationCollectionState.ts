@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { loadCollection } from '../../data/client'
 import type { Champion, ChampionAnimation, ChampionIllustration, DataCollection } from '../../domain/types'
-import { isLocalizedEnumGroup, isStringEnumGroup } from '../../features/champion-filters/enumGroups'
+import { isIdLocalizedEnumGroup, isLocalizedEnumGroup, isStringEnumGroup } from '../../features/champion-filters/enumGroups'
 import type { IllustrationState } from './types'
 
 const EMPTY_CHAMPION_COLLECTION: DataCollection<Champion> = {
@@ -33,8 +33,10 @@ export function useIllustrationCollectionState(): IllustrationState {
 
         const stringGroups = enumCollection.items.filter(isStringEnumGroup)
         const localizedGroups = enumCollection.items.filter(isLocalizedEnumGroup)
+        const idLocalizedGroups = enumCollection.items.filter(isIdLocalizedEnumGroup)
         const roles = stringGroups.find((group) => group.id === 'roles')?.values ?? []
         const affiliations = localizedGroups.find((group) => group.id === 'affiliations')?.values ?? []
+        const patrons = idLocalizedGroups.find((group) => group.id === 'patrons')?.values ?? []
 
         setState({
           status: 'ready',
@@ -43,6 +45,7 @@ export function useIllustrationCollectionState(): IllustrationState {
           champions: championCollection.items,
           roles,
           affiliations,
+          patrons,
         })
       })
       .catch((error: unknown) => {

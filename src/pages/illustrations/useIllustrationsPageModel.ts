@@ -4,6 +4,7 @@ import { useI18n } from '../../app/i18n'
 import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../../components/workbench/useWorkbenchResultsMotion'
 import { useWorkbenchShareLink } from '../../components/workbench/useWorkbenchShareLink'
 import type { Champion, ChampionAnimation, ChampionIllustration, LocalizedText } from '../../domain/types'
+import type { IdLocalizedOption } from '../../features/champion-filters/types'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
 import { filterIllustrations } from '../../rules/illustrationFilter'
 import { MAX_VISIBLE_ILLUSTRATIONS } from './constants'
@@ -27,6 +28,7 @@ const EMPTY_ANIMATIONS: ChampionAnimation[] = []
 const EMPTY_CHAMPIONS: Champion[] = []
 const EMPTY_STRINGS: string[] = []
 const EMPTY_LOCALIZED_TEXTS: LocalizedText[] = []
+const EMPTY_PATRONS: IdLocalizedOption[] = []
 
 export function useIllustrationsPageModel(): IllustrationsPageModel {
   const location = useLocation()
@@ -59,6 +61,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
   const champions = state.status === 'ready' ? state.champions : EMPTY_CHAMPIONS
   const roles = state.status === 'ready' ? state.roles : EMPTY_STRINGS
   const affiliations = state.status === 'ready' ? state.affiliations : EMPTY_LOCALIZED_TEXTS
+  const patrons = state.status === 'ready' ? state.patrons : EMPTY_PATRONS
   const championMap = useMemo(() => new Map(champions.map((champion) => [champion.id, champion])), [champions])
   const animationByIllustrationId = useMemo(() => new Map(animations.map((animation) => [animation.id, animation])), [animations])
   const availableChampionIds = useMemo(() => new Set(illustrations.map((illustration) => illustration.championId)), [illustrations])
@@ -122,6 +125,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
   const orderedSelectedProfessions = professionOptions.filter((profession) => filters.selectedProfessions.includes(profession))
   const orderedSelectedAcquisitions = acquisitionOptions.filter((acquisition) => filters.selectedAcquisitions.includes(acquisition))
   const orderedSelectedMechanics = mechanicOptions.filter((mechanic) => filters.selectedMechanics.includes(mechanic))
+  const orderedSelectedPatrons = patrons.filter((patron) => filters.selectedPatrons.includes(patron.id))
   const activeFilterChips = buildActiveIllustrationFilterChips({
     locale,
     t,
@@ -135,6 +139,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     orderedSelectedProfessions,
     orderedSelectedAcquisitions,
     orderedSelectedMechanics,
+    orderedSelectedPatrons,
   })
   const activeFilters = activeFilterChips.map((chip) => chip.label)
   const hasActiveFilters = hasActiveIllustrationFilters(filters)
@@ -215,7 +220,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     options: {
       roleOptions,
       affiliationOptions,
-      patronOptions: [],
+      patronOptions: patrons,
       raceOptions,
       genderOptions,
       alignmentOptions,

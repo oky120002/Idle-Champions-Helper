@@ -19,7 +19,9 @@ export function isLocalizedEnumGroup(value: unknown): value is LocalizedEnumGrou
     'id' in value &&
     'values' in value &&
     Array.isArray(value.values) &&
-    value.values.every((item) => isLocalizedText(item))
+    value.values.every(
+      (item) => isLocalizedText(item) && typeof (item as Record<string, unknown>).id !== 'string',
+    )
   )
 }
 
