@@ -11,6 +11,7 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerComputationMode } from './planner/PlannerComputationMode'
 import { PlannerStackCount } from './planner/PlannerStackCount'
+import { PlannerGoldLevel } from './planner/PlannerGoldLevel'
 import { PlannerHypotheticalEquipment } from './planner/PlannerHypotheticalEquipment'
 import { PlannerSpecializationPanel } from './planner/PlannerSpecializationPanel'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
@@ -70,6 +71,10 @@ export function PlannerPage() {
     computationMode,
     equipmentEnchant,
     equipmentRarity,
+    goldBudget,
+    goldLevelConversion,
+    goldLevelMode,
+    globalLevel,
     lockedCarryHeroId,
     lockedSlots,
     loadError,
@@ -89,11 +94,14 @@ export function PlannerPage() {
     selectComputationMode,
     selectEquipmentEnchant,
     selectEquipmentRarity,
+    selectGoldLevelMode,
     selectManualStackCount,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
     selectScoringMode,
+    setGoldBudget,
+    setGlobalLevel,
     setHeroSpecializationOverride,
     lockSlot,
   } = usePlannerPageModel()
@@ -204,6 +212,15 @@ export function PlannerPage() {
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                   <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
                   <PlannerStackCount value={manualStackCount} onChange={selectManualStackCount} />
+                  <PlannerGoldLevel
+                    mode={goldLevelMode}
+                    goldBudget={goldBudget}
+                    globalLevel={globalLevel}
+                    conversion={goldLevelConversion}
+                    onModeChange={selectGoldLevelMode}
+                    onGoldBudgetChange={setGoldBudget}
+                    onGlobalLevelChange={setGlobalLevel}
+                  />
                   {!profileSnapshot ? (
                     <PlannerHypotheticalEquipment
                       rarity={equipmentRarity}

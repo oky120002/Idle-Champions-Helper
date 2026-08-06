@@ -155,12 +155,12 @@ export interface PlannerRecommendationOptions {
    * 全局金币预算（游戏记数法字符串，如 `"1.50e92"`）。评分链路暂不消费，预留扩展。
    * 等级模式时由调用方反算（computeMaxGoldForLevel）后传入。
    */
-  goldBudget?: string
+  goldBudget?: string | undefined
   /**
    * 外部算好的 per-hero 等级覆盖（如金币预算换算结果）。覆盖 ownedHeroes 的等级，
    * 同时影响专精等级门控。未覆盖的英雄保持 ownedHeroes 等级。
    */
-  heroLevelOverride?: Map<string, number>
+  heroLevelOverride?: Map<string, number> | undefined
   /**
    * 投影模式（约束②）；默认 'absolute-dps'。透传 scoreFormation。
    * 'formation-buff' = 只阵型内聚合，不乘 baseDamage/levelCurve/外部加成（见 architecture.md「投影模式」）。
