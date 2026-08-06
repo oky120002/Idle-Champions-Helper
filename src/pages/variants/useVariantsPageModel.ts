@@ -71,13 +71,13 @@ function useVariantsLocationSync({ filters, locationSearch, normalizedLocationSe
 }) {
   useLayoutEffect(() => {
     if (normalizedLocationSearch === lastAppliedLocationSearchRef.current) {
-      return () => {}
+      return
     }
     lastAppliedLocationSearchRef.current = normalizedLocationSearch
     const currentFilterSearch = buildVariantsFilterSearchParams(filters).toString()
     if (currentFilterSearch === normalizedLocationSearch) {
       pendingLocationSyncSearchRef.current = null
-      return () => {}
+      return
     }
     const nextFilters = readInitialVariantsFilterState(locationSearch)
     pendingLocationSyncSearchRef.current = normalizedLocationSearch

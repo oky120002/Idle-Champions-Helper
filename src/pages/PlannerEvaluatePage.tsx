@@ -423,11 +423,9 @@ function EvaluateReadyContent({
           type="button"
           className="action-button action-button--ghost action-button--with-icon"
           disabled={Object.keys(lockedSlots).length === 0}
-          onClick={() => {
-            void navigate('/planner', {
-              state: { lockedSlotsFromEvaluate: lockedSlots, variantIdFromEvaluate: selectedVariantId },
-            })
-          }}
+          onClick={() => navigate('/planner', {
+            state: { lockedSlotsFromEvaluate: lockedSlots, variantIdFromEvaluate: selectedVariantId },
+          })}
         >
           <span className="action-button__icon" aria-hidden="true">
             <Send strokeWidth={1.9} />
@@ -605,7 +603,7 @@ export function PlannerEvaluatePage() {
               icon: <BackNavigationIcon />,
               tone: 'share',
               className: 'planner-evaluate-workbench__toolbar-back',
-              onClick: () => void navigate(backTarget.pathname + backTarget.search),
+              onClick: () => navigate(backTarget.pathname + backTarget.search),
             },
           ],
         },

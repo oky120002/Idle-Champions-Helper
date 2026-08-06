@@ -109,6 +109,22 @@
     - shorthand-property-grouping 重排：无法可靠自动检测/回退
     - 显式返回类型标注：`sonarjs/function-return-type` 仍在 recommended 中生效（`[2]`），删除会重新违规
   - **保留**（改动本身是良好实践）：`import { Buffer } from 'node:buffer'`（Node.js 正确写法）、`??` 替代 `||`（prefer-nullish-coalescing 仍启用）
+- 形式主义规则遗留清理·第二轮（深度审计 3 子智能体并行，6 文件）：
+  - **已完成**：
+    - `void navigate(...)` → `navigate(...)`（no-confusing-void-expression 遗留，round 1 漏的 void 操作符模式，PlannerEvaluatePage 2 处）
+    - `return () => {}` → bare `return`（no-inconsistent-returns 遗留，round 1 漏的空 cleanup 函数模式，useVariantsPageModel 2 处）
+    - SurfaceCardHeaderParts 子组件提取回退（expression-complexity 遗留，SurfaceCard.tsx）
+    - renderToolbarSectionByKind/renderToolbarGroupSection 提取回退（max-lines-per-function 遗留，workbenchToolbarConfig.tsx）
+    - persistPreset 8 参数 context 提取回退（max-lines-per-function 遗留，formation-preset-actions.ts）
+    - 删除 2 个死文件：WorkbenchToolbarPrimitives.tsx（152 行）+ useSidebarCollapseAnimation.ts（148 行），lint 提取创建但从未接线
+    - 更新 steadyStateScoring/recommendationEngine 的 max-lines disable 注释，移除对已关闭 max-lines-per-function 的引用
+  - **不可回退**（仍启用规则阻止）：
+    - 嵌套三元回退 → `sonarjs/no-nested-conditional`（recommended，仍启用 `[2]`）阻止
+    - 多数函数内联回退 → `sonarjs/cognitive-complexity`（recommended，max 15，仍启用）阻止
+    - `||` → `Set.has()` 转换 → 保留（良好实践 + cognitive-complexity 可能触发）
+  - **跳过**（低价值 / 工程量大）：
+    - shorthand-property-grouping 属性重排（~50+ 处，纯装饰性，无法可靠回退）
+    - max-lines-per-function 函数提取（18+ 文件，多数也服务 cognitive-complexity）
 - 本 change Status → Landed → 移 `archive/changes/`
 - **specs/ 永不引用本 milestone**
 

@@ -1,4 +1,4 @@
-/* eslint-disable max-lines -- planner 核心评分引擎：scoreFormation 主流程 + 7 个紧密协作的子函数（已全部 ≤50 行/max-lines-per-function 已清）。拆到多个文件会让评分逻辑修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
+/* eslint-disable max-lines -- planner 核心评分引擎：scoreFormation 主流程 + 7 个紧密协作的子函数。拆到多个文件会让评分逻辑修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
 import { Decimal } from 'decimal.js'
 
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'

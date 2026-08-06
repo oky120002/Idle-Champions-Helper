@@ -83,74 +83,8 @@ function joinClasses(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ')
 }
 
-function renderToolbarGroupSection(
-  config: WorkbenchToolbarGroupConfig,
-  slot: WorkbenchToolbarRegion,
-): ReactNode {
-  return (
-    <div className={joinClasses('workbench-page__toolbar-group', `workbench-page__toolbar-group--${slot}`, config.className)}>
-      {config.items.map((item, index) => (
-        <Fragment key={`${slot}-${String(index)}`}>
-          {renderWorkbenchToolbarSection(item, slot)}
-        </Fragment>
-      ))}
-    </div>
-  )
-}
-
 // sonarjs 对 JSX.Element 与 ReactNode 视为不同返回类型，但本函数返回标注为 ReactNode，所有分支均兼容
 // eslint-disable-next-line sonarjs/function-return-type
-function renderToolbarSectionByKind(
-  config: WorkbenchToolbarSectionConfig,
-  slot: WorkbenchToolbarRegion,
-): ReactNode {
-  switch (config.kind) {
-    case 'group':
-      return renderToolbarGroupSection(config, slot)
-    case 'node':
-      return config.node
-    case 'mark':
-      return (
-        <WorkbenchToolbarMark
-          label={config.label}
-          {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
-        />
-      )
-    case 'filter-status':
-      return (
-        <WorkbenchToolbarFilterStatus
-          label={config.label}
-          activeCount={config.activeCount}
-          {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
-        />
-      )
-    case 'copy':
-      return (
-        <WorkbenchToolbarCopy
-          {...(config.kicker !== undefined ? { kicker: config.kicker } : {})}
-          title={config.title}
-          {...(config.detail !== undefined ? { detail: config.detail } : {})}
-        />
-      )
-    case 'tablist':
-      return (
-        <WorkbenchToolbarTabList
-          value={config.value}
-          items={config.items}
-          ariaLabel={config.ariaLabel}
-          onChange={config.onChange}
-        />
-      )
-    case 'items':
-      return (
-        <WorkbenchToolbarItems
-          items={config.items}
-          layout={config.layout ?? 'inline'}
-        />
-      )
-  }
-}
-
 export function renderWorkbenchToolbarSection(
   config: WorkbenchToolbarSectionConfig | undefined,
   slot: WorkbenchToolbarRegion = 'primary',
@@ -159,7 +93,68 @@ export function renderWorkbenchToolbarSection(
     return null
   }
 
-  return renderToolbarSectionByKind(config, slot)
+  if (config.kind === 'group') {
+    return (
+      <div className={joinClasses('workbench-page__toolbar-group', `workbench-page__toolbar-group--${slot}`, config.className)}>
+        {config.items.map((item, index) => (
+          <Fragment key={`${slot}-${String(index)}`}>
+            {renderWorkbenchToolbarSection(item, slot)}
+          </Fragment>
+        ))}
+      </div>
+    )
+  }
+
+  if (config.kind === 'node') {
+    return config.node
+  }
+
+  if (config.kind === 'mark') {
+    return (
+      <WorkbenchToolbarMark
+        label={config.label}
+        {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
+      />
+    )
+  }
+
+  if (config.kind === 'filter-status') {
+    return (
+      <WorkbenchToolbarFilterStatus
+        label={config.label}
+        activeCount={config.activeCount}
+        {...(config.accentTone !== undefined ? { accentTone: config.accentTone } : {})}
+      />
+    )
+  }
+
+  if (config.kind === 'copy') {
+    return (
+      <WorkbenchToolbarCopy
+        {...(config.kicker !== undefined ? { kicker: config.kicker } : {})}
+        title={config.title}
+        {...(config.detail !== undefined ? { detail: config.detail } : {})}
+      />
+    )
+  }
+
+  if (config.kind === 'tablist') {
+    return (
+      <WorkbenchToolbarTabList
+        value={config.value}
+        items={config.items}
+        ariaLabel={config.ariaLabel}
+        onChange={config.onChange}
+      />
+    )
+  }
+
+  return (
+    <WorkbenchToolbarItems
+      items={config.items}
+      layout={config.layout ?? 'inline'}
+    />
+  )
 }
 
 export function resolveWorkbenchToolbarSlotConfig(
