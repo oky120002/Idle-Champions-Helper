@@ -52,26 +52,29 @@ const makeProfileWithBaseSupport = (heroId: string): ResolvedHeroAbilityProfile 
     sourceBreakdown: { carrySignals: [], supportSignals: ['official-parsed'], unsupportedSignals: [] },
   } as unknown as ResolvedHeroAbilityProfile)
 
+// 现有测试无 requiredLevel → 等级门控跳过（任何等级都通过）
+const HIGH_LEVEL = 9999
+
 describe('applySpecializationsToProfile', () => {
   it('注入选中专精 signal（支援/全局 → supportSignals bucket）', () => {
-    const profile = applySpecializationsToProfile(makeProfile('7'), ['109'], heroSpecs)
+    const profile = applySpecializationsToProfile(makeProfile('7'), ['109'], heroSpecs, HIGH_LEVEL)
     expect(profile.supportSignals).toHaveLength(1)
     expect(profile.supportSignals[0]?.kind).toBe('enemyVulnerability')
   })
 
   it('无 active 专精 → 原样（不建空 patch）', () => {
     const original = makeProfile('7')
-    expect(applySpecializationsToProfile(original, ['999'], heroSpecs)).toBe(original)
+    expect(applySpecializationsToProfile(original, ['999'], heroSpecs, HIGH_LEVEL)).toBe(original)
   })
 
   it('gainProfile 重算（appendHeroAbilitySignals 保证）', () => {
-    const profile = applySpecializationsToProfile(makeProfile('7'), ['109'], heroSpecs)
+    const profile = applySpecializationsToProfile(makeProfile('7'), ['109'], heroSpecs, HIGH_LEVEL)
     expect(profile.gainProfile).toBeDefined()
   })
 
   it('【P0 回归】追加而非替换——base 支援信号必须保留', () => {
     // 误用 applyHeroAbilityPatch 传子集会把 base 35 个支援信号抹成仅专精信号（35→2）。
-    const profile = applySpecializationsToProfile(makeProfileWithBaseSupport('7'), ['109', '108'], heroSpecs)
+    const profile = applySpecializationsToProfile(makeProfileWithBaseSupport('7'), ['109', '108'], heroSpecs, HIGH_LEVEL)
     // base globalDps + 2 个 vulnerability 专精 = 3 个 supportSignals（base 不丢）
     expect(profile.supportSignals).toHaveLength(3)
     expect(profile.supportSignals.map((s) => s.rawEffect)).toContain('global_dps_multiplier_mult,200')
@@ -79,11 +82,46 @@ describe('applySpecializationsToProfile', () => {
 
   it('【泄漏回归】自增益专精进 carrySignals（不泄漏到 supportSignals）', () => {
     // hero_dps_multiplier_mult,400 无目标 → carrySignals。注入 supportSignals 会泄漏给其他 carry。
-    const profile = applySpecializationsToProfile(makeProfileWithBaseSupport('7'), ['201'], selfBuffSpecs)
+    const profile = applySpecializationsToProfile(makeProfileWithBaseSupport('7'), ['201'], selfBuffSpecs, HIGH_LEVEL)
     expect(profile.carrySignals).toHaveLength(1)
     expect(profile.carrySignals[0]?.kind).toBe('heroDpsMultiplier')
     // supportSignals 只有 base，未被自增益污染
     expect(profile.supportSignals).toHaveLength(1)
     expect(profile.supportSignals[0]?.rawEffect).toBe('global_dps_multiplier_mult,200')
+  })
+})
+
+describe('applySpecializationsToProfile 等级门控', () => {
+  const specWithLevel: SpecializationEntry[] = [
+    {
+      upgradeId: '109',
+      specializationName: { original: 'Favored Enemy: Beasts', display: '偏好敌人：兽类' },
+      requiredLevel: 150,
+      signals: [{ dimension: 'vulnerability', bucket: 'supportSignals', signal: { kind: 'enemyVulnerability', value: 300, rawEffect: 'monster_with_tag_more_damage,300,beast', source: 'official-parsed', monsterTags: ['beast'] } }],
+    },
+  ]
+
+  it('等级 >= requiredLevel → 注入专精信号', () => {
+    const profile = applySpecializationsToProfile(makeProfile('7'), ['109'], specWithLevel, 150)
+    expect(profile.supportSignals).toHaveLength(1)
+  })
+
+  it('等级 < requiredLevel → 不注入（原样返回）', () => {
+    const original = makeProfile('7')
+    const profile = applySpecializationsToProfile(original, ['109'], specWithLevel, 100)
+    expect(profile).toBe(original)
+  })
+
+  it('requiredLevel 为 null → 不门控（总是注入）', () => {
+    const specNoLevel: SpecializationEntry[] = [
+      {
+        upgradeId: '109',
+        specializationName: { original: 'Test', display: '测试' },
+        requiredLevel: null,
+        signals: [{ dimension: 'vulnerability', bucket: 'supportSignals', signal: { kind: 'enemyVulnerability', value: 300, rawEffect: 'monster_with_tag_more_damage,300,beast', source: 'official-parsed', monsterTags: ['beast'] } }],
+      },
+    ]
+    const profile = applySpecializationsToProfile(makeProfile('7'), ['109'], specNoLevel, 1)
+    expect(profile.supportSignals).toHaveLength(1)
   })
 })

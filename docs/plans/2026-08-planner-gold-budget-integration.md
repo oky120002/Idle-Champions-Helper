@@ -44,10 +44,10 @@
 - [x] 重写 `goldBudgetBaseline.ts`：`computeAffordableLevel`（金币→per-hero 等级二分搜索）+ `computeMaxGoldForLevel`（等级→最贵英雄累计费用），删除旧 `costCurve` 函数式接口（零引用） —— 验证：15 项测试（含多英雄取 max、零/超大金币、双向闭环向下取整一致性）
 - [x] 双向闭环测试：金币→等级→反算金币 ≤ 原金币（向下取整），下一级费用 > 原金币
 
-### 阶段 3：专精按等级判断解锁
+### 阶段 3：专精按等级判断解锁 ✅
 
-- [ ] 修 `specializationBaseline.ts` 判据 bug：专精节点判定从 `upgradeType === 'specialization'` 改为 `specializationName != null`（与 `specialization-catalog.ts` 对齐） —— 验证：所有英雄专精 baseline 不再 fallback 到 1
-- [ ] engine 接入：等级 < requiredLevel 的专精不注入信号（`applySpecializationsToProfile` 加等级门控） —— 验证：等级够/不够的专精注入行为测试
+- [x] 删除 `specializationBaseline.ts`（零引用死代码 + 判据 bug；catalog 的 `requiredLevel` 直接用于门控，不需要 baseline 提取） —— 验证：typecheck 通过
+- [x] `applySpecializationsToProfile` 加 `heroLevel` 参数 + 等级门控（`requiredLevel != null && heroLevel < requiredLevel` → 跳过注入）；recommendationEngine 传 `owned.level` —— 验证：3 项测试（够/不够/null 不过控）
 
 ### 阶段 4：评分链路接入
 

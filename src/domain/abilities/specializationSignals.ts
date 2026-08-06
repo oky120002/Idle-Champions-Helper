@@ -62,12 +62,17 @@ export function applySpecializationsToProfile(
   profile: ResolvedHeroAbilityProfile,
   activeUpgradeIds: readonly string[],
   heroSpecializations: readonly SpecializationEntry[] | undefined,
+  heroLevel: number,
 ): ResolvedHeroAbilityProfile {
   const active = new Set(activeUpgradeIds)
   const carry: HeroAbilitySignal[] = []
   const support: HeroAbilitySignal[] = []
   for (const entry of heroSpecializations ?? []) {
     if (!active.has(entry.upgradeId)) {
+      continue
+    }
+    // 等级门控：等级不够 requiredLevel 的专精不注入信号
+    if (entry.requiredLevel != null && heroLevel < entry.requiredLevel) {
       continue
     }
     for (const signalEntry of entry.signals) {

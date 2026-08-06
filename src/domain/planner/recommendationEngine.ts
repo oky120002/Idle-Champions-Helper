@@ -277,7 +277,7 @@ function applyActiveSpecializations(
     if (owned == null || owned.specializations.length === 0) {
       continue
     }
-    heroById.set(heroId, applySpecializationsToProfile(profile, owned.specializations, specializationCatalog[heroId]))
+    heroById.set(heroId, applySpecializationsToProfile(profile, owned.specializations, specializationCatalog[heroId], owned.level))
   }
 }
 
