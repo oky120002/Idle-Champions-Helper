@@ -18,7 +18,7 @@
 
 ### champions
 
-当前 `champions.json`（`updatedAt: 2026-07-25`）包含 `164` 名可上阵英雄，`name.display` 与英文原名不同的有 `161` 名；`K'thriss`、`BBEG`、`Lazaapz` 当前使用英文回退。2026-04-13 raw 快照还证明 `character_sheet_details.class / race / alignment / backstory` 基本可直接用，`event_name` 只在事件英雄上有值且多数已翻译。
+当前 `champions.json`（`updatedAt: 2026-07-28`）包含 `164` 名可上阵英雄，`name.display` 与英文原名不同的有 `161` 名；`K'thriss`、`BBEG`、`Lazaapz` 当前使用英文回退。2026-04-13 raw 快照还证明 `character_sheet_details.class / race / alignment / backstory` 基本可直接用，`event_name` 只在事件英雄上有值且多数已翻译。
 
 ### affiliations
 
@@ -30,4 +30,4 @@
 
 ### variants / adventures
 
-2026-04-13 raw 快照的 `adventure_defines` 总数为 `1865`：`name` 覆盖 `1851`，`description` 覆盖 `1852`，`objectives_text` 覆盖 `1715`，`requirements_text` 覆盖 `1655`，`restrictions_text` 覆盖 `1859`。当前 `adventures.json`（`updatedAt: 2026-07-25`）包含 `521` 个普通冒险，名称与描述均有不同于英文原文的 display 值；`variants.json` 包含 `1413` 个变体，其中 `1412` 个名称有不同于英文原文的 display 值。中文可作为主来源，但所有字段仍必须允许英文回退。
+2026-04-13 raw 快照的 `adventure_defines` 总数为 `1865`：`name` 覆盖 `1851`，`description` 覆盖 `1852`，`objectives_text` 覆盖 `1715`，`requirements_text` 覆盖 `1655`，`restrictions_text` 覆盖 `1859`。当前 `adventures.json`（`updatedAt: 2026-07-28`）包含 `521` 个普通冒险，名称与描述均有不同于英文原文的 display 值；`variants.json` 包含 `1413` 个变体，其中 `1412` 个名称有不同于英文原文的 display 值。中文可作为主来源，但所有字段仍必须允许英文回退。

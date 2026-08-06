@@ -20,7 +20,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 - 阵型级 BUD（`max` 各英雄单次伤害）**不在此计算**——`steadyStateScoring` 直接用 carry 的单次伤害近似阵型 BUD（carry 通常设 BUD）。formation-max 精确化（考虑非 carry 高 cooldown 英雄）留待 BUD 实测校准后按需立项。
 - ult_damage 派生（`ultimate_damage_params.dps_based:true`）的 uptime 折算模块（`ultUptime.ts`）已实现但**未接入评分**，见 `docs/specs/modules/planner/simulator.md`。
 
-## MVP 近似与局限
+## 实现近似与局限
 
 - carryDps 当前不含攻速（`baseDps.ts` 未除 cooldown），用作 heroDps 时与「真·每秒」存在系统性偏差；speed 暂不进 carryDps，BUD 作为 speed 感知辅助指标并行计算。
 - `computeSingleHitDamage` 未含 BUD 专属放大（click damage、ult 对单次、BUD-setter 标签加成），绝对值偏低；相对比较（谁设 BUD）保序。

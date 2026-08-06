@@ -33,7 +33,7 @@ hero_final_dps = base_dps × level_curve
 
 `global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron / blessing / 装备）同属一个 IC effect key，按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。`scoreFormation` 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
 
-**加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot / legendary）只走 owned-aware 通道：加性 kind（hero_dps / global_dps / gold / health / crit，`equipmentMult.ts`）+ `buff_upgrade` wrapper（`equipmentBuffSignals.ts` `applyEquipmentBuffsToProfile`：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 wrapper 注入 profile，与 feat / 专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals **或 spec catalog**——`buildHeroModels` 过滤 loot / legendary / feat 不进 base（`e053b759`），`specialization-catalog` build 同构过滤 `specializationDerived` 的 loot / legendary / feat 源。所有 wrapper 消费路径都必须接 sourceBucket 过滤。违反此不变式 → 双重计数（陷阱与防范纪律见 `modeling-pitfalls.md`）。
+**加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot / legendary）只走 owned-aware 通道：加性 kind（hero_dps / global_dps / gold / health / crit，`equipmentMult.ts`）+ `buff_upgrade` wrapper（`equipmentBuffSignals.ts` `applyEquipmentBuffsToProfile`：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 wrapper 注入 profile，与 feat / 专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals **或 spec catalog**——`buildHeroModels` 过滤 loot / legendary / feat 不进 base，`specialization-catalog` build 同构过滤 `specializationDerived` 的 loot / legendary / feat 源。所有 wrapper 消费路径都必须接 sourceBucket 过滤。违反此不变式 → 双重计数（陷阱与防范纪律见 `modeling-pitfalls.md`）。
 
 `HeroAbilitySignal.unit: 'percent'|'flat'|'boolean'`（默认 percent；`buff_upgrade_add_flat_amount` 是 flat）。
 
@@ -56,7 +56,7 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
-`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` **且无 stackFunc** 的纯动态层数 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。`stacksMultiply=true` **带 stackFunc** 的 signal（如 hero32 `per_mithral_hall_stacks`）层数源是 stackFunc 而非 area-based manual——走 stackFunc 计数路径（注册的按阵型计数、未注册的不计分），不再短路 manualStackCount（旧实现 (1+value/100)^1000 灾难高估）。formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
+`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` **且无 stackFunc** 的纯动态层数 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。`stacksMultiply=true` **带 stackFunc** 的 signal（如 hero32 `per_mithral_hall_stacks`）层数源是 stackFunc 而非 area-based manual——走 stackFunc 计数路径（注册的按阵型计数、未注册的不计分），不进 manualStackCount 短路（误进则 (1+value/100)^1000 灾难高估）。formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
 
 未进评分、只标记的效果：随机触发、击杀过程、逐区时间线、敌人实时状态、临时 buff、同时期互斥或无法静态判断的效果。未知 effect 必须进入 `warnings` 和 `unsupportedSignals`，不静默忽略。
 

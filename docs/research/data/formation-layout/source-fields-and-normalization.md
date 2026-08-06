@@ -4,11 +4,11 @@
 
 ## 核实结论
 
-- 官方 definitions 已包含阵型布局数据，不需要继续手工维护 MVP 示例布局作为主来源。
+- 官方 definitions 已包含阵型布局数据，是阵型布局的主来源（不手工维护示例布局）。
 - 布局字段不在独立 `formation_defines` 集合里，而是挂在：`campaign_defines[].game_changes[].formation` 与 `adventure_defines[].game_changes[].formation`。
 - 单个槽位对象当前可见：`x`、`y`、`col`、`row`（部分缺失）、`adj`。
 
-## 本次原始来源
+## 核实来源
 
 - 英文快照：`tmp/idle-champions-api/definitions-2026-04-13T11-51-00.099Z-inspect-en.json`
 - 英文元信息：`tmp/idle-champions-api/definitions-2026-04-13T11-51-00.099Z-inspect-en.meta.json`
@@ -27,4 +27,4 @@
 
 - `col` 是 0 基列号，前端网格需转成 1 基
 - `row` 缺失时可回退到 `y` 分层
-- `adj` 基于官方原始数组下标，归一化后应改写成稳定 `slotId`
+- `adj` 基于官方原始数组下标，归一化后映射到稳定 `slotId`

@@ -32,7 +32,7 @@
 | sequence 长度 | `40`、`32` |
 | 第一个 sequence 的 piece 数 | `56` |
 
-并且单个 piece 已能读出 atlas 裁切框、`center`、`depth / x / y / scaleX / scaleY / rotation`。因此问题不是“官方没给数据”，而是“此前脚本没有继续解析并消费这些数据”。
+并且单个 piece 已能读出 atlas 裁切框、`center`、`depth / x / y / scaleX / scaleY / rotation`。因此问题不是“官方没给数据”，而是“官方给了数据，解析层需要继续解码并消费”。
 
 ## 客户端运行时做了什么
 

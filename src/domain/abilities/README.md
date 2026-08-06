@@ -16,6 +16,14 @@
 - signal 的 `unit` 字段默认按 `percent` 处理；`flat`/`boolean` 由加成聚合层按 dimension 分别处理。
 - `DIMENSION_BY_KIND` 是 kind→dimension 单一映射；新 kind 必须同时登记 dimension。
 
+## 其他文件
+
+- `equipmentBuffSignals.ts` — 装备 buff_upgrade 运行时信号注入（wrapper，owned-aware）。
+- `featSignals.ts` — feat（专长）运行时信号注入。
+- `specializationSignals.ts` — 专精运行时信号注入。
+- `heroTargetingRelation.ts` — filter-like target 类型集合与显式 target 分类。
+- `poolScope.ts` — 加成归属 pool（global / hero）。
+
 ## 依赖方向
 
 - `abilities/` → `domain/types`（LocalizedText / AbilityScoreKey / DataCollection）。

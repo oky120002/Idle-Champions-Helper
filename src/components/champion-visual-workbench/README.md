@@ -8,6 +8,7 @@
 4. `src/components/champion-visual-workbench/ChampionVisualWorkbenchStage.tsx`
 5. `src/components/champion-visual-workbench/ChampionVisualWorkbenchConsole.tsx`
 6. `src/components/champion-visual-workbench/asset-model.ts`
+7. `src/components/champion-visual-workbench/types.ts`
 
 关键不变量：
 

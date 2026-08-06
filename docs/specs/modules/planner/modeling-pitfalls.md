@@ -57,16 +57,16 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 
 ## 陷阱 4：stacksMultiply 短路与 stackFunc / wrapper 继承的灾难高估
 
-`resolveSignalMultiplier` 的 dynamic-stack-multiply 短路分支曾对**任意** `stacksMultiply===true` 信号无条件用 `manualStackCount`（默认 1000）乘方，产生两类灾难高估：
+`resolveSignalMultiplier` 的 dynamic-stack-multiply 短路分支须精确限定适用集——若对**任意** `stacksMultiply===true` 信号无条件用 `manualStackCount`（默认 1000）乘方，产生两类灾难高估：
 
-1. **stacksMultiply + stackFunc 共存**：hero32 `buff_upgrade,100,11503`（stacksMultiply=true + stackFunc=per_mithral_hall_stacks）被 (1+100/100)^1000 = 2^1000≈10^301 放大进 damage 池。同类 23 条未注册 stackFunc + 23 条注册 stackFunc 信号全受影响（注册的如 hero1 `per_tagged_crusader_mult,100` 旧也 2^1000，应按阵型真实计数 2^dwarf数）。根因：短路分支忽略 stackFunc——层数源本应是 stackFunc（阵型计数），却被当成 area-based manual 层数。
+1. **stacksMultiply + stackFunc 共存**：hero32 `buff_upgrade,100,11503`（stacksMultiply=true + stackFunc=per_mithral_hall_stacks）被 (1+100/100)^1000 = 2^1000≈10^301 放大进 damage 池。同类 23 条未注册 stackFunc + 23 条注册 stackFunc 信号全受影响（注册的如 hero1 `per_tagged_crusader_mult,100` 也被 2^1000，应按阵型真实计数 2^dwarf数）。根因：短路分支忽略 stackFunc——层数源本应是 stackFunc（阵型计数），却被当成 area-based manual 层数。
 2. **runtime wrapper 继承 base 的 stacksMultiply**：`buildEquipmentBuffWrapper` 用 `{...base}` 构造 loot/feat wrapper，只重置 amountFunc/stackFunc，漏掉 stacksMultiply/applyManually——wrapper 继承 stacksMultiply base 的 `stacksMultiply=true`，又无 stackFunc 可回落，走短路分支 → (1+buff%/100)^1000 灾难。
 
 ### 为什么难发现
 
 1. 出言不逊（stacksMultiply + manual_stacking，**无** stackFunc）是合法的 dynamic-stack 信号，1.0033^N≈576 正确——掩盖了「stacksMultiply 短路」对带 stackFunc 者的错误。
 2. 高 value 信号在 manualStackCount=1000 下溢出 → ok:false（被 overflow 守卫静默吞掉），低/中 value 有限但灾难——前者隐藏问题，后者制造污染。
-3. `signal-coverage` 的对称分类曾把所有 stacksMultiply 信号判 supported（注释「实际已计分」），给了「已覆盖」假象，实际是灾难高估而非正确计分。
+3. `signal-coverage` 的对称分类若把所有 stacksMultiply 信号判 supported（注释「实际已计分」），会给「已覆盖」假象，实际是灾难高估而非正确计分。
 
 ### 防范纪律（可执行）
 
@@ -78,25 +78,25 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 
 `computeHeroGainProfile`（`abilityModel.ts` 的 `aggregateGainByDimension`）预计算英雄各维度收益，供 `applyComputationMode`（`computationMode.ts`）按席位排序裁剪候选（默认 p50 每席位取前 50%）。它是实际评分（`placementFit.ts` signal→pool 路由 + `signalMultiplier.ts` 折算）的**镜像预算**——文档化不变量要求「数学须与 pool 聚合一致」。
 
-但新增 signal 机制时容易只改实际评分、漏改 gain profile 镜像：`bonusScaleOfSignal`（buff_upgrade wrapper 联动）实际评分贡献 = `base.value × wrapper.value / 100`（`applySignalPercent` 折算后 `(multiplier−1)×100` 进 addPercent）；gain profile 旧实现直接 `+= signal.value`（wrapper 百分比），忽略 base。base.value>100 时严重低估（base=300、wrapper=100：实际 +300%，旧 gain +100%，3× 低估）→ 强候选被 p50 误裁，beam search 永不试到。实测重建后部分英雄 damage gain 46→69、32→56（之前被大幅低估）。
+但新增 signal 机制时容易只改实际评分、漏改 gain profile 镜像：`bonusScaleOfSignal`（buff_upgrade wrapper 联动）实际评分贡献 = `base.value × wrapper.value / 100`（`applySignalPercent` 折算后 `(multiplier−1)×100` 进 addPercent）；gain profile 须按同公式折算，若直接 `+= signal.value`（wrapper 百分比）会忽略 base——base.value>100 时严重低估（base=300、wrapper=100：实际 +300%，错算 +100%，3× 低估）→ 强候选被 p50 误裁，beam search 永不试到。
 
 该不变量有**两维度**——路由（add/mult/stacksMultiply 走 addPercent 还是 multFactor，上方 bonusScaleOfSignal 案例）与**丢弃条件**（实际评分 `resolveSignalMultiplier` 返回 `ok:false` 恒不计分的信号，gain 须对称跳过，否则幻影增益挤掉同席位真实候选）：
 
 - `applyManually`（手动触发/专精门控）：`resolveSignalMultiplier` 首分支 `ok:false`，稳态永不触发。
 - 未注册 `stackFunc`（`per_mithral_hall_stacks` / `get_stat` 等，不在 `STACK_COUNT_RESOLVERS`）：走 stackFunc 路径找不到 resolver → `ok:false`。注册名集合 `REGISTERED_STACK_FUNCS`（`Object.keys(STACK_COUNT_RESOLVERS)` 派生）从 `planner/mechanics` 导入到 `abilityModel`——`stackFunc` 是本层字段但「哪些已注册」是 scorer 能力，此导入是 gain 镜像评分的必要依赖。
 
-实测补这两道守卫后部分英雄 damage gain 被对半砍（72→36、80→40），表观强度约一半来自幻影信号。
+未排除时部分英雄 damage gain 含幻影信号（72 vs 36、80 vs 40 级别偏差），约一半表观强度来自幻影信号。
 
 ### 为什么难发现
 
 1. gain profile 是**预算**（非最终评分），不改 `scoreFormation` 输出 → 方向性 golden / breakdown 不受影响，全绿。
 2. 影响是「裁掉谁」而非「算成多少」——被误裁的英雄不出现在结果里，无对照无感知。
 3. 只有 base.value≠100 的 wrapper 受影响（base=100 时巧合一致：100×value/100 = value），随机性掩盖系统性。applyManually 变体同理：只有当 phantom 强英雄与真强候选**同席位且贴近 p50 边界**时才可见损，窄条件掩盖系统性。
-4. 增量审计（轮 4–9）聚焦数据盲区 / 运行时边界 / 性能，未逐 signal 对比 gain profile 与实际评分的路由。
+4. 增量审计聚焦数据盲区 / 运行时边界 / 性能，未逐 signal 对比 gain profile 与实际评分的路由。
 
 ### 防范纪律（可执行）
 
 - **新增 signal 机制须同步 gain profile 镜像**：任何改变 signal→pool 折算的字段（amountFunc / stacksMultiply / bonusScaleOfSignal / stackFunc）在 `placementFit.ts` + `signalMultiplier.ts` 改完后，必须检查 `aggregateGainByDimension` 是否对称处理。三处是同一不变量的三个落点。
-- **gain profile 须镜像评分的「丢弃条件」而非仅「路由」**：实际评分 `resolveSignalMultiplier` 恒丢弃的信号（applyManually、未注册 stackFunc）不计入 gain 上界，否则幻影增益挤掉真实候选。两类均已修：applyManually（`91c839b9`，信号自身字段，abilities 层内守卫）；未注册 stackFunc（`8448f65a`，`REGISTERED_STACK_FUNCS` = `Object.keys(STACK_COUNT_RESOLVERS)` 派生，从 planner/mechanics 导入 abilities——`computeHeroGainProfile` 本就含评分语义，此导入是镜像评分的必要依赖）。实测部分英雄 damage gain 被对半砍（72→36、80→40），表观强度约一半来自幻影。
+- **gain profile 须镜像评分的「丢弃条件」而非仅「路由」**：实际评分 `resolveSignalMultiplier` 恒丢弃的信号（applyManually、未注册 stackFunc）不计入 gain 上界，否则幻影增益挤掉真实候选。两类守卫均在 `aggregateGainByDimension` 内：applyManually（信号自身字段，abilities 层内）；未注册 stackFunc（`REGISTERED_STACK_FUNCS` = `Object.keys(STACK_COUNT_RESOLVERS)` 派生，从 planner/mechanics 导入 abilities——`computeHeroGainProfile` 本就含评分语义，此导入是镜像评分的必要依赖）。
 - **gain profile 测试须覆盖与评分一致的逐 signal 案例**：不只在 gain profile 孤立测加法 / 乘法，还要对 wrapper 等机制断言「gain = 实际评分单 signal 贡献」（见 `abilityModel.test.ts` bonusScaleOfSignal 用例），以及「恒丢弃信号（applyManually）不计入」。
 - **改 gain profile 折算后强制重建数据**：gainProfile 烘进 `hero-abilities.json`（build 期 `computeHeroGainProfile`），代码改完须 `FORCE_DATA_REBUILD=1` 重跑 `buildModels`（或改 `abilityModel.ts` 触发 `computePipelineHash` 变化自动重跑），否则 build-time 烘值仍是旧的（runtime wrapper 注入会重算，但 `applyComputationMode` 裁剪用的是 build-time 值——wrapper 在裁剪之后才注入）。

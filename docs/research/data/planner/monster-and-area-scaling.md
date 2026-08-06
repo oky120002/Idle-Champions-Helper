@@ -16,7 +16,7 @@
 | `dps_growth_rate_curve` | `{1:1, 50:1.75, 51:1, 100:1.75, ...}` | boss 层（50/100/151 起 每 50 层）1.75× spike，高层（2001-2401 每 50 层）升至 4，2451 层 1e10（max_area 墙） |
 | `base_speed` | `50` | 怪物速度参数（语义未确认，见下方 dps 量纲缺口） |
 | `speed_growth_rate` | `1` | 速度不随层数增长 |
-| `health_gold_ratio` | `0.65` | 生命/金币比基准（**当前未消费**——`goldObjective.ts` MVP 硬编码 `BASE_GOLD=1` 做相对比较；绝对值校准需接入此字段） |
+| `health_gold_ratio` | `0.65` | 生命/金币比基准（**当前未消费**——`goldObjective.ts` 当前硬编码 `BASE_GOLD=1` 做相对比较；绝对值校准需接入此字段） |
 | `health_gold_ratio_curve` | `{1:0.65, 42:0.62, ...}` | 比率随层数衰减（**当前未消费**，同上） |
 | `gold_overrides` | `{1:.., 2:..}` | 按层的金币覆写（**当前未消费**，同上） |
 | `power_boost_time` / `power_boost_growth_rate` / `power_boost_multiplicative` | `10` / `1` / `false` | 怪物 power boost 机制（rate=1，当前无实际增长贡献） |

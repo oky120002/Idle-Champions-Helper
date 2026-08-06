@@ -16,7 +16,7 @@
 ### 护送占位（escort slot locking）
 
 - **是什么**：护送任务（`slot_escort` / `slot_escort_by_area` / `slot_escort_wandering` mechanic）中，非英雄单位（鸡 / 小鬼 / VIP / Drizzt 等）占据一个阵型槽位。完整建模需：锁定该槽不放入英雄、并纳入护送目标（若为英雄）的能力贡献。
-- **为何暂缓**：游戏官方导出数据**未标注护送目标占据的具体槽位**——`formations.json` 的槽位只有位置字段（`row` / `column` / `x` / `y` / `adjacentSlotIds`），无「护送槽」标记；`variant.mechanics` 只给 `slot_escort` 布尔标志，不给槽位 id。曾用「column 降序锁前排首槽」启发式（commit 历史），但属猜测、与游戏实际占位不符。现已移除全部占位逻辑，**所有阵型按全槽可用处理**。
+- **为何暂缓**：游戏官方导出数据**未标注护送目标占据的具体槽位**——`formations.json` 的槽位只有位置字段（`row` / `column` / `x` / `y` / `adjacentSlotIds`），无「护送槽」标记；`variant.mechanics` 只给 `slot_escort` 布尔标志，不给槽位 id。无可靠数据源推断具体占位，**所有阵型按全槽可用处理**。
 - **数据源缺口**：要精确实现，需补一张「护送关卡 → 护送目标占哪个槽」的映射。游戏客户端运行时知道（玩家可见），但未进入导出的 JSON。两条路：①翻 `data:fetch` 拉下的完整原始 dump 逐字段找是否有未提取的字段；②人工校准各护送关（玩一遍记槽位）。
 - **优先级**：劣后（锦上添花）。当前姿态不影响主体加成计算；护送关的槽位空着只是少放一个英雄，不致错误推荐。
 
@@ -36,8 +36,8 @@
 
 ### 未建模加成源补建
 
-- **是什么**：vulnerability 条件生效 / modron（齿轮）/ 成就 / 药水 / gem / feat（专长）/ legendary（传奇装备）等伤害加成来源尚未接入评分。
-- **为何暂缓**：主体加成（同 key 跨源加法）已正确建模后，这些暴露为真实正向偏差来源；逐类需核定 amount 与生效条件。vulnerability 条件生效 ROI 可能最高（生产 enemyTypes 含种族，数据已具备）。
+- **是什么**：modron（齿轮）/ 成就 / 药水 / gem 等伤害加成来源尚未接入评分。
+- **为何暂缓**：主体加成（同 key 跨源加法）已正确建模后，这些暴露为真实正向偏差来源；逐类需核定 amount 与生效条件。
 - **关联**：[damage-bonus-sources.md「未建模来源」「未建模补建方向」](../../research/data/planner/damage-bonus-sources.md)
 - **优先级**：待评。按价值与成本排序。
 

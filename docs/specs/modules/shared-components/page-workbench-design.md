@@ -93,13 +93,17 @@
 | 页面 | 左顶部区 | 左主体区 | 右顶部区 | 右主体区 |
 | --- | --- | --- | --- | --- |
 | Champions | 条件 badge、清空、提示 | champions 筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 视觉档案、结果卡、空态 |
+| User Heroes | 条件 badge、清空、提示 | 用户英雄筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 用户英雄结果卡、空态 |
 | Illustrations | 条件 badge、清空、提示 | 立绘筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 立绘结果网格、空态 |
 | Pets | 条件 badge、清空、提示 | 宠物筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | 宠物结果网格、空态 |
 | Variants | 条件 badge、清空、提示 | 变体筛选组件 | 标题、metrics、筛选摘要、显示全部/随机/复制链接 | campaign / adventure 分组结果、空态 |
 | Formation | 布局状态、提示 | 布局搜索、场景类型、当前布局摘要、布局库 | 标题、当前布局、已放置英雄数、复制链接 | 草稿提示、画板编辑、阵型摘要、保存方案 |
+| Planner | 隐藏 | 隐藏 | 标题、metrics、复制链接 | 计划配置、评估结果 |
 | Presets | 隐藏 | 隐藏 | 标题、总数、可恢复数、复制链接 | 范围说明、方案列表、空态 / 编辑 / 删除 / 恢复 |
+| Search | 隐藏 | 隐藏 | 标题、metrics、复制链接 | 搜索结果列表、空态 |
 | User Data | 隐藏 | 隐藏 | 标题、当前导入方式、解析状态、复制链接 | 导入边界、导入工作台 |
 | Champion Detail | 隐藏 | 隐藏 | 返回入口、标题、当前章节、复制链接 | 卷宗头部、章节内容、详情侧栏 |
+| Animation Audit | 隐藏 | 隐藏 | 标题、metrics、复制链接 | 动画审计结果、空态 |
 
-- `Illustrations Audit`（`/illustrations/audit`）是 `/illustrations` 前缀下的子路由条目，`Champion Detail`（`/champions/:championId`）是 `/champions` 下的详情子路由条目，均为独立页级 Route。
-- `isWorkbenchRoute`（`src/app/workbenchRoutes.ts`）统一覆盖全部工作台页面与 `/champions/:championId`；桌面锁滚、头部紧凑与主内容高度锁定挂在这条路由判定上。
+- `Illustrations Audit`（`/illustrations/audit`）是 `/illustrations` 前缀下的子路由条目，`Champion Detail`（`/champions/:championId`）是 `/champions` 下的详情子路由条目，`Planner Evaluate`（`/planner/evaluate`）是 `/planner` 下的评估子路由条目，均为独立页级 Route。
+- `isWorkbenchRoute`（`src/app/workbenchRoutes.ts`）统一覆盖全部工作台页面与子路由（`/champions/:championId`、`/illustrations/audit`、`/planner/evaluate`）；桌面锁滚、头部紧凑与主内容高度锁定挂在这条路由判定上。

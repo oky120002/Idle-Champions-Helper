@@ -26,7 +26,7 @@ worker → UI:
 
 **loading**：worker 天然异步，计算中结果区显示 loading 占位。
 
-**测试策略**：抽象 `PlannerComputeRunner` 接口（`init` / `recommend` / `evaluate`），`SyncPlannerComputeRunner`（测试，直接调 engine 函数）+ `WorkerPlannerComputeRunner`（生产，postMessage）；hook 注入 runner，单测用 Sync 覆盖 loading 翻转 / requestId 丢弃 / debounce；client 单测 mock `Worker` 验证协议。
+**测试策略**：抽象 `PlannerComputeRunner` 接口（`updateCollections` / `recommend` / `evaluate`），`SyncPlannerComputeRunner`（测试，直接调 engine 函数）+ `WorkerPlannerComputeRunner`（生产，postMessage）；hook 注入 runner，单测用 Sync 覆盖 loading 翻转 / requestId 丢弃 / debounce；client 单测 mock `Worker` 验证协议。
 
 **边界**：worker 启动 + 首次 collections 传输一次性开销相比 1-8s 计算可忽略；GitHub Pages 静态站原生支持 module worker（`import.meta.env.BASE_URL` 兼容）。
 

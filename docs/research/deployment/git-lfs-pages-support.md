@@ -28,15 +28,4 @@
 - 192MB 直接 commit 在 GitHub 推荐 <1GB 安全区（[disk quota](https://docs.github.com/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-personal-account-settings/managing-your-account/what-is-my-disk-quota)）。
 - lfs 不解决历史膨胀：当前版本挪到对象存储，历史版本的 lfs 对象仍算配额；真正解决的是「不在 git 历史留二进制 diff」，前提是 .bin 频繁更迭。
 
-## 替代方案（若未来仓库体积成真痛点）
-
-| 方案 | 利 | 弊 |
-|---|---|---|
-| 维持现状 | 零改动，走 Pages CDN 免费 | 体积随 .bin 更新累积 |
-| Release Assets | 免费、走 GitHub CDN、不计 lfs 配额、单文件 2GB | URL 无语义、需同步脚本、版本自管 |
-| 外部 CDN（Cloudflare R2 10GB 免费 / B2） | 访客带宽不占 GitHub、适合高流量 | 第三方依赖、CORS/域名配置 |
-| jsDelivr（`cdn.jsdelivr.net/gh`） | 免费 CDN、与仓库同源 | 单文件 50MB 上限、缓存延迟、公开仓库限定 |
-
-## 决策
-
-当前 **维持现状**，登记到 `docs/specs/product/future-features.md`，待有空闲再评估 Release Assets。无需代码改动。
+后续若仓库体积成真痛点，候选方向（Release Assets / 外部 CDN / jsDelivr）已登记在 `docs/specs/product/future-features.md`。

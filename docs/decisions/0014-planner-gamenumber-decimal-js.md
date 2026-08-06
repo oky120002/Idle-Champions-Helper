@@ -19,7 +19,7 @@ planner 伤害量级远超 JS number 上限：游戏后期 carryDps 可达 `1e10
 
 - 正面：任意精度（默认 20 位有效数字，远高于 double）、主流成熟库（文档/生态/长期维护）、wrapper 隔离实现可换；log10/阈值规避大数运算热点。
 - 代价：大数运算比原生 number 慢（已用 log10 比较 + 加法阈值缓解）。
-- 风险：业务代码绕过 wrapper 直接 import decimal.js（「只 gameNumber.ts 直接 import」约定 + review 守护）。当前 `monsterStats`/`baseDps`/`survivalCalculation`/`steadyStateScoring`/`goldObjective`/`recommendationEngine`/`budCalculation`/`clickDamage` 共 8 处仍直接 import，收敛到 wrapper 为独立后续任务。
+- 风险：业务代码绕过 wrapper 直接 import decimal.js（「只 gameNumber.ts 直接 import」约定 + review 守护）。当前 `monsterStats`/`baseDps`/`survivalCalculation`/`steadyStateScoring`/`goldObjective`/`recommendationEngine` 共 6 处仍直接 import，收敛到 wrapper 为独立后续任务。
 
 ## 替代方案
 

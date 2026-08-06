@@ -5,9 +5,9 @@
 
 ## 获取方式字段
 
-`familiar_defines[*].collections_source.type` 截至 2026-04-16 的快照分布：`flash_sale` 180、`dlc` 60、`none / 空对象` 42、`not_yet_available` 25、`gems` 11、`patron` 5。当前数据已变化为合计 331 条，分布为：`flash_sale` 229、`dlc` 70、`not_yet_available` 12、`gems` 11、`patron` 5、`sourceType=null` 3、`giveaway` 1（新增 `giveaway` 类型）。
+`familiar_defines[*].collections_source.type` 当前分布（合计 341 条）：`flash_sale` 229、`dlc` 70、`not_yet_available` 12、`gems` 11、`patron` 5、`giveaway` 1、空字符串/空对象 13。2026-04-16 raw 快照曾为 328 条对象 + 13 条空字符串，类型分布与当前结构一致。
 
-补充核对后，不能只依赖 `collections_source`：`premium_item_defines` 中有 `290` 条 `effect.type = familiar`，其中 `279` 只宠物能命中至少一个 premium item；`patron_shop_item_defines` 中有 `5` 条 `effect.type = familiar`。
+补充核对后，不能只依赖 `collections_source`：`premium_item_defines` 中有 `302` 条 `effect.type = familiar`，覆盖 `298` 个独立 familiar_id；`patron_shop_item_defines` 中有 `5` 条 `effect.type = familiar`。
 
 ## 当前可解释归类
 

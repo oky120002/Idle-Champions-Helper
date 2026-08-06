@@ -6,4 +6,12 @@
 - 布局筛选库 UI 先读 `src/pages/formation/FormationLayoutFilters.tsx`，再看 `src/pages/formation/FormationLayoutLibraryScaffold.tsx`；前者只组装配置，后者负责渲染 hero / filters / selected / list。
 - 纯派生和格式化读 `src/pages/formation/useFormationPageDerived.ts`、`src/pages/formation/formation-model-helpers.ts`。
 - 交互动作按意图分别读 `formation-board-actions.ts`、`formation-draft-prompt-actions.ts`、`formation-preset-actions.ts`。
-- 公共契约只看 `src/pages/formation/types.ts`；不要先通读整个目录。
+- 公共契约只看 `src/pages/formation/types.ts`。
+
+## 组件
+
+- `FormationBoardCanvas.tsx` / `FormationBoardGrid.tsx` / `FormationBoardEditor.tsx` — 桌面阵型棋盘画布、网格与编辑器。
+- `FormationMobileEditor.tsx` — 移动端阵型编辑器。
+- `FormationPresetCard.tsx` — 预设方案卡片。
+- `FormationDraftBanner.tsx` — 草稿横幅。
+- `HeroPicker.tsx` — 英雄选择器。

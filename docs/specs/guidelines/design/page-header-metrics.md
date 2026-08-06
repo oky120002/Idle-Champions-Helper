@@ -36,6 +36,6 @@
 
 ## 修改顺序
 
-1. 先改 `src/components/SurfaceCard.tsx` 与 `src/styles/shared/surfaces.css`。
+1. 先改 `src/components/SurfaceCard.tsx` 与 `src/styles/shared/surfaces/`。
 2. 再改具体页面的 metrics 组件与页面入口。
 3. 最后确认正文里没有残留的重复统计块。

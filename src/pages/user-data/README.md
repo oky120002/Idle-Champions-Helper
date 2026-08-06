@@ -18,9 +18,13 @@
    - 看 messages、本地解析分派和 sample 默认值。
 7. `src/pages/user-data/useUserSyncModel.ts`
    - 看手动同步、dev-only 本地快照刷新、IndexedDB 快照读取、删除和安全错误展示。
-8. `src/data/user-sync/officialClient.ts`
+8. `src/pages/user-data/UserSyncPanel.tsx`
+   - 看同步面板 UI 结构（credentials 输入 + 手动同步 + 本地开发快照区）。
+9. `src/pages/user-data/types.ts`
+   - 看 `ParseState` / `ImportMethodOption` / `UserDataPageModel` 等 feature 类型边界。
+10. `src/data/user-sync/officialClient.ts`
    - 看官方只读端点 allowlist、URL 构造和安全 fetch 选项。
-9. `src/data/user-sync/userProfileNormalizer.ts`
+11. `src/data/user-sync/userProfileNormalizer.ts`
    - 看官方 payload 到 `UserProfileSnapshot` 的容错归一化。
 
 ## 关键不变量

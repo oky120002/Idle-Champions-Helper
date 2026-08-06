@@ -72,5 +72,5 @@ IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自�
 ## 派生去重 + bonusScale targeting
 
 - **派生去重**：`rarityGroupKey` 按 (kind, base target, targetQualifier, formationCountQualifier, position, amountFunc, stackFunc) 分组（排除 magnitude/value），key 追加 `@upgradeId`，同 key 首条保留。不同 upgrade 的 wrapper 各自独立。
-- **loot rarity 选择局限**：loot 来源 `upgradeId=null`，同槽多 rarity tier 共享 key `rarityGroupKey@?` → 首条（低 rarity）保留，非最高 rarity。IC 装备每槽只装备一件（最高 rarity），应取最高；这是已知 follow-up（见 TODO.md atd_5f6e7d8c9b）。
+- **loot rarity 选择局限**：loot 来源 `upgradeId=null`，同槽多 rarity tier 共享 key `rarityGroupKey@?` → 首条（低 rarity）保留，非最高 rarity。IC 装备每槽只装备一件（最高 rarity），当前去重保留首条与游戏装备选择不一致（低 rarity 而非最高），是已知量级低估来源。
 - **bonusScale targeting 复用**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时取 base 的 multiplier 折算（`(basePercent × wrapperMag)/100`），不重新校验 base 的 `positionQualifier` / `targetQualifier`。wrapper 自身 filter_targets 已 AND 合并到 base targetQualifier（`mergeHeroQualifiers`）；base 与外层 targeting 不一致的场景当前进入 warning（保守安全）。

@@ -85,7 +85,7 @@ src/domain/planner/mechanics/
 
 `placementFit.ts` 保留 `evaluatePlacementFit`（阵型合法性 + pool 聚合主循环），import resolveSignalMultiplier，re-export STACK_COUNT_RESOLVERS / DEFAULT_MANUAL_STACK_COUNT 保持外部零改动。
 
-设计取舍：不引入 MechanicResolver 注册表——`dps-mechanic-abstraction.md` 阈值 4 明确机制总数 >10 才把字段分支升级为策略注册表，当前 7 机制属过度工程。模式核心价值是机制可测性（`resolveSignalMultiplier` 抽出前无直接单测，buff_upgrade 22× 高估 bug 即出在此处），通过抽出 + 直接单测达成。
+设计取舍：不引入 MechanicResolver 注册表——`dps-mechanic-abstraction.md` 阈值 4 明确机制总数 >10 才把字段分支升级为策略注册表，当前 7 机制属过度工程。模式核心价值是机制可测性——`resolveSignalMultiplier` 有直接单测覆盖路径分支与 buff_upgrade modifier 折算（22× 高估回归 bug 的发现与守护靠此单测）。
 
 ### 测试
 
@@ -106,8 +106,7 @@ src/domain/buffs/
   patronPerkGlobalBuff.ts    patron perk actual level 的 global_dps add pool + collectActivePatronPerkEffects
   blessingGlobalBuff.ts      blessing actual level 的 global_dps add pool + collectActiveBlessingEffects
                             + combineGlobalBuffMultipliers（多 global_dps 源合并同 pool）
-  equipmentMult.ts           装备加成六通道（hero_dps/health/global_dps/gold/crit 加性 + buff_upgrade wrapper 元数据）
-  scoringBonusInputs.ts      buildScoringBonusInputs（唯一装配点，编排各 provider → ScoringInput 外部加成字段）
+  equipmentMult.ts           装备加成五通道 + buff_upgrade wrapper 元数据（hero_dps/health/global_dps/gold/crit 加性 + wrapper）
 ```
 
 `buffs/` 作 `simulator/` 兄弟目录（非嵌套 `simulator/buffs/`）：simulator 公式层与 buffs provider 层单向依赖，buffs → {effects, abilities} 的语义解析是合法方向；simulator 对 buffs/ 无依赖（纯公式层，仅 baseDps / survivalCalculation 对 abilities/abilityModel 的 type-only import）。`hermeticBoundary.test.ts` 第三规则守护：simulator 非测试文件不得 import `../effects/` 或 `../abilities/signalSemantics`（公式不解析 effect 语义）。

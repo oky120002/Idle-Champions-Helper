@@ -4,14 +4,14 @@
 
 ## 核实结论
 
-1. 当前官方 definitions 接口返回格式仍与现有脚本匹配，没有出现“接口一变，流水线立刻吃不下”的问题。
+1. 当前官方 definitions 接口返回格式与现有脚本匹配，没有“接口一变，流水线立刻吃不下”的问题。
 2. 但官方基座数据并没有被“完整归一化保存”。
 3. 现在实际存在 4 层状态：已提升为共享归一化集合；已提升为详情结构化字段；只作为 `properties` / `raw.*` 明细保存；完全未进入当前产物。
 4. “不涉及，就不归一化”这个担心分层成立：对“官方原始明细是否完全丢了”，不成立（很多已保存在 `champion-details/<id>.json`）；对“是否所有官方稳定事实都被提升成公共可复用契约”，成立（当前共享层明显偏薄）。
 
 ## 核对方式
 
-重新拉实时官方数据现场过一次 normalize（英文 `language_id=1` + 中文 `language_id=7`），确认当前脚本与官方接口顶层格式仍匹配：
+通过实时拉取官方数据并跑一遍 normalize（英文 `language_id=1` + 中文 `language_id=7`），确认当前脚本与官方接口顶层格式匹配：
 
 ```bash
 node scripts/fetch-idle-champions-definitions.ts --outDir tmp/idle-champions-audit-live --languageId 1 --fileLabel audit-source
@@ -23,7 +23,7 @@ node scripts/normalize-idle-champions-definitions.ts \
   --versionFile tmp/idle-champions-audit-normalized/version.json
 ```
 
-现场 normalize 成功生成 `champions=164 / championVisuals=164 / championDetails=164 / adventures=521 / patrons=5 / variants=1405 / formations=160 / enums=5`。顶层返回包含 `51` 组 `_defines` 表。眼下更明显的问题不是“仓库快照滞后”或“接口换格式导致脚本失效”，而是“归一化覆盖面仍然有限”。
+normalize 输出 `champions=164 / championVisuals=164 / championDetails=164 / adventures=521 / patrons=5 / variants=1405 / formations=160 / enums=5`。顶层返回包含 `51` 组 `_defines` 表。当前主要缺口不是“仓库快照滞后”或“接口换格式导致脚本失效”，而是“归一化覆盖面仍然有限”。
 
 ## 当前归一化保存到哪里
 

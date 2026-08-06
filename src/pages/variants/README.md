@@ -15,12 +15,31 @@
 ## 关键不变量
 
 - 当前页只做本地静态变体目录展示，地图 / 关卡 / 分页状态同步到 URL；读写规则都收敛在 `query-state.ts`。
-- 战役过滤默认值仍保持 `__all__`，页面就绪后由模型派生到第一个可用地图与关卡。
+- 战役过滤默认值为 `__all__`，页面就绪后由模型派生到第一个可用地图与关卡。
 - 变体名 / 战役双语展示保留，长段限制与奖励文本只跟随当前界面语言展示。
 - 左侧上方是本地模糊搜索下拉，结果按地图分组；左侧下方只展示当前地图的关卡。
 - 右侧只展示当前关卡详情：敌人类型占比、攻击占比、特殊敌人、区域节点、阵型和分页列表。
 - 敌人类型占比必须优先读取 `Variant.enemyTypeCounts`，分母使用 `Variant.enemyCount`；不要从 `enemyTypes` 标签列表平均分摊。
 - 当前公共数据没有官方地图图片与剧情文本字段；不要镜像第三方站点私有地图或剧情内容。
+
+## 其他文件
+
+组件：
+- `VariantsFilterBar.tsx` / `VariantsFilterChipGroup.tsx` — 筛选条与 chip group。
+- `VariantsResultsSection.tsx` — 结果区包壳。
+- `VariantsWorkbenchContentHeader.tsx` — 结果头。
+- `VariantCampaignSection.tsx` / `VariantAdventureSection.tsx` — 战役 / 冒险分组。
+- `VariantResultCard.tsx` — 单条变体卡片。
+- `VariantFormationMiniBoard.tsx` — 阵型迷你棋盘。
+
+逻辑：
+- `variant-model.ts` — 筛选 / 搜索 / 派生。
+- `variant-grouping.ts` — 变体分组。
+- `variant-labels.ts` — 标签与文案。
+- `variant-selection-model.ts` — 选择派生。
+- `variants-navigation-model.ts` — 导航搜索模型。
+- `useVariantCollectionState.ts` — 数据加载 hook。
+- `types.ts` / `constants.ts` — 类型与常量。
 
 ## 回归建议
 

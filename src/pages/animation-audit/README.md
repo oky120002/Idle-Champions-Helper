@@ -37,6 +37,10 @@
   - 单行 verdict / tag / note 交互
 - `AnimationAuditFeedbackExportPanel.tsx`
   - 顶部统计、复制按钮、JSON 预览
+- `types.ts`
+  - AnimationAudit 条目、metrics、filter 与 state 类型
+- `animationAuditFilterLabels.ts`
+  - level / kind filter label 构造
 
 ## 不变量
 

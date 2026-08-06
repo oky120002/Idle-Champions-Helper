@@ -6,7 +6,7 @@
 
 - 官方 definitions 会返回英雄头像线索，但不是完整图片 URL。
 - 可用链路是：`hero_defines[].portrait_graphic_id` -> `graphic_defines[]` 的 `graphic / v` -> `https://master.idlechampions.com/~idledragons/mobile_assets/<graphic>`。
-- 当前 `champions.json`（`updatedAt: 2026-07-25`）的 `164 / 164` 名可上阵英雄都带本地 portrait 路径。
+- 当前 `champions.json`（`updatedAt: 2026-07-28`）的 `164 / 164` 名可上阵英雄都带本地 portrait 路径。
 - 当前核实到的英雄头像资源全部为 `256x256 PNG`；没有看到额外的小图 / 中图 / 大图 portrait 字段。
 - 官方 `mobile_assets` 返回的头像文件外面包了一层 24 字节的自定义包装头；真正的 PNG 数据从偏移 24 开始，需要裁掉头部再落盘。
 

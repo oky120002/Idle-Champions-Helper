@@ -1,4 +1,4 @@
-# ADR-0006：文档采用五类活跃资产与一类历史归档
+# 0006. 文档采用五类活跃资产与一类历史归档
 
 **Status**: Accepted
 **Decided**: 2026-07-27
@@ -18,7 +18,7 @@ Spec 可以链接 ADR 作为依据，但不得复述决策历史；Spec 不链�
 - 不引入独立 `evidence/`、`plans/` 或框架专用 feature 目录，避免增加跨目录回跳。
 - 吸收 Spec Kit 的跨产物检查、Superpowers 的设计与计划分离、Diátaxis 的读者意图分离，不复制完整目录或工具链。
 
-## 依据
+## 关联
 
-- `docs/research/documentation/framework-practices.md`
-- `docs/specs/guidelines/documentation-governance.md`
+- 依据：`docs/research/documentation/framework-practices.md`
+- 落地：`docs/specs/guidelines/documentation-governance.md`

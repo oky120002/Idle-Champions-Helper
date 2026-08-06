@@ -1,7 +1,5 @@
 # champion-mechanics/ —— 英雄机制实测
 
-一英雄一份调研 `<heroId>.md`，记录游戏内 DPS/金币/速度机制的完整实测，配合 `src/domain/planner/references/<heroId>ReferenceData.ts`（typed 测试字段）双向关联。
-
 一英雄一份调研 `<3位补零heroId>-<name>.md`（编号前置便于排序），记录游戏内 DPS/金币/速度机制的完整实测，配合 `src/domain/planner/references/<heroId>ReferenceData.ts`（typed 测试字段）双向关联。
 
 ## 当前记录

@@ -7,7 +7,7 @@
 - effectKeys 共 **1020 条**，归为 12 个语义大类；**伤害加成是绝对主力**，内部再分 21 子类（§2，另数百个英雄/装备专属命名 key 挂在这些通用机制下，按 owner + paramNames 反查所属）。
 - 大量 effect key 是英雄/装备专属命名（如 `hitch_daggers`、`storm_of_flame_damage_mult`），挂在下列通用机制下；本表列**通用机制 key**（带语义后缀、可跨英雄复用），并标每类 effect 总数（含专属命名）。
 
-## 2. 伤害加成机制全表（19 子类，~431 条）
+## 2. 伤害加成机制全表（21 子类，~431 条）
 
 | # | 机制类型 | 代表 effect key | 数值·模式 | 数量 |
 |---|---|---|---|---|
@@ -93,7 +93,7 @@
 - **宿敌持久计数**（佐布 22）：`zorbu_lifelong_enemies`（跨冒险命中计数）+ `hero_dps_mult_percent_lifelong_enemies`（按宿敌总增益数加 DPS）+ `lifelong_enemies_count_amount`。依赖跨冒险持久状态（userdetails 存档），单冒险快照不可得。
 - **加性/计数变体 No parser**（各 1 条，量小）：`hero_dps_multiplier_add`（卡兹琳 166）、`hero_dps_multiplier_reduce`（塔林 74）、`hero_dps_mult_per_briv_steelbones`（布里夫 58，按钢骨层数）——§2 #4/#7 列为代表 key 但 parser 实际只接 `mult` 主体变体，这些变体未接，ROI 低登记不补。
 
-**量级判断**：speed/cooldown 维度已解析未消费是**最大真实缺口**；装备 `buff_upgrade` owned wrapper 通道已接（曾误判"未建模"，实为双重计数，见 `modeling-pitfalls.md`）；modron/favor/药水需先解决私有存档（userdetails）导入通道；§5E 五家族依赖动态触发/跨冒险存档，静态评分不可消费，登记不建模。
+**量级判断**：speed/cooldown 维度已解析未消费是**最大真实缺口**；装备 `buff_upgrade` owned wrapper 通道已接（ability 源静态 buff_upgrade 与 base effect_string snapshot 双重计数风险见 `modeling-pitfalls.md`）；modron/favor/药水需先解决私有存档（userdetails）导入通道；§5E 五家族依赖动态触发/跨冒险存档，静态评分不可消费，登记不建模。
 
 ## 6. 高风险机制模式（对 planner 建模有结构性影响）
 

@@ -35,5 +35,5 @@
 
 - 页面消费的是“唯一布局库”，不是“与游戏战役一一对应的最终页面模型”。
 - `formations.json` 必须保留 `sourceContexts / applicableContexts`，否则用户会误以为当前布局已与战役完全一一映射。
-- `scripts/data/manual-overrides.json` 只用于必要布局覆写和补充说明，不再承担全量主数据。
+- `scripts/data/manual-overrides.json` 只用于必要布局覆写和补充说明。
 - `language_id=7` 对部分新活动或时空门条目仍可能回退英文原文，页面需接受这种边界。

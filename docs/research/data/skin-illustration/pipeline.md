@@ -29,7 +29,7 @@
 | 文件 | 当前职责 | 关键结论 |
 | --- | --- | --- |
 | `scripts/sync-idle-champions-animations.ts` | 选择 hero-base / skin 动画源，写出 `.bin` 与 manifest | 现已支持全量 hero-base + skin 发布，并按 source 元数据增量复用 |
-| `scripts/sync-idle-champions-illustrations.ts` | 读取本地动画 manifest，截默认帧生成静态 PNG | skin 与 hero-base 不再维护独立 pose 决策链路，也不再回退官方静态图 |
+| `scripts/sync-idle-champions-illustrations.ts` | 读取本地动画 manifest，截默认帧生成静态 PNG | skin 与 hero-base 共用同一动画 manifest 渲染默认帧 |
 | `scripts/data/skelanim-codec.ts` | 解压并解析 `SkelAnim` | 前后端共享同一套二进制格式假设 |
 | `scripts/data/skelanim-renderer.ts` | 计算 bounds、选择 frame、渲染静态 PNG | 默认帧裁切规则集中在这里 |
 | `src/features/skelanim-player/browser-codec.ts` | 浏览器端解压 / 解码 `.bin` | 让 GitHub Pages 站点在不依赖上游的前提下播放动画 |
@@ -62,8 +62,6 @@
 | 缩放 | 使用 `frame.scaleX / frame.scaleY` |
 | 坐标系 | `y` 轴向下为正 |
 | 绘制顺序 | 所有可见 piece 按 `depth` 升序绘制 |
-
-这条规则修正了早期“人物倒置、看起来不像人”的问题。
 
 ## 画布边界
 

@@ -1,45 +1,46 @@
 # planner 领域模块入口
 
 - 作用：承接自动计划里的纯计算链路，只放候选池、合法性、评分、搜索和推荐结果契约。
-- 边界：这里不放页面 JSX、浏览器状态、路由、副作用和文案编排；页面层只能消费这里的结果。
+- 边界：不放页面 JSX、浏览器状态、路由、副作用和文案编排；页面层只消费结果。
 
 ## 先读顺序
 
-- 推荐主入口先读 `src/domain/planner/recommendationEngine.ts`。
-- 结果合同与跨层共享类型读 `src/domain/planner/recommendationTypes.ts`。
-- 候选池模式读 `src/domain/planner/candidatePool.ts`。
-- 阵型合法性读 `src/domain/planner/formationLegality.ts`。
-- 搜索与评分分别读 `src/domain/planner/beamSearchRanking.ts`、`src/domain/planner/steadyStateScoring.ts`。
-- 变体限制投影与未拥有英雄假设分别读 `src/domain/planner/variantConstraints.ts`、`src/domain/planner/hypotheticalBaseline.ts`。
+- `recommendationEngine.ts` — 主入口；串起候选池、布局槽位、合法性、评分和 beam search。
+- `recommendationTypes.ts` — 推荐结果、解释文本、阵位条目和 blocker 契约。
+- `plannerModel.ts` — merge 后推荐输入模型。
+- `candidatePool.ts` — `owned-only / all-hypothetical` 候选模式。
+- `formationLegality.ts` — seat 冲突、禁用英雄、强制英雄、锁槽。
+- `steadyStateScoring.ts` — 当前可静态解释的评分。
+- `beamSearchRanking.ts` — deterministic beam search。
 
-## 当前职责
+## 其他文件
 
-- `recommendationEngine.ts`
-  - 串起候选池、布局槽位、合法性、评分和 beam search。
-  - 输出页面可直接消费的 `PlannerRecommendation`，但不依赖任何页面组件类型。
-- `plannerModel.ts`
-  - 定义 merge 后推荐输入模型；统一承接 `hero-abilities.json`、`scenarios.json`、仓库语义补丁和浏览器本地 override。
-- `recommendationTypes.ts`
-  - 定义推荐结果、解释文本、阵位条目和 blocker 契约。
-- `candidatePool.ts`
-  - 定义 `owned-only / all-hypothetical` 两种候选模式。
-- `formationLegality.ts`
-  - 检查 seat 冲突、禁用英雄、强制英雄和锁槽。
-- `steadyStateScoring.ts`
-  - 只做当前可静态解释的评分，不偷偷吸收 unsupported 规则。
-- `beamSearchRanking.ts`
-  - 负责 deterministic beam search；不关心 UI，也不决定文案。
+- `computationMode.ts` — 同步 / Worker 计算模式选择。
+- `variantConstraints.ts` — 变体限制投影。
+- `hypotheticalBaseline.ts` — 未拥有英雄假设基线。
+- `placementFit.ts` / `placementFitTypes.ts` / `placementReasonCode.ts` / `placementSlotRelation.ts` — placement fit 评分。
+- `placementFitTestFixtures.ts` — 测试夹具。
+- `plannerNarrative.ts` — 推荐结果叙事文本。
+- `scoringBonusInputs.ts` — 评分加成输入构建。
+- `scoringSupportSync.ts` — 评分支持度同步。
+- `goldObjective.ts` — 金币目标。
 
-## 当前不变量
+## 子目录
 
-- 推荐引擎属于领域层，不允许反向 import `src/pages/**`。
-- 页面组件不能作为领域结果的类型来源；共享契约必须放回 `src/domain/planner/`。
-- 评分和搜索只消费结构化输入，不在 JSX 里现场拼规则。
-- unsupported 规则只能进入 warning，不能静默计分。
-- 推荐引擎只消费 merge 后 planner model；计算逻辑留在本目录，不塞回页面层或测试夹具里现场拼 `champions + formations + champion-details`。
+- `compute/` — Worker 计算（plannerCompute + worker entry）。
+- `mechanics/` — signal multiplier / stack count resolver。
+- `references/` — 英雄参考验证数据（minsc7 / varo159 / vi95 等）。
+- `scoring/` — crit / vulnerability / pool aggregation 评分因子。
 
-## 后续继续时优先看什么
+## 不变量
 
-- 若要继续补“独立子模块”，先看 `docs/specs/modules/planner/recommendation-and-placement-design.md`。
-- 若要补 carry-centric 推荐，优先改 `recommendationEngine.ts` 和 `steadyStateScoring.ts`，不要先改页面。
-- 若要继续补 planner model / merge 层，先看 `src/domain/planner/plannerModel.ts`、`src/data/plannerModel.ts` 和 `src/data/plannerOverridesStore.ts`。
+- 推荐引擎属于领域层，不反向 import `src/pages/**`。
+- 页面组件不作为领域结果类型来源；共享契约留在本目录。
+- unsupported 规则只进 warning，不静默计分。
+- 推荐引擎只消费 merge 后 planner model；计算逻辑留在本目录。
+
+## 继续时的入口
+
+- 补独立子模块先看 `docs/specs/modules/planner/recommendation.md`。
+- 补 carry-centric 推荐优先改 `recommendationEngine.ts` 和 `steadyStateScoring.ts`。
+- 补 planner model / merge 层先看 `plannerModel.ts`、`src/data/plannerModel.ts` 和 `src/data/plannerOverridesStore.ts`。

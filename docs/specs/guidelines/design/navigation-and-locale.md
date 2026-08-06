@@ -23,6 +23,6 @@
 
 ## 当前实现
 
-- 主导航实现：`src/app/PrimaryNavigation.tsx` + `src/styles/app/navigation.css`
-- 顶部状态与收紧逻辑：`src/app/SiteHeader.tsx`、`src/app/useSiteHeaderState.ts`、`src/styles/app/site-header.css`
+- 主导航实现：`src/app/PrimaryNavigation.tsx` + `src/styles/app/navigation/`
+- 顶部状态与收紧逻辑：`src/app/SiteHeader.tsx`、`src/app/useSiteHeaderState.ts`、`src/styles/app/site-header/`
 - 语言切换：`src/app/LocaleSwitcher.tsx`

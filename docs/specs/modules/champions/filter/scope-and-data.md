@@ -13,29 +13,8 @@
 ### 当前输入
 
 - `public/data/v1/champions.json`：`id`、`name`、`seat`、`roles`、`affiliations`、`tags`、`patronEligibility`
-- `public/data/v1/enums.json`：`roles`、`affiliations`、`campaigns`、`patrons`、`modes`
-- `public/data/v1/adventures.json` / `public/data/v1/variants.json`：场景身份、`ruleContextId`、`modeTags`、Patron 目标层级
+- `public/data/v1/enums.json`：`roles`、`affiliations`
 - `public/data/version.json`：当前数据版本
-
-### 明确不接受的做法
-
-- 从 `variants` 原文限制文本做页面侧字符串匹配
-- 把 `Patron / 模式过滤` 规则散写在页面组件里
-- 在没有公共数据合同的前提下先做临时 UI 开关
-- 只保留展示用 `mode` 文本，不保留场景身份
-
-### 筛选上下文
-
-```ts
-type ChampionFilterContext =
-  | { type: 'mode'; modeId: string }
-  | {
-      type: 'scenario'
-      scenarioKind: 'adventure' | 'variant' | 'trial' | 'timeGate'
-      scenarioId: string
-      ruleContextId: string
-    }
-```
 
 ## 当前代码落点与页面结构
 
@@ -44,4 +23,4 @@ type ChampionFilterContext =
 - `src/rules/championFilter.ts`：纯筛选逻辑
 - `src/features/champion-filters/`：枚举分组、筛选项、交互组件
 
-页面当前已切到统一工作台结构：桌面端使用“上方紧凑小导航 + 下方页面工作台壳层”，左侧是筛选抽屉与状态头，右侧是结果 metrics + 结果卡网格（卡片内嵌立绘背景）+ 空态；移动端继续退化为单列网页滚动。共性壳层细节见 `docs/specs/modules/shared-components/page-workbench-design.md`。
+页面使用统一工作台结构：桌面端为”上方紧凑小导航 + 下方页面工作台壳层”，左侧是筛选抽屉与状态头，右侧是结果 metrics + 结果卡网格（卡片内嵌立绘背景）+ 空态；移动端退化为单列网页滚动。共性壳层细节见 `docs/specs/modules/shared-components/page-workbench-design.md`。

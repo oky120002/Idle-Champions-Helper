@@ -5,7 +5,7 @@
 
 ## 中文覆盖事实
 
-`getDefinitions` 接受 `language_id=7`，返回结构与默认英文 definitions 一致，但会把部分字符串字段替换为官方中文。中文覆盖已足够支撑 MVP 的主要名称字段，但不是 100%；页面搜索、筛选和详情展示都需要同时支持中文展示、英文原文检索和中文缺失时的自动回退（见 `docs/research/data/language-id-7/coverage.md`）。
+`getDefinitions` 接受 `language_id=7`，返回结构与默认英文 definitions 一致，但会把部分字符串字段替换为官方中文。中文覆盖已足够支撑主要名称字段，但不是 100%；页面搜索、筛选和详情展示都需要同时支持中文展示、英文原文检索和中文缺失时的自动回退（见 `docs/research/data/language-id-7/coverage.md`）。
 
 ## 归一化输出形态
 

@@ -53,5 +53,5 @@
 
 ## 验收
 
-- 单元：`tests/unit/search/searchEngine.test.ts`、`searchTokenizer.test.ts`、`searchHighlight.test.ts`。
+- 单元（co-located）：`src/features/search/searchEngine.test.ts`、`searchTokenizer.test.ts`、`searchHighlight.test.ts`。
 - E2E：`tests/e2e/search.spec.ts`。

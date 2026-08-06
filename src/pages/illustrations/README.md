@@ -32,6 +32,7 @@
 - `IllustrationResultCard.tsx`: 单张结果卡片、整卡跳转与 hover 动态预览。
 - `IllustrationsWorkbenchContentHeader.tsx`: 实时结果统计、metrics 与筛选摘要。
 - `IllustrationsPage.tsx`: 直接拼接主筛选区与补充筛选区，并在顶部 toolbar 承接展开/收起、随机排序与复制当前链接等稳定动作。
+- `useVisibleIllustrationEntries.ts`: 结果卡片渐进式批量展示 hook。
 
 ## 关键不变量
 

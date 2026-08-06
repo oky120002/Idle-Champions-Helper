@@ -1,4 +1,4 @@
-# ADR-0007：双主题用纯 token 覆盖切换，不引入双轨类名或 dark: 变体
+# 0007. 双主题用纯 token 覆盖切换，不引入双轨类名或 dark: 变体
 
 **Status**: Accepted
 **Decided**: 2026-07-29
@@ -15,7 +15,7 @@
 - **gloss 两档基于 `--color-gloss-base` 派生**：深底 white 提亮、浅底暖深压暗，翻一个基色两档全跟随，不必为浅色另写两档。
 - **`color-mix` 稀释锚点必须够强，不能复用带 alpha 的终值 token**：`color-mix(in srgb, var(--T) N%, transparent)` 的产物 alpha = `alpha(T) × N%`。若 `--T` 自身已带 alpha（如浅色 `--color-panel` 仅 0.06），再稀释会双计 alpha，产物落到 0.01–0.03 实质不可见。故派生叠层锚定 `--color-panel-base`（深色与 panel 同值保零回归，浅色提强到 0.3），与 `--color-gloss-base` 同属「为 color-mix 准备的基色」家族；`--color-scrim` 本就不透明，可直接稀释。
 - **三种「暗」叠层语义分离，不合并**：`--color-scrim`（图上文字遮罩，随主题翻转，保跨主题可读）、`--color-backdrop`（模态遮罩，两主题都暗以突出模态）、投影（`color-mix(in srgb, black X%, transparent)`，两主题都暗）。三者都暗但服务不同可读性目标。
-- **品牌色（铜/钢/金）与 categorical（`--cat-*`）/稀有度色：色相跨主题稳定，L/C 按主题适配**：色相是品牌/数据语义身份（紫=传说、粉=史诗、铜=品牌点缀），跨主题不变；但 L/C 必须随主题翻转——深色用高 L 亮金属作点缀文字/边框都成立，浅主题暖纸底（L≈0.91）上若仍高 L，作文字不可读（ratio<1.5）、作边框过淡、作底色过隐。故浅主题统一降 L 提 C，三用途同时受益（详见 `tokens.css` `[data-theme="light"]` 各段注释）。`legendary` 仅作进度条渐变填充不作文字，保持深色值不翻转。
+- **品牌色（铜/钢/金）与 categorical（`--cat-*`）/稀有度色：色相跨主题稳定，L/C 按主题适配**：色相是品牌/数据语义身份（紫=传说、粉=史诗、铜=品牌点缀），跨主题不变；但 L/C 必须随主题翻转——深色用高 L 亮金属作点缀文字/边框都成立，浅主题冷白底（L≈0.97）上若仍高 L，作文字不可读（ratio<1.5）、作边框过淡、作底色过隐。故浅主题统一降 L 提 C，三用途同时受益（详见 `tokens.css` `[data-theme="light"]` 各段注释）。`legendary` 仅作进度条渐变填充不作文字，保持深色值不翻转。
 - **三态而非二值开关**：默认跟随系统以尊重 OS 偏好，`matchMedia` 订阅实时响应系统切换。
 - **纯 token 覆盖而非 `dark:` 变体或双轨类名**：选择器与结构两主题完全一致，主题只是 token 值的差异；`scripts/check-colors.ts` 守护禁止业务 CSS 出现任何颜色字面量。
 

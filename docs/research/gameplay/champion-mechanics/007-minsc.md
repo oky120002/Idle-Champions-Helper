@@ -41,14 +41,14 @@
 - **cost 曲线 ≠ 伤害曲线**：1→722 级顺势斩比值 = 5.02e62/1.25e45 ≈ 4.0e17，反推真实伤害增长率 ≈ **1.058**；而 built `costCurves['1']=1.12`，1.12^721 ≈ 3.4e35（高 18 个数量级）。即用金币 cost 曲线代理伤害曲线是上界近似（`baseDps.ts` 注释自承），真实伤害增长慢得多。注：比值含 722 级偏好敌人（若野兽在场）的额外加成，1.058 为近似。
 - **阵型交叉 buff**：瓦罗战斗指南（前面两列 +2.03e15%）在 cursed-farmer 阵型对明斯克 active（明斯克在瓦罗前列），`damageReferenceVerification` 断言瓦罗入阵提升明斯克阵型聚合——交叉位置 buff 是现有 mock 阵型测不到的核心用例。
 
-## 接入进展（2026-07-29）
+## 接入事实
 
-- ✅ 等级解锁门控（build 烘 requiredLevel + 评分按 heroLevels 过滤）。
-- ✅ 外部加成 blessing/patron（global_dps active 过滤 + effect_def filter_targets，#9）。
-- ✅ vulnerability `monster_with_tag_more_damage`（偏好敌人基础 +300%，commit 32ae5e72）。
-- ✅ feat 专长（active feats 按 scoringMode 维度注入；明斯克 feat 35 hero_dps +30% / 38 global_dps +10%，commit 95ed508c + dd7ef095）。
-- ⏳ feat wrapper（feat 399 buff_upgrades 偏好敌人 +80%）+ ability 升级 stacking（+2.43e6%）。
-- ⏳ BUD/baseDamage 校准（costCurves 1.12 上界 vs 真实 1.058）。
+- 等级解锁门控：build 烘 requiredLevel，评分按 heroLevels 过滤。
+- 外部加成 blessing/patron：global_dps active 过滤 + effect_def filter_targets 接入。
+- vulnerability `monster_with_tag_more_damage`（偏好敌人基础 +300%）经专精外部化按玩家选择注入。
+- feat 专长：active feats 按 scoringMode 维度注入；明斯克 feat 35 hero_dps +30% / 38 global_dps +10% 生效。
+- feat wrapper（feat 399 buff_upgrades 偏好敌人 +80%）+ ability 升级 stacking（+2.43e6%）：尚未接入（feat wrapper 通道待补）。
+- BUD/baseDamage 校准：costCurves 1.12 上界 vs 真实 1.058。
 
 ## 度量校准（详见 damage-reference-calibration.md）
 
