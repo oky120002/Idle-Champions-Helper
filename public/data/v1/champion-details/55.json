@@ -1,301 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "55",
-    "name": {
-      "original": "Môrgæn",
-      "display": "莫尔甘"
-    },
-    "seat": 9,
-    "roles": [
-      "gold",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Acquisitions Incorporated",
-        "display": "艾奎兹玄有限责任公司"
-      }
-    ],
-    "tags": [
-      "acqinc",
-      "chaotic",
-      "elf",
-      "event",
-      "female",
-      "geneutral",
-      "gold",
-      "neutral",
-      "ranger",
-      "support",
-      "y3"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/55.png",
-      "sourceGraphic": "Portraits/Portrait_Morgaen",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Môrgæn",
-  "eventName": {
-    "original": "Wintershield",
-    "display": "冬盾节"
-  },
-  "dateAvailable": "2020-01-08 00:00:00",
-  "lastReworkDate": "2020-01-08 00:00:00",
-  "popularity": 94,
-  "baseCost": "11000000000000",
-  "baseDamage": "1850000000",
-  "baseHealth": "43",
-  "graphicId": "7075",
-  "portraitGraphicId": "7083",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1799352000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    185,
-    630,
-    1155,
-    1805
-  ],
-  "costCurves": {
-    "1": 1.11
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      170,
-      171,
-      172
-    ],
-    "graphic_large": 7081,
-    "graphic_xl": 13926,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      81,
-      82
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2020-01-20 12:00:00",
-    "time_gate_blackout": {
-      "start": "2022-01-12 00:00:00",
-      "end": "2022-01-24 12:00:00"
-    },
-    "time_gate_adventure_id": 528,
-    "time_gate_variants_ids": [
-      464,
-      465,
-      466
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 168,
-    "gold_chest_type_id": 169,
-    "available_in_store": "2020-01-27 12:00:00",
-    "store_blackout": {
-      "start": "2022-01-12 00:00:00",
-      "end": "2022-01-24 12:00:00"
-    },
-    "golden_epic_loot_id": 1300,
-    "golden_epic_promo_id": 144,
-    "event_logo_graphic_id": 3373,
-    "console_portrait": 6987,
-    "head_graphic_id": 7279,
-    "trials_effect_id": 848,
-    "legendary_effect_id": [
-      1,
-      3,
-      7,
-      38,
-      94,
-      53
-    ],
-    "weekly_buff": "buff_upgrade,200,3326",
-    "portrait_graphic_scale": 0.94,
-    "notification_adjustment": {
-      "offset": [
-        53,
-        224
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Môrgæn",
-      "display": "莫尔甘"
-    },
-    "class": {
-      "original": "Ranger",
-      "display": "巡林客"
-    },
-    "race": {
-      "original": "Elf (High)",
-      "display": "精灵（高等）"
-    },
-    "age": 150,
-    "alignment": {
-      "original": "Chaotic Neutral",
-      "display": "混乱中立"
-    },
-    "abilityScores": {
-      "str": 12,
-      "dex": 20,
-      "con": 12,
-      "int": 14,
-      "wis": 15,
-      "cha": 10
-    },
-    "backstory": {
-      "original": "The ranger Môrgæn is a renowned tracker and hunter, able to pinpoint-target foes at any range, then vanish into the woods with no one the wiser. Her legendary ability with the longbow and the custom arrows she crafts instills fear into the hearts of her many enemies -- and more than a few of her coworkers. Famously, she is the only member of Acquisitions Incorporated known to be paid in advance, lest a missed invoice lead to dire repercussions.",
-      "display": "巡林客莫尔甘是著名的追踪者和猎手，能在任何范围准确点杀敌人，然后悄然消失在树林里。她使用长弓和特制箭矢的传奇能力，使许多敌人以及一些同事心生恐惧。最出名的是，她是艾奎兹玄有限责任公司唯一会预先付款的成员，因为公司不想错过付款时间而导致可怕的后果。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "262",
-      "name": {
-        "original": "Rapid Shot",
-        "display": "快速射击"
-      },
-      "description": {
-        "original": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow.",
-        "display": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。"
-      },
-      "longDescription": {
-        "original": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow. This arrow always targets the same enemy, even if that enemy is killed by the first arrow.",
-        "display": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。两支箭始终会射向同一敌人，即使该敌人已经被第一箭击杀。"
-      },
-      "cooldown": 5.2,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "random",
-      "damageTypes": [
-        "ranged"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile": "morgaen_arrow",
-          "projectile_details": {
-            "delay_frames": 11
-          },
-          "shoot_frame": 8,
-          "shoot_offset_x": 65,
-          "shoot_offset_y": -45
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "263",
-      "name": {
-        "original": "Customized Arrow",
-        "display": "定制箭矢"
-      },
-      "description": {
-        "original": "Môrgæn shoots a customized arrow from her quiver, with one of 3 random effects.",
-        "display": "莫尔甘射出一支箭囊中的定制箭矢，箭矢带有 3 种随机效果之一。"
-      },
-      "longDescription": {
-        "original": "Môrgæn pulls a customized arrow from her quiver at random, and fires this more powerful arrow towards a random enemy.",
-        "display": "莫尔甘从箭囊中随机抽出一支定制箭矢，然后将这支更强力的箭矢射向一名随机敌人。"
-      },
-      "cooldown": 210,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "random",
-      "damageTypes": [
-        "ranged"
-      ],
-      "tags": [
-        "ranged",
-        "ultimate"
-      ],
-      "graphicId": "7011",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile": "skull_carved_arrow",
-          "shoot_frame": 13,
-          "line_damage_distance": 100,
-          "shoot_offset_x": 65,
-          "shoot_offset_y": -45
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "3326",
-        "name": {
-          "original": "Paid Up Front",
-          "display": "提前支付"
-        },
-        "description": {
-          "original": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected.",
-          "display": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。"
-        },
-        "graphicId": "6999"
-      },
-      {
-        "upgradeId": "3327",
-        "name": {
-          "original": "Friends In Wealth",
-          "display": "土豪朋友"
-        },
-        "description": {
-          "original": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't).",
-          "display": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。"
-        },
-        "graphicId": "6998"
-      },
-      {
-        "upgradeId": "3328",
-        "name": {
-          "original": "Double Tap",
-          "display": "双金连射"
-        },
-        "description": null,
-        "graphicId": "6997"
-      },
-      {
-        "upgradeId": "3329",
-        "name": {
-          "original": "Customized Arrow",
-          "display": "定制箭矢"
-        },
-        "description": null,
-        "graphicId": "813"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "3328",
@@ -306,7 +10,6 @@
         "display": "双金连射"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,526",
       "effectDefinition": {
         "id": "526",
         "snapshots": {
@@ -349,7 +52,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,526"
     },
     {
       "id": "3396",
@@ -357,14 +61,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3352",
@@ -372,14 +76,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3326",
@@ -390,7 +94,6 @@
         "display": "提前支付"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,523",
       "effectDefinition": {
         "id": "523",
         "snapshots": {
@@ -496,7 +199,8 @@
       "tipText": {
         "original": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected.",
         "display": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。"
-      }
+      },
+      "effectReference": "effect_def,523"
     },
     {
       "id": "3410",
@@ -504,14 +208,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3338",
@@ -519,14 +223,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "3411",
@@ -534,14 +238,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3327",
@@ -552,7 +256,6 @@
         "display": "土豪朋友"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,525",
       "effectDefinition": {
         "id": "525",
         "snapshots": {
@@ -606,7 +309,8 @@
       "tipText": {
         "original": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't).",
         "display": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。"
-      }
+      },
+      "effectReference": "effect_def,525"
     },
     {
       "id": "3412",
@@ -614,14 +318,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3397",
@@ -629,14 +333,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3413",
@@ -644,14 +348,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3329",
@@ -662,7 +366,6 @@
         "display": "定制箭矢"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "effect_def,529",
       "effectDefinition": {
         "id": "529",
         "snapshots": {
@@ -705,7 +408,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,529"
     },
     {
       "id": "3414",
@@ -713,14 +417,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3415",
@@ -728,14 +432,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3330",
@@ -746,7 +450,6 @@
         "display": "随遇而安"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,530",
       "effectDefinition": {
         "id": "530",
         "snapshots": {
@@ -795,7 +498,8 @@
         "display": "莫尔甘并不挑剔。她对提前支付现在的效果很满意。"
       },
       "specializationGraphicId": "7004",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,530"
     },
     {
       "id": "3331",
@@ -806,7 +510,6 @@
         "display": "保持距离"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,531",
       "effectDefinition": {
         "id": "531",
         "snapshots": {
@@ -859,7 +562,8 @@
         "display": "莫尔甘希望阵型中某些不太有趣的勇士与她保持距离。"
       },
       "specializationGraphicId": "7006",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,531"
     },
     {
       "id": "3332",
@@ -870,7 +574,6 @@
         "display": "怪物饲料"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,532",
       "effectDefinition": {
         "id": "532",
         "snapshots": {
@@ -923,7 +626,8 @@
         "display": "莫尔甘喜欢留在阵型中某些看起来更美味的勇士身后。让怪物先吃他们，而不是她。"
       },
       "specializationGraphicId": "7007",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,532"
     },
     {
       "id": "3333",
@@ -934,7 +638,6 @@
         "display": "别挡路"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,533",
       "effectDefinition": {
         "id": "533",
         "snapshots": {
@@ -987,7 +690,8 @@
         "display": "莫尔甘不希望阵型中某些不太敏捷的勇士被她的箭射中，所以将她放置在前线附近。"
       },
       "specializationGraphicId": "7008",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,533"
     },
     {
       "id": "3405",
@@ -995,14 +699,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "3416",
@@ -1010,14 +714,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3417",
@@ -1025,14 +729,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3334",
@@ -1043,7 +747,6 @@
         "display": "简单最美"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,534",
       "effectDefinition": {
         "id": "534",
         "snapshots": {
@@ -1092,7 +795,8 @@
         "display": "维持伤害输出，不搞花里胡哨。"
       },
       "specializationGraphicId": "7005",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,534"
     },
     {
       "id": "3335",
@@ -1103,7 +807,6 @@
         "display": "严密阵型"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,535",
       "effectDefinition": {
         "id": "535",
         "snapshots": {
@@ -1160,7 +863,8 @@
         "display": "保持严密的阵型，获得可观增益。"
       },
       "specializationGraphicId": "7010",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,535"
     },
     {
       "id": "3336",
@@ -1171,7 +875,6 @@
         "display": "从容应对"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,536",
       "effectDefinition": {
         "id": "536",
         "snapshots": {
@@ -1238,7 +941,8 @@
         "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
       },
       "specializationGraphicId": "7003",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,536"
     },
     {
       "id": "3337",
@@ -1249,7 +953,6 @@
         "display": "大局观"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,537",
       "effectDefinition": {
         "id": "537",
         "snapshots": {
@@ -1334,7 +1037,8 @@
         "display": "只要持续提高伤害，最终肯定能杀死些什么。"
       },
       "specializationGraphicId": "7009",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,537"
     },
     {
       "id": "3418",
@@ -1342,14 +1046,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3398",
@@ -1357,14 +1061,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3419",
@@ -1372,14 +1076,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3339",
@@ -1387,14 +1091,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3327",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3327"
     },
     {
       "id": "3420",
@@ -1402,14 +1106,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3406",
@@ -1417,14 +1121,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "3340",
@@ -1435,7 +1139,6 @@
         "display": "严密阵型"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,535",
       "effectDefinition": {
         "id": "535",
         "snapshots": {
@@ -1492,7 +1195,8 @@
         "display": "保持严密的阵型，获得可观增益。"
       },
       "specializationGraphicId": "7010",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,535"
     },
     {
       "id": "3341",
@@ -1503,7 +1207,6 @@
         "display": "从容应对"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,536",
       "effectDefinition": {
         "id": "536",
         "snapshots": {
@@ -1570,7 +1273,8 @@
         "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
       },
       "specializationGraphicId": "7003",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,536"
     },
     {
       "id": "3342",
@@ -1581,7 +1285,6 @@
         "display": "大局观"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,537",
       "effectDefinition": {
         "id": "537",
         "snapshots": {
@@ -1666,7 +1369,8 @@
         "display": "只要持续提高伤害，最终肯定能杀死些什么。"
       },
       "specializationGraphicId": "7009",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,537"
     },
     {
       "id": "3343",
@@ -1677,7 +1381,6 @@
         "display": "简单最美"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,534",
       "effectDefinition": {
         "id": "534",
         "snapshots": {
@@ -1726,7 +1429,8 @@
         "display": "维持伤害输出，不搞花里胡哨。"
       },
       "specializationGraphicId": "7005",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,534"
     },
     {
       "id": "3344",
@@ -1737,7 +1441,6 @@
         "display": "从容应对"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,536",
       "effectDefinition": {
         "id": "536",
         "snapshots": {
@@ -1804,7 +1507,8 @@
         "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
       },
       "specializationGraphicId": "7003",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,536"
     },
     {
       "id": "3345",
@@ -1815,7 +1519,6 @@
         "display": "大局观"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,537",
       "effectDefinition": {
         "id": "537",
         "snapshots": {
@@ -1900,7 +1603,8 @@
         "display": "只要持续提高伤害，最终肯定能杀死些什么。"
       },
       "specializationGraphicId": "7009",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,537"
     },
     {
       "id": "3346",
@@ -1911,7 +1615,6 @@
         "display": "简单最美"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,534",
       "effectDefinition": {
         "id": "534",
         "snapshots": {
@@ -1960,7 +1663,8 @@
         "display": "维持伤害输出，不搞花里胡哨。"
       },
       "specializationGraphicId": "7005",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,534"
     },
     {
       "id": "3347",
@@ -1971,7 +1675,6 @@
         "display": "严密阵型"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,535",
       "effectDefinition": {
         "id": "535",
         "snapshots": {
@@ -2028,7 +1731,8 @@
         "display": "保持严密的阵型，获得可观增益。"
       },
       "specializationGraphicId": "7010",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,535"
     },
     {
       "id": "3348",
@@ -2039,7 +1743,6 @@
         "display": "大局观"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,537",
       "effectDefinition": {
         "id": "537",
         "snapshots": {
@@ -2124,7 +1827,8 @@
         "display": "只要持续提高伤害，最终肯定能杀死些什么。"
       },
       "specializationGraphicId": "7009",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,537"
     },
     {
       "id": "3349",
@@ -2135,7 +1839,6 @@
         "display": "简单最美"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,534",
       "effectDefinition": {
         "id": "534",
         "snapshots": {
@@ -2184,7 +1887,8 @@
         "display": "维持伤害输出，不搞花里胡哨。"
       },
       "specializationGraphicId": "7005",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,534"
     },
     {
       "id": "3350",
@@ -2195,7 +1899,6 @@
         "display": "严密阵型"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,535",
       "effectDefinition": {
         "id": "535",
         "snapshots": {
@@ -2252,7 +1955,8 @@
         "display": "保持严密的阵型，获得可观增益。"
       },
       "specializationGraphicId": "7010",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,535"
     },
     {
       "id": "3351",
@@ -2263,7 +1967,6 @@
         "display": "从容应对"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,536",
       "effectDefinition": {
         "id": "536",
         "snapshots": {
@@ -2330,7 +2033,8 @@
         "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
       },
       "specializationGraphicId": "7003",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,536"
     },
     {
       "id": "3421",
@@ -2338,14 +2042,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3422",
@@ -2353,14 +2057,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3399",
@@ -2368,14 +2072,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3407",
@@ -2383,14 +2087,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "3423",
@@ -2398,14 +2102,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3424",
@@ -2413,14 +2117,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3403",
@@ -2428,14 +2132,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3327",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3327"
     },
     {
       "id": "3425",
@@ -2443,14 +2147,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3400",
@@ -2458,14 +2162,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3408",
@@ -2473,14 +2177,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "3426",
@@ -2488,14 +2192,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3427",
@@ -2503,14 +2207,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3428",
@@ -2518,14 +2222,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3401",
@@ -2533,14 +2237,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3409",
@@ -2548,14 +2252,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "3429",
@@ -2563,14 +2267,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3404",
@@ -2578,14 +2282,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3327",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3327"
     },
     {
       "id": "3430",
@@ -2593,14 +2297,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3402",
@@ -2608,14 +2312,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3962",
@@ -2623,14 +2327,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3963",
@@ -2638,14 +2342,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,3326"
     },
     {
       "id": "3964",
@@ -2653,14 +2357,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3965",
@@ -2668,14 +2372,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,3327",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,3327"
     },
     {
       "id": "3966",
@@ -2683,14 +2387,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3967",
@@ -2698,14 +2402,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "5200",
@@ -2713,14 +2417,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "5201",
@@ -2728,14 +2432,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3327",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3327"
     },
     {
       "id": "5202",
@@ -2743,14 +2447,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "5203",
@@ -2758,14 +2462,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "5204",
@@ -2773,14 +2477,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "5205",
@@ -2788,14 +2492,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "6619",
@@ -2803,14 +2507,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "6620",
@@ -2818,14 +2522,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "6621",
@@ -2833,14 +2537,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "6622",
@@ -2848,14 +2552,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,3326"
     },
     {
       "id": "6623",
@@ -2863,14 +2567,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "8388",
@@ -2878,14 +2582,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "8389",
@@ -2893,14 +2597,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3326",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3326"
     },
     {
       "id": "8390",
@@ -2908,14 +2612,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "8391",
@@ -2923,14 +2627,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3327",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3327"
     },
     {
       "id": "8392",
@@ -2938,14 +2642,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -3197,6 +2901,7 @@
       "graphicId": "7055",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3218,6 +2923,7 @@
       "graphicId": "7055",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3239,6 +2945,7 @@
       "graphicId": "7056",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3260,6 +2967,7 @@
       "graphicId": "7057",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3281,6 +2989,7 @@
       "graphicId": "7049",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3302,6 +3011,7 @@
       "graphicId": "7049",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3323,6 +3033,7 @@
       "graphicId": "7050",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3344,6 +3055,7 @@
       "graphicId": "7051",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3365,6 +3077,7 @@
       "graphicId": "7052",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,3326"
@@ -3386,6 +3099,7 @@
       "graphicId": "7052",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,3326"
@@ -3407,6 +3121,7 @@
       "graphicId": "7053",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,3326"
@@ -3428,6 +3143,7 @@
       "graphicId": "7054",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,3326"
@@ -3449,6 +3165,7 @@
       "graphicId": "7046",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,3327"
@@ -3470,6 +3187,7 @@
       "graphicId": "7046",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,3327"
@@ -3491,6 +3209,7 @@
       "graphicId": "7047",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,3327"
@@ -3512,6 +3231,7 @@
       "graphicId": "7048",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,3327"
@@ -3533,6 +3253,7 @@
       "graphicId": "7043",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -3554,6 +3275,7 @@
       "graphicId": "7043",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -3575,6 +3297,7 @@
       "graphicId": "7044",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -3596,6 +3319,7 @@
       "graphicId": "7045",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -3617,6 +3341,11 @@
       "graphicId": "7040",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,6"
@@ -3638,6 +3367,11 @@
       "graphicId": "7040",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,11"
@@ -3659,6 +3393,11 @@
       "graphicId": "7041",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,21"
@@ -3680,6 +3419,11 @@
       "graphicId": "7042",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,53"
@@ -3805,6 +3549,314 @@
       ]
     }
   ],
+  "summary": {
+    "id": "55",
+    "name": {
+      "original": "Môrgæn",
+      "display": "莫尔甘"
+    },
+    "seat": 9,
+    "portrait": {
+      "path": "v1/champion-portraits/55.png",
+      "sourceGraphic": "Portraits/Portrait_Morgaen",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "gold",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Acquisitions Incorporated",
+        "display": "艾奎兹玄有限责任公司"
+      }
+    ],
+    "tags": [
+      "acqinc",
+      "chaotic",
+      "elf",
+      "event",
+      "female",
+      "geneutral",
+      "gold",
+      "neutral",
+      "ranger",
+      "support",
+      "y3"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "3"
+      ],
+      "ruleQualifiedPatronIds": [
+        "3"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Môrgæn",
+  "eventName": {
+    "original": "Wintershield",
+    "display": "冬盾节"
+  },
+  "dateAvailable": "2020-01-08 00:00:00",
+  "lastReworkDate": "2020-01-08 00:00:00",
+  "popularity": 113,
+  "baseCost": "11000000000000",
+  "baseDamage": "1850000000",
+  "baseHealth": "43",
+  "graphicId": "7075",
+  "portraitGraphicId": "7083",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1799352000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    185,
+    630,
+    1155,
+    1805
+  ],
+  "costCurves": {
+    "1": 1.11
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 7081,
+    "graphic_xl": 13926,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      81,
+      82
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2020-01-20 12:00:00",
+    "time_gate_blackout": {
+      "start": "2022-01-12 00:00:00",
+      "end": "2022-01-24 12:00:00"
+    },
+    "time_gate_adventure_id": 528,
+    "time_gate_variants_ids": [
+      464,
+      465,
+      466
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 168,
+    "gold_chest_type_id": 169,
+    "available_in_store": "2020-01-27 12:00:00",
+    "store_blackout": {
+      "start": "2022-01-12 00:00:00",
+      "end": "2022-01-24 12:00:00"
+    },
+    "golden_epic_loot_id": 1300,
+    "golden_epic_promo_id": 144,
+    "event_logo_graphic_id": 3373,
+    "console_portrait": 6987,
+    "head_graphic_id": 7279,
+    "trials_effect_id": 848,
+    "legendary_effect_id": [
+      1,
+      3,
+      7,
+      38,
+      94,
+      53
+    ],
+    "weekly_buff": "buff_upgrade,200,3326",
+    "portrait_graphic_scale": 0.94,
+    "notification_adjustment": {
+      "offset": [
+        53,
+        224
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30481
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Môrgæn",
+      "display": "莫尔甘"
+    },
+    "class": {
+      "original": "Ranger",
+      "display": "巡林客"
+    },
+    "race": {
+      "original": "Elf (High)",
+      "display": "精灵（高等）"
+    },
+    "age": 150,
+    "alignment": {
+      "original": "Chaotic Neutral",
+      "display": "混乱中立"
+    },
+    "backstory": {
+      "original": "The ranger Môrgæn is a renowned tracker and hunter, able to pinpoint-target foes at any range, then vanish into the woods with no one the wiser. Her legendary ability with the longbow and the custom arrows she crafts instills fear into the hearts of her many enemies -- and more than a few of her coworkers. Famously, she is the only member of Acquisitions Incorporated known to be paid in advance, lest a missed invoice lead to dire repercussions.",
+      "display": "巡林客莫尔甘是著名的追踪者和猎手，能在任何范围准确点杀敌人，然后悄然消失在树林里。她使用长弓和特制箭矢的传奇能力，使许多敌人以及一些同事心生恐惧。最出名的是，她是艾奎兹玄有限责任公司唯一会预先付款的成员，因为公司不想错过付款时间而导致可怕的后果。"
+    },
+    "abilityScores": {
+      "str": 12,
+      "dex": 20,
+      "con": 12,
+      "int": 14,
+      "wis": 15,
+      "cha": 10
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "262",
+      "name": {
+        "original": "Rapid Shot",
+        "display": "快速射击"
+      },
+      "description": {
+        "original": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow.",
+        "display": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。"
+      },
+      "longDescription": {
+        "original": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow. This arrow always targets the same enemy, even if that enemy is killed by the first arrow.",
+        "display": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。两支箭始终会射向同一敌人，即使该敌人已经被第一箭击杀。"
+      },
+      "cooldown": 5.2,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "morgaen_arrow",
+          "projectile_details": {
+            "delay_frames": 11
+          },
+          "shoot_frame": 8,
+          "shoot_offset_x": 65,
+          "shoot_offset_y": -45
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "263",
+      "name": {
+        "original": "Customized Arrow",
+        "display": "定制箭矢"
+      },
+      "description": {
+        "original": "Môrgæn shoots a customized arrow from her quiver, with one of 3 random effects.",
+        "display": "莫尔甘射出一支箭囊中的定制箭矢，箭矢带有 3 种随机效果之一。"
+      },
+      "longDescription": {
+        "original": "Môrgæn pulls a customized arrow from her quiver at random, and fires this more powerful arrow towards a random enemy.",
+        "display": "莫尔甘从箭囊中随机抽出一支定制箭矢，然后将这支更强力的箭矢射向一名随机敌人。"
+      },
+      "cooldown": 210,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "random",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "7011",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "skull_carved_arrow",
+          "shoot_frame": 13,
+          "line_damage_distance": 100,
+          "shoot_offset_x": 65,
+          "shoot_offset_y": -45
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "3326",
+        "name": {
+          "original": "Paid Up Front",
+          "display": "提前支付"
+        },
+        "description": {
+          "original": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected.",
+          "display": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。"
+        },
+        "graphicId": "6999"
+      },
+      {
+        "upgradeId": "3327",
+        "name": {
+          "original": "Friends In Wealth",
+          "display": "土豪朋友"
+        },
+        "description": {
+          "original": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't).",
+          "display": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。"
+        },
+        "graphicId": "6998"
+      },
+      {
+        "upgradeId": "3328",
+        "name": {
+          "original": "Double Tap",
+          "display": "双金连射"
+        },
+        "description": null,
+        "graphicId": "6997"
+      },
+      {
+        "upgradeId": "3329",
+        "name": {
+          "original": "Customized Arrow",
+          "display": "定制箭矢"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3932,7 +3984,8 @@
               224
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30481
         },
         "adventure_ids": [
           {
@@ -3960,7 +4013,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 94,
+        "popularity": 113,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4121,7 +4174,8 @@
               224
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30481
         },
         "adventure_ids": [
           {
@@ -4149,7 +4203,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 94,
+        "popularity": 113,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [

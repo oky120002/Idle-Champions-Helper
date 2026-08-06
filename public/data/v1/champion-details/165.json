@@ -1,288 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "165",
-    "name": {
-      "original": "Baldric",
-      "display": "巴尔德里克"
-    },
-    "seat": 12,
-    "roles": [
-      "healing",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "The Fallbacks",
-        "display": "后备队"
-      }
-    ],
-    "tags": [
-      "cleric",
-      "dwarf",
-      "event",
-      "fallbacks",
-      "geneutral",
-      "healing",
-      "lawful",
-      "male",
-      "neutral",
-      "spec_gold",
-      "support",
-      "y8"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/165.png",
-      "sourceGraphic": "Portraits/Portrait_Baldric",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Baldric",
-  "eventName": {
-    "original": "Ahghairon's Day",
-    "display": "阿格哈荣日"
-  },
-  "dateAvailable": "2025-08-06 12:00:00",
-  "lastReworkDate": "2025-08-06 12:00:00",
-  "popularity": 116,
-  "baseCost": "500000000000000000000",
-  "baseDamage": "60000000000000",
-  "baseHealth": "49",
-  "graphicId": "26976",
-  "portraitGraphicId": "26974",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1786042800
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    65,
-    690,
-    1400,
-    2280
-  ],
-  "costCurves": {
-    "1": 1.08
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "content_set_id": 61,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      170,
-      171,
-      172
-    ],
-    "graphic_large": 26977,
-    "graphic_xl": 26978,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      87,
-      78
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2025-08-27 12:00:00",
-    "available_in_store": "2025-09-03 12:00:00",
-    "time_gate_adventure_id": 1712,
-    "time_gate_variants_ids": [
-      1693,
-      1694,
-      1695
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 662,
-    "gold_chest_type_id": 663,
-    "golden_epic_loot_id": 3917,
-    "golden_epic_promo_id": 591,
-    "event_logo_graphic_id": 3943,
-    "console_portrait": 26975,
-    "trials_effect_id": 836,
-    "weekly_buff": "buff_upgrade,200,17472",
-    "portrait_graphic_scale": 1,
-    "permanent_effects": [
-      "effect_def,2410"
-    ],
-    "legendary_effect_id": [
-      1,
-      3,
-      5,
-      41,
-      39,
-      105
-    ],
-    "notification_adjustment": {
-      "offset": [
-        56,
-        210
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Baldric Goodhand",
-      "display": "巴尔德里克·妙手"
-    },
-    "class": {
-      "original": "Cleric",
-      "display": "牧师"
-    },
-    "race": {
-      "original": "Dwarf",
-      "display": "矮人"
-    },
-    "age": 80,
-    "alignment": {
-      "original": "Lawful Neutral",
-      "display": "守序中立"
-    },
-    "abilityScores": {
-      "str": 14,
-      "dex": 10,
-      "con": 12,
-      "int": 13,
-      "wis": 17,
-      "cha": 15
-    },
-    "backstory": {
-      "original": "Baldric left his position as a prominent member of his family's mercantile empire to seek his fortunes elsewhere. He's a unique cleric that often confounds other clerics because he refuses to pledge his service or faith to a single deity. He prefers to bargain with any and all of them, depending on the situation, to receive his magic. This has lent him a confidence/cockiness that has landed him in his share of trouble. But now he's with the Fallbacks, and over the course of their adventures, his faith in them has become unshakable.",
-      "display": "巴尔德里克舍弃了他在家族商业帝国中显赫的地位，踏上了另寻机遇的旅途。他是一位独特的牧师，常常令其他牧师感到困惑，因为他拒绝效忠或信仰任何单一的神。他更喜欢根据具体的情况与各路神明交涉以获得神力。这给了他信心或者说是傲气，虽然这也让他惹上过不少麻烦。但现在他成为了“后备队”的一员，在经历过各种冒险之后，他坚定不移地相信他的这群伙伴。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "879",
-      "name": {
-        "original": "Two-Handed Mace",
-        "display": "双手大锤"
-      },
-      "description": {
-        "original": "Baldric attacks the closest enemy, dealing 1 hit.",
-        "display": "巴尔德里克攻击最近的敌人，造成 1 次打击。"
-      },
-      "longDescription": null,
-      "cooldown": 4.75,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "damage_frame": 3
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "880",
-      "name": {
-        "original": "Faith Aflame",
-        "display": "烈焰信仰"
-      },
-      "description": {
-        "original": "Baldric prevents Champions from being stunned and he empowers his attacks for a short duration.",
-        "display": "巴尔德里克在短时间内使勇士们不会被眩晕，并强化他的攻击。"
-      },
-      "longDescription": {
-        "original": "Baldric's mace ignites with radiant light, preventing Champions from being stunned and empowering his attacks for the duration it is aflame",
-        "display": "巴尔德里克的大锤被耀眼的光芒点燃，在燃烧期间使勇士们不会被眩晕，并强化他的攻击。"
-      },
-      "cooldown": 360,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "ultimate"
-      ],
-      "tags": [
-        "melee",
-        "ultimate"
-      ],
-      "graphicId": "27023",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "baldric",
-          "animation_sequence_name": "ultimate"
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "17472",
-        "name": {
-          "original": "Bargaining Power",
-          "display": "交涉之力"
-        },
-        "description": null,
-        "graphicId": "26998"
-      },
-      {
-        "upgradeId": "17475",
-        "name": {
-          "original": "Undeniable Uggie",
-          "display": "无人可挡的乌吉"
-        },
-        "description": null,
-        "graphicId": "27002"
-      },
-      {
-        "upgradeId": "17476",
-        "name": {
-          "original": "Healing Word",
-          "display": "治愈真言"
-        },
-        "description": null,
-        "graphicId": "27000"
-      },
-      {
-        "upgradeId": "17477",
-        "name": {
-          "original": "Shield of Filth",
-          "display": "污秽之盾"
-        },
-        "description": null,
-        "graphicId": "27001"
-      },
-      {
-        "upgradeId": "17478",
-        "name": {
-          "original": "Healing Lantern",
-          "display": "治疗提灯"
-        },
-        "description": null,
-        "graphicId": "26999"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "17470",
@@ -293,7 +10,6 @@
         "display": "乌吉！"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2363",
       "effectDefinition": {
         "id": "2363",
         "snapshots": {
@@ -406,7 +122,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2363"
     },
     {
       "id": "17472",
@@ -417,7 +134,6 @@
         "display": "交涉之力"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2379",
       "effectDefinition": {
         "id": "2379",
         "snapshots": {
@@ -571,7 +287,8 @@
       "tipText": {
         "original": "Baldric increases the damage of his bargaining partners, which start as Fallbacks Champions and those with a high Charisma. More can be added with his specialization choices!",
         "display": "巴尔德里克会提高他交涉伙伴的伤害，他的交涉伙伴包括初始为“后备队”成员的勇士和有着高魅力值的勇士。你可通过他的专精选项来让更多的勇士加入其中！"
-      }
+      },
+      "effectReference": "effect_def,2379"
     },
     {
       "id": "17693",
@@ -579,14 +296,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17471",
@@ -597,7 +314,6 @@
         "display": "烈焰信仰"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "effect_def,2405",
       "effectDefinition": {
         "id": "2405",
         "snapshots": {
@@ -690,7 +406,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2405"
     },
     {
       "id": "17475",
@@ -701,7 +418,6 @@
         "display": "无人可挡的乌吉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2380",
       "effectDefinition": {
         "id": "2380",
         "snapshots": {
@@ -758,7 +474,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2380"
     },
     {
       "id": "17476",
@@ -769,7 +486,6 @@
         "display": "治愈真言"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2381",
       "effectDefinition": {
         "id": "2381",
         "snapshots": {
@@ -835,7 +551,8 @@
       "tipText": {
         "original": "Baldric heals Champions in all the columns in front of him, and his Healing Lantern empowers all healing abilities when any Champions are heavily damaged.",
         "display": "巴尔德里克会治疗处于他身前各列的勇士，并且当有任何勇士受重伤时，他的“治疗提灯”会强化所有治疗技能。"
-      }
+      },
+      "effectReference": "effect_def,2381"
     },
     {
       "id": "17669",
@@ -843,14 +560,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17491",
@@ -861,7 +578,6 @@
         "display": "与提尔交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2384",
       "effectDefinition": {
         "id": "2384",
         "snapshots": {
@@ -924,7 +640,8 @@
         "display": "巴尔德里克与法律与正义之神提尔有着复杂的关系。"
       },
       "specializationGraphicId": "27016",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2384"
     },
     {
       "id": "17492",
@@ -935,7 +652,6 @@
         "display": "与摩拉丁交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2385",
       "effectDefinition": {
         "id": "2385",
         "snapshots": {
@@ -970,6 +686,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "Dwarf Champions: $num_stacks___2"
             }
           },
@@ -1004,6 +721,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "矮人型勇士：$num_stacks___2"
             }
           }
@@ -1020,7 +738,8 @@
         "display": "所有矮人都熟知他们万神殿的主神摩拉丁的力量。"
       },
       "specializationGraphicId": "27013",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2385"
     },
     {
       "id": "17493",
@@ -1031,7 +750,6 @@
         "display": "与泰摩拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2386",
       "effectDefinition": {
         "id": "2386",
         "snapshots": {
@@ -1140,7 +858,8 @@
         "display": "当巴尔德里克需要运气和财富时，他会与幸运女神交涉。"
       },
       "specializationGraphicId": "27015",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2386"
     },
     {
       "id": "17494",
@@ -1151,7 +870,6 @@
         "display": "与密斯特拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2387",
       "effectDefinition": {
         "id": "2387",
         "snapshots": {
@@ -1234,7 +952,8 @@
         "display": "当巴尔德里克需要魔法和知识时，他会去乞求神秘女神。"
       },
       "specializationGraphicId": "27014",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2387"
     },
     {
       "id": "17495",
@@ -1245,7 +964,6 @@
         "display": "与艾达丝交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2388",
       "effectDefinition": {
         "id": "2388",
         "snapshots": {
@@ -1330,7 +1048,8 @@
         "display": "当暴力无法解决问题时，巴尔德里克会去向树林守护神艾达丝求助。"
       },
       "specializationGraphicId": "27012",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2388"
     },
     {
       "id": "17694",
@@ -1338,14 +1057,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17477",
@@ -1356,7 +1075,6 @@
         "display": "污秽之盾"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2382",
       "effectDefinition": {
         "id": "2382",
         "snapshots": {
@@ -1449,7 +1167,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2382"
     },
     {
       "id": "17695",
@@ -1457,14 +1176,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17696",
@@ -1472,14 +1191,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17478",
@@ -1490,7 +1209,6 @@
         "display": "治疗提灯"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2383",
       "effectDefinition": {
         "id": "2383",
         "snapshots": {
@@ -1583,7 +1301,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2383"
     },
     {
       "id": "17697",
@@ -1591,14 +1310,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17698",
@@ -1606,14 +1325,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17496",
@@ -1624,7 +1343,6 @@
         "display": "黑暗交易"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2389",
       "effectDefinition": {
         "id": "2389",
         "snapshots": {
@@ -1695,7 +1413,8 @@
         "display": "巴尔德里克冒着计算过的风险，与一个神秘的黑暗之神达成交易以换取力量。"
       },
       "specializationGraphicId": "27017",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2389"
     },
     {
       "id": "17497",
@@ -1706,7 +1425,6 @@
         "display": "与摩拉丁交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2385",
       "effectDefinition": {
         "id": "2385",
         "snapshots": {
@@ -1741,6 +1459,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "Dwarf Champions: $num_stacks___2"
             }
           },
@@ -1775,6 +1494,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "矮人型勇士：$num_stacks___2"
             }
           }
@@ -1791,7 +1511,8 @@
         "display": "所有矮人都熟知他们万神殿的主神摩拉丁的力量。"
       },
       "specializationGraphicId": "27013",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2385"
     },
     {
       "id": "17498",
@@ -1802,7 +1523,6 @@
         "display": "与泰摩拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2386",
       "effectDefinition": {
         "id": "2386",
         "snapshots": {
@@ -1911,7 +1631,8 @@
         "display": "当巴尔德里克需要运气和财富时，他会与幸运女神交涉。"
       },
       "specializationGraphicId": "27015",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2386"
     },
     {
       "id": "17499",
@@ -1922,7 +1643,6 @@
         "display": "与密斯特拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2387",
       "effectDefinition": {
         "id": "2387",
         "snapshots": {
@@ -2005,7 +1725,8 @@
         "display": "当巴尔德里克需要魔法和知识时，他会去乞求神秘女神。"
       },
       "specializationGraphicId": "27014",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2387"
     },
     {
       "id": "17500",
@@ -2016,7 +1737,6 @@
         "display": "与艾达丝交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2388",
       "effectDefinition": {
         "id": "2388",
         "snapshots": {
@@ -2101,7 +1821,8 @@
         "display": "当暴力无法解决问题时，巴尔德里克会去向树林守护神艾达丝求助。"
       },
       "specializationGraphicId": "27012",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2388"
     },
     {
       "id": "17501",
@@ -2112,7 +1833,6 @@
         "display": "与提尔交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2384",
       "effectDefinition": {
         "id": "2384",
         "snapshots": {
@@ -2175,7 +1895,8 @@
         "display": "巴尔德里克与法律与正义之神提尔有着复杂的关系。"
       },
       "specializationGraphicId": "27016",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2384"
     },
     {
       "id": "17502",
@@ -2186,7 +1907,6 @@
         "display": "黑暗交易"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2390",
       "effectDefinition": {
         "id": "2390",
         "snapshots": {
@@ -2325,7 +2045,8 @@
         "display": "巴尔德里克冒着计算过的风险，与一个神秘的黑暗之神达成交易以换取力量。"
       },
       "specializationGraphicId": "27017",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2390"
     },
     {
       "id": "17503",
@@ -2336,7 +2057,6 @@
         "display": "与泰摩拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2386",
       "effectDefinition": {
         "id": "2386",
         "snapshots": {
@@ -2445,7 +2165,8 @@
         "display": "当巴尔德里克需要运气和财富时，他会与幸运女神交涉。"
       },
       "specializationGraphicId": "27015",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2386"
     },
     {
       "id": "17504",
@@ -2456,7 +2177,6 @@
         "display": "与密斯特拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2387",
       "effectDefinition": {
         "id": "2387",
         "snapshots": {
@@ -2539,7 +2259,8 @@
         "display": "当巴尔德里克需要魔法和知识时，他会去乞求神秘女神。"
       },
       "specializationGraphicId": "27014",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2387"
     },
     {
       "id": "17505",
@@ -2550,7 +2271,6 @@
         "display": "与艾达丝交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2388",
       "effectDefinition": {
         "id": "2388",
         "snapshots": {
@@ -2635,7 +2355,8 @@
         "display": "当暴力无法解决问题时，巴尔德里克会去向树林守护神艾达丝求助。"
       },
       "specializationGraphicId": "27012",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2388"
     },
     {
       "id": "17506",
@@ -2646,7 +2367,6 @@
         "display": "与提尔交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2384",
       "effectDefinition": {
         "id": "2384",
         "snapshots": {
@@ -2709,7 +2429,8 @@
         "display": "巴尔德里克与法律与正义之神提尔有着复杂的关系。"
       },
       "specializationGraphicId": "27016",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2384"
     },
     {
       "id": "17507",
@@ -2720,7 +2441,6 @@
         "display": "与摩拉丁交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2385",
       "effectDefinition": {
         "id": "2385",
         "snapshots": {
@@ -2755,6 +2475,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "Dwarf Champions: $num_stacks___2"
             }
           },
@@ -2789,6 +2510,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "矮人型勇士：$num_stacks___2"
             }
           }
@@ -2805,7 +2527,8 @@
         "display": "所有矮人都熟知他们万神殿的主神摩拉丁的力量。"
       },
       "specializationGraphicId": "27013",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2385"
     },
     {
       "id": "17508",
@@ -2816,7 +2539,6 @@
         "display": "黑暗交易"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2391",
       "effectDefinition": {
         "id": "2391",
         "snapshots": {
@@ -2923,7 +2645,8 @@
         "display": "巴尔德里克冒着计算过的风险，与一个神秘的黑暗之神达成交易以换取力量。"
       },
       "specializationGraphicId": "27017",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2391"
     },
     {
       "id": "17509",
@@ -2934,7 +2657,6 @@
         "display": "与密斯特拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2387",
       "effectDefinition": {
         "id": "2387",
         "snapshots": {
@@ -3017,7 +2739,8 @@
         "display": "当巴尔德里克需要魔法和知识时，他会去乞求神秘女神。"
       },
       "specializationGraphicId": "27014",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2387"
     },
     {
       "id": "17510",
@@ -3028,7 +2751,6 @@
         "display": "与艾达丝交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2388",
       "effectDefinition": {
         "id": "2388",
         "snapshots": {
@@ -3113,7 +2835,8 @@
         "display": "当暴力无法解决问题时，巴尔德里克会去向树林守护神艾达丝求助。"
       },
       "specializationGraphicId": "27012",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2388"
     },
     {
       "id": "17511",
@@ -3124,7 +2847,6 @@
         "display": "与提尔交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2384",
       "effectDefinition": {
         "id": "2384",
         "snapshots": {
@@ -3187,7 +2909,8 @@
         "display": "巴尔德里克与法律与正义之神提尔有着复杂的关系。"
       },
       "specializationGraphicId": "27016",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2384"
     },
     {
       "id": "17512",
@@ -3198,7 +2921,6 @@
         "display": "与摩拉丁交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2385",
       "effectDefinition": {
         "id": "2385",
         "snapshots": {
@@ -3233,6 +2955,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "Dwarf Champions: $num_stacks___2"
             }
           },
@@ -3267,6 +2990,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "矮人型勇士：$num_stacks___2"
             }
           }
@@ -3283,7 +3007,8 @@
         "display": "所有矮人都熟知他们万神殿的主神摩拉丁的力量。"
       },
       "specializationGraphicId": "27013",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2385"
     },
     {
       "id": "17513",
@@ -3294,7 +3019,6 @@
         "display": "与泰摩拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2386",
       "effectDefinition": {
         "id": "2386",
         "snapshots": {
@@ -3403,7 +3127,8 @@
         "display": "当巴尔德里克需要运气和财富时，他会与幸运女神交涉。"
       },
       "specializationGraphicId": "27015",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2386"
     },
     {
       "id": "17514",
@@ -3414,7 +3139,6 @@
         "display": "黑暗交易"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2392",
       "effectDefinition": {
         "id": "2392",
         "snapshots": {
@@ -3559,7 +3283,8 @@
         "display": "巴尔德里克冒着计算过的风险，与一个神秘的黑暗之神达成交易以换取力量。"
       },
       "specializationGraphicId": "27017",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2392"
     },
     {
       "id": "17515",
@@ -3570,7 +3295,6 @@
         "display": "与艾达丝交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2388",
       "effectDefinition": {
         "id": "2388",
         "snapshots": {
@@ -3655,7 +3379,8 @@
         "display": "当暴力无法解决问题时，巴尔德里克会去向树林守护神艾达丝求助。"
       },
       "specializationGraphicId": "27012",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2388"
     },
     {
       "id": "17516",
@@ -3666,7 +3391,6 @@
         "display": "与提尔交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2384",
       "effectDefinition": {
         "id": "2384",
         "snapshots": {
@@ -3729,7 +3453,8 @@
         "display": "巴尔德里克与法律与正义之神提尔有着复杂的关系。"
       },
       "specializationGraphicId": "27016",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2384"
     },
     {
       "id": "17517",
@@ -3740,7 +3465,6 @@
         "display": "与摩拉丁交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2385",
       "effectDefinition": {
         "id": "2385",
         "snapshots": {
@@ -3775,6 +3499,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "Dwarf Champions: $num_stacks___2"
             }
           },
@@ -3809,6 +3534,7 @@
               "indexed_effect_properties": true,
               "per_effect_index_bonuses": true,
               "default_bonus_index": 0,
+              "retain_on_slot_changed": true,
               "spec_option_post_apply_info": "矮人型勇士：$num_stacks___2"
             }
           }
@@ -3825,7 +3551,8 @@
         "display": "所有矮人都熟知他们万神殿的主神摩拉丁的力量。"
       },
       "specializationGraphicId": "27013",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2385"
     },
     {
       "id": "17518",
@@ -3836,7 +3563,6 @@
         "display": "与泰摩拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2386",
       "effectDefinition": {
         "id": "2386",
         "snapshots": {
@@ -3945,7 +3671,8 @@
         "display": "当巴尔德里克需要运气和财富时，他会与幸运女神交涉。"
       },
       "specializationGraphicId": "27015",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2386"
     },
     {
       "id": "17519",
@@ -3956,7 +3683,6 @@
         "display": "与密斯特拉交涉"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2387",
       "effectDefinition": {
         "id": "2387",
         "snapshots": {
@@ -4039,7 +3765,8 @@
         "display": "当巴尔德里克需要魔法和知识时，他会去乞求神秘女神。"
       },
       "specializationGraphicId": "27014",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2387"
     },
     {
       "id": "17520",
@@ -4050,7 +3777,6 @@
         "display": "黑暗交易"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2393",
       "effectDefinition": {
         "id": "2393",
         "snapshots": {
@@ -4169,7 +3895,8 @@
         "display": "巴尔德里克冒着计算过的风险，与一个神秘的黑暗之神达成交易以换取力量。"
       },
       "specializationGraphicId": "27017",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2393"
     },
     {
       "id": "17699",
@@ -4177,14 +3904,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17671",
@@ -4192,14 +3919,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17700",
@@ -4207,14 +3934,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17701",
@@ -4222,14 +3949,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17702",
@@ -4237,14 +3964,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17703",
@@ -4252,14 +3979,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17704",
@@ -4267,14 +3994,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17705",
@@ -4282,14 +4009,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17706",
@@ -4297,14 +4024,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17684",
@@ -4312,14 +4039,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17707",
@@ -4327,14 +4054,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17708",
@@ -4342,14 +4069,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17709",
@@ -4357,14 +4084,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17710",
@@ -4372,14 +4099,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17711",
@@ -4387,14 +4114,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17712",
@@ -4402,14 +4129,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17685",
@@ -4417,14 +4144,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17713",
@@ -4432,14 +4159,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17714",
@@ -4447,14 +4174,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17715",
@@ -4462,14 +4189,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17716",
@@ -4477,14 +4204,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17717",
@@ -4492,14 +4219,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17718",
@@ -4507,14 +4234,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17719",
@@ -4522,14 +4249,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17686",
@@ -4537,14 +4264,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17720",
@@ -4552,14 +4279,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17721",
@@ -4567,14 +4294,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17722",
@@ -4582,14 +4309,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17723",
@@ -4597,14 +4324,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17724",
@@ -4612,14 +4339,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17725",
@@ -4627,14 +4354,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17687",
@@ -4642,14 +4369,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17726",
@@ -4657,14 +4384,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17727",
@@ -4672,14 +4399,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17728",
@@ -4687,14 +4414,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17729",
@@ -4702,14 +4429,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17688",
@@ -4717,14 +4444,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17730",
@@ -4732,14 +4459,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17731",
@@ -4747,14 +4474,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17732",
@@ -4762,14 +4489,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17733",
@@ -4777,14 +4504,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17689",
@@ -4792,14 +4519,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17734",
@@ -4807,14 +4534,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17735",
@@ -4822,14 +4549,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17736",
@@ -4837,14 +4564,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17737",
@@ -4852,14 +4579,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17690",
@@ -4867,14 +4594,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17738",
@@ -4882,14 +4609,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17739",
@@ -4897,14 +4624,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17740",
@@ -4912,14 +4639,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17741",
@@ -4927,14 +4654,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17742",
@@ -4942,14 +4669,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17743",
@@ -4957,14 +4684,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17691",
@@ -4972,14 +4699,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     },
     {
       "id": "17744",
@@ -4987,14 +4714,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17472",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17472"
     },
     {
       "id": "17670",
@@ -5002,14 +4729,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17475",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17475"
     },
     {
       "id": "17692",
@@ -5017,14 +4744,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,70,17476",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,17476"
     }
   ],
   "feats": [
@@ -5283,11 +5010,11 @@
       "order": 9,
       "name": {
         "original": "Trash Taste",
-        "display": "垃圾的味道"
+        "display": "低俗品味"
       },
       "description": {
         "original": "Cazrin, you promised you wouldn't tell anyone I was feeding Uggie bacon!",
-        "display": "卡兹琳，你答应过不告诉别人我给乌吉喂培根的！"
+        "display": "卡兹林，你答应过不会告诉任何人我给乌吉喂培根的！"
       },
       "rarity": "3",
       "graphicId": "6080",
@@ -5352,11 +5079,11 @@
       "order": 11,
       "name": {
         "original": "Onerous Odor",
-        "display": "难闻的气味"
+        "display": "刺鼻的气味"
       },
       "description": {
         "original": "Stop drooling on my clothes! It's going to take all day to get the stench out!",
-        "display": "别在我衣服上流口水了这臭味得一整天才能散掉"
+        "display": "别再把口水流到我衣服上了！这股臭味得花一整天才能去掉！"
       },
       "rarity": "4",
       "graphicId": "6080",
@@ -5484,8 +5211,8 @@
         "available_at_time": 1761159600
       },
       "collectionsSource": {
-        "type": "emergence",
-        "unavailable": true
+        "type": "gems",
+        "cost": 50000
       }
     }
   ],
@@ -5503,7 +5230,8 @@
         "base_graphic_id": 27262,
         "large_graphic_id": 27267,
         "portrait_graphic_id": 27277,
-        "xl_graphic_id": 27272
+        "xl_graphic_id": 27272,
+        "bastion_graphic_id": 31159
       },
       "rarity": "3",
       "properties": {
@@ -5515,7 +5243,7 @@
         "cost": 3830
       },
       "availabilities": {
-        "premium_item_id": "605"
+        "in_flash_sales": true
       }
     }
   ],
@@ -5533,6 +5261,7 @@
       "graphicId": "26971",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -5554,6 +5283,7 @@
       "graphicId": "26971",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -5575,6 +5305,7 @@
       "graphicId": "26972",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -5596,6 +5327,7 @@
       "graphicId": "26973",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -5617,6 +5349,7 @@
       "graphicId": "26962",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -5638,6 +5371,7 @@
       "graphicId": "26962",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -5659,6 +5393,7 @@
       "graphicId": "26963",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -5680,6 +5415,7 @@
       "graphicId": "26964",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -5701,6 +5437,7 @@
       "graphicId": "26965",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,17472,0"
@@ -5722,6 +5459,7 @@
       "graphicId": "26965",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,17472,0"
@@ -5743,6 +5481,7 @@
       "graphicId": "26966",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,17472,0"
@@ -5764,6 +5503,7 @@
       "graphicId": "26967",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,17472,0"
@@ -5785,6 +5525,7 @@
       "graphicId": "26956",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,17475"
@@ -5806,6 +5547,7 @@
       "graphicId": "26956",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,17475"
@@ -5827,6 +5569,7 @@
       "graphicId": "26958",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,17475"
@@ -5848,6 +5591,7 @@
       "graphicId": "26957",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,17475"
@@ -5869,6 +5613,7 @@
       "graphicId": "26968",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,17476"
@@ -5890,6 +5635,7 @@
       "graphicId": "26968",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,17476"
@@ -5911,6 +5657,7 @@
       "graphicId": "26969",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,17476"
@@ -5932,6 +5679,7 @@
       "graphicId": "26970",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,17476"
@@ -5953,6 +5701,11 @@
       "graphicId": "26959",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,9"
@@ -5974,6 +5727,11 @@
       "graphicId": "26959",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,18"
@@ -5995,6 +5753,11 @@
       "graphicId": "26960",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,36"
@@ -6016,6 +5779,11 @@
       "graphicId": "26961",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,90"
@@ -6141,6 +5909,305 @@
       ]
     }
   ],
+  "summary": {
+    "id": "165",
+    "name": {
+      "original": "Baldric",
+      "display": "巴尔德里克"
+    },
+    "seat": 12,
+    "portrait": {
+      "path": "v1/champion-portraits/165.png",
+      "sourceGraphic": "Portraits/Portrait_Baldric",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "healing",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "The Fallbacks",
+        "display": "后备队"
+      }
+    ],
+    "tags": [
+      "cleric",
+      "dwarf",
+      "event",
+      "fallbacks",
+      "geneutral",
+      "healing",
+      "lawful",
+      "male",
+      "neutral",
+      "spec_gold",
+      "support",
+      "y8"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "3",
+        "4",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "3",
+        "4",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Baldric",
+  "eventName": {
+    "original": "Ahghairon's Day",
+    "display": "阿格哈荣日"
+  },
+  "dateAvailable": "2025-08-06 12:00:00",
+  "lastReworkDate": "2025-08-06 12:00:00",
+  "popularity": 0,
+  "baseCost": "500000000000000000000",
+  "baseDamage": "60000000000000",
+  "baseHealth": "49",
+  "graphicId": "26976",
+  "portraitGraphicId": "26974",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1817492400
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    65,
+    690,
+    1400,
+    2280
+  ],
+  "costCurves": {
+    "1": 1.08
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 61,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 26977,
+    "graphic_xl": 26978,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      87,
+      78
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2025-08-27 12:00:00",
+    "available_in_store": "2025-09-03 12:00:00",
+    "time_gate_adventure_id": 1712,
+    "time_gate_variants_ids": [
+      1693,
+      1694,
+      1695
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 662,
+    "gold_chest_type_id": 663,
+    "golden_epic_loot_id": 3917,
+    "golden_epic_promo_id": 591,
+    "event_logo_graphic_id": 3368,
+    "console_portrait": 26975,
+    "trials_effect_id": 836,
+    "weekly_buff": "buff_upgrade,200,17472",
+    "portrait_graphic_scale": 1,
+    "permanent_effects": [
+      "effect_def,2410"
+    ],
+    "legendary_effect_id": [
+      1,
+      3,
+      5,
+      41,
+      39,
+      105
+    ],
+    "notification_adjustment": {
+      "offset": [
+        56,
+        210
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30578
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Baldric Goodhand",
+      "display": "巴尔德里克·妙手"
+    },
+    "class": {
+      "original": "Cleric",
+      "display": "牧师"
+    },
+    "race": {
+      "original": "Dwarf",
+      "display": "矮人"
+    },
+    "age": 80,
+    "alignment": {
+      "original": "Lawful Neutral",
+      "display": "守序中立"
+    },
+    "backstory": {
+      "original": "Baldric left his position as a prominent member of his family's mercantile empire to seek his fortunes elsewhere. He's a unique cleric that often confounds other clerics because he refuses to pledge his service or faith to a single deity. He prefers to bargain with any and all of them, depending on the situation, to receive his magic. This has lent him a confidence/cockiness that has landed him in his share of trouble. But now he's with the Fallbacks, and over the course of their adventures, his faith in them has become unshakable.",
+      "display": "巴尔德里克舍弃了他在家族商业帝国中显赫的地位，踏上了另寻机遇的旅途。他是一位独特的牧师，常常令其他牧师感到困惑，因为他拒绝效忠或信仰任何单一的神。他更喜欢根据具体的情况与各路神明交涉以获得神力。这给了他信心或者说是傲气，虽然这也让他惹上过不少麻烦。但现在他成为了“后备队”的一员，在经历过各种冒险之后，他坚定不移地相信他的这群伙伴。"
+    },
+    "abilityScores": {
+      "str": 14,
+      "dex": 10,
+      "con": 12,
+      "int": 13,
+      "wis": 17,
+      "cha": 15
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "879",
+      "name": {
+        "original": "Two-Handed Mace",
+        "display": "双手大锤"
+      },
+      "description": {
+        "original": "Baldric attacks the closest enemy, dealing 1 hit.",
+        "display": "巴尔德里克攻击最近的敌人，造成 1 次打击。"
+      },
+      "longDescription": null,
+      "cooldown": 4.75,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "damage_frame": 3
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "880",
+      "name": {
+        "original": "Faith Aflame",
+        "display": "烈焰信仰"
+      },
+      "description": {
+        "original": "Baldric prevents Champions from being stunned and he empowers his attacks for a short duration.",
+        "display": "巴尔德里克在短时间内使勇士们不会被眩晕，并强化他的攻击。"
+      },
+      "longDescription": {
+        "original": "Baldric's mace ignites with radiant light, preventing Champions from being stunned and empowering his attacks for the duration it is aflame",
+        "display": "巴尔德里克的大锤被耀眼的光芒点燃，在燃烧期间使勇士们不会被眩晕，并强化他的攻击。"
+      },
+      "cooldown": 360,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "ultimate"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "27023",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "baldric",
+          "animation_sequence_name": "ultimate"
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17472",
+        "name": {
+          "original": "Bargaining Power",
+          "display": "交涉之力"
+        },
+        "description": null,
+        "graphicId": "26998"
+      },
+      {
+        "upgradeId": "17475",
+        "name": {
+          "original": "Undeniable Uggie",
+          "display": "无人可挡的乌吉"
+        },
+        "description": null,
+        "graphicId": "27002"
+      },
+      {
+        "upgradeId": "17476",
+        "name": {
+          "original": "Healing Word",
+          "display": "治愈真言"
+        },
+        "description": null,
+        "graphicId": "27000"
+      },
+      {
+        "upgradeId": "17477",
+        "name": {
+          "original": "Shield of Filth",
+          "display": "污秽之盾"
+        },
+        "description": null,
+        "graphicId": "27001"
+      },
+      {
+        "upgradeId": "17478",
+        "name": {
+          "original": "Healing Lantern",
+          "display": "治疗提灯"
+        },
+        "description": null,
+        "graphicId": "26999"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -6242,7 +6309,7 @@
           "gold_chest_type_id": 663,
           "golden_epic_loot_id": 3917,
           "golden_epic_promo_id": 591,
-          "event_logo_graphic_id": 3943,
+          "event_logo_graphic_id": 3368,
           "console_portrait": 26975,
           "trials_effect_id": 836,
           "weekly_buff": "buff_upgrade,200,17472",
@@ -6264,7 +6331,8 @@
               210
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30578
         },
         "adventure_ids": [
           {
@@ -6292,7 +6360,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 116,
+        "popularity": 0,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6328,7 +6396,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1786042800,
+        "next_event_timestamp": 1817492400,
         "event_name": "Ahghairon's Day",
         "is_available": true,
         "date_available": "2025-08-06 12:00:00",
@@ -6433,7 +6501,7 @@
           "gold_chest_type_id": 663,
           "golden_epic_loot_id": 3917,
           "golden_epic_promo_id": 591,
-          "event_logo_graphic_id": 3943,
+          "event_logo_graphic_id": 3368,
           "console_portrait": 26975,
           "trials_effect_id": 836,
           "weekly_buff": "buff_upgrade,200,17472",
@@ -6455,7 +6523,8 @@
               210
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30578
         },
         "adventure_ids": [
           {
@@ -6483,7 +6552,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 116,
+        "popularity": 0,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6519,7 +6588,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1786042800,
+        "next_event_timestamp": 1817492400,
         "event_name": "阿格哈荣日",
         "is_available": true,
         "date_available": "2025-08-06 12:00:00",
@@ -10050,8 +10119,8 @@
             "id": 2271,
             "hero_id": 165,
             "order": 9,
-            "name": "垃圾的味道",
-            "description": "卡兹琳，你答应过不告诉别人我给乌吉喂培根的！",
+            "name": "低俗品味",
+            "description": "卡兹林，你答应过不会告诉任何人我给乌吉喂培根的！",
             "rarity": 3,
             "graphic_id": 6080,
             "effects": [
@@ -10118,8 +10187,8 @@
             "id": 2272,
             "hero_id": 165,
             "order": 11,
-            "name": "难闻的气味",
-            "description": "别在我衣服上流口水了这臭味得一整天才能散掉",
+            "name": "刺鼻的气味",
+            "description": "别再把口水流到我衣服上了！这股臭味得花一整天才能去掉！",
             "rarity": 4,
             "graphic_id": 6080,
             "effects": [
@@ -10368,8 +10437,8 @@
               "available_at_time": 1761159600
             },
             "collections_source": {
-              "type": "emergence",
-              "unavailable": true
+              "type": "gems",
+              "cost": 50000
             }
           },
           "display": {
@@ -10396,8 +10465,8 @@
               "available_at_time": 1761159600
             },
             "collections_source": {
-              "type": "emergence",
-              "unavailable": true
+              "type": "gems",
+              "cost": 50000
             }
           }
         }
@@ -10418,7 +10487,8 @@
               "base_graphic_id": 27262,
               "large_graphic_id": 27267,
               "portrait_graphic_id": 27277,
-              "xl_graphic_id": 27272
+              "xl_graphic_id": 27272,
+              "bastion_graphic_id": 31159
             },
             "rarity": "3",
             "properties": {
@@ -10430,7 +10500,7 @@
               "cost": 3830
             },
             "availabilities": {
-              "premium_item_id": "605"
+              "in_flash_sales": true
             }
           },
           "display": {
@@ -10444,7 +10514,8 @@
               "base_graphic_id": 27262,
               "large_graphic_id": 27267,
               "portrait_graphic_id": 27277,
-              "xl_graphic_id": 27272
+              "xl_graphic_id": 27272,
+              "bastion_graphic_id": 31159
             },
             "rarity": "3",
             "properties": {
@@ -10456,7 +10527,7 @@
               "cost": 3830
             },
             "availabilities": {
-              "premium_item_id": "605"
+              "in_flash_sales": true
             }
           }
         }

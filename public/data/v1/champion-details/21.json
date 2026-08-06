@@ -1,315 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "21",
-    "name": {
-      "original": "Birdsong",
-      "display": "鸟歌"
-    },
-    "seat": 9,
-    "roles": [
-      "dps",
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "bard",
-      "dps",
-      "event",
-      "female",
-      "geneutral",
-      "lawful",
-      "neutral",
-      "positional",
-      "support",
-      "tabaxi",
-      "unaffiliated",
-      "y1"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/21.png",
-      "sourceGraphic": "Portraits/Portrait_Birdsong",
-      "sourceVersion": 5
-    }
-  },
-  "englishName": "Birdsong",
-  "eventName": {
-    "original": "Grand Revel",
-    "display": "闹饮节"
-  },
-  "dateAvailable": "2018-02-14 00:00:00",
-  "lastReworkDate": "2018-02-14 00:00:00",
-  "popularity": 49,
-  "baseCost": "8000000000000",
-  "baseDamage": "1500000000",
-  "baseHealth": "43",
-  "graphicId": "2127",
-  "portraitGraphicId": "2270",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1801771200
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    165,
-    545,
-    990,
-    1545
-  ],
-  "costCurves": {
-    "1": 1.13
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      200,
-      201,
-      202
-    ],
-    "graphic_large": 2269,
-    "graphic_xl": 13846,
-    "eye_height": 119,
-    "portrait_center_offset": [
-      93,
-      71
-    ],
-    "ultimate_color": [
-      255,
-      112,
-      0
-    ],
-    "allow_time_gate": true,
-    "time_gate_adventure_id": 195,
-    "time_gate_variants_ids": [
-      105,
-      106,
-      107
-    ],
-    "time_gate_tier": 3,
-    "silver_chest_type_id": 18,
-    "gold_chest_type_id": 19,
-    "available_in_store": true,
-    "golden_epic_loot_id": 492,
-    "golden_epic_promo_id": 12,
-    "event_logo_graphic_id": 3369,
-    "console_portrait": 3982,
-    "head_graphic_id": 7064,
-    "trials_effect_id": 839,
-    "legendary_effect_id": [
-      1,
-      56,
-      13,
-      31,
-      43,
-      46
-    ],
-    "weekly_buff": "buff_upgrade,200,10774",
-    "permanent_effects": [
-      "update_stat_from_broadcast,crescendo_trigger,birdsong_perfect_pitch,<"
-    ],
-    "portrait_graphic_scale": 0.91,
-    "notification_adjustment": {
-      "offset": [
-        56,
-        232
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Birdsong",
-      "display": "鸟歌"
-    },
-    "class": {
-      "original": "Bard",
-      "display": "吟游诗人"
-    },
-    "race": {
-      "original": "Tabaxi",
-      "display": "斑猫人"
-    },
-    "age": 26,
-    "alignment": {
-      "original": "Lawful Neutral",
-      "display": "守序中立"
-    },
-    "abilityScores": {
-      "str": 9,
-      "dex": 18,
-      "con": 12,
-      "int": 13,
-      "wis": 11,
-      "cha": 17
-    },
-    "backstory": {
-      "original": "Birdsong, a cunning young Tabaxi bard, learned to defend herself while enslaved by the Yuan-ti. Proficient in playing the lute, Birdsong discovered her potential as a bard when witnessing the effect her songs had on other slaves. After her escape, she became one of the greatest minstrels of Chult. She promised herself to, one day, get revenge on the Yuan-ti who destroyed her village.",
-      "display": "鸟歌，一个狡黠的年轻斑猫人吟游诗人，在被蛇人奴役时学会了保护自己。鸟歌精通弹奏鲁特琴，当看到她的歌声对其他奴隶产生的影响时，她发现了自己作为吟游诗人的潜力。在逃脱奴役后，她成为了楚尔特最伟大的吟游诗人。她向自己发誓，有朝一日要向摧毁她村庄的蛇人复仇。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "609",
-      "name": {
-        "original": "Flashing Blades",
-        "display": "闪烁之刃"
-      },
-      "description": {
-        "original": "Birdsong leaps out with a cat's grace and attacks the nearest enemies with her sword.",
-        "display": "鸟歌以猫般的优雅跃出，用她的剑攻击距离最近的敌人。"
-      },
-      "longDescription": null,
-      "cooldown": 4.6,
-      "numTargets": 1,
-      "aoeRadius": 100,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "aoe"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "animation": "split_sequence_multi_target",
-          "sequences": [
-            {
-              "start_frame": 0,
-              "damage_frame": 2,
-              "hit_frames": [
-                2
-              ],
-              "end_frame": 25,
-              "sound_frames": {
-                "2": 199
-              },
-              "target_offset_x": -60
-            }
-          ]
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "611",
-      "name": {
-        "original": "Cat's Agility",
-        "display": "猫之灵巧"
-      },
-      "description": {
-        "original": "Birdsong leaps from enemy to enemy, dealing damage and stunning them.",
-        "display": "鸟歌从一名敌人跳向另一名敌人，造成伤害并眩晕他们。"
-      },
-      "longDescription": {
-        "original": "Birdsong leaps from enemy to enemy 5 times, dealing damage and stunning them for 5 seconds. Enemies she attacks during her ultimate take 200% extra damage from all Champions for 15 seconds.",
-        "display": "鸟歌从一名敌人跳向另一名敌人 5 次，造成伤害并使其眩晕 5 秒。所有勇士对鸟歌杀招期间受到她攻击的敌人额外造成 200% 的伤害，持续 15 秒。"
-      },
-      "cooldown": 180,
-      "numTargets": 5,
-      "aoeRadius": 0,
-      "damageModifier": "0.0325",
-      "target": "random",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "ultimate"
-      ],
-      "graphicId": "2125",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "stun_on_hit": 5,
-          "stun_graphic": 1509,
-          "animation": "split_sequence_multi_target",
-          "target_offset_x": -80,
-          "shake_on_hit": 0.1,
-          "sequences": [
-            {
-              "effects_on_monsters": [
-                {
-                  "effect_string": "increase_monster_damage,200",
-                  "for_time": 15,
-                  "active_graphic_id": 18603,
-                  "active_graphic_y": -90
-                }
-              ],
-              "start_frame": 0,
-              "damage_frame": 20,
-              "end_frame": 27,
-              "hit_frames": [
-                2,
-                20
-              ],
-              "sound_frames": {
-                "2": 199,
-                "20": 199
-              },
-              "target_offset_x": -60
-            }
-          ]
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "10774",
-        "name": {
-          "original": "Song of Battle",
-          "display": "战歌"
-        },
-        "description": null,
-        "graphicId": "2119"
-      },
-      {
-        "upgradeId": "10775",
-        "name": {
-          "original": "Chorus of the Lost",
-          "display": "迷失者的合唱"
-        },
-        "description": null,
-        "graphicId": "18589"
-      },
-      {
-        "upgradeId": "10776",
-        "name": {
-          "original": "Crescendo",
-          "display": "高潮迭起"
-        },
-        "description": null,
-        "graphicId": "813"
-      },
-      {
-        "upgradeId": "10777",
-        "name": {
-          "original": "Impressive Bladework",
-          "display": "惊天剑术"
-        },
-        "description": null,
-        "graphicId": "2118"
-      },
-      {
-        "upgradeId": "10784",
-        "name": {
-          "original": "Cat's Agility",
-          "display": "猫之灵巧"
-        },
-        "description": null,
-        "graphicId": "813"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "10990",
@@ -317,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10774",
@@ -335,7 +25,6 @@
         "display": "战歌"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1452",
       "effectDefinition": {
         "id": "1452",
         "snapshots": {
@@ -415,7 +104,8 @@
       "tipText": {
         "original": "Birdsong buffs Champions within two slots of herself. Use her as your main DPS, or keep your main DPS nearby.",
         "display": "鸟歌为距离自己两格以内的勇士提供增益。使用她作为主要伤害输出，或者把你的主要伤害输出放在她附近。"
-      }
+      },
+      "effectReference": "effect_def,1452"
     },
     {
       "id": "10991",
@@ -423,14 +113,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10992",
@@ -438,14 +128,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10778",
@@ -456,7 +146,6 @@
         "display": "英勇主题"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1456",
       "effectDefinition": {
         "id": "1456",
         "snapshots": {
@@ -531,7 +220,8 @@
         "display": "鸟歌的歌声专注于善良阵营勇士"
       },
       "specializationGraphicId": "2124",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1456"
     },
     {
       "id": "10779",
@@ -542,7 +232,6 @@
         "display": "深思主题"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1457",
       "effectDefinition": {
         "id": "1457",
         "snapshots": {
@@ -617,7 +306,8 @@
         "display": "鸟歌的歌声专注于中立阵营勇士"
       },
       "specializationGraphicId": "2122",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1457"
     },
     {
       "id": "10780",
@@ -628,7 +318,6 @@
         "display": "欺骗主题"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1458",
       "effectDefinition": {
         "id": "1458",
         "snapshots": {
@@ -703,7 +392,8 @@
         "display": "鸟歌的歌声专注于邪恶阵营勇士"
       },
       "specializationGraphicId": "2123",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1458"
     },
     {
       "id": "10993",
@@ -711,14 +401,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10775",
@@ -729,7 +419,6 @@
         "display": "迷失者的合唱"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1453",
       "effectDefinition": {
         "id": "1453",
         "snapshots": {
@@ -805,7 +494,8 @@
       "tipText": {
         "original": "Birdsong works best when she's getting buffed by unaffiliated Champions.",
         "display": "鸟歌受到无从属组织勇士增益的时候表现最佳。"
-      }
+      },
+      "effectReference": "effect_def,1453"
     },
     {
       "id": "10785",
@@ -813,14 +503,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "10776",
@@ -831,7 +521,6 @@
         "display": "高潮迭起"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1454",
       "effectDefinition": {
         "id": "1454",
         "snapshots": {
@@ -932,7 +621,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1454"
     },
     {
       "id": "10994",
@@ -940,14 +630,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10995",
@@ -955,14 +645,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10781",
@@ -973,7 +663,6 @@
         "display": "齐唱"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1459",
       "effectDefinition": {
         "id": "1459",
         "snapshots": {
@@ -1050,7 +739,8 @@
         "display": "鸟歌的歌声专注于守序阵营勇士"
       },
       "specializationGraphicId": "18598",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1459"
     },
     {
       "id": "10782",
@@ -1061,7 +751,6 @@
         "display": "女高音"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1460",
       "effectDefinition": {
         "id": "1460",
         "snapshots": {
@@ -1138,7 +827,8 @@
         "display": "鸟歌的歌声专注于女性勇士"
       },
       "specializationGraphicId": "18597",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1460"
     },
     {
       "id": "10783",
@@ -1149,7 +839,6 @@
         "display": "协奏"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1461",
       "effectDefinition": {
         "id": "1461",
         "snapshots": {
@@ -1226,7 +915,8 @@
         "display": "鸟歌的歌声专注于吟游诗人"
       },
       "specializationGraphicId": "18590",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1461"
     },
     {
       "id": "10996",
@@ -1234,14 +924,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "10777",
@@ -1252,7 +942,6 @@
         "display": "惊天剑术"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1455",
       "effectDefinition": {
         "id": "1455",
         "snapshots": {
@@ -1313,7 +1002,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1455"
     },
     {
       "id": "10997",
@@ -1321,14 +1011,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10998",
@@ -1336,14 +1026,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "10999",
@@ -1351,14 +1041,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11000",
@@ -1366,14 +1056,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10784",
@@ -1384,14 +1074,14 @@
         "display": "猫之灵巧"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "11001",
@@ -1399,14 +1089,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11002",
@@ -1414,14 +1104,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11036",
@@ -1429,14 +1119,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11003",
@@ -1444,14 +1134,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11004",
@@ -1459,14 +1149,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11005",
@@ -1474,14 +1164,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11006",
@@ -1489,14 +1179,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11007",
@@ -1504,14 +1194,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11008",
@@ -1519,14 +1209,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11009",
@@ -1534,14 +1224,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11010",
@@ -1549,14 +1239,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11011",
@@ -1564,14 +1254,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11012",
@@ -1579,14 +1269,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11013",
@@ -1594,14 +1284,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11014",
@@ -1609,14 +1299,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11015",
@@ -1624,14 +1314,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11016",
@@ -1639,14 +1329,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11017",
@@ -1654,14 +1344,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11037",
@@ -1669,14 +1359,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11018",
@@ -1684,14 +1374,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11038",
@@ -1699,14 +1389,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11039",
@@ -1714,14 +1404,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11019",
@@ -1729,14 +1419,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11020",
@@ -1744,14 +1434,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11040",
@@ -1759,14 +1449,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11021",
@@ -1774,14 +1464,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11041",
@@ -1789,14 +1479,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11042",
@@ -1804,14 +1494,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11022",
@@ -1819,14 +1509,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11023",
@@ -1834,14 +1524,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11043",
@@ -1849,14 +1539,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11024",
@@ -1864,14 +1554,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11044",
@@ -1879,14 +1569,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11025",
@@ -1894,14 +1584,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11045",
@@ -1909,14 +1599,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11026",
@@ -1924,14 +1614,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11027",
@@ -1939,14 +1629,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11028",
@@ -1954,14 +1644,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11046",
@@ -1969,14 +1659,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11047",
@@ -1984,14 +1674,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11029",
@@ -1999,14 +1689,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11030",
@@ -2014,14 +1704,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11048",
@@ -2029,14 +1719,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11031",
@@ -2044,14 +1734,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11032",
@@ -2059,14 +1749,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11049",
@@ -2074,14 +1764,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11033",
@@ -2089,14 +1779,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11050",
@@ -2104,14 +1794,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11034",
@@ -2119,14 +1809,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10774",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10774"
     },
     {
       "id": "11051",
@@ -2134,14 +1824,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11035",
@@ -2149,14 +1839,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11052",
@@ -2164,14 +1854,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10786",
@@ -2179,14 +1869,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10775",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10775"
     },
     {
       "id": "10787",
@@ -2194,14 +1884,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,10776",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10776"
     }
   ],
   "feats": [
@@ -2731,9 +2421,8 @@
         "available_at_time": 1771444800
       },
       "collectionsSource": {
-        "type": "dlc",
-        "item_id": "676",
-        "cost": 1680
+        "type": "gems",
+        "cost": 50000
       }
     },
     {
@@ -2850,7 +2539,8 @@
         "available_at_time": 1779908400
       },
       "collectionsSource": {
-        "type": "not_yet_available"
+        "type": "adventure",
+        "adventure_id": 1899
       }
     },
     {
@@ -2895,7 +2585,8 @@
         "available_at_time": 1779908400
       },
       "collectionsSource": {
-        "type": "not_yet_available"
+        "type": "adventure",
+        "adventure_id": 1900
       }
     },
     {
@@ -2913,8 +2604,13 @@
       "graphicId": "27204",
       "effects": [
         {
-          "effect_string": "todo",
-          "notes": "NEW EFFECT Birdsong may be used in any The Tales of the Champions adventure or variant when a patron is enabled, even if the patron or variant restrictions would normally restrict her."
+          "effect_string": "force_allow_hero",
+          "hero_ids": [
+            21
+          ],
+          "ignore_hero_source_check": true,
+          "if": "campaign_id==32&&patron_id!=0",
+          "description": "Birdsong may be used in any Tales of the Champions campaign adventure when a patron is enabled, regardless of any restrictions."
         }
       ],
       "sources": [
@@ -2924,11 +2620,13 @@
         }
       ],
       "properties": {
-        "available_time": 999999,
-        "is_available": false,
+        "is_available": true,
         "available_at_time": 1782327600
       },
-      "collectionsSource": ""
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 1915
+      }
     }
   ],
   "skins": [
@@ -2945,7 +2643,8 @@
         "base_graphic_id": 7816,
         "large_graphic_id": 7810,
         "xl_graphic_id": 13772,
-        "portrait_graphic_id": 7812
+        "portrait_graphic_id": 7812,
+        "bastion_graphic_id": 30624
       },
       "rarity": "3",
       "properties": {
@@ -2977,7 +2676,8 @@
         "base_graphic_id": 18809,
         "large_graphic_id": 18812,
         "portrait_graphic_id": 18803,
-        "xl_graphic_id": 18815
+        "xl_graphic_id": 18815,
+        "bastion_graphic_id": 30866
       },
       "rarity": "3",
       "properties": {
@@ -2998,7 +2698,7 @@
       "id": "294",
       "name": {
         "original": "Ancient Birdsong",
-        "display": "古老的鸟歌"
+        "display": "远古的鸟鸣"
       },
       "cost": {
         "req_date": "2023-04-19 12:00:00"
@@ -3007,7 +2707,8 @@
         "base_graphic_id": 19095,
         "large_graphic_id": 19099,
         "portrait_graphic_id": 19085,
-        "xl_graphic_id": 19103
+        "xl_graphic_id": 19103,
+        "bastion_graphic_id": 30876
       },
       "rarity": "3",
       "properties": {
@@ -3036,7 +2737,8 @@
         "base_graphic_id": 21890,
         "large_graphic_id": 21891,
         "portrait_graphic_id": 21889,
-        "xl_graphic_id": 21892
+        "xl_graphic_id": 21892,
+        "bastion_graphic_id": 30949
       },
       "rarity": "3",
       "properties": {
@@ -3072,7 +2774,8 @@
         "base_graphic_id": 23876,
         "large_graphic_id": 23878,
         "portrait_graphic_id": 23873,
-        "xl_graphic_id": 23880
+        "xl_graphic_id": 23880,
+        "bastion_graphic_id": 31017
       },
       "rarity": "3",
       "properties": {
@@ -3108,7 +2811,8 @@
         "base_graphic_id": 25483,
         "large_graphic_id": 25486,
         "portrait_graphic_id": 25480,
-        "xl_graphic_id": 25489
+        "xl_graphic_id": 25489,
+        "bastion_graphic_id": 31080
       },
       "rarity": "3",
       "properties": {
@@ -3133,7 +2837,8 @@
         "base_graphic_id": 25916,
         "large_graphic_id": 25925,
         "portrait_graphic_id": 25907,
-        "xl_graphic_id": 25932
+        "xl_graphic_id": 25932,
+        "bastion_graphic_id": 31097
       },
       "rarity": "3",
       "properties": {
@@ -3168,7 +2873,8 @@
         "base_graphic_id": 28606,
         "large_graphic_id": 28608,
         "portrait_graphic_id": 28604,
-        "xl_graphic_id": 28610
+        "xl_graphic_id": 28610,
+        "bastion_graphic_id": 31231
       },
       "rarity": "3",
       "properties": {
@@ -3205,6 +2911,7 @@
       "graphicId": "2140",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -3226,6 +2933,7 @@
       "graphicId": "2140",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -3247,6 +2955,7 @@
       "graphicId": "2141",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -3268,6 +2977,7 @@
       "graphicId": "2142",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -3289,6 +2999,7 @@
       "graphicId": "2134",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,10776"
@@ -3310,6 +3021,7 @@
       "graphicId": "2134",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,10776"
@@ -3331,6 +3043,7 @@
       "graphicId": "2135",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,10776"
@@ -3352,6 +3065,7 @@
       "graphicId": "2136",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,10776"
@@ -3373,6 +3087,7 @@
       "graphicId": "2128",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3394,6 +3109,7 @@
       "graphicId": "2128",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3415,6 +3131,7 @@
       "graphicId": "2129",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3436,6 +3153,7 @@
       "graphicId": "2130",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3457,6 +3175,7 @@
       "graphicId": "2137",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,10774"
@@ -3478,6 +3197,7 @@
       "graphicId": "2137",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,10774"
@@ -3499,6 +3219,7 @@
       "graphicId": "2138",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,10774"
@@ -3520,6 +3241,7 @@
       "graphicId": "2139",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,10774"
@@ -3541,6 +3263,7 @@
       "graphicId": "2131",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -3562,6 +3285,7 @@
       "graphicId": "2131",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -3583,6 +3307,7 @@
       "graphicId": "2132",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -3604,6 +3329,7 @@
       "graphicId": "2133",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -3625,6 +3351,11 @@
       "graphicId": "2143",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,5"
@@ -3646,6 +3377,11 @@
       "graphicId": "2143",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,9"
@@ -3667,6 +3403,11 @@
       "graphicId": "2144",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,18"
@@ -3688,6 +3429,11 @@
       "graphicId": "2145",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,45"
@@ -3813,6 +3559,329 @@
       ]
     }
   ],
+  "summary": {
+    "id": "21",
+    "name": {
+      "original": "Birdsong",
+      "display": "鸟歌"
+    },
+    "seat": 9,
+    "portrait": {
+      "path": "v1/champion-portraits/21.png",
+      "sourceGraphic": "Portraits/Portrait_Birdsong",
+      "sourceVersion": 5
+    },
+    "roles": [
+      "dps",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "bard",
+      "dps",
+      "event",
+      "female",
+      "geneutral",
+      "lawful",
+      "neutral",
+      "positional",
+      "support",
+      "tabaxi",
+      "tales",
+      "unaffiliated",
+      "y1"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "3"
+      ],
+      "ruleQualifiedPatronIds": [
+        "3"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Birdsong",
+  "eventName": {
+    "original": "Grand Revel",
+    "display": "闹饮节"
+  },
+  "dateAvailable": "2018-02-14 00:00:00",
+  "lastReworkDate": "2018-02-14 00:00:00",
+  "popularity": 18,
+  "baseCost": "8000000000000",
+  "baseDamage": "1500000000",
+  "baseHealth": "43",
+  "graphicId": "2127",
+  "portraitGraphicId": "2270",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1801771200
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    165,
+    545,
+    990,
+    1545
+  ],
+  "costCurves": {
+    "1": 1.13
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      200,
+      201,
+      202
+    ],
+    "graphic_large": 2269,
+    "graphic_xl": 13846,
+    "eye_height": 119,
+    "portrait_center_offset": [
+      93,
+      71
+    ],
+    "ultimate_color": [
+      255,
+      112,
+      0
+    ],
+    "allow_time_gate": true,
+    "time_gate_adventure_id": 195,
+    "time_gate_variants_ids": [
+      105,
+      106,
+      107
+    ],
+    "time_gate_tier": 3,
+    "silver_chest_type_id": 18,
+    "gold_chest_type_id": 19,
+    "available_in_store": true,
+    "golden_epic_loot_id": 492,
+    "golden_epic_promo_id": 12,
+    "event_logo_graphic_id": 3369,
+    "console_portrait": 3982,
+    "head_graphic_id": 7064,
+    "trials_effect_id": 839,
+    "legendary_effect_id": [
+      1,
+      56,
+      13,
+      31,
+      43,
+      46
+    ],
+    "weekly_buff": "buff_upgrade,200,10774",
+    "permanent_effects": [
+      "update_stat_from_broadcast,crescendo_trigger,birdsong_perfect_pitch,<"
+    ],
+    "portrait_graphic_scale": 0.91,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        232
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30447
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Birdsong",
+      "display": "鸟歌"
+    },
+    "class": {
+      "original": "Bard",
+      "display": "吟游诗人"
+    },
+    "race": {
+      "original": "Tabaxi",
+      "display": "斑猫人"
+    },
+    "age": 26,
+    "alignment": {
+      "original": "Lawful Neutral",
+      "display": "守序中立"
+    },
+    "backstory": {
+      "original": "Birdsong, a cunning young Tabaxi bard, learned to defend herself while enslaved by the Yuan-ti. Proficient in playing the lute, Birdsong discovered her potential as a bard when witnessing the effect her songs had on other slaves. After her escape, she became one of the greatest minstrels of Chult. She promised herself to, one day, get revenge on the Yuan-ti who destroyed her village.",
+      "display": "鸟歌，一个狡黠的年轻斑猫人吟游诗人，在被蛇人奴役时学会了保护自己。鸟歌精通弹奏鲁特琴，当看到她的歌声对其他奴隶产生的影响时，她发现了自己作为吟游诗人的潜力。在逃脱奴役后，她成为了楚尔特最伟大的吟游诗人。她向自己发誓，有朝一日要向摧毁她村庄的蛇人复仇。"
+    },
+    "abilityScores": {
+      "str": 9,
+      "dex": 18,
+      "con": 12,
+      "int": 13,
+      "wis": 11,
+      "cha": 17
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "609",
+      "name": {
+        "original": "Flashing Blades",
+        "display": "闪烁之刃"
+      },
+      "description": {
+        "original": "Birdsong leaps out with a cat's grace and attacks the nearest enemies with her sword.",
+        "display": "鸟歌以猫般的优雅跃出，用她的剑攻击距离最近的敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 4.6,
+      "numTargets": 1,
+      "aoeRadius": 100,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "aoe"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "animation": "split_sequence_multi_target",
+          "sequences": [
+            {
+              "start_frame": 0,
+              "damage_frame": 2,
+              "hit_frames": [
+                2
+              ],
+              "end_frame": 25,
+              "sound_frames": {
+                "2": 199
+              },
+              "target_offset_x": -60
+            }
+          ]
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "611",
+      "name": {
+        "original": "Cat's Agility",
+        "display": "猫之灵巧"
+      },
+      "description": {
+        "original": "Birdsong leaps from enemy to enemy, dealing damage and stunning them.",
+        "display": "鸟歌从一名敌人跳向另一名敌人，造成伤害并眩晕他们。"
+      },
+      "longDescription": {
+        "original": "Birdsong leaps from enemy to enemy 5 times, dealing damage and stunning them for 5 seconds. Enemies she attacks during her ultimate take 200% extra damage from all Champions for 15 seconds.",
+        "display": "鸟歌从一名敌人跳向另一名敌人 5 次，造成伤害并使其眩晕 5 秒。所有勇士对鸟歌杀招期间受到她攻击的敌人额外造成 200% 的伤害，持续 15 秒。"
+      },
+      "cooldown": 180,
+      "numTargets": 5,
+      "aoeRadius": 0,
+      "damageModifier": "0.0325",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "2125",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "stun_on_hit": 5,
+          "stun_graphic": 1509,
+          "animation": "split_sequence_multi_target",
+          "target_offset_x": -80,
+          "shake_on_hit": 0.1,
+          "sequences": [
+            {
+              "effects_on_monsters": [
+                {
+                  "effect_string": "increase_monster_damage,200",
+                  "for_time": 15,
+                  "active_graphic_id": 18603,
+                  "active_graphic_y": -90
+                }
+              ],
+              "start_frame": 0,
+              "damage_frame": 20,
+              "end_frame": 27,
+              "hit_frames": [
+                2,
+                20
+              ],
+              "sound_frames": {
+                "2": 199,
+                "20": 199
+              },
+              "target_offset_x": -60
+            }
+          ]
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "10774",
+        "name": {
+          "original": "Song of Battle",
+          "display": "战歌"
+        },
+        "description": null,
+        "graphicId": "2119"
+      },
+      {
+        "upgradeId": "10775",
+        "name": {
+          "original": "Chorus of the Lost",
+          "display": "迷失者的合唱"
+        },
+        "description": null,
+        "graphicId": "18589"
+      },
+      {
+        "upgradeId": "10776",
+        "name": {
+          "original": "Crescendo",
+          "display": "高潮迭起"
+        },
+        "description": null,
+        "graphicId": "813"
+      },
+      {
+        "upgradeId": "10777",
+        "name": {
+          "original": "Impressive Bladework",
+          "display": "惊天剑术"
+        },
+        "description": null,
+        "graphicId": "2118"
+      },
+      {
+        "upgradeId": "10784",
+        "name": {
+          "original": "Cat's Agility",
+          "display": "猫之灵巧"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3868,6 +3937,7 @@
           "y1",
           "unaffiliated",
           "positional",
+          "tales",
           "geneutral"
         ],
         "properties": {
@@ -3926,7 +3996,8 @@
               232
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30447
         },
         "adventure_ids": [
           {
@@ -3954,7 +4025,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 49,
+        "popularity": 18,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4049,6 +4120,7 @@
           "y1",
           "unaffiliated",
           "positional",
+          "tales",
           "geneutral"
         ],
         "properties": {
@@ -4107,7 +4179,8 @@
               232
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30447
         },
         "adventure_ids": [
           {
@@ -4135,7 +4208,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 49,
+        "popularity": 18,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7581,9 +7654,8 @@
               "available_at_time": 1771444800
             },
             "collections_source": {
-              "type": "dlc",
-              "item_id": "676",
-              "cost": 1680
+              "type": "gems",
+              "cost": 50000
             }
           },
           "display": {
@@ -7597,7 +7669,7 @@
             "effects": [
               {
                 "effect_string": "effect_def,2193",
-                "description": "阵型中每有一个独特的种族，所有勇士的伤害提高 20%，以加算方式堆叠。"
+                "description": "每阵容中每种独特的物种，都会使所有勇士的伤害提高20%，该效果可叠加，且为加法叠加。"
               }
             ],
             "sources": [
@@ -7616,9 +7688,8 @@
               "available_at_time": 1771444800
             },
             "collections_source": {
-              "type": "dlc",
-              "item_id": "676",
-              "cost": 1680
+              "type": "gems",
+              "cost": 50000
             }
           }
         }
@@ -7660,7 +7731,8 @@
               "available_at_time": 1779908400
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "adventure",
+              "adventure_id": 1899
             }
           },
           "display": {
@@ -7697,7 +7769,8 @@
               "available_at_time": 1779908400
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "adventure",
+              "adventure_id": 1899
             }
           }
         }
@@ -7742,7 +7815,8 @@
               "available_at_time": 1779908400
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "adventure",
+              "adventure_id": 1900
             }
           },
           "display": {
@@ -7782,7 +7856,8 @@
               "available_at_time": 1779908400
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "adventure",
+              "adventure_id": 1900
             }
           }
         }
@@ -7800,8 +7875,13 @@
             "graphic_id": 27204,
             "effects": [
               {
-                "effect_string": "todo",
-                "notes": "NEW EFFECT Birdsong may be used in any The Tales of the Champions adventure or variant when a patron is enabled, even if the patron or variant restrictions would normally restrict her."
+                "effect_string": "force_allow_hero",
+                "hero_ids": [
+                  21
+                ],
+                "ignore_hero_source_check": true,
+                "if": "campaign_id==32&&patron_id!=0",
+                "description": "Birdsong may be used in any Tales of the Champions campaign adventure when a patron is enabled, regardless of any restrictions."
               }
             ],
             "sources": [
@@ -7811,11 +7891,13 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1782327600
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1915
+            }
           },
           "display": {
             "id": 2610,
@@ -7827,8 +7909,13 @@
             "graphic_id": 27204,
             "effects": [
               {
-                "effect_string": "todo",
-                "notes": "NEW EFFECT Birdsong may be used in any The Tales of the Champions adventure or variant when a patron is enabled, even if the patron or variant restrictions would normally restrict her."
+                "effect_string": "force_allow_hero",
+                "hero_ids": [
+                  21
+                ],
+                "ignore_hero_source_check": true,
+                "if": "campaign_id==32&&patron_id!=0",
+                "description": "启用赞助者时，鸟歌可用于任何“勇士传说”战役冒险，无视任何限制条件。"
               }
             ],
             "sources": [
@@ -7838,11 +7925,13 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1782327600
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1915
+            }
           }
         }
       }
@@ -7862,7 +7951,8 @@
               "base_graphic_id": 7816,
               "large_graphic_id": 7810,
               "xl_graphic_id": 13772,
-              "portrait_graphic_id": 7812
+              "portrait_graphic_id": 7812,
+              "bastion_graphic_id": 30624
             },
             "rarity": "3",
             "properties": {
@@ -7891,7 +7981,8 @@
               "base_graphic_id": 7816,
               "large_graphic_id": 7810,
               "xl_graphic_id": 13772,
-              "portrait_graphic_id": 7812
+              "portrait_graphic_id": 7812,
+              "bastion_graphic_id": 30624
             },
             "rarity": "3",
             "properties": {
@@ -7925,7 +8016,8 @@
               "base_graphic_id": 18809,
               "large_graphic_id": 18812,
               "portrait_graphic_id": 18803,
-              "xl_graphic_id": 18815
+              "xl_graphic_id": 18815,
+              "bastion_graphic_id": 30866
             },
             "rarity": "3",
             "properties": {
@@ -7953,7 +8045,8 @@
               "base_graphic_id": 18809,
               "large_graphic_id": 18812,
               "portrait_graphic_id": 18803,
-              "xl_graphic_id": 18815
+              "xl_graphic_id": 18815,
+              "bastion_graphic_id": 30866
             },
             "rarity": "3",
             "properties": {
@@ -7986,7 +8079,8 @@
               "base_graphic_id": 19095,
               "large_graphic_id": 19099,
               "portrait_graphic_id": 19085,
-              "xl_graphic_id": 19103
+              "xl_graphic_id": 19103,
+              "bastion_graphic_id": 30876
             },
             "rarity": "3",
             "properties": {
@@ -8005,7 +8099,7 @@
           "display": {
             "id": 294,
             "hero_id": 21,
-            "name": "古老的鸟歌",
+            "name": "远古的鸟鸣",
             "cost": {
               "req_date": "2023-04-19 12:00:00"
             },
@@ -8013,7 +8107,8 @@
               "base_graphic_id": 19095,
               "large_graphic_id": 19099,
               "portrait_graphic_id": 19085,
-              "xl_graphic_id": 19103
+              "xl_graphic_id": 19103,
+              "bastion_graphic_id": 30876
             },
             "rarity": "3",
             "properties": {
@@ -8045,7 +8140,8 @@
               "base_graphic_id": 21890,
               "large_graphic_id": 21891,
               "portrait_graphic_id": 21889,
-              "xl_graphic_id": 21892
+              "xl_graphic_id": 21892,
+              "bastion_graphic_id": 30949
             },
             "rarity": "3",
             "properties": {
@@ -8079,7 +8175,8 @@
               "base_graphic_id": 21890,
               "large_graphic_id": 21891,
               "portrait_graphic_id": 21889,
-              "xl_graphic_id": 21892
+              "xl_graphic_id": 21892,
+              "bastion_graphic_id": 30949
             },
             "rarity": "3",
             "properties": {
@@ -8118,7 +8215,8 @@
               "base_graphic_id": 23876,
               "large_graphic_id": 23878,
               "portrait_graphic_id": 23873,
-              "xl_graphic_id": 23880
+              "xl_graphic_id": 23880,
+              "bastion_graphic_id": 31017
             },
             "rarity": "3",
             "properties": {
@@ -8151,7 +8249,8 @@
               "base_graphic_id": 23876,
               "large_graphic_id": 23878,
               "portrait_graphic_id": 23873,
-              "xl_graphic_id": 23880
+              "xl_graphic_id": 23880,
+              "bastion_graphic_id": 31017
             },
             "rarity": "3",
             "properties": {
@@ -8190,7 +8289,8 @@
               "base_graphic_id": 25483,
               "large_graphic_id": 25486,
               "portrait_graphic_id": 25480,
-              "xl_graphic_id": 25489
+              "xl_graphic_id": 25489,
+              "bastion_graphic_id": 31080
             },
             "rarity": "3",
             "properties": {
@@ -8213,7 +8313,8 @@
               "base_graphic_id": 25483,
               "large_graphic_id": 25486,
               "portrait_graphic_id": 25480,
-              "xl_graphic_id": 25489
+              "xl_graphic_id": 25489,
+              "bastion_graphic_id": 31080
             },
             "rarity": "3",
             "properties": {
@@ -8240,7 +8341,8 @@
               "base_graphic_id": 25916,
               "large_graphic_id": 25925,
               "portrait_graphic_id": 25907,
-              "xl_graphic_id": 25932
+              "xl_graphic_id": 25932,
+              "bastion_graphic_id": 31097
             },
             "rarity": "3",
             "properties": {
@@ -8273,7 +8375,8 @@
               "base_graphic_id": 25916,
               "large_graphic_id": 25925,
               "portrait_graphic_id": 25907,
-              "xl_graphic_id": 25932
+              "xl_graphic_id": 25932,
+              "bastion_graphic_id": 31097
             },
             "rarity": "3",
             "properties": {
@@ -8311,7 +8414,8 @@
               "base_graphic_id": 28606,
               "large_graphic_id": 28608,
               "portrait_graphic_id": 28604,
-              "xl_graphic_id": 28610
+              "xl_graphic_id": 28610,
+              "bastion_graphic_id": 31231
             },
             "rarity": "3",
             "properties": {
@@ -8344,7 +8448,8 @@
               "base_graphic_id": 28606,
               "large_graphic_id": 28608,
               "portrait_graphic_id": 28604,
-              "xl_graphic_id": 28610
+              "xl_graphic_id": 28610,
+              "bastion_graphic_id": 31231
             },
             "rarity": "3",
             "properties": {

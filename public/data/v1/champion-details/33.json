@@ -1,289 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "33",
-    "name": {
-      "original": "Farideh",
-      "display": "法莉德"
-    },
-    "seat": 7,
-    "roles": [
-      "dps"
-    ],
-    "affiliations": [
-      {
-        "original": "Brimstone Angels",
-        "display": "硫磺天使"
-      }
-    ],
-    "tags": [
-      "brimstone",
-      "dps",
-      "event",
-      "female",
-      "good",
-      "lcneutral",
-      "neutral",
-      "spec_debuff",
-      "spec_hunter",
-      "spec_hunter_fiends",
-      "tiefling",
-      "warlock",
-      "y2"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/33.png",
-      "sourceGraphic": "Portraits/Portrait_Farideh",
-      "sourceVersion": 5
-    }
-  },
-  "englishName": "Farideh",
-  "eventName": {
-    "original": "Highharvestide",
-    "display": "丰收节"
-  },
-  "dateAvailable": "2018-10-03 00:00:00",
-  "lastReworkDate": "2025-10-08 12:00:00",
-  "popularity": 119,
-  "baseCost": "5250000000",
-  "baseDamage": "20000000",
-  "baseHealth": "45",
-  "graphicId": "4110",
-  "portraitGraphicId": "4117",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1788462000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    155,
-    605,
-    1130,
-    1780
-  ],
-  "costCurves": {
-    "1": 1.11
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      170,
-      171,
-      172
-    ],
-    "graphic_large": 4118,
-    "graphic_xl": 13880,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      101,
-      73
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 5,
-      "gethit": 6,
-      "koed": 7,
-      "run": 8
-    },
-    "allow_time_gate": true,
-    "time_gate_adventure_id": 261,
-    "time_gate_variants_ids": [
-      257,
-      258,
-      259
-    ],
-    "time_gate_tier": 2,
-    "silver_chest_type_id": 71,
-    "gold_chest_type_id": 72,
-    "available_in_store": true,
-    "golden_epic_loot_id": 780,
-    "golden_epic_promo_id": 53,
-    "event_logo_graphic_id": 3371,
-    "console_portrait": 4116,
-    "head_graphic_id": 7269,
-    "trials_effect_id": 839,
-    "legendary_effect_id": [
-      1,
-      3,
-      63,
-      35,
-      90,
-      49
-    ],
-    "weekly_buff": "hero_dps_multiplier_mult,400",
-    "portrait_graphic_scale": 0.96,
-    "notification_adjustment": {
-      "offset": [
-        60,
-        209
-      ],
-      "scale": 1.25
-    },
-    "shop_transform_graphic": 28656
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Farideh",
-      "display": "法莉德"
-    },
-    "class": {
-      "original": "Warlock",
-      "display": "邪术师"
-    },
-    "race": {
-      "original": "Tiefling",
-      "display": "提夫林"
-    },
-    "age": 19,
-    "alignment": {
-      "original": "Neutral Good",
-      "display": "中立善良"
-    },
-    "abilityScores": {
-      "str": 10,
-      "dex": 14,
-      "con": 14,
-      "int": 14,
-      "wis": 13,
-      "cha": 18
-    },
-    "backstory": {
-      "original": "Abandoned as an infant and adopted by an outcast dragonborn warrior, Farideh grew to adulthood acutely aware of the drawbacks of being a tiefling. While those from the Nine Hells do their utmost to corrupt her, Farideh isn't interested in power so much as defending the world from demons, the undead, and any other villains trying to bring trouble or drag her friends and family into danger.",
-      "display": "法莉德在婴儿时被遗弃，随后被一名流浪的龙裔战士收养。在成年后，她深刻地意识到了作为一名提夫林的缺点。虽然那些来自九层地狱的存在竭力想腐蚀她，但法莉德对力量并不感兴趣。她想要的是保护世界，使其不受恶魔、亡灵，以及任何其他试图带来麻烦或将她朋友和家人拖入危险的恶棍所侵害。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "137",
-      "name": {
-        "original": "Scorching Ray",
-        "display": "灼热射线"
-      },
-      "description": {
-        "original": "Farideh creates $attack_num_targets rays of fire and hurls them at random enemies.",
-        "display": "法莉德召唤出 $attack_num_targets 道火焰射线，并将其投向随机敌人。"
-      },
-      "longDescription": null,
-      "cooldown": 5,
-      "numTargets": 3,
-      "aoeRadius": 0,
-      "damageModifier": "0.33",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile": "scorching_ray",
-          "shoot_frame": 9,
-          "projectile_delay_no_pause": 0.1,
-          "projectile_count": 3,
-          "shoot_offset_x": 27,
-          "shoot_offset_y": -20
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "903",
-      "name": {
-        "original": "Infernal Aspect",
-        "display": "地狱容颜"
-      },
-      "description": {
-        "original": "Farideh taps into her infernal bloodline, berserking enemies and damaging them.",
-        "display": "法莉德展露出她的地狱血脉，使敌人发狂并对他们造成伤害。"
-      },
-      "longDescription": {
-        "original": "Farideh taps into her infernal bloodline, causing enemies to move faster and attack more often, but deal less damage, while also damaging them",
-        "display": "法莉德展露出她的地狱血脉，使敌人的移动速度和攻击频率加快，但造成的伤害降低，同时也会对他们造成伤害"
-      },
-      "cooldown": 450,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "magic",
-        "ultimate"
-      ],
-      "graphicId": "4109",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "farideh_v2",
-          "animation_sequence_name": "ultimate",
-          "no_damage_display": true
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "17835",
-        "name": {
-          "original": "Hellish Rebuke",
-          "display": "炼狱叱喝"
-        },
-        "description": {
-          "original": "Enemies that strike Farideh (can be expanded to allies via upgrades and specializations) take instant damage based on Farideh's DPS.",
-          "display": "攻击法莉德（可通过进阶和专精扩展至包括队友）的敌人，会立即受到基于法莉德的秒伤的伤害。"
-        },
-        "graphicId": "4094"
-      },
-      {
-        "upgradeId": "17836",
-        "name": {
-          "original": "Chosen of Asmodeus",
-          "display": "被阿斯摩蒂斯选中者"
-        },
-        "description": null,
-        "graphicId": "4096"
-      },
-      {
-        "upgradeId": "17837",
-        "name": {
-          "original": "Pact Family",
-          "display": "契约家族"
-        },
-        "description": {
-          "original": "Increase the damage of Farideh for each Tiefling in the formation.",
-          "display": "阵型中每有一名提夫林，都会为法莉德提高伤害。"
-        },
-        "graphicId": "4098"
-      },
-      {
-        "upgradeId": "17838",
-        "name": {
-          "original": "Sister, Sister",
-          "display": "姐妹，姐妹"
-        },
-        "description": null,
-        "graphicId": "27631"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "18107",
@@ -291,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "17835",
@@ -309,7 +25,6 @@
         "display": "炼狱叱喝"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2462",
       "effectDefinition": {
         "id": "2462",
         "snapshots": {
@@ -419,7 +134,8 @@
       "tipText": {
         "original": "Farideh's Hellish Rebuke triggers when enemies hit her or her allies, dealing big damage to the enemy.",
         "display": "当敌人击中法莉德或者她的盟友时，她的“炼狱叱喝”就会触发，对该敌人造成巨大的伤害。"
-      }
+      },
+      "effectReference": "effect_def,2462"
     },
     {
       "id": "18108",
@@ -427,14 +143,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "17836",
@@ -445,7 +161,6 @@
         "display": "被阿斯摩蒂斯选中者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2463",
       "effectDefinition": {
         "id": "2463",
         "snapshots": {
@@ -538,7 +253,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2463"
     },
     {
       "id": "18109",
@@ -546,14 +262,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "18110",
@@ -561,14 +277,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17837",
@@ -579,7 +295,6 @@
         "display": "契约家族"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2464",
       "effectDefinition": {
         "id": "2464",
         "snapshots": {
@@ -665,7 +380,8 @@
       "tipText": {
         "original": "Farideh's damage is increased by the number of tieflings in the formation. Load up your formation with tieflings to really power her up!",
         "display": "法莉德的伤害随着阵型中的提夫林数量而提高。在阵型中加入更多提夫林，让她尽情发挥力量！"
-      }
+      },
+      "effectReference": "effect_def,2464"
     },
     {
       "id": "18111",
@@ -673,14 +389,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17842",
@@ -691,7 +407,6 @@
         "display": "地狱容颜"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "effect_def,2471",
       "effectDefinition": {
         "id": "2471",
         "snapshots": {
@@ -760,7 +475,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2471"
     },
     {
       "id": "18112",
@@ -768,14 +484,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17839",
@@ -786,7 +502,6 @@
         "display": "梅亨的女儿们"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2466",
       "effectDefinition": {
         "id": "2466",
         "snapshots": {
@@ -927,7 +642,8 @@
         "display": "法莉德找梅亨和其他龙裔勇士来协助她作战。"
       },
       "specializationGraphicId": "27505",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2466"
     },
     {
       "id": "17840",
@@ -938,7 +654,6 @@
         "display": "阿斯摩蒂斯之怒"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2467",
       "effectDefinition": {
         "id": "2467",
         "snapshots": {
@@ -1017,7 +732,8 @@
         "display": "法莉德进一步强化她与阿斯摩蒂斯的联系，对受“炼狱叱喝”影响的敌人造成更多伤害。"
       },
       "specializationGraphicId": "27506",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2467"
     },
     {
       "id": "17841",
@@ -1028,7 +744,6 @@
         "display": "与洛肯的契约"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2468",
       "effectDefinition": {
         "id": "2468",
         "snapshots": {
@@ -1169,7 +884,8 @@
         "display": "法莉德追寻那些迷惑她姐妹哈维拉的恶魔，并试图彻底消灭它们。"
       },
       "specializationGraphicId": "27507",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2468"
     },
     {
       "id": "18113",
@@ -1177,14 +893,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17838",
@@ -1195,7 +911,6 @@
         "display": "姐妹，姐妹"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2465",
       "effectDefinition": {
         "id": "2465",
         "snapshots": {
@@ -1336,7 +1051,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2465"
     },
     {
       "id": "18114",
@@ -1344,14 +1060,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "18115",
@@ -1359,14 +1075,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18116",
@@ -1374,14 +1090,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "18117",
@@ -1389,14 +1105,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18118",
@@ -1404,14 +1120,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17844",
@@ -1419,14 +1135,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17835"
     },
     {
       "id": "18119",
@@ -1434,14 +1150,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18120",
@@ -1449,14 +1165,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "1552",
@@ -1464,14 +1180,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "add_attack_targets,1,137",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1,137"
     },
     {
       "id": "18121",
@@ -1479,14 +1195,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18122",
@@ -1494,14 +1210,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18123",
@@ -1509,14 +1225,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18124",
@@ -1524,14 +1240,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18125",
@@ -1539,14 +1255,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18126",
@@ -1554,14 +1270,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17835"
     },
     {
       "id": "18127",
@@ -1569,14 +1285,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18128",
@@ -1584,14 +1300,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18129",
@@ -1599,14 +1315,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18130",
@@ -1614,14 +1330,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18131",
@@ -1629,14 +1345,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18132",
@@ -1644,14 +1360,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18133",
@@ -1659,14 +1375,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17835"
     },
     {
       "id": "18134",
@@ -1674,14 +1390,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18135",
@@ -1689,14 +1405,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18136",
@@ -1704,14 +1420,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18137",
@@ -1719,14 +1435,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18138",
@@ -1734,14 +1450,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17835"
     },
     {
       "id": "1558",
@@ -1749,14 +1465,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "add_attack_targets,1,137",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1,137"
     },
     {
       "id": "18139",
@@ -1764,14 +1480,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18140",
@@ -1779,14 +1495,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17835"
     },
     {
       "id": "18141",
@@ -1794,14 +1510,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18142",
@@ -1809,14 +1525,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "18143",
@@ -1824,14 +1540,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     }
   ],
   "feats": [
@@ -2564,11 +2280,12 @@
       ],
       "properties": {
         "is_available": true,
-        "available_at_time": 1777489200,
-        "available_for_gems_at_time": 1785351600
+        "available_at_time": 1777489200
       },
       "collectionsSource": {
-        "type": "not_yet_available"
+        "type": "dlc",
+        "item_id": "705",
+        "cost": 1680
       }
     }
   ],
@@ -2596,7 +2313,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30614
       },
       "rarity": "3",
       "properties": {
@@ -2636,7 +2354,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30724
       },
       "rarity": "3",
       "properties": {
@@ -2677,7 +2396,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30726
       },
       "rarity": "3",
       "properties": {
@@ -2717,7 +2437,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30758
       },
       "rarity": "3",
       "properties": {
@@ -2764,7 +2485,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30923
       },
       "rarity": "3",
       "properties": {
@@ -2804,7 +2526,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 31046
       },
       "rarity": "3",
       "properties": {
@@ -2844,7 +2567,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 31181
       },
       "rarity": "3",
       "properties": {
@@ -2884,7 +2608,8 @@
             "sequence": 1,
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 31257
       },
       "rarity": "3",
       "properties": {
@@ -2914,6 +2639,7 @@
       "graphicId": "4119",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2935,6 +2661,7 @@
       "graphicId": "4119",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2956,6 +2683,7 @@
       "graphicId": "4120",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2977,6 +2705,7 @@
       "graphicId": "4121",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2998,6 +2727,7 @@
       "graphicId": "4134",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,17836,0"
@@ -3019,6 +2749,7 @@
       "graphicId": "4134",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,17836,0"
@@ -3040,6 +2771,7 @@
       "graphicId": "4135",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,17836,0"
@@ -3061,6 +2793,7 @@
       "graphicId": "4136",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,17836,0"
@@ -3082,6 +2815,7 @@
       "graphicId": "4122",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,17835"
@@ -3103,6 +2837,7 @@
       "graphicId": "4122",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,17835"
@@ -3124,6 +2859,7 @@
       "graphicId": "4123",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,17835"
@@ -3145,6 +2881,7 @@
       "graphicId": "4124",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,17835"
@@ -3166,6 +2903,7 @@
       "graphicId": "4131",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,17837"
@@ -3187,6 +2925,7 @@
       "graphicId": "4131",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,17837"
@@ -3208,6 +2947,7 @@
       "graphicId": "4132",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,17837"
@@ -3229,6 +2969,7 @@
       "graphicId": "4133",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,17837"
@@ -3250,6 +2991,7 @@
       "graphicId": "4125",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,17839,17840,17841",
@@ -3272,6 +3014,7 @@
       "graphicId": "4125",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,17839,17840,17841",
@@ -3294,6 +3037,7 @@
       "graphicId": "4126",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,17839,17840,17841",
@@ -3316,6 +3060,7 @@
       "graphicId": "4127",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,17839,17840,17841",
@@ -3338,6 +3083,11 @@
       "graphicId": "4128",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,12"
@@ -3359,6 +3109,11 @@
       "graphicId": "4128",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,23"
@@ -3380,6 +3135,11 @@
       "graphicId": "4129",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,45"
@@ -3401,6 +3161,11 @@
       "graphicId": "4130",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,113"
@@ -3528,6 +3293,310 @@
       ]
     }
   ],
+  "summary": {
+    "id": "33",
+    "name": {
+      "original": "Farideh",
+      "display": "法莉德"
+    },
+    "seat": 7,
+    "portrait": {
+      "path": "v1/champion-portraits/33.png",
+      "sourceGraphic": "Portraits/Portrait_Farideh",
+      "sourceVersion": 5
+    },
+    "roles": [
+      "dps"
+    ],
+    "affiliations": [
+      {
+        "original": "Brimstone Angels",
+        "display": "硫磺天使"
+      }
+    ],
+    "tags": [
+      "brimstone",
+      "dps",
+      "event",
+      "female",
+      "good",
+      "lcneutral",
+      "neutral",
+      "spec_debuff",
+      "spec_hunter",
+      "spec_hunter_fiends",
+      "tiefling",
+      "warlock",
+      "y2"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Farideh",
+  "eventName": {
+    "original": "Highharvestide",
+    "display": "丰收节"
+  },
+  "dateAvailable": "2018-10-03 00:00:00",
+  "lastReworkDate": "2025-10-08 12:00:00",
+  "popularity": 47,
+  "baseCost": "5250000000",
+  "baseDamage": "20000000",
+  "baseHealth": "45",
+  "graphicId": "4110",
+  "portraitGraphicId": "4117",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1788375600
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    155,
+    605,
+    1130,
+    1780
+  ],
+  "costCurves": {
+    "1": 1.11
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 4118,
+    "graphic_xl": 13880,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      101,
+      73
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 8
+    },
+    "allow_time_gate": true,
+    "time_gate_adventure_id": 261,
+    "time_gate_variants_ids": [
+      257,
+      258,
+      259
+    ],
+    "time_gate_tier": 2,
+    "silver_chest_type_id": 71,
+    "gold_chest_type_id": 72,
+    "available_in_store": true,
+    "golden_epic_loot_id": 780,
+    "golden_epic_promo_id": 53,
+    "event_logo_graphic_id": 3371,
+    "console_portrait": 4116,
+    "head_graphic_id": 7269,
+    "trials_effect_id": 839,
+    "legendary_effect_id": [
+      1,
+      3,
+      63,
+      35,
+      90,
+      49
+    ],
+    "weekly_buff": "hero_dps_multiplier_mult,400",
+    "portrait_graphic_scale": 0.96,
+    "notification_adjustment": {
+      "offset": [
+        60,
+        209
+      ],
+      "scale": 1.25
+    },
+    "shop_transform_graphic": 28656,
+    "bastion_graphic_id": 30459
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Farideh",
+      "display": "法莉德"
+    },
+    "class": {
+      "original": "Warlock",
+      "display": "邪术师"
+    },
+    "race": {
+      "original": "Tiefling",
+      "display": "提夫林"
+    },
+    "age": 19,
+    "alignment": {
+      "original": "Neutral Good",
+      "display": "中立善良"
+    },
+    "backstory": {
+      "original": "Abandoned as an infant and adopted by an outcast dragonborn warrior, Farideh grew to adulthood acutely aware of the drawbacks of being a tiefling. While those from the Nine Hells do their utmost to corrupt her, Farideh isn't interested in power so much as defending the world from demons, the undead, and any other villains trying to bring trouble or drag her friends and family into danger.",
+      "display": "法莉德在婴儿时被遗弃，随后被一名流浪的龙裔战士收养。在成年后，她深刻地意识到了作为一名提夫林的缺点。虽然那些来自九层地狱的存在竭力想腐蚀她，但法莉德对力量并不感兴趣。她想要的是保护世界，使其不受恶魔、亡灵，以及任何其他试图带来麻烦或将她朋友和家人拖入危险的恶棍所侵害。"
+    },
+    "abilityScores": {
+      "str": 10,
+      "dex": 14,
+      "con": 14,
+      "int": 14,
+      "wis": 13,
+      "cha": 18
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "137",
+      "name": {
+        "original": "Scorching Ray",
+        "display": "灼热射线"
+      },
+      "description": {
+        "original": "Farideh creates $attack_num_targets rays of fire and hurls them at random enemies.",
+        "display": "法莉德召唤出 $attack_num_targets 道火焰射线，并将其投向随机敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 5,
+      "numTargets": 3,
+      "aoeRadius": 0,
+      "damageModifier": "0.33",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "scorching_ray",
+          "shoot_frame": 9,
+          "projectile_delay_no_pause": 0.1,
+          "projectile_count": 3,
+          "shoot_offset_x": 27,
+          "shoot_offset_y": -20
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "903",
+      "name": {
+        "original": "Infernal Aspect",
+        "display": "地狱容颜"
+      },
+      "description": {
+        "original": "Farideh taps into her infernal bloodline, berserking enemies and damaging them.",
+        "display": "法莉德展露出她的地狱血脉，使敌人发狂并对他们造成伤害。"
+      },
+      "longDescription": {
+        "original": "Farideh taps into her infernal bloodline, causing enemies to move faster and attack more often, but deal less damage, while also damaging them",
+        "display": "法莉德展露出她的地狱血脉，使敌人的移动速度和攻击频率加快，但造成的伤害降低，同时也会对他们造成伤害"
+      },
+      "cooldown": 450,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "magic",
+        "ultimate"
+      ],
+      "graphicId": "4109",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "farideh_v2",
+          "animation_sequence_name": "ultimate",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17835",
+        "name": {
+          "original": "Hellish Rebuke",
+          "display": "炼狱叱喝"
+        },
+        "description": {
+          "original": "Enemies that strike Farideh (can be expanded to allies via upgrades and specializations) take instant damage based on Farideh's DPS.",
+          "display": "攻击法莉德（可通过进阶和专精扩展至包括队友）的敌人，会立即受到基于法莉德的秒伤的伤害。"
+        },
+        "graphicId": "4094"
+      },
+      {
+        "upgradeId": "17836",
+        "name": {
+          "original": "Chosen of Asmodeus",
+          "display": "被阿斯摩蒂斯选中者"
+        },
+        "description": null,
+        "graphicId": "4096"
+      },
+      {
+        "upgradeId": "17837",
+        "name": {
+          "original": "Pact Family",
+          "display": "契约家族"
+        },
+        "description": {
+          "original": "Increase the damage of Farideh for each Tiefling in the formation.",
+          "display": "阵型中每有一名提夫林，都会为法莉德提高伤害。"
+        },
+        "graphicId": "4098"
+      },
+      {
+        "upgradeId": "17838",
+        "name": {
+          "original": "Sister, Sister",
+          "display": "姐妹，姐妹"
+        },
+        "description": null,
+        "graphicId": "27631"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3650,7 +3719,8 @@
             ],
             "scale": 1.25
           },
-          "shop_transform_graphic": 28656
+          "shop_transform_graphic": 28656,
+          "bastion_graphic_id": 30459
         },
         "adventure_ids": [
           {
@@ -3678,7 +3748,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 119,
+        "popularity": 47,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3708,7 +3778,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1788462000,
+        "next_event_timestamp": 1788375600,
         "event_name": "Highharvestide",
         "is_available": true,
         "date_available": "2018-10-03 00:00:00",
@@ -3834,7 +3904,8 @@
             ],
             "scale": 1.25
           },
-          "shop_transform_graphic": 28656
+          "shop_transform_graphic": 28656,
+          "bastion_graphic_id": 30459
         },
         "adventure_ids": [
           {
@@ -3862,7 +3933,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 119,
+        "popularity": 47,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3892,7 +3963,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1788462000,
+        "next_event_timestamp": 1788375600,
         "event_name": "丰收节",
         "is_available": true,
         "date_available": "2018-10-03 00:00:00",
@@ -6668,11 +6739,12 @@
             ],
             "properties": {
               "is_available": true,
-              "available_at_time": 1777489200,
-              "available_for_gems_at_time": 1785351600
+              "available_at_time": 1777489200
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "dlc",
+              "item_id": "705",
+              "cost": 1680
             }
           },
           "display": {
@@ -6702,11 +6774,12 @@
             ],
             "properties": {
               "is_available": true,
-              "available_at_time": 1777489200,
-              "available_for_gems_at_time": 1785351600
+              "available_at_time": 1777489200
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "dlc",
+              "item_id": "705",
+              "cost": 1680
             }
           }
         }
@@ -6737,7 +6810,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30614
             },
             "rarity": "3",
             "properties": {
@@ -6773,7 +6847,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30614
             },
             "rarity": "3",
             "properties": {
@@ -6816,7 +6891,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30724
             },
             "rarity": "3",
             "properties": {
@@ -6855,7 +6931,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30724
             },
             "rarity": "3",
             "properties": {
@@ -6899,7 +6976,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30726
             },
             "rarity": "3",
             "properties": {
@@ -6937,7 +7015,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30726
             },
             "rarity": "3",
             "properties": {
@@ -6980,7 +7059,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30758
             },
             "rarity": "3",
             "properties": {
@@ -7025,7 +7105,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30758
             },
             "rarity": "3",
             "properties": {
@@ -7075,7 +7156,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30923
             },
             "rarity": "3",
             "properties": {
@@ -7113,7 +7195,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30923
             },
             "rarity": "3",
             "properties": {
@@ -7156,7 +7239,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31046
             },
             "rarity": "3",
             "properties": {
@@ -7194,7 +7278,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31046
             },
             "rarity": "3",
             "properties": {
@@ -7237,7 +7322,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31181
             },
             "rarity": "3",
             "properties": {
@@ -7275,7 +7361,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31181
             },
             "rarity": "3",
             "properties": {
@@ -7318,7 +7405,8 @@
                   "sequence": 1,
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31257
             },
             "rarity": "3",
             "properties": {
@@ -7356,7 +7444,8 @@
                   "sequence": 1,
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31257
             },
             "rarity": "3",
             "properties": {

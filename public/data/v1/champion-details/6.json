@@ -1,264 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "6",
-    "name": {
-      "original": "Asharra",
-      "display": "艾萨拉"
-    },
-    "seat": 6,
-    "roles": [
-      "dps",
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "aarakocra",
-      "core",
-      "dps",
-      "evergreen",
-      "female",
-      "geneutral",
-      "lawful",
-      "neutral",
-      "support",
-      "unaffiliated",
-      "wizard"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/6.png",
-      "sourceGraphic": "Portraits/Portrait_Asharra",
-      "sourceVersion": 7
-    }
-  },
-  "englishName": "Asharra",
-  "eventName": null,
-  "dateAvailable": "2017-09-07 00:00:00",
-  "lastReworkDate": "2017-09-07 00:00:00",
-  "popularity": 0,
-  "baseCost": "50000000",
-  "baseDamage": "500000",
-  "baseHealth": "35",
-  "graphicId": "7",
-  "portraitGraphicId": "12",
-  "availability": {
-    "availableInNextEvent": false,
-    "availableInShop": true,
-    "availableInTimeGate": false,
-    "isAvailable": true,
-    "nextEventTimestamp": 0
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    175,
-    445,
-    775,
-    1185
-  ],
-  "costCurves": {
-    "1": 1.18
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "available_in_store": "2025-10-23 12:00:00",
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      150,
-      151,
-      152
-    ],
-    "graphic_large": 179,
-    "graphic_xl": 13765,
-    "dps_balancing_multiplier": 3,
-    "eye_height": 116,
-    "portrait_center_offset": [
-      90,
-      58
-    ],
-    "ultimate_color": [
-      255,
-      112,
-      0
-    ],
-    "console_portrait": 3259,
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "shoot": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7,
-      "attack_c": 9
-    },
-    "head_graphic_id": 7062,
-    "trials_effect_id": 842,
-    "legendary_effect_id": [
-      1,
-      56,
-      9,
-      43,
-      41,
-      104
-    ],
-    "weekly_chest_type_id": 466,
-    "weekly_buff": "buff_upgrades,200,90,91,92,975,976,977",
-    "portrait_graphic_scale": 1,
-    "notification_adjustment": {
-      "offset": [
-        47,
-        205
-      ],
-      "scale": 1.25
-    },
-    "gold_chest_type_id": 466
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Asharra",
-      "display": "艾萨拉"
-    },
-    "class": {
-      "original": "Wizard",
-      "display": "法师"
-    },
-    "race": {
-      "original": "Aarakocra",
-      "display": "翼爪鸟人"
-    },
-    "age": 38,
-    "alignment": {
-      "original": "Lawful Neutral",
-      "display": "守序中立"
-    },
-    "abilityScores": {
-      "str": 10,
-      "dex": 11,
-      "con": 9,
-      "int": 17,
-      "wis": 15,
-      "cha": 14
-    },
-    "backstory": {
-      "original": "The elder of Kir Sabal, Asharra is a stern and honorable aarakocra wizard who looks over her flock and the safety of the Omu royal family.",
-      "display": "身为克萨巴尔的长老，艾萨拉是一位严厉而可敬的翼爪鸟人法师，她维护着她的族群和奥穆王室的安全。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "11",
-      "name": {
-        "original": "Magic Missile",
-        "display": "魔法飞弹"
-      },
-      "description": {
-        "original": "Asharra lets loose a barrage of missiles, hitting random targets.",
-        "display": "艾萨拉释放出魔法飞弹弹幕，攻击随机目标。"
-      },
-      "longDescription": null,
-      "cooldown": 7,
-      "numTargets": 3,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged",
-        "multitarget"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile_graphic_id": 1,
-          "projectile": "magic_missile",
-          "shoot_frame": 18,
-          "projectile_delay": 0.1,
-          "projectile_count": 3,
-          "shoot_sound": 149,
-          "hit_sound": 133
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "12",
-      "name": {
-        "original": "Fireball",
-        "display": "火球术"
-      },
-      "description": {
-        "original": "Asharra pushes back all enemies and casts a massive Fireball on a random one.",
-        "display": "艾萨拉击退所有敌人，并对随机目标施放一个大火球。"
-      },
-      "longDescription": {
-        "original": "Asharra leaps into the air, flapping her wings and pushing all enemies away from the party. Hovering there, she summons a massive fireball that hits a random enemy and all other enemies within a small radius.",
-        "display": "艾萨拉跳到空中，挥动翅膀将所有敌人推离队伍。随后悬停在空中并召唤一个大火球，攻击一名随机敌人和小范围内的其他所有敌人。"
-      },
-      "cooldown": 420,
-      "numTargets": 1,
-      "aoeRadius": 200,
-      "damageModifier": "0.00595",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged",
-        "aoe",
-        "ultimate"
-      ],
-      "graphicId": "668",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile_graphic_id": 1,
-          "projectile": "fireball",
-          "shoot_frame": 75,
-          "sound_frames": {
-            "1": 153
-          },
-          "hit_sound": 142,
-          "effect_frames": {
-            "34": {
-              "effect_string": "enemies_pushback,11,200"
-            },
-            "44": {
-              "effect_string": "enemies_pushback,11,200"
-            },
-            "54": {
-              "effect_string": "enemies_pushback,11,200"
-            }
-          }
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "2189",
-        "name": {
-          "original": "Paragon of Kir Sabal",
-          "display": "克萨巴尔的楷模"
-        },
-        "description": null,
-        "graphicId": "5236"
-      },
-      {
-        "upgradeId": "2190",
-        "name": {
-          "original": "Take Flight",
-          "display": "飞离地面"
-        },
-        "description": null,
-        "graphicId": "5240"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "90",
@@ -269,7 +10,6 @@
         "display": "纽带：人类"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,11",
       "effectDefinition": {
         "id": "11",
         "snapshots": {
@@ -347,7 +87,8 @@
       "tipText": {
         "original": "Asharra has formed a bond of friendship with your Human champions. Focus on having those champions as your main damage dealers.",
         "display": "艾萨拉与人类勇士结成友谊纽带，专注于使其成为主要伤害输出者。"
-      }
+      },
+      "effectReference": "effect_def,11"
     },
     {
       "id": "91",
@@ -358,7 +99,6 @@
         "display": "纽带：矮人与精灵"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,12",
       "effectDefinition": {
         "id": "12",
         "snapshots": {
@@ -436,7 +176,8 @@
       "tipText": {
         "original": "Asharra has formed a bond of friendship with your Dwarf and Elf champions (including Drow). Focus on having those champions as your main damage dealers.",
         "display": "艾萨拉与矮人及精灵勇士（包括卓尔精灵）结成友谊纽带，专注于使其成为主要伤害输出者。"
-      }
+      },
+      "effectReference": "effect_def,12"
     },
     {
       "id": "92",
@@ -447,7 +188,6 @@
         "display": "纽带：混合"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,13",
       "effectDefinition": {
         "id": "13",
         "snapshots": {
@@ -525,7 +265,8 @@
       "tipText": {
         "original": "Asharra has formed a bond of friendship with your Aarakocra, Dragonborn, Firbolg, Lizardfolk, Minotaur, Tiefling, and Tortle champions. Focus on having those champions as your main damage dealers.",
         "display": "艾萨拉与翼爪鸟人、龙裔、隐逸巨人、蜥蜴人、牛头人、提夫林以及龟人勇士结成友谊纽带，专注于使其成为主要伤害输出者。"
-      }
+      },
+      "effectReference": "effect_def,13"
     },
     {
       "id": "93",
@@ -533,14 +274,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "set_ultimate_attack,12",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,12"
     },
     {
       "id": "94",
@@ -548,14 +289,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "95",
@@ -563,14 +304,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "88",
@@ -578,14 +319,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "89",
@@ -593,14 +334,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "96",
@@ -608,14 +349,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2189",
@@ -626,7 +367,6 @@
         "display": "克萨巴尔的楷模"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,315",
       "effectDefinition": {
         "id": "315",
         "snapshots": {
@@ -823,7 +563,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,315"
     },
     {
       "id": "201",
@@ -831,14 +572,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "97",
@@ -846,14 +587,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "add_attack_targets,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1"
     },
     {
       "id": "202",
@@ -861,14 +602,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "100",
@@ -876,14 +617,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92"
     },
     {
       "id": "99",
@@ -891,14 +632,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "98",
@@ -906,14 +647,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "103",
@@ -921,14 +662,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "104",
@@ -936,14 +677,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92"
     },
     {
       "id": "280",
@@ -951,14 +692,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "281",
@@ -966,14 +707,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "105",
@@ -981,14 +722,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "101",
@@ -996,14 +737,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92"
     },
     {
       "id": "2190",
@@ -1014,7 +755,6 @@
         "display": "飞离地面"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,316",
       "effectDefinition": {
         "id": "316",
         "snapshots": {
@@ -1057,7 +797,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,316"
     },
     {
       "id": "282",
@@ -1065,14 +806,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "283",
@@ -1080,14 +821,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "489",
@@ -1095,14 +836,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "490",
@@ -1110,14 +851,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92"
     },
     {
       "id": "493",
@@ -1125,14 +866,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "492",
@@ -1140,14 +881,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "add_attack_targets,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1"
     },
     {
       "id": "804",
@@ -1155,14 +896,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "102",
@@ -1170,14 +911,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92"
     },
     {
       "id": "805",
@@ -1185,14 +926,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "806",
@@ -1200,14 +941,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "975",
@@ -1218,7 +959,6 @@
         "display": "纽带：混血"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,137",
       "effectDefinition": {
         "id": "137",
         "snapshots": {
@@ -1296,7 +1036,8 @@
       "tipText": {
         "original": "Asharra has formed a bond of friendship with your Half-Elf, Half-Orc and Halfling champions. Focus on having those champions as your main damage dealers.",
         "display": "艾萨拉与半精灵，半兽人和半身人勇士结成友谊纽带，专注于使其成为主要伤害输出者。"
-      }
+      },
+      "effectReference": "effect_def,137"
     },
     {
       "id": "976",
@@ -1307,7 +1048,6 @@
         "display": "纽带：异域种族"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,138",
       "effectDefinition": {
         "id": "138",
         "snapshots": {
@@ -1385,7 +1125,8 @@
       "tipText": {
         "original": "Asharra has formed a bond of friendship with your Aasimar, Genasi, Gith, Goliath, Saurial, Tabaxi , Warforged, and Yuan-ti champions. Focus on having those champions as your main damage dealers.",
         "display": "艾萨拉与神裔、元素裔、吉斯人、巨人、爬虫人、斑猫人、机关人及蛇人勇士结成友谊纽带，专注于使其成为主要伤害输出者。"
-      }
+      },
+      "effectReference": "effect_def,138"
     },
     {
       "id": "977",
@@ -1393,10 +1134,9 @@
       "requiredUpgradeId": null,
       "name": {
         "original": "Bond: Short-folk",
-        "display": "纽带：小人族"
+        "display": "邦德：短篇民谣"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,139",
       "effectDefinition": {
         "id": "139",
         "snapshots": {
@@ -1464,7 +1204,7 @@
       "defaultEnabled": true,
       "specializationName": {
         "original": "Bond: Short-folk",
-        "display": "纽带：小人族"
+        "display": "邦德：短篇民谣"
       },
       "specializationDescription": {
         "original": "Asharra forms a bond of friendship with any Fairy, Gnome, Goblin, Halfling, Kender, Kobold, NERDS, and Plasmoid champions in your party, increasing their damage.",
@@ -1474,7 +1214,8 @@
       "tipText": {
         "original": "Asharra has formed a bond of friendship with your Fairy, Gnome, Goblin, Halfling, Kender, Kobold, NERDS, and Plasmoid champions. Focus on having those champions as your main damage dealers.",
         "display": "艾萨拉与你的仙女、侏儒、地精、半身人、坎德人、狗头人、呆宝和等离子体勇士结成了友谊纽带。 专注于让他们成为你的主要伤害输出者吧。"
-      }
+      },
+      "effectReference": "effect_def,139"
     },
     {
       "id": "973",
@@ -1482,14 +1223,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "974",
@@ -1497,14 +1238,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92,975,976,977"
     },
     {
       "id": "972",
@@ -1512,14 +1253,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "1353",
@@ -1527,14 +1268,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1357",
@@ -1542,14 +1283,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "1354",
@@ -1557,14 +1298,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1356",
@@ -1572,14 +1313,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "add_attack_targets,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1"
     },
     {
       "id": "1355",
@@ -1587,14 +1328,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1774",
@@ -1602,14 +1343,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92,975,976,977"
     },
     {
       "id": "1352",
@@ -1617,14 +1358,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "1768",
@@ -1632,14 +1373,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1771",
@@ -1647,14 +1388,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "1769",
@@ -1662,14 +1403,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "491",
@@ -1677,14 +1418,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92,975,976,977"
     },
     {
       "id": "1770",
@@ -1692,14 +1433,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1359",
@@ -1707,14 +1448,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1358",
@@ -1722,14 +1463,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92,975,976,977"
     },
     {
       "id": "1772",
@@ -1737,14 +1478,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1773",
@@ -1752,14 +1493,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3734",
@@ -1767,14 +1508,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1775",
@@ -1782,14 +1523,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,90,91,92,975,976,977"
     },
     {
       "id": "1776",
@@ -1797,14 +1538,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4942",
@@ -1812,14 +1553,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4943",
@@ -1827,14 +1568,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "4944",
@@ -1842,14 +1583,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "4945",
@@ -1857,14 +1598,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4946",
@@ -1872,14 +1613,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "4947",
@@ -1887,14 +1628,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "6379",
@@ -1902,14 +1643,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "6380",
@@ -1917,14 +1658,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "6381",
@@ -1932,14 +1673,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,90,91,92,975,976,977\",\"description\":\"Increases the effect of Asharra's Bond abilities by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,90,91,92,975,976,977"
     },
     {
       "id": "8173",
@@ -1947,14 +1688,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "8174",
@@ -1962,14 +1703,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -2315,7 +2056,8 @@
             "sequence": 1,
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30601
       },
       "rarity": "3",
       "properties": {
@@ -2352,7 +2094,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30716
       },
       "rarity": "3",
       "properties": {
@@ -2386,7 +2129,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30804
       },
       "rarity": "3",
       "properties": {
@@ -2422,7 +2166,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30910
       },
       "rarity": "3",
       "properties": {
@@ -2452,6 +2197,7 @@
       "graphicId": "238",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2473,6 +2219,7 @@
       "graphicId": "238",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2494,6 +2241,7 @@
       "graphicId": "239",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2515,6 +2263,7 @@
       "graphicId": "240",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2536,6 +2285,7 @@
       "graphicId": "241",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,2190"
@@ -2557,6 +2307,7 @@
       "graphicId": "241",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,2190"
@@ -2578,6 +2329,7 @@
       "graphicId": "242",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,2190"
@@ -2599,6 +2351,7 @@
       "graphicId": "243",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,2190"
@@ -2620,6 +2373,7 @@
       "graphicId": "235",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,2189"
@@ -2641,6 +2395,7 @@
       "graphicId": "235",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,2189"
@@ -2662,6 +2417,7 @@
       "graphicId": "236",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,2189"
@@ -2683,6 +2439,7 @@
       "graphicId": "237",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,2189"
@@ -2704,6 +2461,7 @@
       "graphicId": "232",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,90,91,92,975,976,977",
@@ -2726,6 +2484,7 @@
       "graphicId": "232",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,90,91,92,975,976,977",
@@ -2748,6 +2507,7 @@
       "graphicId": "233",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,90,91,92,975,976,977",
@@ -2770,6 +2530,7 @@
       "graphicId": "234",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,90,91,92,975,976,977",
@@ -2792,6 +2553,7 @@
       "graphicId": "229",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -2813,6 +2575,7 @@
       "graphicId": "229",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -2834,6 +2597,7 @@
       "graphicId": "230",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -2855,6 +2619,7 @@
       "graphicId": "231",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -2876,6 +2641,11 @@
       "graphicId": "226",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,11"
@@ -2897,6 +2667,11 @@
       "graphicId": "226",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,21"
@@ -2918,6 +2693,11 @@
       "graphicId": "227",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,42"
@@ -2939,6 +2719,11 @@
       "graphicId": "228",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,105"
@@ -3066,6 +2851,286 @@
       ]
     }
   ],
+  "summary": {
+    "id": "6",
+    "name": {
+      "original": "Asharra",
+      "display": "艾萨拉"
+    },
+    "seat": 6,
+    "portrait": {
+      "path": "v1/champion-portraits/6.png",
+      "sourceGraphic": "Portraits/Portrait_Asharra",
+      "sourceVersion": 7
+    },
+    "roles": [
+      "dps",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "aarakocra",
+      "core",
+      "dps",
+      "evergreen",
+      "female",
+      "geneutral",
+      "lawful",
+      "neutral",
+      "support",
+      "unaffiliated",
+      "wizard"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "3",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "3",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Asharra",
+  "eventName": null,
+  "dateAvailable": "2017-09-07 00:00:00",
+  "lastReworkDate": "2017-09-07 00:00:00",
+  "popularity": 0,
+  "baseCost": "50000000",
+  "baseDamage": "500000",
+  "baseHealth": "35",
+  "graphicId": "7",
+  "portraitGraphicId": "12",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    175,
+    445,
+    775,
+    1185
+  ],
+  "costCurves": {
+    "1": 1.18
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      150,
+      151,
+      152
+    ],
+    "graphic_large": 179,
+    "graphic_xl": 13765,
+    "dps_balancing_multiplier": 3,
+    "eye_height": 116,
+    "portrait_center_offset": [
+      90,
+      58
+    ],
+    "ultimate_color": [
+      255,
+      112,
+      0
+    ],
+    "console_portrait": 3259,
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "shoot": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7,
+      "attack_c": 9
+    },
+    "head_graphic_id": 7062,
+    "trials_effect_id": 842,
+    "legendary_effect_id": [
+      1,
+      56,
+      9,
+      43,
+      41,
+      104
+    ],
+    "weekly_chest_type_id": 466,
+    "weekly_buff": "buff_upgrades,200,90,91,92,975,976,977",
+    "portrait_graphic_scale": 1,
+    "notification_adjustment": {
+      "offset": [
+        47,
+        205
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30432,
+    "gold_chest_type_id": 466
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Asharra",
+      "display": "艾萨拉"
+    },
+    "class": {
+      "original": "Wizard",
+      "display": "法师"
+    },
+    "race": {
+      "original": "Aarakocra",
+      "display": "翼爪鸟人"
+    },
+    "age": 38,
+    "alignment": {
+      "original": "Lawful Neutral",
+      "display": "守序中立"
+    },
+    "backstory": {
+      "original": "The elder of Kir Sabal, Asharra is a stern and honorable aarakocra wizard who looks over her flock and the safety of the Omu royal family.",
+      "display": "身为克萨巴尔的长老，艾萨拉是一位严厉而可敬的翼爪鸟人法师，她维护着她的族群和奥穆王室的安全。"
+    },
+    "abilityScores": {
+      "str": 10,
+      "dex": 11,
+      "con": 9,
+      "int": 17,
+      "wis": 15,
+      "cha": 14
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "11",
+      "name": {
+        "original": "Magic Missile",
+        "display": "魔法飞弹"
+      },
+      "description": {
+        "original": "Asharra lets loose a barrage of missiles, hitting random targets.",
+        "display": "艾萨拉释放出魔法飞弹弹幕，攻击随机目标。"
+      },
+      "longDescription": null,
+      "cooldown": 7,
+      "numTargets": 3,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "multitarget"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile_graphic_id": 1,
+          "projectile": "magic_missile",
+          "shoot_frame": 18,
+          "projectile_delay": 0.1,
+          "projectile_count": 3,
+          "shoot_sound": 149,
+          "hit_sound": 133
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "12",
+      "name": {
+        "original": "Fireball",
+        "display": "火球术"
+      },
+      "description": {
+        "original": "Asharra pushes back all enemies and casts a massive Fireball on a random one.",
+        "display": "艾萨拉击退所有敌人，并对随机目标施放一个大火球。"
+      },
+      "longDescription": {
+        "original": "Asharra leaps into the air, flapping her wings and pushing all enemies away from the party. Hovering there, she summons a massive fireball that hits a random enemy and all other enemies within a small radius.",
+        "display": "艾萨拉跳到空中，挥动翅膀将所有敌人推离队伍。随后悬停在空中并召唤一个大火球，攻击一名随机敌人和小范围内的其他所有敌人。"
+      },
+      "cooldown": 420,
+      "numTargets": 1,
+      "aoeRadius": 200,
+      "damageModifier": "0.00595",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "aoe",
+        "ultimate"
+      ],
+      "graphicId": "668",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile_graphic_id": 1,
+          "projectile": "fireball",
+          "shoot_frame": 75,
+          "sound_frames": {
+            "1": 153
+          },
+          "hit_sound": 142,
+          "effect_frames": {
+            "34": {
+              "effect_string": "enemies_pushback,11,200"
+            },
+            "44": {
+              "effect_string": "enemies_pushback,11,200"
+            },
+            "54": {
+              "effect_string": "enemies_pushback,11,200"
+            }
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "2189",
+        "name": {
+          "original": "Paragon of Kir Sabal",
+          "display": "克萨巴尔的楷模"
+        },
+        "description": null,
+        "graphicId": "5236"
+      },
+      {
+        "upgradeId": "2190",
+        "name": {
+          "original": "Take Flight",
+          "display": "飞离地面"
+        },
+        "description": null,
+        "graphicId": "5240"
+      }
+    ]
+  },
+  "ability": {
+    "id": "6",
+    "duration": 0,
+    "baseCooldown": 3600,
+    "effects": [
+      "enemies_pushback,0,200"
+    ]
+  },
   "raw": {
     "hero": {
       "original": {
@@ -3175,6 +3240,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30432,
           "gold_chest_type_id": 466
         },
         "adventure_ids": [],
@@ -3309,6 +3375,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30432,
           "gold_chest_type_id": 466
         },
         "adventure_ids": [],
@@ -4564,8 +4631,8 @@
             "effect": "effect_def,139",
             "static_dps_mult": null,
             "default_enabled": 1,
-            "name": "纽带：小人族",
-            "specialization_name": "纽带：小人族",
+            "name": "邦德：短篇民谣",
+            "specialization_name": "邦德：短篇民谣",
             "specialization_description": "艾萨拉与你探险队中的所有仙女、侏儒、地精、半身人、坎德人、狗头人、呆宝和等离子体勇士结成友谊纽带，使他们的伤害提高。",
             "specialization_graphic_id": 2827,
             "tip_text": "艾萨拉与你的仙女、侏儒、地精、半身人、坎德人、狗头人、呆宝和等离子体勇士结成了友谊纽带。 专注于让他们成为你的主要伤害输出者吧。"
@@ -6030,7 +6097,8 @@
                   "sequence": 1,
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30601
             },
             "rarity": "3",
             "properties": {
@@ -6062,7 +6130,8 @@
                   "sequence": 1,
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30601
             },
             "rarity": "3",
             "properties": {
@@ -6102,7 +6171,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30716
             },
             "rarity": "3",
             "properties": {
@@ -6134,7 +6204,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30716
             },
             "rarity": "3",
             "properties": {
@@ -6170,7 +6241,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30804
             },
             "rarity": "3",
             "properties": {
@@ -6204,7 +6276,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30804
             },
             "rarity": "3",
             "properties": {
@@ -6243,7 +6316,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30910
             },
             "rarity": "3",
             "properties": {
@@ -6277,7 +6351,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30910
             },
             "rarity": "3",
             "properties": {

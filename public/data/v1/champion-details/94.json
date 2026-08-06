@@ -1,320 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "94",
-    "name": {
-      "original": "Rust",
-      "display": "拉斯特"
-    },
-    "seat": 11,
-    "roles": [
-      "gold",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Oxventurers Guild",
-        "display": "公牛冒险公会"
-      }
-    ],
-    "tags": [
-      "event",
-      "geneutral",
-      "gold",
-      "lcneutral",
-      "male",
-      "neutral",
-      "oxventure",
-      "rogue",
-      "support",
-      "tabaxi",
-      "y5"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/94.png",
-      "sourceGraphic": "Portraits/Portrait_Rust",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Rust",
-  "eventName": {
-    "original": "Wintershield",
-    "display": "冬盾节"
-  },
-  "dateAvailable": "2022-01-12 00:00:00",
-  "lastReworkDate": "2024-08-07 10:00:00",
-  "popularity": 88,
-  "baseCost": "1000000000000000000",
-  "baseDamage": "2000000000000",
-  "baseHealth": "47",
-  "graphicId": "12747",
-  "portraitGraphicId": "12856",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1799352000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    165,
-    980,
-    1920,
-    3085
-  ],
-  "costCurves": {
-    "1": 1.06
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      155,
-      156,
-      157
-    ],
-    "graphic_large": 12749,
-    "graphic_xl": 13952,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      92,
-      88
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 7,
-      "koed": 8,
-      "run": 2
-    },
-    "permanent_effects": [
-      {
-        "effect_string": "rust_attack",
-        "stabby_stabby_attack_id": 783
-      }
-    ],
-    "allow_time_gate": "2022-01-24 12:00:00",
-    "time_gate_adventure_id": 1028,
-    "time_gate_variants_ids": [
-      964,
-      965,
-      966
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 344,
-    "gold_chest_type_id": 345,
-    "available_in_store": "2022-01-31 12:00:00",
-    "golden_epic_loot_id": 2188,
-    "golden_epic_promo_id": 263,
-    "event_logo_graphic_id": 3373,
-    "console_portrait": 12855,
-    "trials_effect_id": 848,
-    "legendary_effect_id": [
-      1,
-      3,
-      13,
-      37,
-      93,
-      106
-    ],
-    "weekly_buff": "buff_upgrade,200,15359",
-    "spotlight_url": "https://youtu.be/I8X2USSlkIM",
-    "time_gate_blackout": {
-      "start": "2024-01-07 00:00:00",
-      "end": "2024-01-22 12:00:00"
-    },
-    "store_blackout": {
-      "start": "2024-01-07 00:00:00",
-      "end": "2024-01-22 12:00:00"
-    },
-    "portrait_graphic_scale": 1.04,
-    "notification_adjustment": {
-      "offset": [
-        50,
-        236
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Rust on the Harbour",
-      "display": "港口的拉斯特"
-    },
-    "class": {
-      "original": "Rogue",
-      "display": "游荡者"
-    },
-    "race": {
-      "original": "Tabaxi",
-      "display": "斑猫人"
-    },
-    "age": 23,
-    "alignment": {
-      "original": "Neutral",
-      "display": "中立"
-    },
-    "abilityScores": {
-      "str": 12,
-      "dex": 18,
-      "con": 15,
-      "int": 11,
-      "wis": 12,
-      "cha": 14
-    },
-    "backstory": {
-      "original": "Rust on the Harbour is a former pirate who gave up a life at sea because it was far too wet. Now trying life as an adventurer on land, he'll lend his roguish skills to anyone who can give him that which his heart desires most: one gold piece.",
-      "display": "港口的拉斯特以前是一名海盗，却因为讨厌过度潮湿而放弃了海上生涯。他现在试图在陆地上当一名冒险者来讨生活，因此愿意向一切能给予他心之所向（一枚金币）的人提供帮助，奉献他的游荡者技能。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "782",
-      "name": {
-        "original": "Bang Bang",
-        "display": "砰砰"
-      },
-      "description": {
-        "original": "Rust shoots a random enemy with his pistols.",
-        "display": "拉斯特用手枪射击一名随机敌人。"
-      },
-      "longDescription": {
-        "original": "Rust shoots a random enemy with his pistols.",
-        "display": "拉斯特用手枪射击一名随机敌人。"
-      },
-      "cooldown": 5,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.5",
-      "target": "random",
-      "damageTypes": [
-        "melee",
-        "ranged"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile": "generic",
-          "shoot_offset_x": 60,
-          "shoot_offset_y": -50,
-          "shoot_frame": 4,
-          "projectile_delay_no_pause": 0.25,
-          "projectile_count": 2,
-          "unique_hit_multiplier": 2,
-          "projectile_details": {
-            "projectile_speed": 2400,
-            "has_trail": false,
-            "extend_line": true,
-            "projectile_graphic_id": 5395
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "784",
-      "name": {
-        "original": "Cannonball!",
-        "display": "炮弹！"
-      },
-      "description": {
-        "original": "Rust climbs into a cannon and fires himself at the enemies, dealing damage in a large area.",
-        "display": "拉斯特爬进一门大炮，瞄准敌人将自己发射出去，在大范围内造成伤害。"
-      },
-      "longDescription": {
-        "original": "Rust loads himself into a cannon and fires himself toward the enemies, dealing damage in a large area upon landing. If Rust has a shiny gold piece, he drops it while flying through the air.",
-        "display": "拉斯特将自己装进一门大炮，瞄准敌人将自己发射出去，落地时在大范围内造成伤害。如果拉斯特有一枚闪亮金币，他在空中飞行时会把它弄掉。"
-      },
-      "cooldown": 180,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "all",
-      "damageTypes": [
-        "ranged"
-      ],
-      "tags": [
-        "ranged",
-        "aoe",
-        "ultimate"
-      ],
-      "graphicId": "12843",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "rust"
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "15357",
-        "name": {
-          "original": "Hello, Friends",
-          "display": "你们好啊，朋友们"
-        },
-        "description": null,
-        "graphicId": "12833"
-      },
-      {
-        "upgradeId": "15358",
-        "name": {
-          "original": "Rust For Hire",
-          "display": "雇佣兵拉斯特"
-        },
-        "description": {
-          "original": "Rust increases the party's gold find, this is greatly increased when he is holding his One Gold Piece",
-          "display": "拉斯特提高队伍的金币获取量，当他持有“一枚金币”时，此效果大幅提升"
-        },
-        "graphicId": "12832"
-      },
-      {
-        "upgradeId": "15359",
-        "name": {
-          "original": "One Gold Piece",
-          "display": "一枚金币"
-        },
-        "description": null,
-        "graphicId": "12835"
-      },
-      {
-        "upgradeId": "15360",
-        "name": {
-          "original": "Highest Bidder",
-          "display": "最高出价者"
-        },
-        "description": {
-          "original": "Rust increases the damage of all champions, this is increased base on the order of magnitude of the party's gold find.",
-          "display": "拉斯特提高所有勇士的伤害，此效果会根据队伍的金币获取量数量级而获得提升。"
-        },
-        "graphicId": "12834"
-      },
-      {
-        "upgradeId": "15361",
-        "name": {
-          "original": "Rags to Riches",
-          "display": "贫穷变巨富"
-        },
-        "description": null,
-        "graphicId": "24168"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "15357",
@@ -325,7 +10,6 @@
         "display": "你们好啊，朋友们"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2035",
       "effectDefinition": {
         "id": "2035",
         "snapshots": {
@@ -397,7 +81,8 @@
       "tipText": {
         "original": "Rust increases the damage of all Champions, and those benefits increase for each Gold Find Champion or Oxventurers Guild affiliation member in the formation.",
         "display": "拉斯特会提升所有勇士的伤害，并且阵型中每有一位金币寻获勇士或“公牛冒险公会”从属组织成员，加成效果会进一步增加。"
-      }
+      },
+      "effectReference": "effect_def,2035"
     },
     {
       "id": "15455",
@@ -405,14 +90,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15492",
@@ -420,14 +105,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15358",
@@ -438,7 +123,6 @@
         "display": "雇佣兵拉斯特"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2036",
       "effectDefinition": {
         "id": "2036",
         "snapshots": {
@@ -489,7 +173,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2036"
     },
     {
       "id": "15493",
@@ -497,14 +182,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15494",
@@ -512,14 +197,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15359",
@@ -530,7 +215,6 @@
         "display": "一枚金币"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2037",
       "effectDefinition": {
         "id": "2037",
         "snapshots": {
@@ -648,7 +332,8 @@
       "tipText": {
         "original": "Rust has a chance of finding his One Gold Piece whenever an enemy is defeated which increases his damage buff. By using his ultimate, he'll drop his gold piece and give you another chance to increase his buff even further!",
         "display": "每当有敌人被击败时，拉斯特都有机会找到他的一枚金币，它会提高他的伤害增益。使用他的杀招会使他弄丢他的金币，你便又有机会进一步提高他的增益！"
-      }
+      },
+      "effectReference": "effect_def,2037"
     },
     {
       "id": "15456",
@@ -656,14 +341,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15495",
@@ -671,14 +356,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15365",
@@ -689,14 +374,14 @@
         "display": "炮弹！"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "15496",
@@ -704,14 +389,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15360",
@@ -722,7 +407,6 @@
         "display": "最高出价者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2038",
       "effectDefinition": {
         "id": "2038",
         "snapshots": {
@@ -789,7 +473,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2038"
     },
     {
       "id": "15497",
@@ -797,14 +482,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15498",
@@ -812,14 +497,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15362",
@@ -830,7 +515,6 @@
         "display": "快速致富"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2040",
       "effectDefinition": {
         "id": "2040",
         "snapshots": {
@@ -887,7 +571,8 @@
         "display": "拉斯特爱炫耀的个性激发了他的朋友也去尝试一些大胆的壮举。"
       },
       "specializationGraphicId": "24172",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2040"
     },
     {
       "id": "15363",
@@ -898,7 +583,6 @@
         "display": "更多财富"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2041",
       "effectDefinition": {
         "id": "2041",
         "snapshots": {
@@ -975,7 +659,8 @@
         "display": "拉斯特变得更加痴迷他的一枚金币，这提高了他得到和失去它时提供的增益效果。"
       },
       "specializationGraphicId": "24170",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2041"
     },
     {
       "id": "15364",
@@ -986,7 +671,6 @@
         "display": "拉斯特的发烧梦"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2042",
       "effectDefinition": {
         "id": "2042",
         "snapshots": {
@@ -1041,7 +725,8 @@
         "display": "拉斯特对金币的痴迷变成了现实，每次他被装进大炮发射出去时，都会真的下起金币雨。"
       },
       "specializationGraphicId": "24171",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2042"
     },
     {
       "id": "15499",
@@ -1049,14 +734,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15361",
@@ -1067,7 +752,6 @@
         "display": "贫穷变巨富"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2039",
       "effectDefinition": {
         "id": "2039",
         "snapshots": {
@@ -1160,7 +844,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2039"
     },
     {
       "id": "15500",
@@ -1168,14 +853,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15501",
@@ -1183,14 +868,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15460",
@@ -1198,14 +883,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15502",
@@ -1213,14 +898,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15461",
@@ -1228,14 +913,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15503",
@@ -1243,14 +928,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15504",
@@ -1258,14 +943,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15505",
@@ -1273,14 +958,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15506",
@@ -1288,14 +973,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15507",
@@ -1303,14 +988,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15464",
@@ -1318,14 +1003,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15508",
@@ -1333,14 +1018,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15465",
@@ -1348,14 +1033,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15509",
@@ -1363,14 +1048,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15510",
@@ -1378,14 +1063,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15467",
@@ -1393,14 +1078,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15511",
@@ -1408,14 +1093,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15512",
@@ -1423,14 +1108,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15513",
@@ -1438,14 +1123,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15514",
@@ -1453,14 +1138,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15469",
@@ -1468,14 +1153,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15515",
@@ -1483,14 +1168,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15516",
@@ -1498,14 +1183,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15517",
@@ -1513,14 +1198,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15471",
@@ -1528,14 +1213,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15518",
@@ -1543,14 +1228,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15519",
@@ -1558,14 +1243,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15520",
@@ -1573,14 +1258,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15473",
@@ -1588,14 +1273,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15521",
@@ -1603,14 +1288,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15522",
@@ -1618,14 +1303,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15475",
@@ -1633,14 +1318,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15523",
@@ -1648,14 +1333,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15524",
@@ -1663,14 +1348,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15525",
@@ -1678,14 +1363,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15477",
@@ -1693,14 +1378,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15526",
@@ -1708,14 +1393,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15527",
@@ -1723,14 +1408,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15479",
@@ -1738,14 +1423,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15528",
@@ -1753,14 +1438,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15529",
@@ -1768,14 +1453,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15481",
@@ -1783,14 +1468,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15530",
@@ -1798,14 +1483,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15531",
@@ -1813,14 +1498,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15532",
@@ -1828,14 +1513,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15484",
@@ -1843,14 +1528,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15485",
@@ -1858,14 +1543,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15533",
@@ -1873,14 +1558,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15534",
@@ -1888,14 +1573,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15487",
@@ -1903,14 +1588,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15535",
@@ -1918,14 +1603,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15536",
@@ -1933,14 +1618,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15537",
@@ -1948,14 +1633,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15489",
@@ -1963,14 +1648,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15358",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15358"
     },
     {
       "id": "15538",
@@ -1978,14 +1663,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15539",
@@ -1993,14 +1678,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15491",
@@ -2008,14 +1693,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15366",
@@ -2023,14 +1708,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15457",
@@ -2038,14 +1723,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15458",
@@ -2053,14 +1738,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15459",
@@ -2068,14 +1753,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15462",
@@ -2083,14 +1768,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15463",
@@ -2098,14 +1783,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15466",
@@ -2113,14 +1798,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15468",
@@ -2128,14 +1813,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15470",
@@ -2143,14 +1828,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15472",
@@ -2158,14 +1843,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15474",
@@ -2173,14 +1858,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15476",
@@ -2188,14 +1873,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15478",
@@ -2203,14 +1888,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15480",
@@ -2218,14 +1903,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15482",
@@ -2233,14 +1918,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15483",
@@ -2248,14 +1933,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15486",
@@ -2263,14 +1948,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15488",
@@ -2278,14 +1963,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     },
     {
       "id": "15490",
@@ -2293,14 +1978,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,15357",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15357"
     }
   ],
   "feats": [
@@ -2848,7 +2533,8 @@
         "large_graphic_id": 14653,
         "portrait_graphic_id": 14650,
         "rust_sword_graphic_id": 14652,
-        "xl_graphic_id": 15616
+        "xl_graphic_id": 15616,
+        "bastion_graphic_id": 30754
       },
       "rarity": "3",
       "properties": {
@@ -2879,7 +2565,8 @@
         "large_graphic_id": 18348,
         "portrait_graphic_id": 18335,
         "rust_sword_graphic_id": 18343,
-        "xl_graphic_id": 18353
+        "xl_graphic_id": 18353,
+        "bastion_graphic_id": 30854
       },
       "rarity": "3",
       "properties": {
@@ -2908,7 +2595,8 @@
         "large_graphic_id": 24318,
         "portrait_graphic_id": 24315,
         "xl_graphic_id": 24319,
-        "rust_sword_graphic_id": 24317
+        "rust_sword_graphic_id": 24317,
+        "bastion_graphic_id": 31034
       },
       "rarity": "3",
       "properties": {
@@ -2938,6 +2626,7 @@
       "graphicId": "12814",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2959,6 +2648,7 @@
       "graphicId": "12814",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2980,6 +2670,7 @@
       "graphicId": "12815",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3001,6 +2692,7 @@
       "graphicId": "12816",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3022,6 +2714,7 @@
       "graphicId": "12802",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15359"
@@ -3043,6 +2736,7 @@
       "graphicId": "12802",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15359"
@@ -3064,6 +2758,7 @@
       "graphicId": "12803",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15359"
@@ -3085,6 +2780,7 @@
       "graphicId": "12804",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15359"
@@ -3106,6 +2802,7 @@
       "graphicId": "12811",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15358"
@@ -3127,6 +2824,7 @@
       "graphicId": "12811",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15358"
@@ -3148,6 +2846,7 @@
       "graphicId": "12812",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15358"
@@ -3169,6 +2868,7 @@
       "graphicId": "12813",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15358"
@@ -3190,6 +2890,7 @@
       "graphicId": "12805",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15360"
@@ -3211,6 +2912,7 @@
       "graphicId": "12805",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15360"
@@ -3232,6 +2934,7 @@
       "graphicId": "12806",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15360"
@@ -3253,6 +2956,7 @@
       "graphicId": "12807",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15360"
@@ -3274,6 +2978,7 @@
       "graphicId": "12799",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15357"
@@ -3295,6 +3000,7 @@
       "graphicId": "12799",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15357"
@@ -3316,6 +3022,7 @@
       "graphicId": "12800",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15357"
@@ -3337,6 +3044,7 @@
       "graphicId": "12801",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15357"
@@ -3358,6 +3066,11 @@
       "graphicId": "12808",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,5"
@@ -3379,6 +3092,11 @@
       "graphicId": "12808",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,9"
@@ -3400,6 +3118,11 @@
       "graphicId": "12809",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,18"
@@ -3421,6 +3144,11 @@
       "graphicId": "12810",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,45"
@@ -3548,6 +3276,337 @@
       ]
     }
   ],
+  "summary": {
+    "id": "94",
+    "name": {
+      "original": "Rust",
+      "display": "拉斯特"
+    },
+    "seat": 11,
+    "portrait": {
+      "path": "v1/champion-portraits/94.png",
+      "sourceGraphic": "Portraits/Portrait_Rust",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "gold",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Oxventurers Guild",
+        "display": "公牛冒险公会"
+      }
+    ],
+    "tags": [
+      "event",
+      "geneutral",
+      "gold",
+      "lcneutral",
+      "male",
+      "neutral",
+      "oxventure",
+      "rogue",
+      "support",
+      "tabaxi",
+      "y5"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "2",
+        "4",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "2",
+        "4",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Rust",
+  "eventName": {
+    "original": "Wintershield",
+    "display": "冬盾节"
+  },
+  "dateAvailable": "2022-01-12 00:00:00",
+  "lastReworkDate": "2024-08-07 10:00:00",
+  "popularity": 101,
+  "baseCost": "1000000000000000000",
+  "baseDamage": "2000000000000",
+  "baseHealth": "47",
+  "graphicId": "12747",
+  "portraitGraphicId": "12856",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1799352000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    165,
+    980,
+    1920,
+    3085
+  ],
+  "costCurves": {
+    "1": 1.06
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      155,
+      156,
+      157
+    ],
+    "graphic_large": 12749,
+    "graphic_xl": 13952,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      92,
+      88
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 7,
+      "koed": 8,
+      "run": 2
+    },
+    "permanent_effects": [
+      {
+        "effect_string": "rust_attack",
+        "stabby_stabby_attack_id": 783
+      }
+    ],
+    "allow_time_gate": "2022-01-24 12:00:00",
+    "time_gate_adventure_id": 1028,
+    "time_gate_variants_ids": [
+      964,
+      965,
+      966
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 344,
+    "gold_chest_type_id": 345,
+    "available_in_store": "2022-01-31 12:00:00",
+    "golden_epic_loot_id": 2188,
+    "golden_epic_promo_id": 263,
+    "event_logo_graphic_id": 3373,
+    "console_portrait": 12855,
+    "trials_effect_id": 848,
+    "legendary_effect_id": [
+      1,
+      3,
+      13,
+      37,
+      93,
+      106
+    ],
+    "weekly_buff": "buff_upgrade,200,15359",
+    "spotlight_url": "https://youtu.be/I8X2USSlkIM",
+    "time_gate_blackout": {
+      "start": "2024-01-07 00:00:00",
+      "end": "2024-01-22 12:00:00"
+    },
+    "store_blackout": {
+      "start": "2024-01-07 00:00:00",
+      "end": "2024-01-22 12:00:00"
+    },
+    "portrait_graphic_scale": 1.04,
+    "notification_adjustment": {
+      "offset": [
+        50,
+        236
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30520
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Rust on the Harbour",
+      "display": "港口的拉斯特"
+    },
+    "class": {
+      "original": "Rogue",
+      "display": "游荡者"
+    },
+    "race": {
+      "original": "Tabaxi",
+      "display": "斑猫人"
+    },
+    "age": 23,
+    "alignment": {
+      "original": "Neutral",
+      "display": "中立"
+    },
+    "backstory": {
+      "original": "Rust on the Harbour is a former pirate who gave up a life at sea because it was far too wet. Now trying life as an adventurer on land, he'll lend his roguish skills to anyone who can give him that which his heart desires most: one gold piece.",
+      "display": "港口的拉斯特以前是一名海盗，却因为讨厌过度潮湿而放弃了海上生涯。他现在试图在陆地上当一名冒险者来讨生活，因此愿意向一切能给予他心之所向（一枚金币）的人提供帮助，奉献他的游荡者技能。"
+    },
+    "abilityScores": {
+      "str": 12,
+      "dex": 18,
+      "con": 15,
+      "int": 11,
+      "wis": 12,
+      "cha": 14
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "782",
+      "name": {
+        "original": "Bang Bang",
+        "display": "砰砰"
+      },
+      "description": {
+        "original": "Rust shoots a random enemy with his pistols.",
+        "display": "拉斯特用手枪射击一名随机敌人。"
+      },
+      "longDescription": {
+        "original": "Rust shoots a random enemy with his pistols.",
+        "display": "拉斯特用手枪射击一名随机敌人。"
+      },
+      "cooldown": 5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.5",
+      "target": "random",
+      "damageTypes": [
+        "melee",
+        "ranged"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "generic",
+          "shoot_offset_x": 60,
+          "shoot_offset_y": -50,
+          "shoot_frame": 4,
+          "projectile_delay_no_pause": 0.25,
+          "projectile_count": 2,
+          "unique_hit_multiplier": 2,
+          "projectile_details": {
+            "projectile_speed": 2400,
+            "has_trail": false,
+            "extend_line": true,
+            "projectile_graphic_id": 5395
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "784",
+      "name": {
+        "original": "Cannonball!",
+        "display": "炮弹！"
+      },
+      "description": {
+        "original": "Rust climbs into a cannon and fires himself at the enemies, dealing damage in a large area.",
+        "display": "拉斯特爬进一门大炮，瞄准敌人将自己发射出去，在大范围内造成伤害。"
+      },
+      "longDescription": {
+        "original": "Rust loads himself into a cannon and fires himself toward the enemies, dealing damage in a large area upon landing. If Rust has a shiny gold piece, he drops it while flying through the air.",
+        "display": "拉斯特将自己装进一门大炮，瞄准敌人将自己发射出去，落地时在大范围内造成伤害。如果拉斯特有一枚闪亮金币，他在空中飞行时会把它弄掉。"
+      },
+      "cooldown": 180,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "all",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged",
+        "aoe",
+        "ultimate"
+      ],
+      "graphicId": "12843",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "rust"
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "15357",
+        "name": {
+          "original": "Hello, Friends",
+          "display": "你们好啊，朋友们"
+        },
+        "description": null,
+        "graphicId": "12833"
+      },
+      {
+        "upgradeId": "15358",
+        "name": {
+          "original": "Rust For Hire",
+          "display": "雇佣兵拉斯特"
+        },
+        "description": {
+          "original": "Rust increases the party's gold find, this is greatly increased when he is holding his One Gold Piece",
+          "display": "拉斯特提高队伍的金币获取量，当他持有“一枚金币”时，此效果大幅提升"
+        },
+        "graphicId": "12832"
+      },
+      {
+        "upgradeId": "15359",
+        "name": {
+          "original": "One Gold Piece",
+          "display": "一枚金币"
+        },
+        "description": null,
+        "graphicId": "12835"
+      },
+      {
+        "upgradeId": "15360",
+        "name": {
+          "original": "Highest Bidder",
+          "display": "最高出价者"
+        },
+        "description": {
+          "original": "Rust increases the damage of all champions, this is increased base on the order of magnitude of the party's gold find.",
+          "display": "拉斯特提高所有勇士的伤害，此效果会根据队伍的金币获取量数量级而获得提升。"
+        },
+        "graphicId": "12834"
+      },
+      {
+        "upgradeId": "15361",
+        "name": {
+          "original": "Rags to Riches",
+          "display": "贫穷变巨富"
+        },
+        "description": null,
+        "graphicId": "24168"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3681,7 +3740,8 @@
               236
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30520
         },
         "adventure_ids": [
           {
@@ -3709,7 +3769,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 88,
+        "popularity": 101,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3882,7 +3942,8 @@
               236
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30520
         },
         "adventure_ids": [
           {
@@ -3910,7 +3971,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 88,
+        "popularity": 101,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7674,7 +7735,8 @@
               "large_graphic_id": 14653,
               "portrait_graphic_id": 14650,
               "rust_sword_graphic_id": 14652,
-              "xl_graphic_id": 15616
+              "xl_graphic_id": 15616,
+              "bastion_graphic_id": 30754
             },
             "rarity": "3",
             "properties": {
@@ -7703,7 +7765,8 @@
               "large_graphic_id": 14653,
               "portrait_graphic_id": 14650,
               "rust_sword_graphic_id": 14652,
-              "xl_graphic_id": 15616
+              "xl_graphic_id": 15616,
+              "bastion_graphic_id": 30754
             },
             "rarity": "3",
             "properties": {
@@ -7737,7 +7800,8 @@
               "large_graphic_id": 18348,
               "portrait_graphic_id": 18335,
               "rust_sword_graphic_id": 18343,
-              "xl_graphic_id": 18353
+              "xl_graphic_id": 18353,
+              "bastion_graphic_id": 30854
             },
             "rarity": "3",
             "properties": {
@@ -7764,7 +7828,8 @@
               "large_graphic_id": 18348,
               "portrait_graphic_id": 18335,
               "rust_sword_graphic_id": 18343,
-              "xl_graphic_id": 18353
+              "xl_graphic_id": 18353,
+              "bastion_graphic_id": 30854
             },
             "rarity": "3",
             "properties": {
@@ -7796,7 +7861,8 @@
               "large_graphic_id": 24318,
               "portrait_graphic_id": 24315,
               "xl_graphic_id": 24319,
-              "rust_sword_graphic_id": 24317
+              "rust_sword_graphic_id": 24317,
+              "bastion_graphic_id": 31034
             },
             "rarity": "3",
             "properties": {
@@ -7823,7 +7889,8 @@
               "large_graphic_id": 24318,
               "portrait_graphic_id": 24315,
               "xl_graphic_id": 24319,
-              "rust_sword_graphic_id": 24317
+              "rust_sword_graphic_id": 24317,
+              "bastion_graphic_id": 31034
             },
             "rarity": "3",
             "properties": {

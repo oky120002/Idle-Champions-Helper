@@ -1,270 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "88",
-    "name": {
-      "original": "Xerophon",
-      "display": "瑟诺芬"
-    },
-    "seat": 7,
-    "roles": [
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "doppelganger",
-      "evergreen",
-      "geneutral",
-      "lcneutral",
-      "neutral",
-      "rogue",
-      "support",
-      "unaffiliated"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/88.png",
-      "sourceGraphic": "Portraits/Portrait_Xerophon",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Xerophon",
-  "eventName": null,
-  "dateAvailable": "2021-12-01 00:00:00",
-  "lastReworkDate": "2021-12-01 00:00:00",
-  "popularity": 0,
-  "baseCost": "5000000000",
-  "baseDamage": "20000000",
-  "baseHealth": "47",
-  "graphicId": "12083",
-  "portraitGraphicId": "12085",
-  "availability": {
-    "availableInNextEvent": false,
-    "availableInShop": true,
-    "availableInTimeGate": false,
-    "isAvailable": true,
-    "nextEventTimestamp": 0
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    240,
-    675,
-    1200,
-    1845
-  ],
-  "costCurves": {
-    "1": 1.11
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "available_in_store": "2025-10-23 12:00:00",
-    "unlock_adventure_id": 1077,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      185,
-      186,
-      187
-    ],
-    "graphic_large": 12084,
-    "graphic_xl": 13825,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      93,
-      73
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "console_portrait": 12086,
-    "trials_effect_id": 842,
-    "legendary_effect_id": [
-      1,
-      4,
-      35,
-      37,
-      33,
-      46
-    ],
-    "weekly_chest_type_id": 480,
-    "weekly_buff": "global_dps_multiplier_mult,200",
-    "spotlight_url": "https://youtu.be/lwstRv-mfvc",
-    "portrait_graphic_scale": 0.94,
-    "notification_adjustment": {
-      "offset": [
-        56,
-        244
-      ],
-      "scale": 1.25
-    },
-    "hero_not_unlocked_skin_warning": "Champion Xerophon is not unlocked with this skin. Xerophon can only be unlocked by completing A Lesson in Classes - the second Variant of the The Fall of Ythryn adventure in the Icewind Dale: Rime of the Frostmaiden Campaign.",
-    "gold_chest_type_id": 480
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Xerophon",
-      "display": "瑟诺芬"
-    },
-    "class": {
-      "original": "Rogue",
-      "display": "游荡者"
-    },
-    "race": {
-      "original": "Doppelganger",
-      "display": "变形怪"
-    },
-    "age": 47,
-    "alignment": {
-      "original": "Neutral",
-      "display": "中立"
-    },
-    "abilityScores": {
-      "str": 9,
-      "dex": 18,
-      "con": 13,
-      "int": 12,
-      "wis": 14,
-      "cha": 17
-    },
-    "backstory": {
-      "original": "Xerophon went to sleep as a prisoner in a Netherese floating city, and awoke centuries later to the Champions asking them questions about a glacier. To say it's been a rough day would be an understatement. In an attempt to avoid the icy tomb of Ythryn, Xerophon joins with the Champions and is willing to see where this decision takes them. After all, they've played many roles in their life, but never the hero.",
-      "display": "瑟诺芬是耐瑟瑞尔浮空城里的一名囚犯，他在那里睡了一觉，数百年后醒来，勇士队却在问他关于冰川的问题。说他经历了苦难的一天已经足够含蓄了。为了避免伊斯林成为一座冰霜大墓，瑟诺芬加入了勇士队，他想看看他们的决定最终会引导大家走向何方。毕竟他曾在一生中扮演过许多角色，但从未当过英雄。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "468",
-      "name": {
-        "original": "Stab",
-        "display": "刺击"
-      },
-      "description": {
-        "original": "Xerophon stabs a random enemy",
-        "display": "瑟诺芬刺击一名随机敌人。"
-      },
-      "longDescription": {
-        "original": "Xerophon leaps at a random enemy and stabs them with thier dagger.",
-        "display": "瑟诺芬向一名随机敌人跳跃，并用匕首刺击该敌人。"
-      },
-      "cooldown": 7.5,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "random",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -34,
-          "damage_frame": 8,
-          "jump_sound": 30,
-          "sound_frames": {
-            "8": 154
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "469",
-      "name": {
-        "original": "Perfect Imitation",
-        "display": "完美模仿"
-      },
-      "description": {
-        "original": "Xerophon imitates an enemy and buffs all Champions for 60 seconds.",
-        "display": "瑟诺芬模仿一名敌人，并使所有勇士获得 60 秒的增益。"
-      },
-      "longDescription": {
-        "original": "Xerophon picks an enemy from the current adventure and imitates them for 60 seconds. While the imitation lasts, Xerophon does not attack, but increases the damage of all Champions. If the enemy has been seen in the past 15 seconds the damage increase is further buffed.",
-        "display": "瑟诺芬从当前的冒险中挑选一名敌人并模仿他们 60 秒。当处于模仿状态时，瑟诺芬不会攻击，但会提高所有勇士的伤害。如果在过去 15 秒内此敌人曾经出现，则伤害将进一步提高。"
-      },
-      "cooldown": 600,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ultimate"
-      ],
-      "graphicId": "12063",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "xerophon",
-          "no_damage_display": true
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "6834",
-        "name": {
-          "original": "Perfect Imitation",
-          "display": "完美模仿"
-        },
-        "description": null,
-        "graphicId": "12063"
-      },
-      {
-        "upgradeId": "6835",
-        "name": {
-          "original": "Adaptable",
-          "display": "适应性"
-        },
-        "description": null,
-        "graphicId": "12051"
-      },
-      {
-        "upgradeId": "6836",
-        "name": {
-          "original": "Minion Meets Master",
-          "display": "仆人遇见大师"
-        },
-        "description": null,
-        "graphicId": "12052"
-      },
-      {
-        "upgradeId": "6837",
-        "name": {
-          "original": "Repeated Imitation",
-          "display": "反复模仿"
-        },
-        "description": null,
-        "graphicId": "12053"
-      },
-      {
-        "upgradeId": "6973",
-        "name": {
-          "original": "Weak Spot",
-          "display": "弱点"
-        },
-        "description": null,
-        "graphicId": "12201"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "6834",
@@ -275,7 +10,6 @@
         "display": "完美模仿"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "effect_def,980",
       "effectDefinition": {
         "id": "980",
         "snapshots": {
@@ -411,7 +145,8 @@
       "tipText": {
         "original": "While Xerophon is transformed, they do not attack; however, all Champions deal more damage.",
         "display": "当瑟诺芬被转化时，它们不会攻击；然而，所有勇士都会造成更大的伤害。"
-      }
+      },
+      "effectReference": "effect_def,980"
     },
     {
       "id": "6838",
@@ -422,7 +157,6 @@
         "display": "高强度"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,989",
       "effectDefinition": {
         "id": "989",
         "snapshots": {
@@ -509,7 +243,8 @@
         "display": "瑟诺芬专注于他们与实力最强的勇士的联系"
       },
       "specializationGraphicId": "12061",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,989"
     },
     {
       "id": "6839",
@@ -520,7 +255,6 @@
         "display": "低强度"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,990",
       "effectDefinition": {
         "id": "990",
         "snapshots": {
@@ -607,7 +341,8 @@
         "display": "瑟诺芬专注于他们与实力最弱的勇士的联系"
       },
       "specializationGraphicId": "12207",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,990"
     },
     {
       "id": "6835",
@@ -618,7 +353,6 @@
         "display": "适应性"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,981",
       "effectDefinition": {
         "id": "981",
         "snapshots": {
@@ -730,7 +464,8 @@
       "tipText": {
         "original": "Xerophon causes all Champions to deal more damage, this is buffed by the number of Champion ability scores that do NOT match their specialization choices.",
         "display": "瑟诺芬造成所有勇士造成更多的伤害，这是由勇士技能分数的数量，不符合他们的专精选择。"
-      }
+      },
+      "effectReference": "effect_def,981"
     },
     {
       "id": "7217",
@@ -738,14 +473,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "6840",
@@ -756,7 +491,6 @@
         "display": "高敏捷度"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,991",
       "effectDefinition": {
         "id": "991",
         "snapshots": {
@@ -843,7 +577,8 @@
         "display": "瑟诺芬专注于他们与敏捷度最高的勇士的联系"
       },
       "specializationGraphicId": "12059",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,991"
     },
     {
       "id": "6841",
@@ -854,7 +589,6 @@
         "display": "低敏捷度"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,992",
       "effectDefinition": {
         "id": "992",
         "snapshots": {
@@ -941,7 +675,8 @@
         "display": "瑟诺芬专注于他们与敏捷度最低的勇士的联系"
       },
       "specializationGraphicId": "12205",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,992"
     },
     {
       "id": "7265",
@@ -949,14 +684,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6836",
@@ -967,7 +702,6 @@
         "display": "仆人遇见大师"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,982",
       "effectDefinition": {
         "id": "982",
         "snapshots": {
@@ -1038,7 +772,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,982"
     },
     {
       "id": "7266",
@@ -1046,14 +781,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "6978",
@@ -1064,7 +799,6 @@
         "display": "精力充沛"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,993",
       "effectDefinition": {
         "id": "993",
         "snapshots": {
@@ -1151,7 +885,8 @@
         "display": "瑟诺芬专注于他们与精力最充沛的勇士的联系"
       },
       "specializationGraphicId": "12058",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,993"
     },
     {
       "id": "6979",
@@ -1162,7 +897,6 @@
         "display": "精力不充沛"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,994",
       "effectDefinition": {
         "id": "994",
         "snapshots": {
@@ -1249,7 +983,8 @@
         "display": "瑟诺芬专注于他们与精力最不充沛的勇士的联系"
       },
       "specializationGraphicId": "12204",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,994"
     },
     {
       "id": "7267",
@@ -1257,14 +992,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6837",
@@ -1275,7 +1010,6 @@
         "display": "反复模仿"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,983",
       "effectDefinition": {
         "id": "983",
         "snapshots": {
@@ -1348,7 +1082,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,983"
     },
     {
       "id": "7268",
@@ -1356,14 +1091,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6976",
@@ -1374,7 +1109,6 @@
         "display": "高智力"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,995",
       "effectDefinition": {
         "id": "995",
         "snapshots": {
@@ -1461,7 +1195,8 @@
         "display": "瑟诺芬专注于他们与智力最高的勇士的联系"
       },
       "specializationGraphicId": "12060",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,995"
     },
     {
       "id": "6977",
@@ -1472,7 +1207,6 @@
         "display": "低智力"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,996",
       "effectDefinition": {
         "id": "996",
         "snapshots": {
@@ -1559,7 +1293,8 @@
         "display": "瑟诺芬专注于他们与智力最低的勇士的联系"
       },
       "specializationGraphicId": "12206",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,996"
     },
     {
       "id": "7269",
@@ -1567,14 +1302,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6973",
@@ -1585,7 +1320,6 @@
         "display": "弱点"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,984",
       "effectDefinition": {
         "id": "984",
         "snapshots": {
@@ -1656,7 +1390,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,984"
     },
     {
       "id": "7270",
@@ -1664,14 +1399,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "6980",
@@ -1682,7 +1417,6 @@
         "display": "高感知"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,997",
       "effectDefinition": {
         "id": "997",
         "snapshots": {
@@ -1769,7 +1503,8 @@
         "display": "瑟诺芬专注于他们与感知最高的勇士的联系"
       },
       "specializationGraphicId": "12062",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,997"
     },
     {
       "id": "6981",
@@ -1780,7 +1515,6 @@
         "display": "低感知"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,998",
       "effectDefinition": {
         "id": "998",
         "snapshots": {
@@ -1867,7 +1601,8 @@
         "display": "瑟诺芬专注于他们与感知最低的勇士的联系"
       },
       "specializationGraphicId": "12208",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,998"
     },
     {
       "id": "7271",
@@ -1875,14 +1610,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7272",
@@ -1890,14 +1625,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6842",
@@ -1908,7 +1643,6 @@
         "display": "高魅力"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,999",
       "effectDefinition": {
         "id": "999",
         "snapshots": {
@@ -1995,7 +1729,8 @@
         "display": "瑟诺芬专注于他们与魅力最高的勇士的联系"
       },
       "specializationGraphicId": "12057",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,999"
     },
     {
       "id": "6843",
@@ -2006,7 +1741,6 @@
         "display": "低魅力"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1000",
       "effectDefinition": {
         "id": "1000",
         "snapshots": {
@@ -2093,7 +1827,8 @@
         "display": "瑟诺芬专注于他们与魅力最低的勇士的联系"
       },
       "specializationGraphicId": "12203",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1000"
     },
     {
       "id": "7273",
@@ -2101,14 +1836,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7274",
@@ -2116,14 +1851,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7218",
@@ -2131,14 +1866,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6836",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6836"
     },
     {
       "id": "7275",
@@ -2146,14 +1881,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7220",
@@ -2161,14 +1896,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7276",
@@ -2176,14 +1911,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7277",
@@ -2191,14 +1926,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7278",
@@ -2206,14 +1941,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7279",
@@ -2221,14 +1956,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7225",
@@ -2236,14 +1971,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7280",
@@ -2251,14 +1986,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7281",
@@ -2266,14 +2001,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7228",
@@ -2281,14 +2016,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7229",
@@ -2296,14 +2031,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7282",
@@ -2311,14 +2046,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7283",
@@ -2326,14 +2061,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7232",
@@ -2341,14 +2076,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7284",
@@ -2356,14 +2091,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7285",
@@ -2371,14 +2106,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7235",
@@ -2386,14 +2121,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6836",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6836"
     },
     {
       "id": "7236",
@@ -2401,14 +2136,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7286",
@@ -2416,14 +2151,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7287",
@@ -2431,14 +2166,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7239",
@@ -2446,14 +2181,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7240",
@@ -2461,14 +2196,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7288",
@@ -2476,14 +2211,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6985",
@@ -2491,14 +2226,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6973",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6973"
     },
     {
       "id": "7289",
@@ -2506,14 +2241,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7243",
@@ -2521,14 +2256,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7244",
@@ -2536,14 +2271,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7290",
@@ -2551,14 +2286,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7246",
@@ -2566,14 +2301,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7291",
@@ -2581,14 +2316,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "6984",
@@ -2596,14 +2331,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6837",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6837"
     },
     {
       "id": "7248",
@@ -2611,14 +2346,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6836",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6836"
     },
     {
       "id": "7292",
@@ -2626,14 +2361,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7250",
@@ -2641,14 +2376,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7293",
@@ -2656,14 +2391,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7252",
@@ -2671,14 +2406,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7294",
@@ -2686,14 +2421,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "7254",
@@ -2701,14 +2436,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7295",
@@ -2716,14 +2451,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7256",
@@ -2731,14 +2466,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "7257",
@@ -2746,14 +2481,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7258",
@@ -2761,14 +2496,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "7259",
@@ -2776,14 +2511,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7260",
@@ -2791,14 +2526,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7261",
@@ -2806,14 +2541,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6836",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6836"
     },
     {
       "id": "7262",
@@ -2821,14 +2556,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "7263",
@@ -2836,14 +2571,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "7296",
@@ -2851,14 +2586,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "8545",
@@ -2866,14 +2601,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "8546",
@@ -2881,14 +2616,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "8547",
@@ -2896,14 +2631,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "8548",
@@ -2911,14 +2646,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,6835",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,6835"
     },
     {
       "id": "8549",
@@ -2926,14 +2661,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -3343,6 +3078,7 @@
       "graphicId": "12096",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3364,6 +3100,7 @@
       "graphicId": "12096",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3385,6 +3122,7 @@
       "graphicId": "12097",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3406,6 +3144,7 @@
       "graphicId": "12098",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3427,6 +3166,7 @@
       "graphicId": "12087",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3448,6 +3188,7 @@
       "graphicId": "12087",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3469,6 +3210,7 @@
       "graphicId": "12088",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3490,6 +3232,7 @@
       "graphicId": "12089",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3511,6 +3254,7 @@
       "graphicId": "12094",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,6835"
@@ -3532,6 +3276,7 @@
       "graphicId": "12094",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,6835"
@@ -3553,6 +3298,7 @@
       "graphicId": "12093",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,6835"
@@ -3574,6 +3320,7 @@
       "graphicId": "12095",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,6835"
@@ -3595,6 +3342,7 @@
       "graphicId": "12099",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,6836"
@@ -3616,6 +3364,7 @@
       "graphicId": "12099",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,6836"
@@ -3637,6 +3386,7 @@
       "graphicId": "12100",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,6836"
@@ -3658,6 +3408,7 @@
       "graphicId": "12101",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,6836"
@@ -3679,6 +3430,7 @@
       "graphicId": "12090",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,6837"
@@ -3700,6 +3452,7 @@
       "graphicId": "12090",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,6837"
@@ -3721,6 +3474,7 @@
       "graphicId": "12091",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,6837"
@@ -3742,6 +3496,7 @@
       "graphicId": "12092",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,6837"
@@ -3763,6 +3518,7 @@
       "graphicId": "12102",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,6973"
@@ -3784,6 +3540,7 @@
       "graphicId": "12102",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,6973"
@@ -3805,6 +3562,7 @@
       "graphicId": "12103",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,6973"
@@ -3826,6 +3584,7 @@
       "graphicId": "12104",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,6973"
@@ -3951,6 +3710,279 @@
       ]
     }
   ],
+  "summary": {
+    "id": "88",
+    "name": {
+      "original": "Xerophon",
+      "display": "瑟诺芬"
+    },
+    "seat": 7,
+    "portrait": {
+      "path": "v1/champion-portraits/88.png",
+      "sourceGraphic": "Portraits/Portrait_Xerophon",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "doppelganger",
+      "evergreen",
+      "geneutral",
+      "lcneutral",
+      "neutral",
+      "rogue",
+      "support",
+      "unaffiliated"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [],
+      "ruleQualifiedPatronIds": [],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Xerophon",
+  "eventName": null,
+  "dateAvailable": "2021-12-01 00:00:00",
+  "lastReworkDate": "2021-12-01 00:00:00",
+  "popularity": 0,
+  "baseCost": "5000000000",
+  "baseDamage": "20000000",
+  "baseHealth": "47",
+  "graphicId": "12083",
+  "portraitGraphicId": "12085",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    240,
+    675,
+    1200,
+    1845
+  ],
+  "costCurves": {
+    "1": 1.11
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 1077,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 12084,
+    "graphic_xl": 13825,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      93,
+      73
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "console_portrait": 12086,
+    "trials_effect_id": 842,
+    "legendary_effect_id": [
+      1,
+      4,
+      35,
+      37,
+      33,
+      46
+    ],
+    "weekly_chest_type_id": 480,
+    "weekly_buff": "global_dps_multiplier_mult,200",
+    "spotlight_url": "https://youtu.be/lwstRv-mfvc",
+    "portrait_graphic_scale": 0.94,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        244
+      ],
+      "scale": 1.25
+    },
+    "hero_not_unlocked_skin_warning": "Champion Xerophon is not unlocked with this skin. Xerophon can only be unlocked by completing A Lesson in Classes - the second Variant of the The Fall of Ythryn adventure in the Icewind Dale: Rime of the Frostmaiden Campaign.",
+    "bastion_graphic_id": 30514,
+    "gold_chest_type_id": 480
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Xerophon",
+      "display": "瑟诺芬"
+    },
+    "class": {
+      "original": "Rogue",
+      "display": "游荡者"
+    },
+    "race": {
+      "original": "Doppelganger",
+      "display": "变形怪"
+    },
+    "age": 47,
+    "alignment": {
+      "original": "Neutral",
+      "display": "中立"
+    },
+    "backstory": {
+      "original": "Xerophon went to sleep as a prisoner in a Netherese floating city, and awoke centuries later to the Champions asking them questions about a glacier. To say it's been a rough day would be an understatement. In an attempt to avoid the icy tomb of Ythryn, Xerophon joins with the Champions and is willing to see where this decision takes them. After all, they've played many roles in their life, but never the hero.",
+      "display": "瑟诺芬是耐瑟瑞尔浮空城里的一名囚犯，他在那里睡了一觉，数百年后醒来，勇士队却在问他关于冰川的问题。说他经历了苦难的一天已经足够含蓄了。为了避免伊斯林成为一座冰霜大墓，瑟诺芬加入了勇士队，他想看看他们的决定最终会引导大家走向何方。毕竟他曾在一生中扮演过许多角色，但从未当过英雄。"
+    },
+    "abilityScores": {
+      "str": 9,
+      "dex": 18,
+      "con": 13,
+      "int": 12,
+      "wis": 14,
+      "cha": 17
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "468",
+      "name": {
+        "original": "Stab",
+        "display": "刺击"
+      },
+      "description": {
+        "original": "Xerophon stabs a random enemy",
+        "display": "瑟诺芬刺击一名随机敌人。"
+      },
+      "longDescription": {
+        "original": "Xerophon leaps at a random enemy and stabs them with thier dagger.",
+        "display": "瑟诺芬向一名随机敌人跳跃，并用匕首刺击该敌人。"
+      },
+      "cooldown": 7.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -34,
+          "damage_frame": 8,
+          "jump_sound": 30,
+          "sound_frames": {
+            "8": 154
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "469",
+      "name": {
+        "original": "Perfect Imitation",
+        "display": "完美模仿"
+      },
+      "description": {
+        "original": "Xerophon imitates an enemy and buffs all Champions for 60 seconds.",
+        "display": "瑟诺芬模仿一名敌人，并使所有勇士获得 60 秒的增益。"
+      },
+      "longDescription": {
+        "original": "Xerophon picks an enemy from the current adventure and imitates them for 60 seconds. While the imitation lasts, Xerophon does not attack, but increases the damage of all Champions. If the enemy has been seen in the past 15 seconds the damage increase is further buffed.",
+        "display": "瑟诺芬从当前的冒险中挑选一名敌人并模仿他们 60 秒。当处于模仿状态时，瑟诺芬不会攻击，但会提高所有勇士的伤害。如果在过去 15 秒内此敌人曾经出现，则伤害将进一步提高。"
+      },
+      "cooldown": 600,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "12063",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "xerophon",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "6834",
+        "name": {
+          "original": "Perfect Imitation",
+          "display": "完美模仿"
+        },
+        "description": null,
+        "graphicId": "12063"
+      },
+      {
+        "upgradeId": "6835",
+        "name": {
+          "original": "Adaptable",
+          "display": "适应性"
+        },
+        "description": null,
+        "graphicId": "12051"
+      },
+      {
+        "upgradeId": "6836",
+        "name": {
+          "original": "Minion Meets Master",
+          "display": "仆人遇见大师"
+        },
+        "description": null,
+        "graphicId": "12052"
+      },
+      {
+        "upgradeId": "6837",
+        "name": {
+          "original": "Repeated Imitation",
+          "display": "反复模仿"
+        },
+        "description": null,
+        "graphicId": "12053"
+      },
+      {
+        "upgradeId": "6973",
+        "name": {
+          "original": "Weak Spot",
+          "display": "弱点"
+        },
+        "description": null,
+        "graphicId": "12201"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -4057,6 +4089,7 @@
             "scale": 1.25
           },
           "hero_not_unlocked_skin_warning": "Champion Xerophon is not unlocked with this skin. Xerophon can only be unlocked by completing A Lesson in Classes - the second Variant of the The Fall of Ythryn adventure in the Icewind Dale: Rime of the Frostmaiden Campaign.",
+          "bastion_graphic_id": 30514,
           "gold_chest_type_id": 480
         },
         "adventure_ids": [],
@@ -4206,6 +4239,7 @@
             "scale": 1.25
           },
           "hero_not_unlocked_skin_warning": "勇士瑟诺芬不随此皮肤解锁。只有完成“职业课程”——“冰风谷：冰霜少女的白霜”战役中“伊斯林的陨落”冒险的第二个支线任务——才能解锁瑟诺芬。",
+          "bastion_graphic_id": 30514,
           "gold_chest_type_id": 480
         },
         "adventure_ids": [],

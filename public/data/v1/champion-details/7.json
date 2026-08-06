@@ -1,288 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "7",
-    "name": {
-      "original": "Minsc",
-      "display": "明斯克"
-    },
-    "seat": 7,
-    "roles": [
-      "dps",
-      "speed",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Heroes of Baldur's Gate",
-        "display": "博德之门的英雄们"
-      }
-    ],
-    "tags": [
-      "baldursgate",
-      "chaotic",
-      "core",
-      "dps",
-      "evergreen",
-      "good",
-      "human",
-      "hunter",
-      "male",
-      "ranger",
-      "space-hamster",
-      "spec_hunter_beast",
-      "spec_hunter_fey",
-      "spec_hunter_humanoid",
-      "spec_hunter_monstrosity",
-      "spec_hunter_undead",
-      "speed",
-      "support"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/7.png",
-      "sourceGraphic": "Portraits/Portrait_Minsc",
-      "sourceVersion": 11
-    }
-  },
-  "englishName": "Minsc",
-  "eventName": null,
-  "dateAvailable": "2017-09-07 00:00:00",
-  "lastReworkDate": "2017-09-07 00:00:00",
-  "popularity": 0,
-  "baseCost": "2500000000",
-  "baseDamage": "10000000",
-  "baseHealth": "47",
-  "graphicId": "8",
-  "portraitGraphicId": "19",
-  "availability": {
-    "availableInNextEvent": false,
-    "availableInShop": true,
-    "availableInTimeGate": false,
-    "isAvailable": true,
-    "nextEventTimestamp": 0
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    225,
-    625,
-    1110,
-    1705
-  ],
-  "costCurves": {
-    "1": 1.12
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "available_in_store": "2025-10-23 12:00:00",
-    "attack_sound": 1,
-    "death_sound": 1,
-    "graphic_large": 180,
-    "graphic_xl": 13806,
-    "pain_sounds": [
-      190,
-      191,
-      192
-    ],
-    "companion_graphic_id": 192,
-    "companion_visible": false,
-    "eye_height": 114,
-    "portrait_center_offset": [
-      88,
-      60
-    ],
-    "ultimate_color": [
-      0,
-      0,
-      255
-    ],
-    "console_portrait": 3267,
-    "head_graphic_id": 7073,
-    "trials_effect_id": 851,
-    "legendary_effect_id": [
-      54,
-      2,
-      58,
-      29,
-      89,
-      46
-    ],
-    "weekly_chest_type_id": 467,
-    "weekly_buff": "buff_upgrades,200,108,109,110,111,112",
-    "notification_adjustment": {
-      "offset": [
-        56,
-        204
-      ],
-      "scale": 1.25
-    },
-    "gold_chest_type_id": 467
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Minsc",
-      "display": "明斯克"
-    },
-    "class": {
-      "original": "Ranger",
-      "display": "巡林客"
-    },
-    "race": {
-      "original": "Human",
-      "display": "人类"
-    },
-    "age": 45,
-    "alignment": {
-      "original": "Chaotic Good",
-      "display": "混乱善良"
-    },
-    "abilityScores": {
-      "str": 18,
-      "dex": 12,
-      "con": 17,
-      "int": 10,
-      "wis": 10,
-      "cha": 10
-    },
-    "backstory": {
-      "original": "Minsc is a dim-witted but ferociously courageous ranger who saved Baldur's Gate and the surrounding area several times over the course of his adventures. He's accompanied by his stalwart companion Boo; a miniature giant space hamster.",
-      "display": "明斯克是一位头脑简单但十分勇猛的巡林客，他在冒险旅程中多次拯救了博德之门和周边地区。他身边有一位坚强的伙伴布布，它是一只小型的太空巨仓鼠。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "13",
-      "name": {
-        "original": "Cleave",
-        "display": "顺势斩"
-      },
-      "description": {
-        "original": "Minsc cleaves all targets near the closest enemy.",
-        "display": "明斯克顺劈距离最近的敌人附近的所有目标。"
-      },
-      "longDescription": null,
-      "cooldown": 4.5,
-      "numTargets": 1,
-      "aoeRadius": 150,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "aoe"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -34,
-          "damage_frame": 2,
-          "jump_sound": 30,
-          "sound_frames": {
-            "2": 189
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "14",
-      "name": {
-        "original": "Go for the Eyes!",
-        "display": "直取双眼！"
-      },
-      "description": {
-        "original": "Minsc and Boo attack together, dealing massive cleaving damage.",
-        "display": "明斯克和布布同时攻击，造成高额顺劈伤害。"
-      },
-      "longDescription": {
-        "original": "Minsc swings his greatsword in a massive circle centered on the front-most enemy while Boo leaps about causing up to 5 random enemies to take additional damage for the next 30 seconds.",
-        "display": "明斯克挥动大剑，以最前方的敌人为圆心画一个巨大的圆圈，同时布布跃起，使最多 5 个随机敌人在接下来的 30 秒内受到额外伤害。"
-      },
-      "cooldown": 180,
-      "numTargets": 1,
-      "aoeRadius": 200,
-      "damageModifier": "0.01875",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "aoe",
-        "ultimate"
-      ],
-      "graphicId": "676",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "jump_sound": 30,
-          "power_up_sequence": {
-            "start_frame": 0,
-            "end_frame": 57,
-            "repeat": true,
-            "sound_frames": {
-              "1": 193
-            },
-            "effect_frames": {
-              "1": {
-                "effect_string": "boo_ultimate_rebalanced,5,0.3,30"
-              }
-            }
-          },
-          "sequences": [
-            {
-              "sound_frames": {
-                "60": 214,
-                "70": 215,
-                "80": 216,
-                "90": 217
-              },
-              "hit_frames": [
-                60,
-                72
-              ],
-              "start_frame": 58,
-              "damage_frame": 93,
-              "end_frame": 103,
-              "target_offset_x": -50
-            }
-          ]
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "2191",
-        "name": {
-          "original": "Boastful",
-          "display": "直吹自擂"
-        },
-        "description": null,
-        "graphicId": "5226"
-      },
-      {
-        "upgradeId": "2192",
-        "name": {
-          "original": "Overkill",
-          "display": "过度杀戮"
-        },
-        "description": null,
-        "graphicId": "5235"
-      },
-      {
-        "upgradeId": "2193",
-        "name": {
-          "original": "Legendary Slayer",
-          "display": "传奇杀手"
-        },
-        "description": null,
-        "graphicId": "5230"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "107",
@@ -290,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "106",
@@ -305,14 +22,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "108",
@@ -323,7 +40,6 @@
         "display": "偏好敌人：类人生物"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1326",
       "effectDefinition": {
         "id": "1326",
         "snapshots": {
@@ -395,7 +111,8 @@
       "tipText": {
         "original": "Minsc has a history with Humanoid enemies, so with his direction the party does additional damage to any Humanoids.",
         "display": "明斯克与类人生物敌人素有渊源，因此在他的指示下，队伍对所有人形造成额外伤害。"
-      }
+      },
+      "effectReference": "effect_def,1326"
     },
     {
       "id": "109",
@@ -406,7 +123,6 @@
         "display": "偏好敌人：兽类"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1327",
       "effectDefinition": {
         "id": "1327",
         "snapshots": {
@@ -478,7 +194,8 @@
       "tipText": {
         "original": "Minsc has a history with Beast enemies, so with his direction the party does additional damage to any Beasts.",
         "display": "明斯克与兽类敌人素有渊源，因此在他的指示下，队伍对所有兽类造成额外伤害。"
-      }
+      },
+      "effectReference": "effect_def,1327"
     },
     {
       "id": "110",
@@ -489,7 +206,6 @@
         "display": "偏好敌人：亡灵"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1328",
       "effectDefinition": {
         "id": "1328",
         "snapshots": {
@@ -561,7 +277,8 @@
       "tipText": {
         "original": "Minsc has a history with Undead enemies, so with his direction the party does additional damage to any Undead.",
         "display": "明斯克与亡灵敌人素有渊源，因此在他的指示下，队伍对所有亡灵造成额外伤害。"
-      }
+      },
+      "effectReference": "effect_def,1328"
     },
     {
       "id": "111",
@@ -572,7 +289,6 @@
         "display": "偏好敌人：精类生物"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1329",
       "effectDefinition": {
         "id": "1329",
         "snapshots": {
@@ -644,7 +360,8 @@
       "tipText": {
         "original": "Minsc has a history with Fey enemies, so with his direction the party does additional damage to any Fey.",
         "display": "明斯克与精类生物敌人素有渊源，因此在他的指示下，队伍对所有精类生物造成额外伤害。"
-      }
+      },
+      "effectReference": "effect_def,1329"
     },
     {
       "id": "112",
@@ -655,7 +372,6 @@
         "display": "偏好敌人：怪兽"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1330",
       "effectDefinition": {
         "id": "1330",
         "snapshots": {
@@ -727,7 +443,8 @@
       "tipText": {
         "original": "Minsc has a history with Monstrosity enemies, so with his direction the party does additional damage to any Monstrosities.",
         "display": "明斯克与怪兽敌人素有渊源，因此在他的指示下，队伍对所有妖精造成额外伤害。"
-      }
+      },
+      "effectReference": "effect_def,1330"
     },
     {
       "id": "113",
@@ -735,14 +452,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "2191",
@@ -753,7 +470,6 @@
         "display": "直吹自擂"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1360",
       "effectDefinition": {
         "id": "1360",
         "snapshots": {
@@ -885,7 +601,8 @@
       "tipText": {
         "original": "Minsc's boastful attitude causes extra enemies to sometimes spawn. Don't worry, Boo can handle them!",
         "display": "明斯克自吹自擂的态度有时会吸引额外的敌人。但别担心，布可以搞定他们！"
-      }
+      },
+      "effectReference": "effect_def,1360"
     },
     {
       "id": "114",
@@ -893,14 +610,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "203",
@@ -908,14 +625,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "117",
@@ -923,14 +640,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "116",
@@ -938,14 +655,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "2192",
@@ -956,7 +673,6 @@
         "display": "过度杀戮"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,318",
       "effectDefinition": {
         "id": "318",
         "snapshots": {
@@ -999,7 +715,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,318"
     },
     {
       "id": "204",
@@ -1007,14 +724,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "115",
@@ -1022,14 +739,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "set_ultimate_attack,14",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,14"
     },
     {
       "id": "120",
@@ -1037,14 +754,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "122",
@@ -1052,14 +769,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "2193",
@@ -1070,7 +787,6 @@
         "display": "传奇杀手"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,319",
       "effectDefinition": {
         "id": "319",
         "snapshots": {
@@ -1113,7 +829,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,319"
     },
     {
       "id": "284",
@@ -1121,14 +838,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "496",
@@ -1136,14 +853,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "285",
@@ -1151,14 +868,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "286",
@@ -1166,14 +883,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "121",
@@ -1181,14 +898,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "494",
@@ -1196,14 +913,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "500",
@@ -1211,14 +928,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,2192",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,2192"
     },
     {
       "id": "495",
@@ -1226,14 +943,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "984",
@@ -1241,14 +958,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "811",
@@ -1256,14 +973,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "987",
@@ -1271,14 +988,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,50,2193",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,50,2193"
     },
     {
       "id": "812",
@@ -1286,14 +1003,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "499",
@@ -1301,14 +1018,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "983",
@@ -1316,14 +1033,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1380",
@@ -1331,14 +1048,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "982",
@@ -1346,14 +1063,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "985",
@@ -1361,14 +1078,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,2192",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,2192"
     },
     {
       "id": "1379",
@@ -1376,14 +1093,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "497",
@@ -1391,14 +1108,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "1378",
@@ -1406,14 +1123,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "988",
@@ -1421,14 +1138,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,50,2193",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,50,2193"
     },
     {
       "id": "1377",
@@ -1436,14 +1153,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "118",
@@ -1451,14 +1168,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "1376",
@@ -1466,14 +1183,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1788",
@@ -1481,14 +1198,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "498",
@@ -1496,14 +1213,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "986",
@@ -1511,14 +1228,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,2192",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,2192"
     },
     {
       "id": "1789",
@@ -1526,14 +1243,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1790",
@@ -1541,14 +1258,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "119",
@@ -1556,14 +1273,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "1791",
@@ -1571,14 +1288,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1383",
@@ -1586,14 +1303,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1384",
@@ -1601,14 +1318,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "1382",
@@ -1616,14 +1333,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "2478",
@@ -1631,14 +1348,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "1381",
@@ -1646,14 +1363,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "2479",
@@ -1661,14 +1378,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3735",
@@ -1676,14 +1393,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3738",
@@ -1691,14 +1408,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3736",
@@ -1706,14 +1423,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,108,109,110,111,112"
     },
     {
       "id": "3739",
@@ -1721,14 +1438,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3737",
@@ -1736,14 +1453,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,108,109,110,111,112"
     },
     {
       "id": "3740",
@@ -1751,14 +1468,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4948",
@@ -1766,14 +1483,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "4949",
@@ -1781,14 +1498,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4950",
@@ -1796,14 +1513,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,200,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,200,108,109,110,111,112"
     },
     {
       "id": "4951",
@@ -1811,14 +1528,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4952",
@@ -1826,14 +1543,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "4953",
@@ -1841,14 +1558,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "6382",
@@ -1856,14 +1573,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,108,109,110,111,112"
     },
     {
       "id": "6383",
@@ -1871,14 +1588,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "6384",
@@ -1886,14 +1603,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,108,109,110,111,112\",\"description\":\"Increases the effect of Minsc's Favored Enemy ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,108,109,110,111,112"
     },
     {
       "id": "6385",
@@ -1901,14 +1618,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "8175",
@@ -1916,14 +1633,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "8176",
@@ -1931,14 +1648,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "8177",
@@ -1946,14 +1663,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "8178",
@@ -1961,14 +1678,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -2291,11 +2008,11 @@
       "order": 9,
       "name": {
         "original": "Prodigal Leader",
-        "display": "浪荡首领"
+        "display": "放荡的领袖"
       },
       "description": {
         "original": "I--and my medium giant space hamster--will defend you!",
-        "display": "我--和我的中等巨型太空仓鼠--会保护你的！"
+        "display": "我——还有我的那只中等大小的太空仓鼠——会保护你的！"
       },
       "rarity": "4",
       "graphicId": "6074",
@@ -2338,7 +2055,8 @@
         "base_graphic_id": 4428,
         "large_graphic_id": 4430,
         "xl_graphic_id": 13807,
-        "portrait_graphic_id": 4473
+        "portrait_graphic_id": 4473,
+        "bastion_graphic_id": 30596
       },
       "rarity": "3",
       "properties": {
@@ -2368,7 +2086,8 @@
         "base_graphic_id": 6521,
         "large_graphic_id": 6522,
         "xl_graphic_id": 14026,
-        "portrait_graphic_id": 7819
+        "portrait_graphic_id": 7819,
+        "bastion_graphic_id": 30622
       },
       "rarity": "3",
       "properties": {
@@ -2391,7 +2110,8 @@
         "base_graphic_id": 8248,
         "large_graphic_id": 8249,
         "xl_graphic_id": 13808,
-        "portrait_graphic_id": 8260
+        "portrait_graphic_id": 8260,
+        "bastion_graphic_id": 30627
       },
       "rarity": "3",
       "properties": {
@@ -2429,7 +2149,8 @@
         "base_graphic_id": 12199,
         "large_graphic_id": 12324,
         "xl_graphic_id": 13925,
-        "portrait_graphic_id": 12212
+        "portrait_graphic_id": 12212,
+        "bastion_graphic_id": 30703
       },
       "rarity": "3",
       "properties": {
@@ -2446,7 +2167,7 @@
       "id": "155",
       "name": {
         "original": "Polymorphed Minsc",
-        "display": "变形明斯克"
+        "display": "变形后的明斯克"
       },
       "cost": {
         "req_date": "2022-03-23 12:00:00"
@@ -2455,7 +2176,8 @@
         "base_graphic_id": 14101,
         "large_graphic_id": 14102,
         "xl_graphic_id": 14480,
-        "portrait_graphic_id": 14100
+        "portrait_graphic_id": 14100,
+        "bastion_graphic_id": 30738
       },
       "rarity": "3",
       "properties": {
@@ -2492,7 +2214,8 @@
         "base_graphic_id": 15430,
         "large_graphic_id": 15433,
         "portrait_graphic_id": 15426,
-        "xl_graphic_id": 15635
+        "xl_graphic_id": 15635,
+        "bastion_graphic_id": 30769
       },
       "rarity": "3",
       "properties": {
@@ -2525,7 +2248,8 @@
         "base_graphic_id": 18462,
         "large_graphic_id": 18467,
         "portrait_graphic_id": 18456,
-        "xl_graphic_id": 18472
+        "xl_graphic_id": 18472,
+        "bastion_graphic_id": 30848
       },
       "rarity": "3",
       "properties": {
@@ -2557,7 +2281,8 @@
         "base_graphic_id": 24533,
         "large_graphic_id": 24535,
         "portrait_graphic_id": 24531,
-        "xl_graphic_id": 24537
+        "xl_graphic_id": 24537,
+        "bastion_graphic_id": 31040
       },
       "rarity": "3",
       "properties": {
@@ -2594,6 +2319,7 @@
       "graphicId": "367",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2615,6 +2341,7 @@
       "graphicId": "367",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2636,6 +2363,7 @@
       "graphicId": "368",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2657,6 +2385,7 @@
       "graphicId": "369",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2678,6 +2407,7 @@
       "graphicId": "364",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2699,6 +2429,7 @@
       "graphicId": "364",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2720,6 +2451,7 @@
       "graphicId": "365",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2741,6 +2473,7 @@
       "graphicId": "366",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2762,6 +2495,7 @@
       "graphicId": "358",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,2192"
@@ -2783,6 +2517,7 @@
       "graphicId": "358",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,2192"
@@ -2804,6 +2539,7 @@
       "graphicId": "359",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,2192"
@@ -2825,6 +2561,7 @@
       "graphicId": "360",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,2192"
@@ -2846,6 +2583,7 @@
       "graphicId": "361",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,108,109,110,111,112",
@@ -2868,6 +2606,7 @@
       "graphicId": "361",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,108,109,110,111,112",
@@ -2890,6 +2629,7 @@
       "graphicId": "362",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,108,109,110,111,112",
@@ -2912,6 +2652,7 @@
       "graphicId": "363",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,108,109,110,111,112",
@@ -2934,6 +2675,7 @@
       "graphicId": "352",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -2955,6 +2697,7 @@
       "graphicId": "352",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -2976,6 +2719,7 @@
       "graphicId": "353",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -2997,6 +2741,7 @@
       "graphicId": "354",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -3018,6 +2763,11 @@
       "graphicId": "355",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,5"
@@ -3039,6 +2789,11 @@
       "graphicId": "355",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,9"
@@ -3060,6 +2815,11 @@
       "graphicId": "356",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,18"
@@ -3081,6 +2841,11 @@
       "graphicId": "357",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,45"
@@ -3210,6 +2975,310 @@
       ]
     }
   ],
+  "summary": {
+    "id": "7",
+    "name": {
+      "original": "Minsc",
+      "display": "明斯克"
+    },
+    "seat": 7,
+    "portrait": {
+      "path": "v1/champion-portraits/7.png",
+      "sourceGraphic": "Portraits/Portrait_Minsc",
+      "sourceVersion": 11
+    },
+    "roles": [
+      "dps",
+      "speed",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Heroes of Baldur's Gate",
+        "display": "博德之门的英雄们"
+      }
+    ],
+    "tags": [
+      "baldursgate",
+      "chaotic",
+      "core",
+      "dps",
+      "evergreen",
+      "good",
+      "human",
+      "hunter",
+      "male",
+      "ranger",
+      "space-hamster",
+      "spec_hunter_beast",
+      "spec_hunter_fey",
+      "spec_hunter_humanoid",
+      "spec_hunter_monstrosity",
+      "spec_hunter_undead",
+      "speed",
+      "support"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Minsc",
+  "eventName": null,
+  "dateAvailable": "2017-09-07 00:00:00",
+  "lastReworkDate": "2017-09-07 00:00:00",
+  "popularity": 0,
+  "baseCost": "2500000000",
+  "baseDamage": "10000000",
+  "baseHealth": "47",
+  "graphicId": "8",
+  "portraitGraphicId": "19",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    225,
+    625,
+    1110,
+    1705
+  ],
+  "costCurves": {
+    "1": 1.12
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "attack_sound": 1,
+    "death_sound": 1,
+    "graphic_large": 180,
+    "graphic_xl": 13806,
+    "pain_sounds": [
+      190,
+      191,
+      192
+    ],
+    "companion_graphic_id": 192,
+    "companion_visible": false,
+    "eye_height": 114,
+    "portrait_center_offset": [
+      88,
+      60
+    ],
+    "ultimate_color": [
+      0,
+      0,
+      255
+    ],
+    "console_portrait": 3267,
+    "head_graphic_id": 7073,
+    "trials_effect_id": 851,
+    "legendary_effect_id": [
+      54,
+      2,
+      58,
+      29,
+      89,
+      46
+    ],
+    "weekly_chest_type_id": 467,
+    "weekly_buff": "buff_upgrades,200,108,109,110,111,112",
+    "notification_adjustment": {
+      "offset": [
+        56,
+        204
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30433,
+    "gold_chest_type_id": 467
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Minsc",
+      "display": "明斯克"
+    },
+    "class": {
+      "original": "Ranger",
+      "display": "巡林客"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 45,
+    "alignment": {
+      "original": "Chaotic Good",
+      "display": "混乱善良"
+    },
+    "backstory": {
+      "original": "Minsc is a dim-witted but ferociously courageous ranger who saved Baldur's Gate and the surrounding area several times over the course of his adventures. He's accompanied by his stalwart companion Boo; a miniature giant space hamster.",
+      "display": "明斯克是一位头脑简单但十分勇猛的巡林客，他在冒险旅程中多次拯救了博德之门和周边地区。他身边有一位坚强的伙伴布布，它是一只小型的太空巨仓鼠。"
+    },
+    "abilityScores": {
+      "str": 18,
+      "dex": 12,
+      "con": 17,
+      "int": 10,
+      "wis": 10,
+      "cha": 10
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "13",
+      "name": {
+        "original": "Cleave",
+        "display": "顺势斩"
+      },
+      "description": {
+        "original": "Minsc cleaves all targets near the closest enemy.",
+        "display": "明斯克顺劈距离最近的敌人附近的所有目标。"
+      },
+      "longDescription": null,
+      "cooldown": 4.5,
+      "numTargets": 1,
+      "aoeRadius": 150,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "aoe"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -34,
+          "damage_frame": 2,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 189
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "14",
+      "name": {
+        "original": "Go for the Eyes!",
+        "display": "直取双眼！"
+      },
+      "description": {
+        "original": "Minsc and Boo attack together, dealing massive cleaving damage.",
+        "display": "明斯克和布布同时攻击，造成高额顺劈伤害。"
+      },
+      "longDescription": {
+        "original": "Minsc swings his greatsword in a massive circle centered on the front-most enemy while Boo leaps about causing up to 5 random enemies to take additional damage for the next 30 seconds.",
+        "display": "明斯克挥动大剑，以最前方的敌人为圆心画一个巨大的圆圈，同时布布跃起，使最多 5 个随机敌人在接下来的 30 秒内受到额外伤害。"
+      },
+      "cooldown": 180,
+      "numTargets": 1,
+      "aoeRadius": 200,
+      "damageModifier": "0.01875",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "aoe",
+        "ultimate"
+      ],
+      "graphicId": "676",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "jump_sound": 30,
+          "power_up_sequence": {
+            "start_frame": 0,
+            "end_frame": 57,
+            "repeat": true,
+            "sound_frames": {
+              "1": 193
+            },
+            "effect_frames": {
+              "1": {
+                "effect_string": "boo_ultimate_rebalanced,5,0.3,30"
+              }
+            }
+          },
+          "sequences": [
+            {
+              "sound_frames": {
+                "60": 214,
+                "70": 215,
+                "80": 216,
+                "90": 217
+              },
+              "hit_frames": [
+                60,
+                72
+              ],
+              "start_frame": 58,
+              "damage_frame": 93,
+              "end_frame": 103,
+              "target_offset_x": -50
+            }
+          ]
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "2191",
+        "name": {
+          "original": "Boastful",
+          "display": "直吹自擂"
+        },
+        "description": null,
+        "graphicId": "5226"
+      },
+      {
+        "upgradeId": "2192",
+        "name": {
+          "original": "Overkill",
+          "display": "过度杀戮"
+        },
+        "description": null,
+        "graphicId": "5235"
+      },
+      {
+        "upgradeId": "2193",
+        "name": {
+          "original": "Legendary Slayer",
+          "display": "传奇杀手"
+        },
+        "description": null,
+        "graphicId": "5230"
+      }
+    ]
+  },
+  "ability": {
+    "id": "7",
+    "duration": 30,
+    "baseCooldown": 3600,
+    "effects": [
+      "boo_attack_increase_damage,0.8333333333333334,3"
+    ]
+  },
   "raw": {
     "hero": {
       "original": {
@@ -3315,6 +3384,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30433,
           "gold_chest_type_id": 467
         },
         "adventure_ids": [],
@@ -3451,6 +3521,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30433,
           "gold_chest_type_id": 467
         },
         "adventure_ids": [],
@@ -6317,8 +6388,8 @@
             "id": 760,
             "hero_id": 7,
             "order": 9,
-            "name": "浪荡首领",
-            "description": "我--和我的中等巨型太空仓鼠--会保护你的！",
+            "name": "放荡的领袖",
+            "description": "我——还有我的那只中等大小的太空仓鼠——会保护你的！",
             "rarity": 4,
             "graphic_id": 6074,
             "effects": [
@@ -6438,7 +6509,8 @@
               "base_graphic_id": 4428,
               "large_graphic_id": 4430,
               "xl_graphic_id": 13807,
-              "portrait_graphic_id": 4473
+              "portrait_graphic_id": 4473,
+              "bastion_graphic_id": 30596
             },
             "rarity": "3",
             "properties": {
@@ -6464,7 +6536,8 @@
               "base_graphic_id": 4428,
               "large_graphic_id": 4430,
               "xl_graphic_id": 13807,
-              "portrait_graphic_id": 4473
+              "portrait_graphic_id": 4473,
+              "bastion_graphic_id": 30596
             },
             "rarity": "3",
             "properties": {
@@ -6497,7 +6570,8 @@
               "base_graphic_id": 6521,
               "large_graphic_id": 6522,
               "xl_graphic_id": 14026,
-              "portrait_graphic_id": 7819
+              "portrait_graphic_id": 7819,
+              "bastion_graphic_id": 30622
             },
             "rarity": "3",
             "properties": {
@@ -6519,7 +6593,8 @@
               "base_graphic_id": 6521,
               "large_graphic_id": 6522,
               "xl_graphic_id": 14026,
-              "portrait_graphic_id": 7819
+              "portrait_graphic_id": 7819,
+              "bastion_graphic_id": 30622
             },
             "rarity": "3",
             "properties": {
@@ -6544,7 +6619,8 @@
               "base_graphic_id": 8248,
               "large_graphic_id": 8249,
               "xl_graphic_id": 13808,
-              "portrait_graphic_id": 8260
+              "portrait_graphic_id": 8260,
+              "bastion_graphic_id": 30627
             },
             "rarity": "3",
             "properties": {
@@ -6577,7 +6653,8 @@
               "base_graphic_id": 8248,
               "large_graphic_id": 8249,
               "xl_graphic_id": 13808,
-              "portrait_graphic_id": 8260
+              "portrait_graphic_id": 8260,
+              "bastion_graphic_id": 30627
             },
             "rarity": "3",
             "properties": {
@@ -6618,7 +6695,8 @@
               "base_graphic_id": 12199,
               "large_graphic_id": 12324,
               "xl_graphic_id": 13925,
-              "portrait_graphic_id": 12212
+              "portrait_graphic_id": 12212,
+              "bastion_graphic_id": 30703
             },
             "rarity": "3",
             "properties": {
@@ -6642,7 +6720,8 @@
               "base_graphic_id": 12199,
               "large_graphic_id": 12324,
               "xl_graphic_id": 13925,
-              "portrait_graphic_id": 12212
+              "portrait_graphic_id": 12212,
+              "bastion_graphic_id": 30703
             },
             "rarity": "3",
             "properties": {
@@ -6670,7 +6749,8 @@
               "base_graphic_id": 14101,
               "large_graphic_id": 14102,
               "xl_graphic_id": 14480,
-              "portrait_graphic_id": 14100
+              "portrait_graphic_id": 14100,
+              "bastion_graphic_id": 30738
             },
             "rarity": "3",
             "properties": {
@@ -6697,7 +6777,7 @@
           "display": {
             "id": 155,
             "hero_id": 7,
-            "name": "变形明斯克",
+            "name": "变形后的明斯克",
             "cost": {
               "req_date": "2022-03-23 12:00:00"
             },
@@ -6705,7 +6785,8 @@
               "base_graphic_id": 14101,
               "large_graphic_id": 14102,
               "xl_graphic_id": 14480,
-              "portrait_graphic_id": 14100
+              "portrait_graphic_id": 14100,
+              "bastion_graphic_id": 30738
             },
             "rarity": "3",
             "properties": {
@@ -6745,7 +6826,8 @@
               "base_graphic_id": 15430,
               "large_graphic_id": 15433,
               "portrait_graphic_id": 15426,
-              "xl_graphic_id": 15635
+              "xl_graphic_id": 15635,
+              "bastion_graphic_id": 30769
             },
             "rarity": "3",
             "properties": {
@@ -6774,7 +6856,8 @@
               "base_graphic_id": 15430,
               "large_graphic_id": 15433,
               "portrait_graphic_id": 15426,
-              "xl_graphic_id": 15635
+              "xl_graphic_id": 15635,
+              "bastion_graphic_id": 30769
             },
             "rarity": "3",
             "properties": {
@@ -6809,7 +6892,8 @@
               "base_graphic_id": 18462,
               "large_graphic_id": 18467,
               "portrait_graphic_id": 18456,
-              "xl_graphic_id": 18472
+              "xl_graphic_id": 18472,
+              "bastion_graphic_id": 30848
             },
             "rarity": "3",
             "properties": {
@@ -6839,7 +6923,8 @@
               "base_graphic_id": 18462,
               "large_graphic_id": 18467,
               "portrait_graphic_id": 18456,
-              "xl_graphic_id": 18472
+              "xl_graphic_id": 18472,
+              "bastion_graphic_id": 30848
             },
             "rarity": "3",
             "properties": {
@@ -6873,7 +6958,8 @@
               "base_graphic_id": 24533,
               "large_graphic_id": 24535,
               "portrait_graphic_id": 24531,
-              "xl_graphic_id": 24537
+              "xl_graphic_id": 24537,
+              "bastion_graphic_id": 31040
             },
             "rarity": "3",
             "properties": {
@@ -6906,7 +6992,8 @@
               "base_graphic_id": 24533,
               "large_graphic_id": 24535,
               "portrait_graphic_id": 24531,
-              "xl_graphic_id": 24537
+              "xl_graphic_id": 24537,
+              "bastion_graphic_id": 31040
             },
             "rarity": "3",
             "properties": {
