@@ -104,4 +104,4 @@
 - 新操作手册 → `runbooks/<task>.md`，写前提、命令、判断和验证
 - 新历史记录 → 仅从已完成的 Plan 或 Investigation 移入 `archives/`，不为当前工作新建归档文档
 
-Decision 和 Plan 使用各自目录的 `_template.md`；Spec、Requirement、Research、Runbook 与 Archive 以相邻 以相邻 README 的职责约定为准。
+有 `_template.md` 的目录，新建文档必须从模板结构开始写。目前仅 `decisions/`（ADR 有 Nygard 业界共识）和 `plans/`（多阶段 checklist 刚需）有模板；Spec、Requirement、Research、Runbook 与 Archive 无统一模板共识，以相邻 README 的职责约定为准，不为形式化而强加模板。
