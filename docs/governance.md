@@ -62,14 +62,14 @@
 | 类型 | 目录 | 回答什么 | 生命周期 | 核心规则 |
 |---|---|---|---|---|
 | Spec 活跃规范 | `specs/` | 系统现在是什么 | 随实现重写 | 禁迁移叙事；只描述「现在是什么」；**永不引用 plans/milestone** |
-| Requirement 需求 | `requirements/` | 将来可能做什么 | 长期保留，落地时转为 change | 有明确需求描述和暂缓理由；不做排期；被接受后在 `plans/` 新建执行计划 |
+| Requirement 需求 | `requirements/` | 将来可能做什么 | 落地/否决后立即归档 | 有明确需求描述和暂缓理由；不做排期；被接受后在 `plans/` 新建执行计划，提案保留至实现完成 |
 | Research 调研 | `research/` | 外部事实是什么 | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
 | Decision 决策 | `decisions/` | 为什么这样选 | append-only | `**Status**: Draft/Accepted/Superseded`；superseded 不删，新 ADR 取代 |
 | Plan 计划 | `plans/` | 接下来按什么步骤改 | `Accepted→Landed` | 确认要做时才创建；落地后 `specs/` 更新，保留 `Landed` 状态并移入 `archives/plans/` |
 | Runbook 操作手册 | `runbooks/` | 当前怎样操作 | 随操作更新 | 写当前可执行步骤；不写事故经过或方案讨论 |
 | Archive 归档 | `archives/` | 过去发生了什么 | 冷存储 | 仅考古读取；默认不进入 |
 
-**铁律**：活跃规范不引用 `plans/` 或里程碑，不描述「某次交付了什么」。Spec 可以链接 ADR 作为当前选择的依据，但不得复述决策历史。Requirement 和 Plan 是两个不同阶段：Requirement 是需求意图（可能永远不做），Plan 是执行计划（确认要做）。Requirement 被接受后在 `plans/` 新建对应执行计划，Requirement 本身保留不删。
+**铁律**：活跃规范不引用 `plans/` 或里程碑，不描述「某次交付了什么」。Spec 可以链接 ADR 作为当前选择的依据，但不得复述决策历史。Requirement 和 Plan 是两个不同阶段：Requirement 是需求意图（可能永远不做），Plan 是执行计划（确认要做）。Requirement 被接受后在 `plans/` 新建对应执行计划，提案保留至实现完成；**一旦实现落地或被否决，必须立即将需求文件移入 `archives/requirements/` 并标记终态，禁止留在 `requirements/` 堆积**。多子项需求部分落地时原地更新剩余子项，全部终态后才整体归档；重复或无效提案直接删除，不归档。
 
 ## 8. 操作规则
 
@@ -92,6 +92,7 @@
 - 代码改了 → 更新 `specs/` 描述新现状（不写迁移叙事）
 - 决策变了 → 新 ADR（`decisions/`，旧的不删，标 `Status: Superseded by NNNN`）
 - plan 落地 → 更新 `specs/` + plan 标 `Status: Landed` → 移 `archives/plans/`；归档位置不新增状态
+- 需求落地 → 更新 `specs/` 为新现状 + 需求文件加终态头 → 移 `archives/requirements/`；否决只加终态头移归档；重复或无效提案直接删除
 - 操作变化 → 原地更新 `runbooks/`；一次性事故证据另存 `archives/investigations/`
 
 ### 怎么添加
@@ -102,6 +103,6 @@
 - 新决策 → `decisions/NNNN-<slug>.md`，使用该目录的 `_template.md`
 - 新执行计划/里程碑 → `plans/YYYY-MM-<scope>-<slug>.md`，使用该目录的 `_template.md`（提案被接受、准备执行时才创建）
 - 新操作手册 → `runbooks/<task>.md`，写前提、命令、判断和验证
-- 新历史记录 → 仅从已完成的 Plan 或 Investigation 移入 `archives/`，不为当前工作新建归档文档
+- 新历史记录 → 仅从已完成的 Plan、Investigation 或已终态的 Requirement 移入 `archives/`，不为当前工作新建归档文档
 
 有 `_template.md` 的目录，新建文档必须从模板结构开始写。目前仅 `decisions/`（ADR 有 Nygard 业界共识）和 `plans/`（多阶段 checklist 刚需）有模板；Spec、Requirement、Research、Runbook 与 Archive 无统一模板共识，以相邻 README 的职责约定为准，不为形式化而强加模板。

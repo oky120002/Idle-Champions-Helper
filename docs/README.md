@@ -27,7 +27,7 @@
 
 ## 怎么写 / 怎么加
 
-各类文档的命名与生命周期见对应目录 README；ADR 和 Change 另有目录内模板：
+各类文档的命名与生命周期见对应目录 README；ADR 和 Plan 另有目录内模板：
 
 - [怎么写提案](./requirements/README.md)
 - [怎么写 ADR](./decisions/README.md)
