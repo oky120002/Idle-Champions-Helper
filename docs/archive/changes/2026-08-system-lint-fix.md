@@ -1,6 +1,6 @@
 # Lint 违规渐进式修复
 
-**Status**: Accepted
+**Status**: Landed
 **Type**: milestone
 **Scope**: system
 **Created**: 2026-08-04
