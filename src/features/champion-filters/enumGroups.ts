@@ -26,17 +26,15 @@ export function isLocalizedEnumGroup(value: unknown): value is LocalizedEnumGrou
 }
 
 export function isIdLocalizedEnumGroup(value: unknown): value is IdLocalizedEnumGroup {
-  if (
-    typeof value !== 'object' ||
-    value === null ||
-    !('id' in value) ||
-    !('values' in value) ||
-    !Array.isArray(value.values)
-  ) {
-    return false
-  }
-  return value.values.every(
-    (item) => isLocalizedText(item) && typeof (item as Record<string, unknown>).id === 'string',
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'id' in value &&
+    'values' in value &&
+    Array.isArray(value.values) &&
+    value.values.every(
+      (item) => isLocalizedText(item) && typeof (item as Record<string, unknown>).id === 'string',
+    )
   )
 }
 

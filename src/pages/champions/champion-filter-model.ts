@@ -40,9 +40,7 @@ export function buildActiveFilterChips({
   orderedSelectedPatrons,
 }: ActiveChipOptions): ActiveFilterChip[] {
   const trimmedSearch = filters.search.trim()
-  const patronLabels = orderedSelectedPatrons.map((patron) =>
-    getLocalizedTextPair({ original: patron.original, display: patron.display }, locale),
-  )
+  const patronLabels = orderedSelectedPatrons.map((patron) => getLocalizedTextPair(patron, locale))
 
   return [
     trimmedSearch !== ''

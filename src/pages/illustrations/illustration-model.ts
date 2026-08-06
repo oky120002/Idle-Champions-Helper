@@ -299,8 +299,8 @@ export function buildActiveIllustrationFilterChips({
       ? {
           id: 'patrons',
           label: t({
-            zh: `赞助人：${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText({ original: patron.original, display: patron.display }, locale)).join(' / ')}`,
-            en: `Patrons: ${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText({ original: patron.original, display: patron.display }, locale)).join(' / ')}`,
+            zh: `赞助人：${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`,
+            en: `Patrons: ${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`,
           }),
           clearLabel: t({ zh: '清空赞助人筛选', en: 'Clear patron filter' }),
         }

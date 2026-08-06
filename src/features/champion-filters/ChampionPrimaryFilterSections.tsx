@@ -141,7 +141,7 @@ export function ChampionPrimaryFilterSections({
                 hint: t(copy.patronHint),
                 options: options.patronOptions.map((patron) => ({
                   id: patron.id,
-                  label: buildLocalizedLabel({ original: patron.original, display: patron.display }),
+                  label: buildLocalizedLabel(patron),
                 })),
                 selectedValues: values.selectedPatrons,
                 allLabel: t({ zh: '全部', en: 'All' }),

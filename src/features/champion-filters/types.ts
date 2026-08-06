@@ -19,10 +19,8 @@ export interface LocalizedEnumGroup {
   values: LocalizedText[]
 }
 
-export interface IdLocalizedOption {
+export interface IdLocalizedOption extends LocalizedText {
   id: string
-  original: string
-  display: string
 }
 
 export interface IdLocalizedEnumGroup {
