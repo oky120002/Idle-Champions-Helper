@@ -105,4 +105,29 @@
 - 新操作手册 → `runbooks/<task>.md`，写前提、命令、判断和验证
 - 新历史记录 → 仅从已完成的 Plan、Investigation 或已终态的 Requirement 移入 `archives/`，不为当前工作新建归档文档
 
-有 `_template.md` 的目录，新建文档必须从模板结构开始写。目前仅 `decisions/`（ADR 有 Nygard 业界共识）和 `plans/`（多阶段 checklist 刚需）有模板；Spec、Requirement、Research、Runbook 与 Archive 无统一模板共识，以相邻 README 的职责约定为准，不为形式化而强加模板。
+有 `_template.md` 的目录，新建文档必须从模板结构开始写。Decision 和 Plan 使用各自目录的 `_template.md`（ADR 有 Nygard 业界共识、Plan 多阶段 checklist 刚需）；Spec、Requirement、Research、Runbook 与 Archive 无统一模板共识，以相邻 README 的职责约定为准，不为形式化而强加模板。
+
+## 9. 全量索引
+
+本文件（§1-§8）给跨类型总则。各类型细则、可执行约束与操作流程分布在以下文件——治理变更须同步排查全表：
+
+| 位置 | 管什么 |
+|---|---|
+| [`AGENTS.md`](../AGENTS.md)「文档落库」 | 仓库级落库判据表 + 需求归档铁律 |
+| [`README.md`](./README.md) | 类型导航表、任务→目录速查 |
+| [`runbooks/documentation-maintenance.md`](./runbooks/documentation-maintenance.md) | 新增/改名文档 5 步操作 + 治理测试命令 |
+| [`specs/README.md`](./specs/README.md) | 规范核心规则：只描述现在、禁迁移叙事、禁引用 plans/milestone |
+| [`specs/modules/README.md`](./specs/modules/README.md) | 模块标准结构：README + design + rules + acceptance（+ contract） |
+| [`specs/guidelines/README.md`](./specs/guidelines/README.md) | guidelines 写作规则：只描述当前、原地更新、代码是事实源 |
+| [`specs/guidelines/design/README.md`](./specs/guidelines/design/README.md) | design 子目录入口：视觉规范何时读/何时补 |
+| [`specs/product/README.md`](./specs/product/README.md) | product 写作规则：描述产品现状、不写里程碑/变更叙事 |
+| [`requirements/README.md`](./requirements/README.md) | 需求库规则：与 plans 区别、终态标记格式、落地/否决后立即归档 |
+| [`plans/README.md`](./plans/README.md) | 计划规则：change/milestone 类型、Status 生命周期、落地流程、铁律 |
+| [`decisions/README.md`](./decisions/README.md) | ADR 规则：命名补零、append-only、Status 生命周期 |
+| [`research/README.md`](./research/README.md) | 调研规则：只记事实、不含决策/建议、带数据快照日期 |
+| [`runbooks/README.md`](./runbooks/README.md) | 手册写作规则：可复现前提/命令/判断/验证 |
+| [`audits/README.md`](./audits/README.md) | 审计报告规则：命名（-audit/-recon）、与其他目录关系、保留作基线 |
+| [`archives/README.md`](./archives/README.md) | 归档总规则：子目录、何时移入、进入后不再更新 |
+| [`archives/requirements/README.md`](./archives/requirements/README.md) | 需求归档规则：终态标记、何时进入 |
+| [`scripts/docs-governance.test.ts`](../scripts/docs-governance.test.ts) | 可执行约束：目录结构、断链、体量、迁移叙事、Status |
+| [`decisions/0006-document-taxonomy.md`](./decisions/0006-document-taxonomy.md) | 六类分类决策依据（ADR） |
