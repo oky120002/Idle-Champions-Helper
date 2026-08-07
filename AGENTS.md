@@ -5,6 +5,7 @@
 - TS/TSX：`docs/specs/guidelines/ai-first-ts-tsx.md`
 - CSS：`docs/specs/guidelines/ai-first-css.md`
 - 文档：`docs/governance.md`
+- 统一语言（游戏术语 ↔ 代码标识符）：`CONTEXT.md`
 - 测试：`docs/specs/guidelines/testing.md`
 - 数据归一化管线（资源同步 + normalize/build 增量跳过、数据源格式追溯）：`docs/specs/guidelines/data-normalization.md`
 - 私有用户数据：`docs/specs/modules/user-data/`
@@ -68,3 +69,9 @@
 - 默认简体中文，优先用游戏术语和通俗易懂的词汇，少用开发语言；**禁止直接搬用代码里的英文 key**（如 `slot_escort`、`forcedHeroes`、`scenarioRef`）——先用游戏术语或中文讲清概念，必要时括注代码标识符方便定位。
 - 引用代码位置用文件路径（如 `build-models.ts:208`）；引用游戏 JSON 字段时说明它在游戏中对应什么，不假设用户认识该字段名。
 - 本规则只约束面向用户的对话文本；代码内的函数名、变量名、类型名、注释保持英文（遵循代码规范），游戏 JSON 字段名按数据源事实使用。
+
+## 统一语言（CONTEXT.md）
+
+- 根 `CONTEXT.md` 是统一语言术语表，只记领域术语定义与别名（游戏术语 ↔ 代码标识符映射）。
+- 术语确认时即时更新，不批量；新任务涉及新概念时先查 `CONTEXT.md` 建立理解。
+- 用户使用冲突术语时：能从上下文自行消解的直接消解更新；无法消解的交用户确认。
