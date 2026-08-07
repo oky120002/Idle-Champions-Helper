@@ -24,3 +24,12 @@
 | 脚本 | 风险 | 用途 |
 |---|---|---|
 | `slim-git-history.sh` | 🔴 不可逆 | 删 `.png`/`.json` 历史旧版本 blob + 重写全历史 + force push |
+| `test_slim-git-history.sh` | 🟢 只读 | 上者的单元 + 集成测试（临时仓库 + 本地 bare 模拟远端，零网络依赖） |
+
+## 测试
+
+- 运维脚本测试 co-located（`test_<被测>.sh`），用 `bash test_<被测>.sh` 跑——纯 bash，无外部测试框架（bats/pytest）。
+- 测试前置检查 git / git-filter-repo，缺失提示安装并退出。
+- 设计：被测脚本主流程包在 `main()` + `BASH_SOURCE` 守卫内，`source` 只暴露函数；测试 source 后调单函数 + 临时仓库集成。
+- 集成测试用本地 bare 仓库模拟远端（不碰真网络），等价覆盖 push 路径；真代理探测不可单元测，注释说明。
+- shellcheck 全量 gate（主脚本 + 测试）。

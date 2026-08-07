@@ -23,8 +23,9 @@
 | 单元（node） | vitest `unit` | `src/**/*.test.ts`、`scripts/**/*.test.ts` |
 | 组件（jsdom） | vitest `component` | `src/**/*.test.tsx` |
 | E2E | playwright | `tests/e2e/**` |
+| 运维（bash） | bash | `scripts/ops/test_*.sh` |
 
-新增测试目录必须同步扩展对应运行器 glob；测试存在但不被任何运行器扫到 = 游离，禁止。
+新增测试目录必须同步扩展对应运行器 glob；测试存在但不被任何运行器扫到 = 游离，禁止。运维 bash 脚本测试用 `bash scripts/ops/test_*.sh` 跑（co-located，临时仓库自包含，不进 vitest），shellcheck 全量 gate；约定见 `scripts/ops/AGENTS.md`。
 
 接入 `test` / `test:xxx` 链的脚本步骤必须真 gate：有断言 + 失败时非零退出码。只打印报告不断言不构成 gate——要么加阈值/快照断言（真实数据 gate），要么移出测试链。`signal-coverage` 的 gate 模式：`main()` 比对 `signal-coverage-baseline.json` 关键计数，漂移 `exit 1` + 打印 diff，`--update-baseline` 显式确认。详见 `docs/audits/scripts-audit.md` §2 #1。
 
