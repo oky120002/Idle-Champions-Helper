@@ -102,12 +102,6 @@ compute_strip_list() {
     comm -23 "$all" "$keep" > "$out"
 }
 
-# ── 纯函数：解析 `git worktree list` 输出为 "path\tbranch" 行（detached branch 空）──
-parse_worktree_list() {
-    awk '{ path=$1; branch=""; for(i=3;i<=NF;i++) if($i ~ /^\[/) {branch=$i; break}
-          gsub(/[\[\]]/, "", branch); print path "\t" branch }'
-}
-
 # ── 选择网络路由：候选代理优先（HTTP/1.1），ls-remote 探测选第一个可达；都失败则直连 ──
 # 用 $1 为仓库目录（测 origin URL），幂等（NETWORK_DECIDED=1 后不重探）
 select_route() {

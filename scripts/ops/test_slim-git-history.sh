@@ -6,7 +6,7 @@
 #
 # 覆盖：
 #   单元——纯函数（detect_main_repo / collect_proxy_candidates / compute_strip_list /
-#     parse_worktree_list / translate_sha / check_dep）、git 函数（collect_ht_tip_blobs /
+#     translate_sha / check_dep）、git 函数（collect_ht_tip_blobs /
 #     collect_all_blobs，临时仓库）、网络（select_route，本地 bare 模拟）
 #   集成——完整流程（filter-repo + push 本地 bare + tip 保留）、幂等重跑、strip 空、
 #     验证守卫（strip 含 tip→中止）、worktree 移除+重建
@@ -101,10 +101,6 @@ assert_eq "$(cat "$d/strip")" "$(printf 'a\nc\nd')" "strip = all - keep"
 printf 'a\nb\nc\nd\n' > "$d/keep2"; compute_strip_list "$d/all" "$d/keep2" "$d/s2"
 assert_eq "$(cat "$d/s2")" "" "keep 全包含→strip 空"
 check_tmp_path "$d"
-
-echo "[parse_worktree_list]"
-in=$'/p/a abc [main]\n/p/b def [opencode/dev1]\n/p/c ghi (detached)'
-assert_eq "$(echo "$in" | parse_worktree_list)" "$(printf '/p/a\tmain\n/p/b\topencode/dev1\n/p/c\t')" "分支名 + detached 空"
 
 echo "[translate_sha]"
 d=$(_tmpdir)
