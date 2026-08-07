@@ -2,8 +2,8 @@
 # pre-push: 增量 lint——只检查待 push 范围内的变动源码文件 + 颜色守卫全量。
 # 漏检由 main CI 全量兜底。应急绕过：git push --no-verify
 #
-# 版本化：本文件进 git（githooks/），clone 后由 npm prepare 自动设置
-# core.hooksPath=githooks 生效。
+# 版本化：本文件进 git（.githooks/），clone 后由 npm prepare 自动设置
+# core.hooksPath=.githooks 生效。
 
 ZERO="0000000000000000000000000000000000000000"
 NEED_FULL=0

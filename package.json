@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "prepare": "git config core.hooksPath githooks 2>/dev/null || true",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . && tsx scripts/check-colors.ts && tsx scripts/check-color-contrast.ts",
