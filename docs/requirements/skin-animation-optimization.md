@@ -6,7 +6,7 @@
 
 动画主线（`decisions/0004-animation-bin-canvas-playback.md`）已落地，本提案收纳暂未实现的观测与性能后续项：
 
-1. **动画包体积预算阈值**：`data:official` 打印每英雄 `.bin` 体积并超阈值告警，防总体积无声增长
+1. ✅ **动画包体积预算阈值**（2026-08-07 落地）：同步脚本加体积分布报告（最大/中位/平均）+ 512 KB 单条告警（`summarizeAnimationSizes` 纯函数 + `printAnimationSizeReport`，`scripts/sync-idle-champions-animations.ts`）
 2. ✅ **详情弹层状态释放**（2026-08-07 落地）：`requestAnimationFrame` 随弹层卸载 cancel（组件已有正确 cleanup）；动画纹理缓存加 FIFO 上限 12 条 + `ImageBitmap.close()` 释放原生资源（`src/features/skelanim-player/asset-loader.ts`）
 3. **插画页扩展评估**：扩展到插画页仍维持「用户触发后再播放」，评估 CPU / 内存 / 懒加载策略
 4. **确定性候选选择规则**：全量样本不存在依赖槽位命名的误选

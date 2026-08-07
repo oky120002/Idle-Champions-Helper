@@ -144,8 +144,8 @@ function renderSlotHint(
   return (
     <span className="formation-slot__hint">
       {t({
-        zh: `坐标 ${String(slot.row)}-${String(slot.column)}`,
-        en: `Position ${String(slot.row)}-${String(slot.column)}`,
+        zh: `第 ${String(slot.row)} 排`,
+        en: `Row ${String(slot.row)}`,
       })}
     </span>
   )

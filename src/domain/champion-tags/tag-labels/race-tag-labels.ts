@@ -105,4 +105,100 @@ export const RACE_TAG_LABELS = {
     'zh-CN': '蛇人',
     'en-US': 'Yuan-Ti',
   },
+  celestial: {
+    'zh-CN': '天界生物',
+    'en-US': 'Celestial',
+  },
+  construct: {
+    'zh-CN': '构造体',
+    'en-US': 'Construct',
+  },
+  doppelganger: {
+    'zh-CN': '变形怪',
+    'en-US': 'Doppelganger',
+  },
+  fairy: {
+    'zh-CN': '妖精',
+    'en-US': 'Fairy',
+  },
+  firbolg: {
+    'zh-CN': '菲尔博格',
+    'en-US': 'Firbolg',
+  },
+  giff: {
+    'zh-CN': '吉夫',
+    'en-US': 'Giff',
+  },
+  githyanki: {
+    'zh-CN': '吉斯洋基人',
+    'en-US': 'Githyanki',
+  },
+  githzerai: {
+    'zh-CN': '吉斯泽雷人',
+    'en-US': 'Githzerai',
+  },
+  goblin: {
+    'zh-CN': '哥布林',
+    'en-US': 'Goblin',
+  },
+  goliath: {
+    'zh-CN': '哥利亚',
+    'en-US': 'Goliath',
+  },
+  harengon: {
+    'zh-CN': '兔族',
+    'en-US': 'Harengon',
+  },
+  kalashtar: {
+    'zh-CN': '卡拉斯塔',
+    'en-US': 'Kalashtar',
+  },
+  kender: {
+    'zh-CN': '坎德人',
+    'en-US': 'Kender',
+  },
+  minotaur: {
+    'zh-CN': '牛头人',
+    'en-US': 'Minotaur',
+  },
+  modron: {
+    'zh-CN': '模族',
+    'en-US': 'Modron',
+  },
+  plasmoid: {
+    'zh-CN': '黏液怪',
+    'en-US': 'Plasmoid',
+  },
+  satyr: {
+    'zh-CN': '萨特',
+    'en-US': 'Satyr',
+  },
+  saurial: {
+    'zh-CN': '恐人',
+    'en-US': 'Saurial',
+  },
+  shadarkai: {
+    'zh-CN': '暗影凯',
+    'en-US': 'Shadar-kai',
+  },
+  'space-hamster': {
+    'zh-CN': '太空仓鼠',
+    'en-US': 'Giant Space Hamster',
+  },
+  thrikreen: {
+    'zh-CN': '螳螂人',
+    'en-US': 'Thri-kreen',
+  },
+  triton: {
+    'zh-CN': '三栖人',
+    'en-US': 'Triton',
+  },
+  wildelf: {
+    'zh-CN': '野精灵',
+    'en-US': 'Wild Elf',
+  },
+  planes: {
+    'zh-CN': '异界生物',
+    'en-US': 'Planar',
+  },
 } satisfies Record<string, Record<AppLocale, string>>
