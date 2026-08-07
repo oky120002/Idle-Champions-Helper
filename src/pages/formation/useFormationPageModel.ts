@@ -42,7 +42,6 @@ export function useFormationPageModel(): FormationPageModel {
     placements: pageState.placements,
     scenarioRef: pageState.scenarioRef,
     selectedLayoutId: pageState.selectedLayoutId,
-    locale,
   })
 
   const derived = useFormationPageDerived({

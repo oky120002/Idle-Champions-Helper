@@ -16,7 +16,6 @@ interface UseFormationDraftPersistenceOptions {
   placements: Record<string, string>
   scenarioRef: ScenarioRef | null
   selectedLayoutId: string
-  locale: 'zh-CN' | 'en-US'
   setDraftStatus: Dispatch<SetStateAction<StatusMessage | null>>
 }
 
@@ -28,7 +27,6 @@ export function useFormationDraftPersistence(options: UseFormationDraftPersisten
     placements,
     scenarioRef,
     selectedLayoutId,
-    locale,
     setDraftStatus,
   } = options
   useEffect(() => scheduleDraftPersistence({
@@ -46,7 +44,6 @@ export function useFormationDraftPersistence(options: UseFormationDraftPersisten
     placements,
     scenarioRef,
     selectedLayoutId,
-    locale,
     setDraftStatus,
   ])
 }
