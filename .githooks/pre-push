@@ -19,14 +19,14 @@ while read -r _ local_sha _ remote_sha; do
   fi
 done
 
-# 首次 push 新分支 / 删除分支：无法 diff → 全量 eslint 兜底
+# 首次 push 新分支 / 删除分支：无法 diff → 全量 lint 兜底
 if [ "$NEED_FULL" = "1" ]; then
-  echo "▶ pre-push: 首次 push 或新分支，全量 eslint 兜底..."
-  if npx eslint .; then
-    echo "✓ eslint 通过，放行 push"
+  echo "▶ pre-push: 首次 push 或新分支，全量 lint 兜底..."
+  if npm run lint; then
+    echo "✓ lint 通过，放行 push"
     exit 0
   else
-    echo "✗ eslint 失败，已中止 push。修复后重试，或 git push --no-verify 应急绕过。" >&2
+    echo "✗ lint 失败，已中止 push。修复后重试，或 git push --no-verify 应急绕过。" >&2
     exit 1
   fi
 fi
