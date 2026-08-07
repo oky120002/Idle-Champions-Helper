@@ -75,7 +75,7 @@ const championsFixture: DataCollection<Champion> = {
 
 async function openHeroPicker(user: ReturnType<typeof userEvent.setup>) {
   await waitFor(() => expect(screen.getAllByTestId('hero-picker-trigger').length).toBeGreaterThan(0))
-  await user.click(screen.getAllByTestId('hero-picker-trigger')[0]!)
+  await user.click(unwrap(screen.getAllByTestId('hero-picker-trigger')[0], 'hero-picker-trigger'))
   await waitFor(() => expect(screen.getAllByTestId('hero-picker-panel').length).toBeGreaterThan(0))
 }
 
@@ -256,8 +256,9 @@ describe('FormationPage restore preset with filter snapshot', () => {
     })
 
     const selects = screen.getAllByRole('combobox')
-    const slot2Options = Array.from(selects[1]!.querySelectorAll('option')).map((o) => o.value)
+    const slot2Select = unwrap(selects[1], 'slot-2 select')
+    const slot2Options = Array.from(slot2Select.querySelectorAll('option')).map((o) => o.value)
     expect(slot2Options).toContain('celeste')
-    expect(selects[1]!.value).toBe('celeste')
+    expect(slot2Select.value).toBe('celeste')
   })
 })
