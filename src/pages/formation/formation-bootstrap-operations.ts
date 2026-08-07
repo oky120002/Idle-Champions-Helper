@@ -118,7 +118,13 @@ export async function loadFormationBootstrapData(opts: LoadFormationBootstrapDat
 export async function restorePendingPreset(opts: RestorePendingPresetOptions) {
   const { isDisposed, navigate, pendingPresetRestore, version, formations, champions } = opts
 
-  void navigate('/formation', { replace: true, state: null })
+  // 清除路由 state（防止 back/forward 或 remount 时重复恢复），但保留当前 URL 搜索参数——
+  // useFormationFilterState 的 useLayoutEffect 已将筛选快照同步到 URL，硬编码 '/formation'
+  // 会抹掉这些参数导致刷新后筛选丢失。HashRouter 下路由路径在 window.location.hash 中。
+  const currentPath = typeof window !== 'undefined'
+    ? (window.location.hash.slice(1) || '/formation')
+    : '/formation'
+  void navigate(currentPath, { replace: true, state: null })
 
   const pendingPrompt = await buildFormationSnapshotPrompt(
     convertPresetToDraft(pendingPresetRestore),

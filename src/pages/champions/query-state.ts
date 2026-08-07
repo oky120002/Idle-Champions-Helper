@@ -1,21 +1,8 @@
 import {
-  SEARCH_PARAM_ACQUISITION,
-  SEARCH_PARAM_AFFILIATION,
-  SEARCH_PARAM_ALIGNMENT,
-  SEARCH_PARAM_GENDER,
-  SEARCH_PARAM_MECHANIC,
-  SEARCH_PARAM_PATRON,
-  SEARCH_PARAM_PROFESSION,
-  SEARCH_PARAM_QUERY,
-  SEARCH_PARAM_RACE,
-  SEARCH_PARAM_ROLE,
-  SEARCH_PARAM_SEAT,
-} from '../../features/champion-filters/constants'
-import {
   appendCommonFilterSearchParams,
+  COMMON_FILTER_PARAM_KEYS,
   readCommonFilterExpansion,
   readCommonFilterState,
-  type CommonFilterSearchParamKeys,
 } from '../../features/champion-filters/query-state'
 import {
   DEFAULT_SCROLL_KEY,
@@ -24,27 +11,13 @@ import {
 } from './constants'
 import type { ChampionsFilterState } from './types'
 
-const CHAMPION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
-  query: SEARCH_PARAM_QUERY,
-  seat: SEARCH_PARAM_SEAT,
-  role: SEARCH_PARAM_ROLE,
-  affiliation: SEARCH_PARAM_AFFILIATION,
-  race: SEARCH_PARAM_RACE,
-  gender: SEARCH_PARAM_GENDER,
-  alignment: SEARCH_PARAM_ALIGNMENT,
-  profession: SEARCH_PARAM_PROFESSION,
-  acquisition: SEARCH_PARAM_ACQUISITION,
-  mechanic: SEARCH_PARAM_MECHANIC,
-  patron: SEARCH_PARAM_PATRON,
-}
-
 export function readShowAllResults(searchParams: URLSearchParams): boolean {
   return searchParams.get(SEARCH_PARAM_VIEW) === RESULTS_VIEW_ALL
 }
 
 export function buildFilterSearchParams(filters: ChampionsFilterState): URLSearchParams {
   const searchParams = new URLSearchParams()
-  appendCommonFilterSearchParams(searchParams, filters, CHAMPION_FILTER_PARAM_KEYS)
+  appendCommonFilterSearchParams(searchParams, filters, COMMON_FILTER_PARAM_KEYS)
 
   if (filters.showAllResults) {
     searchParams.set(SEARCH_PARAM_VIEW, RESULTS_VIEW_ALL)
@@ -59,7 +32,7 @@ export function buildFilterSearchParams(filters: ChampionsFilterState): URLSearc
  */
 export function buildFormationFilterHref(filters: ChampionsFilterState): string {
   const searchParams = new URLSearchParams()
-  appendCommonFilterSearchParams(searchParams, filters, CHAMPION_FILTER_PARAM_KEYS)
+  appendCommonFilterSearchParams(searchParams, filters, COMMON_FILTER_PARAM_KEYS)
   const search = searchParams.toString()
   return search !== '' ? `/formation?${search}` : '/formation'
 }
@@ -80,7 +53,7 @@ export function readInitialFilterState(search: string): ChampionsFilterState {
   const searchParams = new URLSearchParams(search)
 
   return {
-    ...readCommonFilterState(searchParams, CHAMPION_FILTER_PARAM_KEYS),
+    ...readCommonFilterState(searchParams, COMMON_FILTER_PARAM_KEYS),
     showAllResults: readShowAllResults(searchParams),
   }
 }
@@ -89,5 +62,5 @@ export function readInitialFilterExpansion(search: string): {
   identity: boolean
   meta: boolean
 } {
-  return readCommonFilterExpansion(new URLSearchParams(search), CHAMPION_FILTER_PARAM_KEYS)
+  return readCommonFilterExpansion(new URLSearchParams(search), COMMON_FILTER_PARAM_KEYS)
 }

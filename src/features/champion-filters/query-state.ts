@@ -1,9 +1,40 @@
 import {
+  SEARCH_PARAM_ACQUISITION,
+  SEARCH_PARAM_AFFILIATION,
+  SEARCH_PARAM_ALIGNMENT,
+  SEARCH_PARAM_GENDER,
+  SEARCH_PARAM_MECHANIC,
+  SEARCH_PARAM_PATRON,
+  SEARCH_PARAM_PROFESSION,
+  SEARCH_PARAM_QUERY,
+  SEARCH_PARAM_RACE,
+  SEARCH_PARAM_ROLE,
+  SEARCH_PARAM_SEAT,
+} from './constants'
+import {
   appendSortedStringValues,
   readSearchValue,
   readSeatValues,
   readStringValues,
 } from './query'
+
+/**
+ * 跨页面共享的筛选 param keys——champions / illustrations / formation 三页同名，
+ * 跳转时筛选条件在 URL 中无缝传递。消费方直接引用，不再各自重复组装。
+ */
+export const COMMON_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
+  query: SEARCH_PARAM_QUERY,
+  seat: SEARCH_PARAM_SEAT,
+  role: SEARCH_PARAM_ROLE,
+  affiliation: SEARCH_PARAM_AFFILIATION,
+  race: SEARCH_PARAM_RACE,
+  gender: SEARCH_PARAM_GENDER,
+  alignment: SEARCH_PARAM_ALIGNMENT,
+  profession: SEARCH_PARAM_PROFESSION,
+  acquisition: SEARCH_PARAM_ACQUISITION,
+  mechanic: SEARCH_PARAM_MECHANIC,
+  patron: SEARCH_PARAM_PATRON,
+}
 
 export interface CommonFilterSearchParamKeys {
   query: string

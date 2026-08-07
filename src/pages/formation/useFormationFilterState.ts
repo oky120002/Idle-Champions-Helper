@@ -1,40 +1,13 @@
 import { useCallback, useState, useLayoutEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import {
-  SEARCH_PARAM_ACQUISITION,
-  SEARCH_PARAM_AFFILIATION,
-  SEARCH_PARAM_ALIGNMENT,
-  SEARCH_PARAM_GENDER,
-  SEARCH_PARAM_MECHANIC,
-  SEARCH_PARAM_PATRON,
-  SEARCH_PARAM_PROFESSION,
-  SEARCH_PARAM_QUERY,
-  SEARCH_PARAM_RACE,
-  SEARCH_PARAM_ROLE,
-  SEARCH_PARAM_SEAT,
-} from '../../features/champion-filters/constants'
-import {
   appendCommonFilterSearchParams,
+  COMMON_FILTER_PARAM_KEYS,
   readCommonFilterState,
-  type CommonFilterSearchParamKeys,
   type CommonFilterSearchState,
 } from '../../features/champion-filters/query-state'
 import { hasActiveChampionFilters } from '../../rules/championFilter'
 import type { ChampionFilterSnapshot } from '../../domain/types'
-
-const FORMATION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
-  query: SEARCH_PARAM_QUERY,
-  seat: SEARCH_PARAM_SEAT,
-  role: SEARCH_PARAM_ROLE,
-  affiliation: SEARCH_PARAM_AFFILIATION,
-  race: SEARCH_PARAM_RACE,
-  gender: SEARCH_PARAM_GENDER,
-  alignment: SEARCH_PARAM_ALIGNMENT,
-  profession: SEARCH_PARAM_PROFESSION,
-  acquisition: SEARCH_PARAM_ACQUISITION,
-  mechanic: SEARCH_PARAM_MECHANIC,
-  patron: SEARCH_PARAM_PATRON,
-}
 
 /**
  * 阵型编辑页筛选状态。
@@ -49,13 +22,13 @@ const FORMATION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
 export function useFormationFilterState(initialSnapshot?: ChampionFilterSnapshot | null) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [filterState] = useState<CommonFilterSearchState>(() =>
-    initialSnapshot ?? readCommonFilterState(searchParams, FORMATION_FILTER_PARAM_KEYS),
+    initialSnapshot ?? readCommonFilterState(searchParams, COMMON_FILTER_PARAM_KEYS),
   )
 
   const syncUrl = useCallback(
     (next: CommonFilterSearchState) => {
       const urlParams = new URLSearchParams()
-      appendCommonFilterSearchParams(urlParams, next, FORMATION_FILTER_PARAM_KEYS)
+      appendCommonFilterSearchParams(urlParams, next, COMMON_FILTER_PARAM_KEYS)
       setSearchParams(urlParams, { replace: true })
     },
     [setSearchParams],
