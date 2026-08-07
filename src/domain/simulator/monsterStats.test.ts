@@ -1,12 +1,12 @@
 import { Decimal } from 'decimal.js'
 import { describe, expect, test } from 'vitest'
 
+import { compareGameNumbers } from '../gameNumber'
 import {
   MAX_AREA,
   monsterDpsAt,
   monsterHealthAt,
 } from './monsterStats'
-import { compareGameNumbers } from '../gameNumber'
 
 describe('monsterHealthAt', () => {
   test('area 1 = base_health', () => {

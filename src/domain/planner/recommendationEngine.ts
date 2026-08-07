@@ -343,7 +343,7 @@ function attachOwnedSaveContext(
  * evaluate 与 recommend 会对同一阵型算出不同 DPS 且无诊断。
  */
 function parseGoldBudget(value: string | undefined): GameNumberValue | undefined {
-  if (!value) return undefined
+  if (value === undefined || value.length === 0) return undefined
   const result = parseGameNumber(value)
   return result.ok ? result.value : undefined
 }
