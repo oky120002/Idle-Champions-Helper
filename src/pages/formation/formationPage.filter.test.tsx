@@ -242,4 +242,22 @@ describe('FormationPage restore preset with filter snapshot', () => {
     expect(screen.getAllByText('布鲁诺').length).toBeGreaterThan(0)
     expect(screen.getAllByText('赛丽丝特').length).toBeGreaterThan(0)
   })
+
+  it('已放置英雄即使不匹配筛选也在槽位下拉中可见', async () => {
+    // 方案筛选 seat=1，但 slot-2 放了 Celeste(seat 2)——下拉必须显示当前英雄
+    renderWithPresetRestore({
+      ...presetWithSeatOne,
+      placements: { 'slot-1': 'bruenor', 'slot-2': 'celeste' },
+    })
+
+    // 等 bootstrap 恢复方案完成（恢复状态消息出现）
+    await waitFor(() => {
+      expect(screen.getByText(/已从方案/)).toBeInTheDocument()
+    })
+
+    const selects = screen.getAllByRole('combobox')
+    const slot2Options = Array.from(selects[1]!.querySelectorAll('option')).map((o) => o.value)
+    expect(slot2Options).toContain('celeste')
+    expect(selects[1]!.value).toBe('celeste')
+  })
 })

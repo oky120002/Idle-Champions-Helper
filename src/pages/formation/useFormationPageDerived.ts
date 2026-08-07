@@ -190,7 +190,7 @@ export function useFormationPageDerived({
     conflictingSeats,
     draftPromptChampions,
     canSavePreset,
-    getAvailableChampionsForSlot: (slotId: string) => filterAvailableChampionsForSlot(slotId, selectedChampions, championOptions),
+    getAvailableChampionsForSlot: (slotId: string) => filterAvailableChampionsForSlot(slotId, selectedChampions, championOptions, championById),
     getChampionOptionLabel: (champion: Champion) => formatChampionOptionLabel(champion, locale),
     getPresetPriorityLabel: (priority: PresetPriority) => formatPresetPriorityLabel(priority, t),
     getLayoutFilterLabel: (kind: LayoutFilterKind) => formatLayoutFilterLabel(kind, t),
@@ -201,6 +201,7 @@ function filterAvailableChampionsForSlot(
   slotId: string,
   selectedChampions: SelectedChampionPlacement[],
   championOptions: Champion[],
+  championById: Map<string, Champion>,
 ): Champion[] {
   const currentHeroId = selectedChampions.find((p) => p.slotId === slotId)?.champion.id
   const occupiedOtherSeats = new Set(
@@ -208,9 +209,18 @@ function filterAvailableChampionsForSlot(
       .filter((p) => p.slotId !== slotId)
       .map((p) => p.champion.seat),
   )
-  return championOptions.filter(
+  const result = championOptions.filter(
     (champion) => champion.id === currentHeroId || !occupiedOtherSeats.has(champion.seat),
   )
+  // 当前英雄可能被筛选排除出 championOptions，但仍放置在棋盘上——下拉必须显示它，
+  // 否则 select 显示「未放置」而 hint 显示英雄名，UI 不一致。
+  if (currentHeroId !== undefined) {
+    const currentHero = championById.get(currentHeroId)
+    if (currentHero !== undefined && !result.some((c) => c.id === currentHeroId)) {
+      return [currentHero, ...result]
+    }
+  }
+  return result
 }
 
 function formatChampionOptionLabel(champion: Champion, locale: AppLocale): string {
