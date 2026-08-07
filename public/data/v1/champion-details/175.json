@@ -1,296 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "175",
-    "name": {
-      "original": "Laurana",
-      "display": "劳拉娜"
-    },
-    "seat": 7,
-    "roles": [
-      "support",
-      "tanking"
-    ],
-    "affiliations": [
-      {
-        "original": "Heroes of the Lance",
-        "display": "长枪英雄"
-      }
-    ],
-    "tags": [
-      "elf",
-      "event",
-      "female",
-      "fighter",
-      "good",
-      "heroeslance",
-      "lcneutral",
-      "neutral",
-      "spec_hunter",
-      "support",
-      "tanking",
-      "y9"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/175.png",
-      "sourceGraphic": "Portraits/Portrait_Laurana",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Laurana",
-  "eventName": {
-    "original": "The Great Modron March",
-    "display": "魔冢长征"
-  },
-  "dateAvailable": "2026-05-06 12:00:00",
-  "lastReworkDate": "2026-05-06 12:00:00",
-  "popularity": 118,
-  "baseCost": "30000000000",
-  "baseDamage": "150000000",
-  "baseHealth": "250",
-  "graphicId": "28923",
-  "portraitGraphicId": "28928",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1809630000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    455,
-    1385,
-    2510,
-    3895
-  ],
-  "costCurves": {
-    "1": 1.05
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "content_set_id": 77,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      170,
-      171,
-      172
-    ],
-    "graphic_large": 28924,
-    "graphic_xl": 28925,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      89,
-      64
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2026-05-06 12:00:00",
-    "available_in_store": "2026-05-06 12:00:00",
-    "time_gate_adventure_id": 1968,
-    "time_gate_variants_ids": [
-      1964,
-      1965,
-      1966
-    ],
-    "permanent_effects": [
-      "base_overwhelm,25"
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 807,
-    "gold_chest_type_id": 808,
-    "golden_epic_loot_id": 4181,
-    "golden_epic_promo_id": 802,
-    "event_logo_graphic_id": 3374,
-    "console_portrait": 28929,
-    "trials_effect_id": 836,
-    "weekly_chest_type_id": 808,
-    "weekly_buff": "buff_upgrades,200,19356,19355,19354",
-    "portrait_graphic_scale": 1,
-    "legendary_effect_id": [
-      1,
-      5,
-      56,
-      96,
-      102,
-      48
-    ]
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Lauralanthalasa Kanan",
-      "display": "劳拉兰萨拉萨·卡南"
-    },
-    "class": {
-      "original": "Fighter",
-      "display": "战士"
-    },
-    "race": {
-      "original": "Elf (Qualinesti)",
-      "display": "精灵（奎灵尼斯）"
-    },
-    "age": 80,
-    "alignment": {
-      "original": "Neutral Good",
-      "display": "中立善良"
-    },
-    "abilityScores": {
-      "str": 13,
-      "dex": 17,
-      "con": 14,
-      "int": 15,
-      "wis": 12,
-      "cha": 16
-    },
-    "backstory": {
-      "original": "Lauralanthalasa Kanan was a pampered princess of the Qualinesti elves. Then the flames of evil dragons threatened her people and Laurana joined with other heroes to fight the Dragon Queen. In time, she became known as the Golden General: a renowned fighter, dragon rider, and brilliant battlefield commander. Now a living symbol of hope, Laurana fights to save her people and the world.",
-      "display": "劳拉兰萨拉萨·卡南曾是奎灵尼斯精灵一族备受宠爱的公主。然而，当邪恶巨龙的烈焰威胁到她的族人时，劳拉娜毅然加入其他英雄对抗龙女王的行列。时光流转，她被誉为“黄金将军”：一位著名的战士、龙骑士，以及卓越的战场指挥官。如今，作为希望的象征，劳拉娜为拯救她的族人与整个世界而战。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "962",
-      "name": {
-        "original": "Sword Strike",
-        "display": "剑击"
-      },
-      "description": {
-        "original": "Laurana attacks the closest enemy for one hit.",
-        "display": "劳拉娜攻击距离最近的敌人一次。"
-      },
-      "longDescription": {
-        "original": "Laurana nimbly attacks the closest enemy with her shortsword for one hit.",
-        "display": "劳拉娜敏捷地用她的短剑攻击距离最近的敌人一次。"
-      },
-      "cooldown": 5,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -34,
-          "damage_frame": 7,
-          "jump_sound": 30,
-          "sound_frames": {
-            "7": 154
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "963",
-      "name": {
-        "original": "Dragon Strafe",
-        "display": "巨龙横扫"
-      },
-      "description": {
-        "original": "Laurana and Quallathon deal one ultimate hit to all enemies, and encourage her allies.",
-        "display": "劳拉娜与奎里安对所有敌人造成一次杀招打击，并激励她的盟友。"
-      },
-      "longDescription": {
-        "original": "Laurana and Quallathon deal one ultimate hit to all enemies, which additionally encourages her allies for a short while.",
-        "display": "劳拉娜与奎里安对所有敌人造成一次杀招打击，并额外激励她的盟友一小段时间。"
-      },
-      "cooldown": 300,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "all",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "magic",
-        "ultimate"
-      ],
-      "graphicId": "28968",
-      "animations": [
-        {
-          "type": "laurana_ultimate",
-          "dragon_sequences": {
-            "fly": 0,
-            "breathefire": 1
-          },
-          "projectile_data": {
-            "type": "ranged_attack",
-            "projectile": "fire_breath_simple",
-            "single_projectile": false,
-            "does_no_damage": true,
-            "shoot_offset_x": 166,
-            "shoot_offset_y": -98,
-            "auto_projectile_angle": false,
-            "projectile_angle": -135,
-            "hold_time": 2,
-            "particle_duration": 0.7,
-            "projectile_strength": 1200
-          }
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "19350",
-        "name": {
-          "original": "Golden General",
-          "display": "黄金将军"
-        },
-        "description": null,
-        "graphicId": "28955"
-      },
-      {
-        "upgradeId": "19351",
-        "name": {
-          "original": "Leader of the Whitestone Armies",
-          "display": "白石军领袖"
-        },
-        "description": null,
-        "graphicId": "28956"
-      },
-      {
-        "upgradeId": "19352",
-        "name": {
-          "original": "Strategic Reserves",
-          "display": "战略储备"
-        },
-        "description": null,
-        "graphicId": "28957"
-      },
-      {
-        "upgradeId": "19353",
-        "name": {
-          "original": "Inner Strength",
-          "display": "内在力量"
-        },
-        "description": null,
-        "graphicId": "28954"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "19348",
@@ -301,7 +10,6 @@
         "display": "长枪之战"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2684",
       "effectDefinition": {
         "id": "2684",
         "snapshots": {
@@ -486,7 +194,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2684"
     },
     {
       "id": "19605",
@@ -494,14 +203,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19354",
@@ -512,7 +221,6 @@
         "display": "作战计划：冲锋"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2689",
       "effectDefinition": {
         "id": "2689",
         "snapshots": {
@@ -583,7 +291,8 @@
         "display": "劳拉娜命令她最亲密的盟友与她一起发起正面冲锋。"
       },
       "specializationGraphicId": "28962",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2689"
     },
     {
       "id": "19355",
@@ -594,7 +303,6 @@
         "display": "作战计划：包抄"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2690",
       "effectDefinition": {
         "id": "2690",
         "snapshots": {
@@ -665,7 +373,8 @@
         "display": "劳拉娜从意想不到的角度杀出，撕碎敌人的防线。"
       },
       "specializationGraphicId": "28964",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2690"
     },
     {
       "id": "19356",
@@ -676,7 +385,6 @@
         "display": "作战计划：筑防"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2691",
       "effectDefinition": {
         "id": "2691",
         "snapshots": {
@@ -747,7 +455,8 @@
         "display": "劳拉娜巩固后方阵线，为时机成熟时发动毁灭性一击做好准备。"
       },
       "specializationGraphicId": "28963",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2691"
     },
     {
       "id": "19350",
@@ -758,7 +467,6 @@
         "display": "黄金将军"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2685",
       "effectDefinition": {
         "id": "2685",
         "snapshots": {
@@ -840,7 +548,8 @@
       "tipText": {
         "original": "Laurana's Battle Plan affects one of the three columns behind her (your choice); this buff is greatly increased by her Campaign stacks, which you can increase by completing her extra achievements.",
         "display": "劳拉娜的“作战计划”会影响她身后三列中的一列（由你选择）；此项增益会随着她的“战役”堆叠层数而大幅提升，你可通过完成她的额外成就来增加该堆叠层数。"
-      }
+      },
+      "effectReference": "effect_def,2685"
     },
     {
       "id": "19349",
@@ -848,14 +557,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19351",
@@ -866,7 +575,6 @@
         "display": "白石军领袖"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2686",
       "effectDefinition": {
         "id": "2686",
         "snapshots": {
@@ -966,7 +674,8 @@
       "tipText": {
         "original": "Laurana recruits some of her fellow Champions to be Soldiers, and greatly increases the effect of her Battle Plan based on the strength of her Army.",
         "display": "劳拉娜招募她的部分勇士伙伴当士兵，并根据她“军队”的实力大幅提高她“作战计划”的效果。"
-      }
+      },
+      "effectReference": "effect_def,2686"
     },
     {
       "id": "19606",
@@ -974,14 +683,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "19607",
@@ -989,14 +698,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19357",
@@ -1007,7 +716,6 @@
         "display": "带头进攻"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2692",
       "effectDefinition": {
         "id": "2692",
         "snapshots": {
@@ -1144,7 +852,8 @@
         "display": "劳拉娜高明的战术使她的士兵能够更频繁地打出暴击，并造成更高的伤害。"
       },
       "specializationGraphicId": "28965",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2692"
     },
     {
       "id": "19358",
@@ -1155,7 +864,6 @@
         "display": "保护弱者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2693",
       "effectDefinition": {
         "id": "2693",
         "snapshots": {
@@ -1236,7 +944,8 @@
         "display": "劳拉娜使自身变得更加坚韧，并招募那些可能会被其他人忽视的士兵。"
       },
       "specializationGraphicId": "28966",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2693"
     },
     {
       "id": "19359",
@@ -1247,7 +956,6 @@
         "display": "挥舞龙枪"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2694",
       "effectDefinition": {
         "id": "2694",
         "snapshots": {
@@ -1378,7 +1086,8 @@
         "display": "劳拉娜试图消灭她能找到的每一名龙族敌人，并招募其他猎人作为她的士兵加入她的军队。"
       },
       "specializationGraphicId": "28967",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2694"
     },
     {
       "id": "19352",
@@ -1389,7 +1098,6 @@
         "display": "战略储备"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2687",
       "effectDefinition": {
         "id": "2687",
         "snapshots": {
@@ -1508,7 +1216,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2687"
     },
     {
       "id": "19353",
@@ -1519,7 +1228,6 @@
         "display": "内在力量"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2688",
       "effectDefinition": {
         "id": "2688",
         "snapshots": {
@@ -1632,7 +1340,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2688"
     },
     {
       "id": "19608",
@@ -1640,14 +1349,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "19609",
@@ -1655,14 +1364,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19610",
@@ -1670,14 +1379,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19347",
@@ -1688,7 +1397,6 @@
         "display": "巨龙横扫"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "effect_def,2695",
       "effectDefinition": {
         "id": "2695",
         "snapshots": {
@@ -1769,7 +1477,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2695"
     },
     {
       "id": "19611",
@@ -1777,14 +1486,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19612",
@@ -1792,14 +1501,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,190",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,190"
     },
     {
       "id": "19613",
@@ -1807,14 +1516,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19614",
@@ -1822,14 +1531,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19615",
@@ -1837,14 +1546,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19616",
@@ -1852,14 +1561,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19617",
@@ -1867,14 +1576,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,330",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,330"
     },
     {
       "id": "19618",
@@ -1882,14 +1591,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19619",
@@ -1897,14 +1606,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19620",
@@ -1912,14 +1621,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19621",
@@ -1927,14 +1636,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19622",
@@ -1942,14 +1651,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19623",
@@ -1957,14 +1666,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,570",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,570"
     },
     {
       "id": "19624",
@@ -1972,14 +1681,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19625",
@@ -1987,14 +1696,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19626",
@@ -2002,14 +1711,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19627",
@@ -2017,14 +1726,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19628",
@@ -2032,14 +1741,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19629",
@@ -2047,14 +1756,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,1000",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,1000"
     },
     {
       "id": "19630",
@@ -2062,14 +1771,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19631",
@@ -2077,14 +1786,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19632",
@@ -2092,14 +1801,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19633",
@@ -2107,14 +1816,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19634",
@@ -2122,14 +1831,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19635",
@@ -2137,14 +1846,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19636",
@@ -2152,14 +1861,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,1750",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,1750"
     },
     {
       "id": "19637",
@@ -2167,14 +1876,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19638",
@@ -2182,14 +1891,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19639",
@@ -2197,14 +1906,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19640",
@@ -2212,14 +1921,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19641",
@@ -2227,14 +1936,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19642",
@@ -2242,14 +1951,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19643",
@@ -2257,14 +1966,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,3000",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,3000"
     },
     {
       "id": "19644",
@@ -2272,14 +1981,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19645",
@@ -2287,14 +1996,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19646",
@@ -2302,14 +2011,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19647",
@@ -2317,14 +2026,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19648",
@@ -2332,14 +2041,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19649",
@@ -2347,14 +2056,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19650",
@@ -2362,14 +2071,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,5300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,5300"
     },
     {
       "id": "19651",
@@ -2377,14 +2086,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19652",
@@ -2392,14 +2101,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19653",
@@ -2407,14 +2116,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19654",
@@ -2422,14 +2131,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19655",
@@ -2437,14 +2146,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,9300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,9300"
     },
     {
       "id": "19656",
@@ -2452,14 +2161,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19657",
@@ -2467,14 +2176,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19658",
@@ -2482,14 +2191,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19659",
@@ -2497,14 +2206,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19660",
@@ -2512,14 +2221,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,16250",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,16250"
     },
     {
       "id": "19661",
@@ -2527,14 +2236,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19662",
@@ -2542,14 +2251,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "19663",
@@ -2557,14 +2266,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19664",
@@ -2572,14 +2281,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "19665",
@@ -2587,14 +2296,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,28500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,28500"
     },
     {
       "id": "19666",
@@ -2602,14 +2311,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19667",
@@ -2617,14 +2326,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "19668",
@@ -2632,14 +2341,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "19669",
@@ -2647,14 +2356,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19670",
@@ -2662,14 +2371,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     },
     {
       "id": "19671",
@@ -2677,14 +2386,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "19672",
@@ -2692,14 +2401,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "19673",
@@ -2707,14 +2416,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,50000",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,50000"
     },
     {
       "id": "19674",
@@ -2722,14 +2431,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19356,19355,19354\",\"description\":\"Increases the effect of Laurana's Battle Plan Specializations by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,19356,19355,19354"
     }
   ],
   "feats": [
@@ -3342,6 +3051,38 @@
         "event_id": 9,
         "tier": 4
       }
+    },
+    {
+      "id": "2701",
+      "order": 19,
+      "name": {
+        "original": "Prodigal Leader",
+        "display": "浪荡首领"
+      },
+      "description": {
+        "original": "I'm not discussing anything. I'm the general. It's my decision. ~Laurana",
+        "display": "我不想做任何讨论。 我是将军。 这是我的决定。 ~劳拉娜"
+      },
+      "rarity": "4",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,50"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1785351600
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
     }
   ],
   "skins": [
@@ -3364,7 +3105,8 @@
           {
             "graphic_id": 29339
           }
-        ]
+        ],
+        "bastion_graphic_id": 31260
       },
       "rarity": "3",
       "properties": {
@@ -3394,6 +3136,7 @@
       "graphicId": "28896",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,19354,19355,19356",
@@ -3416,6 +3159,7 @@
       "graphicId": "28896",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,19354,19355,19356",
@@ -3438,6 +3182,7 @@
       "graphicId": "28897",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,19354,19355,19356",
@@ -3460,6 +3205,7 @@
       "graphicId": "28898",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,19354,19355,19356",
@@ -3482,6 +3228,7 @@
       "graphicId": "28887",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,19350"
@@ -3503,6 +3250,7 @@
       "graphicId": "28887",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,19350"
@@ -3524,6 +3272,7 @@
       "graphicId": "28888",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,19350"
@@ -3545,6 +3294,7 @@
       "graphicId": "28889",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,19350"
@@ -3566,6 +3316,7 @@
       "graphicId": "28881",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,19351"
@@ -3587,6 +3338,7 @@
       "graphicId": "28881",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,19351"
@@ -3608,6 +3360,7 @@
       "graphicId": "28882",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,19351"
@@ -3629,6 +3382,7 @@
       "graphicId": "28883",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,19351"
@@ -3650,12 +3404,13 @@
       "graphicId": "28884",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,19353"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3671,12 +3426,13 @@
       "graphicId": "28884",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,19353"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3692,12 +3448,13 @@
       "graphicId": "28885",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,19353"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3713,12 +3470,13 @@
       "graphicId": "28886",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,19353"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3734,6 +3492,7 @@
       "graphicId": "28893",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,19357,19358,19359",
@@ -3756,6 +3515,7 @@
       "graphicId": "28893",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,19357,19358,19359",
@@ -3778,6 +3538,7 @@
       "graphicId": "28894",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,19357,19358,19359",
@@ -3800,6 +3561,7 @@
       "graphicId": "28895",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,19357,19358,19359",
@@ -3822,6 +3584,11 @@
       "graphicId": "28890",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,8"
@@ -3843,6 +3610,11 @@
       "graphicId": "28890",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,15"
@@ -3864,6 +3636,11 @@
       "graphicId": "28891",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,30"
@@ -3885,6 +3662,11 @@
       "graphicId": "28892",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,75"
@@ -4012,6 +3794,317 @@
       ]
     }
   ],
+  "summary": {
+    "id": "175",
+    "name": {
+      "original": "Laurana",
+      "display": "劳拉娜"
+    },
+    "seat": 7,
+    "portrait": {
+      "path": "v1/champion-portraits/175.png",
+      "sourceGraphic": "Portraits/Portrait_Laurana",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "support",
+      "tanking"
+    ],
+    "affiliations": [
+      {
+        "original": "Heroes of the Lance",
+        "display": "长枪英雄"
+      }
+    ],
+    "tags": [
+      "elf",
+      "event",
+      "female",
+      "fighter",
+      "good",
+      "heroeslance",
+      "lcneutral",
+      "neutral",
+      "spec_hunter",
+      "support",
+      "tanking",
+      "y9"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Laurana",
+  "eventName": {
+    "original": "The Great Modron March",
+    "display": "魔冢长征"
+  },
+  "dateAvailable": "2026-05-06 12:00:00",
+  "lastReworkDate": "2026-05-06 12:00:00",
+  "popularity": 128,
+  "baseCost": "30000000000",
+  "baseDamage": "150000000",
+  "baseHealth": "250",
+  "graphicId": "28923",
+  "portraitGraphicId": "28928",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1809630000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    455,
+    1385,
+    2510,
+    3895
+  ],
+  "costCurves": {
+    "1": 1.05
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 77,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 28924,
+    "graphic_xl": 28925,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      89,
+      64
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2026-05-06 12:00:00",
+    "available_in_store": "2026-05-06 12:00:00",
+    "time_gate_adventure_id": 1968,
+    "time_gate_variants_ids": [
+      1964,
+      1965,
+      1966
+    ],
+    "permanent_effects": [
+      "base_overwhelm,25"
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 807,
+    "gold_chest_type_id": 808,
+    "golden_epic_loot_id": 4181,
+    "golden_epic_promo_id": 802,
+    "event_logo_graphic_id": 3374,
+    "console_portrait": 28929,
+    "trials_effect_id": 836,
+    "weekly_chest_type_id": 808,
+    "weekly_buff": "buff_upgrades,200,19356,19355,19354",
+    "portrait_graphic_scale": 1,
+    "legendary_effect_id": [
+      1,
+      5,
+      56,
+      96,
+      102,
+      48
+    ],
+    "bastion_graphic_id": 30588
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Lauralanthalasa Kanan",
+      "display": "劳拉兰萨拉萨·卡南"
+    },
+    "class": {
+      "original": "Fighter",
+      "display": "战士"
+    },
+    "race": {
+      "original": "Elf (Qualinesti)",
+      "display": "精灵（奎灵尼斯）"
+    },
+    "age": 80,
+    "alignment": {
+      "original": "Neutral Good",
+      "display": "中立善良"
+    },
+    "backstory": {
+      "original": "Lauralanthalasa Kanan was a pampered princess of the Qualinesti elves. Then the flames of evil dragons threatened her people and Laurana joined with other heroes to fight the Dragon Queen. In time, she became known as the Golden General: a renowned fighter, dragon rider, and brilliant battlefield commander. Now a living symbol of hope, Laurana fights to save her people and the world.",
+      "display": "劳拉兰萨拉萨·卡南曾是奎灵尼斯精灵一族备受宠爱的公主。然而，当邪恶巨龙的烈焰威胁到她的族人时，劳拉娜毅然加入其他英雄对抗龙女王的行列。时光流转，她被誉为“黄金将军”：一位著名的战士、龙骑士，以及卓越的战场指挥官。如今，作为希望的象征，劳拉娜为拯救她的族人与整个世界而战。"
+    },
+    "abilityScores": {
+      "str": 13,
+      "dex": 17,
+      "con": 14,
+      "int": 15,
+      "wis": 12,
+      "cha": 16
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "962",
+      "name": {
+        "original": "Sword Strike",
+        "display": "剑击"
+      },
+      "description": {
+        "original": "Laurana attacks the closest enemy for one hit.",
+        "display": "劳拉娜攻击距离最近的敌人一次。"
+      },
+      "longDescription": {
+        "original": "Laurana nimbly attacks the closest enemy with her shortsword for one hit.",
+        "display": "劳拉娜敏捷地用她的短剑攻击距离最近的敌人一次。"
+      },
+      "cooldown": 5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -34,
+          "damage_frame": 7,
+          "jump_sound": 30,
+          "sound_frames": {
+            "7": 154
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "963",
+      "name": {
+        "original": "Dragon Strafe",
+        "display": "巨龙横扫"
+      },
+      "description": {
+        "original": "Laurana and Quallathon deal one ultimate hit to all enemies, and encourage her allies.",
+        "display": "劳拉娜与奎里安对所有敌人造成一次杀招打击，并激励她的盟友。"
+      },
+      "longDescription": {
+        "original": "Laurana and Quallathon deal one ultimate hit to all enemies, which additionally encourages her allies for a short while.",
+        "display": "劳拉娜与奎里安对所有敌人造成一次杀招打击，并额外激励她的盟友一小段时间。"
+      },
+      "cooldown": 300,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "all",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "magic",
+        "ultimate"
+      ],
+      "graphicId": "28968",
+      "animations": [
+        {
+          "type": "laurana_ultimate",
+          "dragon_sequences": {
+            "fly": 0,
+            "breathefire": 1
+          },
+          "projectile_data": {
+            "type": "ranged_attack",
+            "projectile": "fire_breath_simple",
+            "single_projectile": false,
+            "does_no_damage": true,
+            "shoot_offset_x": 166,
+            "shoot_offset_y": -98,
+            "auto_projectile_angle": false,
+            "projectile_angle": -135,
+            "hold_time": 2,
+            "particle_duration": 0.7,
+            "projectile_strength": 1200
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "19350",
+        "name": {
+          "original": "Golden General",
+          "display": "黄金将军"
+        },
+        "description": null,
+        "graphicId": "28955"
+      },
+      {
+        "upgradeId": "19351",
+        "name": {
+          "original": "Leader of the Whitestone Armies",
+          "display": "白石军领袖"
+        },
+        "description": null,
+        "graphicId": "28956"
+      },
+      {
+        "upgradeId": "19352",
+        "name": {
+          "original": "Strategic Reserves",
+          "display": "战略储备"
+        },
+        "description": null,
+        "graphicId": "28957"
+      },
+      {
+        "upgradeId": "19353",
+        "name": {
+          "original": "Inner Strength",
+          "display": "内在力量"
+        },
+        "description": null,
+        "graphicId": "28954"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -4129,7 +4222,8 @@
             96,
             102,
             48
-          ]
+          ],
+          "bastion_graphic_id": 30588
         },
         "adventure_ids": [
           {
@@ -4157,7 +4251,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 118,
+        "popularity": 128,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4308,7 +4402,8 @@
             96,
             102,
             48
-          ]
+          ],
+          "bastion_graphic_id": 30588
         },
         "adventure_ids": [
           {
@@ -4336,7 +4431,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 118,
+        "popularity": 128,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7706,7 +7801,7 @@
               },
               {
                 "effect_string": "reverse_taunt",
-                "description": "试图攻击这名勇士的敌人会转为攻击另一名勇士（如有）。"
+                "description": "如果可能的话，试图攻击该英雄的敌人会转而攻击另一位英雄。"
               }
             ],
             "sources": [
@@ -7938,6 +8033,65 @@
             }
           }
         }
+      },
+      {
+        "id": "2701",
+        "snapshots": {
+          "original": {
+            "id": 2701,
+            "hero_id": 175,
+            "order": 19,
+            "name": "Prodigal Leader",
+            "description": "I'm not discussing anything. I'm the general. It's my decision. ~Laurana",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1785351600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2701,
+            "hero_id": 175,
+            "order": 19,
+            "name": "浪荡首领",
+            "description": "我不想做任何讨论。 我是将军。 这是我的决定。 ~劳拉娜",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1785351600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
       }
     ],
     "skins": [
@@ -7961,7 +8115,8 @@
                 {
                   "graphic_id": 29339
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31260
             },
             "rarity": "3",
             "properties": {
@@ -7993,7 +8148,8 @@
                 {
                   "graphic_id": 29339
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31260
             },
             "rarity": "3",
             "properties": {
@@ -8447,7 +8603,8 @@
               {
                 "effect_string": "buff_upgrade,25,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4190,
@@ -8461,7 +8618,8 @@
               {
                 "effect_string": "buff_upgrade,25,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },
@@ -8480,7 +8638,8 @@
               {
                 "effect_string": "buff_upgrade,87.5,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4191,
@@ -8494,7 +8653,8 @@
               {
                 "effect_string": "buff_upgrade,87.5,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },
@@ -8513,7 +8673,8 @@
               {
                 "effect_string": "buff_upgrade,150,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4192,
@@ -8527,7 +8688,8 @@
               {
                 "effect_string": "buff_upgrade,150,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },
@@ -8546,7 +8708,8 @@
               {
                 "effect_string": "buff_upgrade,275,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4193,
@@ -8560,7 +8723,8 @@
               {
                 "effect_string": "buff_upgrade,275,19353"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },

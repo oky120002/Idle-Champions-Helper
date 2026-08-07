@@ -1,0 +1,193 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "description": {
+        "original": "Once known as Mirt the Merciless and the Old Wolf, Mirt made a fortune and carved out a reputation as an adventurer and philanderer. Today, an older and wiser Mirt serves as one of the Masked Lords, a Harper, and a close advisor to Laeral Silverhand. He spends his days embroiled in politics and whiles away his nights in drink and debauchery.",
+        "display": "米尔特曾经有过“无情的米尔特”和“老狼”的绰号，他赚了一大笔钱，并赢得了冒险家和花花公子的名声。如今，日渐年长且愈发睿智的米尔特成为了蒙面之主的一员，还担任莱拉·银手的贴身顾问。他白天忙于政治，晚上则把时间都用来饮酒作乐。"
+      },
+      "shortName": "Mirt",
+      "restrictionsText": [
+        {
+          "original": "Only Good or Evil Champions can be used",
+          "display": "只能使用善良或邪恶的勇士"
+        }
+      ],
+      "minObjectiveLevel": 250,
+      "defaultObjectiveBump": 100,
+      "weeklyFreePlayCap": 5000,
+      "forceAllowedHeroIds": [],
+      "eligibilityRules": [
+        {
+          "type": "tags",
+          "rawExpression": "!(good|evil)",
+          "requiredAnyTags": [
+            "good",
+            "evil"
+          ],
+          "supported": true
+        }
+      ],
+      "evaluationStatus": "complete",
+      "name": {
+        "original": "Mirt the Moneylender",
+        "display": "放债者米尔特"
+      }
+    },
+    {
+      "id": "2",
+      "description": {
+        "original": "Vajra is a capable wizard in her mid-thirties, the youngest person ever to hold the position of Blackstaff. As the High Wizard of Waterdeep, she is charged with using all the magic and resources at her disposal to defend the city against threats. She is also in charge of Force Grey, an order of highly skilled adventurers who are called upon to defend the city in times of need.",
+        "display": "跋折罗是一位三十来岁的有为法师，也是有史以来身居“黑杖”之位的最年轻之人。作为深水城的高级法师，她负责使用她能用的一切魔法和资源来保护城市免受威胁。她还执掌灰色小队，那是一个由技艺超群的冒险者组成的教团，他们在有需要的时候会被召唤去保卫城市。"
+      },
+      "shortName": "Vajra",
+      "restrictionsText": [
+        {
+          "original": "Only Champions with a CON score of 14 or higher can be used",
+          "display": "只能使用体质大于等于 14 的勇士"
+        }
+      ],
+      "minObjectiveLevel": 275,
+      "defaultObjectiveBump": 125,
+      "weeklyFreePlayCap": 5000,
+      "forceAllowedHeroIds": [],
+      "eligibilityRules": [
+        {
+          "type": "stats",
+          "blockedWhen": "all",
+          "stats": [
+            {
+              "stat": "con",
+              "operator": "<",
+              "value": 14
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "evaluationStatus": "complete",
+      "name": {
+        "original": "Vajra Safahr",
+        "display": "跋折罗·萨法尔"
+      }
+    },
+    {
+      "id": "3",
+      "description": {
+        "original": "Strahd von Zarovich was a count, a prince, a soldier, and a conqueror, but that was before he welcomed the darkness of vampirism. Strahd has been the master of Ravenloft for centuries, but he is always in the hunt for someone worthy to rule in his stead so that he can escape his cursed lands.",
+        "display": "斯特拉德·冯·扎罗维奇曾是一位伯爵、王子、士兵和征服者，但那都是在他接受吸血鬼的黑暗之前的事。几个世纪以来，斯特拉德一直是鸦阁魔域的主人，但他一直在寻找合适的人来代替他进行统治，这样他就可以逃离他被诅咒的土地了。"
+      },
+      "shortName": "Strahd",
+      "restrictionsText": [
+        {
+          "original": "Only Champions with an INT score of 13 or higher can be used",
+          "display": "只能使用智力大于等于 13 的勇士"
+        }
+      ],
+      "minObjectiveLevel": 300,
+      "defaultObjectiveBump": 150,
+      "weeklyFreePlayCap": 5000,
+      "forceAllowedHeroIds": [
+        "102",
+        "177"
+      ],
+      "eligibilityRules": [
+        {
+          "type": "stats",
+          "blockedWhen": "all",
+          "stats": [
+            {
+              "stat": "int",
+              "operator": "<",
+              "value": 13
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "evaluationStatus": "complete",
+      "name": {
+        "original": "Strahd von Zarovich",
+        "display": "斯特拉德·冯·扎罗维奇"
+      }
+    },
+    {
+      "id": "4",
+      "description": {
+        "original": "Once a mighty angel charged with watching the tides of the Blood War, Zariel succumbed to the plane's corrupting influence and fell from grace, becoming the Archduke of Avernus. After the events of the Descent into Avernus, Zariel joins the Champions as a redeemed angel and patron.",
+        "display": "扎瑞尔曾是一位强大的天使，负责监视血战的战况，她屈服于位面的腐化影响而堕落了，成为了阿弗纳斯的大公。在坠入阿弗纳斯事件后，扎瑞尔作为赎罪天使和赞助者加入了勇士队。"
+      },
+      "shortName": null,
+      "restrictionsText": [
+        {
+          "original": "Only Champions with a STR score of 10 or higher and a CHA score of 13 or higher can be used.",
+          "display": "只能使用力量大于等于 10 或者魅力大于等于 13 的勇士"
+        }
+      ],
+      "minObjectiveLevel": 325,
+      "defaultObjectiveBump": 175,
+      "weeklyFreePlayCap": 5000,
+      "forceAllowedHeroIds": [
+        "143"
+      ],
+      "eligibilityRules": [
+        {
+          "type": "stats",
+          "blockedWhen": "any",
+          "stats": [
+            {
+              "stat": "cha",
+              "operator": "<",
+              "value": 13
+            },
+            {
+              "stat": "str",
+              "operator": "<",
+              "value": 10
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "evaluationStatus": "complete",
+      "name": {
+        "original": "Zariel",
+        "display": "扎瑞尔"
+      }
+    },
+    {
+      "id": "5",
+      "description": {
+        "original": "Elminster Aumar is a powerful wizard hailing from the city of Shadowdale. Legends of his adventures and studies are known across the Sword Coast. He has witnessed centuries of history, and his vast knowledge makes him a guiding force throughout all of Faerûn.",
+        "display": "艾尔明斯特·奥马尔是一位来自阴影谷的强大法师。他的冒险和研究传奇在整个剑湾家喻户晓。他见证了数百年的历史发展，渊博的知识使他成为整个费伦的指引人。"
+      },
+      "shortName": null,
+      "restrictionsText": [
+        {
+          "original": "Only Champions released or reworked in an event in the past 3 years can be used.",
+          "display": "只能使用过去 3 年内发布或重新制作的勇士。"
+        }
+      ],
+      "minObjectiveLevel": 825,
+      "defaultObjectiveBump": 300,
+      "weeklyFreePlayCap": 5000,
+      "forceAllowedHeroIds": [
+        "147"
+      ],
+      "eligibilityRules": [
+        {
+          "type": "time_available_days",
+          "supported": true,
+          "rawExpression": "TimeAvailable(`days`) > (365 * 3)",
+          "maxAgeDays": 1095
+        }
+      ],
+      "evaluationStatus": "complete",
+      "name": {
+        "original": "Elminster",
+        "display": "艾尔明斯特"
+      }
+    }
+  ],
+  "updatedAt": "2026-08-06"
+}

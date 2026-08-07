@@ -7,6 +7,8 @@ import type {
 import type { ResolvedHeroAbilityProfile } from '../../abilities/abilityModel'
 import type { ResolvedPlannerScenarioModel } from '../plannerModel'
 import type { PlannerCollections, PlannerRecommendation } from '../recommendationTypes'
+import { computeAffordableLevel, computeCumulativeLevelCost, computeMaxGoldForLevel } from '../../simulator/goldBudgetBaseline'
+import { formatGameNumber, parseGameNumber, toGameNumber } from '../../gameNumber'
 
 // === Worker 通信协议（UI ↔ worker 消息） ===
 // init 一次性把大数据（plannerHeroes + plannerScenarios）发进 worker 缓存；
@@ -30,16 +32,45 @@ export interface PlannerComputeEvaluateMessage extends PlannerEvaluateInput {
   requestId: number
 }
 
+// === 金币↔等级换算（UI 实时调用，不经过 engine） ===
+
+export interface PlannerComputeConvertMessage {
+  type: 'convertGoldLevel'
+  requestId: number
+  mode: 'gold' | 'level'
+  /** gold 模式：金币预算（游戏记数法字符串） */
+  goldBudget?: string
+  /** level 模式：全局等级 */
+  level?: number
+}
+
+export interface GoldLevelHeroEntry {
+  heroId: string
+  heroName: string
+  seat: number
+  /** gold 模式：金币能升到的等级；level 模式：传入的统一等级 */
+  level: number
+  /** 该等级的累计升级费用（游戏记数法字符串） */
+  goldCost: string
+}
+
+export interface GoldLevelConversion {
+  heroes: readonly GoldLevelHeroEntry[]
+  /** 所有英雄中最贵的累计费用（游戏记数法字符串） */
+  maxGold: string
+}
+
 export type PlannerComputeInbound =
   | PlannerComputeInitMessage
   | PlannerComputeRecommendMessage
   | PlannerComputeEvaluateMessage
+  | PlannerComputeConvertMessage
 
 export interface PlannerComputeResultMessage {
   type: 'result'
   requestId: number
   ok: true
-  result: PlannerRecommendation | FormationEvaluation
+  result: PlannerRecommendation | FormationEvaluation | GoldLevelConversion
 }
 
 export interface PlannerComputeErrorMessage {
@@ -61,6 +92,7 @@ export interface PlannerComputeRunner {
   updateCollections(collections: PlannerCollections): void
   recommend(input: PlannerRecommendInput): Promise<PlannerRecommendation>
   evaluate(input: PlannerEvaluateInput): Promise<FormationEvaluation>
+  convertGoldLevel(input: { mode: 'gold'; goldBudget: string } | { mode: 'level'; level: number }): Promise<GoldLevelConversion>
   dispose(): void
 }
 
@@ -87,6 +119,13 @@ export class SyncPlannerComputeRunner implements PlannerComputeRunner {
     return Promise.resolve(evaluateFormation({ ...input, collections: this.collections }))
   }
 
+  convertGoldLevel(input: { mode: 'gold'; goldBudget: string } | { mode: 'level'; level: number }): Promise<GoldLevelConversion> {
+    if (!this.collections) {
+      return Promise.reject(new Error('SyncPlannerComputeRunner: updateCollections 未调用'))
+    }
+    return Promise.resolve(processConvertGoldLevel(input, this.collections.plannerHeroes))
+  }
+
   dispose(): void {
     // noop
   }
@@ -95,7 +134,7 @@ export class SyncPlannerComputeRunner implements PlannerComputeRunner {
 // === Worker 实现（生产用：postMessage + requestId 路由 + collections 缓存进 worker） ===
 
 interface PendingRequest {
-  resolve: (value: PlannerRecommendation | FormationEvaluation) => void
+  resolve: (value: PlannerRecommendation | FormationEvaluation | GoldLevelConversion) => void
   reject: (error: Error) => void
 }
 
@@ -133,8 +172,12 @@ export class WorkerPlannerComputeRunner implements PlannerComputeRunner {
     return this.dispatch<FormationEvaluation>({ type: 'evaluate', ...input })
   }
 
-  private dispatch<T extends PlannerRecommendation | FormationEvaluation>(
-    message: Omit<PlannerComputeRecommendMessage, 'requestId'> | Omit<PlannerComputeEvaluateMessage, 'requestId'>,
+  convertGoldLevel(input: { mode: 'gold'; goldBudget: string } | { mode: 'level'; level: number }): Promise<GoldLevelConversion> {
+    return this.dispatch<GoldLevelConversion>({ type: 'convertGoldLevel', ...input })
+  }
+
+  private dispatch<T>(
+    message: Omit<PlannerComputeRecommendMessage, 'requestId'> | Omit<PlannerComputeEvaluateMessage, 'requestId'> | Omit<PlannerComputeConvertMessage, 'requestId'>,
   ): Promise<T> {
     const requestId = this.nextRequestId++
     this.worker.postMessage({ ...message, requestId })
@@ -205,6 +248,12 @@ export function processPlannerComputeInbound(
   if (message.type === 'init') {
     return null
   }
+  if (message.type === 'convertGoldLevel') {
+    const input = message.mode === 'gold'
+      ? { mode: 'gold' as const, goldBudget: message.goldBudget ?? '0' }
+      : { mode: 'level' as const, level: message.level ?? 0 }
+    return { type: 'result', ok: true, requestId: message.requestId, result: processConvertGoldLevel(input, state.plannerHeroes) }
+  }
   // engine 只用 plannerHeroes + plannerScenarios；variants 始终空（UI 已解析 selectedVariant 传入）。
   const collections: PlannerCollections = {
     variants: [],
@@ -231,4 +280,36 @@ export function processPlannerComputeInbound(
   } catch (error) {
     return { type: 'result', ok: false, error: error instanceof Error ? error.message : String(error), requestId }
   }
+}
+
+/**
+ * 金币↔等级换算纯函数（UI 实时调用：输入金币看等级，或输入等级看金币）。
+ *
+ * gold 模式：全局金币值 → 每个英雄各自换算等级（baseCost + costCurves 不同，等级不同）。
+ * level 模式：全局统一等级 → 每个英雄各自的累计费用 + 最高费用。
+ */
+export function processConvertGoldLevel(
+  input: { mode: 'gold'; goldBudget: string } | { mode: 'level'; level: number },
+  heroes: readonly ResolvedHeroAbilityProfile[],
+): GoldLevelConversion {
+  const makeEntry = (hero: ResolvedHeroAbilityProfile, level: number): GoldLevelHeroEntry => ({
+    heroId: hero.heroId,
+    heroName: hero.name.display,
+    seat: hero.seat,
+    level,
+    goldCost: formatGameNumber(computeCumulativeLevelCost(hero.baseCost ?? 0, hero.costCurves?.['1'] ?? 1.06, level)),
+  })
+
+  const heroCostData = heroes.map(h => ({ baseCost: h.baseCost ?? 0, costCurves: h.costCurves }))
+
+  if (input.mode === 'gold') {
+    const parsed = parseGameNumber(input.goldBudget)
+    const budget = parsed.ok ? parsed.value : toGameNumber(0)
+    const entries = heroes.map(hero => makeEntry(hero, computeAffordableLevel(hero.baseCost ?? 0, hero.costCurves, budget)))
+    const maxLevel = entries.length > 0 ? Math.max(...entries.map(e => e.level)) : 0
+    return { heroes: entries, maxGold: formatGameNumber(computeMaxGoldForLevel(heroCostData, maxLevel)) }
+  }
+
+  const entries = heroes.map(hero => makeEntry(hero, input.level))
+  return { heroes: entries, maxGold: formatGameNumber(computeMaxGoldForLevel(heroCostData, input.level)) }
 }

@@ -1,267 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "54",
-    "name": {
-      "original": "Artemis",
-      "display": "阿尔忒弥斯"
-    },
-    "seat": 3,
-    "roles": [
-      "dps"
-    ],
-    "affiliations": [],
-    "tags": [
-      "dps",
-      "event",
-      "evil",
-      "human",
-      "lawful",
-      "male",
-      "rogue",
-      "unaffiliated",
-      "y3"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/54.png",
-      "sourceGraphic": "Portraits/Portrait_Artemis",
-      "sourceVersion": 4
-    }
-  },
-  "englishName": "Artemis",
-  "eventName": {
-    "original": "Wintershield",
-    "display": "冬盾节"
-  },
-  "dateAvailable": "2019-12-18 00:00:00",
-  "lastReworkDate": "2019-12-18 00:00:00",
-  "popularity": 115,
-  "baseCost": "2500",
-  "baseDamage": "1200",
-  "baseHealth": "45",
-  "graphicId": "6897",
-  "portraitGraphicId": "6988",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1799352000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    575,
-    1325,
-    2265,
-    3430
-  ],
-  "costCurves": {
-    "1": 1.06
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      155,
-      156,
-      157
-    ],
-    "graphic_large": 6898,
-    "graphic_xl": 13831,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      98,
-      78
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2019-12-30 12:00:00",
-    "time_gate_blackout": {
-      "start": "2021-12-22 00:00:00",
-      "end": "2022-01-01 12:00:00"
-    },
-    "time_gate_adventure_id": 527,
-    "time_gate_variants_ids": [
-      459,
-      460,
-      461
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 166,
-    "gold_chest_type_id": 167,
-    "available_in_store": "2020-01-06 12:00:00",
-    "store_blackout": {
-      "start": "2021-12-22 00:00:00",
-      "end": "2022-01-0112:00:00"
-    },
-    "golden_epic_loot_id": 1280,
-    "golden_epic_promo_id": 138,
-    "event_logo_graphic_id": 3377,
-    "console_portrait": 6985,
-    "head_graphic_id": 7255,
-    "premium_pack_ids": [
-      68
-    ],
-    "trials_effect_id": 839,
-    "legendary_effect_id": [
-      1,
-      55,
-      58,
-      97,
-      28,
-      104
-    ],
-    "weekly_buff": "buff_upgrade,200,3267",
-    "permanent_effects": [
-      "effect_def,1558"
-    ],
-    "portrait_graphic_scale": 0.88,
-    "notification_adjustment": {
-      "offset": [
-        50,
-        235
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Artemis Entreri",
-      "display": "阿尔忒弥斯·恩崔立"
-    },
-    "class": {
-      "original": "Rogue",
-      "display": "游荡者"
-    },
-    "race": {
-      "original": "Human",
-      "display": "人类"
-    },
-    "age": 131,
-    "alignment": {
-      "original": "Lawful Evil",
-      "display": "守序邪恶"
-    },
-    "abilityScores": {
-      "str": 14,
-      "dex": 20,
-      "con": 15,
-      "int": 16,
-      "wis": 16,
-      "cha": 13
-    },
-    "backstory": {
-      "original": "Raised by the thieves' guild in Calimport, Artemis Entreri has since become one of the deadliest and most feared assassins in the history of Faerûn. Entreri is completely devoted to mastery of his craft, leaving no room in his life for emotional attachment or even personal pleasures. His fighting skills and tactical brilliance are equalled only by one other - the drow warrior Drizzt Do'Urden.",
-      "display": "阿尔忒弥斯·恩崔立在卡林港的盗贼公会长大，从此成为费伦历史上最为致命和令人恐惧的刺客之一。恩崔立彻底致力于掌握自身技艺，在他的生活中，没有给情感甚至个人乐趣留下空间。他的战斗技艺和战术智慧只有一个人可以与之媲美--卓尔精灵崔斯特·杜垩登。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "255",
-      "name": {
-        "original": "Vampiric Dagger",
-        "display": "吸血匕首"
-      },
-      "description": {
-        "original": "Artemis attacks the nearest enemy with his Vampiric Dagger.",
-        "display": "阿尔忒弥斯用他的吸血匕首攻击距离最近的敌人。"
-      },
-      "longDescription": null,
-      "cooldown": 4.7,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -80,
-          "damage_frame": 4
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "256",
-      "name": {
-        "original": "One Upped",
-        "display": "略胜一筹"
-      },
-      "description": {
-        "original": "Artemis shows off his martial prowess, leaping out to attack whenever someone else does.",
-        "display": "阿尔忒弥斯展现自己的武艺本领，在其他人攻击的同时跳起发动攻击。"
-      },
-      "longDescription": {
-        "original": "For 30 seconds, Artemis concentrates on showing off his martial prowess, increasing his base damage by 300% for each DPS Champion in the formation (including himself), stacking multiplicatively. Artemis' base attack cooldown also completes whenever another DPS Champion attacks.",
-        "display": "在 30 秒内，阿尔忒弥斯会集中注意力展现自己的武艺本领，阵型中每有一位输出型勇士（包含他自己），他的基础伤害就提升 300%，以乘算方式叠加。只要其他输出型勇士发动攻击，阿尔忒弥斯的基本攻击也会同时完成冷却。"
-      },
-      "cooldown": 200,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "ultimate"
-      ],
-      "graphicId": "6955",
-      "animations": [
-        {
-          "type": "artemis_ultimate",
-          "effect": "effect_def,513",
-          "no_damage_display": true
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "3267",
-        "name": {
-          "original": "Observance",
-          "display": "观察"
-        },
-        "description": {
-          "original": "Artemis observes and duplicates a portion of formational abilities affecting other DPS Champions in the formation. You'll need a unique formation to take advantage of this.",
-          "display": "阿尔忒弥斯观察并复制一部分影响其他输出型勇士的阵型技能。你需要构建独特的阵型才能利用此优势。"
-        },
-        "graphicId": "6950"
-      },
-      {
-        "upgradeId": "3268",
-        "name": {
-          "original": "Jeweled Power",
-          "display": "宝石之力"
-        },
-        "description": null,
-        "graphicId": "6951"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "3289",
@@ -269,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3290",
@@ -284,14 +22,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3267",
@@ -302,7 +40,6 @@
         "display": "观察"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,509",
       "effectDefinition": {
         "id": "509",
         "snapshots": {
@@ -352,7 +89,8 @@
       "tipText": {
         "original": "Artemis observes and duplicates a portion of formational abilities affecting other DPS Champions in the formation. You'll need a unique formation to take advantage of this.",
         "display": "阿尔忒弥斯观察并复制一部分影响其他输出型勇士的阵型技能。你需要构建独特的阵型才能利用此优势。"
-      }
+      },
+      "effectReference": "effect_def,509"
     },
     {
       "id": "3291",
@@ -360,14 +98,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3292",
@@ -375,14 +113,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3293",
@@ -390,14 +128,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3294",
@@ -405,14 +143,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3268",
@@ -423,7 +161,6 @@
         "display": "宝石之力"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,510",
       "effectDefinition": {
         "id": "510",
         "snapshots": {
@@ -479,7 +216,8 @@
       "tipText": {
         "original": "Artemis' power increases over time as he gets kills; this power gets unleashed randomly when he attacks.",
         "display": "造成击杀时，阿尔忒弥斯的力量逐渐提高，并在他发动攻击时随机施放储存的力量。"
-      }
+      },
+      "effectReference": "effect_def,510"
     },
     {
       "id": "3295",
@@ -487,14 +225,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3296",
@@ -502,14 +240,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3297",
@@ -517,14 +255,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3269",
@@ -535,7 +273,6 @@
         "display": "观察：朋友"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,511",
       "effectDefinition": {
         "id": "511",
         "snapshots": {
@@ -584,7 +321,8 @@
         "display": "阿尔忒弥斯将身边的人视为朋友，提高从其身上观察得来的技能效果。"
       },
       "specializationGraphicId": "6954",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,511"
     },
     {
       "id": "3270",
@@ -595,7 +333,6 @@
         "display": "观察：敌人"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,512",
       "effectDefinition": {
         "id": "512",
         "snapshots": {
@@ -644,7 +381,8 @@
         "display": "阿尔忒弥斯善于利用他从宿敌崔斯特·杜垩登，以及他那群讨厌的伙伴身上复制得来的技能。"
       },
       "specializationGraphicId": "6953",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,512"
     },
     {
       "id": "3298",
@@ -652,14 +390,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3299",
@@ -667,14 +405,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3300",
@@ -682,14 +420,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3271",
@@ -697,14 +435,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack,256",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,256"
     },
     {
       "id": "3301",
@@ -712,14 +450,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3302",
@@ -727,14 +465,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3303",
@@ -742,14 +480,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3304",
@@ -757,14 +495,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3305",
@@ -772,14 +510,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3306",
@@ -787,14 +525,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3307",
@@ -802,14 +540,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3285",
@@ -817,14 +555,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3268",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3268"
     },
     {
       "id": "3308",
@@ -832,14 +570,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3309",
@@ -847,14 +585,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3310",
@@ -862,14 +600,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3311",
@@ -877,14 +615,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3312",
@@ -892,14 +630,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3313",
@@ -907,14 +645,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3314",
@@ -922,14 +660,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3315",
@@ -937,14 +675,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3316",
@@ -952,14 +690,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3317",
@@ -967,14 +705,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3286",
@@ -982,14 +720,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3268",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3268"
     },
     {
       "id": "3318",
@@ -997,14 +735,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3319",
@@ -1012,14 +750,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3320",
@@ -1027,14 +765,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3321",
@@ -1042,14 +780,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3322",
@@ -1057,14 +795,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3323",
@@ -1072,14 +810,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3324",
@@ -1087,14 +825,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3325",
@@ -1102,14 +840,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3284",
@@ -1117,14 +855,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3287",
@@ -1132,14 +870,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3268",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3268"
     },
     {
       "id": "3288",
@@ -1147,14 +885,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3959",
@@ -1162,14 +900,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "5195",
@@ -1177,14 +915,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "5196",
@@ -1192,14 +930,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "5197",
@@ -1207,14 +945,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3268",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3268"
     },
     {
       "id": "5198",
@@ -1222,14 +960,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "5199",
@@ -1237,14 +975,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "6616",
@@ -1252,14 +990,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "6617",
@@ -1267,14 +1005,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3268",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3268"
     },
     {
       "id": "6618",
@@ -1282,14 +1020,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "8386",
@@ -1297,14 +1035,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,3268",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3268"
     },
     {
       "id": "8387",
@@ -1312,14 +1050,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3960",
@@ -1327,14 +1065,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3961",
@@ -1342,14 +1080,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -1807,9 +1545,8 @@
         "available_at_time": 1767816000
       },
       "collectionsSource": {
-        "type": "dlc",
-        "item_id": "659",
-        "cost": 1680
+        "type": "gems",
+        "cost": 50000
       }
     },
     {
@@ -1863,7 +1600,8 @@
         "base_graphic_id": 7636,
         "large_graphic_id": 7638,
         "xl_graphic_id": 13832,
-        "portrait_graphic_id": 7639
+        "portrait_graphic_id": 7639,
+        "bastion_graphic_id": 30621
       },
       "rarity": "3",
       "properties": {
@@ -1893,7 +1631,8 @@
         "base_graphic_id": 17914,
         "large_graphic_id": 17917,
         "portrait_graphic_id": 17911,
-        "xl_graphic_id": 17920
+        "xl_graphic_id": 17920,
+        "bastion_graphic_id": 30837
       },
       "rarity": "3",
       "properties": {
@@ -1923,7 +1662,8 @@
         "base_graphic_id": 19343,
         "large_graphic_id": 19347,
         "portrait_graphic_id": 19336,
-        "xl_graphic_id": 19351
+        "xl_graphic_id": 19351,
+        "bastion_graphic_id": 30893
       },
       "rarity": "3",
       "properties": {
@@ -1959,7 +1699,8 @@
         "base_graphic_id": 21449,
         "large_graphic_id": 21450,
         "portrait_graphic_id": 21448,
-        "xl_graphic_id": 21451
+        "xl_graphic_id": 21451,
+        "bastion_graphic_id": 30956
       },
       "rarity": "3",
       "properties": {
@@ -1988,7 +1729,8 @@
         "base_graphic_id": 23396,
         "large_graphic_id": 23398,
         "portrait_graphic_id": 23412,
-        "xl_graphic_id": 23400
+        "xl_graphic_id": 23400,
+        "bastion_graphic_id": 31009
       },
       "rarity": "3",
       "properties": {
@@ -2016,7 +1758,8 @@
         "base_graphic_id": 25598,
         "large_graphic_id": 25605,
         "portrait_graphic_id": 25625,
-        "xl_graphic_id": 25612
+        "xl_graphic_id": 25612,
+        "bastion_graphic_id": 31082
       },
       "rarity": "3",
       "properties": {
@@ -2051,7 +1794,8 @@
         "base_graphic_id": 28578,
         "large_graphic_id": 28579,
         "portrait_graphic_id": 28577,
-        "xl_graphic_id": 28580
+        "xl_graphic_id": 28580,
+        "bastion_graphic_id": 31217
       },
       "rarity": "3",
       "properties": {
@@ -2081,6 +1825,7 @@
       "graphicId": "6970",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2102,6 +1847,7 @@
       "graphicId": "6970",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2123,6 +1869,7 @@
       "graphicId": "6971",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2144,6 +1891,7 @@
       "graphicId": "6972",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2165,6 +1913,7 @@
       "graphicId": "6976",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2186,6 +1935,7 @@
       "graphicId": "6976",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2207,6 +1957,7 @@
       "graphicId": "6977",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2228,6 +1979,7 @@
       "graphicId": "6978",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2249,6 +2001,7 @@
       "graphicId": "6973",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,3267"
@@ -2270,6 +2023,7 @@
       "graphicId": "6973",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,3267"
@@ -2291,6 +2045,7 @@
       "graphicId": "6974",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,3267"
@@ -2312,6 +2067,7 @@
       "graphicId": "6975",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,3267"
@@ -2333,6 +2089,7 @@
       "graphicId": "6982",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,3268"
@@ -2354,6 +2111,7 @@
       "graphicId": "6982",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,3268"
@@ -2375,6 +2133,7 @@
       "graphicId": "6983",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,3268"
@@ -2396,6 +2155,7 @@
       "graphicId": "6984",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,3268"
@@ -2417,6 +2177,7 @@
       "graphicId": "6967",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_artemis_ultimate,25",
@@ -2439,6 +2200,7 @@
       "graphicId": "6967",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_artemis_ultimate,87.5",
@@ -2461,6 +2223,7 @@
       "graphicId": "6968",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_artemis_ultimate,150",
@@ -2483,6 +2246,7 @@
       "graphicId": "6969",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_artemis_ultimate,275",
@@ -2505,6 +2269,11 @@
       "graphicId": "6979",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,5"
@@ -2526,6 +2295,11 @@
       "graphicId": "6979",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,10"
@@ -2547,6 +2321,11 @@
       "graphicId": "6980",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,20"
@@ -2568,6 +2347,11 @@
       "graphicId": "6981",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,50"
@@ -2699,6 +2483,286 @@
       ]
     }
   ],
+  "summary": {
+    "id": "54",
+    "name": {
+      "original": "Artemis",
+      "display": "阿尔忒弥斯"
+    },
+    "seat": 3,
+    "portrait": {
+      "path": "v1/champion-portraits/54.png",
+      "sourceGraphic": "Portraits/Portrait_Artemis",
+      "sourceVersion": 4
+    },
+    "roles": [
+      "dps"
+    ],
+    "affiliations": [],
+    "tags": [
+      "dps",
+      "event",
+      "evil",
+      "human",
+      "lawful",
+      "male",
+      "rogue",
+      "unaffiliated",
+      "y3"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Artemis",
+  "eventName": {
+    "original": "Wintershield",
+    "display": "冬盾节"
+  },
+  "dateAvailable": "2019-12-18 00:00:00",
+  "lastReworkDate": "2019-12-18 00:00:00",
+  "popularity": 126,
+  "baseCost": "2500",
+  "baseDamage": "1200",
+  "baseHealth": "45",
+  "graphicId": "6897",
+  "portraitGraphicId": "6988",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1799352000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    575,
+    1325,
+    2265,
+    3430
+  ],
+  "costCurves": {
+    "1": 1.06
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      155,
+      156,
+      157
+    ],
+    "graphic_large": 6898,
+    "graphic_xl": 13831,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      98,
+      78
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2019-12-30 12:00:00",
+    "time_gate_blackout": {
+      "start": "2021-12-22 00:00:00",
+      "end": "2022-01-01 12:00:00"
+    },
+    "time_gate_adventure_id": 527,
+    "time_gate_variants_ids": [
+      459,
+      460,
+      461
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 166,
+    "gold_chest_type_id": 167,
+    "available_in_store": "2020-01-06 12:00:00",
+    "store_blackout": {
+      "start": "2021-12-22 00:00:00",
+      "end": "2022-01-0112:00:00"
+    },
+    "golden_epic_loot_id": 1280,
+    "golden_epic_promo_id": 138,
+    "event_logo_graphic_id": 3377,
+    "console_portrait": 6985,
+    "head_graphic_id": 7255,
+    "premium_pack_ids": [
+      68
+    ],
+    "trials_effect_id": 839,
+    "legendary_effect_id": [
+      1,
+      55,
+      58,
+      97,
+      28,
+      104
+    ],
+    "weekly_buff": "buff_upgrade,200,3267",
+    "permanent_effects": [
+      "effect_def,1558"
+    ],
+    "portrait_graphic_scale": 0.88,
+    "notification_adjustment": {
+      "offset": [
+        50,
+        235
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30480
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Artemis Entreri",
+      "display": "阿尔忒弥斯·恩崔立"
+    },
+    "class": {
+      "original": "Rogue",
+      "display": "游荡者"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 131,
+    "alignment": {
+      "original": "Lawful Evil",
+      "display": "守序邪恶"
+    },
+    "backstory": {
+      "original": "Raised by the thieves' guild in Calimport, Artemis Entreri has since become one of the deadliest and most feared assassins in the history of Faerûn. Entreri is completely devoted to mastery of his craft, leaving no room in his life for emotional attachment or even personal pleasures. His fighting skills and tactical brilliance are equalled only by one other - the drow warrior Drizzt Do'Urden.",
+      "display": "阿尔忒弥斯·恩崔立在卡林港的盗贼公会长大，从此成为费伦历史上最为致命和令人恐惧的刺客之一。恩崔立彻底致力于掌握自身技艺，在他的生活中，没有给情感甚至个人乐趣留下空间。他的战斗技艺和战术智慧只有一个人可以与之媲美--卓尔精灵崔斯特·杜垩登。"
+    },
+    "abilityScores": {
+      "str": 14,
+      "dex": 20,
+      "con": 15,
+      "int": 16,
+      "wis": 16,
+      "cha": 13
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "255",
+      "name": {
+        "original": "Vampiric Dagger",
+        "display": "吸血匕首"
+      },
+      "description": {
+        "original": "Artemis attacks the nearest enemy with his Vampiric Dagger.",
+        "display": "阿尔忒弥斯用他的吸血匕首攻击距离最近的敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 4.7,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -80,
+          "damage_frame": 4
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "256",
+      "name": {
+        "original": "One Upped",
+        "display": "略胜一筹"
+      },
+      "description": {
+        "original": "Artemis shows off his martial prowess, leaping out to attack whenever someone else does.",
+        "display": "阿尔忒弥斯展现自己的武艺本领，在其他人攻击的同时跳起发动攻击。"
+      },
+      "longDescription": {
+        "original": "For 30 seconds, Artemis concentrates on showing off his martial prowess, increasing his base damage by 300% for each DPS Champion in the formation (including himself), stacking multiplicatively. Artemis' base attack cooldown also completes whenever another DPS Champion attacks.",
+        "display": "在 30 秒内，阿尔忒弥斯会集中注意力展现自己的武艺本领，阵型中每有一位输出型勇士（包含他自己），他的基础伤害就提升 300%，以乘算方式叠加。只要其他输出型勇士发动攻击，阿尔忒弥斯的基本攻击也会同时完成冷却。"
+      },
+      "cooldown": 200,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "6955",
+      "animations": [
+        {
+          "type": "artemis_ultimate",
+          "effect": "effect_def,513",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "3267",
+        "name": {
+          "original": "Observance",
+          "display": "观察"
+        },
+        "description": {
+          "original": "Artemis observes and duplicates a portion of formational abilities affecting other DPS Champions in the formation. You'll need a unique formation to take advantage of this.",
+          "display": "阿尔忒弥斯观察并复制一部分影响其他输出型勇士的阵型技能。你需要构建独特的阵型才能利用此优势。"
+        },
+        "graphicId": "6950"
+      },
+      {
+        "upgradeId": "3268",
+        "name": {
+          "original": "Jeweled Power",
+          "display": "宝石之力"
+        },
+        "description": null,
+        "graphicId": "6951"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -2830,7 +2894,8 @@
               235
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30480
         },
         "adventure_ids": [
           {
@@ -2858,7 +2923,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 115,
+        "popularity": 126,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3011,7 +3076,8 @@
               235
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30480
         },
         "adventure_ids": [
           {
@@ -3039,7 +3105,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 115,
+        "popularity": 126,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -5700,9 +5766,8 @@
               "available_at_time": 1767816000
             },
             "collections_source": {
-              "type": "dlc",
-              "item_id": "659",
-              "cost": 1680
+              "type": "gems",
+              "cost": 50000
             }
           },
           "display": {
@@ -5734,9 +5799,8 @@
               "available_at_time": 1767816000
             },
             "collections_source": {
-              "type": "dlc",
-              "item_id": "659",
-              "cost": 1680
+              "type": "gems",
+              "cost": 50000
             }
           }
         }
@@ -5755,7 +5819,8 @@
               "base_graphic_id": 7636,
               "large_graphic_id": 7638,
               "xl_graphic_id": 13832,
-              "portrait_graphic_id": 7639
+              "portrait_graphic_id": 7639,
+              "bastion_graphic_id": 30621
             },
             "rarity": "3",
             "properties": {
@@ -5781,7 +5846,8 @@
               "base_graphic_id": 7636,
               "large_graphic_id": 7638,
               "xl_graphic_id": 13832,
-              "portrait_graphic_id": 7639
+              "portrait_graphic_id": 7639,
+              "bastion_graphic_id": 30621
             },
             "rarity": "3",
             "properties": {
@@ -5814,7 +5880,8 @@
               "base_graphic_id": 17914,
               "large_graphic_id": 17917,
               "portrait_graphic_id": 17911,
-              "xl_graphic_id": 17920
+              "xl_graphic_id": 17920,
+              "bastion_graphic_id": 30837
             },
             "rarity": "3",
             "properties": {
@@ -5842,7 +5909,8 @@
               "base_graphic_id": 17914,
               "large_graphic_id": 17917,
               "portrait_graphic_id": 17911,
-              "xl_graphic_id": 17920
+              "xl_graphic_id": 17920,
+              "bastion_graphic_id": 30837
             },
             "rarity": "3",
             "properties": {
@@ -5875,7 +5943,8 @@
               "base_graphic_id": 19343,
               "large_graphic_id": 19347,
               "portrait_graphic_id": 19336,
-              "xl_graphic_id": 19351
+              "xl_graphic_id": 19351,
+              "bastion_graphic_id": 30893
             },
             "rarity": "3",
             "properties": {
@@ -5909,7 +5978,8 @@
               "base_graphic_id": 19343,
               "large_graphic_id": 19347,
               "portrait_graphic_id": 19336,
-              "xl_graphic_id": 19351
+              "xl_graphic_id": 19351,
+              "bastion_graphic_id": 30893
             },
             "rarity": "3",
             "properties": {
@@ -5948,7 +6018,8 @@
               "base_graphic_id": 21449,
               "large_graphic_id": 21450,
               "portrait_graphic_id": 21448,
-              "xl_graphic_id": 21451
+              "xl_graphic_id": 21451,
+              "bastion_graphic_id": 30956
             },
             "rarity": "3",
             "properties": {
@@ -5975,7 +6046,8 @@
               "base_graphic_id": 21449,
               "large_graphic_id": 21450,
               "portrait_graphic_id": 21448,
-              "xl_graphic_id": 21451
+              "xl_graphic_id": 21451,
+              "bastion_graphic_id": 30956
             },
             "rarity": "3",
             "properties": {
@@ -6007,7 +6079,8 @@
               "base_graphic_id": 23396,
               "large_graphic_id": 23398,
               "portrait_graphic_id": 23412,
-              "xl_graphic_id": 23400
+              "xl_graphic_id": 23400,
+              "bastion_graphic_id": 31009
             },
             "rarity": "3",
             "properties": {
@@ -6033,7 +6106,8 @@
               "base_graphic_id": 23396,
               "large_graphic_id": 23398,
               "portrait_graphic_id": 23412,
-              "xl_graphic_id": 23400
+              "xl_graphic_id": 23400,
+              "bastion_graphic_id": 31009
             },
             "rarity": "3",
             "properties": {
@@ -6064,7 +6138,8 @@
               "base_graphic_id": 25598,
               "large_graphic_id": 25605,
               "portrait_graphic_id": 25625,
-              "xl_graphic_id": 25612
+              "xl_graphic_id": 25612,
+              "bastion_graphic_id": 31082
             },
             "rarity": "3",
             "properties": {
@@ -6097,7 +6172,8 @@
               "base_graphic_id": 25598,
               "large_graphic_id": 25605,
               "portrait_graphic_id": 25625,
-              "xl_graphic_id": 25612
+              "xl_graphic_id": 25612,
+              "bastion_graphic_id": 31082
             },
             "rarity": "3",
             "properties": {
@@ -6135,7 +6211,8 @@
               "base_graphic_id": 28578,
               "large_graphic_id": 28579,
               "portrait_graphic_id": 28577,
-              "xl_graphic_id": 28580
+              "xl_graphic_id": 28580,
+              "bastion_graphic_id": 31217
             },
             "rarity": "3",
             "properties": {
@@ -6161,7 +6238,8 @@
               "base_graphic_id": 28578,
               "large_graphic_id": 28579,
               "portrait_graphic_id": 28577,
-              "xl_graphic_id": 28580
+              "xl_graphic_id": 28580,
+              "bastion_graphic_id": 31217
             },
             "rarity": "3",
             "properties": {

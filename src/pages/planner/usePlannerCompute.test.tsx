@@ -34,6 +34,7 @@ function createControllableRunner(): ControllableRunner {
     updateCollections: vi.fn(),
     recommend: vi.fn(() => new Promise<PlannerRecommendation>((resolve) => recommendResolvers.push(resolve))),
     evaluate: vi.fn(() => Promise.resolve({} as FormationEvaluation)),
+    convertGoldLevel: vi.fn(() => Promise.resolve({ heroes: [], maxGold: '0' })),
     dispose: vi.fn(),
   }
   return {

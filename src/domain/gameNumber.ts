@@ -85,6 +85,15 @@ export function parseGameNumber(input: string | number): GameNumberResult {
 }
 
 // ---------------------------------------------------------------------------
+// Quick construction (known-valid input)
+// ---------------------------------------------------------------------------
+
+/** Create a GameNumberValue from a known-valid number or string. */
+export function toGameNumber(input: string | number): GameNumberValue {
+  return new Decimal(input)
+}
+
+// ---------------------------------------------------------------------------
 // Format
 // ---------------------------------------------------------------------------
 
@@ -188,4 +197,8 @@ export function addGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumb
   }
 
   return a.add(b)
+}
+
+export function subtractGameNumbers(a: GameNumberValue, b: GameNumberValue): GameNumberValue {
+  return a.sub(b)
 }

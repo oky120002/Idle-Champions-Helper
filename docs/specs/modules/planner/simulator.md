@@ -13,9 +13,13 @@
 
 ## 英雄等级
 
-英雄等级取自存档 `ownedHeroes.level`（`recommendationEngine.ts` 构造 `heroLevels` 传入 `scoreFormation`）。未拥有英雄（all-hypothetical 候选）按 `DEFAULT_CARRY_LEVEL = 1`，`levelCurve = rate^1`（英雄自身 costCurve rate），保留英雄间增长率差异但无法反映高等级 scale。
+英雄等级默认取自存档 `ownedHeroes.level`（`recommendationEngine.ts` 构造 `heroLevels` 传入 `scoreFormation`）。未拥有英雄（all-hypothetical 候选）按 `DEFAULT_CARRY_LEVEL = 1`。
 
-等级基线估算（`goldBudgetBaseline.ts` + `specializationBaseline.ts`，cost curve + 金币预算 → 可负担等级 + below-baseline 标记）模块已实现但未接入评分链路——当前不估算未拥有英雄可达成等级、不标记 below-baseline。
+支持两种外部覆盖（`PlannerRecommendationOptions.heroLevelOverride` + `goldBudget`，UI 金币/等级互斥控件驱动）：
+- **金币预算模式**：全局金币值（GameNumberValue）→ worker 用 `computeAffordableLevel`（`baseCost × (rate^X-1)/(rate-1)` 等比数列求和 + 二分搜索）对每个英雄换算可达等级 → 构建 `heroLevelOverride` Map。
+- **全局等级模式**：统一等级 → worker 反算 `computeMaxGoldForLevel`（最贵英雄累计费用）作为 `goldBudget`。
+
+覆盖等级同时驱动专精门控：等级 < `requiredLevel` 的专精不注入信号（`applySpecializationsToProfile` `heroLevel` 参数）。
 
 ## 加成聚合与 DPS 公式
 

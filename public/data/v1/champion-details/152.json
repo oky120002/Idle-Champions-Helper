@@ -1,302 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "152",
-    "name": {
-      "original": "Bobby",
-      "display": "鲍比"
-    },
-    "seat": 12,
-    "roles": [
-      "dps",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Saturday Morning Squad",
-        "display": "星期六早晨的小队"
-      }
-    ],
-    "tags": [
-      "barbarian",
-      "chaotic",
-      "dps",
-      "event",
-      "good",
-      "human",
-      "male",
-      "positional",
-      "saturdaymorningsquad",
-      "spec_control",
-      "spec_control_knockback",
-      "spec_control_stun",
-      "support",
-      "y8"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/152.png",
-      "sourceGraphic": "Portraits/Portrait_Bobby",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Bobby",
-  "eventName": {
-    "original": "Highharvestide",
-    "display": "丰收节"
-  },
-  "dateAvailable": "2024-09-04 12:00:00",
-  "lastReworkDate": "2024-09-04 12:00:00",
-  "popularity": 120,
-  "baseCost": "100000000000000000000",
-  "baseDamage": "15000000000000",
-  "baseHealth": "41",
-  "graphicId": "24352",
-  "portraitGraphicId": "24351",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1788462000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    95,
-    805,
-    1615,
-    2615
-  ],
-  "costCurves": {
-    "1": 1.07
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "content_set_id": 47,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      190,
-      191,
-      192
-    ],
-    "graphic_large": 24353,
-    "graphic_xl": 24354,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      84,
-      60
-    ],
-    "companions": [
-      {
-        "graphic_id": 14202,
-        "visible": false,
-        "sequences": {
-          "idle": 9,
-          "walk": 7,
-          "charge": 0,
-          "shoot": 2,
-          "gethit": 5,
-          "koed": 6
-        },
-        "offset_x": 30,
-        "offset_y": -15,
-        "scale": 1
-      }
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2024-09-25 12:00:00",
-    "available_in_store": "2024-10-02 12:00:00",
-    "time_gate_adventure_id": 1545,
-    "time_gate_variants_ids": [
-      1521,
-      1522,
-      1523
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 574,
-    "gold_chest_type_id": 575,
-    "golden_epic_loot_id": 3605,
-    "golden_epic_promo_id": 475,
-    "event_logo_graphic_id": 3371,
-    "console_portrait": 24373,
-    "trials_effect_id": 839,
-    "portrait_graphic_scale": 0.9,
-    "weekly_buff": "buff_upgrade,100,15443,0",
-    "legendary_effect_id": [
-      1,
-      2,
-      5,
-      28,
-      85,
-      52
-    ],
-    "notification_adjustment": {
-      "offset": [
-        50,
-        180
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Bobby",
-      "display": "鲍比"
-    },
-    "class": {
-      "original": "Barbarian",
-      "display": "野蛮人"
-    },
-    "race": {
-      "original": "Human",
-      "display": "人类"
-    },
-    "age": 8,
-    "alignment": {
-      "original": "Chaotic Good",
-      "display": "混乱善良"
-    },
-    "abilityScores": {
-      "str": 18,
-      "dex": 15,
-      "con": 12,
-      "int": 9,
-      "wis": 8,
-      "cha": 10
-    },
-    "backstory": {
-      "original": "Bobby is the youngest of the group that was transported to the magical world of Dungeons & Dragons. As a brave and loyal Barbarian, he wields a powerful magical club that enhances his strength. Bobby has close ties to his sister Sheila and his pet unicorn, Uni. Despite his impulsiveness, Bobby's courage and determination are key assets in the search to find the way back home.",
-      "display": "鲍比是被传送到龙与地下城神奇世界的人中最年轻的。他是个勇敢而忠诚的野蛮人，挥舞着一根威力无穷的魔力木棒。鲍比和他的姐姐希拉以及他的独角兽宠物“独角”非常亲近。尽管鲍比很冲动，但他将用自己的勇气和决心来寻找回家的路。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "791",
-      "name": {
-        "original": "Thunder Club",
-        "display": "雷霆棒"
-      },
-      "description": {
-        "original": "Bobby swings his club at the closest enemy.",
-        "display": "鲍比挥舞棍棒打向最近的敌人。"
-      },
-      "longDescription": null,
-      "cooldown": 6,
-      "numTargets": 1,
-      "aoeRadius": 100,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "damage_frame": 8,
-          "target_offset_x": -40,
-          "jump_sound": 30,
-          "sound_frames": {
-            "14": 154
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "792",
-      "name": {
-        "original": "Bobby-quake",
-        "display": "鲍比地震"
-      },
-      "description": {
-        "original": "Bobby strikes the ground with his club, stunning and knocking back all enemies.",
-        "display": "鲍比用棍棒击打地面，眩晕所有敌人并将他们击退。"
-      },
-      "longDescription": {
-        "original": "Bobby strikes the ground with his club, knocking all enemies up and back and stunning them for 5 seconds.",
-        "display": "鲍比用棍棒击打地面，将所有敌人击飞并击退，眩晕他们 5 秒。"
-      },
-      "cooldown": 320,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "ultimate"
-      ],
-      "graphicId": "24409",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "bobby",
-          "knockback_effect": {
-            "effect_string": "push_back_monster,10"
-          }
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "15443",
-        "name": {
-          "original": "Charge Into Battle",
-          "display": "冲锋陷阵"
-        },
-        "description": null,
-        "graphicId": "24396"
-      },
-      {
-        "upgradeId": "15444",
-        "name": {
-          "original": "Uni, the Unicorn",
-          "display": "独角兽“独角”"
-        },
-        "description": null,
-        "graphicId": "24399"
-      },
-      {
-        "upgradeId": "15445",
-        "name": {
-          "original": "Now We're Talking",
-          "display": "这才像话"
-        },
-        "description": null,
-        "graphicId": "24397"
-      },
-      {
-        "upgradeId": "15446",
-        "name": {
-          "original": "Scales of Tiamat Scavenger",
-          "display": "提亚马特龙鳞回收者"
-        },
-        "description": null,
-        "graphicId": "24398"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "15442",
@@ -307,7 +10,6 @@
         "display": "暴击"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2051",
       "effectDefinition": {
         "id": "2051",
         "snapshots": {
@@ -370,7 +72,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2051"
     },
     {
       "id": "15443",
@@ -381,7 +84,6 @@
         "display": "冲锋陷阵"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2052",
       "effectDefinition": {
         "id": "2052",
         "snapshots": {
@@ -458,7 +160,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2052"
     },
     {
       "id": "15704",
@@ -466,14 +169,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15444",
@@ -484,7 +187,6 @@
         "display": "独角兽“独角”"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2053",
       "effectDefinition": {
         "id": "2053",
         "snapshots": {
@@ -666,7 +368,8 @@
       "tipText": {
         "original": "Bobby's pet unicorn Uni supports all Champions that are next to her.",
         "display": "鲍比的宠物独角兽“独角”会支援所有她身旁的勇士。"
-      }
+      },
+      "effectReference": "effect_def,2053"
     },
     {
       "id": "15705",
@@ -674,14 +377,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15706",
@@ -689,14 +392,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15445",
@@ -707,7 +410,6 @@
         "display": "这才像话"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2054",
       "effectDefinition": {
         "id": "2054",
         "snapshots": {
@@ -802,7 +504,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2054"
     },
     {
       "id": "15707",
@@ -810,14 +513,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15454",
@@ -825,14 +528,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15447",
@@ -843,7 +546,6 @@
         "display": "惊人力量"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2056",
       "effectDefinition": {
         "id": "2056",
         "snapshots": {
@@ -952,7 +654,8 @@
         "display": "鲍比冲动地专注于他的伤害输出角色，在他造成暴击时击晕对手。"
       },
       "specializationGraphicId": "24408",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2056"
     },
     {
       "id": "15448",
@@ -963,7 +666,6 @@
         "display": "集体冲锋"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2057",
       "effectDefinition": {
         "id": "2057",
         "snapshots": {
@@ -1056,7 +758,8 @@
         "display": "鲍比勇敢地专注于他的支援角色，带领身后的英雄们冲锋陷阵。"
       },
       "specializationGraphicId": "24404",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2057"
     },
     {
       "id": "15452",
@@ -1067,14 +770,14 @@
         "display": "鲍比地震"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "15708",
@@ -1082,14 +785,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15709",
@@ -1097,14 +800,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15446",
@@ -1115,7 +818,6 @@
         "display": "提亚马特龙鳞回收者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2055",
       "effectDefinition": {
         "id": "2055",
         "snapshots": {
@@ -1205,7 +907,8 @@
       "tipText": {
         "original": "Bobby has a chance to uncover Scales of Tiamat with each defeated boss, with a cap that increases every day.",
         "display": "鲍比有几率在每个被击败的首领身上发现提亚马特龙鳞碎片，上限随日期提升。"
-      }
+      },
+      "effectReference": "effect_def,2055"
     },
     {
       "id": "15710",
@@ -1213,14 +916,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15711",
@@ -1228,14 +931,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15712",
@@ -1243,14 +946,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15713",
@@ -1258,14 +961,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15714",
@@ -1273,14 +976,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15449",
@@ -1291,7 +994,6 @@
         "display": "半高不低"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2058",
       "effectDefinition": {
         "id": "2058",
         "snapshots": {
@@ -1388,7 +1090,8 @@
         "display": "鲍比专注于那些总属性值较低的勇士。"
       },
       "specializationGraphicId": "24405",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2058"
     },
     {
       "id": "15450",
@@ -1399,7 +1102,6 @@
         "display": "成长之路"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2059",
       "effectDefinition": {
         "id": "2059",
         "snapshots": {
@@ -1494,7 +1196,8 @@
         "display": "鲍比最适合与其他年轻勇士合作。"
       },
       "specializationGraphicId": "24406",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2059"
     },
     {
       "id": "15451",
@@ -1505,7 +1208,6 @@
         "display": "强壮臂膀"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2060",
       "effectDefinition": {
         "id": "2060",
         "snapshots": {
@@ -1602,7 +1304,8 @@
         "display": "鲍比会和其他强大的勇士一起展示肌肉。"
       },
       "specializationGraphicId": "24407",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2060"
     },
     {
       "id": "15715",
@@ -1610,14 +1313,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15716",
@@ -1625,14 +1328,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15717",
@@ -1640,14 +1343,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15718",
@@ -1655,14 +1358,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15719",
@@ -1670,14 +1373,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15720",
@@ -1685,14 +1388,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15721",
@@ -1700,14 +1403,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15722",
@@ -1715,14 +1418,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15723",
@@ -1730,14 +1433,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15724",
@@ -1745,14 +1448,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15725",
@@ -1760,14 +1463,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15726",
@@ -1775,14 +1478,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15727",
@@ -1790,14 +1493,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15728",
@@ -1805,14 +1508,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15729",
@@ -1820,14 +1523,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15730",
@@ -1835,14 +1538,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15731",
@@ -1850,14 +1553,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15732",
@@ -1865,14 +1568,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15733",
@@ -1880,14 +1583,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15734",
@@ -1895,14 +1598,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15735",
@@ -1910,14 +1613,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15736",
@@ -1925,14 +1628,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15737",
@@ -1940,14 +1643,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15738",
@@ -1955,14 +1658,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15739",
@@ -1970,14 +1673,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15740",
@@ -1985,14 +1688,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15741",
@@ -2000,14 +1703,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15742",
@@ -2015,14 +1718,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15743",
@@ -2030,14 +1733,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15744",
@@ -2045,14 +1748,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15745",
@@ -2060,14 +1763,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15746",
@@ -2075,14 +1778,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15747",
@@ -2090,14 +1793,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15748",
@@ -2105,14 +1808,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15749",
@@ -2120,14 +1823,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15750",
@@ -2135,14 +1838,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15751",
@@ -2150,14 +1853,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15752",
@@ -2165,14 +1868,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15753",
@@ -2180,14 +1883,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15754",
@@ -2195,14 +1898,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15755",
@@ -2210,14 +1913,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15756",
@@ -2225,14 +1928,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15757",
@@ -2240,14 +1943,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15758",
@@ -2255,14 +1958,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15759",
@@ -2270,14 +1973,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15760",
@@ -2285,14 +1988,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15761",
@@ -2300,14 +2003,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15762",
@@ -2315,14 +2018,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15763",
@@ -2330,14 +2033,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15764",
@@ -2345,14 +2048,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15765",
@@ -2360,14 +2063,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15444,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15444,1"
     },
     {
       "id": "15453",
@@ -2375,14 +2078,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15443,0",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15443,0"
     }
   ],
   "feats": [
@@ -3093,8 +2796,53 @@
       ],
       "properties": {
         "is_available": true,
-        "available_at_time": 1777489200,
-        "available_for_gems_at_time": 1785351600
+        "available_at_time": 1777489200
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "704",
+        "cost": 1680
+      }
+    },
+    {
+      "id": "2635",
+      "order": 22,
+      "name": {
+        "original": "Temper Tantrum",
+        "display": "待定 鲍比 合作曲（请勿翻译）"
+      },
+      "description": {
+        "original": "Bobby, please calm down! Oh, brother. ~Sheila",
+        "display": "Bobby, please calm down! Oh, brother. ~Sheila"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,15447,0",
+          "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,80,15448,0",
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-12-02 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 751
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1788375600,
+        "available_for_gems_at_time": 1796241600
       },
       "collectionsSource": {
         "type": "not_yet_available"
@@ -3125,7 +2873,8 @@
             "graphic_id": "27143",
             "sequence": "1"
           }
-        ]
+        ],
+        "bastion_graphic_id": 31041
       },
       "rarity": "3",
       "properties": {
@@ -3163,7 +2912,8 @@
             "graphic_id": "27142",
             "sequence": "1"
           }
-        ]
+        ],
+        "bastion_graphic_id": 31143
       },
       "rarity": "3",
       "properties": {
@@ -3197,7 +2947,8 @@
             "graphic_id": "27759",
             "sequence": "1"
           }
-        ]
+        ],
+        "bastion_graphic_id": 31168
       },
       "rarity": "3",
       "properties": {
@@ -3235,7 +2986,8 @@
         "xl_graphic_id": 29173,
         "companion_graphic_ids": [
           "{int}"
-        ]
+        ],
+        "bastion_graphic_id": 31256
       },
       "rarity": "3",
       "properties": {
@@ -3248,6 +3000,41 @@
       },
       "availabilities": {
         "premium_item_id": "704"
+      }
+    },
+    {
+      "id": "721",
+      "name": {
+        "original": "Schoolyard Bruiser Bobby",
+        "display": "校园恶霸鲍比"
+      },
+      "cost": {
+        "req_date": "2026-09-02 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 30338,
+        "large_graphic_id": 30339,
+        "portrait_graphic_id": 30341,
+        "xl_graphic_id": 30340,
+        "companion_graphic_ids": [
+          30335
+        ],
+        "additional_shop_graphics": [
+          {
+            "graphic_id": 30337,
+            "sequence": 1
+          }
+        ],
+        "bastion_graphic_id": 31294
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "is_available": false
+      },
+      "collectionsSource": "",
+      "availabilities": {
+        "premium_item_id": "751"
       }
     }
   ],
@@ -3265,6 +3052,7 @@
       "graphicId": "24358",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3286,6 +3074,7 @@
       "graphicId": "24358",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3307,6 +3096,7 @@
       "graphicId": "24359",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3328,6 +3118,7 @@
       "graphicId": "24360",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3349,6 +3140,7 @@
       "graphicId": "24361",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,15443,0"
@@ -3370,6 +3162,7 @@
       "graphicId": "24361",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,15443,0"
@@ -3391,6 +3184,7 @@
       "graphicId": "24362",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,15443,0"
@@ -3412,6 +3206,7 @@
       "graphicId": "24363",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,15443,0"
@@ -3433,6 +3228,7 @@
       "graphicId": "24370",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15444,1"
@@ -3454,6 +3250,7 @@
       "graphicId": "24370",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15444,1"
@@ -3475,6 +3272,7 @@
       "graphicId": "24371",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15444,1"
@@ -3496,6 +3294,7 @@
       "graphicId": "24372",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15444,1"
@@ -3517,6 +3316,7 @@
       "graphicId": "24355",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15447,0",
@@ -3543,6 +3343,7 @@
       "graphicId": "24355",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15447,0",
@@ -3569,6 +3370,7 @@
       "graphicId": "24356",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15447,0",
@@ -3595,6 +3397,7 @@
       "graphicId": "24357",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15447,0",
@@ -3621,6 +3424,7 @@
       "graphicId": "24367",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,15449,0",
@@ -3651,6 +3455,7 @@
       "graphicId": "24367",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,15449,0",
@@ -3681,6 +3486,7 @@
       "graphicId": "24368",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,15449,0",
@@ -3711,6 +3517,7 @@
       "graphicId": "24369",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,15449,0",
@@ -3741,6 +3548,11 @@
       "graphicId": "24364",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,8"
@@ -3762,6 +3574,11 @@
       "graphicId": "24364",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,16"
@@ -3783,6 +3600,11 @@
       "graphicId": "24365",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,32"
@@ -3804,6 +3626,11 @@
       "graphicId": "24366",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,80"
@@ -3929,6 +3756,317 @@
       ]
     }
   ],
+  "summary": {
+    "id": "152",
+    "name": {
+      "original": "Bobby",
+      "display": "鲍比"
+    },
+    "seat": 12,
+    "portrait": {
+      "path": "v1/champion-portraits/152.png",
+      "sourceGraphic": "Portraits/Portrait_Bobby",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "dps",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Saturday Morning Squad",
+        "display": "星期六早晨的小队"
+      }
+    ],
+    "tags": [
+      "barbarian",
+      "chaotic",
+      "dps",
+      "event",
+      "good",
+      "human",
+      "male",
+      "positional",
+      "saturdaymorningsquad",
+      "spec_control",
+      "spec_control_knockback",
+      "spec_control_stun",
+      "support",
+      "y8"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Bobby",
+  "eventName": {
+    "original": "Highharvestide",
+    "display": "丰收节"
+  },
+  "dateAvailable": "2024-09-04 12:00:00",
+  "lastReworkDate": "2024-09-04 12:00:00",
+  "popularity": 116,
+  "baseCost": "100000000000000000000",
+  "baseDamage": "15000000000000",
+  "baseHealth": "41",
+  "graphicId": "24352",
+  "portraitGraphicId": "24351",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1788375600
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    95,
+    805,
+    1615,
+    2615
+  ],
+  "costCurves": {
+    "1": 1.07
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 47,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      190,
+      191,
+      192
+    ],
+    "graphic_large": 24353,
+    "graphic_xl": 24354,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      84,
+      60
+    ],
+    "companions": [
+      {
+        "graphic_id": 14202,
+        "visible": false,
+        "sequences": {
+          "idle": 9,
+          "walk": 7,
+          "charge": 0,
+          "shoot": 2,
+          "gethit": 5,
+          "koed": 6
+        },
+        "offset_x": 30,
+        "offset_y": -15,
+        "scale": 1
+      }
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2024-09-25 12:00:00",
+    "available_in_store": "2024-10-02 12:00:00",
+    "time_gate_adventure_id": 1545,
+    "time_gate_variants_ids": [
+      1521,
+      1522,
+      1523
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 574,
+    "gold_chest_type_id": 575,
+    "golden_epic_loot_id": 3605,
+    "golden_epic_promo_id": 475,
+    "event_logo_graphic_id": 3371,
+    "console_portrait": 24373,
+    "trials_effect_id": 839,
+    "portrait_graphic_scale": 0.9,
+    "weekly_buff": "buff_upgrade,100,15443,0",
+    "legendary_effect_id": [
+      1,
+      2,
+      5,
+      28,
+      85,
+      52
+    ],
+    "notification_adjustment": {
+      "offset": [
+        50,
+        180
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30565
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Bobby",
+      "display": "鲍比"
+    },
+    "class": {
+      "original": "Barbarian",
+      "display": "野蛮人"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 8,
+    "alignment": {
+      "original": "Chaotic Good",
+      "display": "混乱善良"
+    },
+    "backstory": {
+      "original": "Bobby is the youngest of the group that was transported to the magical world of Dungeons & Dragons. As a brave and loyal Barbarian, he wields a powerful magical club that enhances his strength. Bobby has close ties to his sister Sheila and his pet unicorn, Uni. Despite his impulsiveness, Bobby's courage and determination are key assets in the search to find the way back home.",
+      "display": "鲍比是被传送到龙与地下城神奇世界的人中最年轻的。他是个勇敢而忠诚的野蛮人，挥舞着一根威力无穷的魔力木棒。鲍比和他的姐姐希拉以及他的独角兽宠物“独角”非常亲近。尽管鲍比很冲动，但他将用自己的勇气和决心来寻找回家的路。"
+    },
+    "abilityScores": {
+      "str": 18,
+      "dex": 15,
+      "con": 12,
+      "int": 9,
+      "wis": 8,
+      "cha": 10
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "791",
+      "name": {
+        "original": "Thunder Club",
+        "display": "雷霆棒"
+      },
+      "description": {
+        "original": "Bobby swings his club at the closest enemy.",
+        "display": "鲍比挥舞棍棒打向最近的敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 6,
+      "numTargets": 1,
+      "aoeRadius": 100,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "damage_frame": 8,
+          "target_offset_x": -40,
+          "jump_sound": 30,
+          "sound_frames": {
+            "14": 154
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "792",
+      "name": {
+        "original": "Bobby-quake",
+        "display": "鲍比地震"
+      },
+      "description": {
+        "original": "Bobby strikes the ground with his club, stunning and knocking back all enemies.",
+        "display": "鲍比用棍棒击打地面，眩晕所有敌人并将他们击退。"
+      },
+      "longDescription": {
+        "original": "Bobby strikes the ground with his club, knocking all enemies up and back and stunning them for 5 seconds.",
+        "display": "鲍比用棍棒击打地面，将所有敌人击飞并击退，眩晕他们 5 秒。"
+      },
+      "cooldown": 320,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "24409",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "bobby",
+          "knockback_effect": {
+            "effect_string": "push_back_monster,10"
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "15443",
+        "name": {
+          "original": "Charge Into Battle",
+          "display": "冲锋陷阵"
+        },
+        "description": null,
+        "graphicId": "24396"
+      },
+      {
+        "upgradeId": "15444",
+        "name": {
+          "original": "Uni, the Unicorn",
+          "display": "独角兽“独角”"
+        },
+        "description": null,
+        "graphicId": "24399"
+      },
+      {
+        "upgradeId": "15445",
+        "name": {
+          "original": "Now We're Talking",
+          "display": "这才像话"
+        },
+        "description": null,
+        "graphicId": "24397"
+      },
+      {
+        "upgradeId": "15446",
+        "name": {
+          "original": "Scales of Tiamat Scavenger",
+          "display": "提亚马特龙鳞回收者"
+        },
+        "description": null,
+        "graphicId": "24398"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -4068,7 +4206,8 @@
               180
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30565
         },
         "adventure_ids": [
           {
@@ -4096,7 +4235,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 120,
+        "popularity": 116,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4126,7 +4265,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1788462000,
+        "next_event_timestamp": 1788375600,
         "event_name": "Highharvestide",
         "is_available": true,
         "date_available": "2024-09-04 12:00:00",
@@ -4269,7 +4408,8 @@
               180
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30565
         },
         "adventure_ids": [
           {
@@ -4297,7 +4437,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 120,
+        "popularity": 116,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4327,7 +4467,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1788462000,
+        "next_event_timestamp": 1788375600,
         "event_name": "丰收节",
         "is_available": true,
         "date_available": "2024-09-04 12:00:00",
@@ -7794,11 +7934,12 @@
             ],
             "properties": {
               "is_available": true,
-              "available_at_time": 1777489200,
-              "available_for_gems_at_time": 1785351600
+              "available_at_time": 1777489200
             },
             "collections_source": {
-              "type": "not_yet_available"
+              "type": "dlc",
+              "item_id": "704",
+              "cost": 1680
             }
           },
           "display": {
@@ -7836,8 +7977,92 @@
             ],
             "properties": {
               "is_available": true,
-              "available_at_time": 1777489200,
-              "available_for_gems_at_time": 1785351600
+              "available_at_time": 1777489200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "704",
+              "cost": 1680
+            }
+          }
+        }
+      },
+      {
+        "id": "2635",
+        "snapshots": {
+          "original": {
+            "id": 2635,
+            "hero_id": 152,
+            "order": 22,
+            "name": "Temper Tantrum",
+            "description": "Bobby, please calm down! Oh, brother. ~Sheila",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,15447,0",
+                "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,80,15448,0",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-12-02 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 751
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1788375600,
+              "available_for_gems_at_time": 1796241600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2635,
+            "hero_id": 152,
+            "order": 22,
+            "name": "待定 鲍比 合作曲（请勿翻译）",
+            "description": "Bobby, please calm down! Oh, brother. ~Sheila",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,15447,0",
+                "description": "使鲍比的“惊人力量”与“集体冲锋”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,80,15448,0",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-12-02 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 751
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1788375600,
+              "available_for_gems_at_time": 1796241600
             },
             "collections_source": {
               "type": "not_yet_available"
@@ -7871,7 +8096,8 @@
                   "graphic_id": "27143",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31041
             },
             "rarity": "3",
             "properties": {
@@ -7907,7 +8133,8 @@
                   "graphic_id": "27143",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31041
             },
             "rarity": "3",
             "properties": {
@@ -7948,7 +8175,8 @@
                   "graphic_id": "27142",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31143
             },
             "rarity": "3",
             "properties": {
@@ -7980,7 +8208,8 @@
                   "graphic_id": "27142",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31143
             },
             "rarity": "3",
             "properties": {
@@ -8016,7 +8245,8 @@
                   "graphic_id": "27759",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31168
             },
             "rarity": "3",
             "properties": {
@@ -8058,7 +8288,8 @@
                   "graphic_id": "27759",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31168
             },
             "rarity": "3",
             "properties": {
@@ -8099,7 +8330,8 @@
               "xl_graphic_id": 29173,
               "companion_graphic_ids": [
                 "{int}"
-              ]
+              ],
+              "bastion_graphic_id": 31256
             },
             "rarity": "3",
             "properties": {
@@ -8128,7 +8360,8 @@
               "xl_graphic_id": 29173,
               "companion_graphic_ids": [
                 "{int}"
-              ]
+              ],
+              "bastion_graphic_id": 31256
             },
             "rarity": "3",
             "properties": {
@@ -8141,6 +8374,77 @@
             },
             "availabilities": {
               "premium_item_id": "704"
+            }
+          }
+        }
+      },
+      {
+        "id": "721",
+        "snapshots": {
+          "original": {
+            "id": 721,
+            "hero_id": 152,
+            "name": "Schoolyard Bruiser Bobby",
+            "cost": {
+              "req_date": "2026-09-02 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 30338,
+              "large_graphic_id": 30339,
+              "portrait_graphic_id": 30341,
+              "xl_graphic_id": 30340,
+              "companion_graphic_ids": [
+                30335
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": 30337,
+                  "sequence": 1
+                }
+              ],
+              "bastion_graphic_id": 31294
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": false
+            },
+            "collections_source": "",
+            "availabilities": {
+              "premium_item_id": "751"
+            }
+          },
+          "display": {
+            "id": 721,
+            "hero_id": 152,
+            "name": "校园恶霸鲍比",
+            "cost": {
+              "req_date": "2026-09-02 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 30338,
+              "large_graphic_id": 30339,
+              "portrait_graphic_id": 30341,
+              "xl_graphic_id": 30340,
+              "companion_graphic_ids": [
+                30335
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": 30337,
+                  "sequence": 1
+                }
+              ],
+              "bastion_graphic_id": 31294
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": false
+            },
+            "collections_source": "",
+            "availabilities": {
+              "premium_item_id": "751"
             }
           }
         }

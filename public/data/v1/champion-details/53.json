@@ -1,295 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "53",
-    "name": {
-      "original": "Krull",
-      "display": "克鲁尔"
-    },
-    "seat": 6,
-    "roles": [
-      "debuff",
-      "gold",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Dark Order",
-        "display": "黑暗教团"
-      }
-    ],
-    "tags": [
-      "cleric",
-      "darkorder",
-      "debuff",
-      "event",
-      "evil",
-      "gold",
-      "lawful",
-      "male",
-      "support",
-      "tortle",
-      "y3"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/53.png",
-      "sourceGraphic": "Portraits/Portrait_Krull",
-      "sourceVersion": 5
-    }
-  },
-  "englishName": "Krull",
-  "eventName": {
-    "original": "Simril",
-    "display": "观星节"
-  },
-  "dateAvailable": "2019-11-27 00:00:00",
-  "lastReworkDate": "2019-11-27 00:00:00",
-  "popularity": 92,
-  "baseCost": "90000000",
-  "baseDamage": "750000",
-  "baseHealth": "232",
-  "graphicId": "6778",
-  "portraitGraphicId": "6780",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1796328000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    230,
-    595,
-    1045,
-    1595
-  ],
-  "costCurves": {
-    "1": 1.13
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      155,
-      156,
-      157
-    ],
-    "graphic_large": 6779,
-    "graphic_xl": 13908,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      110,
-      82
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2019-12-09 12:00:00",
-    "time_gate_blackout": {
-      "start": "2021-12-08 00:00:00",
-      "end": "2021-12-20 12:00:00"
-    },
-    "time_gate_adventure_id": 526,
-    "time_gate_variants_ids": [
-      454,
-      455,
-      456
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 164,
-    "gold_chest_type_id": 165,
-    "available_in_store": "2019-12-16 12:00:00",
-    "store_blackout": {
-      "start": "2021-12-08 00:00:00",
-      "end": "2021-12-20 12:00:00"
-    },
-    "golden_epic_loot_id": 1252,
-    "golden_epic_promo_id": 135,
-    "event_logo_graphic_id": 3375,
-    "console_portrait": 6783,
-    "head_graphic_id": 7276,
-    "trials_effect_id": 849,
-    "legendary_effect_id": [
-      1,
-      3,
-      14,
-      40,
-      82,
-      103
-    ],
-    "weekly_buff": "buff_upgrades,200,3214,3215",
-    "portrait_graphic_scale": 0.96,
-    "notification_adjustment": {
-      "offset": [
-        3,
-        217
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Krull",
-      "display": "克鲁尔"
-    },
-    "class": {
-      "original": "Cleric",
-      "display": "牧师"
-    },
-    "race": {
-      "original": "Tortle",
-      "display": "龟人"
-    },
-    "age": 40,
-    "alignment": {
-      "original": "Lawful Evil",
-      "display": "守序邪恶"
-    },
-    "abilityScores": {
-      "str": 20,
-      "dex": 14,
-      "con": 15,
-      "int": 12,
-      "wis": 20,
-      "cha": 12
-    },
-    "backstory": {
-      "original": "Krull is a death-cleric of Tiamat who swore allegiance to Arkhan the Cruel after being bested by him in combat. He's Arkhan's alchemist, his experimenter, his torturer... Always surrounded by the dead, Krull wears a white painted face mask that makes him look undead in an effort to confuse and strike fear in his opponents.",
-      "display": "克鲁尔是提亚马特的死亡牧师。在战斗中被残暴者阿克汉击败后，他发誓效忠于阿克汉。他是阿克汉的炼金术士、实验品和拷问者......克鲁尔总是被死者所环绕，他戴着白色的面具，使其看起来像个亡灵，以迷惑对手并使其产生恐惧。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "250",
-      "name": {
-        "original": "Krull's Maul",
-        "display": "克鲁尔的双手锤"
-      },
-      "description": {
-        "original": "Krull attacks a random enemy with his Maul.",
-        "display": "克鲁尔用他的双手锤攻击一名随机敌人。"
-      },
-      "longDescription": null,
-      "cooldown": 6.5,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "random",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -100,
-          "damage_frame": 4
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "251",
-      "name": {
-        "original": "Corrupted Ghouls",
-        "display": "腐化的食尸鬼"
-      },
-      "description": {
-        "original": "Krull summons four corrupted ghouls that rush towards the nearest enemies and explode.",
-        "display": "克鲁尔召唤四只腐化的食尸鬼，冲向距离最近的敌人并爆炸。"
-      },
-      "longDescription": {
-        "original": "Krull summons four corrupted ghouls that rush towards the nearest enemies and explode, damaging all nearby enemies and leaving behind pools of necrotic goo that last for 30 seconds.",
-        "display": "克鲁尔召唤四只腐化的食尸鬼，冲向距离最近的敌人并爆炸，对附近的所有敌人造成伤害。同时留下一滩腐败粘液，持续 30 秒。"
-      },
-      "cooldown": 320,
-      "numTargets": 1,
-      "aoeRadius": 100,
-      "damageModifier": "0.03",
-      "target": "front",
-      "damageTypes": [
-        "ranged"
-      ],
-      "tags": [
-        "ranged",
-        "aoe",
-        "ultimate"
-      ],
-      "graphicId": "6801",
-      "animations": [
-        {
-          "type": "krull_ultimate",
-          "ghouls": 4,
-          "ghoul_speed": 6,
-          "explode_radius": 100,
-          "pool_width": 180,
-          "pool_height": 120,
-          "pool_time": 30,
-          "pool_interval": 0.6,
-          "damage_per_second_modifier": 0.2
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "3211",
-        "name": {
-          "original": "Virulent Strain",
-          "display": "致命毒株"
-        },
-        "description": null,
-        "graphicId": "6793"
-      },
-      {
-        "upgradeId": "3212",
-        "name": {
-          "original": "Arkhan's Army",
-          "display": "阿克汉的军队"
-        },
-        "description": {
-          "original": "Krull greatly increases the damage of all evil champions, but by less if there are any do-gooders around.",
-          "display": "克鲁尔大幅提高所有邪恶阵营勇士的伤害，但如果他们周围有善良阵营的队友，则效果减弱。"
-        },
-        "graphicId": "6790"
-      },
-      {
-        "upgradeId": "3213",
-        "name": {
-          "original": "The Master's Call",
-          "display": "主人的召唤"
-        },
-        "description": null,
-        "graphicId": "6792"
-      },
-      {
-        "upgradeId": "4563",
-        "name": {
-          "original": "Dark Order Synergy",
-          "display": "黑暗教团协同"
-        },
-        "description": null,
-        "graphicId": "8904"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "3244",
@@ -297,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3210",
@@ -315,7 +25,6 @@
         "display": "龙语瘟疫"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,500",
       "effectDefinition": {
         "id": "500",
         "snapshots": {
@@ -403,7 +112,8 @@
       "tipText": {
         "original": "Krull occasionally infects the next enemy to spawn with a Draconic Plague which can increase their damage taken, gold dropped, or make them trigger AOE damage.",
         "display": "克鲁尔偶尔使下一个刷新的敌人感染龙语瘟疫，提高其受到的伤害、金币掉落，或使其触发范围伤害。"
-      }
+      },
+      "effectReference": "effect_def,500"
     },
     {
       "id": "3245",
@@ -411,14 +121,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "3226",
@@ -426,14 +136,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3246",
@@ -441,14 +151,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3211",
@@ -459,7 +169,6 @@
         "display": "致命毒株"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,504",
       "effectDefinition": {
         "id": "504",
         "snapshots": {
@@ -502,7 +211,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,504"
     },
     {
       "id": "3219",
@@ -510,14 +220,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3247",
@@ -525,14 +235,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3248",
@@ -540,14 +250,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3217",
@@ -555,14 +265,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack,251",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,251"
     },
     {
       "id": "3249",
@@ -570,14 +280,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3234",
@@ -585,14 +295,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3214",
@@ -603,7 +313,6 @@
         "display": "瘟疫聚焦：{偷窃}#0F0"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,1\",\"description\":\"Increases the effect of Plague: {Pilfer}#0F0 by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
@@ -616,7 +325,8 @@
         "display": "克鲁尔的研究专注于从感染瘟疫的敌人身上窃取更多金币。"
       },
       "specializationGraphicId": "6799",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,1"
     },
     {
       "id": "3215",
@@ -627,7 +337,6 @@
         "display": "瘟疫聚焦：{痛苦}#F00"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: {Pain}#F00 by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
@@ -640,7 +349,8 @@
         "display": "克鲁尔的研究专注于使感染瘟疫的敌人受到更多伤害。"
       },
       "specializationGraphicId": "6798",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3216",
@@ -651,7 +361,6 @@
         "display": "瘟疫聚焦：{背叛}#F0F"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,3\",\"description\":\"Increases the effect of Plague: {Traitor}#F0F by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
@@ -664,7 +373,8 @@
         "display": "克鲁尔的研究专注于提高感染瘟疫敌人的背叛倾向。"
       },
       "specializationGraphicId": "6800",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,3"
     },
     {
       "id": "3227",
@@ -672,14 +382,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3250",
@@ -687,14 +397,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3251",
@@ -702,14 +412,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3212",
@@ -720,7 +430,6 @@
         "display": "阿克汉的军队"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,505",
       "effectDefinition": {
         "id": "505",
         "snapshots": {
@@ -792,7 +501,8 @@
       "tipText": {
         "original": "Krull increases the damage of all evil Champions, but reduces the bonus for each good Champion in the formation.",
         "display": "克鲁尔使所有邪恶勇士的伤害提高，但阵型中的每位善良勇士都会使加成降低。"
-      }
+      },
+      "effectReference": "effect_def,505"
     },
     {
       "id": "3235",
@@ -800,14 +510,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3252",
@@ -815,14 +525,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3213",
@@ -833,7 +543,6 @@
         "display": "主人的召唤"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,506",
       "effectDefinition": {
         "id": "506",
         "snapshots": {
@@ -904,7 +613,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,506"
     },
     {
       "id": "3253",
@@ -912,14 +622,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3228",
@@ -927,14 +637,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3218",
@@ -942,14 +652,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,1\",\"description\":\"Increases the effect of Plague: Pilfer by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,1"
     },
     {
       "id": "3254",
@@ -957,14 +667,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3236",
@@ -972,14 +682,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,200,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 200%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,3210,2"
     },
     {
       "id": "3255",
@@ -987,14 +697,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "4563",
@@ -1005,7 +715,6 @@
         "display": "黑暗教团协同"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "effect_def,715",
       "effectDefinition": {
         "id": "715",
         "snapshots": {
@@ -1052,7 +761,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,715"
     },
     {
       "id": "3237",
@@ -1060,14 +770,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3256",
@@ -1075,14 +785,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3221",
@@ -1090,14 +800,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3212",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3212"
     },
     {
       "id": "3257",
@@ -1105,14 +815,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3258",
@@ -1120,14 +830,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3238",
@@ -1135,14 +845,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3230",
@@ -1150,14 +860,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3259",
@@ -1165,14 +875,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3222",
@@ -1180,14 +890,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3213",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3213"
     },
     {
       "id": "3224",
@@ -1195,14 +905,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,1\",\"description\":\"Increases the effect of Plague: Pilfer by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,1"
     },
     {
       "id": "3260",
@@ -1210,14 +920,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3239",
@@ -1225,14 +935,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3261",
@@ -1240,14 +950,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3240",
@@ -1255,14 +965,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3231",
@@ -1270,14 +980,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3262",
@@ -1285,14 +995,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3241",
@@ -1300,14 +1010,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3263",
@@ -1315,14 +1025,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3232",
@@ -1330,14 +1040,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3212",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3212"
     },
     {
       "id": "3242",
@@ -1345,14 +1055,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3264",
@@ -1360,14 +1070,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3225",
@@ -1375,14 +1085,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,1\",\"description\":\"Increases the effect of Plague: Pilfer by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,1"
     },
     {
       "id": "3233",
@@ -1390,14 +1100,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3265",
@@ -1405,14 +1115,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3223",
@@ -1420,14 +1130,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3213",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3213"
     },
     {
       "id": "3243",
@@ -1435,14 +1145,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3266",
@@ -1450,14 +1160,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "3229",
@@ -1465,14 +1175,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3212",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3212"
     },
     {
       "id": "3954",
@@ -1480,14 +1190,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3958",
@@ -1495,14 +1205,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "3955",
@@ -1510,14 +1220,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3956",
@@ -1525,14 +1235,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "3957",
@@ -1540,14 +1250,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "5190",
@@ -1555,14 +1265,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "5191",
@@ -1570,14 +1280,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3213",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3213"
     },
     {
       "id": "5192",
@@ -1585,14 +1295,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "5193",
@@ -1600,14 +1310,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "5194",
@@ -1615,14 +1325,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "6612",
@@ -1630,14 +1340,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,2\",\"description\":\"Increases the effect of Plague: Pain by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,2"
     },
     {
       "id": "6613",
@@ -1645,14 +1355,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "6614",
@@ -1660,14 +1370,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,3210,1\",\"description\":\"Increases the effect of Plague: Pilfer by 100%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3210,1"
     },
     {
       "id": "6615",
@@ -1675,14 +1385,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "8383",
@@ -1690,14 +1400,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "8384",
@@ -1705,14 +1415,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,3212",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,3212"
     },
     {
       "id": "8385",
@@ -1720,14 +1430,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -2222,7 +1932,8 @@
         "base_graphic_id": 7059,
         "large_graphic_id": 7060,
         "xl_graphic_id": 13909,
-        "portrait_graphic_id": 7058
+        "portrait_graphic_id": 7058,
+        "bastion_graphic_id": 30618
       },
       "rarity": "3",
       "properties": {
@@ -2252,7 +1963,8 @@
         "base_graphic_id": 9653,
         "large_graphic_id": 9654,
         "xl_graphic_id": 13910,
-        "portrait_graphic_id": 9652
+        "portrait_graphic_id": 9652,
+        "bastion_graphic_id": 30653
       },
       "rarity": "3",
       "properties": {
@@ -2282,7 +1994,8 @@
         "base_graphic_id": 10714,
         "large_graphic_id": 10715,
         "xl_graphic_id": 13911,
-        "portrait_graphic_id": 10713
+        "portrait_graphic_id": 10713,
+        "bastion_graphic_id": 30669
       },
       "rarity": "3",
       "properties": {
@@ -2315,7 +2028,8 @@
         "base_graphic_id": 11440,
         "large_graphic_id": 11693,
         "xl_graphic_id": 13912,
-        "portrait_graphic_id": 11682
+        "portrait_graphic_id": 11682,
+        "bastion_graphic_id": 30691
       },
       "rarity": "3",
       "properties": {
@@ -2340,7 +2054,8 @@
         "base_graphic_id": 17949,
         "large_graphic_id": 17952,
         "portrait_graphic_id": 17939,
-        "xl_graphic_id": 17955
+        "xl_graphic_id": 17955,
+        "bastion_graphic_id": 30835
       },
       "rarity": "3",
       "properties": {
@@ -2372,6 +2087,7 @@
       "graphicId": "6851",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2393,6 +2109,7 @@
       "graphicId": "6851",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2414,6 +2131,7 @@
       "graphicId": "6852",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2435,6 +2153,7 @@
       "graphicId": "6853",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2456,6 +2175,7 @@
       "graphicId": "6845",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,3210,1",
@@ -2478,6 +2198,7 @@
       "graphicId": "6845",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,3210,1",
@@ -2500,6 +2221,7 @@
       "graphicId": "6846",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,3210,1",
@@ -2522,6 +2244,7 @@
       "graphicId": "6847",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,3210,1",
@@ -2544,6 +2267,7 @@
       "graphicId": "6848",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,3210,2",
@@ -2566,6 +2290,7 @@
       "graphicId": "6848",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,3210,2",
@@ -2588,6 +2313,7 @@
       "graphicId": "6849",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,3210,2",
@@ -2610,6 +2336,7 @@
       "graphicId": "6850",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,3210,2",
@@ -2632,6 +2359,7 @@
       "graphicId": "6857",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,3212"
@@ -2653,6 +2381,7 @@
       "graphicId": "6857",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,3212"
@@ -2674,6 +2403,7 @@
       "graphicId": "6858",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,3212"
@@ -2695,6 +2425,7 @@
       "graphicId": "6859",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,3212"
@@ -2716,6 +2447,7 @@
       "graphicId": "6854",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -2737,6 +2469,7 @@
       "graphicId": "6854",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -2758,6 +2491,7 @@
       "graphicId": "6855",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -2779,6 +2513,7 @@
       "graphicId": "6856",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -2800,6 +2535,11 @@
       "graphicId": "6842",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,8"
@@ -2821,6 +2561,11 @@
       "graphicId": "6842",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,16"
@@ -2842,6 +2587,11 @@
       "graphicId": "6843",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,32"
@@ -2863,6 +2613,11 @@
       "graphicId": "6844",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,80"
@@ -2990,6 +2745,310 @@
       ]
     }
   ],
+  "summary": {
+    "id": "53",
+    "name": {
+      "original": "Krull",
+      "display": "克鲁尔"
+    },
+    "seat": 6,
+    "portrait": {
+      "path": "v1/champion-portraits/53.png",
+      "sourceGraphic": "Portraits/Portrait_Krull",
+      "sourceVersion": 5
+    },
+    "roles": [
+      "debuff",
+      "gold",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Dark Order",
+        "display": "黑暗教团"
+      }
+    ],
+    "tags": [
+      "cleric",
+      "darkorder",
+      "debuff",
+      "event",
+      "evil",
+      "gold",
+      "lawful",
+      "male",
+      "support",
+      "tortle",
+      "y3"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Krull",
+  "eventName": {
+    "original": "Simril",
+    "display": "观星节"
+  },
+  "dateAvailable": "2019-11-27 00:00:00",
+  "lastReworkDate": "2019-11-27 00:00:00",
+  "popularity": 79,
+  "baseCost": "90000000",
+  "baseDamage": "750000",
+  "baseHealth": "232",
+  "graphicId": "6778",
+  "portraitGraphicId": "6780",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1796328000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    230,
+    595,
+    1045,
+    1595
+  ],
+  "costCurves": {
+    "1": 1.13
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      155,
+      156,
+      157
+    ],
+    "graphic_large": 6779,
+    "graphic_xl": 13908,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      110,
+      82
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2019-12-09 12:00:00",
+    "time_gate_blackout": {
+      "start": "2021-12-08 00:00:00",
+      "end": "2021-12-20 12:00:00"
+    },
+    "time_gate_adventure_id": 526,
+    "time_gate_variants_ids": [
+      454,
+      455,
+      456
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 164,
+    "gold_chest_type_id": 165,
+    "available_in_store": "2019-12-16 12:00:00",
+    "store_blackout": {
+      "start": "2021-12-08 00:00:00",
+      "end": "2021-12-20 12:00:00"
+    },
+    "golden_epic_loot_id": 1252,
+    "golden_epic_promo_id": 135,
+    "event_logo_graphic_id": 3375,
+    "console_portrait": 6783,
+    "head_graphic_id": 7276,
+    "trials_effect_id": 849,
+    "legendary_effect_id": [
+      1,
+      3,
+      14,
+      40,
+      82,
+      103
+    ],
+    "weekly_buff": "buff_upgrades,200,3214,3215",
+    "portrait_graphic_scale": 0.96,
+    "notification_adjustment": {
+      "offset": [
+        3,
+        217
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30479
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Krull",
+      "display": "克鲁尔"
+    },
+    "class": {
+      "original": "Cleric",
+      "display": "牧师"
+    },
+    "race": {
+      "original": "Tortle",
+      "display": "龟人"
+    },
+    "age": 40,
+    "alignment": {
+      "original": "Lawful Evil",
+      "display": "守序邪恶"
+    },
+    "backstory": {
+      "original": "Krull is a death-cleric of Tiamat who swore allegiance to Arkhan the Cruel after being bested by him in combat. He's Arkhan's alchemist, his experimenter, his torturer... Always surrounded by the dead, Krull wears a white painted face mask that makes him look undead in an effort to confuse and strike fear in his opponents.",
+      "display": "克鲁尔是提亚马特的死亡牧师。在战斗中被残暴者阿克汉击败后，他发誓效忠于阿克汉。他是阿克汉的炼金术士、实验品和拷问者......克鲁尔总是被死者所环绕，他戴着白色的面具，使其看起来像个亡灵，以迷惑对手并使其产生恐惧。"
+    },
+    "abilityScores": {
+      "str": 20,
+      "dex": 14,
+      "con": 15,
+      "int": 12,
+      "wis": 20,
+      "cha": 12
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "250",
+      "name": {
+        "original": "Krull's Maul",
+        "display": "克鲁尔的双手锤"
+      },
+      "description": {
+        "original": "Krull attacks a random enemy with his Maul.",
+        "display": "克鲁尔用他的双手锤攻击一名随机敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 6.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -100,
+          "damage_frame": 4
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "251",
+      "name": {
+        "original": "Corrupted Ghouls",
+        "display": "腐化的食尸鬼"
+      },
+      "description": {
+        "original": "Krull summons four corrupted ghouls that rush towards the nearest enemies and explode.",
+        "display": "克鲁尔召唤四只腐化的食尸鬼，冲向距离最近的敌人并爆炸。"
+      },
+      "longDescription": {
+        "original": "Krull summons four corrupted ghouls that rush towards the nearest enemies and explode, damaging all nearby enemies and leaving behind pools of necrotic goo that last for 30 seconds.",
+        "display": "克鲁尔召唤四只腐化的食尸鬼，冲向距离最近的敌人并爆炸，对附近的所有敌人造成伤害。同时留下一滩腐败粘液，持续 30 秒。"
+      },
+      "cooldown": 320,
+      "numTargets": 1,
+      "aoeRadius": 100,
+      "damageModifier": "0.03",
+      "target": "front",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged",
+        "aoe",
+        "ultimate"
+      ],
+      "graphicId": "6801",
+      "animations": [
+        {
+          "type": "krull_ultimate",
+          "ghouls": 4,
+          "ghoul_speed": 6,
+          "explode_radius": 100,
+          "pool_width": 180,
+          "pool_height": 120,
+          "pool_time": 30,
+          "pool_interval": 0.6,
+          "damage_per_second_modifier": 0.2
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "3211",
+        "name": {
+          "original": "Virulent Strain",
+          "display": "致命毒株"
+        },
+        "description": null,
+        "graphicId": "6793"
+      },
+      {
+        "upgradeId": "3212",
+        "name": {
+          "original": "Arkhan's Army",
+          "display": "阿克汉的军队"
+        },
+        "description": {
+          "original": "Krull greatly increases the damage of all evil champions, but by less if there are any do-gooders around.",
+          "display": "克鲁尔大幅提高所有邪恶阵营勇士的伤害，但如果他们周围有善良阵营的队友，则效果减弱。"
+        },
+        "graphicId": "6790"
+      },
+      {
+        "upgradeId": "3213",
+        "name": {
+          "original": "The Master's Call",
+          "display": "主人的召唤"
+        },
+        "description": null,
+        "graphicId": "6792"
+      },
+      {
+        "upgradeId": "4563",
+        "name": {
+          "original": "Dark Order Synergy",
+          "display": "黑暗教团协同"
+        },
+        "description": null,
+        "graphicId": "8904"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3117,7 +3176,8 @@
               217
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30479
         },
         "adventure_ids": [
           {
@@ -3145,7 +3205,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 92,
+        "popularity": 79,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3306,7 +3366,8 @@
               217
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30479
         },
         "adventure_ids": [
           {
@@ -3334,7 +3395,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 92,
+        "popularity": 79,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6420,7 +6481,8 @@
               "base_graphic_id": 7059,
               "large_graphic_id": 7060,
               "xl_graphic_id": 13909,
-              "portrait_graphic_id": 7058
+              "portrait_graphic_id": 7058,
+              "bastion_graphic_id": 30618
             },
             "rarity": "3",
             "properties": {
@@ -6449,7 +6511,8 @@
               "base_graphic_id": 7059,
               "large_graphic_id": 7060,
               "xl_graphic_id": 13909,
-              "portrait_graphic_id": 7058
+              "portrait_graphic_id": 7058,
+              "bastion_graphic_id": 30618
             },
             "rarity": "3",
             "properties": {
@@ -6481,7 +6544,8 @@
               "base_graphic_id": 9653,
               "large_graphic_id": 9654,
               "xl_graphic_id": 13910,
-              "portrait_graphic_id": 9652
+              "portrait_graphic_id": 9652,
+              "bastion_graphic_id": 30653
             },
             "rarity": "3",
             "properties": {
@@ -6506,7 +6570,8 @@
               "base_graphic_id": 9653,
               "large_graphic_id": 9654,
               "xl_graphic_id": 13910,
-              "portrait_graphic_id": 9652
+              "portrait_graphic_id": 9652,
+              "bastion_graphic_id": 30653
             },
             "rarity": "3",
             "properties": {
@@ -6539,7 +6604,8 @@
               "base_graphic_id": 10714,
               "large_graphic_id": 10715,
               "xl_graphic_id": 13911,
-              "portrait_graphic_id": 10713
+              "portrait_graphic_id": 10713,
+              "bastion_graphic_id": 30669
             },
             "rarity": "3",
             "properties": {
@@ -6570,7 +6636,8 @@
               "base_graphic_id": 10714,
               "large_graphic_id": 10715,
               "xl_graphic_id": 13911,
-              "portrait_graphic_id": 10713
+              "portrait_graphic_id": 10713,
+              "bastion_graphic_id": 30669
             },
             "rarity": "3",
             "properties": {
@@ -6605,7 +6672,8 @@
               "base_graphic_id": 11440,
               "large_graphic_id": 11693,
               "xl_graphic_id": 13912,
-              "portrait_graphic_id": 11682
+              "portrait_graphic_id": 11682,
+              "bastion_graphic_id": 30691
             },
             "rarity": "3",
             "properties": {
@@ -6627,7 +6695,8 @@
               "base_graphic_id": 11440,
               "large_graphic_id": 11693,
               "xl_graphic_id": 13912,
-              "portrait_graphic_id": 11682
+              "portrait_graphic_id": 11682,
+              "bastion_graphic_id": 30691
             },
             "rarity": "3",
             "properties": {
@@ -6654,7 +6723,8 @@
               "base_graphic_id": 17949,
               "large_graphic_id": 17952,
               "portrait_graphic_id": 17939,
-              "xl_graphic_id": 17955
+              "xl_graphic_id": 17955,
+              "bastion_graphic_id": 30835
             },
             "rarity": "3",
             "properties": {
@@ -6682,7 +6752,8 @@
               "base_graphic_id": 17949,
               "large_graphic_id": 17952,
               "portrait_graphic_id": 17939,
-              "xl_graphic_id": 17955
+              "xl_graphic_id": 17955,
+              "bastion_graphic_id": 30835
             },
             "rarity": "3",
             "properties": {

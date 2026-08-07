@@ -1,252 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "9",
-    "name": {
-      "original": "Makos",
-      "display": "马科斯"
-    },
-    "seat": 9,
-    "roles": [
-      "dps",
-      "gold",
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "core",
-      "dps",
-      "evergreen",
-      "evil",
-      "gold",
-      "lcneutral",
-      "male",
-      "neutral",
-      "positional",
-      "support",
-      "tiefling",
-      "unaffiliated",
-      "warlock"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/9.png",
-      "sourceGraphic": "Portraits/Portrait_Makos",
-      "sourceVersion": 9
-    }
-  },
-  "englishName": "Makos",
-  "eventName": null,
-  "dateAvailable": "2017-09-07 00:00:00",
-  "lastReworkDate": "2017-09-07 00:00:00",
-  "popularity": 0,
-  "baseCost": "10000000000000",
-  "baseDamage": "1750000000",
-  "baseHealth": "41",
-  "graphicId": "10",
-  "portraitGraphicId": "18",
-  "availability": {
-    "availableInNextEvent": false,
-    "availableInShop": true,
-    "availableInTimeGate": false,
-    "isAvailable": true,
-    "nextEventTimestamp": 0
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    60,
-    185,
-    330,
-    510
-  ],
-  "costCurves": {
-    "1": 1.45
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "available_in_store": "2025-10-23 12:00:00",
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      185,
-      186,
-      187
-    ],
-    "graphic_large": 182,
-    "graphic_xl": 13803,
-    "eye_height": 118,
-    "portrait_center_offset": [
-      92,
-      76
-    ],
-    "ultimate_color": [
-      146,
-      0,
-      255
-    ],
-    "console_portrait": 3266,
-    "head_graphic_id": 7278,
-    "trials_effect_id": 849,
-    "legendary_effect_id": [
-      1,
-      2,
-      10,
-      90,
-      81,
-      50
-    ],
-    "weekly_chest_type_id": 469,
-    "weekly_buff": "buff_upgrades,200,139,140",
-    "portrait_graphic_scale": 0.9,
-    "notification_adjustment": {
-      "offset": [
-        53,
-        216
-      ],
-      "scale": 1.25
-    },
-    "gold_chest_type_id": 469
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Makos",
-      "display": "马科斯"
-    },
-    "class": {
-      "original": "Warlock",
-      "display": "邪术师"
-    },
-    "race": {
-      "original": "Tiefling",
-      "display": "提夫林"
-    },
-    "age": 56,
-    "alignment": {
-      "original": "Neutral Evil",
-      "display": "中立邪恶"
-    },
-    "abilityScores": {
-      "str": 11,
-      "dex": 10,
-      "con": 14,
-      "int": 14,
-      "wis": 8,
-      "cha": 18
-    },
-    "backstory": {
-      "original": "Makos grew up on the streets with a desire to rise above it all. He knows that his innate connection to infernal power is his key to achieving his goals, no matter the cost.",
-      "display": "马科斯在街头长大，他渴望超脱这一切。他知道自己和地狱力量之间与生俱来的联系是实现自己目标的关键，无论付出什么代价。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "17",
-      "name": {
-        "original": "Eldritch Blast",
-        "display": "魔能爆弹"
-      },
-      "description": {
-        "original": "A beam of green crackling energy streaks towards a random enemy.",
-        "display": "发射一束绿色的能量命中一名随机敌人。"
-      },
-      "longDescription": null,
-      "cooldown": 5.7,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile_graphic_id": 1,
-          "projectile": "eldritch_blast",
-          "shoot_frame": 17,
-          "shoot_offset_x": 80,
-          "shoot_offset_y": -31,
-          "projectile_details": {
-            "beam_time": 0.5
-          },
-          "sound_frames": {
-            "1": 184
-          },
-          "hit_sound": -1,
-          "buffer_hit_damage": true
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "18",
-      "name": {
-        "original": "Circle of Death",
-        "display": "死亡法阵"
-      },
-      "description": {
-        "original": "A sphere of negative energy ripples out from a random enemy.",
-        "display": "从一名随机敌人身上爆发出一个负极能量球。"
-      },
-      "longDescription": {
-        "original": "A sphere of negative energy ripples out from a random enemy, causing that enemy and all other enemies near it to take heavy damage.",
-        "display": "从一名随机敌人身上爆发出一个负极能量球，使该敌人及附近的所有其他敌人受到高额伤害。"
-      },
-      "cooldown": 300,
-      "numTargets": 1,
-      "aoeRadius": 200,
-      "damageModifier": "0.00833",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged",
-        "aoe",
-        "ultimate"
-      ],
-      "graphicId": "675",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile_graphic_id": 1,
-          "projectile": "circle_of_death",
-          "shoot_frame": 45,
-          "hit_sound": 133,
-          "sound_frames": {
-            "1": 188
-          },
-          "projectile_details": {
-            "projectile_hit_graphic_id": 845
-          }
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "2196",
-        "name": {
-          "original": "Eldritch Alchemy",
-          "display": "恐怖炼金术"
-        },
-        "description": null,
-        "graphicId": "5228"
-      },
-      {
-        "upgradeId": "2197",
-        "name": {
-          "original": "Draw Power",
-          "display": "吸取力量"
-        },
-        "description": null,
-        "graphicId": "5276"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "137",
@@ -254,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "139",
@@ -272,7 +25,6 @@
         "display": "厄运"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1127",
       "effectDefinition": {
         "id": "1127",
         "snapshots": {
@@ -336,7 +88,8 @@
       "tipText": {
         "original": "Enemies that Makos lands the killing blow on drop additional gold.",
         "display": "死于马科斯之手的敌人掉落额外金币。"
-      }
+      },
+      "effectReference": "effect_def,1127"
     },
     {
       "id": "140",
@@ -347,7 +100,6 @@
         "display": "黑暗祝福"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,23",
       "effectDefinition": {
         "id": "23",
         "snapshots": {
@@ -405,7 +157,8 @@
       "tipText": {
         "original": "Champions that are not adjacent to Makos deal additional damage. Make sure he's not adjacent to other damage dealers to increase their damage.",
         "display": "不与马科斯相邻的勇士造成额外伤害。确保他不与其他伤害输出者相邻，以提高其伤害。"
-      }
+      },
+      "effectReference": "effect_def,23"
     },
     {
       "id": "141",
@@ -413,14 +166,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "142",
@@ -428,14 +181,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "set_ultimate_attack,18",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,18"
     },
     {
       "id": "143",
@@ -443,14 +196,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "2213",
@@ -458,14 +211,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "135",
@@ -473,14 +226,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "294",
@@ -488,14 +241,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "375",
@@ -503,14 +256,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,140"
     },
     {
       "id": "136",
@@ -518,14 +271,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,400",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,400"
     },
     {
       "id": "293",
@@ -533,14 +286,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "292",
@@ -548,14 +301,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "295",
@@ -563,14 +316,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "296",
@@ -578,14 +331,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "297",
@@ -593,14 +346,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "506",
@@ -608,14 +361,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "508",
@@ -623,14 +376,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,140"
     },
     {
       "id": "507",
@@ -638,14 +391,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "509",
@@ -653,14 +406,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2196",
@@ -671,7 +424,6 @@
         "display": "恐怖炼金术"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,325",
       "effectDefinition": {
         "id": "325",
         "snapshots": {
@@ -722,7 +474,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,325"
     },
     {
       "id": "2197",
@@ -733,7 +486,6 @@
         "display": "吸取力量"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,326",
       "effectDefinition": {
         "id": "326",
         "snapshots": {
@@ -786,7 +538,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,326"
     },
     {
       "id": "821",
@@ -794,14 +547,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "823",
@@ -809,14 +562,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "824",
@@ -824,14 +577,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "822",
@@ -839,14 +592,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "2214",
@@ -854,14 +607,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,300"
     },
     {
       "id": "1001",
@@ -869,14 +622,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "1002",
@@ -884,14 +637,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "unlock_ultimate",
-      "effectReference": "buff_ultimate,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_ultimate,100"
     },
     {
       "id": "1000",
@@ -899,14 +652,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "2211",
@@ -914,14 +667,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "1413",
@@ -929,14 +682,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1416",
@@ -944,14 +697,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "1417",
@@ -959,14 +712,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "1414",
@@ -974,14 +727,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2215",
@@ -989,14 +742,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "1415",
@@ -1004,14 +757,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2212",
@@ -1019,14 +772,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "1412",
@@ -1034,14 +787,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "1827",
@@ -1049,14 +802,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1828",
@@ -1064,14 +817,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2216",
@@ -1079,14 +832,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,300"
     },
     {
       "id": "1831",
@@ -1094,14 +847,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "1832",
@@ -1109,14 +862,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "1829",
@@ -1124,14 +877,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "1830",
@@ -1139,14 +892,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "2487",
@@ -1154,14 +907,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "2488",
@@ -1169,14 +922,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,140"
     },
     {
       "id": "2483",
@@ -1184,14 +937,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2486",
@@ -1199,14 +952,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "2484",
@@ -1214,14 +967,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "2485",
@@ -1229,14 +982,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "3745",
@@ -1244,14 +997,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3746",
@@ -1259,14 +1012,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "3747",
@@ -1274,14 +1027,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,140"
     },
     {
       "id": "3748",
@@ -1289,14 +1042,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3749",
@@ -1304,14 +1057,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "3750",
@@ -1319,14 +1072,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3751",
@@ -1334,14 +1087,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,200,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,200,140"
     },
     {
       "id": "4960",
@@ -1349,14 +1102,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4961",
@@ -1364,14 +1117,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4962",
@@ -1379,14 +1132,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "4963",
@@ -1394,14 +1147,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "4964",
@@ -1409,14 +1162,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "6390",
@@ -1424,14 +1177,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "6391",
@@ -1439,14 +1192,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "6392",
@@ -1454,14 +1207,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "6393",
@@ -1469,14 +1222,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "6394",
@@ -1484,14 +1237,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "8183",
@@ -1499,14 +1252,14 @@
       "requiredUpgradeId": "140",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,140",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,140"
     },
     {
       "id": "8184",
@@ -1514,14 +1267,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "8185",
@@ -1529,14 +1282,14 @@
       "requiredUpgradeId": "139",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,139",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,139"
     },
     {
       "id": "8186",
@@ -1544,14 +1297,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     }
   ],
   "feats": [
@@ -1865,7 +1618,8 @@
         "base_graphic_id": 6191,
         "large_graphic_id": 6202,
         "xl_graphic_id": 13804,
-        "portrait_graphic_id": 6207
+        "portrait_graphic_id": 6207,
+        "bastion_graphic_id": 30604
       },
       "rarity": "3",
       "properties": {
@@ -1895,7 +1649,8 @@
         "base_graphic_id": 11689,
         "large_graphic_id": 11697,
         "xl_graphic_id": 13805,
-        "portrait_graphic_id": 11683
+        "portrait_graphic_id": 11683,
+        "bastion_graphic_id": 30687
       },
       "rarity": "3",
       "properties": {
@@ -1920,7 +1675,8 @@
         "base_graphic_id": 16323,
         "large_graphic_id": 16325,
         "portrait_graphic_id": 16321,
-        "xl_graphic_id": 16327
+        "xl_graphic_id": 16327,
+        "bastion_graphic_id": 30794
       },
       "rarity": "3",
       "properties": {
@@ -1957,7 +1713,8 @@
         "base_graphic_id": 26116,
         "large_graphic_id": 26123,
         "portrait_graphic_id": 26095,
-        "xl_graphic_id": 26130
+        "xl_graphic_id": 26130,
+        "bastion_graphic_id": 31115
       },
       "rarity": "3",
       "properties": {
@@ -1987,6 +1744,7 @@
       "graphicId": "346",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2008,6 +1766,7 @@
       "graphicId": "346",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2029,6 +1788,7 @@
       "graphicId": "347",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2050,6 +1810,7 @@
       "graphicId": "348",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2071,6 +1832,7 @@
       "graphicId": "343",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -2092,6 +1854,7 @@
       "graphicId": "343",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -2113,6 +1876,7 @@
       "graphicId": "344",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -2134,6 +1898,7 @@
       "graphicId": "345",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -2155,6 +1920,7 @@
       "graphicId": "340",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2176,6 +1942,7 @@
       "graphicId": "340",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2197,6 +1964,7 @@
       "graphicId": "341",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2218,6 +1986,7 @@
       "graphicId": "342",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2239,6 +2008,7 @@
       "graphicId": "337",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,139,140"
@@ -2260,6 +2030,7 @@
       "graphicId": "337",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,139,140"
@@ -2281,6 +2052,7 @@
       "graphicId": "338",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,139,140"
@@ -2302,6 +2074,7 @@
       "graphicId": "339",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,139,140"
@@ -2323,6 +2096,7 @@
       "graphicId": "349",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -2344,6 +2118,7 @@
       "graphicId": "349",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -2365,6 +2140,7 @@
       "graphicId": "350",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -2386,6 +2162,7 @@
       "graphicId": "351",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -2407,6 +2184,11 @@
       "graphicId": "334",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,8"
@@ -2428,6 +2210,11 @@
       "graphicId": "334",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,15"
@@ -2449,6 +2236,11 @@
       "graphicId": "335",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,30"
@@ -2470,6 +2262,11 @@
       "graphicId": "336",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,75"
@@ -2597,6 +2394,278 @@
       ]
     }
   ],
+  "summary": {
+    "id": "9",
+    "name": {
+      "original": "Makos",
+      "display": "马科斯"
+    },
+    "seat": 9,
+    "portrait": {
+      "path": "v1/champion-portraits/9.png",
+      "sourceGraphic": "Portraits/Portrait_Makos",
+      "sourceVersion": 9
+    },
+    "roles": [
+      "dps",
+      "gold",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "core",
+      "dps",
+      "evergreen",
+      "evil",
+      "gold",
+      "lcneutral",
+      "male",
+      "neutral",
+      "positional",
+      "support",
+      "tiefling",
+      "unaffiliated",
+      "warlock"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Makos",
+  "eventName": null,
+  "dateAvailable": "2017-09-07 00:00:00",
+  "lastReworkDate": "2017-09-07 00:00:00",
+  "popularity": 0,
+  "baseCost": "10000000000000",
+  "baseDamage": "1750000000",
+  "baseHealth": "41",
+  "graphicId": "10",
+  "portraitGraphicId": "18",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    60,
+    185,
+    330,
+    510
+  ],
+  "costCurves": {
+    "1": 1.45
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 182,
+    "graphic_xl": 13803,
+    "eye_height": 118,
+    "portrait_center_offset": [
+      92,
+      76
+    ],
+    "ultimate_color": [
+      146,
+      0,
+      255
+    ],
+    "console_portrait": 3266,
+    "head_graphic_id": 7278,
+    "trials_effect_id": 849,
+    "legendary_effect_id": [
+      1,
+      2,
+      10,
+      90,
+      81,
+      50
+    ],
+    "weekly_chest_type_id": 469,
+    "weekly_buff": "buff_upgrades,200,139,140",
+    "portrait_graphic_scale": 0.9,
+    "notification_adjustment": {
+      "offset": [
+        53,
+        216
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30435,
+    "gold_chest_type_id": 469
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Makos",
+      "display": "马科斯"
+    },
+    "class": {
+      "original": "Warlock",
+      "display": "邪术师"
+    },
+    "race": {
+      "original": "Tiefling",
+      "display": "提夫林"
+    },
+    "age": 56,
+    "alignment": {
+      "original": "Neutral Evil",
+      "display": "中立邪恶"
+    },
+    "backstory": {
+      "original": "Makos grew up on the streets with a desire to rise above it all. He knows that his innate connection to infernal power is his key to achieving his goals, no matter the cost.",
+      "display": "马科斯在街头长大，他渴望超脱这一切。他知道自己和地狱力量之间与生俱来的联系是实现自己目标的关键，无论付出什么代价。"
+    },
+    "abilityScores": {
+      "str": 11,
+      "dex": 10,
+      "con": 14,
+      "int": 14,
+      "wis": 8,
+      "cha": 18
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "17",
+      "name": {
+        "original": "Eldritch Blast",
+        "display": "魔能爆弹"
+      },
+      "description": {
+        "original": "A beam of green crackling energy streaks towards a random enemy.",
+        "display": "发射一束绿色的能量命中一名随机敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 5.7,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile_graphic_id": 1,
+          "projectile": "eldritch_blast",
+          "shoot_frame": 17,
+          "shoot_offset_x": 80,
+          "shoot_offset_y": -31,
+          "projectile_details": {
+            "beam_time": 0.5
+          },
+          "sound_frames": {
+            "1": 184
+          },
+          "hit_sound": -1,
+          "buffer_hit_damage": true
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "18",
+      "name": {
+        "original": "Circle of Death",
+        "display": "死亡法阵"
+      },
+      "description": {
+        "original": "A sphere of negative energy ripples out from a random enemy.",
+        "display": "从一名随机敌人身上爆发出一个负极能量球。"
+      },
+      "longDescription": {
+        "original": "A sphere of negative energy ripples out from a random enemy, causing that enemy and all other enemies near it to take heavy damage.",
+        "display": "从一名随机敌人身上爆发出一个负极能量球，使该敌人及附近的所有其他敌人受到高额伤害。"
+      },
+      "cooldown": 300,
+      "numTargets": 1,
+      "aoeRadius": 200,
+      "damageModifier": "0.00833",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "aoe",
+        "ultimate"
+      ],
+      "graphicId": "675",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile_graphic_id": 1,
+          "projectile": "circle_of_death",
+          "shoot_frame": 45,
+          "hit_sound": 133,
+          "sound_frames": {
+            "1": 188
+          },
+          "projectile_details": {
+            "projectile_hit_graphic_id": 845
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "2196",
+        "name": {
+          "original": "Eldritch Alchemy",
+          "display": "恐怖炼金术"
+        },
+        "description": null,
+        "graphicId": "5228"
+      },
+      {
+        "upgradeId": "2197",
+        "name": {
+          "original": "Draw Power",
+          "display": "吸取力量"
+        },
+        "description": null,
+        "graphicId": "5276"
+      }
+    ]
+  },
+  "ability": {
+    "id": "9",
+    "duration": 30,
+    "baseCooldown": 3600,
+    "effects": [
+      "hero_dps_multiplier_mult,0.8333333333333334"
+    ]
+  },
   "raw": {
     "hero": {
       "original": {
@@ -2696,6 +2765,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30435,
           "gold_chest_type_id": 469
         },
         "adventure_ids": [],
@@ -2820,6 +2890,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30435,
           "gold_chest_type_id": 469
         },
         "adventure_ids": [],
@@ -5555,7 +5626,8 @@
               "base_graphic_id": 6191,
               "large_graphic_id": 6202,
               "xl_graphic_id": 13804,
-              "portrait_graphic_id": 6207
+              "portrait_graphic_id": 6207,
+              "bastion_graphic_id": 30604
             },
             "rarity": "3",
             "properties": {
@@ -5581,7 +5653,8 @@
               "base_graphic_id": 6191,
               "large_graphic_id": 6202,
               "xl_graphic_id": 13804,
-              "portrait_graphic_id": 6207
+              "portrait_graphic_id": 6207,
+              "bastion_graphic_id": 30604
             },
             "rarity": "3",
             "properties": {
@@ -5614,7 +5687,8 @@
               "base_graphic_id": 11689,
               "large_graphic_id": 11697,
               "xl_graphic_id": 13805,
-              "portrait_graphic_id": 11683
+              "portrait_graphic_id": 11683,
+              "bastion_graphic_id": 30687
             },
             "rarity": "3",
             "properties": {
@@ -5636,7 +5710,8 @@
               "base_graphic_id": 11689,
               "large_graphic_id": 11697,
               "xl_graphic_id": 13805,
-              "portrait_graphic_id": 11683
+              "portrait_graphic_id": 11683,
+              "bastion_graphic_id": 30687
             },
             "rarity": "3",
             "properties": {
@@ -5663,7 +5738,8 @@
               "base_graphic_id": 16323,
               "large_graphic_id": 16325,
               "portrait_graphic_id": 16321,
-              "xl_graphic_id": 16327
+              "xl_graphic_id": 16327,
+              "bastion_graphic_id": 30794
             },
             "rarity": "3",
             "properties": {
@@ -5698,7 +5774,8 @@
               "base_graphic_id": 16323,
               "large_graphic_id": 16325,
               "portrait_graphic_id": 16321,
-              "xl_graphic_id": 16327
+              "xl_graphic_id": 16327,
+              "bastion_graphic_id": 30794
             },
             "rarity": "3",
             "properties": {
@@ -5738,7 +5815,8 @@
               "base_graphic_id": 26116,
               "large_graphic_id": 26123,
               "portrait_graphic_id": 26095,
-              "xl_graphic_id": 26130
+              "xl_graphic_id": 26130,
+              "bastion_graphic_id": 31115
             },
             "rarity": "3",
             "properties": {
@@ -5764,7 +5842,8 @@
               "base_graphic_id": 26116,
               "large_graphic_id": 26123,
               "portrait_graphic_id": 26095,
-              "xl_graphic_id": 26130
+              "xl_graphic_id": 26130,
+              "bastion_graphic_id": 31115
             },
             "rarity": "3",
             "properties": {

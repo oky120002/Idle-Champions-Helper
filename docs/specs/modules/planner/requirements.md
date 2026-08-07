@@ -37,7 +37,7 @@ planner 用 `npm run data:signal-coverage` 审计 definitions 中对模拟器有
 
 ### 英雄等级
 
-英雄等级取自存档 `ownedHeroes.level`；未拥有英雄（all-hypothetical 候选）按 level 1（`levelCurve = rate^1`，保留英雄间增长率差异但无法反映高等级 scale）。等级基线估算（cost curve + 金币预算 → 可负担等级 + below-baseline 标记）模块已实现但未接入评分链路，见 `simulator.md`。
+英雄等级默认取自存档 `ownedHeroes.level`；未拥有英雄按 level 1。支持金币预算/全局等级两种外部覆盖（UI 金币/等级互斥控件 → worker 换算 → `heroLevelOverride` + `goldBudget` 入参），覆盖等级同时驱动专精门控。详见 `simulator.md`。
 
 ### 评分
 

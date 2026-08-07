@@ -1,6 +1,4 @@
-import { Decimal } from 'decimal.js'
-
-import type { GameNumberValue } from '../simulator/gameNumber'
+import { toGameNumber, type GameNumberValue } from '../gameNumber'
 
 /**
  * 金币 objective：全队金币收益（team_gold_find）。
@@ -17,5 +15,5 @@ const BASE_GOLD = 1
 
 export function computeTeamGoldFind(goldPoolMultiplier: number): GameNumberValue {
   const mult = Number.isFinite(goldPoolMultiplier) && goldPoolMultiplier > 0 ? goldPoolMultiplier : 1
-  return new Decimal(BASE_GOLD).mul(mult)
+  return toGameNumber(BASE_GOLD).mul(mult)
 }

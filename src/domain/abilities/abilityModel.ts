@@ -168,6 +168,8 @@ export interface HeroAbilityProfile {
   age: number | null
   abilityScores: Partial<Record<AbilityScoreKey, number>>
   baseDamage: number
+  /** 英雄基础升级费用（来自 champion-details.baseCost，金币预算→等级换算用）。 */
+  baseCost?: number
   /**
    * 英雄 innate base 暴击 %（来自 set_base_crit_chance SET，覆盖游戏全局默认 2.5%）。
    * null/undefined = 用默认 2.5%（critFactor 归一）。非位置信号，build 期提取。

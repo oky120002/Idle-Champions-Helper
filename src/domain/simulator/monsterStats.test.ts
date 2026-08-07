@@ -6,7 +6,7 @@ import {
   monsterDpsAt,
   monsterHealthAt,
 } from './monsterStats'
-import { compareGameNumbers } from './gameNumber'
+import { compareGameNumbers } from '../gameNumber'
 
 describe('monsterHealthAt', () => {
   test('area 1 = base_health', () => {

@@ -1,268 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "68",
-    "name": {
-      "original": "Ulkoria",
-      "display": "乌尔科莉亚"
-    },
-    "seat": 10,
-    "roles": [
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "dwarf",
-      "evergreen",
-      "female",
-      "good",
-      "lcneutral",
-      "neutral",
-      "support",
-      "unaffiliated",
-      "wizard"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/68.png",
-      "sourceGraphic": "Portraits/Portrait_Ulkoria",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Ulkoria",
-  "eventName": null,
-  "dateAvailable": "2020-08-19 13:00:00",
-  "lastReworkDate": "2020-08-19 13:00:00",
-  "popularity": 0,
-  "baseCost": "500000000000000",
-  "baseDamage": "5000000000",
-  "baseHealth": "47",
-  "graphicId": "8345",
-  "portraitGraphicId": "8351",
-  "availability": {
-    "availableInNextEvent": false,
-    "availableInShop": true,
-    "availableInTimeGate": false,
-    "isAvailable": true,
-    "nextEventTimestamp": 0
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    275,
-    1085,
-    2025,
-    3185
-  ],
-  "costCurves": {
-    "1": 1.06
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "available_in_store": "2025-10-23 12:00:00",
-    "unlock_adventure_id": 657,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      175,
-      176,
-      177
-    ],
-    "graphic_large": 8346,
-    "graphic_xl": 13822,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      90,
-      65
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "special": 5,
-      "gethit": 6,
-      "koed": 7,
-      "run": 8
-    },
-    "console_portrait": 8350,
-    "trials_effect_id": 842,
-    "legendary_effect_id": [
-      1,
-      56,
-      6,
-      34,
-      39,
-      49
-    ],
-    "weekly_chest_type_id": 477,
-    "weekly_buff": "buff_upgrade,200,4346",
-    "portrait_graphic_scale": 1,
-    "notification_adjustment": {
-      "offset": [
-        44,
-        185
-      ],
-      "scale": 1.25
-    },
-    "hero_not_unlocked_skin_warning": "Champion Ulkoria is not unlocked with this skin. Ulkoria can only be unlocked by completing The Gargoyle - the second Variant of the Alterdeep adventure in the Waterdeep: Dragon Heist Campaign.",
-    "gold_chest_type_id": 477
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Ulkoria Stonemarrow",
-      "display": "乌尔科莉亚·石髓"
-    },
-    "class": {
-      "original": "Wizard",
-      "display": "法师"
-    },
-    "race": {
-      "original": "Dwarf",
-      "display": "矮人"
-    },
-    "age": 377,
-    "alignment": {
-      "original": "Neutral Good",
-      "display": "中立善良"
-    },
-    "abilityScores": {
-      "str": 10,
-      "dex": 14,
-      "con": 12,
-      "int": 20,
-      "wis": 15,
-      "cha": 16
-    },
-    "backstory": {
-      "original": "Ulkoria has defended Waterdeep with her magic more times than she can recall. She is a well-respected member of the Watchful Order, often working closely with The Blackstaff on the city's defense. Known only as 'the Gargoyle' by most, her face often locks into a scowl of concentration. Few have withstood her withering stares without relenting.",
-      "display": "乌尔科莉亚用魔法保卫深水城的次数，多得她已记不清。她是守望者教团中备受尊敬的成员，经常与黑杖密切合作，共同保卫城市。大多数人只知道她的称号是“石像鬼”，她经常一脸凝重，很少有人能经受得住她枯燥的凝视而不动摇。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "310",
-      "name": {
-        "original": "Magic Missile",
-        "display": "魔法飞弹"
-      },
-      "description": {
-        "original": "Ulkoria summons 3 magic missiles and fires them at random targets",
-        "display": "乌尔科莉亚召唤 3 发魔法飞弹并向随机目标发射。"
-      },
-      "longDescription": {
-        "original": "Ulkoria summons 3 magic missiles and fires them at random targets (each missile deals 33% of her DPS)",
-        "display": "乌尔科莉亚召唤 3 发魔法飞弹并向随机目标发射（每发飞弹的伤害相当于她 33% 的每秒伤害值）。"
-      },
-      "cooldown": 6.5,
-      "numTargets": 3,
-      "aoeRadius": 0,
-      "damageModifier": "0.33",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile": "magic_missile",
-          "shoot_frame": 9,
-          "projectile_count": 3,
-          "projectile_delay": 0.1,
-          "shoot_sound": 149,
-          "hit_sound": 133,
-          "shoot_offset_x": 58,
-          "shoot_offset_y": -32
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "311",
-      "name": {
-        "original": "Shield Guardian",
-        "display": "盾卫者"
-      },
-      "description": {
-        "original": "Ulkoria's Shield Guardian steps up behind the formation and casts Lightning Bolt.",
-        "display": "乌尔科莉亚的盾卫者进入阵型后方，施放闪电束。"
-      },
-      "longDescription": {
-        "original": "Ulkoria's Shield Guardian steps up behind the formation and casts Lightning Bolt once for each stack of Spellcaster School that Ulkoria has. Lightning Bolt targets a random enemy and deals massive damage to all enemies in a line.",
-        "display": "乌尔科莉亚的盾卫者进入阵型后方，乌尔科莉亚每有一层魔法学校堆叠层数，它就会施放一发闪电束。闪电束会瞄准一名随机敌人，并对一条直线上的所有敌人造成高额伤害。"
-      },
-      "cooldown": 300,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged",
-        "ultimate"
-      ],
-      "graphicId": "8339",
-      "animations": [
-        {
-          "type": "ulkoria_ultimate_shield_guardian",
-          "shield_guardian": {
-            "graphic_id": 8341,
-            "animation_sequences": {
-              "idle": 0,
-              "walk": 1,
-              "ultimate_shoot": 3,
-              "special": 2,
-              "koed": 0
-            },
-            "walk_speed": 50,
-            "attack_id": 313,
-            "upgrade_id_for_stack_function": 4346,
-            "walk_back_speed": 50
-          }
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "4346",
-        "name": {
-          "original": "Spellcaster School",
-          "display": "魔法学校"
-        },
-        "description": null,
-        "graphicId": "8332"
-      },
-      {
-        "upgradeId": "4347",
-        "name": {
-          "original": "Watchful Order",
-          "display": "守望者教团"
-        },
-        "description": null,
-        "graphicId": "8333"
-      },
-      {
-        "upgradeId": "4348",
-        "name": {
-          "original": "Defender of Waterdeep",
-          "display": "深水守护者"
-        },
-        "description": null,
-        "graphicId": "8331"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "4437",
@@ -270,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4446",
@@ -285,14 +22,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4346",
@@ -303,7 +40,6 @@
         "display": "魔法学校"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,671",
       "effectDefinition": {
         "id": "671",
         "snapshots": {
@@ -427,7 +163,8 @@
       "tipText": {
         "original": "Ulkoria's abilities gets stronger when there are more spellcasters in the formation.",
         "display": "阵型中的施法者越多，乌尔科莉亚的技能越强。"
-      }
+      },
+      "effectReference": "effect_def,671"
     },
     {
       "id": "4447",
@@ -435,14 +172,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4448",
@@ -450,14 +187,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4438",
@@ -465,14 +202,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4348",
@@ -483,7 +220,6 @@
         "display": "深水守护者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,673",
       "effectDefinition": {
         "id": "673",
         "snapshots": {
@@ -547,7 +283,8 @@
       "tipText": {
         "original": "Ulkoria is at home in the streets and alleys of Waterdeep and increases everyone's damage when you start adventures there.",
         "display": "乌尔科莉亚在深水城的大街小巷中如鱼得水。从那里开始冒险时，所有人的伤害都会提高。"
-      }
+      },
+      "effectReference": "effect_def,673"
     },
     {
       "id": "4449",
@@ -555,14 +292,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4351",
@@ -570,14 +307,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4450",
@@ -585,14 +322,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4451",
@@ -600,14 +337,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4452",
@@ -615,14 +352,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4425",
@@ -630,14 +367,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4347",
@@ -648,7 +385,6 @@
         "display": "守望者教团"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,672",
       "effectDefinition": {
         "id": "672",
         "snapshots": {
@@ -873,7 +609,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,672"
     },
     {
       "id": "4453",
@@ -881,14 +618,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4454",
@@ -896,14 +633,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4455",
@@ -911,14 +648,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4349",
@@ -929,7 +666,6 @@
         "display": "盾卫者"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack,311",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
@@ -942,7 +678,8 @@
         "display": "乌尔科莉亚召唤她的盾卫者作为杀招攻击。她的每层魔法学校都会造成巨大伤害。"
       },
       "specializationGraphicId": "8334",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,311"
     },
     {
       "id": "4350",
@@ -953,7 +690,6 @@
         "display": "顽童恶作剧"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack,312",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
@@ -966,7 +702,8 @@
         "display": "乌尔科莉亚的顽童朋友（纳特、詹克斯和斯奎迪）在她发动杀招时出现，击退并眩晕敌人。"
       },
       "specializationGraphicId": "8335",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,312"
     },
     {
       "id": "4426",
@@ -974,14 +711,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4439",
@@ -989,14 +726,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4456",
@@ -1004,14 +741,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4457",
@@ -1019,14 +756,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4427",
@@ -1034,14 +771,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4458",
@@ -1049,14 +786,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4459",
@@ -1064,14 +801,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4460",
@@ -1079,14 +816,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4428",
@@ -1094,14 +831,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4461",
@@ -1109,14 +846,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4355",
@@ -1124,14 +861,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"add_attack_targets,1,310\",\"description\":\"Increases the number of Missiles fired by Ulkoria's Magic Missiles by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1,310"
     },
     {
       "id": "4440",
@@ -1139,14 +876,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4462",
@@ -1154,14 +891,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4429",
@@ -1169,14 +906,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4463",
@@ -1184,14 +921,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4424",
@@ -1199,14 +936,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4348",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4348"
     },
     {
       "id": "4464",
@@ -1214,14 +951,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4430",
@@ -1229,14 +966,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4465",
@@ -1244,14 +981,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4431",
@@ -1259,14 +996,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4441",
@@ -1274,14 +1011,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4466",
@@ -1289,14 +1026,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4467",
@@ -1304,14 +1041,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4432",
@@ -1319,14 +1056,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4468",
@@ -1334,14 +1071,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4469",
@@ -1349,14 +1086,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4442",
@@ -1364,14 +1101,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4470",
@@ -1379,14 +1116,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4433",
@@ -1394,14 +1131,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4445",
@@ -1409,14 +1146,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"add_attack_targets,1,310\",\"description\":\"Increases the number of Missiles fired by Ulkoria's Magic Missiles by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1,310"
     },
     {
       "id": "4471",
@@ -1424,14 +1161,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "4434",
@@ -1439,14 +1176,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4472",
@@ -1454,14 +1191,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4443",
@@ -1469,14 +1206,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "4435",
@@ -1484,14 +1221,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4354",
@@ -1499,14 +1236,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4348",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4348"
     },
     {
       "id": "4473",
@@ -1514,14 +1251,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4436",
@@ -1529,14 +1266,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "4474",
@@ -1544,14 +1281,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "4444",
@@ -1559,14 +1296,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "5249",
@@ -1574,14 +1311,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "5250",
@@ -1589,14 +1326,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "5251",
@@ -1604,14 +1341,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "5252",
@@ -1619,14 +1356,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "5253",
@@ -1634,14 +1371,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "5254",
@@ -1649,14 +1386,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "5255",
@@ -1664,14 +1401,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"add_attack_targets,1,310\",\"description\":\"Increases the number of Missiles fired by Ulkoria's Magic Missiles by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1,310"
     },
     {
       "id": "6692",
@@ -1679,14 +1416,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "6693",
@@ -1694,14 +1431,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "6694",
@@ -1709,14 +1446,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "6695",
@@ -1724,14 +1461,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"add_attack_targets,1,310\",\"description\":\"Increases the number of Missiles fired by Ulkoria's Magic Missiles by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "add_attack_targets,1,310"
     },
     {
       "id": "6696",
@@ -1739,14 +1476,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4348",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4348"
     },
     {
       "id": "6697",
@@ -1754,14 +1491,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "6698",
@@ -1769,14 +1506,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "8449",
@@ -1784,14 +1521,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4346",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4346"
     },
     {
       "id": "8450",
@@ -1799,14 +1536,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "8451",
@@ -1814,14 +1551,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4348",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4348"
     },
     {
       "id": "8452",
@@ -1829,14 +1566,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "4352",
@@ -1847,14 +1584,14 @@
         "display": "强化守望者教团（3层）。仅限专长"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4347,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4347,1"
     },
     {
       "id": "4353",
@@ -1865,14 +1602,14 @@
         "display": "强化守望者教团（5层）。仅限专长"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,4347,2",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,4347,2"
     }
   ],
   "feats": [
@@ -2241,7 +1978,8 @@
             "graphic_id": "27397",
             "sequence": "1"
           }
-        ]
+        ],
+        "bastion_graphic_id": 30711
       },
       "rarity": "3",
       "properties": {
@@ -2272,6 +2010,7 @@
       "graphicId": "8322",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2293,6 +2032,7 @@
       "graphicId": "8322",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2314,6 +2054,7 @@
       "graphicId": "8323",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2335,6 +2076,7 @@
       "graphicId": "8324",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2356,6 +2098,7 @@
       "graphicId": "8325",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2377,6 +2120,7 @@
       "graphicId": "8325",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2398,6 +2142,7 @@
       "graphicId": "8326",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2419,6 +2164,7 @@
       "graphicId": "8327",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2440,6 +2186,7 @@
       "graphicId": "8313",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,4346"
@@ -2461,6 +2208,7 @@
       "graphicId": "8313",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,4346"
@@ -2482,6 +2230,7 @@
       "graphicId": "8314",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,4346"
@@ -2503,6 +2252,7 @@
       "graphicId": "8315",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,4346"
@@ -2524,6 +2274,7 @@
       "graphicId": "8328",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,4348"
@@ -2545,6 +2296,7 @@
       "graphicId": "8328",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,4348"
@@ -2566,6 +2318,7 @@
       "graphicId": "8329",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,4348"
@@ -2587,6 +2340,7 @@
       "graphicId": "8330",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,4348"
@@ -2608,6 +2362,7 @@
       "graphicId": "8319",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -2629,6 +2384,7 @@
       "graphicId": "8319",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -2650,6 +2406,7 @@
       "graphicId": "8320",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -2671,6 +2428,7 @@
       "graphicId": "8321",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -2692,6 +2450,11 @@
       "graphicId": "8316",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,8"
@@ -2713,6 +2476,11 @@
       "graphicId": "8316",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,15"
@@ -2734,6 +2502,11 @@
       "graphicId": "8317",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,30"
@@ -2755,6 +2528,11 @@
       "graphicId": "8318",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,75"
@@ -2880,6 +2658,285 @@
       ]
     }
   ],
+  "summary": {
+    "id": "68",
+    "name": {
+      "original": "Ulkoria",
+      "display": "乌尔科莉亚"
+    },
+    "seat": 10,
+    "portrait": {
+      "path": "v1/champion-portraits/68.png",
+      "sourceGraphic": "Portraits/Portrait_Ulkoria",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "dwarf",
+      "evergreen",
+      "female",
+      "good",
+      "lcneutral",
+      "neutral",
+      "support",
+      "unaffiliated",
+      "wizard"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "3",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "3",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Ulkoria",
+  "eventName": null,
+  "dateAvailable": "2020-08-19 13:00:00",
+  "lastReworkDate": "2020-08-19 13:00:00",
+  "popularity": 0,
+  "baseCost": "500000000000000",
+  "baseDamage": "5000000000",
+  "baseHealth": "47",
+  "graphicId": "8345",
+  "portraitGraphicId": "8351",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    275,
+    1085,
+    2025,
+    3185
+  ],
+  "costCurves": {
+    "1": 1.06
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 657,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      175,
+      176,
+      177
+    ],
+    "graphic_large": 8346,
+    "graphic_xl": 13822,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      90,
+      65
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "special": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 8
+    },
+    "console_portrait": 8350,
+    "trials_effect_id": 842,
+    "legendary_effect_id": [
+      1,
+      56,
+      6,
+      34,
+      39,
+      49
+    ],
+    "weekly_chest_type_id": 477,
+    "weekly_buff": "buff_upgrade,200,4346",
+    "portrait_graphic_scale": 1,
+    "notification_adjustment": {
+      "offset": [
+        44,
+        185
+      ],
+      "scale": 1.25
+    },
+    "hero_not_unlocked_skin_warning": "Champion Ulkoria is not unlocked with this skin. Ulkoria can only be unlocked by completing The Gargoyle - the second Variant of the Alterdeep adventure in the Waterdeep: Dragon Heist Campaign.",
+    "bastion_graphic_id": 30494,
+    "gold_chest_type_id": 477
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Ulkoria Stonemarrow",
+      "display": "乌尔科莉亚·石髓"
+    },
+    "class": {
+      "original": "Wizard",
+      "display": "法师"
+    },
+    "race": {
+      "original": "Dwarf",
+      "display": "矮人"
+    },
+    "age": 377,
+    "alignment": {
+      "original": "Neutral Good",
+      "display": "中立善良"
+    },
+    "backstory": {
+      "original": "Ulkoria has defended Waterdeep with her magic more times than she can recall. She is a well-respected member of the Watchful Order, often working closely with The Blackstaff on the city's defense. Known only as 'the Gargoyle' by most, her face often locks into a scowl of concentration. Few have withstood her withering stares without relenting.",
+      "display": "乌尔科莉亚用魔法保卫深水城的次数，多得她已记不清。她是守望者教团中备受尊敬的成员，经常与黑杖密切合作，共同保卫城市。大多数人只知道她的称号是“石像鬼”，她经常一脸凝重，很少有人能经受得住她枯燥的凝视而不动摇。"
+    },
+    "abilityScores": {
+      "str": 10,
+      "dex": 14,
+      "con": 12,
+      "int": 20,
+      "wis": 15,
+      "cha": 16
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "310",
+      "name": {
+        "original": "Magic Missile",
+        "display": "魔法飞弹"
+      },
+      "description": {
+        "original": "Ulkoria summons 3 magic missiles and fires them at random targets",
+        "display": "乌尔科莉亚召唤 3 发魔法飞弹并向随机目标发射。"
+      },
+      "longDescription": {
+        "original": "Ulkoria summons 3 magic missiles and fires them at random targets (each missile deals 33% of her DPS)",
+        "display": "乌尔科莉亚召唤 3 发魔法飞弹并向随机目标发射（每发飞弹的伤害相当于她 33% 的每秒伤害值）。"
+      },
+      "cooldown": 6.5,
+      "numTargets": 3,
+      "aoeRadius": 0,
+      "damageModifier": "0.33",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "magic_missile",
+          "shoot_frame": 9,
+          "projectile_count": 3,
+          "projectile_delay": 0.1,
+          "shoot_sound": 149,
+          "hit_sound": 133,
+          "shoot_offset_x": 58,
+          "shoot_offset_y": -32
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "311",
+      "name": {
+        "original": "Shield Guardian",
+        "display": "盾卫者"
+      },
+      "description": {
+        "original": "Ulkoria's Shield Guardian steps up behind the formation and casts Lightning Bolt.",
+        "display": "乌尔科莉亚的盾卫者进入阵型后方，施放闪电束。"
+      },
+      "longDescription": {
+        "original": "Ulkoria's Shield Guardian steps up behind the formation and casts Lightning Bolt once for each stack of Spellcaster School that Ulkoria has. Lightning Bolt targets a random enemy and deals massive damage to all enemies in a line.",
+        "display": "乌尔科莉亚的盾卫者进入阵型后方，乌尔科莉亚每有一层魔法学校堆叠层数，它就会施放一发闪电束。闪电束会瞄准一名随机敌人，并对一条直线上的所有敌人造成高额伤害。"
+      },
+      "cooldown": 300,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "8339",
+      "animations": [
+        {
+          "type": "ulkoria_ultimate_shield_guardian",
+          "shield_guardian": {
+            "graphic_id": 8341,
+            "animation_sequences": {
+              "idle": 0,
+              "walk": 1,
+              "ultimate_shoot": 3,
+              "special": 2,
+              "koed": 0
+            },
+            "walk_speed": 50,
+            "attack_id": 313,
+            "upgrade_id_for_stack_function": 4346,
+            "walk_back_speed": 50
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "4346",
+        "name": {
+          "original": "Spellcaster School",
+          "display": "魔法学校"
+        },
+        "description": null,
+        "graphicId": "8332"
+      },
+      {
+        "upgradeId": "4347",
+        "name": {
+          "original": "Watchful Order",
+          "display": "守望者教团"
+        },
+        "description": null,
+        "graphicId": "8333"
+      },
+      {
+        "upgradeId": "4348",
+        "name": {
+          "original": "Defender of Waterdeep",
+          "display": "深水守护者"
+        },
+        "description": null,
+        "graphicId": "8331"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -2988,6 +3045,7 @@
             "scale": 1.25
           },
           "hero_not_unlocked_skin_warning": "Champion Ulkoria is not unlocked with this skin. Ulkoria can only be unlocked by completing The Gargoyle - the second Variant of the Alterdeep adventure in the Waterdeep: Dragon Heist Campaign.",
+          "bastion_graphic_id": 30494,
           "gold_chest_type_id": 477
         },
         "adventure_ids": [],
@@ -3127,6 +3185,7 @@
             "scale": 1.25
           },
           "hero_not_unlocked_skin_warning": "勇士乌尔科莉亚不随此皮肤解锁。只有完成“石像鬼”——“深水城：龙金之劫”战役中“变幻深渊”冒险的第二个支线任务——才能解锁乌尔科莉亚。",
+          "bastion_graphic_id": 30494,
           "gold_chest_type_id": 477
         },
         "adventure_ids": [],
@@ -6107,7 +6166,8 @@
                   "graphic_id": "27397",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30711
             },
             "rarity": "3",
             "properties": {
@@ -6156,7 +6216,8 @@
                   "graphic_id": "27397",
                   "sequence": "1"
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30711
             },
             "rarity": "3",
             "properties": {

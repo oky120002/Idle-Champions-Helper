@@ -1,296 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "106",
-    "name": {
-      "original": "Blooshi",
-      "display": "布鲁西"
-    },
-    "seat": 2,
-    "roles": [
-      "support",
-      "tanking"
-    ],
-    "affiliations": [],
-    "tags": [
-      "bullywug",
-      "cneoriginal",
-      "evergreen",
-      "evil",
-      "female",
-      "lcneutral",
-      "neutral",
-      "positional",
-      "support",
-      "tanking",
-      "unaffiliated",
-      "warlock"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/106.png",
-      "sourceGraphic": "Portraits/Portrait_Blooshi",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Blooshi",
-  "eventName": null,
-  "dateAvailable": "2022-03-23 13:00:00",
-  "lastReworkDate": "2022-03-23 13:00:00",
-  "popularity": 0,
-  "baseCost": "150",
-  "baseDamage": "75",
-  "baseHealth": "45",
-  "graphicId": "13261",
-  "portraitGraphicId": "13255",
-  "availability": {
-    "availableInNextEvent": false,
-    "availableInShop": true,
-    "availableInTimeGate": false,
-    "isAvailable": true,
-    "nextEventTimestamp": 0
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    295,
-    650,
-    1095,
-    1650
-  ],
-  "costCurves": {
-    "1": 1.13
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "available_in_store": "2025-10-23 12:00:00",
-    "unlock_adventure_id": 1097,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      185,
-      186,
-      187
-    ],
-    "graphic_large": 13262,
-    "graphic_xl": 13773,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      94,
-      78
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "console_portrait": 13254,
-    "trials_effect_id": 836,
-    "permanent_effects": [
-      "blooshi_version_number"
-    ],
-    "legendary_effect_id": [
-      54,
-      55,
-      1,
-      91,
-      87,
-      48
-    ],
-    "weekly_chest_type_id": 481,
-    "weekly_buff": "buff_upgrade,200,7518",
-    "spotlight_url": "https://youtu.be/SCWELuUyUKc",
-    "portrait_graphic_scale": 0.85,
-    "notification_adjustment": {
-      "offset": [
-        56,
-        217
-      ],
-      "scale": 1.25
-    },
-    "hero_not_unlocked_skin_warning": "Champion Blooshi is not unlocked with this skin. Blooshi can only be unlocked by completing Bully for You! - the second Variant of The Fairy Rings of Thither adventure in the Wild Beyond the Witchlight Campaign.",
-    "shop_transform_graphic": 28653,
-    "gold_chest_type_id": 481
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Blooshi",
-      "display": "布鲁西"
-    },
-    "class": {
-      "original": "Warlock",
-      "display": "邪术师"
-    },
-    "race": {
-      "original": "Bullywug",
-      "display": "狂蛙人"
-    },
-    "age": 11.5,
-    "alignment": {
-      "original": "Neutral Evil",
-      "display": "中立邪恶"
-    },
-    "abilityScores": {
-      "str": 10,
-      "dex": 14,
-      "con": 16,
-      "int": 13,
-      "wis": 8,
-      "cha": 18
-    },
-    "backstory": {
-      "original": "Blooshi isn't like other bullywugs-she's dark. Nobody understands this teen, but when she picked up a strange skull, she found someone who does: an undead entity who sealed her in a warlock pact. Now whenever she dies she comes back as a much tougher ghost, smashing her assailants before being sucked back into her body and returning to life. Very useful and goes with her whole, like, vibe. Surely there will be no repercussions!",
-      "display": "布鲁西和别的狂蛙人都不一样--她可黑暗着呢。没人能理解这位少女，但当她执起那颗古怪的头骨时，她找到了一位知心人：一个亡灵与她签订了邪术师契约。现在，无论在何处死去，她都会以更强大的鬼魂形态复归世间并痛扁敌手，直到再次被吸入她的躯壳中然后起死回生。这能力很实用，而且也很合她的，呃，风格。当然，这不会有任何不良副作用！"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "503",
-      "name": {
-        "original": "Taunting Blast",
-        "display": "嘲讽猛击"
-      },
-      "description": {
-        "original": "Blooshi attacks with an Eldritch Blast dealing damage and taunting it, if possible.",
-        "display": "布鲁西用魔能爆弹攻击，造成伤害并对未被嘲讽的敌人施加嘲讽。"
-      },
-      "longDescription": {
-        "original": "Blooshi attacks the closest untaunted enemy with an Eldritch Blast dealing damage and taunting it. If all enemies are currently taunted, she attacks a random enemy instead.",
-        "display": "布鲁西用魔能爆弹攻击最近的未被嘲讽敌人，对其造成伤害并施放嘲讽。如果所有敌人当前均已受到嘲讽，她会改为攻击一名随机敌人。"
-      },
-      "cooldown": 4.5,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "untaunted_front_or_random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile_graphic_id": 1,
-          "projectile": "eldritch_blast",
-          "projectile_details": {
-            "segment_graphics": [
-              "Effect_BlooshiEldritchBlast"
-            ],
-            "hit_effect_graphic": "Effect_BlooshiEldritchBlast_Hit"
-          },
-          "shoot_frame": 8,
-          "hold_for_projectiles_frame": 8,
-          "shoot_offset_x": 40,
-          "shoot_offset_y": -50,
-          "sound_frames": {
-            "1": 184
-          },
-          "hit_sound": -1,
-          "buffer_hit_damage": true,
-          "effect_frames": {
-            "projectile": {
-              "effect_string": "monster_replace_attack_target_chance,106,100",
-              "apply_to_hit_monsters": true
-            }
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "504",
-      "name": {
-        "original": "Spirit Charge",
-        "display": "魂灵冲击"
-      },
-      "description": {
-        "original": "Bullywug spirits toss each enemy back, dealing damage to each of them.",
-        "display": "狂蛙人之灵击退敌人，对他们造成伤害。"
-      },
-      "longDescription": {
-        "original": "Bullywug spirits fly in picking up each enemy and tossing them back 25% of the screen, dealing damage to each of them.",
-        "display": "狂蛙人之灵飞入战场，卷起所有敌人并将他们击退四分之一屏幕的距离，同时对其造成伤害。"
-      },
-      "cooldown": 210,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ultimate",
-        "ranged"
-      ],
-      "graphicId": "13280",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "blooshi"
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "7518",
-        "name": {
-          "original": "Soul Gatherer",
-          "display": "灵魂收集者"
-        },
-        "description": null,
-        "graphicId": "13268"
-      },
-      {
-        "upgradeId": "7519",
-        "name": {
-          "original": "Spirit Carries On",
-          "display": "魂灵进继"
-        },
-        "description": null,
-        "graphicId": "13269"
-      },
-      {
-        "upgradeId": "7520",
-        "name": {
-          "original": "A Life Well Lived",
-          "display": "美妙人生"
-        },
-        "description": null,
-        "graphicId": "13267"
-      },
-      {
-        "upgradeId": "7521",
-        "name": {
-          "original": "A Grave Situation",
-          "display": "墓里阳秋"
-        },
-        "description": null,
-        "graphicId": "13266"
-      },
-      {
-        "upgradeId": "7522",
-        "name": {
-          "original": "Don't Croak!",
-          "display": "别发牢骚！"
-        },
-        "description": null,
-        "graphicId": "13265"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "7518",
@@ -301,7 +10,6 @@
         "display": "灵魂收集者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1577",
       "effectDefinition": {
         "id": "1577",
         "snapshots": {
@@ -389,7 +97,8 @@
       "tipText": {
         "original": "Blooshi gains Soul stacks for each enemy killed, buffing the champions in the two columns behind her.",
         "display": "布鲁西可以从击败的每位敌人身上获得“灵魂”堆叠层数，为身后两列的勇士提供增益。"
-      }
+      },
+      "effectReference": "effect_def,1577"
     },
     {
       "id": "7801",
@@ -397,14 +106,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7529",
@@ -412,14 +121,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7802",
@@ -427,14 +136,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7830",
@@ -442,14 +151,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7519",
@@ -460,7 +169,6 @@
         "display": "魂灵进继"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1081",
       "effectDefinition": {
         "id": "1081",
         "snapshots": {
@@ -534,7 +242,8 @@
       "tipText": {
         "original": "Blooshi's powerful Spirit tanks for the formation when she dies, until the next boss is defeated",
         "display": "当布鲁西死亡时，她的强大魂灵会替代她为阵型充当坦克，直到击败下一个首领"
-      }
+      },
+      "effectReference": "effect_def,1081"
     },
     {
       "id": "7803",
@@ -542,14 +251,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7520",
@@ -560,7 +269,6 @@
         "display": "美妙人生"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1082",
       "effectDefinition": {
         "id": "1082",
         "snapshots": {
@@ -657,7 +365,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1082"
     },
     {
       "id": "7523",
@@ -668,7 +377,6 @@
         "display": "斩切灵魂"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1085",
       "effectDefinition": {
         "id": "1085",
         "snapshots": {
@@ -727,7 +435,8 @@
         "display": "布鲁西专注于在近战中击杀敌人"
       },
       "specializationGraphicId": "13278",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1085"
     },
     {
       "id": "7524",
@@ -738,7 +447,6 @@
         "display": "穿刺灵魂"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1086",
       "effectDefinition": {
         "id": "1086",
         "snapshots": {
@@ -797,7 +505,8 @@
         "display": "布鲁西专注于在远距离击杀敌人"
       },
       "specializationGraphicId": "13277",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1086"
     },
     {
       "id": "7525",
@@ -808,7 +517,6 @@
         "display": "灼烧灵魂"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1087",
       "effectDefinition": {
         "id": "1087",
         "snapshots": {
@@ -867,7 +575,8 @@
         "display": "布鲁西专注于使用法术击杀敌人"
       },
       "specializationGraphicId": "13275",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1087"
     },
     {
       "id": "7804",
@@ -875,14 +584,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7831",
@@ -890,14 +599,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7762",
@@ -905,14 +614,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7805",
@@ -920,14 +629,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7521",
@@ -938,7 +647,6 @@
         "display": "墓里阳秋"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1083",
       "effectDefinition": {
         "id": "1083",
         "snapshots": {
@@ -1007,7 +715,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1083"
     },
     {
       "id": "7763",
@@ -1015,14 +724,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,130,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,130,7519"
     },
     {
       "id": "7528",
@@ -1033,14 +742,14 @@
         "display": "魂灵冲击"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack,504",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack,504"
     },
     {
       "id": "7806",
@@ -1048,14 +757,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7522",
@@ -1066,7 +775,6 @@
         "display": "别发牢骚！"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1084",
       "effectDefinition": {
         "id": "1084",
         "snapshots": {
@@ -1137,7 +845,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1084"
     },
     {
       "id": "7807",
@@ -1145,14 +854,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7764",
@@ -1160,14 +869,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7808",
@@ -1175,14 +884,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7832",
@@ -1190,14 +899,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7526",
@@ -1208,7 +917,6 @@
         "display": "韧性魂灵"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1088",
       "effectDefinition": {
         "id": "1088",
         "snapshots": {
@@ -1281,7 +989,8 @@
         "display": "布鲁西专注于成为坦克型魂灵"
       },
       "specializationGraphicId": "13276",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1088"
     },
     {
       "id": "7527",
@@ -1292,7 +1001,6 @@
         "display": "野性魂灵"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1089",
       "effectDefinition": {
         "id": "1089",
         "snapshots": {
@@ -1351,7 +1059,8 @@
         "display": "布鲁西专注于成为辅助型魂灵"
       },
       "specializationGraphicId": "13279",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1089"
     },
     {
       "id": "7809",
@@ -1359,14 +1068,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7765",
@@ -1374,14 +1083,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7791",
@@ -1389,14 +1098,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,225,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,225,7519"
     },
     {
       "id": "7810",
@@ -1404,14 +1113,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7767",
@@ -1419,14 +1128,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7811",
@@ -1434,14 +1143,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7812",
@@ -1449,14 +1158,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7792",
@@ -1464,14 +1173,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,400,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,400,7519"
     },
     {
       "id": "7813",
@@ -1479,14 +1188,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7833",
@@ -1494,14 +1203,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7814",
@@ -1509,14 +1218,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7769",
@@ -1524,14 +1233,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7815",
@@ -1539,14 +1248,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7793",
@@ -1554,14 +1263,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,700,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,700,7519"
     },
     {
       "id": "7834",
@@ -1569,14 +1278,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7771",
@@ -1584,14 +1293,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7816",
@@ -1599,14 +1308,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7772",
@@ -1614,14 +1323,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7817",
@@ -1629,14 +1338,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7835",
@@ -1644,14 +1353,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7794",
@@ -1659,14 +1368,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,1200,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,1200,7519"
     },
     {
       "id": "7818",
@@ -1674,14 +1383,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7819",
@@ -1689,14 +1398,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7774",
@@ -1704,14 +1413,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7836",
@@ -1719,14 +1428,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7795",
@@ -1734,14 +1443,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,2100,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,2100,7519"
     },
     {
       "id": "7820",
@@ -1749,14 +1458,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7776",
@@ -1764,14 +1473,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7821",
@@ -1779,14 +1488,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7777",
@@ -1794,14 +1503,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7837",
@@ -1809,14 +1518,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7822",
@@ -1824,14 +1533,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7796",
@@ -1839,14 +1548,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,3700,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,3700,7519"
     },
     {
       "id": "7823",
@@ -1854,14 +1563,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7779",
@@ -1869,14 +1578,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7838",
@@ -1884,14 +1593,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7824",
@@ -1899,14 +1608,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7780",
@@ -1914,14 +1623,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7797",
@@ -1929,14 +1638,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,6500,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,6500,7519"
     },
     {
       "id": "7825",
@@ -1944,14 +1653,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7782",
@@ -1959,14 +1668,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7839",
@@ -1974,14 +1683,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7783",
@@ -1989,14 +1698,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7826",
@@ -2004,14 +1713,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,500"
     },
     {
       "id": "7798",
@@ -2019,14 +1728,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,11300,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,11300,7519"
     },
     {
       "id": "7827",
@@ -2034,14 +1743,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "7785",
@@ -2049,14 +1758,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7840",
@@ -2064,14 +1773,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "7786",
@@ -2079,14 +1788,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7799",
@@ -2094,14 +1803,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,19800,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,19800,7519"
     },
     {
       "id": "7828",
@@ -2109,14 +1818,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "7788",
@@ -2124,14 +1833,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7841",
@@ -2139,14 +1848,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7789",
@@ -2154,14 +1863,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "7842",
@@ -2169,14 +1878,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "7829",
@@ -2184,14 +1893,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "7800",
@@ -2199,14 +1908,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,34700,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,34700,7519"
     },
     {
       "id": "8613",
@@ -2214,14 +1923,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "8614",
@@ -2229,14 +1938,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7518",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7518"
     },
     {
       "id": "8615",
@@ -2244,14 +1953,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "8616",
@@ -2259,14 +1968,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "7530",
@@ -2274,14 +1983,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "{\"effect_string\":\"buff_upgrade_add_flat_amount,61000,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade_add_flat_amount,61000,7519"
     },
     {
       "id": "7531",
@@ -2289,14 +1998,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,7519\",\"description\":\"Increase the health bonus provided by Spirit Carries On by $amount%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7519"
     },
     {
       "id": "7532",
@@ -2304,14 +2013,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,7520",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,7520"
     }
   ],
   "feats": [
@@ -2772,7 +2481,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 30813
       },
       "rarity": "3",
       "properties": {
@@ -2808,7 +2518,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 31114
       },
       "rarity": "3",
       "properties": {
@@ -2844,7 +2555,8 @@
             "sequence": "1",
             "is_transform": true
           }
-        ]
+        ],
+        "bastion_graphic_id": 31155
       },
       "rarity": "3",
       "properties": {
@@ -2881,6 +2593,7 @@
       "graphicId": "13391",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2902,6 +2615,7 @@
       "graphicId": "13391",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2923,6 +2637,7 @@
       "graphicId": "13392",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2944,6 +2659,7 @@
       "graphicId": "13393",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2965,6 +2681,7 @@
       "graphicId": "13385",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,7518"
@@ -2986,6 +2703,7 @@
       "graphicId": "13385",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,7518"
@@ -3007,6 +2725,7 @@
       "graphicId": "13386",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,7518"
@@ -3028,6 +2747,7 @@
       "graphicId": "13387",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,7518"
@@ -3049,6 +2769,7 @@
       "graphicId": "13388",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,7519",
@@ -3071,6 +2792,7 @@
       "graphicId": "13388",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,7519",
@@ -3093,6 +2815,7 @@
       "graphicId": "13389",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,7519",
@@ -3115,6 +2838,7 @@
       "graphicId": "13390",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,7519",
@@ -3137,6 +2861,7 @@
       "graphicId": "13382",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,7520"
@@ -3158,6 +2883,7 @@
       "graphicId": "13382",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,7520"
@@ -3179,6 +2905,7 @@
       "graphicId": "13383",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,7520"
@@ -3200,6 +2927,7 @@
       "graphicId": "13384",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,7520"
@@ -3221,6 +2949,7 @@
       "graphicId": "13379",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -3242,6 +2971,7 @@
       "graphicId": "13379",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -3263,6 +2993,7 @@
       "graphicId": "13380",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -3284,6 +3015,7 @@
       "graphicId": "13381",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -3305,6 +3037,11 @@
       "graphicId": "13376",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,6"
@@ -3326,6 +3063,11 @@
       "graphicId": "13376",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,11"
@@ -3347,6 +3089,11 @@
       "graphicId": "13377",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,21"
@@ -3368,6 +3115,11 @@
       "graphicId": "13378",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,53"
@@ -3493,6 +3245,315 @@
       ]
     }
   ],
+  "summary": {
+    "id": "106",
+    "name": {
+      "original": "Blooshi",
+      "display": "布鲁西"
+    },
+    "seat": 2,
+    "portrait": {
+      "path": "v1/champion-portraits/106.png",
+      "sourceGraphic": "Portraits/Portrait_Blooshi",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "support",
+      "tanking"
+    ],
+    "affiliations": [],
+    "tags": [
+      "bullywug",
+      "cneoriginal",
+      "evergreen",
+      "evil",
+      "female",
+      "lcneutral",
+      "neutral",
+      "positional",
+      "support",
+      "tanking",
+      "unaffiliated",
+      "warlock"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Blooshi",
+  "eventName": null,
+  "dateAvailable": "2022-03-23 13:00:00",
+  "lastReworkDate": "2022-03-23 13:00:00",
+  "popularity": 0,
+  "baseCost": "150",
+  "baseDamage": "75",
+  "baseHealth": "45",
+  "graphicId": "13261",
+  "portraitGraphicId": "13255",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    295,
+    650,
+    1095,
+    1650
+  ],
+  "costCurves": {
+    "1": 1.13
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 1097,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 13262,
+    "graphic_xl": 13773,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      94,
+      78
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "console_portrait": 13254,
+    "trials_effect_id": 836,
+    "permanent_effects": [
+      "blooshi_version_number"
+    ],
+    "legendary_effect_id": [
+      54,
+      55,
+      1,
+      91,
+      87,
+      48
+    ],
+    "weekly_chest_type_id": 481,
+    "weekly_buff": "buff_upgrade,200,7518",
+    "spotlight_url": "https://youtu.be/SCWELuUyUKc",
+    "portrait_graphic_scale": 0.85,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        217
+      ],
+      "scale": 1.25
+    },
+    "hero_not_unlocked_skin_warning": "Champion Blooshi is not unlocked with this skin. Blooshi can only be unlocked by completing Bully for You! - the second Variant of The Fairy Rings of Thither adventure in the Wild Beyond the Witchlight Campaign.",
+    "shop_transform_graphic": 28653,
+    "bastion_graphic_id": 30532,
+    "gold_chest_type_id": 481
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Blooshi",
+      "display": "布鲁西"
+    },
+    "class": {
+      "original": "Warlock",
+      "display": "邪术师"
+    },
+    "race": {
+      "original": "Bullywug",
+      "display": "狂蛙人"
+    },
+    "age": 11.5,
+    "alignment": {
+      "original": "Neutral Evil",
+      "display": "中立邪恶"
+    },
+    "backstory": {
+      "original": "Blooshi isn't like other bullywugs-she's dark. Nobody understands this teen, but when she picked up a strange skull, she found someone who does: an undead entity who sealed her in a warlock pact. Now whenever she dies she comes back as a much tougher ghost, smashing her assailants before being sucked back into her body and returning to life. Very useful and goes with her whole, like, vibe. Surely there will be no repercussions!",
+      "display": "布鲁西和别的狂蛙人都不一样--她可黑暗着呢。没人能理解这位少女，但当她执起那颗古怪的头骨时，她找到了一位知心人：一个亡灵与她签订了邪术师契约。现在，无论在何处死去，她都会以更强大的鬼魂形态复归世间并痛扁敌手，直到再次被吸入她的躯壳中然后起死回生。这能力很实用，而且也很合她的，呃，风格。当然，这不会有任何不良副作用！"
+    },
+    "abilityScores": {
+      "str": 10,
+      "dex": 14,
+      "con": 16,
+      "int": 13,
+      "wis": 8,
+      "cha": 18
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "503",
+      "name": {
+        "original": "Taunting Blast",
+        "display": "嘲讽猛击"
+      },
+      "description": {
+        "original": "Blooshi attacks with an Eldritch Blast dealing damage and taunting it, if possible.",
+        "display": "布鲁西用魔能爆弹攻击，造成伤害并对未被嘲讽的敌人施加嘲讽。"
+      },
+      "longDescription": {
+        "original": "Blooshi attacks the closest untaunted enemy with an Eldritch Blast dealing damage and taunting it. If all enemies are currently taunted, she attacks a random enemy instead.",
+        "display": "布鲁西用魔能爆弹攻击最近的未被嘲讽敌人，对其造成伤害并施放嘲讽。如果所有敌人当前均已受到嘲讽，她会改为攻击一名随机敌人。"
+      },
+      "cooldown": 4.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "untaunted_front_or_random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile_graphic_id": 1,
+          "projectile": "eldritch_blast",
+          "projectile_details": {
+            "segment_graphics": [
+              "Effect_BlooshiEldritchBlast"
+            ],
+            "hit_effect_graphic": "Effect_BlooshiEldritchBlast_Hit"
+          },
+          "shoot_frame": 8,
+          "hold_for_projectiles_frame": 8,
+          "shoot_offset_x": 40,
+          "shoot_offset_y": -50,
+          "sound_frames": {
+            "1": 184
+          },
+          "hit_sound": -1,
+          "buffer_hit_damage": true,
+          "effect_frames": {
+            "projectile": {
+              "effect_string": "monster_replace_attack_target_chance,106,100",
+              "apply_to_hit_monsters": true
+            }
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "504",
+      "name": {
+        "original": "Spirit Charge",
+        "display": "魂灵冲击"
+      },
+      "description": {
+        "original": "Bullywug spirits toss each enemy back, dealing damage to each of them.",
+        "display": "狂蛙人之灵击退敌人，对他们造成伤害。"
+      },
+      "longDescription": {
+        "original": "Bullywug spirits fly in picking up each enemy and tossing them back 25% of the screen, dealing damage to each of them.",
+        "display": "狂蛙人之灵飞入战场，卷起所有敌人并将他们击退四分之一屏幕的距离，同时对其造成伤害。"
+      },
+      "cooldown": 210,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate",
+        "ranged"
+      ],
+      "graphicId": "13280",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "blooshi"
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "7518",
+        "name": {
+          "original": "Soul Gatherer",
+          "display": "灵魂收集者"
+        },
+        "description": null,
+        "graphicId": "13268"
+      },
+      {
+        "upgradeId": "7519",
+        "name": {
+          "original": "Spirit Carries On",
+          "display": "魂灵进继"
+        },
+        "description": null,
+        "graphicId": "13269"
+      },
+      {
+        "upgradeId": "7520",
+        "name": {
+          "original": "A Life Well Lived",
+          "display": "美妙人生"
+        },
+        "description": null,
+        "graphicId": "13267"
+      },
+      {
+        "upgradeId": "7521",
+        "name": {
+          "original": "A Grave Situation",
+          "display": "墓里阳秋"
+        },
+        "description": null,
+        "graphicId": "13266"
+      },
+      {
+        "upgradeId": "7522",
+        "name": {
+          "original": "Don't Croak!",
+          "display": "别发牢骚！"
+        },
+        "description": null,
+        "graphicId": "13265"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3608,6 +3669,7 @@
           },
           "hero_not_unlocked_skin_warning": "Champion Blooshi is not unlocked with this skin. Blooshi can only be unlocked by completing Bully for You! - the second Variant of The Fairy Rings of Thither adventure in the Wild Beyond the Witchlight Campaign.",
           "shop_transform_graphic": 28653,
+          "bastion_graphic_id": 30532,
           "gold_chest_type_id": 481
         },
         "adventure_ids": [],
@@ -3766,6 +3828,7 @@
           },
           "hero_not_unlocked_skin_warning": "勇士布鲁西不随此皮肤解锁。只有完成“欺负的就是你！”——“女巫之光的荒野之旅”战役中“彼方的蘑菇圈”冒险的第二个支线任务——才能解锁布鲁西。",
           "shop_transform_graphic": 28653,
+          "bastion_graphic_id": 30532,
           "gold_chest_type_id": 481
         },
         "adventure_ids": [],
@@ -4453,7 +4516,7 @@
             "required_level": 160,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,130,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,130,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -4939,7 +5002,7 @@
             "required_level": 280,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,225,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,225,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -4966,7 +5029,7 @@
             "required_level": 380,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,400,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,400,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -4993,7 +5056,7 @@
             "required_level": 470,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,700,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,700,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5020,7 +5083,7 @@
             "required_level": 600,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,1200,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,1200,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5047,7 +5110,7 @@
             "required_level": 730,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,2100,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,2100,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5074,7 +5137,7 @@
             "required_level": 870,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,3700,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,3700,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5101,7 +5164,7 @@
             "required_level": 1010,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,6500,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,6500,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5128,7 +5191,7 @@
             "required_level": 1150,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,11300,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,11300,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5155,7 +5218,7 @@
             "required_level": 1290,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,19800,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,19800,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -5182,7 +5245,7 @@
             "required_level": 1430,
             "required_upgrade_id": 0,
             "upgrade_type": "increase_health",
-            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,34700,7519\",\"description\":\"\\u9b42\\u7075\\u8fdb\\u7ee7\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
+            "effect": "{\"effect_string\":\"buff_upgrade_add_flat_amount,34700,7519\",\"description\":\"\\u5c06\\u201c\\u7cbe\\u795e\\u6c38\\u5b58\\u201d\\u63d0\\u4f9b\\u7684\\u751f\\u547d\\u503c\\u52a0\\u6210\\u63d0\\u9ad8 $amount\"}",
             "static_dps_mult": null,
             "default_enabled": 1,
             "name": ""
@@ -7260,7 +7323,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30813
             },
             "rarity": "3",
             "properties": {
@@ -7294,7 +7358,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 30813
             },
             "rarity": "3",
             "properties": {
@@ -7333,7 +7398,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31114
             },
             "rarity": "3",
             "properties": {
@@ -7367,7 +7433,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31114
             },
             "rarity": "3",
             "properties": {
@@ -7406,7 +7473,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31155
             },
             "rarity": "3",
             "properties": {
@@ -7447,7 +7515,8 @@
                   "sequence": "1",
                   "is_transform": true
                 }
-              ]
+              ],
+              "bastion_graphic_id": 31155
             },
             "rarity": "3",
             "properties": {

@@ -1,6 +1,4 @@
-import { Decimal } from 'decimal.js'
-
-import type { GameNumberValue } from './gameNumber'
+import { toGameNumber, powerGameNumber, multiplyGameNumbers, type GameNumberValue } from '../gameNumber'
 
 /**
  * 怪物随层数缩放的全局 stats。
@@ -82,10 +80,10 @@ function healthGrowthRateAt(area: number): number {
 export function monsterHealthAt(area: number): GameNumberValue {
   const a = Math.max(1, Math.floor(area))
   if (a === 1) {
-    return new Decimal(BASE_HEALTH)
+    return toGameNumber(BASE_HEALTH)
   }
 
-  let health = new Decimal(BASE_HEALTH)
+  let health = toGameNumber(BASE_HEALTH)
   for (const [i, seg] of HEALTH_GROWTH_SEGMENTS.entries()) {
     if (a < seg.fromArea) {
       break
@@ -97,7 +95,7 @@ export function monsterHealthAt(area: number): GameNumberValue {
     const segStart = seg.fromArea === 1 ? 2 : seg.fromArea
     const layers = Math.max(0, segEnd - segStart + 1)
     if (layers > 0) {
-      health = health.mul(new Decimal(seg.rate).pow(layers))
+      health = multiplyGameNumbers(health, powerGameNumber(toGameNumber(seg.rate), layers))
     }
   }
   return health
@@ -113,10 +111,10 @@ export function monsterHealthAt(area: number): GameNumberValue {
  */
 export function monsterDpsAt(area: number): GameNumberValue {
   const a = Math.max(1, Math.floor(area))
-  let dps = new Decimal(BASE_DPS)
+  let dps = toGameNumber(BASE_DPS)
   for (const spike of DPS_BOSS_SPIKES) {
     if (a >= spike.area) {
-      dps = dps.mul(spike.mult)
+      dps = multiplyGameNumbers(dps, toGameNumber(spike.mult))
     } else {
       break
     }

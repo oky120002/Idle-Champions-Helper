@@ -139,6 +139,8 @@ export function buildOfficialHeroModel(
 
   const rawBaseDamage = Number(detail.baseDamage)
   const baseDamage = Number.isFinite(rawBaseDamage) ? rawBaseDamage : 0
+  const rawBaseCost = Number(detail.baseCost)
+  const baseCost = Number.isFinite(rawBaseCost) ? rawBaseCost : 0
   const costCurvesRaw = detail.costCurves
   const costCurves = typeof costCurvesRaw === 'object' && costCurvesRaw !== null ? costCurvesRaw as Record<string, number> : null
   const rawBaseHealth = Number(detail.baseHealth)
@@ -176,6 +178,7 @@ export function buildOfficialHeroModel(
       unsupportedSignals: unsupportedSignals.map((): 'official-parsed' => 'official-parsed'),
     },
     baseDamage,
+    baseCost,
     baseCritChancePercent,
     costCurves,
     baseHealth,

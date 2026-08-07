@@ -1,318 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "61",
-    "name": {
-      "original": "Jaheira",
-      "display": "贾希拉"
-    },
-    "seat": 9,
-    "roles": [
-      "control",
-      "dps",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Heroes of Baldur's Gate",
-        "display": "博德之门的英雄们"
-      }
-    ],
-    "tags": [
-      "baldursgate",
-      "control",
-      "control_root",
-      "dps",
-      "druid",
-      "event",
-      "female",
-      "fighter",
-      "geneutral",
-      "half-elf",
-      "hunter",
-      "hunter_beast",
-      "lcneutral",
-      "neutral",
-      "spec_hunter_fiend",
-      "spec_hunter_humanoid",
-      "spec_hunter_undead",
-      "support",
-      "y3"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/61.png",
-      "sourceGraphic": "Portraits/Portrait_Jaheira",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Jaheira",
-  "eventName": {
-    "original": "The Great Modron March",
-    "display": "魔冢长征"
-  },
-  "dateAvailable": "2020-05-13 00:00:00",
-  "lastReworkDate": "2020-05-13 00:00:00",
-  "popularity": 8,
-  "baseCost": "30000000000000",
-  "baseDamage": "4750000000",
-  "baseHealth": "45",
-  "graphicId": "7669",
-  "portraitGraphicId": "7668",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1809630000
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    235,
-    840,
-    1550,
-    2430
-  ],
-  "costCurves": {
-    "1": 1.08
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      170,
-      171,
-      172
-    ],
-    "graphic_large": 7670,
-    "graphic_xl": 13900,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      97,
-      67
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2020-05-25 12:00:00",
-    "time_gate_adventure_id": 534,
-    "time_gate_variants_ids": [
-      494,
-      495,
-      496
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 180,
-    "gold_chest_type_id": 181,
-    "available_in_store": "2020-06-01 12:00:00",
-    "store_blackout": {
-      "start": "2022-05-15 00:00:00",
-      "end": "2022-05-30 12:00:00"
-    },
-    "time_gate_blackout": {
-      "start": "2022-05-15 00:00:00",
-      "end": "2022-05-30 12:00:00"
-    },
-    "golden_epic_loot_id": 1448,
-    "golden_epic_promo_id": 156,
-    "event_logo_graphic_id": 3374,
-    "console_portrait": 7667,
-    "trials_effect_id": 838,
-    "legendary_effect_id": [
-      1,
-      3,
-      61,
-      94,
-      44,
-      106
-    ],
-    "weekly_buff": "buff_upgrades,200,9714,9715,9716,9717",
-    "portrait_graphic_scale": 1.02,
-    "notification_adjustment": {
-      "offset": [
-        56,
-        218
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Jaheira",
-      "display": "贾希拉"
-    },
-    "class": {
-      "original": "Fighter / Druid",
-      "display": "战士/德鲁伊"
-    },
-    "race": {
-      "original": "Half-Elf",
-      "display": "半精灵"
-    },
-    "age": 36,
-    "alignment": {
-      "original": "Neutral",
-      "display": "中立"
-    },
-    "abilityScores": {
-      "str": 15,
-      "dex": 14,
-      "con": 17,
-      "int": 10,
-      "wis": 14,
-      "cha": 15
-    },
-    "backstory": {
-      "original": "Jaheira is a noble-born half-elf who was raised by an enclave of druids after her family was killed. Having gained an understanding of balance, she resolved to serve nature with the skills the druids taught her. She was recruited by the Harpers, where she met her late husband, Khalid. Jaheira knows life isn't black and white. She lives in the balance, as nature demands.",
-      "display": "贾希拉是出生于贵族的半精灵。家人被杀后，她在一块德鲁伊飞地被抚养长大。在获得对平衡的理解后，她决心用德鲁伊们教给她的技能来服务于自然。她被竖琴手同盟所招募，在那里遇到了她的丈夫哈立德。贾希拉知道生活并不是非黑即白，她生活在平衡之间，正如自然所希冀的那样。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "579",
-      "name": {
-        "original": "Tangling Scimitar",
-        "display": "纠缠弯刀"
-      },
-      "description": {
-        "original": "Jaheira attacks the nearest enemy with her scimitar, dealing BUD damage and rooting them and nearby enemies in place with vines.",
-        "display": "贾希拉用她的弯刀攻击距离最近的敌人，造成基础杀招伤害，并用藤蔓将其与附近的敌人定在原地。"
-      },
-      "longDescription": {
-        "original": "Jaheira attacks the nearest enemy with her scimitar and then summons roots to hold them in place for 3 seconds. The roots also damage and root other nearby enemies.",
-        "display": "贾希拉用她的弯刀攻击距离最近的敌人，然后召唤藤蔓将其暂时定在原地，持续 3 秒。藤蔓还会伤害和定身附近的其他敌人。"
-      },
-      "cooldown": 4.4,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -60,
-          "damage_frame": 4,
-          "effect_on_monsters": {
-            "effect_string": "effect_def,1319",
-            "after_damage": true
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "289",
-      "name": {
-        "original": "Insect Plague",
-        "display": "疫病虫群"
-      },
-      "description": {
-        "original": "Jaheira blankets the area in front of the party with a swarm of insects for 30 seconds, dealing a small amount of damage to all enemies within the swarm every half-second.",
-        "display": "在 30 秒内，贾希拉用虫群覆盖队伍前方区域，每 0.5 秒对虫群范围内的所有敌人造成少量伤害。"
-      },
-      "longDescription": {
-        "original": "Jaheira blankets the area in front of the party with a swarm of insects for 30 seconds, dealing a small amount of damage to all enemies within the swarm every half-second.",
-        "display": "在 30 秒内，贾希拉用虫群覆盖队伍前方区域，每 0.5 秒对虫群范围内的所有敌人造成少量伤害。"
-      },
-      "cooldown": 270,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ultimate"
-      ],
-      "graphicId": "7753",
-      "animations": [
-        {
-          "type": "jaheira_ultimate",
-          "shoot_frame": 23,
-          "shoot_offset_x": 80,
-          "shoot_offset_y": -90,
-          "projectile_ids": [
-            7665,
-            7666
-          ]
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "9710",
-        "name": {
-          "original": "Fierce Hunter",
-          "display": "狂热猎手"
-        },
-        "description": {
-          "original": "Jaheira is a fierce protector of those under her charge. Whenever a beast dies, her damage and buff is increased.",
-          "display": "贾希拉是她所管辖野兽的狂热保护者 。只要有野兽死亡，她的伤害和增益效果都会提高。"
-        },
-        "graphicId": "7740"
-      },
-      {
-        "upgradeId": "9711",
-        "name": {
-          "original": "Battle Focus",
-          "display": "战斗专注"
-        },
-        "description": {
-          "original": "After a certain number of creatures she covets die Jaheira flies into a rage, further increasing her damage and buff.",
-          "display": "在贾希拉渴求的生物死亡达到一定数量后，她会进入盛怒，进一步提高伤害和增益效果。"
-        },
-        "graphicId": "7739"
-      },
-      {
-        "upgradeId": "9712",
-        "name": {
-          "original": "Persistent Focus",
-          "display": "全神贯注"
-        },
-        "description": null,
-        "graphicId": "7741"
-      },
-      {
-        "upgradeId": "9713",
-        "name": {
-          "original": "Unity",
-          "display": "团结一致"
-        },
-        "description": null,
-        "graphicId": "7742"
-      },
-      {
-        "upgradeId": "9722",
-        "name": {
-          "original": "Insect Plague",
-          "display": "疫病虫群"
-        },
-        "description": null,
-        "graphicId": "813"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "10328",
@@ -320,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "9714",
@@ -338,7 +25,6 @@
         "display": "出类拔萃：施法者"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1308",
       "effectDefinition": {
         "id": "1308",
         "snapshots": {
@@ -412,7 +98,8 @@
       "tipText": {
         "original": "Jaheira supports certain classes. Make sure your main DPS Champion is a supported class!",
         "display": "贾希拉可以支援特定职业。确保你的主要伤害输出勇士的职业受她支援！"
-      }
+      },
+      "effectReference": "effect_def,1308"
     },
     {
       "id": "9715",
@@ -423,7 +110,6 @@
         "display": "出类拔萃：战士"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1309",
       "effectDefinition": {
         "id": "1309",
         "snapshots": {
@@ -497,7 +183,8 @@
       "tipText": {
         "original": "Jaheira supports certain classes. Make sure your main DPS Champion is a supported class!",
         "display": "贾希拉可以支援特定职业。确保你的主要伤害输出勇士的职业受她支援！"
-      }
+      },
+      "effectReference": "effect_def,1309"
     },
     {
       "id": "9716",
@@ -508,7 +195,6 @@
         "display": "出类拔萃：混合"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1310",
       "effectDefinition": {
         "id": "1310",
         "snapshots": {
@@ -582,7 +268,8 @@
       "tipText": {
         "original": "Jaheira supports certain classes. Make sure your main DPS Champion is a supported class!",
         "display": "贾希拉可以支援特定职业。确保你的主要伤害输出勇士的职业受她支援！"
-      }
+      },
+      "effectReference": "effect_def,1310"
     },
     {
       "id": "9717",
@@ -593,7 +280,6 @@
         "display": "出类拔萃：博德之门"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1311",
       "effectDefinition": {
         "id": "1311",
         "snapshots": {
@@ -667,7 +353,8 @@
       "tipText": {
         "original": "Jaheira supports certain classes. Make sure your main DPS Champion is a supported class!",
         "display": "贾希拉可以支援特定职业。确保你的主要伤害输出勇士的职业受她支援！"
-      }
+      },
+      "effectReference": "effect_def,1311"
     },
     {
       "id": "10329",
@@ -675,14 +362,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "9710",
@@ -693,7 +380,6 @@
         "display": "狂热猎手"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1304",
       "effectDefinition": {
         "id": "1304",
         "snapshots": {
@@ -803,7 +489,8 @@
       "tipText": {
         "original": "Jaheira is a fierce hunter of certain creatures. Killing those enemies buff her other abilities.",
         "display": "贾希拉是某些生物的狂热猎手。杀死这些敌人可以强化她的其他能力。"
-      }
+      },
+      "effectReference": "effect_def,1304"
     },
     {
       "id": "10276",
@@ -811,14 +498,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10330",
@@ -826,14 +513,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "9711",
@@ -844,7 +531,6 @@
         "display": "战斗专注"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1305",
       "effectDefinition": {
         "id": "1305",
         "snapshots": {
@@ -911,7 +597,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1305"
     },
     {
       "id": "10331",
@@ -919,14 +606,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10306",
@@ -934,14 +621,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "9712",
@@ -952,7 +639,6 @@
         "display": "全神贯注"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1306",
       "effectDefinition": {
         "id": "1306",
         "snapshots": {
@@ -1033,7 +719,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1306"
     },
     {
       "id": "10332",
@@ -1041,14 +728,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "9713",
@@ -1059,7 +746,6 @@
         "display": "团结一致"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1307",
       "effectDefinition": {
         "id": "1307",
         "snapshots": {
@@ -1138,7 +824,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1307"
     },
     {
       "id": "10333",
@@ -1146,14 +833,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "9718",
@@ -1164,7 +851,6 @@
         "display": "猎手：自然"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1312",
       "effectDefinition": {
         "id": "1312",
         "snapshots": {
@@ -1219,7 +905,8 @@
         "display": "贾希拉继续关注兽类敌人。"
       },
       "specializationGraphicId": "7748",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1312"
     },
     {
       "id": "9719",
@@ -1230,7 +917,6 @@
         "display": "猎手：扭曲生物"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1313",
       "effectDefinition": {
         "id": "1313",
         "snapshots": {
@@ -1291,7 +977,8 @@
         "display": "贾希拉现在专注于炼狱生物敌人。"
       },
       "specializationGraphicId": "7749",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1313"
     },
     {
       "id": "9720",
@@ -1302,7 +989,6 @@
         "display": "猎手：文明"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1314",
       "effectDefinition": {
         "id": "1314",
         "snapshots": {
@@ -1363,7 +1049,8 @@
         "display": "贾希拉现在专注于类人生物敌人。"
       },
       "specializationGraphicId": "7747",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1314"
     },
     {
       "id": "9721",
@@ -1374,7 +1061,6 @@
         "display": "猎手：怨灵"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,1315",
       "effectDefinition": {
         "id": "1315",
         "snapshots": {
@@ -1435,7 +1121,8 @@
         "display": "贾希拉现在专注于亡灵敌人。"
       },
       "specializationGraphicId": "17407",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1315"
     },
     {
       "id": "10277",
@@ -1443,14 +1130,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "9722",
@@ -1461,14 +1148,14 @@
         "display": "疫病虫群"
       },
       "upgradeType": null,
-      "effectReference": "set_ultimate_attack",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "10334",
@@ -1476,14 +1163,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10307",
@@ -1491,14 +1178,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10335",
@@ -1506,14 +1193,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10336",
@@ -1521,14 +1208,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10337",
@@ -1536,14 +1223,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10308",
@@ -1551,14 +1238,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10338",
@@ -1566,14 +1253,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10280",
@@ -1581,14 +1268,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10339",
@@ -1596,14 +1283,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10340",
@@ -1611,14 +1298,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10309",
@@ -1626,14 +1313,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10341",
@@ -1641,14 +1328,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10342",
@@ -1656,14 +1343,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10282",
@@ -1671,14 +1358,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "10310",
@@ -1686,14 +1373,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10343",
@@ -1701,14 +1388,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10344",
@@ -1716,14 +1403,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9712",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9712"
     },
     {
       "id": "10345",
@@ -1731,14 +1418,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10311",
@@ -1746,14 +1433,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10346",
@@ -1761,14 +1448,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10347",
@@ -1776,14 +1463,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10285",
@@ -1791,14 +1478,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10312",
@@ -1806,14 +1493,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10348",
@@ -1821,14 +1508,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9710",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9710"
     },
     {
       "id": "10349",
@@ -1836,14 +1523,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10350",
@@ -1851,14 +1538,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10313",
@@ -1866,14 +1553,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10351",
@@ -1881,14 +1568,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10288",
@@ -1896,14 +1583,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "10352",
@@ -1911,14 +1598,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10314",
@@ -1926,14 +1613,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10353",
@@ -1941,14 +1628,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10354",
@@ -1956,14 +1643,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10290",
@@ -1971,14 +1658,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "10315",
@@ -1986,14 +1673,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10355",
@@ -2001,14 +1688,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10356",
@@ -2016,14 +1703,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10357",
@@ -2031,14 +1718,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9712",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9712"
     },
     {
       "id": "10358",
@@ -2046,14 +1733,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10317",
@@ -2061,14 +1748,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10359",
@@ -2076,14 +1763,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10293",
@@ -2091,14 +1778,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10318",
@@ -2106,14 +1793,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10360",
@@ -2121,14 +1808,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10361",
@@ -2136,14 +1823,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10319",
@@ -2151,14 +1838,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10362",
@@ -2166,14 +1853,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10296",
@@ -2181,14 +1868,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10320",
@@ -2196,14 +1883,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10363",
@@ -2211,14 +1898,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10364",
@@ -2226,14 +1913,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9710",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9710"
     },
     {
       "id": "10322",
@@ -2241,14 +1928,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10365",
@@ -2256,14 +1943,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10299",
@@ -2271,14 +1958,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "10323",
@@ -2286,14 +1973,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10366",
@@ -2301,14 +1988,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9712",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9712"
     },
     {
       "id": "10367",
@@ -2316,14 +2003,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10301",
@@ -2331,14 +2018,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10325",
@@ -2346,14 +2033,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10368",
@@ -2361,14 +2048,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10326",
@@ -2376,14 +2063,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10369",
@@ -2391,14 +2078,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10370",
@@ -2406,14 +2093,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "10304",
@@ -2421,14 +2108,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "10327",
@@ -2436,14 +2123,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\",\"description\":\"Increase the effect of Jaheira's Class Act ability by $(amount)%.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10371",
@@ -2451,14 +2138,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "3632",
@@ -2469,7 +2156,6 @@
         "display": "职业战争：施法者"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,602",
       "effectDefinition": {
         "id": "602",
         "snapshots": {
@@ -2538,7 +2224,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,602"
     },
     {
       "id": "3633",
@@ -2549,7 +2236,6 @@
         "display": "职业战争：战士"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,603",
       "effectDefinition": {
         "id": "603",
         "snapshots": {
@@ -2618,7 +2304,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,603"
     },
     {
       "id": "3634",
@@ -2629,7 +2316,6 @@
         "display": "职业战争：混合"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,604",
       "effectDefinition": {
         "id": "604",
         "snapshots": {
@@ -2698,7 +2384,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,604"
     },
     {
       "id": "9723",
@@ -2706,14 +2393,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9710",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9710"
     },
     {
       "id": "9724",
@@ -2721,14 +2408,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\"effect_string\":\"change_upgrade_data,9712\",\"data\":{\"stack_time\":20},\"description\":\"Decreases the stack time of Jaheira's Persistent Focus to 20 seconds.\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "change_upgrade_data,9712"
     },
     {
       "id": "9725",
@@ -2736,14 +2423,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9712",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9712"
     },
     {
       "id": "9726",
@@ -2751,14 +2438,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10278",
@@ -2766,14 +2453,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10279",
@@ -2781,14 +2468,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10281",
@@ -2796,14 +2483,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10283",
@@ -2811,14 +2498,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10284",
@@ -2826,14 +2513,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10286",
@@ -2841,14 +2528,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10287",
@@ -2856,14 +2543,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10289",
@@ -2871,14 +2558,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10291",
@@ -2886,14 +2573,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10292",
@@ -2901,14 +2588,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10294",
@@ -2916,14 +2603,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10295",
@@ -2931,14 +2618,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10297",
@@ -2946,14 +2633,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10298",
@@ -2961,14 +2648,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10300",
@@ -2976,14 +2663,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10302",
@@ -2991,14 +2678,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10303",
@@ -3006,14 +2693,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10305",
@@ -3021,14 +2708,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "{\r\n\"effect_string\":\"buff_upgrades,100,9714,9715,9716,9717\"\r\n\"description\": \"Incease the effect of Jaheira's Class Act ability by $(amount)%.\"\r\n}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrades,100,9714,9715,9716,9717"
     },
     {
       "id": "10316",
@@ -3036,14 +2723,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9712",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9712"
     },
     {
       "id": "10321",
@@ -3051,14 +2738,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9710",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9710"
     },
     {
       "id": "10324",
@@ -3066,14 +2753,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,9712",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,9712"
     }
   ],
   "feats": [
@@ -3550,7 +3237,8 @@
         "base_graphic_id": 8541,
         "large_graphic_id": 8543,
         "xl_graphic_id": 13901,
-        "portrait_graphic_id": 8545
+        "portrait_graphic_id": 8545,
+        "bastion_graphic_id": 30638
       },
       "rarity": "3",
       "properties": {
@@ -3585,7 +3273,8 @@
         "base_graphic_id": 17915,
         "large_graphic_id": 17918,
         "portrait_graphic_id": 17912,
-        "xl_graphic_id": 17921
+        "xl_graphic_id": 17921,
+        "bastion_graphic_id": 30817
       },
       "rarity": "3",
       "properties": {
@@ -3622,7 +3311,8 @@
         "base_graphic_id": 18119,
         "large_graphic_id": 18123,
         "portrait_graphic_id": 18115,
-        "xl_graphic_id": 18126
+        "xl_graphic_id": 18126,
+        "bastion_graphic_id": 30823
       },
       "rarity": "3",
       "properties": {
@@ -3654,7 +3344,8 @@
         "base_graphic_id": 18340,
         "large_graphic_id": 18346,
         "portrait_graphic_id": 18333,
-        "xl_graphic_id": 18351
+        "xl_graphic_id": 18351,
+        "bastion_graphic_id": 30856
       },
       "rarity": "3",
       "properties": {
@@ -3691,7 +3382,8 @@
         "base_graphic_id": 23315,
         "large_graphic_id": 23325,
         "portrait_graphic_id": 23347,
-        "xl_graphic_id": 23335
+        "xl_graphic_id": 23335,
+        "bastion_graphic_id": 30993
       },
       "rarity": "3",
       "properties": {
@@ -3726,7 +3418,8 @@
         "base_graphic_id": 26428,
         "large_graphic_id": 26431,
         "portrait_graphic_id": 26419,
-        "xl_graphic_id": 26434
+        "xl_graphic_id": 26434,
+        "bastion_graphic_id": 31126
       },
       "rarity": "3",
       "properties": {
@@ -3745,7 +3438,7 @@
         "cost": 1680
       },
       "availabilities": {
-        "premium_item_id": "566"
+        "in_flash_sales": true
       }
     }
   ],
@@ -3763,6 +3456,7 @@
       "graphicId": "7920",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,50"
@@ -3784,6 +3478,7 @@
       "graphicId": "7920",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,125"
@@ -3805,6 +3500,7 @@
       "graphicId": "7921",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,200"
@@ -3826,6 +3522,7 @@
       "graphicId": "7922",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "hero_dps_multiplier_mult,350"
@@ -3847,6 +3544,7 @@
       "graphicId": "7914",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3868,6 +3566,7 @@
       "graphicId": "7914",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3889,6 +3588,7 @@
       "graphicId": "7915",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3910,6 +3610,7 @@
       "graphicId": "7916",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3931,6 +3632,7 @@
       "graphicId": "7911",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,9714,9715,9716,9717",
@@ -3953,6 +3655,7 @@
       "graphicId": "7911",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,9714,9715,9716,9717",
@@ -3975,6 +3678,7 @@
       "graphicId": "7912",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,9714,9715,9716,9717",
@@ -3997,6 +3701,7 @@
       "graphicId": "7913",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,9714,9715,9716,9717",
@@ -4019,6 +3724,7 @@
       "graphicId": "7905",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,9712"
@@ -4040,6 +3746,7 @@
       "graphicId": "7905",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,9712"
@@ -4061,6 +3768,7 @@
       "graphicId": "7906",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,9712"
@@ -4082,6 +3790,7 @@
       "graphicId": "7907",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,9712"
@@ -4103,6 +3812,7 @@
       "graphicId": "7908",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25"
@@ -4124,6 +3834,7 @@
       "graphicId": "7908",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5"
@@ -4145,6 +3856,7 @@
       "graphicId": "7909",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150"
@@ -4166,6 +3878,7 @@
       "graphicId": "7910",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275"
@@ -4187,6 +3900,11 @@
       "graphicId": "7917",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,7"
@@ -4208,6 +3926,11 @@
       "graphicId": "7917",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,14"
@@ -4229,6 +3952,11 @@
       "graphicId": "7918",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,27"
@@ -4250,6 +3978,11 @@
       "graphicId": "7919",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,68"
@@ -4379,6 +4112,333 @@
       ]
     }
   ],
+  "summary": {
+    "id": "61",
+    "name": {
+      "original": "Jaheira",
+      "display": "贾希拉"
+    },
+    "seat": 9,
+    "portrait": {
+      "path": "v1/champion-portraits/61.png",
+      "sourceGraphic": "Portraits/Portrait_Jaheira",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "control",
+      "dps",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Heroes of Baldur's Gate",
+        "display": "博德之门的英雄们"
+      }
+    ],
+    "tags": [
+      "baldursgate",
+      "control",
+      "control_root",
+      "dps",
+      "druid",
+      "event",
+      "female",
+      "fighter",
+      "geneutral",
+      "half-elf",
+      "hunter",
+      "hunter_beast",
+      "lcneutral",
+      "neutral",
+      "spec_hunter_fiend",
+      "spec_hunter_humanoid",
+      "spec_hunter_undead",
+      "support",
+      "y3"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "2",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "2",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Jaheira",
+  "eventName": {
+    "original": "The Great Modron March",
+    "display": "魔冢长征"
+  },
+  "dateAvailable": "2020-05-13 00:00:00",
+  "lastReworkDate": "2020-05-13 00:00:00",
+  "popularity": 24,
+  "baseCost": "30000000000000",
+  "baseDamage": "4750000000",
+  "baseHealth": "45",
+  "graphicId": "7669",
+  "portraitGraphicId": "7668",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1809630000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    235,
+    840,
+    1550,
+    2430
+  ],
+  "costCurves": {
+    "1": 1.08
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 7670,
+    "graphic_xl": 13900,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      97,
+      67
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2020-05-25 12:00:00",
+    "time_gate_adventure_id": 534,
+    "time_gate_variants_ids": [
+      494,
+      495,
+      496
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 180,
+    "gold_chest_type_id": 181,
+    "available_in_store": "2020-06-01 12:00:00",
+    "store_blackout": {
+      "start": "2022-05-15 00:00:00",
+      "end": "2022-05-30 12:00:00"
+    },
+    "time_gate_blackout": {
+      "start": "2022-05-15 00:00:00",
+      "end": "2022-05-30 12:00:00"
+    },
+    "golden_epic_loot_id": 1448,
+    "golden_epic_promo_id": 156,
+    "event_logo_graphic_id": 3374,
+    "console_portrait": 7667,
+    "trials_effect_id": 838,
+    "legendary_effect_id": [
+      1,
+      3,
+      61,
+      94,
+      44,
+      106
+    ],
+    "weekly_buff": "buff_upgrades,200,9714,9715,9716,9717",
+    "portrait_graphic_scale": 1.02,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        218
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30487
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Jaheira",
+      "display": "贾希拉"
+    },
+    "class": {
+      "original": "Fighter / Druid",
+      "display": "战士/德鲁伊"
+    },
+    "race": {
+      "original": "Half-Elf",
+      "display": "半精灵"
+    },
+    "age": 36,
+    "alignment": {
+      "original": "Neutral",
+      "display": "中立"
+    },
+    "backstory": {
+      "original": "Jaheira is a noble-born half-elf who was raised by an enclave of druids after her family was killed. Having gained an understanding of balance, she resolved to serve nature with the skills the druids taught her. She was recruited by the Harpers, where she met her late husband, Khalid. Jaheira knows life isn't black and white. She lives in the balance, as nature demands.",
+      "display": "贾希拉是出生于贵族的半精灵。家人被杀后，她在一块德鲁伊飞地被抚养长大。在获得对平衡的理解后，她决心用德鲁伊们教给她的技能来服务于自然。她被竖琴手同盟所招募，在那里遇到了她的丈夫哈立德。贾希拉知道生活并不是非黑即白，她生活在平衡之间，正如自然所希冀的那样。"
+    },
+    "abilityScores": {
+      "str": 15,
+      "dex": 14,
+      "con": 17,
+      "int": 10,
+      "wis": 14,
+      "cha": 15
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "579",
+      "name": {
+        "original": "Tangling Scimitar",
+        "display": "纠缠弯刀"
+      },
+      "description": {
+        "original": "Jaheira attacks the nearest enemy with her scimitar, dealing BUD damage and rooting them and nearby enemies in place with vines.",
+        "display": "贾希拉用她的弯刀攻击距离最近的敌人，造成基础杀招伤害，并用藤蔓将其与附近的敌人定在原地。"
+      },
+      "longDescription": {
+        "original": "Jaheira attacks the nearest enemy with her scimitar and then summons roots to hold them in place for 3 seconds. The roots also damage and root other nearby enemies.",
+        "display": "贾希拉用她的弯刀攻击距离最近的敌人，然后召唤藤蔓将其暂时定在原地，持续 3 秒。藤蔓还会伤害和定身附近的其他敌人。"
+      },
+      "cooldown": 4.4,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -60,
+          "damage_frame": 4,
+          "effect_on_monsters": {
+            "effect_string": "effect_def,1319",
+            "after_damage": true
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "289",
+      "name": {
+        "original": "Insect Plague",
+        "display": "疫病虫群"
+      },
+      "description": {
+        "original": "Jaheira blankets the area in front of the party with a swarm of insects for 30 seconds, dealing a small amount of damage to all enemies within the swarm every half-second.",
+        "display": "在 30 秒内，贾希拉用虫群覆盖队伍前方区域，每 0.5 秒对虫群范围内的所有敌人造成少量伤害。"
+      },
+      "longDescription": {
+        "original": "Jaheira blankets the area in front of the party with a swarm of insects for 30 seconds, dealing a small amount of damage to all enemies within the swarm every half-second.",
+        "display": "在 30 秒内，贾希拉用虫群覆盖队伍前方区域，每 0.5 秒对虫群范围内的所有敌人造成少量伤害。"
+      },
+      "cooldown": 270,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "7753",
+      "animations": [
+        {
+          "type": "jaheira_ultimate",
+          "shoot_frame": 23,
+          "shoot_offset_x": 80,
+          "shoot_offset_y": -90,
+          "projectile_ids": [
+            7665,
+            7666
+          ]
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "9710",
+        "name": {
+          "original": "Fierce Hunter",
+          "display": "狂热猎手"
+        },
+        "description": {
+          "original": "Jaheira is a fierce protector of those under her charge. Whenever a beast dies, her damage and buff is increased.",
+          "display": "贾希拉是她所管辖野兽的狂热保护者 。只要有野兽死亡，她的伤害和增益效果都会提高。"
+        },
+        "graphicId": "7740"
+      },
+      {
+        "upgradeId": "9711",
+        "name": {
+          "original": "Battle Focus",
+          "display": "战斗专注"
+        },
+        "description": {
+          "original": "After a certain number of creatures she covets die Jaheira flies into a rage, further increasing her damage and buff.",
+          "display": "在贾希拉渴求的生物死亡达到一定数量后，她会进入盛怒，进一步提高伤害和增益效果。"
+        },
+        "graphicId": "7739"
+      },
+      {
+        "upgradeId": "9712",
+        "name": {
+          "original": "Persistent Focus",
+          "display": "全神贯注"
+        },
+        "description": null,
+        "graphicId": "7741"
+      },
+      {
+        "upgradeId": "9713",
+        "name": {
+          "original": "Unity",
+          "display": "团结一致"
+        },
+        "description": null,
+        "graphicId": "7742"
+      },
+      {
+        "upgradeId": "9722",
+        "name": {
+          "original": "Insect Plague",
+          "display": "疫病虫群"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -4513,7 +4573,8 @@
               218
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30487
         },
         "adventure_ids": [
           {
@@ -4541,7 +4602,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 8,
+        "popularity": 24,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4715,7 +4776,8 @@
               218
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30487
         },
         "adventure_ids": [
           {
@@ -4743,7 +4805,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 8,
+        "popularity": 24,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8978,7 +9040,8 @@
               "base_graphic_id": 8541,
               "large_graphic_id": 8543,
               "xl_graphic_id": 13901,
-              "portrait_graphic_id": 8545
+              "portrait_graphic_id": 8545,
+              "bastion_graphic_id": 30638
             },
             "rarity": "3",
             "properties": {
@@ -9009,7 +9072,8 @@
               "base_graphic_id": 8541,
               "large_graphic_id": 8543,
               "xl_graphic_id": 13901,
-              "portrait_graphic_id": 8545
+              "portrait_graphic_id": 8545,
+              "bastion_graphic_id": 30638
             },
             "rarity": "3",
             "properties": {
@@ -9047,7 +9111,8 @@
               "base_graphic_id": 17915,
               "large_graphic_id": 17918,
               "portrait_graphic_id": 17912,
-              "xl_graphic_id": 17921
+              "xl_graphic_id": 17921,
+              "bastion_graphic_id": 30817
             },
             "rarity": "3",
             "properties": {
@@ -9081,7 +9146,8 @@
               "base_graphic_id": 17915,
               "large_graphic_id": 17918,
               "portrait_graphic_id": 17912,
-              "xl_graphic_id": 17921
+              "xl_graphic_id": 17921,
+              "bastion_graphic_id": 30817
             },
             "rarity": "3",
             "properties": {
@@ -9121,7 +9187,8 @@
               "base_graphic_id": 18119,
               "large_graphic_id": 18123,
               "portrait_graphic_id": 18115,
-              "xl_graphic_id": 18126
+              "xl_graphic_id": 18126,
+              "bastion_graphic_id": 30823
             },
             "rarity": "3",
             "properties": {
@@ -9151,7 +9218,8 @@
               "base_graphic_id": 18119,
               "large_graphic_id": 18123,
               "portrait_graphic_id": 18115,
-              "xl_graphic_id": 18126
+              "xl_graphic_id": 18126,
+              "bastion_graphic_id": 30823
             },
             "rarity": "3",
             "properties": {
@@ -9185,7 +9253,8 @@
               "base_graphic_id": 18340,
               "large_graphic_id": 18346,
               "portrait_graphic_id": 18333,
-              "xl_graphic_id": 18351
+              "xl_graphic_id": 18351,
+              "bastion_graphic_id": 30856
             },
             "rarity": "3",
             "properties": {
@@ -9220,7 +9289,8 @@
               "base_graphic_id": 18340,
               "large_graphic_id": 18346,
               "portrait_graphic_id": 18333,
-              "xl_graphic_id": 18351
+              "xl_graphic_id": 18351,
+              "bastion_graphic_id": 30856
             },
             "rarity": "3",
             "properties": {
@@ -9260,7 +9330,8 @@
               "base_graphic_id": 23315,
               "large_graphic_id": 23325,
               "portrait_graphic_id": 23347,
-              "xl_graphic_id": 23335
+              "xl_graphic_id": 23335,
+              "bastion_graphic_id": 30993
             },
             "rarity": "3",
             "properties": {
@@ -9293,7 +9364,8 @@
               "base_graphic_id": 23315,
               "large_graphic_id": 23325,
               "portrait_graphic_id": 23347,
-              "xl_graphic_id": 23335
+              "xl_graphic_id": 23335,
+              "bastion_graphic_id": 30993
             },
             "rarity": "3",
             "properties": {
@@ -9331,7 +9403,8 @@
               "base_graphic_id": 26428,
               "large_graphic_id": 26431,
               "portrait_graphic_id": 26419,
-              "xl_graphic_id": 26434
+              "xl_graphic_id": 26434,
+              "bastion_graphic_id": 31126
             },
             "rarity": "3",
             "properties": {
@@ -9350,7 +9423,7 @@
               "cost": 1680
             },
             "availabilities": {
-              "premium_item_id": "566"
+              "in_flash_sales": true
             }
           },
           "display": {
@@ -9364,7 +9437,8 @@
               "base_graphic_id": 26428,
               "large_graphic_id": 26431,
               "portrait_graphic_id": 26419,
-              "xl_graphic_id": 26434
+              "xl_graphic_id": 26434,
+              "bastion_graphic_id": 31126
             },
             "rarity": "3",
             "properties": {
@@ -9383,7 +9457,7 @@
               "cost": 1680
             },
             "availabilities": {
-              "premium_item_id": "566"
+              "in_flash_sales": true
             }
           }
         }

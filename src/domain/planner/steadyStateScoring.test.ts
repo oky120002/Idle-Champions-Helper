@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { unwrap } from '../../../tests/utils/dom-assertions'
-import { compareGameNumbers } from '../simulator/gameNumber'
+import { compareGameNumbers, toGameNumber } from '../gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { scoreFormation } from './steadyStateScoring'
 import type { OfficialPlannerScenarioModel } from './plannerModel'
@@ -609,6 +609,30 @@ describe('steady state scoring', () => {
       const roundTrip = JSON.parse(JSON.stringify({ levelCurve: breakdown.levelCurve })) as { levelCurve: unknown }
       expect(roundTrip.levelCurve).not.toBeNull()
       expect(typeof roundTrip.levelCurve).toBe('string')
+    })
+  })
+
+  describe('heroLevels / goldBudget 入参透传', () => {
+    it('不同 heroLevels → 不同 carryDps（等级影响评分）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 1 })
+      const heroesById = new Map([['carry', carry]])
+      const placements = { s1: 'carry' }
+
+      const lowLevel = scoreFormation({ heroesById, scenario, placements, heroLevels: new Map([['carry', 1]]) })
+      const highLevel = scoreFormation({ heroesById, scenario, placements, heroLevels: new Map([['carry', 1000]]) })
+
+      expect(compareGameNumbers(highLevel.objectiveValue, lowLevel.objectiveValue)).toBeGreaterThan(0)
+    })
+
+    it('goldBudget 传入不崩溃（透传，暂不消费）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 1 })
+      const result = scoreFormation({
+        heroesById: new Map([['carry', carry]]),
+        scenario,
+        placements: { s1: 'carry' },
+        goldBudget: toGameNumber('1.5e92'),
+      })
+      expect(result.objectiveValue).toBeDefined()
     })
   })
 

@@ -1,0 +1,5658 @@
+{
+  "catalog": {
+    "6": [
+      {
+        "upgradeId": "90",
+        "requiredLevel": 10,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "human"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "90",
+              "requiredLevel": 10
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bond: Humans",
+          "display": "纽带：人类"
+        }
+      },
+      {
+        "upgradeId": "91",
+        "requiredLevel": 10,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "elf"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "dwarf"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "91",
+              "requiredLevel": 10
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bond: Dwarves and Elves",
+          "display": "纽带：矮人与精灵"
+        }
+      },
+      {
+        "upgradeId": "92",
+        "requiredLevel": 10,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "tiefling"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "firbolg"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "dragonborn"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "aarakocra"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "tortle"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "minotaur"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "lizardfolk"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "centaur"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "satyr"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "triton"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "92",
+              "requiredLevel": 10
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bond: Potpourri",
+          "display": "纽带：混合"
+        }
+      },
+      {
+        "upgradeId": "975",
+        "requiredLevel": 325,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 16200,
+              "rawEffect": "hero_dps_multiplier_mult,16200",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "half-elf"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "half-orc"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "halfling"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "975",
+              "requiredLevel": 325
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bond: Half n' Half",
+          "display": "纽带：混血"
+        }
+      },
+      {
+        "upgradeId": "976",
+        "requiredLevel": 325,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 16200,
+              "rawEffect": "hero_dps_multiplier_mult,16200",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "gith"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "tabaxi"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "aasimar"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "warforged"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "genasi"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "saurial"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "yuan-ti"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "bullywug"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "doppelganger"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "harengon"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "modron"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "giff"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "kalashtar"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "goliath"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "thrikreen"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "976",
+              "requiredLevel": 325
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bond: Exotic Species",
+          "display": "纽带：异域种族"
+        }
+      },
+      {
+        "upgradeId": "977",
+        "requiredLevel": 325,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 16200,
+              "rawEffect": "hero_dps_multiplier_mult,16200",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "gnome"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "kobold"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "goblin"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "halfling"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "nerds"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "plasmoid"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "fairy"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "kender"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "small"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "977",
+              "requiredLevel": 325
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bond: Short-folk",
+          "display": "邦德：短篇民谣"
+        }
+      }
+    ],
+    "7": [
+      {
+        "upgradeId": "108",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 300,
+              "monsterTags": [
+                "humanoid"
+              ],
+              "rawEffect": "monster_with_tag_more_damage,300,humanoid",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "108",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Favored Enemy: Humanoids",
+          "display": "偏好敌人：类人生物"
+        }
+      },
+      {
+        "upgradeId": "109",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 300,
+              "monsterTags": [
+                "beast"
+              ],
+              "rawEffect": "monster_with_tag_more_damage,300,beast",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "109",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Favored Enemy: Beasts",
+          "display": "偏好敌人：兽类"
+        }
+      },
+      {
+        "upgradeId": "110",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 300,
+              "monsterTags": [
+                "undead"
+              ],
+              "rawEffect": "monster_with_tag_more_damage,300,undead",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "110",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Favored Enemy: Undead",
+          "display": "偏好敌人：亡灵"
+        }
+      },
+      {
+        "upgradeId": "111",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 300,
+              "monsterTags": [
+                "fey"
+              ],
+              "rawEffect": "monster_with_tag_more_damage,300,fey",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "111",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Favored Enemy: Fey",
+          "display": "偏好敌人：精类生物"
+        }
+      },
+      {
+        "upgradeId": "112",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 300,
+              "monsterTags": [
+                "monstrosity"
+              ],
+              "rawEffect": "monster_with_tag_more_damage,300,monstrosity",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "112",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Favored Enemy: Monstrosities",
+          "display": "偏好敌人：怪兽"
+        }
+      }
+    ],
+    "9": [
+      {
+        "upgradeId": "139",
+        "requiredLevel": 15,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "139",
+              "requiredLevel": 15
+            },
+            "bucket": "carrySignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "carrySignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "buff_upgrade_per_any_tagged_crusader,100,139,warlock|evil",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "warlock"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "evil"
+                    }
+                  ]
+                }
+              },
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "add",
+              "stackFunc": "per_tagged_crusader_mult",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 15,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 400,
+                "rawEffect": "hero_dps_multiplier_mult,400",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": null,
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 15
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Dark Luck",
+          "display": "厄运"
+        }
+      },
+      {
+        "upgradeId": "140",
+        "requiredLevel": 15,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "nonAdjacent"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "140",
+              "requiredLevel": 15
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Dark Blessing",
+          "display": "黑暗祝福"
+        }
+      }
+    ],
+    "14": [
+      {
+        "upgradeId": "16057",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "speed",
+            "signal": {
+              "kind": "attackSpeedMult",
+              "value": 0.1,
+              "rawEffect": "reduce_attack_cooldown,0.1",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "dex",
+                  "operator": ">=",
+                  "value": 16
+                }
+              },
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "add",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16057",
+              "requiredLevel": 200
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bend It Like Birdsong",
+          "display": "鸟歌般灵活"
+        }
+      },
+      {
+        "upgradeId": "16058",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16058",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "speed",
+            "signal": {
+              "kind": "attackSpeedMult",
+              "value": 0.1,
+              "rawEffect": "reduce_attack_cooldown,0.1",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16058",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "A Little Bit Faster Now",
+          "display": "再快一点"
+        }
+      }
+    ],
+    "16": [
+      {
+        "upgradeId": "14877",
+        "requiredLevel": 100,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 5,
+              "rawEffect": "hero_dps_multiplier_mult,5",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "geneutral"
+                }
+              },
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "geneutral"
+                }
+              },
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14877",
+              "requiredLevel": 100
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Circle of the Mountain",
+          "display": "山岭之环"
+        }
+      },
+      {
+        "upgradeId": "14879",
+        "requiredLevel": 100,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "self"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "unknown",
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14879",
+              "requiredLevel": 100
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Circle of the Swamp",
+          "display": "沼泽之环"
+        }
+      }
+    ],
+    "17": [
+      {
+        "upgradeId": "14558",
+        "requiredLevel": 260,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14558",
+              "requiredLevel": 260
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Empowered Orbs",
+          "display": "强化彩球"
+        }
+      }
+    ],
+    "18": [
+      {
+        "upgradeId": "11516",
+        "requiredLevel": 180,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 200,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,200,companion",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "companion"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11516",
+              "requiredLevel": 180
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Leader of the Companions",
+          "display": "五侠领袖"
+        }
+      },
+      {
+        "upgradeId": "11517",
+        "requiredLevel": 180,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 200,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,200,drow",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "drow"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11517",
+              "requiredLevel": 180
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Drow Stalker",
+          "display": "卓尔追踪者"
+        }
+      }
+    ],
+    "20": [
+      {
+        "upgradeId": "11530",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "aheadColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11530",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 500,
+              "rawEffect": "buff_upgrades,500,11530,11531",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "aheadColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "aheadColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Ruby Encouragement (Ahead)",
+          "display": "红宝石鼓舞（前）"
+        }
+      },
+      {
+        "upgradeId": "11531",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "behindColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11531",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 500,
+              "rawEffect": "buff_upgrades,500,11530,11531",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "behindColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "behindColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Ruby Encouragement (Behind)",
+          "display": "红宝石鼓舞（后）"
+        }
+      }
+    ],
+    "25": [
+      {
+        "upgradeId": "11312",
+        "requiredLevel": 220,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11312",
+              "requiredLevel": 220
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Piercing Arrow",
+          "display": "穿刺箭"
+        }
+      },
+      {
+        "upgradeId": "11314",
+        "requiredLevel": 220,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritChance",
+              "value": 20,
+              "rawEffect": "buff_base_crit_chance_add,20",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "companion"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11314",
+              "requiredLevel": 220
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Critical Family",
+          "display": "暴击家族"
+        }
+      }
+    ],
+    "27": [
+      {
+        "upgradeId": "18463",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 1,
+              "rawEffect": "hero_dps_multiplier_mult,1",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "18463",
+              "requiredLevel": 120
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Overkill",
+          "display": "过度杀戮"
+        }
+      },
+      {
+        "upgradeId": "18464",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "18464",
+              "requiredLevel": 120
+            },
+            "bucket": "carrySignals"
+          },
+          {
+            "dimension": "speed",
+            "signal": {
+              "kind": "attackSpeedMult",
+              "value": 2,
+              "rawEffect": "reduce_attack_cooldown,2",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "adjacent"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "18464",
+              "requiredLevel": 120
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Dwarven Encouragement",
+          "display": "矮人鼓励"
+        }
+      },
+      {
+        "upgradeId": "18465",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 200,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,200,dwarf|kobold|halfling|gnome|goblin|kender|small",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "dwarf"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "kobold"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "halfling"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "gnome"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "goblin"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "kender"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "small"
+                    }
+                  ]
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "18465",
+              "requiredLevel": 120
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Tallest in Faerûn",
+          "display": "费伦巨人"
+        }
+      }
+    ],
+    "31": [
+      {
+        "upgradeId": "16532",
+        "requiredLevel": 90,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 125,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "aasimar"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "dwarf"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "elf"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "gnome"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "halfling"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "half-elf"
+                    }
+                  ]
+                }
+              },
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16532",
+              "requiredLevel": 90
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Friend to the Familiar",
+          "display": "熟悉的朋友"
+        }
+      },
+      {
+        "upgradeId": "16533",
+        "requiredLevel": 90,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 150,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "dragonborn"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "goliath"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "orc"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "tiefling"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "half-orc"
+                    }
+                  ]
+                }
+              },
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16533",
+              "requiredLevel": 90
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Friend to the Feared",
+          "display": "敬畏的朋友"
+        }
+      },
+      {
+        "upgradeId": "16534",
+        "requiredLevel": 90,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16534",
+              "requiredLevel": 90
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Friend to the Exceptional",
+          "display": "不寻常的朋友"
+        }
+      }
+    ],
+    "32": [
+      {
+        "upgradeId": "11508",
+        "requiredLevel": 140,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "globalCritChance",
+              "value": 10,
+              "rawEffect": "global_buff_base_crit_chance_add,10",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11508",
+              "requiredLevel": 140
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Heavy Blows",
+          "display": "沉重打击"
+        }
+      },
+      {
+        "upgradeId": "11510",
+        "requiredLevel": 140,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "companion"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11510",
+              "requiredLevel": 140
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Moradin's Will",
+          "display": "摩拉丁的意志"
+        }
+      }
+    ],
+    "33": [
+      {
+        "upgradeId": "17840",
+        "requiredLevel": 140,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 100,
+              "monsterTags": null,
+              "rawEffect": "increase_damage_against_monster,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17840",
+              "requiredLevel": 140
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Fury of Asmodeus",
+          "display": "阿斯摩蒂斯之怒"
+        }
+      }
+    ],
+    "41": [
+      {
+        "upgradeId": "15613",
+        "requiredLevel": 280,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "cteam"
+                }
+              },
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15613",
+              "requiredLevel": 280
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Busy Beestinger",
+          "display": "忙碌奶奶"
+        }
+      },
+      {
+        "upgradeId": "15614",
+        "requiredLevel": 280,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritDamage",
+              "value": 600,
+              "rawEffect": "buff_base_crit_damage_mult,600",
+              "source": "official-parsed",
+              "amountFunc": "mult",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15614",
+              "requiredLevel": 280
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Slower Decay",
+          "display": "更慢衰减"
+        }
+      }
+    ],
+    "48": [
+      {
+        "upgradeId": "20148",
+        "requiredLevel": 160,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_crusader",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "20148",
+              "requiredLevel": 160
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Magic {magic}#CCC {magic}#888 {magic}#444",
+          "display": "法术{法术}#CCC {法术}#888 {法术}#444"
+        }
+      }
+    ],
+    "56": [
+      {
+        "upgradeId": "18045",
+        "requiredLevel": 150,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "heroHealthMultiplier",
+              "value": 50,
+              "rawEffect": "health_mult,50",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "18045",
+              "requiredLevel": 150
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bosh",
+          "display": "波什"
+        }
+      }
+    ],
+    "60": [
+      {
+        "upgradeId": "9635",
+        "requiredLevel": 400,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "heroHealthMultiplier",
+              "value": 75,
+              "rawEffect": "health_mult,75",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "self"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "add",
+              "stackFunc": "per_area_completed",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "9635",
+              "requiredLevel": 400
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Keep Your Enemies Closer",
+          "display": "更加靠近你的敌人"
+        }
+      }
+    ],
+    "61": [
+      {
+        "upgradeId": "9714",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "cleric"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "wizard"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "sorcerer"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "warlock"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "9714",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Class Act - Spellslingers",
+          "display": "出类拔萃：施法者"
+        }
+      },
+      {
+        "upgradeId": "9715",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "barbarian"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "fighter"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "rogue"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "monk"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "9715",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Class Act - Bruisers",
+          "display": "出类拔萃：战士"
+        }
+      },
+      {
+        "upgradeId": "9716",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "paladin"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "ranger"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "druid"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "bard"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "9716",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Class Act - Hybrids",
+          "display": "出类拔萃：混合"
+        }
+      },
+      {
+        "upgradeId": "9717",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "baldursgate"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "9717",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Class Act - Baldur's Gate",
+          "display": "出类拔萃：博德之门"
+        }
+      }
+    ],
+    "70": [
+      {
+        "upgradeId": "15041",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 100,
+              "monsterTags": [
+                "armor_based"
+              ],
+              "rawEffect": "monster_with_tag_more_damage,100,armor_based",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15041",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "We've Trained For This",
+          "display": "训练就绪"
+        }
+      }
+    ],
+    "72": [
+      {
+        "upgradeId": "19253",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "19253",
+              "requiredLevel": 120
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Dichromancy",
+          "display": "二元色彩"
+        }
+      }
+    ],
+    "81": [
+      {
+        "upgradeId": "13749",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Relentless Avenger",
+          "display": "无情复仇者"
+        }
+      },
+      {
+        "upgradeId": "13750",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Reflective Shield",
+          "display": "反射护盾"
+        }
+      },
+      {
+        "upgradeId": "13751",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 0,
+              "rawEffect": "damage_reduction,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "unknown",
+              "stackFunc": "hero_health_below_percent_amount",
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "13751",
+              "requiredLevel": 120
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Mithral Skin",
+          "display": "秘银皮肤"
+        }
+      },
+      {
+        "upgradeId": "13756",
+        "requiredLevel": 350,
+        "requiredUpgradeId": "13750",
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 0,
+              "rawEffect": "damage_reduction,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "unknown",
+              "stackFunc": "hero_health_below_percent_amount",
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "13756",
+              "requiredLevel": 350
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Mithral Skin",
+          "display": "秘银皮肤"
+        }
+      },
+      {
+        "upgradeId": "13758",
+        "requiredLevel": 350,
+        "requiredUpgradeId": "13749",
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 0,
+              "rawEffect": "damage_reduction,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "unknown",
+              "stackFunc": "hero_health_below_percent_amount",
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "13758",
+              "requiredLevel": 350
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Mithral Skin",
+          "display": "秘银皮肤"
+        }
+      }
+    ],
+    "82": [
+      {
+        "upgradeId": "15960",
+        "requiredLevel": 160,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "heroId",
+                  "heroId": "9",
+                  "negate": false
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15960",
+              "requiredLevel": 160
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritDamage",
+              "value": 100,
+              "rawEffect": "buff_base_crit_damage_mult,100",
+              "source": "official-parsed",
+              "amountFunc": "mult",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "heroId",
+                  "heroId": "9",
+                  "negate": false
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15960",
+              "requiredLevel": 160
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritChance",
+              "value": 20,
+              "rawEffect": "buff_base_crit_chance_add,20",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "heroId",
+                  "heroId": "9",
+                  "negate": false
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15960",
+              "requiredLevel": 160
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "For The Greater Good",
+          "display": "为了更大的利益"
+        }
+      },
+      {
+        "upgradeId": "15961",
+        "requiredLevel": 160,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "heroHealthMultiplier",
+              "value": 200,
+              "rawEffect": "health_mult,200",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15961",
+              "requiredLevel": 160
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Shield Wall",
+          "display": "盾墙"
+        }
+      }
+    ],
+    "88": [
+      {
+        "upgradeId": "6838",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "str",
+                  "operator": ">=",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6838",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "High Strength",
+          "display": "高强度"
+        }
+      },
+      {
+        "upgradeId": "6839",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "str",
+                  "operator": "<",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6839",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Low Strength",
+          "display": "低强度"
+        }
+      },
+      {
+        "upgradeId": "6840",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "dex",
+                  "operator": ">=",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6840",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "High Dexterity",
+          "display": "高敏捷度"
+        }
+      },
+      {
+        "upgradeId": "6841",
+        "requiredLevel": 50,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "dex",
+                  "operator": "<",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6841",
+              "requiredLevel": 50
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Low Dexterity",
+          "display": "低敏捷度"
+        }
+      },
+      {
+        "upgradeId": "6978",
+        "requiredLevel": 90,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "con",
+                  "operator": ">=",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6978",
+              "requiredLevel": 90
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "High Constitution",
+          "display": "精力充沛"
+        }
+      },
+      {
+        "upgradeId": "6979",
+        "requiredLevel": 90,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "con",
+                  "operator": "<",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6979",
+              "requiredLevel": 90
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Low Constitution",
+          "display": "精力不充沛"
+        }
+      },
+      {
+        "upgradeId": "6976",
+        "requiredLevel": 130,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "int",
+                  "operator": ">=",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6976",
+              "requiredLevel": 130
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "High Intelligence",
+          "display": "高智力"
+        }
+      },
+      {
+        "upgradeId": "6977",
+        "requiredLevel": 130,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "int",
+                  "operator": "<",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6977",
+              "requiredLevel": 130
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Low Intelligence",
+          "display": "低智力"
+        }
+      },
+      {
+        "upgradeId": "6980",
+        "requiredLevel": 170,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "wis",
+                  "operator": ">=",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6980",
+              "requiredLevel": 170
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "High Wisdom",
+          "display": "高感知"
+        }
+      },
+      {
+        "upgradeId": "6981",
+        "requiredLevel": 170,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "wis",
+                  "operator": "<",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6981",
+              "requiredLevel": 170
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Low Wisdom",
+          "display": "低感知"
+        }
+      },
+      {
+        "upgradeId": "6842",
+        "requiredLevel": 210,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "cha",
+                  "operator": ">=",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6842",
+              "requiredLevel": 210
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "High Charisma",
+          "display": "高魅力"
+        }
+      },
+      {
+        "upgradeId": "6843",
+        "requiredLevel": 210,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "cooldown",
+            "signal": {
+              "kind": "cooldownReduction",
+              "value": 10,
+              "rawEffect": "reduce_ultimate_cooldown,10",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "cha",
+                  "operator": "<",
+                  "value": 13
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "6843",
+              "requiredLevel": 210
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Low Charisma",
+          "display": "低魅力"
+        }
+      }
+    ],
+    "92": [
+      {
+        "upgradeId": "17070",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 1000,
+              "rawEffect": "hero_dps_multiplier_mult,1000",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "self"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17070",
+              "requiredLevel": 120
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Hunger For Blood",
+          "display": "渴血"
+        }
+      }
+    ],
+    "106": [
+      {
+        "upgradeId": "7526",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 50,
+              "rawEffect": "damage_reduction,50",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "7526",
+              "requiredLevel": 250
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Resilient Spirit",
+          "display": "韧性魂灵"
+        }
+      }
+    ],
+    "116": [
+      {
+        "upgradeId": "9619",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,100,chaotic",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "chaotic"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "9619",
+              "requiredLevel": 250
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Chaos Reigns",
+          "display": "混沌之治"
+        }
+      },
+      {
+        "upgradeId": "9620",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 300,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,300,gold",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "gold"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "9620",
+              "requiredLevel": 250
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Mercenary for Hire",
+          "display": "雇佣兵"
+        }
+      },
+      {
+        "upgradeId": "9621",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 500,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,500,evil",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "evil"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "9621",
+              "requiredLevel": 250
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "League of Malevolence",
+          "display": "恶念联会"
+        }
+      }
+    ],
+    "118": [
+      {
+        "upgradeId": "9762",
+        "requiredLevel": 140,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 1000,
+              "rawEffect": "hero_dps_multiplier_mult,1000",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "9762",
+              "requiredLevel": 140
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Curse of the Dhampir",
+          "display": "半吸血鬼的诅咒"
+        }
+      }
+    ],
+    "120": [
+      {
+        "upgradeId": "10615",
+        "requiredLevel": 280,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "speed",
+            "signal": {
+              "kind": "attackSpeedMult",
+              "value": 2,
+              "rawEffect": "reduce_attack_cooldown,2",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "10615",
+              "requiredLevel": 280
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Unwavering",
+          "display": "坚定不移"
+        }
+      }
+    ],
+    "127": [
+      {
+        "upgradeId": "12090",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "frontTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12090",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 250,
+              "rawEffect": "buff_upgrades,0,12090,12091",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "frontTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 400,
+                "rawEffect": "hero_dps_multiplier_mult,400",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "frontTwoColumns"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 25,
+              "rawEffect": "buff_upgrades,25,12090,12091",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "frontTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 400,
+                "rawEffect": "hero_dps_multiplier_mult,400",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "frontTwoColumns"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Front Deck",
+          "display": "前排强化"
+        }
+      },
+      {
+        "upgradeId": "12091",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "backTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12091",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 250,
+              "rawEffect": "buff_upgrades,0,12090,12091",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "backTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 400,
+                "rawEffect": "hero_dps_multiplier_mult,400",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "backTwoColumns"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 25,
+              "rawEffect": "buff_upgrades,25,12090,12091",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "backTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 400,
+                "rawEffect": "hero_dps_multiplier_mult,400",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "backTwoColumns"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Rear Deck",
+          "display": "后排强化"
+        }
+      },
+      {
+        "upgradeId": "12092",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "evil"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12092",
+              "requiredLevel": 250
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Friends in Low Places",
+          "display": "三教九流的朋友"
+        }
+      },
+      {
+        "upgradeId": "12093",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "geneutral"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12093",
+              "requiredLevel": 250
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Friends in Meh Places",
+          "display": "普普通通的朋友"
+        }
+      },
+      {
+        "upgradeId": "12094",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "good"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12094",
+              "requiredLevel": 250
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Friends in High Places",
+          "display": "高高在上的朋友"
+        }
+      }
+    ],
+    "128": [
+      {
+        "upgradeId": "12118",
+        "requiredLevel": 230,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritChance",
+              "value": 20,
+              "rawEffect": "buff_base_crit_chance_add,20",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12118",
+              "requiredLevel": 230
+            },
+            "bucket": "carrySignals"
+          },
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritDamage",
+              "value": 100,
+              "rawEffect": "buff_base_crit_damage_mult,100",
+              "source": "official-parsed",
+              "amountFunc": "mult",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12118",
+              "requiredLevel": 230
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Champion",
+          "display": "勇士"
+        }
+      }
+    ],
+    "129": [
+      {
+        "upgradeId": "12495",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 100,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "gold_mult_per_tagged_crusader_mult,100,gold",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "gold"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "12495",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Thief",
+          "display": "盗贼"
+        }
+      }
+    ],
+    "136": [
+      {
+        "upgradeId": "11659",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 400,
+              "rawEffect": "hero_dps_multiplier_mult,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "11659",
+              "requiredLevel": 250
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Take the Helm",
+          "display": "由我掌舵"
+        }
+      }
+    ],
+    "139": [
+      {
+        "upgradeId": "12982",
+        "requiredLevel": 150,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 60,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "12982",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Defender of the Meek",
+          "display": "温顺者守护者"
+        }
+      },
+      {
+        "upgradeId": "12983",
+        "requiredLevel": 150,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 50,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "speed"
+                }
+              },
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "speed"
+                }
+              },
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "12983",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Vanguard of the Quick",
+          "display": "迅捷者先锋"
+        }
+      },
+      {
+        "upgradeId": "12984",
+        "requiredLevel": 150,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 50,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "female"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "non_binary"
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "female"
+                    },
+                    {
+                      "op": "tag",
+                      "tag": "non_binary"
+                    }
+                  ]
+                }
+              },
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "12984",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Callessa's Blessed",
+          "display": "卡莱萨的护佑"
+        }
+      }
+    ],
+    "143": [
+      {
+        "upgradeId": "13726",
+        "requiredLevel": 130,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 50,
+              "rawEffect": "hero_dps_multiplier_mult,50",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_other_stack_count",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "13726",
+              "requiredLevel": 130
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Berserker",
+          "display": "狂战士"
+        }
+      }
+    ],
+    "146": [
+      {
+        "upgradeId": "14383",
+        "requiredLevel": 130,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 200,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,200,dragonborn",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "dragonborn"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14383",
+              "requiredLevel": 130
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Draconic Bloodline",
+          "display": "龙之血统"
+        }
+      },
+      {
+        "upgradeId": "14385",
+        "requiredLevel": 180,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,100,evil",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "evil"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14385",
+              "requiredLevel": 180
+            },
+            "bucket": "carrySignals"
+          },
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 100,
+              "rawEffect": "damage_reduction,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14385",
+              "requiredLevel": 180
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Embrace the Urge",
+          "display": "拥抱渴望"
+        }
+      },
+      {
+        "upgradeId": "14386",
+        "requiredLevel": 180,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "amountFunc": "mult",
+              "stackFunc": "per_tagged_crusader_mult",
+              "rawEffect": "hero_dps_mult_per_tagged_crusader_mult,100,good",
+              "source": "official-parsed",
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "good"
+                }
+              },
+              "targetQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14386",
+              "requiredLevel": 180
+            },
+            "bucket": "carrySignals"
+          },
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 100,
+              "rawEffect": "damage_reduction,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14386",
+              "requiredLevel": 180
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Resist the Urge",
+          "display": "抵抗渴望"
+        }
+      }
+    ],
+    "148": [
+      {
+        "upgradeId": "14791",
+        "requiredLevel": 60,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "dex",
+                  "operator": ">=",
+                  "value": 15
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14791",
+              "requiredLevel": 60
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Inspire: Acrobatic Assault",
+          "display": "激励：杂技突袭"
+        }
+      },
+      {
+        "upgradeId": "14792",
+        "requiredLevel": 60,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "stat",
+                  "stat": "total_ability_score",
+                  "operator": "<=",
+                  "value": 78
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14792",
+              "requiredLevel": 60
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Inspire: Modest Might",
+          "display": "激励：尽己所能"
+        }
+      },
+      {
+        "upgradeId": "14793",
+        "requiredLevel": 60,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "and",
+                  "children": [
+                    {
+                      "op": "age",
+                      "operator": "<=",
+                      "value": 20
+                    },
+                    {
+                      "op": "heroId",
+                      "heroId": "146",
+                      "negate": true
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "14793",
+              "requiredLevel": 60
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Inspire: Fledgling Fury",
+          "display": "激励：新生之怒"
+        }
+      }
+    ],
+    "149": [
+      {
+        "upgradeId": "15032",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritChance",
+              "value": 20,
+              "rawEffect": "buff_base_crit_chance_add,20",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "attackType",
+                  "attackType": "melee",
+                  "negate": false
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15032",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritDamage",
+              "value": 1000,
+              "rawEffect": "buff_base_crit_damage_mult,1000",
+              "source": "official-parsed",
+              "amountFunc": "mult",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "attackType",
+                  "attackType": "melee",
+                  "negate": false
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15032",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Strength of Baldur's Gate",
+          "display": "博德之门的力量"
+        }
+      }
+    ],
+    "152": [
+      {
+        "upgradeId": "15447",
+        "requiredLevel": 110,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "self"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15447",
+              "requiredLevel": 110
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Stunning Strength",
+          "display": "惊人力量"
+        }
+      },
+      {
+        "upgradeId": "15448",
+        "requiredLevel": 110,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 0,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "allBehindColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15448",
+              "requiredLevel": 110
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Group Charge",
+          "display": "集体冲锋"
+        }
+      }
+    ],
+    "153": [
+      {
+        "upgradeId": "15623",
+        "requiredLevel": 180,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "speed",
+            "signal": {
+              "kind": "attackSpeedMult",
+              "value": 0.5,
+              "rawEffect": "reduce_attack_cooldown,0.5",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "evil"
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15623",
+              "requiredLevel": 180
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Kas the Bloody Handed",
+          "display": "血手凯斯"
+        }
+      },
+      {
+        "upgradeId": "15624",
+        "requiredLevel": 180,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 100,
+              "monsterTags": [
+                "boss"
+              ],
+              "rawEffect": "increase_damage_against_monster_tag,100,boss",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15624",
+              "requiredLevel": 180
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Kas the Betrayer",
+          "display": "背叛者凯斯"
+        }
+      }
+    ],
+    "155": [
+      {
+        "upgradeId": "15218",
+        "requiredLevel": 80,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 50,
+              "rawEffect": "damage_reduction,50",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "15218",
+              "requiredLevel": 80
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Glitch Form: Tabaxi Barbarian",
+          "display": "变异形态：斑猫人野蛮人"
+        }
+      }
+    ],
+    "157": [
+      {
+        "upgradeId": "16134",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 0,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "unknown",
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16134",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Trait: Cautious",
+          "display": "特性：谨慎"
+        }
+      },
+      {
+        "upgradeId": "16135",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 0,
+              "rawEffect": "hero_dps_multiplier_mult,0",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "unknown",
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16135",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Trait: Brave",
+          "display": "特性：勇敢"
+        }
+      },
+      {
+        "upgradeId": "16136",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 600,
+              "rawEffect": "hero_dps_multiplier_mult,600",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "adjacent"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16136",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Trait: Sarcastic",
+          "display": "特性：讽刺"
+        }
+      }
+    ],
+    "161": [
+      {
+        "upgradeId": "16890",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 10000,
+              "monsterTags": null,
+              "rawEffect": "increase_damage_against_monster,10000",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "self"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "16890",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Giant Hunter",
+          "display": "巨人猎人"
+        }
+      },
+      {
+        "upgradeId": "16891",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 20,
+              "rawEffect": "hero_dps_multiplier_mult,20",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "16891",
+              "requiredLevel": 200
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Giant Taunter",
+          "display": "巨人嘲讽者"
+        }
+      }
+    ],
+    "163": [
+      {
+        "upgradeId": "17086",
+        "requiredLevel": 230,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "globalCritChance",
+              "value": 1,
+              "rawEffect": "global_buff_base_crit_chance_add,1",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "17086",
+              "requiredLevel": 230
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "globalCritDamage",
+              "value": 10,
+              "rawEffect": "global_buff_base_crit_damage_add,10",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": false,
+              "excludeSelf": false,
+              "upgradeId": "17086",
+              "requiredLevel": 230
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Tactical Advantage",
+          "display": "战术优势"
+        }
+      }
+    ],
+    "165": [
+      {
+        "upgradeId": "17491",
+        "requiredLevel": 70,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Bargain With Tyr",
+          "display": "与提尔交涉"
+        }
+      },
+      {
+        "upgradeId": "17492",
+        "requiredLevel": 70,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Bargain With Moradin",
+          "display": "与摩拉丁交涉"
+        }
+      },
+      {
+        "upgradeId": "17493",
+        "requiredLevel": 70,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 100,
+              "rawEffect": "gold_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17493",
+              "requiredLevel": 70
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bargain With Tymora",
+          "display": "与泰摩拉交涉"
+        }
+      },
+      {
+        "upgradeId": "17494",
+        "requiredLevel": 70,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Bargain With Mystra",
+          "display": "与密斯特拉交涉"
+        }
+      },
+      {
+        "upgradeId": "17495",
+        "requiredLevel": 70,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Bargain With Eldath",
+          "display": "与艾达丝交涉"
+        }
+      },
+      {
+        "upgradeId": "17498",
+        "requiredLevel": 150,
+        "requiredUpgradeId": "17491",
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 100,
+              "rawEffect": "gold_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17498",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bargain With Tymora",
+          "display": "与泰摩拉交涉"
+        }
+      },
+      {
+        "upgradeId": "17502",
+        "requiredLevel": 150,
+        "requiredUpgradeId": "17492",
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "dwarf"
+                }
+              },
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "dwarf"
+                }
+              },
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17502",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Dark Bargain",
+          "display": "黑暗交易"
+        }
+      },
+      {
+        "upgradeId": "17503",
+        "requiredLevel": 150,
+        "requiredUpgradeId": "17492",
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 100,
+              "rawEffect": "gold_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17503",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bargain With Tymora",
+          "display": "与泰摩拉交涉"
+        }
+      },
+      {
+        "upgradeId": "17513",
+        "requiredLevel": 150,
+        "requiredUpgradeId": "17494",
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 100,
+              "rawEffect": "gold_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17513",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bargain With Tymora",
+          "display": "与泰摩拉交涉"
+        }
+      },
+      {
+        "upgradeId": "17518",
+        "requiredLevel": 150,
+        "requiredUpgradeId": "17495",
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 100,
+              "rawEffect": "gold_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17518",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Bargain With Tymora",
+          "display": "与泰摩拉交涉"
+        }
+      },
+      {
+        "upgradeId": "17520",
+        "requiredLevel": 150,
+        "requiredUpgradeId": "17495",
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "damageReduction",
+              "value": 100,
+              "rawEffect": "damage_reduction,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17520",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 100,
+              "monsterTags": null,
+              "rawEffect": "damage_increase,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": true,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "17520",
+              "requiredLevel": 150
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Dark Bargain",
+          "display": "黑暗交易"
+        }
+      }
+    ],
+    "174": [
+      {
+        "upgradeId": "19240",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "rearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19240",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 10,
+              "rawEffect": "buff_upgrades,0,19240,19241,19242",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "rearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "rearMostColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "buff_upgrades,100,19240,19241,19242",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "rearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "rearMostColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Map Collector: Pre-Cataclysm",
+          "display": "地图收藏家：大灾变之前"
+        }
+      },
+      {
+        "upgradeId": "19241",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "secondRearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19241",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 10,
+              "rawEffect": "buff_upgrades,0,19240,19241,19242",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "secondRearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "secondRearMostColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "buff_upgrades,100,19240,19241,19242",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "secondRearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "secondRearMostColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Map Collector: Time of Darkness",
+          "display": "地图收藏家：黑暗时代"
+        }
+      },
+      {
+        "upgradeId": "19242",
+        "requiredLevel": 20,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "thirdRearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19242",
+              "requiredLevel": 20
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 10,
+              "rawEffect": "buff_upgrades,0,19240,19241,19242",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "thirdRearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "thirdRearMostColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "buff_upgrades,100,19240,19241,19242",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "thirdRearMostColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 20,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "thirdRearMostColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 20
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Map Collector: War of the Lance",
+          "display": "地图收藏家：长矛之战"
+        }
+      }
+    ],
+    "175": [
+      {
+        "upgradeId": "19354",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "exactlyBehindOneColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19354",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 20,
+              "rawEffect": "buff_upgrades,20,19356,19355,19354",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "exactlyBehindOneColumn"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "exactlyBehindOneColumn"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Battle Plan: Charge",
+          "display": "作战计划：冲锋"
+        }
+      },
+      {
+        "upgradeId": "19355",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "exactlyBehindTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19355",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 20,
+              "rawEffect": "buff_upgrades,20,19356,19355,19354",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "exactlyBehindTwoColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "exactlyBehindTwoColumns"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Battle Plan: Outflank",
+          "display": "作战计划：包抄"
+        }
+      },
+      {
+        "upgradeId": "19356",
+        "requiredLevel": 30,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "exactlyBehindThreeColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19356",
+              "requiredLevel": 30
+            },
+            "bucket": "supportSignals"
+          },
+          {
+            "dimension": "damage",
+            "bucket": "supportSignals",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 20,
+              "rawEffect": "buff_upgrades,20,19356,19355,19354",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "exactlyBehindThreeColumns"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "requiredLevel": 30,
+              "bonusScaleOfSignal": {
+                "kind": "heroDpsMultiplier",
+                "value": 100,
+                "rawEffect": "hero_dps_multiplier_mult,100",
+                "source": "official-parsed",
+                "targetQualifier": null,
+                "formationCountQualifier": null,
+                "positionQualifier": {
+                  "relation": "exactlyBehindThreeColumns"
+                },
+                "formationCountPositionQualifier": null,
+                "amountFunc": null,
+                "stackFunc": null,
+                "applyManually": false,
+                "stacksMultiply": null,
+                "excludeSelf": false,
+                "requiredLevel": 30
+              }
+            }
+          }
+        ],
+        "specializationName": {
+          "original": "Battle Plan: Fortify",
+          "display": "作战计划：筑防"
+        }
+      },
+      {
+        "upgradeId": "19357",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "crit",
+            "signal": {
+              "kind": "heroCritChance",
+              "value": 20,
+              "rawEffect": "buff_base_crit_chance_add,20",
+              "source": "official-parsed",
+              "targetQualifier": {
+                "predicate": {
+                  "op": "or",
+                  "children": [
+                    {
+                      "op": "tag",
+                      "tag": "heroeslance"
+                    },
+                    {
+                      "op": "and",
+                      "children": [
+                        {
+                          "op": "upgradeUnlocked",
+                          "upgradeId": "19357"
+                        },
+                        {
+                          "op": "tag",
+                          "tag": "dps"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "children": [
+                        {
+                          "op": "upgradeUnlocked",
+                          "upgradeId": "19358"
+                        },
+                        {
+                          "op": "stat",
+                          "stat": "con",
+                          "operator": "<=",
+                          "value": 12
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "children": [
+                        {
+                          "op": "upgradeUnlocked",
+                          "upgradeId": "19359"
+                        },
+                        {
+                          "op": "tag",
+                          "tag": "hunter"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "children": [
+                        {
+                          "op": "featEquipped",
+                          "featId": "2578"
+                        },
+                        {
+                          "op": "or",
+                          "children": [
+                            {
+                              "op": "tag",
+                              "tag": "elf"
+                            },
+                            {
+                              "op": "tag",
+                              "tag": "half-elf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "children": [
+                        {
+                          "op": "featEquipped",
+                          "featId": "2579"
+                        },
+                        {
+                          "op": "stat",
+                          "stat": "total_ability_score",
+                          "operator": ">=",
+                          "value": 85
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "children": [
+                        {
+                          "op": "featEquipped",
+                          "featId": "2580"
+                        },
+                        {
+                          "op": "attackType",
+                          "attackType": "melee",
+                          "negate": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19357",
+              "requiredLevel": 120
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Lead the Attack",
+          "display": "带头进攻"
+        }
+      },
+      {
+        "upgradeId": "19358",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "survival",
+            "signal": {
+              "kind": "heroHealthMultiplier",
+              "value": 100,
+              "rawEffect": "health_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19358",
+              "requiredLevel": 120
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Protect the Vulnerable",
+          "display": "保护弱者"
+        }
+      },
+      {
+        "upgradeId": "19359",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 400,
+              "monsterTags": null,
+              "rawEffect": "increase_damage_against_monster,400",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": {
+                "predicate": {
+                  "op": "tag",
+                  "tag": "hunter"
+                }
+              },
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "19359",
+              "requiredLevel": 120
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Wield the Dragonlance",
+          "display": "挥舞龙枪"
+        }
+      }
+    ],
+    "176": [
+      {
+        "upgradeId": "19692",
+        "requiredLevel": 160,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 100,
+              "rawEffect": "hero_dps_multiplier_mult,100",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": {
+                "relation": "any"
+              },
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19692",
+              "requiredLevel": 160
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Faster, Friends",
+          "display": "再快点，朋友们"
+        }
+      }
+    ],
+    "178": [
+      {
+        "upgradeId": "20137",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "gold",
+            "signal": {
+              "kind": "globalGoldMultiplier",
+              "value": 10,
+              "rawEffect": "gold_multiplier_mult,10",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_monster_health_order_of_magnitude",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "20137",
+              "requiredLevel": 200
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Craft Maker",
+          "display": "手工艺人"
+        }
+      },
+      {
+        "upgradeId": "20139",
+        "requiredLevel": 200,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "damage",
+            "signal": {
+              "kind": "heroDpsMultiplier",
+              "value": 10000,
+              "rawEffect": "hero_dps_multiplier_mult,10000",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": "mult",
+              "stackFunc": "per_hero_attribute",
+              "applyManually": false,
+              "stacksMultiply": true,
+              "excludeSelf": false,
+              "upgradeId": "20139",
+              "requiredLevel": 200
+            },
+            "bucket": "carrySignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Life Taker",
+          "display": "夺命者"
+        }
+      }
+    ]
+  },
+  "updatedAt": "2026-08-06"
+}

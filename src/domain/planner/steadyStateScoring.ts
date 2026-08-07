@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- planner 核心评分引擎：scoreFormation 主流程 + 7 个紧密协作的子函数。拆到多个文件会让评分逻辑修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
-import { Decimal } from 'decimal.js'
+import { toGameNumber, multiplyGameNumbers, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
@@ -9,7 +9,6 @@ import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
 import { computeSingleHitDamage } from '../simulator/budCalculation'
 import { estimateMaxArea, type AreaEstimationResult } from '../simulator/areaEstimation'
-import { compareGameNumbers, formatGameNumber, type GameNumberValue } from '../simulator/gameNumber'
 import type { EquipmentCritBonus } from '../buffs/equipmentMult'
 import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
@@ -100,6 +99,11 @@ export interface ScoringInput {
    * 且跳过 areaEstimate（非真实 DPS，BUD 估算无意义）。
    */
   aggregateProjection?: AggregateProjection | undefined
+  /**
+   * 金币预算值（评分链路暂不消费，预留扩展——未来金币相关加成建模时使用）。
+   * 由调用方从 options.goldBudget（游戏记数法字符串）解析后传入。
+   */
+  goldBudget?: GameNumberValue | undefined
 }
 
 export interface SimulationFactor {
@@ -163,7 +167,7 @@ export interface ScoringResult {
   breakdown: SimulationBreakdown | null
 }
 
-const ZERO: GameNumberValue = new Decimal(0)
+const ZERO: GameNumberValue = toGameNumber(0)
 
 type PlacedEntry = { slotId: string; hero: ResolvedHeroAbilityProfile }
 
@@ -423,7 +427,7 @@ function scoreCarryCandidate(
 
   // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。
   const carryDps = aggregateProjection === 'formation-buff'
-    ? new Decimal(damageAggregate * critVuln)
+    ? toGameNumber(damageAggregate * critVuln)
     : computeCarryDps(carryEntry.hero, carryLevel, damageAggregate * critVuln)
 
   return {
@@ -495,7 +499,7 @@ function buildSimulationBreakdown(data: BreakdownData, bestCarryDps: GameNumberV
   const { carryEntry, carryLevel, pools, critFactor, vulnFactor, contributions } = data
   const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
   const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
-  const baseDps = new Decimal(baseDamage).mul(levelCurve)
+  const baseDps = multiplyGameNumbers(toGameNumber(baseDamage), levelCurve)
   // factors 从 pools 提取：damage:global/hero 池各外露为 globalBuff/heroDpsPool（unified = ability + 外部同 key 加法）；
   // damagePool 为残余（非 global/hero 的 damage 池，当前结构性 =1）。
   const globalBuff = pools.get('damage:global')?.poolMultiplier ?? 1

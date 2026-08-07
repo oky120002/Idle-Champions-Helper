@@ -1,281 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "15",
-    "name": {
-      "original": "Krond",
-      "display": "克朗"
-    },
-    "seat": 6,
-    "roles": [
-      "dps",
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "chaotic",
-      "cneoriginal",
-      "dps",
-      "event",
-      "evil",
-      "fighter",
-      "half-orc",
-      "male",
-      "spec_debuff",
-      "support",
-      "unaffiliated",
-      "y1"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/15.png",
-      "sourceGraphic": "Portraits/Portrait_Krond",
-      "sourceVersion": 7
-    }
-  },
-  "englishName": "Krond",
-  "eventName": {
-    "original": "Liar's Night",
-    "display": "说谎者之夜"
-  },
-  "dateAvailable": "2017-10-25 00:00:00",
-  "lastReworkDate": "2025-06-11 12:00:00",
-  "popularity": 12,
-  "baseCost": "100000000",
-  "baseDamage": "3500000",
-  "baseHealth": "90",
-  "graphicId": "1316",
-  "portraitGraphicId": "1371",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1790881200
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    300,
-    795,
-    1400,
-    2145
-  ],
-  "costCurves": {
-    "1": 1.095
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      155,
-      156,
-      157
-    ],
-    "graphic_large": 1370,
-    "graphic_xl": 13906,
-    "eye_height": 123,
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "shoot": 4,
-      "attack": 3,
-      "ultimate": 5,
-      "gethit": 6,
-      "koed": 7,
-      "run": 8
-    },
-    "portrait_center_offset": [
-      86,
-      56
-    ],
-    "allow_time_gate": true,
-    "time_gate_adventure_id": 190,
-    "time_gate_variants_ids": [
-      45,
-      46,
-      47
-    ],
-    "time_gate_tier": 3,
-    "silver_chest_type_id": 5,
-    "gold_chest_type_id": 6,
-    "available_in_store": true,
-    "golden_epic_loot_id": 340,
-    "golden_epic_promo_id": 3,
-    "event_logo_graphic_id": 3372,
-    "console_portrait": 3992,
-    "head_graphic_id": 7275,
-    "trials_effect_id": 838,
-    "legendary_effect_id": [
-      1,
-      2,
-      70,
-      83,
-      92,
-      52
-    ],
-    "weekly_buff": "global_dps_multiplier_mult,200",
-    "notification_adjustment": {
-      "offset": [
-        56,
-        219
-      ],
-      "scale": 1.25
-    },
-    "permanent_effects": [
-      "krond_update_blocked"
-    ]
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Krond",
-      "display": "克朗"
-    },
-    "class": {
-      "original": "Fighter",
-      "display": "战士"
-    },
-    "race": {
-      "original": "Half-Orc",
-      "display": "半兽人"
-    },
-    "age": 42,
-    "alignment": {
-      "original": "Chaotic Evil",
-      "display": "混乱邪恶"
-    },
-    "abilityScores": {
-      "str": 18,
-      "dex": 12,
-      "con": 17,
-      "int": 17,
-      "wis": 13,
-      "cha": 9
-    },
-    "backstory": {
-      "original": "Krond was born of a union between an academic human wizard and a mighty orc fighter who led a nomadic orc community. Raised as a fearsome warrior and arcane scholar, he studied these arts with equal passion. Krond's parents tragically lost their lives protecting their family and friends during an enemy raid. This moment changed Krond, and he swore revenge upon the world. Taking up an ancestral warhammer called Unity, Krond set out to make things right, one way or another.",
-      "display": "克朗的母亲是一位学识渊博的人类法师，父亲则是一位曾统领游牧兽人部落的强悍兽人战士。自幼，他便被当作一名令人胆寒的战士与精通奥术的学者来培养，对战斗技艺与奥术学问抱有同等的热忱。在一次敌人的突袭中，他的父母为了保护家人和朋友不幸丧生。这一悲惨瞬间彻底改变了他的人生轨迹，他发誓要向这个世界复仇。随后，他拿起一把名为“团结”的祖传战锤，决心用尽一切办法，向世界讨回一个公道。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "862",
-      "name": {
-        "original": "War Magic",
-        "display": "战争魔法"
-      },
-      "description": {
-        "original": "Krond leaps out and attacks the front-most target with his bonded warhammer. If you have a Cantrip Feat equipped, he then casts the given Cantrip.",
-        "display": "克朗跳起并用他的战锤攻击最前方的目标。如果装备了戏法专长，他随后会施展该戏法。"
-      },
-      "longDescription": null,
-      "cooldown": 5.25,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "monster",
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "damage_frame": 2,
-          "target_offset_x": -80,
-          "jump_sound": 30,
-          "sound_frames": {
-            "2": 154
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "50",
-      "name": {
-        "original": "Arcane Charge",
-        "display": "奥术冲锋"
-      },
-      "description": {
-        "original": "Krond teleports to a random enemy and causes massive area damage.",
-        "display": "克朗传送到一个随机敌人处，并造成大量范围伤害。"
-      },
-      "longDescription": {
-        "original": "Krond throws down his warhammer and leaps up into the air, teleporting to a random enemy and causing massive area damage by slamming down to the ground and casting Shatter when he appears.",
-        "display": "克朗扔下他的战锤并跃入空中，传送到一个随机敌人处，猛地砸向地面并在出现时施展“粉碎”技能，造成大量范围伤害。"
-      },
-      "cooldown": 210,
-      "numTargets": 1,
-      "aoeRadius": 200,
-      "damageModifier": "0.03333",
-      "target": "random",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "melee",
-        "ultimate"
-      ],
-      "graphicId": "1356",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "shake_on_hit": 0.1,
-          "power_up_sequence": {
-            "start_frame": 0,
-            "end_frame": 15,
-            "sound_frames": {
-              "2": 149
-            }
-          },
-          "sequences": [
-            {
-              "start_frame": 18,
-              "damage_frame": 22,
-              "end_frame": 44,
-              "sound_frames": {
-                "20": 133
-              },
-              "visual_effect_frames": {
-                "hit": {
-                  "effect": "animated_clip",
-                  "graphic_id": 1321,
-                  "sort_offset": -9999,
-                  "offset_x": 70
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "17237",
-        "name": {
-          "original": "Unsung Alliance",
-          "display": "无名联盟"
-        },
-        "description": null,
-        "graphicId": "26487"
-      },
-      {
-        "upgradeId": "17241",
-        "name": {
-          "original": "Best of the Best",
-          "display": "出类拔萃"
-        },
-        "description": null,
-        "graphicId": "26486"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "17521",
@@ -286,7 +10,6 @@
         "display": "戏法专长"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2406",
       "effectDefinition": {
         "id": "2406",
         "snapshots": {
@@ -327,7 +50,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2406"
     },
     {
       "id": "17333",
@@ -335,14 +59,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17237",
@@ -353,7 +77,6 @@
         "display": "无名联盟"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2329",
       "effectDefinition": {
         "id": "2329",
         "snapshots": {
@@ -465,7 +188,8 @@
       "tipText": {
         "original": "Krond increases the damage of all Champions based on the number of Evil Champions. A specialization expands this to include those with high Strength, Constitution, or Intelligence.",
         "display": "克朗根据阵型中邪恶勇士的数量来提升所有勇士的伤害。如果学习某项专精，可将此效果扩展到包括那些拥有高力量、体质或智力的勇士。"
-      }
+      },
+      "effectReference": "effect_def,2329"
     },
     {
       "id": "17334",
@@ -473,14 +197,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17335",
@@ -488,14 +212,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17238",
@@ -506,7 +230,6 @@
         "display": "强者生存"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2330",
       "effectDefinition": {
         "id": "2330",
         "snapshots": {
@@ -599,7 +322,8 @@
         "display": "当克朗与无比强大的战士结盟时，他的蛮力会得到增强。"
       },
       "specializationGraphicId": "26503",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2330"
     },
     {
       "id": "17239",
@@ -610,7 +334,6 @@
         "display": "优胜劣汰"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2331",
       "effectDefinition": {
         "id": "2331",
         "snapshots": {
@@ -703,7 +426,8 @@
         "display": "当克朗的盟友在艰难困苦的熔炉中锤炼出来时，他便能蓬勃发展。"
       },
       "specializationGraphicId": "26505",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2331"
     },
     {
       "id": "17240",
@@ -714,7 +438,6 @@
         "display": "智者生存"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2332",
       "effectDefinition": {
         "id": "2332",
         "snapshots": {
@@ -807,7 +530,8 @@
         "display": "在富有谋略的盟友陪伴下，克朗敏锐的智慧能将混乱转化为精心谋划的胜利。"
       },
       "specializationGraphicId": "26504",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2332"
     },
     {
       "id": "17336",
@@ -815,14 +539,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17246",
@@ -833,14 +557,14 @@
         "display": "奥术冲锋"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "17245",
@@ -848,14 +572,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17241",
@@ -866,7 +590,6 @@
         "display": "出类拔萃"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2333",
       "effectDefinition": {
         "id": "2333",
         "snapshots": {
@@ -962,7 +685,8 @@
       "tipText": {
         "original": "Krond further increases his damage bonus based on how high his companions' chosen ability scores are - higher scores provide greater boosts.",
         "display": "克朗会根据他同伴所选技能值的高低进一步提升他的伤害加成——技能值越高，加成越大。"
-      }
+      },
+      "effectReference": "effect_def,2333"
     },
     {
       "id": "17337",
@@ -970,14 +694,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17338",
@@ -985,14 +709,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17242",
@@ -1003,7 +727,6 @@
         "display": "魔能打击"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2334",
       "effectDefinition": {
         "id": "2334",
         "snapshots": {
@@ -1106,7 +829,8 @@
         "display": "克朗的奥术技能会削弱敌人，使后续的每一次攻击都更加致命。"
       },
       "specializationGraphicId": "26501",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2334"
     },
     {
       "id": "17243",
@@ -1117,7 +841,6 @@
         "display": "幕后掌权"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2335",
       "effectDefinition": {
         "id": "2335",
         "snapshots": {
@@ -1220,7 +943,8 @@
         "display": "克朗在暗中引导队伍，赋予盟友更强的伤害输出能力。"
       },
       "specializationGraphicId": "26502",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2335"
     },
     {
       "id": "17244",
@@ -1231,7 +955,6 @@
         "display": "战争魔法"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2336",
       "effectDefinition": {
         "id": "2336",
         "snapshots": {
@@ -1261,7 +984,7 @@
             "id": 2336,
             "flavour_text": "",
             "description": {
-              "desc": "克朗德的神通特长现在会造成伤害，相当于克朗德的基础伤害每增加 $阈值%，就会造成 $秒的基于 BUD 的伤害。"
+              "desc": "克隆德的“小法术”专长现在每造成其正常基础伤害的 $increase_threshold%，就会造成相当于 $amount 秒 BUD 伤害的伤害。"
             },
             "effect_keys": [
               {
@@ -1292,7 +1015,8 @@
         "display": "克朗致命的魔法能将他简单的戏法转化为具有爆炸性的魔法攻击。"
       },
       "specializationGraphicId": "26506",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2336"
     },
     {
       "id": "17339",
@@ -1300,14 +1024,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17340",
@@ -1315,14 +1039,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17341",
@@ -1330,14 +1054,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17342",
@@ -1345,14 +1069,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17343",
@@ -1360,14 +1084,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17344",
@@ -1375,14 +1099,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17345",
@@ -1390,14 +1114,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17346",
@@ -1405,14 +1129,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17347",
@@ -1420,14 +1144,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17348",
@@ -1435,14 +1159,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17349",
@@ -1450,14 +1174,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17350",
@@ -1465,14 +1189,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17351",
@@ -1480,14 +1204,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17352",
@@ -1495,14 +1219,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17353",
@@ -1510,14 +1234,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17354",
@@ -1525,14 +1249,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17355",
@@ -1540,14 +1264,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "17356",
@@ -1555,14 +1279,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17357",
@@ -1570,14 +1294,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17358",
@@ -1585,14 +1309,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17359",
@@ -1600,14 +1324,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17360",
@@ -1615,14 +1339,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17361",
@@ -1630,14 +1354,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17362",
@@ -1645,14 +1369,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17363",
@@ -1660,14 +1384,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17364",
@@ -1675,14 +1399,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17365",
@@ -1690,14 +1414,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17366",
@@ -1705,14 +1429,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17367",
@@ -1720,14 +1444,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17368",
@@ -1735,14 +1459,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17369",
@@ -1750,14 +1474,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17370",
@@ -1765,14 +1489,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17371",
@@ -1780,14 +1504,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17372",
@@ -1795,14 +1519,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17373",
@@ -1810,14 +1534,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17374",
@@ -1825,14 +1549,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17375",
@@ -1840,14 +1564,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17376",
@@ -1855,14 +1579,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17377",
@@ -1870,14 +1594,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17378",
@@ -1885,14 +1609,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17379",
@@ -1900,14 +1624,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17380",
@@ -1915,14 +1639,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17381",
@@ -1930,14 +1654,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17382",
@@ -1945,14 +1669,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17383",
@@ -1960,14 +1684,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17384",
@@ -1975,14 +1699,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17385",
@@ -1990,14 +1714,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17386",
@@ -2005,14 +1729,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17387",
@@ -2020,14 +1744,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17388",
@@ -2035,14 +1759,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17389",
@@ -2050,14 +1774,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17390",
@@ -2065,14 +1789,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17391",
@@ -2080,14 +1804,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17392",
@@ -2095,14 +1819,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17393",
@@ -2110,14 +1834,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,17237",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17237"
     },
     {
       "id": "17394",
@@ -2125,14 +1849,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17395",
@@ -2140,14 +1864,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     }
   ],
   "feats": [
@@ -2895,7 +2619,7 @@
       },
       "description": {
         "original": "My parents taught me much, but above all is this: one needs allies to survive in this world.",
-        "display": "我的父母教会了我很多东西，但最重要的是：一个人要在这个世界上生存，就需要盟友。"
+        "display": "父母教给我很多东西，但最重要的莫过于这一点：要想在这个世界上生存下去，就需要盟友。"
       },
       "rarity": "3",
       "graphicId": "6080",
@@ -3034,6 +2758,36 @@
         "type": "gems",
         "cost": 50000
       }
+    },
+    {
+      "id": "2778",
+      "order": 25,
+      "name": {
+        "original": "TBD Krond Feat (Do not translate)",
+        "display": "TBD Krond Feat (Do not translate)"
+      },
+      "description": null,
+      "rarity": "4",
+      "graphicId": "0",
+      "effects": [],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2027-01-14 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 775
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1792004400,
+        "available_for_gems_at_time": 1799956800
+      },
+      "collectionsSource": ""
     }
   ],
   "skins": [
@@ -3048,7 +2802,8 @@
         "base_graphic_id": 8405,
         "large_graphic_id": 8408,
         "xl_graphic_id": 13907,
-        "portrait_graphic_id": 8402
+        "portrait_graphic_id": 8402,
+        "bastion_graphic_id": 30637
       },
       "rarity": "3",
       "properties": {
@@ -3074,7 +2829,7 @@
       "id": "301",
       "name": {
         "original": "Scholar Krond",
-        "display": "学者克朗德"
+        "display": "学者克隆德"
       },
       "cost": {
         "req_date": "2023-05-17 12:00:00"
@@ -3083,7 +2838,8 @@
         "base_graphic_id": 19358,
         "large_graphic_id": 19360,
         "portrait_graphic_id": 19355,
-        "xl_graphic_id": 19362
+        "xl_graphic_id": 19362,
+        "bastion_graphic_id": 30883
       },
       "rarity": "3",
       "properties": {
@@ -3112,7 +2868,8 @@
         "base_graphic_id": 26850,
         "large_graphic_id": 26853,
         "portrait_graphic_id": 26847,
-        "xl_graphic_id": 26856
+        "xl_graphic_id": 26856,
+        "bastion_graphic_id": 31137
       },
       "rarity": "3",
       "properties": {
@@ -3124,7 +2881,7 @@
         "cost": 3830
       },
       "availabilities": {
-        "premium_item_id": "579"
+        "in_flash_sales": true
       }
     },
     {
@@ -3140,7 +2897,8 @@
         "base_graphic_id": 27916,
         "large_graphic_id": 27917,
         "portrait_graphic_id": 27919,
-        "xl_graphic_id": 27918
+        "xl_graphic_id": 27918,
+        "bastion_graphic_id": 31185
       },
       "rarity": "3",
       "properties": {
@@ -3170,6 +2928,7 @@
       "graphicId": "1298",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3191,6 +2950,7 @@
       "graphicId": "1298",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3212,6 +2972,7 @@
       "graphicId": "1299",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3233,6 +2994,7 @@
       "graphicId": "1300",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3254,6 +3016,7 @@
       "graphicId": "1301",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,17237,0",
@@ -3276,6 +3039,7 @@
       "graphicId": "1301",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,17237,0",
@@ -3298,6 +3062,7 @@
       "graphicId": "1302",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,17237,0",
@@ -3320,6 +3085,7 @@
       "graphicId": "1303",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,17237,0",
@@ -3342,6 +3108,7 @@
       "graphicId": "1304",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,17241"
@@ -3363,6 +3130,7 @@
       "graphicId": "1304",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,17241"
@@ -3384,6 +3152,7 @@
       "graphicId": "1305",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,17241"
@@ -3405,6 +3174,7 @@
       "graphicId": "1306",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,17241"
@@ -3426,6 +3196,7 @@
       "graphicId": "1307",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,17238,17239,17240",
@@ -3448,6 +3219,7 @@
       "graphicId": "1307",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,17238,17239,17240",
@@ -3470,6 +3242,7 @@
       "graphicId": "1308",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,17238,17239,17240",
@@ -3492,6 +3265,7 @@
       "graphicId": "1309",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,17238,17239,17240",
@@ -3509,11 +3283,12 @@
       },
       "description": {
         "original": "I should probably get this replaced.",
-        "display": "我也许应该把它换掉。"
+        "display": "我大概应该把这个换掉。"
       },
       "graphicId": "1310",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,17242,17243,17244",
@@ -3531,11 +3306,12 @@
       },
       "description": {
         "original": "Yes, I knit. What's your problem with that?",
-        "display": "是的，我编织。你有什么问题吗？"
+        "display": "是的，我会织毛衣。你对这有什么意见吗？"
       },
       "graphicId": "1310",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,17242,17243,17244",
@@ -3549,15 +3325,16 @@
       "id": "355",
       "name": {
         "original": "Wizard's Scarf",
-        "display": "法师围巾"
+        "display": "巫师围巾"
       },
       "description": {
         "original": "A fine scarf, though not very warrior-ly.",
-        "display": "一条精美的围巾，虽然不太像战士。"
+        "display": "一条很漂亮的围巾，虽然不太像战士会戴的那种。"
       },
       "graphicId": "1312",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,17242,17243,17244",
@@ -3571,15 +3348,16 @@
       "id": "356",
       "name": {
         "original": "Flowing Scarf of the Eldritch Knight",
-        "display": "奥法骑士流动围巾"
+        "display": "“诡异骑士”的飘逸围巾"
       },
       "description": {
         "original": "A memento from my time training as an Eldritch Knight.",
-        "display": "这是我接受奥法骑士训练时留下的纪念品。"
+        "display": "这是我接受“异界骑士”训练时留下的纪念品。"
       },
       "graphicId": "1311",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,17242,17243,17244",
@@ -3602,6 +3380,11 @@
       "graphicId": "1313",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,6"
@@ -3623,6 +3406,11 @@
       "graphicId": "1313",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,11"
@@ -3644,6 +3432,11 @@
       "graphicId": "1314",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,21"
@@ -3665,6 +3458,11 @@
       "graphicId": "1315",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,53"
@@ -3794,6 +3592,300 @@
       ]
     }
   ],
+  "summary": {
+    "id": "15",
+    "name": {
+      "original": "Krond",
+      "display": "克朗"
+    },
+    "seat": 6,
+    "portrait": {
+      "path": "v1/champion-portraits/15.png",
+      "sourceGraphic": "Portraits/Portrait_Krond",
+      "sourceVersion": 7
+    },
+    "roles": [
+      "dps",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "chaotic",
+      "cneoriginal",
+      "dps",
+      "event",
+      "evil",
+      "fighter",
+      "half-orc",
+      "male",
+      "spec_debuff",
+      "support",
+      "unaffiliated",
+      "y1"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Krond",
+  "eventName": {
+    "original": "Liar's Night",
+    "display": "说谎者之夜"
+  },
+  "dateAvailable": "2017-10-25 00:00:00",
+  "lastReworkDate": "2025-06-11 12:00:00",
+  "popularity": 10,
+  "baseCost": "100000000",
+  "baseDamage": "3500000",
+  "baseHealth": "90",
+  "graphicId": "1316",
+  "portraitGraphicId": "1371",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1790881200
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    300,
+    795,
+    1400,
+    2145
+  ],
+  "costCurves": {
+    "1": 1.095
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      155,
+      156,
+      157
+    ],
+    "graphic_large": 1370,
+    "graphic_xl": 13906,
+    "eye_height": 123,
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "shoot": 4,
+      "attack": 3,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 8
+    },
+    "portrait_center_offset": [
+      86,
+      56
+    ],
+    "allow_time_gate": true,
+    "time_gate_adventure_id": 190,
+    "time_gate_variants_ids": [
+      45,
+      46,
+      47
+    ],
+    "time_gate_tier": 3,
+    "silver_chest_type_id": 5,
+    "gold_chest_type_id": 6,
+    "available_in_store": true,
+    "golden_epic_loot_id": 340,
+    "golden_epic_promo_id": 3,
+    "event_logo_graphic_id": 3372,
+    "console_portrait": 3992,
+    "head_graphic_id": 7275,
+    "trials_effect_id": 838,
+    "legendary_effect_id": [
+      1,
+      2,
+      70,
+      83,
+      92,
+      52
+    ],
+    "weekly_buff": "global_dps_multiplier_mult,200",
+    "notification_adjustment": {
+      "offset": [
+        56,
+        219
+      ],
+      "scale": 1.25
+    },
+    "permanent_effects": [
+      "krond_update_blocked"
+    ],
+    "bastion_graphic_id": 30441
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Krond",
+      "display": "克朗"
+    },
+    "class": {
+      "original": "Fighter",
+      "display": "战士"
+    },
+    "race": {
+      "original": "Half-Orc",
+      "display": "半兽人"
+    },
+    "age": 42,
+    "alignment": {
+      "original": "Chaotic Evil",
+      "display": "混乱邪恶"
+    },
+    "backstory": {
+      "original": "Krond was born of a union between an academic human wizard and a mighty orc fighter who led a nomadic orc community. Raised as a fearsome warrior and arcane scholar, he studied these arts with equal passion. Krond's parents tragically lost their lives protecting their family and friends during an enemy raid. This moment changed Krond, and he swore revenge upon the world. Taking up an ancestral warhammer called Unity, Krond set out to make things right, one way or another.",
+      "display": "克朗的母亲是一位学识渊博的人类法师，父亲则是一位曾统领游牧兽人部落的强悍兽人战士。自幼，他便被当作一名令人胆寒的战士与精通奥术的学者来培养，对战斗技艺与奥术学问抱有同等的热忱。在一次敌人的突袭中，他的父母为了保护家人和朋友不幸丧生。这一悲惨瞬间彻底改变了他的人生轨迹，他发誓要向这个世界复仇。随后，他拿起一把名为“团结”的祖传战锤，决心用尽一切办法，向世界讨回一个公道。"
+    },
+    "abilityScores": {
+      "str": 18,
+      "dex": 12,
+      "con": 17,
+      "int": 17,
+      "wis": 13,
+      "cha": 9
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "862",
+      "name": {
+        "original": "War Magic",
+        "display": "战争魔法"
+      },
+      "description": {
+        "original": "Krond leaps out and attacks the front-most target with his bonded warhammer. If you have a Cantrip Feat equipped, he then casts the given Cantrip.",
+        "display": "克朗跳起并用他的战锤攻击最前方的目标。如果装备了戏法专长，他随后会施展该戏法。"
+      },
+      "longDescription": null,
+      "cooldown": 5.25,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "monster",
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "damage_frame": 2,
+          "target_offset_x": -80,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 154
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "50",
+      "name": {
+        "original": "Arcane Charge",
+        "display": "奥术冲锋"
+      },
+      "description": {
+        "original": "Krond teleports to a random enemy and causes massive area damage.",
+        "display": "克朗传送到一个随机敌人处，并造成大量范围伤害。"
+      },
+      "longDescription": {
+        "original": "Krond throws down his warhammer and leaps up into the air, teleporting to a random enemy and causing massive area damage by slamming down to the ground and casting Shatter when he appears.",
+        "display": "克朗扔下他的战锤并跃入空中，传送到一个随机敌人处，猛地砸向地面并在出现时施展“粉碎”技能，造成大量范围伤害。"
+      },
+      "cooldown": 210,
+      "numTargets": 1,
+      "aoeRadius": 200,
+      "damageModifier": "0.03333",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "1356",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "shake_on_hit": 0.1,
+          "power_up_sequence": {
+            "start_frame": 0,
+            "end_frame": 15,
+            "sound_frames": {
+              "2": 149
+            }
+          },
+          "sequences": [
+            {
+              "start_frame": 18,
+              "damage_frame": 22,
+              "end_frame": 44,
+              "sound_frames": {
+                "20": 133
+              },
+              "visual_effect_frames": {
+                "hit": {
+                  "effect": "animated_clip",
+                  "graphic_id": 1321,
+                  "sort_offset": -9999,
+                  "offset_x": 70
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17237",
+        "name": {
+          "original": "Unsung Alliance",
+          "display": "无名联盟"
+        },
+        "description": null,
+        "graphicId": "26487"
+      },
+      {
+        "upgradeId": "17241",
+        "name": {
+          "original": "Best of the Best",
+          "display": "出类拔萃"
+        },
+        "description": null,
+        "graphicId": "26486"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3913,7 +4005,8 @@
           },
           "permanent_effects": [
             "krond_update_blocked"
-          ]
+          ],
+          "bastion_graphic_id": 30441
         },
         "adventure_ids": [
           {
@@ -3941,7 +4034,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 12,
+        "popularity": 10,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4082,7 +4175,8 @@
           },
           "permanent_effects": [
             "krond_update_blocked"
-          ]
+          ],
+          "bastion_graphic_id": 30441
         },
         "adventure_ids": [
           {
@@ -4110,7 +4204,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 12,
+        "popularity": 10,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7333,7 +7427,7 @@
             "hero_id": 15,
             "order": 15,
             "name": "生存训练",
-            "description": "我的父母教会了我很多东西，但最重要的是：一个人要在这个世界上生存，就需要盟友。",
+            "description": "父母教给我很多东西，但最重要的莫过于这一点：要想在这个世界上生存下去，就需要盟友。",
             "rarity": 3,
             "graphic_id": 6080,
             "effects": [
@@ -7995,6 +8089,67 @@
             }
           }
         }
+      },
+      {
+        "id": "2778",
+        "snapshots": {
+          "original": {
+            "id": 2778,
+            "hero_id": 15,
+            "order": 25,
+            "name": "TBD Krond Feat (Do not translate)",
+            "description": "",
+            "rarity": 4,
+            "graphic_id": 0,
+            "effects": [],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2027-01-14 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 775
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1792004400,
+              "available_for_gems_at_time": 1799956800
+            },
+            "collections_source": ""
+          },
+          "display": {
+            "id": 2778,
+            "hero_id": 15,
+            "order": 25,
+            "name": "TBD Krond Feat (Do not translate)",
+            "description": "",
+            "rarity": 4,
+            "graphic_id": 0,
+            "effects": [],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2027-01-14 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 775
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1792004400,
+              "available_for_gems_at_time": 1799956800
+            },
+            "collections_source": ""
+          }
+        }
       }
     ],
     "skins": [
@@ -8010,7 +8165,8 @@
               "base_graphic_id": 8405,
               "large_graphic_id": 8408,
               "xl_graphic_id": 13907,
-              "portrait_graphic_id": 8402
+              "portrait_graphic_id": 8402,
+              "bastion_graphic_id": 30637
             },
             "rarity": "3",
             "properties": {
@@ -8041,7 +8197,8 @@
               "base_graphic_id": 8405,
               "large_graphic_id": 8408,
               "xl_graphic_id": 13907,
-              "portrait_graphic_id": 8402
+              "portrait_graphic_id": 8402,
+              "bastion_graphic_id": 30637
             },
             "rarity": "3",
             "properties": {
@@ -8079,7 +8236,8 @@
               "base_graphic_id": 19358,
               "large_graphic_id": 19360,
               "portrait_graphic_id": 19355,
-              "xl_graphic_id": 19362
+              "xl_graphic_id": 19362,
+              "bastion_graphic_id": 30883
             },
             "rarity": "3",
             "properties": {
@@ -8098,7 +8256,7 @@
           "display": {
             "id": 301,
             "hero_id": 15,
-            "name": "学者克朗德",
+            "name": "学者克隆德",
             "cost": {
               "req_date": "2023-05-17 12:00:00"
             },
@@ -8106,7 +8264,8 @@
               "base_graphic_id": 19358,
               "large_graphic_id": 19360,
               "portrait_graphic_id": 19355,
-              "xl_graphic_id": 19362
+              "xl_graphic_id": 19362,
+              "bastion_graphic_id": 30883
             },
             "rarity": "3",
             "properties": {
@@ -8138,7 +8297,8 @@
               "base_graphic_id": 26850,
               "large_graphic_id": 26853,
               "portrait_graphic_id": 26847,
-              "xl_graphic_id": 26856
+              "xl_graphic_id": 26856,
+              "bastion_graphic_id": 31137
             },
             "rarity": "3",
             "properties": {
@@ -8150,7 +8310,7 @@
               "cost": 3830
             },
             "availabilities": {
-              "premium_item_id": "579"
+              "in_flash_sales": true
             }
           },
           "display": {
@@ -8164,7 +8324,8 @@
               "base_graphic_id": 26850,
               "large_graphic_id": 26853,
               "portrait_graphic_id": 26847,
-              "xl_graphic_id": 26856
+              "xl_graphic_id": 26856,
+              "bastion_graphic_id": 31137
             },
             "rarity": "3",
             "properties": {
@@ -8176,7 +8337,7 @@
               "cost": 3830
             },
             "availabilities": {
-              "premium_item_id": "579"
+              "in_flash_sales": true
             }
           }
         }
@@ -8195,7 +8356,8 @@
               "base_graphic_id": 27916,
               "large_graphic_id": 27917,
               "portrait_graphic_id": 27919,
-              "xl_graphic_id": 27918
+              "xl_graphic_id": 27918,
+              "bastion_graphic_id": 31185
             },
             "rarity": "3",
             "properties": {
@@ -8221,7 +8383,8 @@
               "base_graphic_id": 27916,
               "large_graphic_id": 27917,
               "portrait_graphic_id": 27919,
-              "xl_graphic_id": 27918
+              "xl_graphic_id": 27918,
+              "bastion_graphic_id": 31185
             },
             "rarity": "3",
             "properties": {
@@ -8838,7 +9001,7 @@
           "display": {
             "id": 353,
             "name": "起球围巾",
-            "description": "我也许应该把它换掉。",
+            "description": "我大概应该把这个换掉。",
             "graphic_id": 1310,
             "hero_id": 15,
             "slot_id": 5,
@@ -8875,7 +9038,7 @@
           "display": {
             "id": 354,
             "name": "手工编织围巾",
-            "description": "是的，我编织。你有什么问题吗？",
+            "description": "是的，我会织毛衣。你对这有什么意见吗？",
             "graphic_id": 1310,
             "hero_id": 15,
             "slot_id": 5,
@@ -8911,8 +9074,8 @@
           },
           "display": {
             "id": 355,
-            "name": "法师围巾",
-            "description": "一条精美的围巾，虽然不太像战士。",
+            "name": "巫师围巾",
+            "description": "一条很漂亮的围巾，虽然不太像战士会戴的那种。",
             "graphic_id": 1312,
             "hero_id": 15,
             "slot_id": 5,
@@ -8948,8 +9111,8 @@
           },
           "display": {
             "id": 356,
-            "name": "奥法骑士流动围巾",
-            "description": "这是我接受奥法骑士训练时留下的纪念品。",
+            "name": "“诡异骑士”的飘逸围巾",
+            "description": "这是我接受“异界骑士”训练时留下的纪念品。",
             "graphic_id": 1311,
             "hero_id": 15,
             "slot_id": 5,

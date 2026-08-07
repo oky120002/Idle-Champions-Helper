@@ -1,355 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "122",
-    "name": {
-      "original": "Antrius",
-      "display": "安裘斯"
-    },
-    "seat": 4,
-    "roles": [
-      "debuff",
-      "healing",
-      "support"
-    ],
-    "affiliations": [
-      {
-        "original": "Awful Ones",
-        "display": "恶人"
-      }
-    ],
-    "tags": [
-      "awfulones",
-      "bard",
-      "chaotic",
-      "debuff",
-      "event",
-      "good",
-      "healing",
-      "human",
-      "male",
-      "positional",
-      "support",
-      "y6"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/122.png",
-      "sourceGraphic": "Portraits/Portrait_Antrius",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Antrius",
-  "eventName": {
-    "original": "Dragondown",
-    "display": "龙陨节"
-  },
-  "dateAvailable": "2023-04-12 13:00:00",
-  "lastReworkDate": "2023-04-12 13:00:00",
-  "popularity": 0,
-  "baseCost": "60000",
-  "baseDamage": "10000",
-  "baseHealth": "45",
-  "graphicId": "18555",
-  "portraitGraphicId": "18662",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1780513200
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    470,
-    1125,
-    1935,
-    2935
-  ],
-  "costCurves": {
-    "1": 1.07
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "content_set_id": 24,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      190,
-      191,
-      192
-    ],
-    "graphic_large": 18556,
-    "graphic_xl": 18557,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      87,
-      81
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 4,
-      "gethit": 5,
-      "koed": 6,
-      "run": 7
-    },
-    "allow_time_gate": "2023-04-24 12:00:00",
-    "available_in_store": "2023-05-01 12:00:00",
-    "time_gate_adventure_id": 1317,
-    "time_gate_variants_ids": [
-      1269,
-      1270,
-      1271
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 445,
-    "gold_chest_type_id": 446,
-    "golden_epic_loot_id": 2909,
-    "golden_epic_promo_id": 343,
-    "event_logo_graphic_id": 3364,
-    "console_portrait": 18663,
-    "trials_effect_id": 845,
-    "permanent_effects": [
-      "effect_def,1471"
-    ],
-    "legendary_effect_id": [
-      1,
-      3,
-      58,
-      85,
-      45,
-      52
-    ],
-    "weekly_buff": "buff_upgrade,200,10794,0",
-    "spotlight_url": "https://youtu.be/iyy_DinqMPI",
-    "portrait_graphic_scale": 0.9,
-    "notification_adjustment": {
-      "offset": [
-        56,
-        245
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Antrius",
-      "display": "安裘斯"
-    },
-    "class": {
-      "original": "Bard",
-      "display": "吟游诗人"
-    },
-    "race": {
-      "original": "Human",
-      "display": "人类"
-    },
-    "age": 45,
-    "alignment": {
-      "original": "Chaotic Good",
-      "display": "混乱善良"
-    },
-    "abilityScores": {
-      "str": 10,
-      "dex": 14,
-      "con": 13,
-      "int": 10,
-      "wis": 12,
-      "cha": 18
-    },
-    "backstory": {
-      "original": "Antrius is your classic fantasy Bard - he's a lover, not a fighter. After his supportive parents paid his way through Bard College, Antrius is out on the road trying to make a name for himself. With a glorious mane of hair and his lute, he is ready to charm anyone who gets in the party's way, friend or foe. His golden pipes bring inspiration to all who hear his song!",
-      "display": "安裘斯是经典的奇幻吟游诗人--他更偏向于情人，而非战士。热心支持的父母为安裘斯支付了吟游诗人学院的学费，此后他便踏上了扬名立万之旅。凭借一头浓密的秀发和鲁特琴，他随时准备诱惑任何挡在探险队前方的人，无论对方是敌是友。他的金嗓子能激励所有听到他歌曲的人！"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "614",
-      "name": {
-        "original": "Vicious Mockery",
-        "display": "恶毒嘲讽"
-      },
-      "description": {
-        "original": "Antrius attacks the enemy with the most health, causing it to take +100% damage until he attacks again.",
-        "display": "安裘斯攻击生命值最高的敌人，使其受到的伤害 +100%，直到他再次攻击为止。"
-      },
-      "longDescription": null,
-      "cooldown": 6,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "highest_health",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ranged"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "ranged_attack",
-          "projectile_graphic_id": 1,
-          "projectile": "song_of_pain",
-          "shoot_frame": 9,
-          "hit_sound": 133,
-          "shoot_sound": 159
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "615",
-      "name": {
-        "original": "Cloud of Daggers",
-        "display": "匕首云"
-      },
-      "description": {
-        "original": "Antrius smiles into a mirror causing it to shatter. The shards create a cloud dealing damage to all enemies within it.",
-        "display": "安裘斯对着镜子微笑，导致镜子破碎。碎片会产生一团云，对陷入其中的所有敌人造成伤害。"
-      },
-      "longDescription": {
-        "original": "Antrius takes a hand mirror out and smiles into it, causing it to shatter. Shards of glass fly out towards the enemy with the most health forming a cloud upon reaching the target. The cloud deals ongoing damage for 10 seconds.",
-        "display": "安裘斯掏出一面手镜并对着它微笑，导致手镜破碎。玻璃碎片飞向生命值最高的敌人，在抵达目标后形成一团云。云团在 10 秒内造成持续伤害。"
-      },
-      "cooldown": 120,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "highest_health",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee",
-        "ultimate"
-      ],
-      "graphicId": "18689",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "antrius",
-          "aoe_radius": 160,
-          "num_damage_ticks": 20,
-          "duration": 10,
-          "projectile_data": {
-            "type": "ranged_attack",
-            "projectile": "pd_generic_projectile",
-            "shoot_offset_x": 90,
-            "shoot_offset_y": -62.5,
-            "shoot_frame": 55,
-            "shoot_sound": 149,
-            "hit_sound": 133,
-            "projectile_details": {
-              "hash": "cloud_of_daggers",
-              "projectile_speed": 1511,
-              "rotation_speed": 0,
-              "percent_height_offset": 0,
-              "projectile_graphic_id": 18554,
-              "trail": {
-                "lifespan": 0.3,
-                "spawn_rate": 160,
-                "particle_graphic_ids": [
-                  7693,
-                  18554
-                ],
-                "initial_velocity": {
-                  "x": "250",
-                  "y": "0"
-                },
-                "velocity_jitter": {
-                  "x": "100",
-                  "y": "100"
-                },
-                "alpha_lerp": {
-                  "0": 0,
-                  "1": 0,
-                  "0.1": 0.75
-                },
-                "scale_lerp": [
-                  {
-                    "x": 1,
-                    "y": 1
-                  },
-                  {
-                    "x": 0,
-                    "y": 0
-                  }
-                ],
-                "tint": {
-                  "r": 1,
-                  "g": 1,
-                  "b": 1,
-                  "a": 1
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "10794",
-        "name": {
-          "original": "Inspiring Song",
-          "display": "激励之歌"
-        },
-        "description": {
-          "original": "Antrius grants protects and buffs adjacent champions. High Charisma Champions cascade this ability on to additional Champions.",
-          "display": "安裘斯保护并增益相邻的勇士。高魅力值的勇士会将此技能扩散到其他勇士身上。"
-        },
-        "graphicId": "18679"
-      },
-      {
-        "upgradeId": "10795",
-        "name": {
-          "original": "The Hardiest, Bardiest Bard",
-          "display": "最勇敢嘹亮的吟游诗人"
-        },
-        "description": null,
-        "graphicId": "18681"
-      },
-      {
-        "upgradeId": "10796",
-        "name": {
-          "original": "Suave and Sophisticated",
-          "display": "精明老练"
-        },
-        "description": null,
-        "graphicId": "18680"
-      },
-      {
-        "upgradeId": "10797",
-        "name": {
-          "original": "Can't be De-Feat-ed",
-          "display": "无敌专长"
-        },
-        "description": {
-          "original": "Antrius' Inspiring Song ability is buffed for each feat owned by any Champion.",
-          "display": "任意勇士的每一个专长均会增强安裘斯的激励之歌技能。"
-        },
-        "graphicId": "18678"
-      },
-      {
-        "upgradeId": "10801",
-        "name": {
-          "original": "Cloud of Daggers",
-          "display": "匕首云"
-        },
-        "description": null,
-        "graphicId": "813"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "11352",
@@ -357,14 +7,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11372",
@@ -372,14 +22,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10794",
@@ -390,7 +40,6 @@
         "display": "激励之歌"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1462",
       "effectDefinition": {
         "id": "1462",
         "snapshots": {
@@ -568,7 +217,8 @@
       "tipText": {
         "original": "Antrius protects and buffs adjacent Champions.",
         "display": "安裘斯可以保护并增益相邻勇士。"
-      }
+      },
+      "effectReference": "effect_def,1462"
     },
     {
       "id": "10803",
@@ -576,14 +226,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11373",
@@ -591,14 +241,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10795",
@@ -609,7 +259,6 @@
         "display": "最勇敢嘹亮的吟游诗人"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1463",
       "effectDefinition": {
         "id": "1463",
         "snapshots": {
@@ -687,7 +336,8 @@
       "tipText": {
         "original": "Inspiring Song is buffed based on the number of Champions affected by it. Use Charismatic champions to spread and buff it.",
         "display": "激励之歌依据受其影响的勇士数量提供增益。使用高魅力勇士来传播和强化此技能。"
-      }
+      },
+      "effectReference": "effect_def,1463"
     },
     {
       "id": "11353",
@@ -695,14 +345,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11374",
@@ -710,14 +360,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10796",
@@ -728,7 +378,6 @@
         "display": "精明老练"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1464",
       "effectDefinition": {
         "id": "1464",
         "snapshots": {
@@ -817,7 +466,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1464"
     },
     {
       "id": "11375",
@@ -825,14 +475,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "10802",
@@ -840,14 +490,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "10797",
@@ -858,7 +508,6 @@
         "display": "无敌专长"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1465",
       "effectDefinition": {
         "id": "1465",
         "snapshots": {
@@ -921,7 +570,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1465"
     },
     {
       "id": "11376",
@@ -929,14 +579,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11320",
@@ -944,14 +594,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11377",
@@ -959,14 +609,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11378",
@@ -974,14 +624,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "10798",
@@ -992,7 +642,6 @@
         "display": "吟游诗人学院"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1466",
       "effectDefinition": {
         "id": "1466",
         "snapshots": {
@@ -1057,7 +706,8 @@
         "display": "安裘斯专注于吟游诗人同伴，为他的歌曲注入力量。"
       },
       "specializationGraphicId": "18686",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1466"
     },
     {
       "id": "10799",
@@ -1068,7 +718,6 @@
         "display": "极恶属性"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1467",
       "effectDefinition": {
         "id": "1467",
         "snapshots": {
@@ -1165,7 +814,8 @@
         "display": "安裘斯专注于其他属性不高的勇士，为他的歌曲注入力量。"
       },
       "specializationGraphicId": "18688",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1467"
     },
     {
       "id": "10800",
@@ -1176,7 +826,6 @@
         "display": "混乱之“混”安裘斯"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1468",
       "effectDefinition": {
         "id": "1468",
         "snapshots": {
@@ -1241,7 +890,8 @@
         "display": "安裘斯专注于混乱阵营勇士，为他的歌曲注入力量。"
       },
       "specializationGraphicId": "18687",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1468"
     },
     {
       "id": "11379",
@@ -1249,14 +899,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11354",
@@ -1264,14 +914,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "10801",
@@ -1282,14 +932,14 @@
         "display": "匕首云"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "{\"effect_string\":\"set_ultimate_attack\",\"description\":\"Unlocks $target' $(attack_name attack_id) Ultimate Attack\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "11380",
@@ -1297,14 +947,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11381",
@@ -1312,14 +962,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11322",
@@ -1327,14 +977,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11321",
@@ -1342,14 +992,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11382",
@@ -1357,14 +1007,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11383",
@@ -1372,14 +1022,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11384",
@@ -1387,14 +1037,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11324",
@@ -1402,14 +1052,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11385",
@@ -1417,14 +1067,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11357",
@@ -1432,14 +1082,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11323",
@@ -1447,14 +1097,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11355",
@@ -1462,14 +1112,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11386",
@@ -1477,14 +1127,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11387",
@@ -1492,14 +1142,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11356",
@@ -1507,14 +1157,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11326",
@@ -1522,14 +1172,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11388",
@@ -1537,14 +1187,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11325",
@@ -1552,14 +1202,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11389",
@@ -1567,14 +1217,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11390",
@@ -1582,14 +1232,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11359",
@@ -1597,14 +1247,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11328",
@@ -1612,14 +1262,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11391",
@@ -1627,14 +1277,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11327",
@@ -1642,14 +1292,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11392",
@@ -1657,14 +1307,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11358",
@@ -1672,14 +1322,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11393",
@@ -1687,14 +1337,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11329",
@@ -1702,14 +1352,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11360",
@@ -1717,14 +1367,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11394",
@@ -1732,14 +1382,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11395",
@@ -1747,14 +1397,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11331",
@@ -1762,14 +1412,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11330",
@@ -1777,14 +1427,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11362",
@@ -1792,14 +1442,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11396",
@@ -1807,14 +1457,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11333",
@@ -1822,14 +1472,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11397",
@@ -1837,14 +1487,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11361",
@@ -1852,14 +1502,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11363",
@@ -1867,14 +1517,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11398",
@@ -1882,14 +1532,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11332",
@@ -1897,14 +1547,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11399",
@@ -1912,14 +1562,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11334",
@@ -1927,14 +1577,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11400",
@@ -1942,14 +1592,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11364",
@@ -1957,14 +1607,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11336",
@@ -1972,14 +1622,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11401",
@@ -1987,14 +1637,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11335",
@@ -2002,14 +1652,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11366",
@@ -2017,14 +1667,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11402",
@@ -2032,14 +1682,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11337",
@@ -2047,14 +1697,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11403",
@@ -2062,14 +1712,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11365",
@@ -2077,14 +1727,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11367",
@@ -2092,14 +1742,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11339",
@@ -2107,14 +1757,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11338",
@@ -2122,14 +1772,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11404",
@@ -2137,14 +1787,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "11340",
@@ -2152,14 +1802,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11370",
@@ -2167,14 +1817,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11405",
@@ -2182,14 +1832,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11342",
@@ -2197,14 +1847,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11341",
@@ -2212,14 +1862,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11406",
@@ -2227,14 +1877,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11343",
@@ -2242,14 +1892,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11368",
@@ -2257,14 +1907,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "11345",
@@ -2272,14 +1922,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11344",
@@ -2287,14 +1937,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "11369",
@@ -2302,14 +1952,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11371",
@@ -2317,14 +1967,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11407",
@@ -2332,14 +1982,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "11408",
@@ -2347,14 +1997,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11346",
@@ -2362,14 +2012,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11521",
@@ -2377,14 +2027,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11409",
@@ -2392,14 +2042,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "11522",
@@ -2407,14 +2057,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     },
     {
       "id": "11347",
@@ -2422,14 +2072,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,70,10794,1\",\"description\":\"Increases the Temporary Hit Points granted by $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,70,10794,1"
     },
     {
       "id": "10804",
@@ -2440,14 +2090,14 @@
         "display": "强化阵型技能 3"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10796\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10796"
     },
     {
       "id": "10805",
@@ -2458,14 +2108,14 @@
         "display": "强化阵型技能 4"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11348",
@@ -2476,14 +2126,14 @@
         "display": "强化阵型技能 4"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11349",
@@ -2494,14 +2144,14 @@
         "display": "强化阵型技能 4"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11350",
@@ -2512,14 +2162,14 @@
         "display": "强化阵型技能 4"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11351",
@@ -2530,14 +2180,14 @@
         "display": "强化阵型技能 4"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10797\",\"description\":\"Increases the effect of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10797"
     },
     {
       "id": "11518",
@@ -2545,14 +2195,14 @@
       "requiredUpgradeId": "9999",
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "11519",
@@ -2563,14 +2213,14 @@
         "display": "强化阵型技能 1 - 伤害"
       },
       "upgradeType": "upgrade_ability",
-      "effectReference": "{\"effect_string\":\"buff_upgrade,100,10794,0\",\"description\":\"Increases the Damage Bonus of $(upgrade_hero id)' $(upgrade_name id) ability by $(amount)%\"}",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,10794,0"
     }
   ],
   "feats": [
@@ -2991,12 +2641,19 @@
       "order": 13,
       "name": {
         "original": "Prodigal Leader",
-        "display": "TBD Antrius Feat (Do not translate)"
+        "display": "浪荡首领"
       },
-      "description": null,
+      "description": {
+        "original": "There is also a 'T' in both 'Team' and 'Antrius,' and I think that's terrific!",
+        "display": "“Team”（团队）和“Antrius”（安裘斯）里都带个字母“T”，我觉得这简直太妙了！"
+      },
       "rarity": "4",
-      "graphicId": "0",
-      "effects": [],
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,50"
+        }
+      ],
       "sources": [
         {
           "source": "gems",
@@ -3009,12 +2666,15 @@
         }
       ],
       "properties": {
-        "available_time": 999999,
-        "is_available": false,
+        "is_available": true,
         "available_at_time": 1781118000,
         "available_for_gems_at_time": 1789066800
       },
-      "collectionsSource": ""
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "722",
+        "cost": 1680
+      }
     }
   ],
   "skins": [
@@ -3031,7 +2691,8 @@
         "base_graphic_id": 19710,
         "large_graphic_id": 19722,
         "portrait_graphic_id": 19728,
-        "xl_graphic_id": 19716
+        "xl_graphic_id": 19716,
+        "bastion_graphic_id": 30872
       },
       "rarity": "3",
       "properties": {
@@ -3058,7 +2719,7 @@
       "id": "291",
       "name": {
         "original": "Witchlight Antrius",
-        "display": "巫光安裘斯"
+        "display": "安特里乌斯·巫光"
       },
       "cost": {
         "req_date": "2023-04-12 12:00:00"
@@ -3067,7 +2728,8 @@
         "base_graphic_id": 19093,
         "large_graphic_id": 19097,
         "portrait_graphic_id": 19088,
-        "xl_graphic_id": 19101
+        "xl_graphic_id": 19101,
+        "bastion_graphic_id": 30873
       },
       "rarity": "3",
       "properties": {
@@ -3103,7 +2765,8 @@
         "base_graphic_id": 23140,
         "large_graphic_id": 23141,
         "portrait_graphic_id": 23139,
-        "xl_graphic_id": 23142
+        "xl_graphic_id": 23142,
+        "bastion_graphic_id": 30990
       },
       "rarity": "3",
       "properties": {
@@ -3138,7 +2801,8 @@
         "base_graphic_id": 27039,
         "large_graphic_id": 27041,
         "portrait_graphic_id": 27037,
-        "xl_graphic_id": 27043
+        "xl_graphic_id": 27043,
+        "bastion_graphic_id": 31140
       },
       "rarity": "3",
       "properties": {
@@ -3157,7 +2821,7 @@
         "cost": 1680
       },
       "availabilities": {
-        "premium_item_id": "583"
+        "in_flash_sales": true
       }
     },
     {
@@ -3173,12 +2837,12 @@
         "base_graphic_id": 29536,
         "large_graphic_id": 29540,
         "portrait_graphic_id": 29527,
-        "xl_graphic_id": 29544
+        "xl_graphic_id": 29544,
+        "bastion_graphic_id": 31272
       },
       "rarity": "3",
       "properties": {
-        "show_only_if_owned": true,
-        "is_available": false
+        "is_available": true
       },
       "collectionsSource": "",
       "availabilities": {
@@ -3200,6 +2864,7 @@
       "graphicId": "18616",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3221,6 +2886,7 @@
       "graphicId": "18616",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3242,6 +2908,7 @@
       "graphicId": "18617",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3263,6 +2930,7 @@
       "graphicId": "18618",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3284,6 +2952,7 @@
       "graphicId": "18610",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,10794,0",
@@ -3306,6 +2975,7 @@
       "graphicId": "18610",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,10794,0",
@@ -3328,6 +2998,7 @@
       "graphicId": "18611",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,10794,0",
@@ -3350,6 +3021,7 @@
       "graphicId": "18612",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,10794,0",
@@ -3372,6 +3044,7 @@
       "graphicId": "18607",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,10796",
@@ -3394,6 +3067,7 @@
       "graphicId": "18607",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,10796",
@@ -3416,6 +3090,7 @@
       "graphicId": "18608",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,10796",
@@ -3438,6 +3113,7 @@
       "graphicId": "18609",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,10796",
@@ -3460,6 +3136,7 @@
       "graphicId": "18604",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,10797",
@@ -3482,6 +3159,7 @@
       "graphicId": "18604",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,10797",
@@ -3504,6 +3182,7 @@
       "graphicId": "18605",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,10797",
@@ -3526,6 +3205,7 @@
       "graphicId": "18606",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,10797",
@@ -3548,6 +3228,7 @@
       "graphicId": "18619",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,25",
@@ -3570,6 +3251,7 @@
       "graphicId": "18619",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,87.5",
@@ -3592,6 +3274,7 @@
       "graphicId": "18620",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,150",
@@ -3614,6 +3297,7 @@
       "graphicId": "18621",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_ultimate,275",
@@ -3636,6 +3320,11 @@
       "graphicId": "18613",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,3",
@@ -3658,6 +3347,11 @@
       "graphicId": "18613",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,6",
@@ -3680,6 +3374,11 @@
       "graphicId": "18614",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,12",
@@ -3702,6 +3401,11 @@
       "graphicId": "18615",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,30",
@@ -3830,6 +3534,370 @@
       ]
     }
   ],
+  "summary": {
+    "id": "122",
+    "name": {
+      "original": "Antrius",
+      "display": "安裘斯"
+    },
+    "seat": 4,
+    "portrait": {
+      "path": "v1/champion-portraits/122.png",
+      "sourceGraphic": "Portraits/Portrait_Antrius",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "debuff",
+      "healing",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Awful Ones",
+        "display": "恶人"
+      }
+    ],
+    "tags": [
+      "awfulones",
+      "bard",
+      "chaotic",
+      "debuff",
+      "event",
+      "good",
+      "healing",
+      "human",
+      "male",
+      "positional",
+      "support",
+      "y6"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "4"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "4"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Antrius",
+  "eventName": {
+    "original": "Dragondown",
+    "display": "龙陨节"
+  },
+  "dateAvailable": "2023-04-12 13:00:00",
+  "lastReworkDate": "2023-04-12 13:00:00",
+  "popularity": 72,
+  "baseCost": "60000",
+  "baseDamage": "10000",
+  "baseHealth": "45",
+  "graphicId": "18555",
+  "portraitGraphicId": "18662",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1812049200
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    470,
+    1125,
+    1935,
+    2935
+  ],
+  "costCurves": {
+    "1": 1.07
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 24,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      190,
+      191,
+      192
+    ],
+    "graphic_large": 18556,
+    "graphic_xl": 18557,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      87,
+      81
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2023-04-24 12:00:00",
+    "available_in_store": "2023-05-01 12:00:00",
+    "time_gate_adventure_id": 1317,
+    "time_gate_variants_ids": [
+      1269,
+      1270,
+      1271
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 445,
+    "gold_chest_type_id": 446,
+    "golden_epic_loot_id": 2909,
+    "golden_epic_promo_id": 343,
+    "event_logo_graphic_id": 3364,
+    "console_portrait": 18663,
+    "trials_effect_id": 845,
+    "permanent_effects": [
+      "effect_def,1471"
+    ],
+    "legendary_effect_id": [
+      1,
+      3,
+      58,
+      85,
+      45,
+      52
+    ],
+    "weekly_buff": "buff_upgrade,200,10794,0",
+    "spotlight_url": "https://youtu.be/iyy_DinqMPI",
+    "portrait_graphic_scale": 0.9,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        245
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30542
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Antrius",
+      "display": "安裘斯"
+    },
+    "class": {
+      "original": "Bard",
+      "display": "吟游诗人"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 45,
+    "alignment": {
+      "original": "Chaotic Good",
+      "display": "混乱善良"
+    },
+    "backstory": {
+      "original": "Antrius is your classic fantasy Bard - he's a lover, not a fighter. After his supportive parents paid his way through Bard College, Antrius is out on the road trying to make a name for himself. With a glorious mane of hair and his lute, he is ready to charm anyone who gets in the party's way, friend or foe. His golden pipes bring inspiration to all who hear his song!",
+      "display": "安裘斯是经典的奇幻吟游诗人--他更偏向于情人，而非战士。热心支持的父母为安裘斯支付了吟游诗人学院的学费，此后他便踏上了扬名立万之旅。凭借一头浓密的秀发和鲁特琴，他随时准备诱惑任何挡在探险队前方的人，无论对方是敌是友。他的金嗓子能激励所有听到他歌曲的人！"
+    },
+    "abilityScores": {
+      "str": 10,
+      "dex": 14,
+      "con": 13,
+      "int": 10,
+      "wis": 12,
+      "cha": 18
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "614",
+      "name": {
+        "original": "Vicious Mockery",
+        "display": "恶毒嘲讽"
+      },
+      "description": {
+        "original": "Antrius attacks the enemy with the most health, causing it to take +100% damage until he attacks again.",
+        "display": "安裘斯攻击生命值最高的敌人，使其受到的伤害 +100%，直到他再次攻击为止。"
+      },
+      "longDescription": null,
+      "cooldown": 6,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "highest_health",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile_graphic_id": 1,
+          "projectile": "song_of_pain",
+          "shoot_frame": 9,
+          "hit_sound": 133,
+          "shoot_sound": 159
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "615",
+      "name": {
+        "original": "Cloud of Daggers",
+        "display": "匕首云"
+      },
+      "description": {
+        "original": "Antrius smiles into a mirror causing it to shatter. The shards create a cloud dealing damage to all enemies within it.",
+        "display": "安裘斯对着镜子微笑，导致镜子破碎。碎片会产生一团云，对陷入其中的所有敌人造成伤害。"
+      },
+      "longDescription": {
+        "original": "Antrius takes a hand mirror out and smiles into it, causing it to shatter. Shards of glass fly out towards the enemy with the most health forming a cloud upon reaching the target. The cloud deals ongoing damage for 10 seconds.",
+        "display": "安裘斯掏出一面手镜并对着它微笑，导致手镜破碎。玻璃碎片飞向生命值最高的敌人，在抵达目标后形成一团云。云团在 10 秒内造成持续伤害。"
+      },
+      "cooldown": 120,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "highest_health",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "18689",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "antrius",
+          "aoe_radius": 160,
+          "num_damage_ticks": 20,
+          "duration": 10,
+          "projectile_data": {
+            "type": "ranged_attack",
+            "projectile": "pd_generic_projectile",
+            "shoot_offset_x": 90,
+            "shoot_offset_y": -62.5,
+            "shoot_frame": 55,
+            "shoot_sound": 149,
+            "hit_sound": 133,
+            "projectile_details": {
+              "hash": "cloud_of_daggers",
+              "projectile_speed": 1511,
+              "rotation_speed": 0,
+              "percent_height_offset": 0,
+              "projectile_graphic_id": 18554,
+              "trail": {
+                "lifespan": 0.3,
+                "spawn_rate": 160,
+                "particle_graphic_ids": [
+                  7693,
+                  18554
+                ],
+                "initial_velocity": {
+                  "x": "250",
+                  "y": "0"
+                },
+                "velocity_jitter": {
+                  "x": "100",
+                  "y": "100"
+                },
+                "alpha_lerp": {
+                  "0": 0,
+                  "1": 0,
+                  "0.1": 0.75
+                },
+                "scale_lerp": [
+                  {
+                    "x": 1,
+                    "y": 1
+                  },
+                  {
+                    "x": 0,
+                    "y": 0
+                  }
+                ],
+                "tint": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "10794",
+        "name": {
+          "original": "Inspiring Song",
+          "display": "激励之歌"
+        },
+        "description": {
+          "original": "Antrius grants protects and buffs adjacent champions. High Charisma Champions cascade this ability on to additional Champions.",
+          "display": "安裘斯保护并增益相邻的勇士。高魅力值的勇士会将此技能扩散到其他勇士身上。"
+        },
+        "graphicId": "18679"
+      },
+      {
+        "upgradeId": "10795",
+        "name": {
+          "original": "The Hardiest, Bardiest Bard",
+          "display": "最勇敢嘹亮的吟游诗人"
+        },
+        "description": null,
+        "graphicId": "18681"
+      },
+      {
+        "upgradeId": "10796",
+        "name": {
+          "original": "Suave and Sophisticated",
+          "display": "精明老练"
+        },
+        "description": null,
+        "graphicId": "18680"
+      },
+      {
+        "upgradeId": "10797",
+        "name": {
+          "original": "Can't be De-Feat-ed",
+          "display": "无敌专长"
+        },
+        "description": {
+          "original": "Antrius' Inspiring Song ability is buffed for each feat owned by any Champion.",
+          "display": "任意勇士的每一个专长均会增强安裘斯的激励之歌技能。"
+        },
+        "graphicId": "18678"
+      },
+      {
+        "upgradeId": "10801",
+        "name": {
+          "original": "Cloud of Daggers",
+          "display": "匕首云"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3954,7 +4022,8 @@
               245
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30542
         },
         "adventure_ids": [
           {
@@ -3982,7 +4051,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 0,
+        "popularity": 72,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4018,7 +4087,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1780513200,
+        "next_event_timestamp": 1812049200,
         "event_name": "Dragondown",
         "is_available": true,
         "date_available": "2023-04-12 13:00:00",
@@ -4146,7 +4215,8 @@
               245
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30542
         },
         "adventure_ids": [
           {
@@ -4174,7 +4244,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 0,
+        "popularity": 72,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4210,7 +4280,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1780513200,
+        "next_event_timestamp": 1812049200,
         "event_name": "龙陨节",
         "is_available": true,
         "date_available": "2023-04-12 13:00:00",
@@ -8106,10 +8176,14 @@
             "hero_id": 122,
             "order": 13,
             "name": "Prodigal Leader",
-            "description": "",
+            "description": "There is also a 'T' in both 'Team' and 'Antrius,' and I think that's terrific!",
             "rarity": 4,
-            "graphic_id": 0,
-            "effects": [],
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
             "sources": [
               {
                 "source": "gems",
@@ -8122,22 +8196,29 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1781118000,
               "available_for_gems_at_time": 1789066800
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "722",
+              "cost": 1680
+            }
           },
           "display": {
             "id": 2634,
             "hero_id": 122,
             "order": 13,
-            "name": "TBD Antrius Feat (Do not translate)",
-            "description": "",
+            "name": "浪荡首领",
+            "description": "“Team”（团队）和“Antrius”（安裘斯）里都带个字母“T”，我觉得这简直太妙了！",
             "rarity": 4,
-            "graphic_id": 0,
-            "effects": [],
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
             "sources": [
               {
                 "source": "gems",
@@ -8150,12 +8231,15 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1781118000,
               "available_for_gems_at_time": 1789066800
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "722",
+              "cost": 1680
+            }
           }
         }
       }
@@ -8175,7 +8259,8 @@
               "base_graphic_id": 19710,
               "large_graphic_id": 19722,
               "portrait_graphic_id": 19728,
-              "xl_graphic_id": 19716
+              "xl_graphic_id": 19716,
+              "bastion_graphic_id": 30872
             },
             "rarity": "3",
             "properties": {
@@ -8209,7 +8294,8 @@
               "base_graphic_id": 19710,
               "large_graphic_id": 19722,
               "portrait_graphic_id": 19728,
-              "xl_graphic_id": 19716
+              "xl_graphic_id": 19716,
+              "bastion_graphic_id": 30872
             },
             "rarity": "3",
             "properties": {
@@ -8248,7 +8334,8 @@
               "base_graphic_id": 19093,
               "large_graphic_id": 19097,
               "portrait_graphic_id": 19088,
-              "xl_graphic_id": 19101
+              "xl_graphic_id": 19101,
+              "bastion_graphic_id": 30873
             },
             "rarity": "3",
             "properties": {
@@ -8274,7 +8361,7 @@
           "display": {
             "id": 291,
             "hero_id": 122,
-            "name": "巫光安裘斯",
+            "name": "安特里乌斯·巫光",
             "cost": {
               "req_date": "2023-04-12 12:00:00"
             },
@@ -8282,7 +8369,8 @@
               "base_graphic_id": 19093,
               "large_graphic_id": 19097,
               "portrait_graphic_id": 19088,
-              "xl_graphic_id": 19101
+              "xl_graphic_id": 19101,
+              "bastion_graphic_id": 30873
             },
             "rarity": "3",
             "properties": {
@@ -8321,7 +8409,8 @@
               "base_graphic_id": 23140,
               "large_graphic_id": 23141,
               "portrait_graphic_id": 23139,
-              "xl_graphic_id": 23142
+              "xl_graphic_id": 23142,
+              "bastion_graphic_id": 30990
             },
             "rarity": "3",
             "properties": {
@@ -8354,7 +8443,8 @@
               "base_graphic_id": 23140,
               "large_graphic_id": 23141,
               "portrait_graphic_id": 23139,
-              "xl_graphic_id": 23142
+              "xl_graphic_id": 23142,
+              "bastion_graphic_id": 30990
             },
             "rarity": "3",
             "properties": {
@@ -8392,7 +8482,8 @@
               "base_graphic_id": 27039,
               "large_graphic_id": 27041,
               "portrait_graphic_id": 27037,
-              "xl_graphic_id": 27043
+              "xl_graphic_id": 27043,
+              "bastion_graphic_id": 31140
             },
             "rarity": "3",
             "properties": {
@@ -8411,7 +8502,7 @@
               "cost": 1680
             },
             "availabilities": {
-              "premium_item_id": "583"
+              "in_flash_sales": true
             }
           },
           "display": {
@@ -8425,7 +8516,8 @@
               "base_graphic_id": 27039,
               "large_graphic_id": 27041,
               "portrait_graphic_id": 27037,
-              "xl_graphic_id": 27043
+              "xl_graphic_id": 27043,
+              "bastion_graphic_id": 31140
             },
             "rarity": "3",
             "properties": {
@@ -8444,7 +8536,7 @@
               "cost": 1680
             },
             "availabilities": {
-              "premium_item_id": "583"
+              "in_flash_sales": true
             }
           }
         }
@@ -8463,12 +8555,12 @@
               "base_graphic_id": 29536,
               "large_graphic_id": 29540,
               "portrait_graphic_id": 29527,
-              "xl_graphic_id": 29544
+              "xl_graphic_id": 29544,
+              "bastion_graphic_id": 31272
             },
             "rarity": "3",
             "properties": {
-              "show_only_if_owned": true,
-              "is_available": false
+              "is_available": true
             },
             "collections_source": "",
             "availabilities": {
@@ -8486,12 +8578,12 @@
               "base_graphic_id": 29536,
               "large_graphic_id": 29540,
               "portrait_graphic_id": 29527,
-              "xl_graphic_id": 29544
+              "xl_graphic_id": 29544,
+              "bastion_graphic_id": 31272
             },
             "rarity": "3",
             "properties": {
-              "show_only_if_owned": true,
-              "is_available": false
+              "is_available": true
             },
             "collections_source": "",
             "availabilities": {

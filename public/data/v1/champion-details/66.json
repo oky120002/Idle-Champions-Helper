@@ -1,309 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "66",
-    "name": {
-      "original": "Lazaapz",
-      "display": "拉扎普"
-    },
-    "seat": 9,
-    "roles": [
-      "control",
-      "support",
-      "tanking"
-    ],
-    "affiliations": [],
-    "tags": [
-      "artificer",
-      "cneoriginal",
-      "control",
-      "control_reposition",
-      "event",
-      "evil",
-      "female",
-      "goblin",
-      "lcneutral",
-      "neutral",
-      "small",
-      "spec_debuff",
-      "support",
-      "tanking",
-      "unaffiliated",
-      "y3"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/66.png",
-      "sourceGraphic": "Portraits/Portrait_Lazaapz",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Lazaapz",
-  "eventName": {
-    "original": "Feast of the Moon",
-    "display": "月之盛宴"
-  },
-  "dateAvailable": "2020-09-02 13:00:00",
-  "lastReworkDate": "2025-08-13 13:00:00",
-  "popularity": 18,
-  "baseCost": "20000000000000",
-  "baseDamage": "3750000000",
-  "baseHealth": "175",
-  "graphicId": "8611",
-  "portraitGraphicId": "8615",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1793908800
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    255,
-    895,
-    1655,
-    2590
-  ],
-  "costCurves": {
-    "1": 1.075
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      165,
-      166,
-      167
-    ],
-    "graphic_large": 8613,
-    "graphic_xl": 13916,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      97,
-      82
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "attack_b": 4,
-      "attack_c": 5,
-      "ultimate_a": 6,
-      "ultimate_b": 7,
-      "gethit": 8,
-      "koed": 9,
-      "run": 1
-    },
-    "allow_time_gate": "2025-08-27 12:00:00",
-    "time_gate_adventure_id": 539,
-    "time_gate_variants_ids": [
-      519,
-      520,
-      521
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 190,
-    "gold_chest_type_id": 191,
-    "available_in_store": "2025-09-03 12:00:00",
-    "golden_epic_loot_id": 1564,
-    "golden_epic_promo_id": 183,
-    "event_logo_graphic_id": 3943,
-    "permanent_effects": [
-      "effect_def,687",
-      "base_overwhelm,25",
-      "effect_def,2425"
-    ],
-    "console_portrait": 8614,
-    "trials_effect_id": 836,
-    "legendary_effect_id": [
-      1,
-      3,
-      91,
-      34,
-      33,
-      53
-    ],
-    "weekly_buff": "buff_upgrades,200,17479",
-    "portrait_graphic_scale": 1,
-    "notification_adjustment": {
-      "offset": [
-        42,
-        188
-      ],
-      "scale": 1.25
-    }
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Lazaapz",
-      "display": "拉扎普"
-    },
-    "class": {
-      "original": "Artificer",
-      "display": "机关术士"
-    },
-    "race": {
-      "original": "Goblin",
-      "display": "地精"
-    },
-    "age": 19,
-    "alignment": {
-      "original": "Neutral Evil",
-      "display": "中性邪恶"
-    },
-    "abilityScores": {
-      "str": 8,
-      "dex": 16,
-      "con": 16,
-      "int": 18,
-      "wis": 10,
-      "cha": 8
-    },
-    "backstory": {
-      "original": "Born in The Cogs beneath Sharn's Lower City, Lazaapz's remarkable intellect elevated her to the Tradefair district, where her mechanical genius became highly sought after by the Dragonmarked Houses. Lazaapz's first invention was a functional mechanical arm to replace the one she was born without; now she leads an elite team of engineers in cutting edge research and development. Following the discovery of a mysterious Eldritch Machine, Lazaapz was brought in by House Cannith to ascertain the purpose of the device. Shortly after, both Lazaapz and the machine disappeared, never to be seen again.",
-      "display": "拉扎普兹出生于沙恩下城的齿轮城，出众的智力让她来到了贸易集市区，在那里，她的机械天才受到了龙印家族的追捧。拉扎普的第一个发明是一个功能性机械手臂，用来替代她生来就没有的手臂；现在，她带领着一支精英工程师团队从事尖端研发工作。在发现神秘的长生机器后，拉扎普被坎尼斯家族请来确定该装置的用途。不久之后，拉扎普和机器都消失了，再也没有出现过。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "888",
-      "name": {
-        "original": "Stunning Gauntlet",
-        "display": "眩晕护手"
-      },
-      "description": {
-        "original": "Lazaapz attacks and stuns the nearest enemy. Every fifth attack, she uses her Grappling Fist to pull an enemy closer to her instead.",
-        "display": "拉扎普攻击并眩晕距离最近的敌人。每第五次攻击，她会改为用抓钩飞拳将一名敌人拉到身边。"
-      },
-      "longDescription": null,
-      "cooldown": 4.5,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "stun_on_hit": 0.5,
-          "stun_graphic": 1509,
-          "stun_chance": 100,
-          "power_up_sequence": {
-            "start_frame": 0,
-            "end_frame": 1
-          },
-          "sequences": [
-            {
-              "start_frame": 1,
-              "end_frame": 11,
-              "damage_frame": 3
-            }
-          ]
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "895",
-      "name": {
-        "original": "Flash of Genius",
-        "display": "灵光乍现"
-      },
-      "description": {
-        "original": "For a short duration, Lazaapz increases her equipment buff and deals ultimate damage.",
-        "display": "在短时间内，拉扎普会提升她的装备增益，并造成杀招伤害。"
-      },
-      "longDescription": {
-        "original": "For a short duration, Lazaapz increases her equipment buff and deals ultimate damage with her attacks.",
-        "display": "在短时间内，拉扎普会提升她的装备增益，并用攻击造成杀招伤害。"
-      },
-      "cooldown": 120,
-      "numTargets": 0,
-      "aoeRadius": 0,
-      "damageModifier": "0",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ultimate"
-      ],
-      "graphicId": "27024",
-      "animations": [
-        {
-          "type": "lazaapz_ultimate_v2",
-          "no_damage_display": true
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "17479",
-        "name": {
-          "original": "Fury of the Small",
-          "display": "小人族之怒"
-        },
-        "description": {
-          "original": "Lazaapz increases the damage of small Champions, such as gnomes, goblins, halflings, and kobolds, based on the number of such Champions in the formation.",
-          "display": "拉扎普根据阵型中小个子勇士的数量，提升所有这些勇士的伤害，小个子种族包括侏儒、地精、半身人和狗头人等。"
-        },
-        "graphicId": "8649"
-      },
-      {
-        "upgradeId": "17480",
-        "name": {
-          "original": "Power Armor",
-          "display": "能量护甲"
-        },
-        "description": {
-          "original": "Lazaapz's armor powers up while she's not under attack, and then unleashes her fury once enemies are foolish enough to attack her.",
-          "display": "拉扎普没有受到攻击时，她的护甲会获得充能，然后向那些攻击她的蠢货释放她的狂怒。"
-        },
-        "graphicId": "8650"
-      },
-      {
-        "upgradeId": "17481",
-        "name": {
-          "original": "Contingency Plan",
-          "display": "应急预案"
-        },
-        "description": null,
-        "graphicId": "27004"
-      },
-      {
-        "upgradeId": "17482",
-        "name": {
-          "original": "Artificer Infusion",
-          "display": "机关术士的灌注"
-        },
-        "description": null,
-        "graphicId": "27003"
-      },
-      {
-        "upgradeId": "17483",
-        "name": {
-          "original": "Shield of Sharn",
-          "display": "萨恩之盾"
-        },
-        "description": null,
-        "graphicId": "8653"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "17479",
@@ -314,7 +10,6 @@
         "display": "小人族之怒"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2394",
       "effectDefinition": {
         "id": "2394",
         "snapshots": {
@@ -438,7 +133,8 @@
       "tipText": {
         "original": "Lazaapz works best with small species (fairy, gnome, goblin, halfling, kender, kobold and plasmoid). The more the merrier.",
         "display": "拉扎普最适合与小个子种族（仙女、侏儒、地精、半身人、坎德人、狗头人和等离子体）配合。 人多力量大。"
-      }
+      },
+      "effectReference": "effect_def,2394"
     },
     {
       "id": "17781",
@@ -446,14 +142,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17480",
@@ -464,7 +160,6 @@
         "display": "能量护甲"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2395",
       "effectDefinition": {
         "id": "2395",
         "snapshots": {
@@ -548,7 +243,8 @@
       "tipText": {
         "original": "Lazaapz's armor prevents her from taking some damage, and she has a Contingency Plan to repair her armor after it becomes too damaged to continue.",
         "display": "拉扎普的护甲能使她免受部分伤害，而且她还有应急预案，可在护甲损坏到无法继续使用时进行修理。"
-      }
+      },
+      "effectReference": "effect_def,2395"
     },
     {
       "id": "17490",
@@ -556,14 +252,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17483",
@@ -574,7 +270,6 @@
         "display": "萨恩之盾"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2398",
       "effectDefinition": {
         "id": "2398",
         "snapshots": {
@@ -647,7 +342,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2398"
     },
     {
       "id": "17481",
@@ -658,7 +354,6 @@
         "display": "应急预案"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2396",
       "effectDefinition": {
         "id": "2396",
         "snapshots": {
@@ -751,7 +446,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2396"
     },
     {
       "id": "17484",
@@ -762,7 +458,6 @@
         "display": "打手之怒"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2399",
       "effectDefinition": {
         "id": "2399",
         "snapshots": {
@@ -839,7 +534,8 @@
         "display": "锋利的刀刃和有力的拳头能击败一切。拉扎普会叫来一些近战高手。"
       },
       "specializationGraphicId": "27018",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2399"
     },
     {
       "id": "17485",
@@ -850,7 +546,6 @@
         "display": "阴谋集团之怒"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2400",
       "effectDefinition": {
         "id": "2400",
         "snapshots": {
@@ -927,7 +622,8 @@
         "display": "勿以恶小而为之。拉扎普吸引来一些不太注重道德的人组成她的阴谋集团。"
       },
       "specializationGraphicId": "27019",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2400"
     },
     {
       "id": "17486",
@@ -938,7 +634,6 @@
         "display": "停顿之怒"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2401",
       "effectDefinition": {
         "id": "2401",
         "snapshots": {
@@ -1015,7 +710,8 @@
         "display": "耐心是一种武器。拉扎普叫来群体控制小队控制局面。"
       },
       "specializationGraphicId": "27020",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2401"
     },
     {
       "id": "17482",
@@ -1026,7 +722,6 @@
         "display": "机关术士的灌注"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,2397",
       "effectDefinition": {
         "id": "2397",
         "snapshots": {
@@ -1089,7 +784,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2397"
     },
     {
       "id": "17770",
@@ -1097,14 +793,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,135",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,135"
     },
     {
       "id": "17489",
@@ -1115,14 +811,14 @@
         "display": "灵光乍现"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "set_ultimate_attack",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "set_ultimate_attack"
     },
     {
       "id": "17768",
@@ -1130,14 +826,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17782",
@@ -1145,14 +841,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17487",
@@ -1163,7 +859,6 @@
         "display": "守护者"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2402",
       "effectDefinition": {
         "id": "2402",
         "snapshots": {
@@ -1282,7 +977,8 @@
         "display": "拉扎普把她的护甲改装成守护者，打算战斗在最前线。"
       },
       "specializationGraphicId": "27021",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2402"
     },
     {
       "id": "17488",
@@ -1293,7 +989,6 @@
         "display": "潜行者"
       },
       "upgradeType": null,
-      "effectReference": "effect_def,2403",
       "effectDefinition": {
         "id": "2403",
         "snapshots": {
@@ -1362,7 +1057,8 @@
         "display": "拉扎普把她的护甲改装成潜行者，这使得她非常擅长执行更隐秘的任务。"
       },
       "specializationGraphicId": "27022",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,2403"
     },
     {
       "id": "17783",
@@ -1370,14 +1066,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17769",
@@ -1385,14 +1081,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17784",
@@ -1400,14 +1096,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17785",
@@ -1415,14 +1111,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17786",
@@ -1430,14 +1126,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17787",
@@ -1445,14 +1141,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17771",
@@ -1460,14 +1156,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,240",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,240"
     },
     {
       "id": "17788",
@@ -1475,14 +1171,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17789",
@@ -1490,14 +1186,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17790",
@@ -1505,14 +1201,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "17791",
@@ -1520,14 +1216,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17792",
@@ -1535,14 +1231,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17772",
@@ -1550,14 +1246,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,420",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,420"
     },
     {
       "id": "17793",
@@ -1565,14 +1261,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17794",
@@ -1580,14 +1276,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17795",
@@ -1595,14 +1291,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17796",
@@ -1610,14 +1306,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17797",
@@ -1625,14 +1321,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17798",
@@ -1640,14 +1336,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17773",
@@ -1655,14 +1351,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,730",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,730"
     },
     {
       "id": "17799",
@@ -1670,14 +1366,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17800",
@@ -1685,14 +1381,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17801",
@@ -1700,14 +1396,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17802",
@@ -1715,14 +1411,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17803",
@@ -1730,14 +1426,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17804",
@@ -1745,14 +1441,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17774",
@@ -1760,14 +1456,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,1300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,1300"
     },
     {
       "id": "17805",
@@ -1775,14 +1471,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17806",
@@ -1790,14 +1486,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17807",
@@ -1805,14 +1501,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17808",
@@ -1820,14 +1516,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17809",
@@ -1835,14 +1531,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17810",
@@ -1850,14 +1546,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17775",
@@ -1865,14 +1561,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,2250",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,2250"
     },
     {
       "id": "17811",
@@ -1880,14 +1576,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17812",
@@ -1895,14 +1591,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17813",
@@ -1910,14 +1606,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17814",
@@ -1925,14 +1621,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17815",
@@ -1940,14 +1636,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17776",
@@ -1955,14 +1651,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,4000",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,4000"
     },
     {
       "id": "17816",
@@ -1970,14 +1666,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17817",
@@ -1985,14 +1681,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17818",
@@ -2000,14 +1696,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17819",
@@ -2015,14 +1711,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17820",
@@ -2030,14 +1726,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17777",
@@ -2045,14 +1741,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,7000",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,7000"
     },
     {
       "id": "17821",
@@ -2060,14 +1756,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17822",
@@ -2075,14 +1771,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17823",
@@ -2090,14 +1786,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17778",
@@ -2105,14 +1801,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,12250",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,12250"
     },
     {
       "id": "17824",
@@ -2120,14 +1816,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17825",
@@ -2135,14 +1831,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17826",
@@ -2150,14 +1846,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17827",
@@ -2165,14 +1861,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "17779",
@@ -2180,14 +1876,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,21500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,21500"
     },
     {
       "id": "17828",
@@ -2195,14 +1891,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17829",
@@ -2210,14 +1906,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "17830",
@@ -2225,14 +1921,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "17831",
@@ -2240,14 +1936,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "17832",
@@ -2255,14 +1951,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "buff_upgrade,100,17479",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,17479"
     },
     {
       "id": "17833",
@@ -2270,14 +1966,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "17834",
@@ -2285,14 +1981,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "17780",
@@ -2300,14 +1996,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "increase_health",
-      "effectReference": "health_add,37500",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "health_add,37500"
     }
   ],
   "feats": [
@@ -2442,11 +2138,11 @@
       "order": 5,
       "name": {
         "original": "Heavily Armored",
-        "display": "重甲"
+        "display": "重装甲"
       },
       "description": {
         "original": "Bolt on another sheet of plate and you're ready to go.",
-        "display": "再多拴上一件板甲，你就可以出发了。"
+        "display": "再用螺栓固定上一块钢板，就可以开始使用了。"
       },
       "rarity": "4",
       "graphicId": "6076",
@@ -2668,8 +2364,7 @@
         }
       ],
       "properties": {
-        "available_time": 999999,
-        "is_available": false,
+        "is_available": true,
         "available_at_time": 1780513200
       },
       "collectionsSource": {
@@ -2713,11 +2408,11 @@
       "order": 13,
       "name": {
         "original": "Friendly Fury",
-        "display": "你的朋友就是我的朋友"
+        "display": "友好的狂怒"
       },
       "description": {
         "original": "I love meeting new people and finding out what we both hate.",
-        "display": "我喜欢认识新朋友，找出我们都讨厌的东西。"
+        "display": "我喜欢结识新朋友，并发现我们共同讨厌什么。"
       },
       "rarity": "2",
       "graphicId": "6080",
@@ -2744,11 +2439,11 @@
       "order": 14,
       "name": {
         "original": "Reinforced Fury",
-        "display": "强化愤怒"
+        "display": "强化之怒"
       },
       "description": {
         "original": "Every time I destroy something I don't like, I feel better!",
-        "display": "每当我毁掉一些我不喜欢的东西时，我都会感觉好多了！"
+        "display": "每当我毁掉一件我不喜欢的东西，心情就会好起来！"
       },
       "rarity": "3",
       "graphicId": "6080",
@@ -2781,7 +2476,7 @@
       },
       "description": {
         "original": "Put me in a cave with a box of scraps and I can build almost anything!",
-        "display": "把我和一箱废料放在一个山洞里，我几乎可以造出任何东西！"
+        "display": "把我关在山洞里，给我一箱废料，我几乎能造出任何东西！"
       },
       "rarity": "3",
       "graphicId": "6080",
@@ -2956,9 +2651,8 @@
         "available_at_time": 1767124800
       },
       "collectionsSource": {
-        "type": "dlc",
-        "item_id": "655",
-        "cost": 1680
+        "type": "gems",
+        "cost": 50000
       }
     }
   ],
@@ -2981,7 +2675,8 @@
         "open_fist_graphic_id": "14495",
         "closed_fist_graphic_id": "14494",
         "shield_graphic": 27131,
-        "drone_graphic": 27136
+        "drone_graphic": 27136,
+        "bastion_graphic_id": 30749
       },
       "rarity": "3",
       "properties": {
@@ -3017,7 +2712,8 @@
         "shield_graphic": 27132,
         "drone_graphic": 27137,
         "shockwave_graphic": 27135,
-        "repair_spark_graphic": 27133
+        "repair_spark_graphic": 27133,
+        "bastion_graphic_id": 30828
       },
       "rarity": "3",
       "properties": {
@@ -3046,7 +2742,8 @@
         "open_fist_graphic_id": 27462,
         "closed_fist_graphic_id": 27463,
         "drone_graphic": 27461,
-        "shield_graphic": 27700
+        "shield_graphic": 27700,
+        "bastion_graphic_id": 31160
       },
       "rarity": "3",
       "properties": {
@@ -3058,7 +2755,7 @@
         "cost": 3830
       },
       "availabilities": {
-        "premium_item_id": "607"
+        "in_flash_sales": true
       }
     },
     {
@@ -3083,12 +2780,12 @@
         "shockwave_graphic": "{int}",
         "gem_glow_graphic": "{int}",
         "gem_glow_offset_x": "{int}",
-        "gem_glow_offset_y": "{int}"
+        "gem_glow_offset_y": "{int}",
+        "bastion_graphic_id": 31275
       },
       "rarity": "3",
       "properties": {
-        "show_only_if_owned": true,
-        "is_available": false
+        "is_available": true
       },
       "collectionsSource": "",
       "availabilities": null
@@ -3108,6 +2805,7 @@
       "graphicId": "8680",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -3129,6 +2827,7 @@
       "graphicId": "8680",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -3150,6 +2849,7 @@
       "graphicId": "8681",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -3171,6 +2871,7 @@
       "graphicId": "8682",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -3183,15 +2884,16 @@
       "id": "1565",
       "name": {
         "original": "Rock-Fist v2",
-        "display": "岩拳 v2"
+        "display": "Rock-Fist v2"
       },
       "description": {
         "original": "Upgraded the manual release bolt. I don't need that breaking off again.",
-        "display": "升级了手动释放螺栓。我可不想再把它弄断了。"
+        "display": "升级了手动释放螺栓。我可不想它再断了。"
       },
       "graphicId": "8668",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,17487,17488",
@@ -3205,15 +2907,16 @@
       "id": "1566",
       "name": {
         "original": "Rock-Fist v17",
-        "display": "岩石拳 v17"
+        "display": "《岩石之拳》第17卷"
       },
       "description": {
         "original": "v16's molten core was a step too far. I know that now.",
-        "display": "v16 的熔融核心太过分了。我现在知道了。"
+        "display": "v16的熔融核心确实有些过头了。我现在明白了。"
       },
       "graphicId": "8668",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,17487,17488",
@@ -3231,11 +2934,12 @@
       },
       "description": {
         "original": "Those House Cannith blueprints were invaluable; those artificers sure know their stuff.",
-        "display": "坎尼斯家族的蓝图非常宝贵，那些机关术士肯定很懂行。"
+        "display": "那些卡尼思家族的蓝图价值连城；那些工匠确实技艺精湛。"
       },
       "graphicId": "8669",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,17487,17488",
@@ -3249,15 +2953,16 @@
       "id": "1568",
       "name": {
         "original": "Mark 42 Grappling Buzzsaw",
-        "display": "马克42 抓斗式链锯"
+        "display": "Mark 42 抓钩圆锯"
       },
       "description": {
         "original": "Grappling arm? Check. Buzz Saw? CHECK. Now to test this thing out...",
-        "display": "擒拿臂？对蜂鸣锯？没问题现在来测试一下这个东西......"
+        "display": "抓钩臂？有。圆锯？有。现在该试用一下这玩意儿了……"
       },
       "graphicId": "8670",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,17487,17488",
@@ -3280,6 +2985,7 @@
       "graphicId": "8677",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,17479,0"
@@ -3301,6 +3007,7 @@
       "graphicId": "8677",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,17479,0"
@@ -3322,6 +3029,7 @@
       "graphicId": "8678",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,17479,0"
@@ -3343,6 +3051,7 @@
       "graphicId": "8679",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,17479,0"
@@ -3364,6 +3073,7 @@
       "graphicId": "8674",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "health_mult,10"
@@ -3385,6 +3095,7 @@
       "graphicId": "8674",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "health_mult,30"
@@ -3406,6 +3117,7 @@
       "graphicId": "8675",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "health_mult,50"
@@ -3427,6 +3139,7 @@
       "graphicId": "8676",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "health_mult,100"
@@ -3448,6 +3161,7 @@
       "graphicId": "8683",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,10,17482"
@@ -3469,6 +3183,7 @@
       "graphicId": "8683",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,30,17482"
@@ -3490,6 +3205,7 @@
       "graphicId": "8684",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,50,17482"
@@ -3511,6 +3227,7 @@
       "graphicId": "8685",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,100,17482"
@@ -3523,15 +3240,16 @@
       "id": "1581",
       "name": {
         "original": "Chestpiece v2",
-        "display": "胸罩 v2"
+        "display": "胸甲 v2"
       },
       "description": {
         "original": "I didn't think that would work anyway.",
-        "display": "反正我也不觉得那会有用。"
+        "display": "反正我本来就不觉得那行得通。"
       },
       "graphicId": "8671",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,25,17484,17485,17486",
@@ -3545,15 +3263,16 @@
       "id": "1582",
       "name": {
         "original": "Chestpiece v82",
-        "display": "胸罩 v82"
+        "display": "胸片 v82"
       },
       "description": {
         "original": "Oh good. We're back to blowing out the crystal again.",
-        "display": "太好了我们又开始吹水晶了。"
+        "display": "哦，太好了。我们又要开始吹制水晶了。"
       },
       "graphicId": "8671",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,87.5,17484,17485,17486",
@@ -3567,15 +3286,16 @@
       "id": "1583",
       "name": {
         "original": "Chestpiece v101",
-        "display": "胸罩 v101"
+        "display": "胸片 v101"
       },
       "description": {
         "original": "I finished it just before I zapped here.",
-        "display": "我在被传送到这里之前刚刚看完。"
+        "display": "我刚传送过来之前就看完了。"
       },
       "graphicId": "8672",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,150,17484,17485,17486",
@@ -3589,15 +3309,16 @@
       "id": "1584",
       "name": {
         "original": "Heart of Sharn Breastplate",
-        "display": "沙恩之心胸甲"
+        "display": "“沙恩之心”胸甲"
       },
       "description": {
         "original": "Just be sure to replace the crystal every couple months and you won't have to worry about exploding.",
-        "display": "只要每隔几个月更换一次水晶，就不用担心爆炸了。"
+        "display": "只要记得每隔几个月更换一次晶体，就不用担心会爆炸了。"
       },
       "graphicId": "8673",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrades,275,17484,17485,17486",
@@ -3726,6 +3447,328 @@
       ]
     }
   ],
+  "summary": {
+    "id": "66",
+    "name": {
+      "original": "Lazaapz",
+      "display": "Lazaapz"
+    },
+    "seat": 9,
+    "portrait": {
+      "path": "v1/champion-portraits/66.png",
+      "sourceGraphic": "Portraits/Portrait_Lazaapz",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "control",
+      "support",
+      "tanking"
+    ],
+    "affiliations": [],
+    "tags": [
+      "artificer",
+      "cneoriginal",
+      "control",
+      "control_reposition",
+      "event",
+      "evil",
+      "female",
+      "goblin",
+      "lcneutral",
+      "neutral",
+      "small",
+      "spec_debuff",
+      "support",
+      "tanking",
+      "unaffiliated",
+      "y3"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Lazaapz",
+  "eventName": {
+    "original": "Feast of the Moon",
+    "display": "月之盛宴"
+  },
+  "dateAvailable": "2020-09-02 13:00:00",
+  "lastReworkDate": "2025-08-13 13:00:00",
+  "popularity": 9,
+  "baseCost": "20000000000000",
+  "baseDamage": "3750000000",
+  "baseHealth": "175",
+  "graphicId": "8611",
+  "portraitGraphicId": "8615",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1793908800
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    255,
+    895,
+    1655,
+    2590
+  ],
+  "costCurves": {
+    "1": 1.075
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      165,
+      166,
+      167
+    ],
+    "graphic_large": 8613,
+    "graphic_xl": 13916,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      97,
+      82
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "attack_b": 4,
+      "attack_c": 5,
+      "ultimate_a": 6,
+      "ultimate_b": 7,
+      "gethit": 8,
+      "koed": 9,
+      "run": 1
+    },
+    "allow_time_gate": "2025-08-27 12:00:00",
+    "time_gate_adventure_id": 539,
+    "time_gate_variants_ids": [
+      519,
+      520,
+      521
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 190,
+    "gold_chest_type_id": 191,
+    "available_in_store": "2025-09-03 12:00:00",
+    "golden_epic_loot_id": 1564,
+    "golden_epic_promo_id": 183,
+    "event_logo_graphic_id": 3943,
+    "permanent_effects": [
+      "effect_def,687",
+      "base_overwhelm,25",
+      "effect_def,2425"
+    ],
+    "console_portrait": 8614,
+    "trials_effect_id": 836,
+    "legendary_effect_id": [
+      1,
+      3,
+      91,
+      34,
+      33,
+      53
+    ],
+    "weekly_buff": "buff_upgrades,200,17479",
+    "portrait_graphic_scale": 1,
+    "notification_adjustment": {
+      "offset": [
+        42,
+        188
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30492
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Lazaapz",
+      "display": "Lazaapz"
+    },
+    "class": {
+      "original": "Artificer",
+      "display": "工匠"
+    },
+    "race": {
+      "original": "Goblin",
+      "display": "哥布林"
+    },
+    "age": 19,
+    "alignment": {
+      "original": "Neutral Evil",
+      "display": "中立邪恶"
+    },
+    "backstory": {
+      "original": "Born in The Cogs beneath Sharn's Lower City, Lazaapz's remarkable intellect elevated her to the Tradefair district, where her mechanical genius became highly sought after by the Dragonmarked Houses. Lazaapz's first invention was a functional mechanical arm to replace the one she was born without; now she leads an elite team of engineers in cutting edge research and development. Following the discovery of a mysterious Eldritch Machine, Lazaapz was brought in by House Cannith to ascertain the purpose of the device. Shortly after, both Lazaapz and the machine disappeared, never to be seen again.",
+      "display": "拉扎普兹出生于沙恩下城区下的“齿轮区”，凭借非凡的智慧，她跻身贸易博览会区，其机械天赋也因此备受“龙印家族”的青睐。 拉扎普兹的首项发明是一条功能完备的机械手臂，用来替代她天生缺失的那只手臂；如今，她正带领一支精英工程师团队从事前沿的研发工作。 在发现一台神秘的“异界机械”后，卡尼思家族邀请拉扎普兹前来查明该装置的用途。不久之后，拉扎普兹与那台机械一同消失，从此杳无音讯。"
+    },
+    "abilityScores": {
+      "str": 8,
+      "dex": 16,
+      "con": 16,
+      "int": 18,
+      "wis": 10,
+      "cha": 8
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "888",
+      "name": {
+        "original": "Stunning Gauntlet",
+        "display": "眩晕护手"
+      },
+      "description": {
+        "original": "Lazaapz attacks and stuns the nearest enemy. Every fifth attack, she uses her Grappling Fist to pull an enemy closer to her instead.",
+        "display": "拉扎普攻击并眩晕距离最近的敌人。每第五次攻击，她会改为用抓钩飞拳将一名敌人拉到身边。"
+      },
+      "longDescription": null,
+      "cooldown": 4.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "stun_on_hit": 0.5,
+          "stun_graphic": 1509,
+          "stun_chance": 100,
+          "power_up_sequence": {
+            "start_frame": 0,
+            "end_frame": 1
+          },
+          "sequences": [
+            {
+              "start_frame": 1,
+              "end_frame": 11,
+              "damage_frame": 3
+            }
+          ]
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "895",
+      "name": {
+        "original": "Flash of Genius",
+        "display": "灵光乍现"
+      },
+      "description": {
+        "original": "For a short duration, Lazaapz increases her equipment buff and deals ultimate damage.",
+        "display": "在短时间内，拉扎普会提升她的装备增益，并造成杀招伤害。"
+      },
+      "longDescription": {
+        "original": "For a short duration, Lazaapz increases her equipment buff and deals ultimate damage with her attacks.",
+        "display": "在短时间内，拉扎普会提升她的装备增益，并用攻击造成杀招伤害。"
+      },
+      "cooldown": 120,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "27024",
+      "animations": [
+        {
+          "type": "lazaapz_ultimate_v2",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17479",
+        "name": {
+          "original": "Fury of the Small",
+          "display": "小人族之怒"
+        },
+        "description": {
+          "original": "Lazaapz increases the damage of small Champions, such as gnomes, goblins, halflings, and kobolds, based on the number of such Champions in the formation.",
+          "display": "拉扎普根据阵型中小个子勇士的数量，提升所有这些勇士的伤害，小个子种族包括侏儒、地精、半身人和狗头人等。"
+        },
+        "graphicId": "8649"
+      },
+      {
+        "upgradeId": "17480",
+        "name": {
+          "original": "Power Armor",
+          "display": "能量护甲"
+        },
+        "description": {
+          "original": "Lazaapz's armor powers up while she's not under attack, and then unleashes her fury once enemies are foolish enough to attack her.",
+          "display": "拉扎普没有受到攻击时，她的护甲会获得充能，然后向那些攻击她的蠢货释放她的狂怒。"
+        },
+        "graphicId": "8650"
+      },
+      {
+        "upgradeId": "17481",
+        "name": {
+          "original": "Contingency Plan",
+          "display": "应急预案"
+        },
+        "description": null,
+        "graphicId": "27004"
+      },
+      {
+        "upgradeId": "17482",
+        "name": {
+          "original": "Artificer Infusion",
+          "display": "机关术士的灌注"
+        },
+        "description": null,
+        "graphicId": "27003"
+      },
+      {
+        "upgradeId": "17483",
+        "name": {
+          "original": "Shield of Sharn",
+          "display": "萨恩之盾"
+        },
+        "description": null,
+        "graphicId": "8653"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3857,7 +3900,8 @@
               188
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30492
         },
         "adventure_ids": [
           {
@@ -3885,7 +3929,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 18,
+        "popularity": 9,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3929,7 +3973,7 @@
       },
       "display": {
         "id": 66,
-        "name": "拉扎普",
+        "name": "Lazaapz",
         "english_name": "Lazaapz",
         "seat_id": 9,
         "base_cost": "20000000000000",
@@ -3946,11 +3990,11 @@
         "graphic_id": 8611,
         "portrait_graphic_id": 8615,
         "character_sheet_details": {
-          "full_name": "拉扎普",
-          "class": "机关术士",
-          "race": "地精",
+          "full_name": "Lazaapz",
+          "class": "工匠",
+          "race": "哥布林",
           "age": 19,
-          "alignment": "中性邪恶",
+          "alignment": "中立邪恶",
           "ability_scores": {
             "str": 8,
             "dex": 16,
@@ -3959,7 +4003,7 @@
             "wis": 10,
             "cha": 8
           },
-          "backstory": "拉扎普兹出生于沙恩下城的齿轮城，出众的智力让她来到了贸易集市区，在那里，她的机械天才受到了龙印家族的追捧。拉扎普的第一个发明是一个功能性机械手臂，用来替代她生来就没有的手臂；现在，她带领着一支精英工程师团队从事尖端研发工作。在发现神秘的长生机器后，拉扎普被坎尼斯家族请来确定该装置的用途。不久之后，拉扎普和机器都消失了，再也没有出现过。",
+          "backstory": "拉扎普兹出生于沙恩下城区下的“齿轮区”，凭借非凡的智慧，她跻身贸易博览会区，其机械天赋也因此备受“龙印家族”的青睐。 拉扎普兹的首项发明是一条功能完备的机械手臂，用来替代她天生缺失的那只手臂；如今，她正带领一支精英工程师团队从事前沿的研发工作。 在发现一台神秘的“异界机械”后，卡尼思家族邀请拉扎普兹前来查明该装置的用途。不久之后，拉扎普兹与那台机械一同消失，从此杳无音讯。",
           "system_description": "拉扎普是一名坦克/支援型勇士，她的机关术士护甲让她几乎免疫伤害——当然了，当护甲撑不住时，这种免疫就会失效。"
         },
         "default_feat_slot_unlocks": [
@@ -4056,7 +4100,8 @@
               188
             ],
             "scale": 1.25
-          }
+          },
+          "bastion_graphic_id": 30492
         },
         "adventure_ids": [
           {
@@ -4084,7 +4129,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 18,
+        "popularity": 9,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6818,8 +6863,8 @@
             "id": 762,
             "hero_id": 66,
             "order": 5,
-            "name": "重甲",
-            "description": "再多拴上一件板甲，你就可以出发了。",
+            "name": "重装甲",
+            "description": "再用螺栓固定上一块钢板，就可以开始使用了。",
             "rarity": 4,
             "graphic_id": 6076,
             "effects": [
@@ -7068,8 +7113,7 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1780513200
             },
             "collections_source": {
@@ -7096,8 +7140,7 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1780513200
             },
             "collections_source": {
@@ -7198,8 +7241,8 @@
             "id": 1949,
             "hero_id": 66,
             "order": 13,
-            "name": "你的朋友就是我的朋友",
-            "description": "我喜欢认识新朋友，找出我们都讨厌的东西。",
+            "name": "友好的狂怒",
+            "description": "我喜欢结识新朋友，并发现我们共同讨厌什么。",
             "rarity": 2,
             "graphic_id": 6080,
             "effects": [
@@ -7257,8 +7300,8 @@
             "id": 1950,
             "hero_id": 66,
             "order": 14,
-            "name": "强化愤怒",
-            "description": "每当我毁掉一些我不喜欢的东西时，我都会感觉好多了！",
+            "name": "强化之怒",
+            "description": "每当我毁掉一件我不喜欢的东西，心情就会好起来！",
             "rarity": 3,
             "graphic_id": 6080,
             "effects": [
@@ -7320,7 +7363,7 @@
             "hero_id": 66,
             "order": 15,
             "name": "人工即兴创作",
-            "description": "把我和一箱废料放在一个山洞里，我几乎可以造出任何东西！",
+            "description": "把我关在山洞里，给我一箱废料，我几乎能造出任何东西！",
             "rarity": 3,
             "graphic_id": 6080,
             "effects": [
@@ -7594,9 +7637,8 @@
               "available_at_time": 1767124800
             },
             "collections_source": {
-              "type": "dlc",
-              "item_id": "655",
-              "cost": 1680
+              "type": "gems",
+              "cost": 50000
             }
           },
           "display": {
@@ -7629,9 +7671,8 @@
               "available_at_time": 1767124800
             },
             "collections_source": {
-              "type": "dlc",
-              "item_id": "655",
-              "cost": 1680
+              "type": "gems",
+              "cost": 50000
             }
           }
         }
@@ -7657,7 +7698,8 @@
               "open_fist_graphic_id": "14495",
               "closed_fist_graphic_id": "14494",
               "shield_graphic": 27131,
-              "drone_graphic": 27136
+              "drone_graphic": 27136,
+              "bastion_graphic_id": 30749
             },
             "rarity": "3",
             "properties": {
@@ -7688,7 +7730,8 @@
               "open_fist_graphic_id": "14495",
               "closed_fist_graphic_id": "14494",
               "shield_graphic": 27131,
-              "drone_graphic": 27136
+              "drone_graphic": 27136,
+              "bastion_graphic_id": 30749
             },
             "rarity": "3",
             "properties": {
@@ -7727,7 +7770,8 @@
               "shield_graphic": 27132,
               "drone_graphic": 27137,
               "shockwave_graphic": 27135,
-              "repair_spark_graphic": 27133
+              "repair_spark_graphic": 27133,
+              "bastion_graphic_id": 30828
             },
             "rarity": "3",
             "properties": {
@@ -7757,7 +7801,8 @@
               "shield_graphic": 27132,
               "drone_graphic": 27137,
               "shockwave_graphic": 27135,
-              "repair_spark_graphic": 27133
+              "repair_spark_graphic": 27133,
+              "bastion_graphic_id": 30828
             },
             "rarity": "3",
             "properties": {
@@ -7788,7 +7833,8 @@
               "open_fist_graphic_id": 27462,
               "closed_fist_graphic_id": 27463,
               "drone_graphic": 27461,
-              "shield_graphic": 27700
+              "shield_graphic": 27700,
+              "bastion_graphic_id": 31160
             },
             "rarity": "3",
             "properties": {
@@ -7800,7 +7846,7 @@
               "cost": 3830
             },
             "availabilities": {
-              "premium_item_id": "607"
+              "in_flash_sales": true
             }
           },
           "display": {
@@ -7818,7 +7864,8 @@
               "open_fist_graphic_id": 27462,
               "closed_fist_graphic_id": 27463,
               "drone_graphic": 27461,
-              "shield_graphic": 27700
+              "shield_graphic": 27700,
+              "bastion_graphic_id": 31160
             },
             "rarity": "3",
             "properties": {
@@ -7830,7 +7877,7 @@
               "cost": 3830
             },
             "availabilities": {
-              "premium_item_id": "607"
+              "in_flash_sales": true
             }
           }
         }
@@ -7858,12 +7905,12 @@
               "shockwave_graphic": "{int}",
               "gem_glow_graphic": "{int}",
               "gem_glow_offset_x": "{int}",
-              "gem_glow_offset_y": "{int}"
+              "gem_glow_offset_y": "{int}",
+              "bastion_graphic_id": 31275
             },
             "rarity": "3",
             "properties": {
-              "show_only_if_owned": true,
-              "is_available": false
+              "is_available": true
             },
             "collections_source": ""
           },
@@ -7887,12 +7934,12 @@
               "shockwave_graphic": "{int}",
               "gem_glow_graphic": "{int}",
               "gem_glow_offset_x": "{int}",
-              "gem_glow_offset_y": "{int}"
+              "gem_glow_offset_y": "{int}",
+              "bastion_graphic_id": 31275
             },
             "rarity": "3",
             "properties": {
-              "show_only_if_owned": true,
-              "is_available": false
+              "is_available": true
             },
             "collections_source": ""
           }
@@ -8060,8 +8107,8 @@
           },
           "display": {
             "id": 1565,
-            "name": "岩拳 v2",
-            "description": "升级了手动释放螺栓。我可不想再把它弄断了。",
+            "name": "Rock-Fist v2",
+            "description": "升级了手动释放螺栓。我可不想它再断了。",
             "graphic_id": 8668,
             "hero_id": 66,
             "slot_id": 2,
@@ -8095,8 +8142,8 @@
           },
           "display": {
             "id": 1566,
-            "name": "岩石拳 v17",
-            "description": "v16 的熔融核心太过分了。我现在知道了。",
+            "name": "《岩石之拳》第17卷",
+            "description": "v16的熔融核心确实有些过头了。我现在明白了。",
             "graphic_id": 8668,
             "hero_id": 66,
             "slot_id": 2,
@@ -8131,7 +8178,7 @@
           "display": {
             "id": 1567,
             "name": "奥术推进臂",
-            "description": "坎尼斯家族的蓝图非常宝贵，那些机关术士肯定很懂行。",
+            "description": "那些卡尼思家族的蓝图价值连城；那些工匠确实技艺精湛。",
             "graphic_id": 8669,
             "hero_id": 66,
             "slot_id": 2,
@@ -8165,8 +8212,8 @@
           },
           "display": {
             "id": 1568,
-            "name": "马克42 抓斗式链锯",
-            "description": "擒拿臂？对蜂鸣锯？没问题现在来测试一下这个东西......",
+            "name": "Mark 42 抓钩圆锯",
+            "description": "抓钩臂？有。圆锯？有。现在该试用一下这玩意儿了……",
             "graphic_id": 8670,
             "hero_id": 66,
             "slot_id": 2,
@@ -8620,8 +8667,8 @@
           },
           "display": {
             "id": 1581,
-            "name": "胸罩 v2",
-            "description": "反正我也不觉得那会有用。",
+            "name": "胸甲 v2",
+            "description": "反正我本来就不觉得那行得通。",
             "graphic_id": 8671,
             "hero_id": 66,
             "slot_id": 6,
@@ -8655,8 +8702,8 @@
           },
           "display": {
             "id": 1582,
-            "name": "胸罩 v82",
-            "description": "太好了我们又开始吹水晶了。",
+            "name": "胸片 v82",
+            "description": "哦，太好了。我们又要开始吹制水晶了。",
             "graphic_id": 8671,
             "hero_id": 66,
             "slot_id": 6,
@@ -8690,8 +8737,8 @@
           },
           "display": {
             "id": 1583,
-            "name": "胸罩 v101",
-            "description": "我在被传送到这里之前刚刚看完。",
+            "name": "胸片 v101",
+            "description": "我刚传送过来之前就看完了。",
             "graphic_id": 8672,
             "hero_id": 66,
             "slot_id": 6,
@@ -8725,8 +8772,8 @@
           },
           "display": {
             "id": 1584,
-            "name": "沙恩之心胸甲",
-            "description": "只要每隔几个月更换一次水晶，就不用担心爆炸了。",
+            "name": "“沙恩之心”胸甲",
+            "description": "只要记得每隔几个月更换一次晶体，就不用担心会爆炸了。",
             "graphic_id": 8673,
             "hero_id": 66,
             "slot_id": 6,

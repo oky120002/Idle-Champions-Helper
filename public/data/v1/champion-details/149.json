@@ -1,271 +1,5 @@
 {
-  "updatedAt": "2026-06-01",
-  "summary": {
-    "id": "149",
-    "name": {
-      "original": "Duke Ravengard",
-      "display": "瑞文嘉德公爵"
-    },
-    "seat": 8,
-    "roles": [
-      "support"
-    ],
-    "affiliations": [],
-    "tags": [
-      "event",
-      "fighter",
-      "geneutral",
-      "human",
-      "lawful",
-      "male",
-      "neutral",
-      "spec_control",
-      "spec_control_knockback",
-      "support",
-      "tales",
-      "unaffiliated",
-      "y7"
-    ],
-    "portrait": {
-      "path": "v1/champion-portraits/149.png",
-      "sourceGraphic": "Portraits/Portrait_DukeRavengard",
-      "sourceVersion": 2
-    }
-  },
-  "englishName": "Duke Ravengard",
-  "eventName": {
-    "original": "Dragondown",
-    "display": "龙陨节"
-  },
-  "dateAvailable": "2024-06-05 13:00:00",
-  "lastReworkDate": "2024-06-05 13:00:00",
-  "popularity": 0,
-  "baseCost": "300000000000",
-  "baseDamage": "175000000",
-  "baseHealth": "49",
-  "graphicId": "23493",
-  "portraitGraphicId": "23492",
-  "availability": {
-    "availableInNextEvent": true,
-    "availableInShop": true,
-    "availableInTimeGate": true,
-    "isAvailable": true,
-    "nextEventTimestamp": 1780513200
-  },
-  "adventureIds": [],
-  "defaultFeatSlotUnlocks": [
-    295,
-    930,
-    1690,
-    2625
-  ],
-  "costCurves": {
-    "1": 1.075
-  },
-  "healthCurves": {
-    "1": 1
-  },
-  "properties": {
-    "content_set_id": 44,
-    "attack_sound": 1,
-    "death_sound": 1,
-    "pain_sounds": [
-      185,
-      186,
-      187
-    ],
-    "graphic_large": 23495,
-    "graphic_xl": 23496,
-    "eye_height": 124,
-    "portrait_center_offset": [
-      85,
-      70
-    ],
-    "ultimate_color": [
-      255,
-      0,
-      0
-    ],
-    "animation_frames": {
-      "idle": 0,
-      "walk": 1,
-      "charge": 2,
-      "attack": 3,
-      "ultimate": 5,
-      "gethit": 6,
-      "koed": 7,
-      "run": 1
-    },
-    "permanent_effects": [
-      "effect_def,1989"
-    ],
-    "allow_time_gate": "2024-06-26 12:00:00",
-    "available_in_store": "2024-07-03 12:00:00",
-    "time_gate_adventure_id": 1542,
-    "time_gate_variants_ids": [
-      1506,
-      1507,
-      1508
-    ],
-    "time_gate_tier": 1,
-    "silver_chest_type_id": 568,
-    "gold_chest_type_id": 569,
-    "golden_epic_loot_id": 3533,
-    "golden_epic_promo_id": 472,
-    "event_logo_graphic_id": 3374,
-    "console_portrait": 23586,
-    "trials_effect_id": 842,
-    "portrait_graphic_scale": 1,
-    "legendary_effect_id": [
-      1,
-      3,
-      58,
-      96,
-      43,
-      46
-    ],
-    "weekly_buff": "buff_upgrade,25,15028",
-    "notification_adjustment": {
-      "offset": [
-        54,
-        219
-      ],
-      "scale": 1.25
-    },
-    "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
-  },
-  "characterSheet": {
-    "fullName": {
-      "original": "Duke Ravengard",
-      "display": "瑞文嘉德公爵"
-    },
-    "class": {
-      "original": "Fighter",
-      "display": "战士"
-    },
-    "race": {
-      "original": "Human",
-      "display": "人类"
-    },
-    "age": 53,
-    "alignment": {
-      "original": "Lawful Neutral",
-      "display": "守序中立"
-    },
-    "abilityScores": {
-      "str": 17,
-      "dex": 14,
-      "con": 16,
-      "int": 11,
-      "wis": 10,
-      "cha": 17
-    },
-    "backstory": {
-      "original": "Ulder Ravengard is the leader of the Flaming Fist and the Grand Duke of Baldur's Gate. His primary concerns are the stability and prosperity of Baldur's Gate, and he's been a voice of reason and common sense among the ruling council. In recent years, he has been a target of fiendish plots in unsuccessful attempts to take over the city.",
-      "display": "乌尔德·瑞文嘉德是烈焰之拳的领袖，也是博德之门的公爵。他的首要关注点是博德之门的稳定和繁荣，并一直在执政委员会中充当理性与常识的代言人。近年来，炼狱生物曾多次企图占领城市但无功而返，而他是首当其冲的目标。"
-    }
-  },
-  "attacks": {
-    "base": {
-      "id": "756",
-      "name": {
-        "original": "Duke's Longsword",
-        "display": "公爵的长剑"
-      },
-      "description": {
-        "original": "Duke Ravengard attacks the closest enemy for one hit with his longsword.",
-        "display": "瑞文嘉德公爵用他的剑攻击距离最近的敌人并命中一次。"
-      },
-      "longDescription": null,
-      "cooldown": 4,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "1",
-      "target": "front",
-      "damageTypes": [
-        "melee"
-      ],
-      "tags": [
-        "melee"
-      ],
-      "graphicId": "0",
-      "animations": [
-        {
-          "type": "melee_attack",
-          "target_offset_x": -40,
-          "start_frame": 5,
-          "damage_frame": 12,
-          "jump_sound": 30,
-          "sound_frames": {
-            "2": 194
-          }
-        }
-      ]
-    },
-    "ultimate": {
-      "id": "758",
-      "name": {
-        "original": "Duke's Fire Shield",
-        "display": "公爵的火焰护盾"
-      },
-      "description": {
-        "original": "Duke Ravengard ignites in flames for 20 seconds, damaging attacking melee enemies and increasing his damage.",
-        "display": "瑞文嘉德公爵燃烧 20 秒，对攻击他的近战敌人造成伤害，并提高他自身的伤害。"
-      },
-      "longDescription": {
-        "original": "Duke Ravengard's magical armor ignites in flames for 20 seconds, causing any attacking melee enemies to take damage as well as increasing his own damage.",
-        "display": "瑞文嘉德公爵的魔法护甲燃烧 20 秒，使所有攻击他的近战敌人受到伤害，并提高他自身的伤害。"
-      },
-      "cooldown": 200,
-      "numTargets": 1,
-      "aoeRadius": 0,
-      "damageModifier": "0.03",
-      "target": "none",
-      "damageTypes": [
-        "magic"
-      ],
-      "tags": [
-        "ultimate"
-      ],
-      "graphicId": "23613",
-      "animations": [
-        {
-          "type": "ultimate_attack",
-          "ultimate": "duke_ravengard",
-          "no_damage_display": true
-        }
-      ]
-    },
-    "eventUpgrades": [
-      {
-        "upgradeId": "15028",
-        "name": {
-          "original": "Marshal of the Flaming Fist",
-          "display": "烈焰之拳元帅"
-        },
-        "description": null,
-        "graphicId": "23605"
-      },
-      {
-        "upgradeId": "15029",
-        "name": {
-          "original": "Position of Power",
-          "display": "位高权重"
-        },
-        "description": null,
-        "graphicId": "23606"
-      },
-      {
-        "upgradeId": "15030",
-        "name": {
-          "original": "Critical Teamwork",
-          "display": "致命合作"
-        },
-        "description": null,
-        "graphicId": "23604"
-      }
-    ]
-  },
+  "updatedAt": "2026-08-06",
   "upgrades": [
     {
       "id": "15027",
@@ -276,7 +10,6 @@
         "display": "暴击"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1968",
       "effectDefinition": {
         "id": "1968",
         "snapshots": {
@@ -327,7 +60,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1968"
     },
     {
       "id": "15028",
@@ -338,7 +72,6 @@
         "display": "烈焰之拳元帅"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1969",
       "effectDefinition": {
         "id": "1969",
         "snapshots": {
@@ -448,7 +181,8 @@
       "tipText": {
         "original": "Duke Ravengard's support abilities grow stronger as you include more heroes that use melee attacks.",
         "display": "阵型重使用近战攻击的勇士越多，瑞文嘉德公爵的辅助技能也就越强。"
-      }
+      },
+      "effectReference": "effect_def,1969"
     },
     {
       "id": "15164",
@@ -456,14 +190,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15134",
@@ -471,14 +205,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15035",
@@ -486,14 +220,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15165",
@@ -501,14 +235,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15030",
@@ -519,7 +253,6 @@
         "display": "致命合作"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1971",
       "effectDefinition": {
         "id": "1971",
         "snapshots": {
@@ -671,7 +404,8 @@
       "tipText": {
         "original": "Duke Ravengard's support abilities grow stronger in an area each time a Champion scores a critical hit!",
         "display": "每当一名勇士打出暴击时，在一个区域内瑞文嘉德公爵的辅助技能就会变得更强！"
-      }
+      },
+      "effectReference": "effect_def,1971"
     },
     {
       "id": "15034",
@@ -682,7 +416,6 @@
         "display": "火焰护盾"
       },
       "upgradeType": "unlock_ultimate",
-      "effectReference": "effect_def,1983",
       "effectDefinition": {
         "id": "1983",
         "snapshots": {
@@ -791,7 +524,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1983"
     },
     {
       "id": "15166",
@@ -799,14 +533,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15029",
@@ -817,7 +551,6 @@
         "display": "位高权重"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1970",
       "effectDefinition": {
         "id": "1970",
         "snapshots": {
@@ -920,7 +653,8 @@
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1970"
     },
     {
       "id": "15135",
@@ -928,14 +662,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15167",
@@ -943,14 +677,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15031",
@@ -961,7 +695,6 @@
         "display": "带头冲锋"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1972",
       "effectDefinition": {
         "id": "1972",
         "snapshots": {
@@ -1024,7 +757,8 @@
         "display": "瑞文嘉德公爵带头冲锋，激励他的追随者们增加攻击频率。"
       },
       "specializationGraphicId": "23610",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1972"
     },
     {
       "id": "15032",
@@ -1035,7 +769,6 @@
         "display": "博德之门的力量"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1973",
       "effectDefinition": {
         "id": "1973",
         "snapshots": {
@@ -1138,7 +871,8 @@
         "display": "乌尔德向其他勇士们展示如何打击敌人弱点，造成更高伤害。"
       },
       "specializationGraphicId": "23612",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1973"
     },
     {
       "id": "15033",
@@ -1149,7 +883,6 @@
         "display": "瑞文嘉德的传承"
       },
       "upgradeType": "unlock_ability",
-      "effectReference": "effect_def,1974",
       "effectDefinition": {
         "id": "1974",
         "snapshots": {
@@ -1208,7 +941,8 @@
         "display": "乌尔德支援瓦尔，两人势不可挡。"
       },
       "specializationGraphicId": "23611",
-      "tipText": null
+      "tipText": null,
+      "effectReference": "effect_def,1974"
     },
     {
       "id": "15136",
@@ -1216,14 +950,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15168",
@@ -1231,14 +965,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15137",
@@ -1246,14 +980,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15169",
@@ -1261,14 +995,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15170",
@@ -1276,14 +1010,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15036",
@@ -1291,14 +1025,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15030,0",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15030,0"
     },
     {
       "id": "15171",
@@ -1306,14 +1040,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15138",
@@ -1321,14 +1055,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15172",
@@ -1336,14 +1070,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15173",
@@ -1351,14 +1085,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15139",
@@ -1366,14 +1100,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15175",
@@ -1381,14 +1115,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15146",
@@ -1396,14 +1130,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15176",
@@ -1411,14 +1145,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15140",
@@ -1426,14 +1160,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15177",
@@ -1441,14 +1175,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,200"
     },
     {
       "id": "15141",
@@ -1456,14 +1190,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15178",
@@ -1471,14 +1205,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15142",
@@ -1486,14 +1220,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15179",
@@ -1501,14 +1235,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15143",
@@ -1516,14 +1250,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15030,0",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15030,0"
     },
     {
       "id": "15180",
@@ -1531,14 +1265,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15144",
@@ -1546,14 +1280,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15181",
@@ -1561,14 +1295,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15145",
@@ -1576,14 +1310,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15182",
@@ -1591,14 +1325,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15151",
@@ -1606,14 +1340,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15183",
@@ -1621,14 +1355,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15147",
@@ -1636,14 +1370,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15184",
@@ -1651,14 +1385,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15148",
@@ -1666,14 +1400,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15185",
@@ -1681,14 +1415,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15149",
@@ -1696,14 +1430,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15186",
@@ -1711,14 +1445,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15150",
@@ -1726,14 +1460,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15030,0",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15030,0"
     },
     {
       "id": "15187",
@@ -1741,14 +1475,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15157",
@@ -1756,14 +1490,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15152",
@@ -1771,14 +1505,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15188",
@@ -1786,14 +1520,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15153",
@@ -1801,14 +1535,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15189",
@@ -1816,14 +1550,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15154",
@@ -1831,14 +1565,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15155",
@@ -1846,14 +1580,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15190",
@@ -1861,14 +1595,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15156",
@@ -1876,14 +1610,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15030,0",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15030,0"
     },
     {
       "id": "15162",
@@ -1891,14 +1625,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15191",
@@ -1906,14 +1640,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15158",
@@ -1921,14 +1655,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15159",
@@ -1936,14 +1670,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15160",
@@ -1951,14 +1685,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,200",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,200"
     },
     {
       "id": "15192",
@@ -1966,14 +1700,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,100"
     },
     {
       "id": "15193",
@@ -1981,14 +1715,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15161",
@@ -1996,14 +1730,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15028,1",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15028,1"
     },
     {
       "id": "15174",
@@ -2011,14 +1745,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "global_dps_multiplier_mult,100",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "global_dps_multiplier_mult,100"
     },
     {
       "id": "15194",
@@ -2026,14 +1760,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": null,
-      "effectReference": "hero_dps_multiplier_mult,300",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "hero_dps_multiplier_mult,300"
     },
     {
       "id": "15163",
@@ -2041,14 +1775,14 @@
       "requiredUpgradeId": null,
       "name": null,
       "upgradeType": "upgrade_ability",
-      "effectReference": "buff_upgrade,100,15030,0",
       "effectDefinition": null,
       "staticDpsMult": null,
       "defaultEnabled": true,
       "specializationName": null,
       "specializationDescription": null,
       "specializationGraphicId": null,
-      "tipText": null
+      "tipText": null,
+      "effectReference": "buff_upgrade,100,15030,0"
     }
   ],
   "feats": [
@@ -2569,8 +2303,7 @@
       "graphicId": "6080",
       "effects": [
         {
-          "effect_string": "todo",
-          "notes": "FA3 - Critical Teamwork damage buff (E)"
+          "effect_string": "buff_upgrade,80,15030,0"
         }
       ],
       "sources": [
@@ -2580,23 +2313,32 @@
         }
       ],
       "properties": {
-        "available_time": 999999,
-        "is_available": false,
+        "is_available": true,
         "available_at_time": 1782327600
       },
-      "collectionsSource": ""
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 1914
+      }
     },
     {
       "id": "2633",
       "order": 17,
       "name": {
         "original": "Edge of Hope",
-        "display": "TBD Ravengard Feat (Do not translate)"
+        "display": "希望的边缘"
       },
-      "description": null,
+      "description": {
+        "original": "We are canceling the apocalypse!",
+        "display": "我们要阻止末日降临！"
+      },
       "rarity": "4",
-      "graphicId": "0",
-      "effects": [],
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,15028,0"
+        }
+      ],
       "sources": [
         {
           "source": "gems",
@@ -2609,12 +2351,15 @@
         }
       ],
       "properties": {
-        "available_time": 999999,
-        "is_available": false,
+        "is_available": true,
         "available_at_time": 1780513200,
         "available_for_gems_at_time": 1788462000
       },
-      "collectionsSource": ""
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "718",
+        "cost": 1680
+      }
     }
   ],
   "skins": [
@@ -2632,7 +2377,8 @@
         "large_graphic_id": 23641,
         "portrait_graphic_id": 23651,
         "xl_graphic_id": 23645,
-        "enflamed_graphic_id": 23636
+        "enflamed_graphic_id": 23636,
+        "bastion_graphic_id": 31011
       },
       "rarity": "3",
       "properties": {
@@ -2662,7 +2408,8 @@
         "large_graphic_id": 23925,
         "portrait_graphic_id": 23918,
         "xl_graphic_id": 23926,
-        "enflamed_graphic_id": 23924
+        "enflamed_graphic_id": 23924,
+        "bastion_graphic_id": 31019
       },
       "rarity": "3",
       "properties": {
@@ -2688,7 +2435,8 @@
         "large_graphic_id": 26910,
         "portrait_graphic_id": 26913,
         "xl_graphic_id": 26911,
-        "enflamed_graphic_id": 26912
+        "enflamed_graphic_id": 26912,
+        "bastion_graphic_id": 31135
       },
       "rarity": "3",
       "properties": {
@@ -2700,7 +2448,7 @@
         "cost": 1680
       },
       "availabilities": {
-        "premium_item_id": "576"
+        "in_flash_sales": true
       }
     },
     {
@@ -2717,10 +2465,12 @@
         "large_graphic_id": 28478,
         "portrait_graphic_id": 28474,
         "xl_graphic_id": 28480,
-        "enflamed_graphic_id": 28476
+        "enflamed_graphic_id": 28476,
+        "bastion_graphic_id": 31214
       },
       "rarity": "3",
       "properties": {
+        "unlock_from_campaign": 32,
         "is_available": true
       },
       "collectionsSource": {
@@ -2750,12 +2500,13 @@
         "base_graphic_id": 29539,
         "large_graphic_id": 29543,
         "portrait_graphic_id": 29529,
-        "xl_graphic_id": 29547
+        "xl_graphic_id": 29547,
+        "enflamed_graphic_id": 29791,
+        "bastion_graphic_id": 31270
       },
       "rarity": "3",
       "properties": {
-        "show_only_if_owned": true,
-        "is_available": false
+        "is_available": true
       },
       "collectionsSource": "",
       "availabilities": {
@@ -2777,6 +2528,7 @@
       "graphicId": "23512",
       "slotId": 1,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2798,6 +2550,7 @@
       "graphicId": "23512",
       "slotId": 1,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2819,6 +2572,7 @@
       "graphicId": "23513",
       "slotId": 1,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2840,6 +2594,7 @@
       "graphicId": "23514",
       "slotId": 1,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2861,6 +2616,7 @@
       "graphicId": "23503",
       "slotId": 2,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,10"
@@ -2882,6 +2638,7 @@
       "graphicId": "23503",
       "slotId": 2,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,65"
@@ -2903,6 +2660,7 @@
       "graphicId": "23504",
       "slotId": 2,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,120"
@@ -2924,6 +2682,7 @@
       "graphicId": "23505",
       "slotId": 2,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "global_dps_multiplier_mult,230"
@@ -2945,6 +2704,7 @@
       "graphicId": "23506",
       "slotId": 3,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15028,0"
@@ -2966,6 +2726,7 @@
       "graphicId": "23506",
       "slotId": 3,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15028,0"
@@ -2987,6 +2748,7 @@
       "graphicId": "23507",
       "slotId": 3,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15028,0"
@@ -3008,6 +2770,7 @@
       "graphicId": "23508",
       "slotId": 3,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15028,0"
@@ -3029,6 +2792,7 @@
       "graphicId": "23509",
       "slotId": 4,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15030,0"
@@ -3050,6 +2814,7 @@
       "graphicId": "23509",
       "slotId": 4,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15030,0"
@@ -3071,6 +2836,7 @@
       "graphicId": "23510",
       "slotId": 4,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15030,0"
@@ -3092,6 +2858,7 @@
       "graphicId": "23511",
       "slotId": 4,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15030,0"
@@ -3113,6 +2880,7 @@
       "graphicId": "23497",
       "slotId": 5,
       "rarity": "1",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,25,15034,1",
@@ -3140,6 +2908,7 @@
       "graphicId": "23497",
       "slotId": 5,
       "rarity": "2",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,87.5,15034,1",
@@ -3167,6 +2936,7 @@
       "graphicId": "23498",
       "slotId": 5,
       "rarity": "3",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,150,15034,1",
@@ -3194,6 +2964,7 @@
       "graphicId": "23499",
       "slotId": 5,
       "rarity": "4",
+      "maxLevel": [],
       "effects": [
         {
           "effect_string": "buff_upgrade,275,15034,1",
@@ -3221,6 +2992,11 @@
       "graphicId": "23500",
       "slotId": 6,
       "rarity": "1",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,10"
@@ -3242,6 +3018,11 @@
       "graphicId": "23500",
       "slotId": 6,
       "rarity": "2",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,20"
@@ -3263,6 +3044,11 @@
       "graphicId": "23501",
       "slotId": 6,
       "rarity": "3",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,40"
@@ -3284,6 +3070,11 @@
       "graphicId": "23502",
       "slotId": 6,
       "rarity": "4",
+      "maxLevel": [
+        500,
+        250,
+        125
+      ],
       "effects": [
         {
           "effect_string": "reduce_ultimate_cooldown,100"
@@ -3411,6 +3202,288 @@
       ]
     }
   ],
+  "summary": {
+    "id": "149",
+    "name": {
+      "original": "Duke Ravengard",
+      "display": "瑞文嘉德公爵"
+    },
+    "seat": 8,
+    "portrait": {
+      "path": "v1/champion-portraits/149.png",
+      "sourceGraphic": "Portraits/Portrait_DukeRavengard",
+      "sourceVersion": 2
+    },
+    "roles": [
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "event",
+      "fighter",
+      "geneutral",
+      "human",
+      "lawful",
+      "male",
+      "neutral",
+      "spec_control",
+      "spec_control_knockback",
+      "support",
+      "tales",
+      "unaffiliated",
+      "y7"
+    ],
+    "patronEligibility": {
+      "eligiblePatronIds": [
+        "2",
+        "4",
+        "5"
+      ],
+      "ruleQualifiedPatronIds": [
+        "2",
+        "4",
+        "5"
+      ],
+      "forcedEligiblePatronIds": [],
+      "unsupportedPatronIds": []
+    }
+  },
+  "englishName": "Duke Ravengard",
+  "eventName": {
+    "original": "Dragondown",
+    "display": "龙陨节"
+  },
+  "dateAvailable": "2024-06-05 13:00:00",
+  "lastReworkDate": "2024-06-05 13:00:00",
+  "popularity": 21,
+  "baseCost": "300000000000",
+  "baseDamage": "175000000",
+  "baseHealth": "49",
+  "graphicId": "23493",
+  "portraitGraphicId": "23492",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1812049200
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    295,
+    930,
+    1690,
+    2625
+  ],
+  "costCurves": {
+    "1": 1.075
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 44,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 23495,
+    "graphic_xl": 23496,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      85,
+      70
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 1
+    },
+    "permanent_effects": [
+      "effect_def,1989"
+    ],
+    "allow_time_gate": "2024-06-26 12:00:00",
+    "available_in_store": "2024-07-03 12:00:00",
+    "time_gate_adventure_id": 1542,
+    "time_gate_variants_ids": [
+      1506,
+      1507,
+      1508
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 568,
+    "gold_chest_type_id": 569,
+    "golden_epic_loot_id": 3533,
+    "golden_epic_promo_id": 472,
+    "event_logo_graphic_id": 3374,
+    "console_portrait": 23586,
+    "trials_effect_id": 842,
+    "portrait_graphic_scale": 1,
+    "legendary_effect_id": [
+      1,
+      3,
+      58,
+      96,
+      43,
+      46
+    ],
+    "weekly_buff": "buff_upgrade,25,15028",
+    "notification_adjustment": {
+      "offset": [
+        54,
+        219
+      ],
+      "scale": 1.25
+    },
+    "bastion_graphic_id": 30562,
+    "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Duke Ravengard",
+      "display": "瑞文嘉德公爵"
+    },
+    "class": {
+      "original": "Fighter",
+      "display": "战士"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 53,
+    "alignment": {
+      "original": "Lawful Neutral",
+      "display": "守序中立"
+    },
+    "backstory": {
+      "original": "Ulder Ravengard is the leader of the Flaming Fist and the Grand Duke of Baldur's Gate. His primary concerns are the stability and prosperity of Baldur's Gate, and he's been a voice of reason and common sense among the ruling council. In recent years, he has been a target of fiendish plots in unsuccessful attempts to take over the city.",
+      "display": "乌尔德·瑞文嘉德是烈焰之拳的领袖，也是博德之门的公爵。他的首要关注点是博德之门的稳定和繁荣，并一直在执政委员会中充当理性与常识的代言人。近年来，炼狱生物曾多次企图占领城市但无功而返，而他是首当其冲的目标。"
+    },
+    "abilityScores": {
+      "str": 17,
+      "dex": 14,
+      "con": 16,
+      "int": 11,
+      "wis": 10,
+      "cha": 17
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "756",
+      "name": {
+        "original": "Duke's Longsword",
+        "display": "公爵的长剑"
+      },
+      "description": {
+        "original": "Duke Ravengard attacks the closest enemy for one hit with his longsword.",
+        "display": "瑞文嘉德公爵用他的剑攻击距离最近的敌人并命中一次。"
+      },
+      "longDescription": null,
+      "cooldown": 4,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -40,
+          "start_frame": 5,
+          "damage_frame": 12,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 194
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "758",
+      "name": {
+        "original": "Duke's Fire Shield",
+        "display": "公爵的火焰护盾"
+      },
+      "description": {
+        "original": "Duke Ravengard ignites in flames for 20 seconds, damaging attacking melee enemies and increasing his damage.",
+        "display": "瑞文嘉德公爵燃烧 20 秒，对攻击他的近战敌人造成伤害，并提高他自身的伤害。"
+      },
+      "longDescription": {
+        "original": "Duke Ravengard's magical armor ignites in flames for 20 seconds, causing any attacking melee enemies to take damage as well as increasing his own damage.",
+        "display": "瑞文嘉德公爵的魔法护甲燃烧 20 秒，使所有攻击他的近战敌人受到伤害，并提高他自身的伤害。"
+      },
+      "cooldown": 200,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "23613",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "duke_ravengard",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "15028",
+        "name": {
+          "original": "Marshal of the Flaming Fist",
+          "display": "烈焰之拳元帅"
+        },
+        "description": null,
+        "graphicId": "23605"
+      },
+      {
+        "upgradeId": "15029",
+        "name": {
+          "original": "Position of Power",
+          "display": "位高权重"
+        },
+        "description": null,
+        "graphicId": "23606"
+      },
+      {
+        "upgradeId": "15030",
+        "name": {
+          "original": "Critical Teamwork",
+          "display": "致命合作"
+        },
+        "description": null,
+        "graphicId": "23604"
+      }
+    ]
+  },
+  "ability": null,
   "raw": {
     "hero": {
       "original": {
@@ -3536,6 +3609,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30562,
           "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
         },
         "adventure_ids": [
@@ -3564,7 +3638,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 0,
+        "popularity": 21,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3588,7 +3662,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1780513200,
+        "next_event_timestamp": 1812049200,
         "event_name": "Dragondown",
         "is_available": true,
         "date_available": "2024-06-05 13:00:00",
@@ -3717,6 +3791,7 @@
             ],
             "scale": 1.25
           },
+          "bastion_graphic_id": 30562,
           "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
         },
         "adventure_ids": [
@@ -3745,7 +3820,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 0,
+        "popularity": 21,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3769,7 +3844,7 @@
           }
         ],
         "available_in_next_event": true,
-        "next_event_timestamp": 1780513200,
+        "next_event_timestamp": 1812049200,
         "event_name": "龙陨节",
         "is_available": true,
         "date_available": "2024-06-05 13:00:00",
@@ -6782,8 +6857,7 @@
             "graphic_id": 6080,
             "effects": [
               {
-                "effect_string": "todo",
-                "notes": "FA3 - Critical Teamwork damage buff (E)"
+                "effect_string": "buff_upgrade,80,15030,0"
               }
             ],
             "sources": [
@@ -6793,11 +6867,13 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1782327600
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1914
+            }
           },
           "display": {
             "id": 2609,
@@ -6809,8 +6885,7 @@
             "graphic_id": 6080,
             "effects": [
               {
-                "effect_string": "todo",
-                "notes": "FA3 - Critical Teamwork damage buff (E)"
+                "effect_string": "buff_upgrade,80,15030,0"
               }
             ],
             "sources": [
@@ -6820,11 +6895,13 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1782327600
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1914
+            }
           }
         }
       },
@@ -6836,10 +6913,14 @@
             "hero_id": 149,
             "order": 17,
             "name": "Edge of Hope",
-            "description": "",
+            "description": "We are canceling the apocalypse!",
             "rarity": 4,
-            "graphic_id": 0,
-            "effects": [],
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,15028,0"
+              }
+            ],
             "sources": [
               {
                 "source": "gems",
@@ -6852,22 +6933,29 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1780513200,
               "available_for_gems_at_time": 1788462000
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "718",
+              "cost": 1680
+            }
           },
           "display": {
             "id": 2633,
             "hero_id": 149,
             "order": 17,
-            "name": "TBD Ravengard Feat (Do not translate)",
-            "description": "",
+            "name": "希望的边缘",
+            "description": "我们要阻止末日降临！",
             "rarity": 4,
-            "graphic_id": 0,
-            "effects": [],
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,15028,0"
+              }
+            ],
             "sources": [
               {
                 "source": "gems",
@@ -6880,12 +6968,15 @@
               }
             ],
             "properties": {
-              "available_time": 999999,
-              "is_available": false,
+              "is_available": true,
               "available_at_time": 1780513200,
               "available_for_gems_at_time": 1788462000
             },
-            "collections_source": ""
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "718",
+              "cost": 1680
+            }
           }
         }
       }
@@ -6906,7 +6997,8 @@
               "large_graphic_id": 23641,
               "portrait_graphic_id": 23651,
               "xl_graphic_id": 23645,
-              "enflamed_graphic_id": 23636
+              "enflamed_graphic_id": 23636,
+              "bastion_graphic_id": 31011
             },
             "rarity": "3",
             "properties": {
@@ -6933,7 +7025,8 @@
               "large_graphic_id": 23641,
               "portrait_graphic_id": 23651,
               "xl_graphic_id": 23645,
-              "enflamed_graphic_id": 23636
+              "enflamed_graphic_id": 23636,
+              "bastion_graphic_id": 31011
             },
             "rarity": "3",
             "properties": {
@@ -6966,7 +7059,8 @@
               "large_graphic_id": 23925,
               "portrait_graphic_id": 23918,
               "xl_graphic_id": 23926,
-              "enflamed_graphic_id": 23924
+              "enflamed_graphic_id": 23924,
+              "bastion_graphic_id": 31019
             },
             "rarity": "3",
             "properties": {
@@ -6990,7 +7084,8 @@
               "large_graphic_id": 23925,
               "portrait_graphic_id": 23918,
               "xl_graphic_id": 23926,
-              "enflamed_graphic_id": 23924
+              "enflamed_graphic_id": 23924,
+              "bastion_graphic_id": 31019
             },
             "rarity": "3",
             "properties": {
@@ -7018,7 +7113,8 @@
               "large_graphic_id": 26910,
               "portrait_graphic_id": 26913,
               "xl_graphic_id": 26911,
-              "enflamed_graphic_id": 26912
+              "enflamed_graphic_id": 26912,
+              "bastion_graphic_id": 31135
             },
             "rarity": "3",
             "properties": {
@@ -7030,7 +7126,7 @@
               "cost": 1680
             },
             "availabilities": {
-              "premium_item_id": "576"
+              "in_flash_sales": true
             }
           },
           "display": {
@@ -7045,7 +7141,8 @@
               "large_graphic_id": 26910,
               "portrait_graphic_id": 26913,
               "xl_graphic_id": 26911,
-              "enflamed_graphic_id": 26912
+              "enflamed_graphic_id": 26912,
+              "bastion_graphic_id": 31135
             },
             "rarity": "3",
             "properties": {
@@ -7057,7 +7154,7 @@
               "cost": 1680
             },
             "availabilities": {
-              "premium_item_id": "576"
+              "in_flash_sales": true
             }
           }
         }
@@ -7077,10 +7174,12 @@
               "large_graphic_id": 28478,
               "portrait_graphic_id": 28474,
               "xl_graphic_id": 28480,
-              "enflamed_graphic_id": 28476
+              "enflamed_graphic_id": 28476,
+              "bastion_graphic_id": 31214
             },
             "rarity": "3",
             "properties": {
+              "unlock_from_campaign": 32,
               "is_available": true
             },
             "collections_source": {
@@ -7109,10 +7208,12 @@
               "large_graphic_id": 28478,
               "portrait_graphic_id": 28474,
               "xl_graphic_id": 28480,
-              "enflamed_graphic_id": 28476
+              "enflamed_graphic_id": 28476,
+              "bastion_graphic_id": 31214
             },
             "rarity": "3",
             "properties": {
+              "unlock_from_campaign": 32,
               "is_available": true
             },
             "collections_source": {
@@ -7145,12 +7246,13 @@
               "base_graphic_id": 29539,
               "large_graphic_id": 29543,
               "portrait_graphic_id": 29529,
-              "xl_graphic_id": 29547
+              "xl_graphic_id": 29547,
+              "enflamed_graphic_id": 29791,
+              "bastion_graphic_id": 31270
             },
             "rarity": "3",
             "properties": {
-              "show_only_if_owned": true,
-              "is_available": false
+              "is_available": true
             },
             "collections_source": "",
             "availabilities": {
@@ -7168,12 +7270,13 @@
               "base_graphic_id": 29539,
               "large_graphic_id": 29543,
               "portrait_graphic_id": 29529,
-              "xl_graphic_id": 29547
+              "xl_graphic_id": 29547,
+              "enflamed_graphic_id": 29791,
+              "bastion_graphic_id": 31270
             },
             "rarity": "3",
             "properties": {
-              "show_only_if_owned": true,
-              "is_available": false
+              "is_available": true
             },
             "collections_source": "",
             "availabilities": {
