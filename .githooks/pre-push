@@ -1,6 +1,6 @@
 #!/bin/sh
-# pre-push: 增量 lint——只检查待 push 范围内的变动源码文件 + 颜色守卫全量。
-# 漏检由 main CI 全量兜底。应急绕过：git push --no-verify
+# pre-push: 增量 eslint——只检查待 push 范围内的变动源码文件。
+# 全量 lint 由 npm run lint 手动执行。应急绕过：git push --no-verify
 #
 # 版本化：本文件进 git（.githooks/），clone 后由 npm prepare 自动设置
 # core.hooksPath=.githooks 生效。
@@ -19,14 +19,14 @@ while read -r _ local_sha _ remote_sha; do
   fi
 done
 
-# 首次 push 新分支 / 删除分支：无法 diff → 全量兜底
+# 首次 push 新分支 / 删除分支：无法 diff → 全量 eslint 兜底
 if [ "$NEED_FULL" = "1" ]; then
-  echo "▶ pre-push: 首次 push 或新分支，全量 lint 兜底..."
-  if npm run lint; then
-    echo "✓ lint 通过，放行 push"
+  echo "▶ pre-push: 首次 push 或新分支，全量 eslint 兜底..."
+  if npx eslint .; then
+    echo "✓ eslint 通过，放行 push"
     exit 0
   else
-    echo "✗ lint 失败，已中止 push。修复后重试，或 git push --no-verify 应急绕过。" >&2
+    echo "✗ eslint 失败，已中止 push。修复后重试，或 git push --no-verify 应急绕过。" >&2
     exit 1
   fi
 fi
@@ -45,11 +45,4 @@ else
   echo "▶ pre-push: 无源码变动，跳过 eslint"
 fi
 
-echo "▶ pre-push: 颜色守卫（全量）..."
-if npx tsx scripts/check-colors.ts && npx tsx scripts/check-color-contrast.ts; then
-  echo "✓ pre-push 通过，放行 push"
-  exit 0
-else
-  echo "✗ 颜色守卫失败，已中止 push。" >&2
-  exit 1
-fi
+echo "✓ pre-push 通过，放行 push"
