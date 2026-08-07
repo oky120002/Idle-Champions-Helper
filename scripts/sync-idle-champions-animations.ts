@@ -540,6 +540,66 @@ function printUsage(): void {
 `)
 }
 
+// 单条动画体积告警阈值（512 KB）；中位数约 150 KB，超阈值说明该角色纹理异常大
+const ANIMATION_SIZE_ALERT_BYTES = 512 * 1024
+
+interface AnimationSizeEntry {
+  readonly id: string
+  readonly kind: string
+  readonly bytes: number
+}
+
+interface AnimationSizeSummary {
+  readonly maxBytes: number
+  readonly medianBytes: number
+  readonly averageBytes: number
+  readonly oversized: readonly AnimationSizeEntry[]
+}
+
+export function summarizeAnimationSizes(
+  items: readonly AnimationSizeEntry[],
+  thresholdBytes: number,
+): AnimationSizeSummary {
+  if (items.length === 0) {
+    return { maxBytes: 0, medianBytes: 0, averageBytes: 0, oversized: [] }
+  }
+
+  const bytesSorted = [...items.map((item) => item.bytes)].sort((a, b) => a - b)
+  const maxBytes = bytesSorted[bytesSorted.length - 1] ?? 0
+  const medianBytes = bytesSorted[Math.floor(bytesSorted.length / 2)] ?? 0
+  const averageBytes = items.reduce((sum, item) => sum + item.bytes, 0) / items.length
+  const oversized = items.filter((item) => item.bytes > thresholdBytes)
+
+  return { maxBytes, medianBytes, averageBytes, oversized }
+}
+
+async function printAnimationSizeReport(outputDir: string): Promise<void> {
+  const collectionPath = path.join(outputDir, 'champion-animations.json')
+  const collection = JSON.parse(await readFile(collectionPath, 'utf-8')) as {
+    items: Array<{ id: string; kind: string; asset: { bytes: number } }>
+  }
+
+  const entries: AnimationSizeEntry[] = collection.items.map((item) => ({
+    id: item.id,
+    kind: item.kind,
+    bytes: item.asset.bytes,
+  }))
+  const summary = summarizeAnimationSizes(entries, ANIMATION_SIZE_ALERT_BYTES)
+
+  console.log(`- 最大体积: ${String(Math.round(summary.maxBytes / 1024))} KB`)
+  console.log(`- 中位体积: ${String(Math.round(summary.medianBytes / 1024))} KB`)
+  console.log(`- 平均体积: ${String(Math.round(summary.averageBytes / 1024))} KB`)
+
+  if (summary.oversized.length > 0) {
+    const thresholdKb = Math.round(ANIMATION_SIZE_ALERT_BYTES / 1024)
+    const sorted = [...summary.oversized].sort((a, b) => b.bytes - a.bytes)
+    console.warn(`\n⚠ ${String(summary.oversized.length)} 个动画超过 ${String(thresholdKb)} KB 阈值：`)
+    for (const item of sorted) {
+      console.warn(`  ${item.id} (${item.kind}): ${String(Math.round(item.bytes / 1024))} KB`)
+    }
+  }
+}
+
 async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
@@ -569,6 +629,10 @@ async function main(): Promise<void> {
   console.log(`- total bytes: ${String(result.totalBytes)}`)
   console.log(`- downloaded: ${String(result.downloadedCount)}`)
   console.log(`- reused: ${String(result.reusedCount)}`)
+
+  if (result.skipped !== true) {
+    await printAnimationSizeReport(result.outputDir)
+  }
 }
 
 const entryScriptPath = process.argv[1]

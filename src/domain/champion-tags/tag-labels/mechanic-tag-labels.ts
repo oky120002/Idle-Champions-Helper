@@ -117,4 +117,72 @@ export const MECHANIC_TAG_LABELS = {
     'zh-CN': '速度专精',
     'en-US': 'Speed Spec',
   },
+  spec_dps: {
+    'zh-CN': '输出专精',
+    'en-US': 'DPS Spec',
+  },
+  spec_healing: {
+    'zh-CN': '治疗专精',
+    'en-US': 'Healing Spec',
+  },
+  control: {
+    'zh-CN': '控制',
+    'en-US': 'Control',
+  },
+  breaking: {
+    'zh-CN': '破坏',
+    'en-US': 'Breaking',
+  },
+  debuff: {
+    'zh-CN': '减益',
+    'en-US': 'Debuff',
+  },
+  dps: {
+    'zh-CN': '输出',
+    'en-US': 'DPS',
+  },
+  gold: {
+    'zh-CN': '金币',
+    'en-US': 'Gold',
+  },
+  healing: {
+    'zh-CN': '治疗',
+    'en-US': 'Healing',
+  },
+  speed: {
+    'zh-CN': '速度',
+    'en-US': 'Speed',
+  },
+  support: {
+    'zh-CN': '支援',
+    'en-US': 'Support',
+  },
+  tanking: {
+    'zh-CN': '坦克',
+    'en-US': 'Tanking',
+  },
+  small: {
+    'zh-CN': '小体型',
+    'en-US': 'Small',
+  },
+  hunter_aberration: {
+    'zh-CN': '异怪猎杀',
+    'en-US': 'Aberration Hunter',
+  },
+  hunter_beast: {
+    'zh-CN': '野兽猎杀',
+    'en-US': 'Beast Hunter',
+  },
+  hunter_fiend: {
+    'zh-CN': '邪魔猎杀',
+    'en-US': 'Fiend Hunter',
+  },
+  hunter_humanoid: {
+    'zh-CN': '类人猎杀',
+    'en-US': 'Humanoid Hunter',
+  },
+  hunter_undead: {
+    'zh-CN': '亡灵猎杀',
+    'en-US': 'Undead Hunter',
+  },
 } satisfies Record<string, Record<AppLocale, string>>

@@ -11,6 +11,7 @@
 - 私有用户数据：`docs/specs/modules/user-data/`
 - 当前操作手册：`docs/runbooks/README.md`
 - 整站视觉（深色战术台方向、克制原则、移动端与 Pages 适配）：`.impeccable.md`
+- 运维脚本执行门禁（高风险脚本默认禁止执行，仅用户显式指示才允许）：`scripts/ops/AGENTS.md`
 
 ## 项目边界
 
