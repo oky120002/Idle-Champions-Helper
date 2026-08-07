@@ -33,7 +33,7 @@ STATE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/slim-git-history"
 BACKUP_BUNDLE="${XDG_CACHE_HOME:-$HOME/.cache}/slim-git-history.bundle"
 
 mkdir -p "$STATE_DIR"
-trap 'echo "⚠️ 失败，状态保留在：$STATE_DIR；备份 bundle：$BACKUP_BUNDLE；修复后重新执行本脚本即可续跑"' ERR
+trap 'echo "⚠️ 失败，状态保留在：${STATE_DIR:-状态目录}；备份 bundle：${BACKUP_BUNDLE:-备份}；修复后重新执行本脚本即可续跑"' ERR
 
 # 收集 refs/heads/ + refs/tags/ 所有 tip 的 .png/.json blob（去重排序），用于验证
 collect_ht_tip_blobs() {
@@ -143,7 +143,14 @@ if [ -z "$EXTRA_WTS" ]; then
 else
     echo "$EXTRA_WTS" | while read -r path; do
         echo "移除: $path"
-        git worktree remove --force "$path"
+        # node_modules 等 untracked 文件可能让 worktree remove 报 "Directory not empty"；
+        # 失败时强制清空目录再 prune 注册（path 来自 worktree list，是合法绝对路径）
+        git worktree remove --force "$path" 2>/dev/null || {
+            [ -n "$path" ] || continue
+            echo "  标准移除失败（残留文件），强制清理: $path"
+            rm -rf "$path"
+            git worktree prune
+        }
     done
 fi
 echo ""
