@@ -1,6 +1,6 @@
 # 金币预算接入评分链路
 
-**Status**: Accepted
+**Status**: Landed
 **Type**: change
 **Scope**: planner
 **Created**: 2026-08-06
@@ -68,14 +68,14 @@
 - [x] 金币模式：换算结果构建 `heroLevelOverride` + `goldBudget` 传入推荐 options
 - [x] 等级模式：统一等级 + `effectiveGoldBudget`（maxGold）传入推荐 options
 - [x] 互斥逻辑：radio 切换时条件渲染对应输入框
-- [ ] 后续增强：评估页（PlannerEvaluatePage）接入 + 详细列表渲染（每个英雄的等级/金币）
-- [ ] **部署前置**：需运行 `npm run data:official` 重建 hero-abilities.json 以包含 `baseCost` 字段
+- [x] ~~后续增强：评估页（PlannerEvaluatePage）接入~~ → 已转 TODO 追踪，不在本计划范围
+- [x] **部署前置**：`npm run data:official` 已运行（`a0bfecd0`，hero-abilities.json 含 baseCost，165 英雄 100% 覆盖）
 
 ### 阶段 6：文档同步 ✅
 
 - [x] specs 更新：`simulator.md`（金币预算换算 + 专精等级门控最终态）、`requirements.md`（等级来源扩展为金币/等级二选一）
 - [x] requirements 状态更新：`planner-capability-extensions.md` 金币预算子项打钩
-- [ ] 数据重建后 plan Status → Landed → 移 `archives/plans/`
+- [x] 数据重建后 plan Status → Landed → 移 `archives/plans/`
 
 ## 验收
 
