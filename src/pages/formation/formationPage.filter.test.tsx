@@ -14,6 +14,8 @@ vi.mock('../../data/client', async () => {
   }
 })
 
+import { listFormationPresets } from '../../data/formationPresetStore'
+import { unwrap } from '../../../tests/utils/dom-assertions'
 import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
 import {
   mockFormationPageCollections,
@@ -70,7 +72,7 @@ const championsFixture: DataCollection<Champion> = {
 
 async function openHeroPicker(user: ReturnType<typeof userEvent.setup>) {
   await waitFor(() => expect(screen.getAllByTestId('hero-picker-trigger').length).toBeGreaterThan(0))
-  await user.click(screen.getAllByTestId('hero-picker-trigger')[0])
+  await user.click(screen.getAllByTestId('hero-picker-trigger')[0]!)
   await waitFor(() => expect(screen.getAllByTestId('hero-picker-panel').length).toBeGreaterThan(0))
 }
 
@@ -126,5 +128,54 @@ describe('FormationPage filter via URL', () => {
 
     expect(screen.queryAllByText('布鲁诺')).toHaveLength(0)
     expect(screen.getAllByText('赛丽丝特').length).toBeGreaterThan(0)
+  })
+})
+
+describe('FormationPage save preset with filter snapshot', () => {
+  it('有筛选时保存方案写入 filterSnapshot', async () => {
+    const user = userEvent.setup()
+    renderFormationPage('/formation?seat=1')
+
+    // 等页面 ready 后选一个英雄放入槽位
+    const [select] = await screen.findAllByRole('combobox')
+    await user.selectOptions(unwrap(select, 'combobox'), 'bruenor')
+    await user.type(screen.getByLabelText('方案名称'), '测试方案')
+    await user.click(screen.getByRole('button', { name: '保存为方案' }))
+
+    await waitFor(async () => {
+      await expect(listFormationPresets()).resolves.toHaveLength(1)
+    })
+
+    const presets = await listFormationPresets()
+    expect(presets[0]?.filterSnapshot).toEqual({
+      search: '',
+      selectedSeats: [1],
+      selectedRoles: [],
+      selectedAffiliations: [],
+      selectedRaces: [],
+      selectedGenders: [],
+      selectedAlignments: [],
+      selectedProfessions: [],
+      selectedAcquisitions: [],
+      selectedMechanics: [],
+      selectedPatrons: [],
+    })
+  })
+
+  it('无筛选时保存方案 filterSnapshot 为 null', async () => {
+    const user = userEvent.setup()
+    renderFormationPage('/formation')
+
+    const [select] = await screen.findAllByRole('combobox')
+    await user.selectOptions(unwrap(select, 'combobox'), 'bruenor')
+    await user.type(screen.getByLabelText('方案名称'), '无筛选方案')
+    await user.click(screen.getByRole('button', { name: '保存为方案' }))
+
+    await waitFor(async () => {
+      await expect(listFormationPresets()).resolves.toHaveLength(1)
+    })
+
+    const presets = await listFormationPresets()
+    expect(presets[0]?.filterSnapshot).toBeNull()
   })
 })

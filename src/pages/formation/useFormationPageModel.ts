@@ -90,6 +90,8 @@ export function useFormationPageModel(): FormationPageModel {
     presetForm: pageState.presetForm,
     placements: pageState.placements,
     scenarioRef: pageState.scenarioRef,
+    filterState: filter.filterState,
+    hasActiveFilter: filter.hasActiveFilter,
     setIsSavingPreset: pageState.setIsSavingPreset,
     setPresetForm: pageState.setPresetForm,
     setPresetStatus: pageState.setPresetStatus,
