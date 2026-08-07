@@ -1,11 +1,4 @@
 import {
-  appendCommonFilterSearchParams,
-  readCommonFilterExpansion,
-  readCommonFilterState,
-  type CommonFilterSearchParamKeys,
-} from '../../features/champion-filters/query-state'
-import {
-  RESULTS_VIEW_ALL,
   SEARCH_PARAM_ACQUISITION,
   SEARCH_PARAM_AFFILIATION,
   SEARCH_PARAM_ALIGNMENT,
@@ -15,10 +8,19 @@ import {
   SEARCH_PARAM_PROFESSION,
   SEARCH_PARAM_QUERY,
   SEARCH_PARAM_RACE,
-  SEARCH_PARAM_RESULTS,
   SEARCH_PARAM_ROLE,
-  SEARCH_PARAM_SCOPE,
   SEARCH_PARAM_SEAT,
+} from '../../features/champion-filters/constants'
+import {
+  appendCommonFilterSearchParams,
+  readCommonFilterExpansion,
+  readCommonFilterState,
+  type CommonFilterSearchParamKeys,
+} from '../../features/champion-filters/query-state'
+import {
+  RESULTS_VIEW_ALL,
+  SEARCH_PARAM_RESULTS,
+  SEARCH_PARAM_SCOPE,
 } from './constants'
 import type { IllustrationFilterExpansion, IllustrationsFilterState, ViewFilter } from './types'
 

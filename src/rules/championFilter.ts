@@ -1,5 +1,5 @@
 import { matchesLocalizedText } from '../domain/localizedText'
-import type { Champion } from '../domain/types'
+import type { Champion, ChampionFilterSnapshot } from '../domain/types'
 
 export interface ChampionFilters {
   search: string
@@ -70,4 +70,25 @@ export function filterChampions(champions: Champion[], filters: ChampionFilters)
   const query = filters.search.trim().toLowerCase()
 
   return champions.filter((champion) => matchesAllChampionFilters(champion, filters, query))
+}
+
+/**
+ * ChampionFilterSnapshot（selected\* 字段名）→ ChampionFilters（短字段名）。
+ * 消除每个 filterChampions 消费方各写一份 selectedSeats→seats 映射。
+ * 兼容 CommonFilterSearchState（结构子类型，字段一致）。
+ */
+export function championFilterSnapshotToFilters(snapshot: ChampionFilterSnapshot): ChampionFilters {
+  return {
+    search: snapshot.search,
+    seats: snapshot.selectedSeats,
+    roles: snapshot.selectedRoles,
+    affiliations: snapshot.selectedAffiliations,
+    races: snapshot.selectedRaces,
+    genders: snapshot.selectedGenders,
+    professions: snapshot.selectedProfessions,
+    alignments: snapshot.selectedAlignments,
+    acquisitions: snapshot.selectedAcquisitions,
+    mechanics: snapshot.selectedMechanics,
+    patrons: snapshot.selectedPatrons,
+  }
 }

@@ -9,6 +9,7 @@ import { useFormationBootstrap } from './useFormationBootstrap'
 import { useFormationDraftPersistence } from './useFormationDraftPersistence'
 import { useFormationPageDerived } from './useFormationPageDerived'
 import { useFormationPageState } from './useFormationPageState'
+import { useFormationFilterState } from './useFormationFilterState'
 import type { FormationPageLocationState, FormationPageModel } from './types'
 
 export function useFormationPageModel(): FormationPageModel {
@@ -18,6 +19,7 @@ export function useFormationPageModel(): FormationPageModel {
   const routeState = location.state as FormationPageLocationState | null
   const pendingPresetRestoreRef = useRef<FormationPreset | null>(routeState?.pendingPresetRestore ?? null)
   const pageState = useFormationPageState()
+  const filter = useFormationFilterState()
 
   useFormationBootstrap({
     navigate,
@@ -55,6 +57,7 @@ export function useFormationPageModel(): FormationPageModel {
     draftPrompt: pageState.draftPrompt,
     locale,
     t,
+    filterState: filter.filterState,
   })
 
   const boardActions = buildFormationBoardActions({
@@ -94,7 +97,7 @@ export function useFormationPageModel(): FormationPageModel {
   })
 
   return assembleFormationPageModel({
-    locale, t, pageState, derived, boardActions, draftPromptActions, presetActions,
+    locale, t, pageState, derived, boardActions, draftPromptActions, presetActions, filter,
   })
 }
 
@@ -106,10 +109,11 @@ interface AssembleFormationPageModelOptions {
   boardActions: ReturnType<typeof buildFormationBoardActions>
   draftPromptActions: ReturnType<typeof buildFormationDraftPromptActions>
   presetActions: ReturnType<typeof buildFormationPresetActions>
+  filter: ReturnType<typeof useFormationFilterState>
 }
 
 function assembleFormationPageModel({
-  locale, t, pageState, derived, boardActions, draftPromptActions, presetActions,
+  locale, t, pageState, derived, boardActions, draftPromptActions, presetActions, filter,
 }: AssembleFormationPageModelOptions): FormationPageModel {
   return {
     locale,
@@ -139,6 +143,9 @@ function assembleFormationPageModel({
     isSavingPreset: pageState.isSavingPreset,
     presetForm: pageState.presetForm,
     scenarioRef: pageState.scenarioRef,
+    filterState: filter.filterState,
+    hasActiveFilter: filter.hasActiveFilter,
+    clearFormationFilter: filter.clearFilters,
     setLayoutSearch: pageState.setLayoutSearch,
     setSelectedContextKind: pageState.setSelectedContextKind,
     setActiveMobileSlotId: pageState.setActiveMobileSlotId,

@@ -12,7 +12,10 @@ import {
   getFormationLayoutLabel,
 } from '../../domain/formationLayout'
 import type { Champion, PresetPriority } from '../../domain/types'
+import type { CommonFilterSearchState } from '../../features/champion-filters/query-state'
 import { findSeatConflicts } from '../../rules/seat'
+import { championFilterSnapshotToFilters, filterChampions } from '../../rules/championFilter'
+import { hasActiveFilterEntry } from './useFormationFilterState'
 import { matchesLayoutContextKind, matchesLayoutSearch } from './formation-model-helpers'
 import type {
   DraftPrompt,
@@ -35,6 +38,7 @@ interface UseFormationPageDerivedOptions {
   activeMobileSlotId: string
   isSavingPreset: boolean
   presetForm: PresetFormState
+  filterState: CommonFilterSearchState
 }
 
 export function useFormationPageDerived({
@@ -49,6 +53,7 @@ export function useFormationPageDerived({
   activeMobileSlotId,
   isSavingPreset,
   presetForm,
+  filterState,
 }: UseFormationPageDerivedOptions) {
   const selectedLayout = useMemo(
     () =>
@@ -96,14 +101,20 @@ export function useFormationPageDerived({
       return []
     }
 
-    return [...state.champions].sort((left, right) => {
+    const sorted = [...state.champions].sort((left, right) => {
       const seatDiff = left.seat - right.seat
       if (seatDiff !== 0 && !Number.isNaN(seatDiff)) return seatDiff
       const nameDiff = getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale))
       if (nameDiff !== 0 && !Number.isNaN(nameDiff)) return nameDiff
       return left.name.original.localeCompare(right.name.original)
     })
-  }, [locale, state])
+
+    if (!hasActiveFilterEntry(filterState)) {
+      return sorted
+    }
+
+    return filterChampions(sorted, championFilterSnapshotToFilters(filterState))
+  }, [filterState, locale, state])
 
   const championById = useMemo(() => {
     if (state.status !== 'ready') {

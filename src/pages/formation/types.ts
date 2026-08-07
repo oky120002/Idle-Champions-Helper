@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
 import type { StatusMessage as SharedStatusMessage } from '../../components/statusMessage'
 import type { FormationSnapshotPrompt } from '../../data/formationPersistence'
+import type { CommonFilterSearchState } from '../../features/champion-filters/query-state'
 import type {
   Champion,
   FormationDraft,
@@ -94,6 +95,9 @@ export interface FormationPageModel {
   isSavingPreset: boolean
   presetForm: PresetFormState
   scenarioRef: ScenarioRef | null
+  filterState: CommonFilterSearchState
+  hasActiveFilter: boolean
+  clearFormationFilter: () => void
   setLayoutSearch: (value: string) => void
   setSelectedContextKind: (kind: LayoutFilterKind) => void
   setActiveMobileSlotId: (slotId: string) => void
