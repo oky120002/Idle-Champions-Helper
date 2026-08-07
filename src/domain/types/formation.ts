@@ -130,6 +130,25 @@ export interface FormationDraft {
 
 export type PresetPriority = 'low' | 'medium' | 'high'
 
+/**
+ * 英雄筛选条件快照——保存方案时的筛选上下文，恢复时候选池按此还原。
+ * 结构与 features/champion-filters 的 CommonFilterSearchState 对齐（结构子类型兼容，
+ * 阵型页复用 appendCommonFilterSearchParams / readCommonFilterState 编解码）。
+ */
+export interface ChampionFilterSnapshot {
+  search: string
+  selectedSeats: number[]
+  selectedRoles: string[]
+  selectedAffiliations: string[]
+  selectedRaces: string[]
+  selectedGenders: string[]
+  selectedAlignments: string[]
+  selectedProfessions: string[]
+  selectedAcquisitions: string[]
+  selectedMechanics: string[]
+  selectedPatrons: string[]
+}
+
 export interface FormationPreset {
   id: string
   schemaVersion: 1
@@ -141,6 +160,8 @@ export interface FormationPreset {
   scenarioRef: ScenarioRef | null
   scenarioTags: string[]
   priority: PresetPriority
+  /** 保存时的筛选条件快照；无筛选或旧方案为 null。 */
+  filterSnapshot: ChampionFilterSnapshot | null
   createdAt: string
   updatedAt: string
 }

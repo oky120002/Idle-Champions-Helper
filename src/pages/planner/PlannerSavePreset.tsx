@@ -56,6 +56,7 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
         placements: presetResult.placements,
         scenarioTags: scenarioRef ? [`${scenarioRef.kind}:${scenarioRef.id}`] : [],
         priority: 'medium',
+        filterSnapshot: null,
         createdAt: now,
         updatedAt: now,
       }

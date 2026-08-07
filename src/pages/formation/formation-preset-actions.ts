@@ -68,6 +68,7 @@ export function buildFormationPresetActions({
           scenarioRef,
           scenarioTags: parseScenarioTags(presetForm.scenarioTagsInput),
           priority: presetForm.priority,
+          filterSnapshot: null,
           createdAt: timestamp,
           updatedAt: timestamp,
         } as const

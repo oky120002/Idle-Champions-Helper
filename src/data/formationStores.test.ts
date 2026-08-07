@@ -33,6 +33,7 @@ function createPreset(id: string, updatedAt: string): FormationPreset {
     scenarioRef: null,
     scenarioTags: [],
     priority: 'medium',
+    filterSnapshot: null,
     createdAt: '2026-04-13T00:00:00.000Z',
     updatedAt,
   }

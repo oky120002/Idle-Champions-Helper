@@ -136,6 +136,7 @@ describe('PresetsPage management flow', () => {
       scenarioRef: null,
       scenarioTags: ['推图'],
       priority: 'medium',
+      filterSnapshot: null,
       createdAt: '2026-04-23T08:00:00.000Z',
       updatedAt: '2026-04-23T09:00:00.000Z',
     })
@@ -188,6 +189,7 @@ describe('PresetsPage management flow', () => {
       scenarioRef: null,
       scenarioTags: ['推图'],
       priority: 'medium',
+      filterSnapshot: null,
       createdAt: '2026-04-23T08:00:00.000Z',
       updatedAt: '2026-04-23T09:00:00.000Z',
     })

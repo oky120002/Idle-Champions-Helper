@@ -39,6 +39,22 @@ export const formationDraftSchema = z
   })
   .loose()
 
+export const championFilterSnapshotSchema = z
+  .object({
+    search: z.string(),
+    selectedSeats: z.array(z.number()),
+    selectedRoles: z.array(z.string()),
+    selectedAffiliations: z.array(z.string()),
+    selectedRaces: z.array(z.string()),
+    selectedGenders: z.array(z.string()),
+    selectedAlignments: z.array(z.string()),
+    selectedProfessions: z.array(z.string()),
+    selectedAcquisitions: z.array(z.string()),
+    selectedMechanics: z.array(z.string()),
+    selectedPatrons: z.array(z.string()),
+  })
+  .loose()
+
 export const formationPresetSchema = z
   .object({
     id: z.string(),
@@ -46,6 +62,7 @@ export const formationPresetSchema = z
     layoutId: z.string(),
     placements: z.record(z.string(), z.string()),
     priority: z.enum(['low', 'medium', 'high']),
+    filterSnapshot: championFilterSnapshotSchema.nullable().optional(),
     updatedAt: z.string(),
   })
   .loose()
