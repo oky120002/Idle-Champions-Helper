@@ -3,9 +3,9 @@ import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
-import { it, expect } from 'vitest'
+import { it, expect, describe } from 'vitest'
 import { writeJson } from './data/io-utils.ts'
-import { syncChampionAnimations } from './sync-idle-champions-animations.ts'
+import { syncChampionAnimations, summarizeAnimationSizes } from './sync-idle-champions-animations.ts'
 
 interface TestHooks {
   onTestFinished(fn: () => Promise<void> | void): void
@@ -531,4 +531,37 @@ it('在集合 updatedAt 未变新时整批跳过，不重下也不重写 bin', a
   expect(result.downloadedCount).toBe(0)
   expect(result.reusedCount).toBe(1)
   expect(result.count).toBe(1)
+})
+
+describe('summarizeAnimationSizes', () => {
+  it('空数组返回零值且无告警', () => {
+    const result = summarizeAnimationSizes([], 512 * 1024)
+    expect(result.maxBytes).toBe(0)
+    expect(result.medianBytes).toBe(0)
+    expect(result.averageBytes).toBe(0)
+    expect(result.oversized).toHaveLength(0)
+  })
+
+  it('正确统计最大/中位/平均值', () => {
+    const items = [
+      { id: 'a', kind: 'hero-base' as const, bytes: 100 },
+      { id: 'b', kind: 'hero-base' as const, bytes: 200 },
+      { id: 'c', kind: 'hero-base' as const, bytes: 300 },
+      { id: 'd', kind: 'skin' as const, bytes: 400 },
+    ]
+    const result = summarizeAnimationSizes(items, 512 * 1024)
+    expect(result.maxBytes).toBe(400)
+    expect(result.medianBytes).toBe(300)
+    expect(result.averageBytes).toBe(250)
+  })
+
+  it('超阈值条目进入 oversized 列表', () => {
+    const items = [
+      { id: 'a', kind: 'hero-base' as const, bytes: 100 },
+      { id: 'b', kind: 'skin' as const, bytes: 600 * 1024 },
+    ]
+    const result = summarizeAnimationSizes(items, 512 * 1024)
+    expect(result.oversized).toHaveLength(1)
+    expect(result.oversized[0]?.id).toBe('b')
+  })
 })
