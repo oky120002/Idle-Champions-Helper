@@ -79,7 +79,7 @@ export function PlannerGoldLevel({ mode, goldBudget, globalLevel, conversion, on
       {conversion && mode !== 'none' && (
         <span className="planner-gold-level__summary" data-testid="planner-gold-level-summary">
           {mode === 'gold' && maxLevel !== null
-            ? t({ zh: `最高可达 ${maxLevel} 级`, en: `Max level ${maxLevel}` })
+            ? t({ zh: `最高可达 ${String(maxLevel)} 级`, en: `Max level ${String(maxLevel)}` })
             : t({ zh: `最高费用 ${conversion.maxGold}`, en: `Max cost ${conversion.maxGold}` })}
         </span>
       )}

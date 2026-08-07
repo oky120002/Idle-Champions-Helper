@@ -61,10 +61,7 @@ export function usePlannerPageModel() {
 
   // 金币/等级换算：debounce + 竞态防护（cancelled flag 防过期响应覆盖）
   useEffect(() => {
-    if (goldLevelMode === 'none') {
-      setGoldLevelConversion(null)
-      return
-    }
+    if (goldLevelMode === 'none') return
     let cancelled = false
     const timer = setTimeout(() => {
       const input = goldLevelMode === 'gold'
@@ -109,7 +106,7 @@ export function usePlannerPageModel() {
   }, [goldLevelMode, goldLevelConversion])
   const effectiveGoldBudget = useMemo(() => {
     if (goldLevelMode === 'none') return undefined
-    if (goldLevelMode === 'gold') return goldBudget || undefined
+    if (goldLevelMode === 'gold') return goldBudget.length > 0 ? goldBudget : undefined
     return goldLevelConversion?.maxGold
   }, [goldLevelMode, goldBudget, goldLevelConversion])
 
@@ -172,6 +169,7 @@ export function usePlannerPageModel() {
   }, [])
   const selectGoldLevelMode = useCallback((mode: 'none' | 'gold' | 'level') => {
     setGoldLevelMode(mode)
+    if (mode === 'none') setGoldLevelConversion(null)
   }, [])
   const selectEquipmentRarity = useCallback((rarity: number) => {
     setEquipmentRarity(rarity)

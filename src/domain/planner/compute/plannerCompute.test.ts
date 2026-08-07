@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import type { ResolvedHeroAbilityProfile } from '../../abilities/abilityModel'
+import { unwrap } from '../../../../tests/utils/dom-assertions'
 import type { FormationEvaluation } from '../recommendationEngine'
 import type { PlannerCollections, PlannerRecommendation } from '../recommendationTypes'
 import {
@@ -10,7 +12,6 @@ import {
   type PlannerComputeInbound,
   type PlannerComputeOutbound,
 } from './plannerCompute'
-import type { ResolvedHeroAbilityProfile } from '../../abilities/abilityModel'
 
 // Fake Worker：捕获 postMessage、暴露 emit 模拟 worker 回包、记录 terminate。
 // node 环境无真 Worker，runner 测试用此替身覆盖协议与路由逻辑。
@@ -239,8 +240,8 @@ describe('processConvertGoldLevel', () => {
 
   it('gold 模式：便宜英雄升到更高等级', () => {
     const result = processConvertGoldLevel({ mode: 'gold', goldBudget: '50000' }, heroes)
-    const bruenor = result.heroes.find(h => h.heroId === 'bruenor')!
-    const nayeli = result.heroes.find(h => h.heroId === 'nayeli')!
+    const bruenor = unwrap(result.heroes.find(h => h.heroId === 'bruenor'), 'bruenor')
+    const nayeli = unwrap(result.heroes.find(h => h.heroId === 'nayeli'), 'nayeli')
     expect(bruenor.level).toBeGreaterThan(nayeli.level)
     expect(bruenor.level).toBeGreaterThan(0)
   })
@@ -257,14 +258,14 @@ describe('processConvertGoldLevel', () => {
     for (const entry of result.heroes) {
       expect(entry.level).toBe(100)
     }
-    const nayeli = result.heroes.find(h => h.heroId === 'nayeli')!
-    const bruenor = result.heroes.find(h => h.heroId === 'bruenor')!
+    const nayeli = unwrap(result.heroes.find(h => h.heroId === 'nayeli'), 'nayeli')
+    const bruenor = unwrap(result.heroes.find(h => h.heroId === 'bruenor'), 'bruenor')
     expect(parseFloat(nayeli.goldCost)).toBeGreaterThan(parseFloat(bruenor.goldCost))
   })
 
   it('level 模式：maxGold = 最贵英雄的累计费用', () => {
     const result = processConvertGoldLevel({ mode: 'level', level: 100 }, heroes)
-    const nayeli = result.heroes.find(h => h.heroId === 'nayeli')!
+    const nayeli = unwrap(result.heroes.find(h => h.heroId === 'nayeli'), 'nayeli')
     expect(result.maxGold).toBe(nayeli.goldCost)
   })
 
