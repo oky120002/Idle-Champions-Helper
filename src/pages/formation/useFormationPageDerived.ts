@@ -14,8 +14,7 @@ import {
 import type { Champion, PresetPriority } from '../../domain/types'
 import type { CommonFilterSearchState } from '../../features/champion-filters/query-state'
 import { findSeatConflicts } from '../../rules/seat'
-import { championFilterSnapshotToFilters, filterChampions } from '../../rules/championFilter'
-import { hasActiveFilterEntry } from './useFormationFilterState'
+import { championFilterSnapshotToFilters, filterChampions, hasActiveChampionFilters } from '../../rules/championFilter'
 import { matchesLayoutContextKind, matchesLayoutSearch } from './formation-model-helpers'
 import type {
   DraftPrompt,
@@ -109,7 +108,7 @@ export function useFormationPageDerived({
       return left.name.original.localeCompare(right.name.original)
     })
 
-    if (!hasActiveFilterEntry(filterState)) {
+    if (!hasActiveChampionFilters(filterState)) {
       return sorted
     }
 

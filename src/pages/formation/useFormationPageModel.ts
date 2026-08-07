@@ -19,7 +19,7 @@ export function useFormationPageModel(): FormationPageModel {
   const routeState = location.state as FormationPageLocationState | null
   const pendingPresetRestoreRef = useRef<FormationPreset | null>(routeState?.pendingPresetRestore ?? null)
   const pageState = useFormationPageState()
-  const filter = useFormationFilterState(pendingPresetRestoreRef.current?.filterSnapshot ?? null)
+  const filter = useFormationFilterState(routeState?.pendingPresetRestore?.filterSnapshot ?? null)
 
   useFormationBootstrap({
     navigate,
@@ -99,7 +99,7 @@ export function useFormationPageModel(): FormationPageModel {
   })
 
   return assembleFormationPageModel({
-    locale, t, pageState, derived, boardActions, draftPromptActions, presetActions, filter,
+    locale, t, pageState, derived, boardActions, draftPromptActions, presetActions,
   })
 }
 
@@ -111,11 +111,10 @@ interface AssembleFormationPageModelOptions {
   boardActions: ReturnType<typeof buildFormationBoardActions>
   draftPromptActions: ReturnType<typeof buildFormationDraftPromptActions>
   presetActions: ReturnType<typeof buildFormationPresetActions>
-  filter: ReturnType<typeof useFormationFilterState>
 }
 
 function assembleFormationPageModel({
-  locale, t, pageState, derived, boardActions, draftPromptActions, presetActions, filter,
+  locale, t, pageState, derived, boardActions, draftPromptActions, presetActions,
 }: AssembleFormationPageModelOptions): FormationPageModel {
   return {
     locale,
@@ -145,9 +144,6 @@ function assembleFormationPageModel({
     isSavingPreset: pageState.isSavingPreset,
     presetForm: pageState.presetForm,
     scenarioRef: pageState.scenarioRef,
-    filterState: filter.filterState,
-    hasActiveFilter: filter.hasActiveFilter,
-    clearFormationFilter: filter.clearFilters,
     setLayoutSearch: pageState.setLayoutSearch,
     setSelectedContextKind: pageState.setSelectedContextKind,
     setActiveMobileSlotId: pageState.setActiveMobileSlotId,

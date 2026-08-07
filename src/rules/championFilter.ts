@@ -73,6 +73,27 @@ export function filterChampions(champions: Champion[], filters: ChampionFilters)
 }
 
 /**
+ * 是否有活跃的英雄筛选条件（search 非空或任一 selected\* 维度非空）。
+ * 消费方（champions / formation / user-heroes）共用一份判断。
+ * 兼容 CommonFilterSearchState、ChampionsFilterState（结构子类型，字段一致）。
+ */
+export function hasActiveChampionFilters(snapshot: ChampionFilterSnapshot): boolean {
+  return (
+    snapshot.search.trim() !== '' ||
+    snapshot.selectedSeats.length > 0 ||
+    snapshot.selectedRoles.length > 0 ||
+    snapshot.selectedAffiliations.length > 0 ||
+    snapshot.selectedRaces.length > 0 ||
+    snapshot.selectedGenders.length > 0 ||
+    snapshot.selectedAlignments.length > 0 ||
+    snapshot.selectedProfessions.length > 0 ||
+    snapshot.selectedAcquisitions.length > 0 ||
+    snapshot.selectedMechanics.length > 0 ||
+    snapshot.selectedPatrons.length > 0
+  )
+}
+
+/**
  * ChampionFilterSnapshot（selected\* 字段名）→ ChampionFilters（短字段名）。
  * 消除每个 filterChampions 消费方各写一份 selectedSeats→seats 映射。
  * 兼容 CommonFilterSearchState（结构子类型，字段一致）。

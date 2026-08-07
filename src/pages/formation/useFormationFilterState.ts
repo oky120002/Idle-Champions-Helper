@@ -19,6 +19,7 @@ import {
   type CommonFilterSearchParamKeys,
   type CommonFilterSearchState,
 } from '../../features/champion-filters/query-state'
+import { hasActiveChampionFilters } from '../../rules/championFilter'
 import type { ChampionFilterSnapshot } from '../../domain/types'
 
 const FORMATION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
@@ -35,36 +36,6 @@ const FORMATION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
   patron: SEARCH_PARAM_PATRON,
 }
 
-const EMPTY_FILTER_STATE: CommonFilterSearchState = {
-  search: '',
-  selectedSeats: [],
-  selectedRoles: [],
-  selectedAffiliations: [],
-  selectedRaces: [],
-  selectedGenders: [],
-  selectedAlignments: [],
-  selectedProfessions: [],
-  selectedAcquisitions: [],
-  selectedMechanics: [],
-  selectedPatrons: [],
-}
-
-export function hasActiveFilterEntry(state: CommonFilterSearchState): boolean {
-  return (
-    state.search.trim() !== '' ||
-    state.selectedSeats.length > 0 ||
-    state.selectedRoles.length > 0 ||
-    state.selectedAffiliations.length > 0 ||
-    state.selectedRaces.length > 0 ||
-    state.selectedGenders.length > 0 ||
-    state.selectedAlignments.length > 0 ||
-    state.selectedProfessions.length > 0 ||
-    state.selectedAcquisitions.length > 0 ||
-    state.selectedMechanics.length > 0 ||
-    state.selectedPatrons.length > 0
-  )
-}
-
 /**
  * 阵型编辑页筛选状态。
  *
@@ -77,7 +48,7 @@ export function hasActiveFilterEntry(state: CommonFilterSearchState): boolean {
  */
 export function useFormationFilterState(initialSnapshot?: ChampionFilterSnapshot | null) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [filterState, setFilterState] = useState<CommonFilterSearchState>(() =>
+  const [filterState] = useState<CommonFilterSearchState>(() =>
     initialSnapshot ?? readCommonFilterState(searchParams, FORMATION_FILTER_PARAM_KEYS),
   )
 
@@ -97,28 +68,13 @@ export function useFormationFilterState(initialSnapshot?: ChampionFilterSnapshot
       return
     }
     initialSyncedRef.current = true
-    if (initialSnapshot && hasActiveFilterEntry(initialSnapshot)) {
+    if (initialSnapshot && hasActiveChampionFilters(initialSnapshot)) {
       syncUrl(initialSnapshot)
     }
   }, [initialSnapshot, syncUrl])
 
-  const applyFilterSnapshot = useCallback(
-    (snapshot: ChampionFilterSnapshot | null) => {
-      const next = snapshot ?? EMPTY_FILTER_STATE
-      setFilterState(next)
-      syncUrl(next)
-    },
-    [syncUrl],
-  )
-
-  const clearFilters = useCallback(() => {
-    applyFilterSnapshot(null)
-  }, [applyFilterSnapshot])
-
   return {
     filterState,
-    hasActiveFilter: hasActiveFilterEntry(filterState),
-    applyFilterSnapshot,
-    clearFilters,
+    hasActiveFilter: hasActiveChampionFilters(filterState),
   }
 }

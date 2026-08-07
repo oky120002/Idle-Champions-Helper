@@ -71,8 +71,8 @@ export function readCommonFilterState(
   keys: CommonFilterSearchParamKeys,
 ): CommonFilterSearchState {
   return {
-    search: readSearchValue(searchParams),
-    selectedSeats: readSeatValues(searchParams),
+    search: readSearchValue(searchParams, keys.query),
+    selectedSeats: readSeatValues(searchParams, keys.seat),
     selectedRoles: readStringValues(searchParams, keys.role),
     selectedAffiliations: readStringValues(searchParams, keys.affiliation),
     selectedRaces: readStringValues(searchParams, keys.race),

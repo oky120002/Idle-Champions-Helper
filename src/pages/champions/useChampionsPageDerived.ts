@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import type { AppLocale } from '../../app/i18n'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
-import { filterChampions } from '../../rules/championFilter'
+import { championFilterSnapshotToFilters, filterChampions, hasActiveChampionFilters } from '../../rules/championFilter'
 import { buildActiveFilterChips } from './champion-filter-model'
 import { shuffleChampions } from './champion-results-order'
 import { MAX_VISIBLE_RESULTS } from './constants'
@@ -13,22 +13,6 @@ type UseChampionsPageDerivedOptions = {
   state: ChampionState
   filters: ChampionsFilterState
   randomOrderSeed: number | null
-}
-
-function hasAnyActiveFilters(filters: ChampionsFilterState): boolean {
-  const selectedGroups = [
-    filters.selectedSeats,
-    filters.selectedRoles,
-    filters.selectedAffiliations,
-    filters.selectedRaces,
-    filters.selectedGenders,
-    filters.selectedAlignments,
-    filters.selectedProfessions,
-    filters.selectedAcquisitions,
-    filters.selectedMechanics,
-    filters.selectedPatrons,
-  ]
-  return filters.search.trim().length > 0 || selectedGroups.some((values) => values.length > 0)
 }
 
 export function useChampionsPageDerived({
@@ -43,19 +27,7 @@ export function useChampionsPageDerived({
       return []
     }
 
-    return filterChampions(state.champions, {
-      search: filters.search,
-      seats: filters.selectedSeats,
-      roles: filters.selectedRoles,
-      affiliations: filters.selectedAffiliations,
-      races: filters.selectedRaces,
-      genders: filters.selectedGenders,
-      alignments: filters.selectedAlignments,
-      professions: filters.selectedProfessions,
-      acquisitions: filters.selectedAcquisitions,
-      mechanics: filters.selectedMechanics,
-      patrons: filters.selectedPatrons,
-    })
+    return filterChampions(state.champions, championFilterSnapshotToFilters(filters))
   }, [filters, state])
   const orderedChampions = useMemo(
     () => (randomOrderSeed === null ? filteredChampions : shuffleChampions(filteredChampions, randomOrderSeed)),
@@ -125,7 +97,7 @@ export function useChampionsPageDerived({
     orderedSelectedPatrons,
   })
   const activeFilters = activeFilterChips.map((chip) => chip.label)
-  const hasActiveFilters = hasAnyActiveFilters(filters)
+  const hasActiveFilters = hasActiveChampionFilters(filters)
   const canToggleResultVisibility = filteredChampions.length > MAX_VISIBLE_RESULTS
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =
