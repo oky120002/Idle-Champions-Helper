@@ -37,6 +37,7 @@ Requirement 是需求意图（可能永远不做），Plan 是执行计划（确
 ## 落地流程
 
 1. plan 完成 → 更新 `specs/` 描述新现状（不写迁移叙事）
-2. plan 标 `Status: Landed`
-3. 移到 `archives/plans/`
-4. 落地期间产生的持久决策 → 写 ADR（`decisions/`）
+2. 所有 checkbox 闭合才能归档；执行中发现的后续项直接写 TODO/requirements，不作为悬空 checkbox 留在计划里
+3. plan 标 `Status: Landed`
+4. 移到 `archives/plans/`
+5. 落地期间产生的持久决策 → 写 ADR（`decisions/`）

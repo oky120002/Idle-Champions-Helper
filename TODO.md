@@ -33,4 +33,10 @@ repair: rebuild
     - 任务：审计 planner 是否有不该有的限制（patron 资格、英雄拥有状态等），如有则移到外部入参构建
     - 背景：champion filter 层做限制，planner 不碰；用户在 Patron 过滤功能中明确要求
 
+- 评估页（PlannerEvaluatePage）接入金币预算控件 <!-- auto-todo:id=atd_46f647cf66 -->
+  - 记录时间: `2026-08-07T23:32:27+08:00`
+  - 类型: follow-up
+  - 位置: `src/pages/planner/PlannerEvaluatePage`
+  - 备注: 金币预算计划（2026-08-planner-gold-budget-integration）归档时留的后续增强：推荐页已有金币/等级互斥控件，评估页尚未接入，可复用 PlannerGoldLevel 组件 + runner.convertGoldLevel
+
 <!-- auto-todo:end -->
