@@ -1,0 +1,55 @@
+#!/bin/sh
+# pre-push: 增量 lint——只检查待 push 范围内的变动源码文件 + 颜色守卫全量。
+# 漏检由 main CI 全量兜底。应急绕过：git push --no-verify
+#
+# 版本化：本文件进 git（githooks/），clone 后由 npm prepare 自动设置
+# core.hooksPath=githooks 生效。
+
+ZERO="0000000000000000000000000000000000000000"
+NEED_FULL=0
+ALL_DIFF=""
+
+# stdin 每行：<local ref> <local sha> <remote ref> <remote sha>
+while read -r _ local_sha _ remote_sha; do
+  if [ "$remote_sha" = "$ZERO" ]; then
+    NEED_FULL=1
+  else
+    ALL_DIFF="${ALL_DIFF}$(git diff --name-only --diff-filter=ACMR "$remote_sha" "$local_sha")
+"
+  fi
+done
+
+# 首次 push 新分支 / 删除分支：无法 diff → 全量兜底
+if [ "$NEED_FULL" = "1" ]; then
+  echo "▶ pre-push: 首次 push 或新分支，全量 lint 兜底..."
+  if npm run lint; then
+    echo "✓ lint 通过，放行 push"
+    exit 0
+  else
+    echo "✗ lint 失败，已中止 push。修复后重试，或 git push --no-verify 应急绕过。" >&2
+    exit 1
+  fi
+fi
+
+# 过滤源码扩展名，排除 .d.ts，去重
+CODE_FILES=$(printf '%s\n' "$ALL_DIFF" | grep -E '\.(ts|tsx|js|jsx|mjs|cjs)$' | grep -v '\.d\.ts$' | sort -u)
+
+if [ -n "$CODE_FILES" ]; then
+  COUNT=$(printf '%s\n' "$CODE_FILES" | wc -l | tr -d ' ')
+  echo "▶ pre-push: 增量 eslint（$COUNT 个变动文件）..."
+  printf '%s\n' "$CODE_FILES" | tr '\n' '\0' | xargs -0 npx eslint || {
+    echo "✗ eslint 失败，已中止 push。修复后重试，或 git push --no-verify 应急绕过。" >&2
+    exit 1
+  }
+else
+  echo "▶ pre-push: 无源码变动，跳过 eslint"
+fi
+
+echo "▶ pre-push: 颜色守卫（全量）..."
+if npx tsx scripts/check-colors.ts && npx tsx scripts/check-color-contrast.ts; then
+  echo "✓ pre-push 通过，放行 push"
+  exit 0
+else
+  echo "✗ 颜色守卫失败，已中止 push。" >&2
+  exit 1
+fi
