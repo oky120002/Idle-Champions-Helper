@@ -5,6 +5,7 @@ import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../..
 import { useWorkbenchShareLink } from '../../components/workbench/useWorkbenchShareLink'
 import { getMechanicCategoryHint } from '../../features/champion-filters/mechanicHints'
 import { buildChampionFilterActions } from './champion-filter-actions'
+import { buildFormationFilterHref } from './query-state'
 import { useChampionCollectionState } from './useChampionCollectionState'
 import { useChampionsFilterState } from './useChampionsFilterState'
 import { useChampionsPageDerived } from './useChampionsPageDerived'
@@ -86,6 +87,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     showAllResults: filterState.showAllResults,
     hasRandomOrder: randomOrderSeed !== null,
     shareLinkState,
+    formationWithFiltersHref: derived.hasActiveFilters ? buildFormationFilterHref(filterState.filters) : null,
     showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,

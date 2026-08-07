@@ -53,6 +53,17 @@ export function buildFilterSearchParams(filters: ChampionsFilterState): URLSearc
   return searchParams
 }
 
+/**
+ * 构建阵型编辑页 URL，携带当前筛选维度（不含 showAllResults）。
+ * 供英雄列表页「带着筛选去摆阵型」入口跳转使用。
+ */
+export function buildFormationFilterHref(filters: ChampionsFilterState): string {
+  const searchParams = new URLSearchParams()
+  appendCommonFilterSearchParams(searchParams, filters, CHAMPION_FILTER_PARAM_KEYS)
+  const search = searchParams.toString()
+  return search !== '' ? `/formation?${search}` : '/formation'
+}
+
 export function buildScrollRestoreKey(search: string): string {
   return `champions-pane-scroll:${search !== '' ? search : DEFAULT_SCROLL_KEY}`
 }

@@ -68,6 +68,8 @@ export interface ChampionsPageModel {
   showAllResults: boolean
   hasRandomOrder: boolean
   shareLinkState: WorkbenchShareLinkState
+  /** 有活跃筛选时返回携带筛选参数的阵型页 URL；无筛选返回 null。 */
+  formationWithFiltersHref: string | null
   showResultsQuickNavTop: boolean
   resultsPaneRef: RefObject<HTMLDivElement | null>
   roles: string[]

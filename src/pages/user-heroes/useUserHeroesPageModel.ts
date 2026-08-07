@@ -118,6 +118,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     rosterSummary: derived.rosterSummary,
     activeRosterMetricFilterId,
     shareLinkState,
+    formationWithFiltersHref: null,
     showResultsQuickNavTop: motion.showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,
