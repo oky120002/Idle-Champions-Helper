@@ -31,7 +31,6 @@ import {
 } from './formation-model-helpers'
 import {
   DRAFT_SCHEMA_VERSION,
-  PRESET_SCHEMA_VERSION,
   type DraftPrompt,
   type FormationState,
   type StatusMessage,
@@ -131,7 +130,7 @@ export async function restorePendingPreset(opts: RestorePendingPresetOptions) {
     formations,
     champions,
     { zh: '方案', en: 'preset' },
-    PRESET_SCHEMA_VERSION,
+    DRAFT_SCHEMA_VERSION,
   )
 
   if (isDisposed()) {
