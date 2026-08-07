@@ -1,7 +1,8 @@
 import 'fake-indexeddb/auto'
 
-import { screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../data/client', async () => {
@@ -16,7 +17,9 @@ vi.mock('../../data/client', async () => {
 
 import { listFormationPresets } from '../../data/formationPresetStore'
 import { unwrap } from '../../../tests/utils/dom-assertions'
-import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
+import { I18nProvider } from '../../app/i18n'
+import { FormationPage } from '../FormationPage'
+import type { Champion, DataCollection, DataVersion, FormationLayout, FormationPreset } from '../../domain/types'
 import {
   mockFormationPageCollections,
   mockedLoadCollection,
@@ -177,5 +180,66 @@ describe('FormationPage save preset with filter snapshot', () => {
 
     const presets = await listFormationPresets()
     expect(presets[0]?.filterSnapshot).toBeNull()
+  })
+})
+
+describe('FormationPage restore preset with filter snapshot', () => {
+  function renderWithPresetRestore(preset: FormationPreset) {
+    return render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={[{ pathname: '/formation', state: { pendingPresetRestore: preset } }]}>
+          <FormationPage />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+  }
+
+  const presetWithSeatOne: FormationPreset = {
+    id: 'preset-filtered',
+    schemaVersion: 1,
+    dataVersion: 'v1',
+    name: '筛选方案',
+    description: '',
+    layoutId: 'layout-a',
+    placements: { 'slot-1': 'bruenor' },
+    scenarioRef: null,
+    scenarioTags: [],
+    priority: 'medium',
+    filterSnapshot: {
+      search: '',
+      selectedSeats: [1],
+      selectedRoles: [],
+      selectedAffiliations: [],
+      selectedRaces: [],
+      selectedGenders: [],
+      selectedAlignments: [],
+      selectedProfessions: [],
+      selectedAcquisitions: [],
+      selectedMechanics: [],
+      selectedPatrons: [],
+    },
+    createdAt: '2026-08-07T00:00:00.000Z',
+    updatedAt: '2026-08-07T00:00:00.000Z',
+  }
+
+  it('恢复含 filterSnapshot 的方案时 HeroPicker 按快照过滤候选', async () => {
+    const user = userEvent.setup()
+    renderWithPresetRestore(presetWithSeatOne)
+
+    await openHeroPicker(user)
+
+    // seat=1 快照 → 只有 Bruenor(seat 1)，Celeste(seat 2) 被过滤掉
+    expect(screen.getAllByText('布鲁诺').length).toBeGreaterThan(0)
+    expect(screen.queryAllByText('赛丽丝特')).toHaveLength(0)
+  })
+
+  it('恢复 filterSnapshot=null 的旧方案时候选池为全量', async () => {
+    const user = userEvent.setup()
+    renderWithPresetRestore({ ...presetWithSeatOne, filterSnapshot: null })
+
+    await openHeroPicker(user)
+
+    expect(screen.getAllByText('布鲁诺').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('赛丽丝特').length).toBeGreaterThan(0)
   })
 })

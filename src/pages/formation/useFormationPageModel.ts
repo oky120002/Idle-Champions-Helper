@@ -19,7 +19,7 @@ export function useFormationPageModel(): FormationPageModel {
   const routeState = location.state as FormationPageLocationState | null
   const pendingPresetRestoreRef = useRef<FormationPreset | null>(routeState?.pendingPresetRestore ?? null)
   const pageState = useFormationPageState()
-  const filter = useFormationFilterState()
+  const filter = useFormationFilterState(pendingPresetRestoreRef.current?.filterSnapshot ?? null)
 
   useFormationBootstrap({
     navigate,

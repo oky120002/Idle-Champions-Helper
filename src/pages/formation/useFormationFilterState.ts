@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useLayoutEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import {
   SEARCH_PARAM_ACQUISITION,
@@ -71,11 +71,14 @@ export function hasActiveFilterEntry(state: CommonFilterSearchState): boolean {
  * 与英雄列表页不同，阵型页不提供筛选 UI——筛选来自 URL（英雄列表页跳转入口）或
  * 方案恢复（preset.filterSnapshot）。state 是唯一真相源，URL 是镜像（便于刷新保持）。
  * 不做 URL → state 持续同步，避免双向防循环复杂度。
+ *
+ * initialSnapshot 非 null 时（从方案页恢复），初始化为快照值并同步 URL（便于刷新保持）；
+ * 否则从 URL 读取（英雄列表页跳转入口）。
  */
-export function useFormationFilterState() {
+export function useFormationFilterState(initialSnapshot?: ChampionFilterSnapshot | null) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [filterState, setFilterState] = useState<CommonFilterSearchState>(() =>
-    readCommonFilterState(searchParams, FORMATION_FILTER_PARAM_KEYS),
+    initialSnapshot ?? readCommonFilterState(searchParams, FORMATION_FILTER_PARAM_KEYS),
   )
 
   const syncUrl = useCallback(
@@ -86,6 +89,18 @@ export function useFormationFilterState() {
     },
     [setSearchParams],
   )
+
+  // 恢复方案时 initialSnapshot 非 null → 同步 URL，让刷新后仍保持筛选。
+  const initialSyncedRef = useRef(false)
+  useLayoutEffect(() => {
+    if (initialSyncedRef.current) {
+      return
+    }
+    initialSyncedRef.current = true
+    if (initialSnapshot && hasActiveFilterEntry(initialSnapshot)) {
+      syncUrl(initialSnapshot)
+    }
+  }, [initialSnapshot, syncUrl])
 
   const applyFilterSnapshot = useCallback(
     (snapshot: ChampionFilterSnapshot | null) => {

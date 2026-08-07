@@ -94,3 +94,22 @@ describe('useFormationFilterState', () => {
     expect(result.current.hasActiveFilter).toBe(false)
   })
 })
+
+describe('useFormationFilterState initialSnapshot', () => {
+  function renderWithSnapshot(snapshot: ChampionFilterSnapshot | null, search = '') {
+    return renderHook(() => useFormationFilterState(snapshot), {
+      wrapper: ({ children }) => <MemoryRouter initialEntries={[`/formation${search}`]}>{children}</MemoryRouter>,
+    })
+  }
+
+  it('initialSnapshot 非 null 时优先用它初始化（覆盖 URL 参数）', () => {
+    const { result } = renderWithSnapshot(SNAPSHOT, '?seat=2')
+    expect(result.current.filterState).toEqual(SNAPSHOT)
+    expect(result.current.hasActiveFilter).toBe(true)
+  })
+
+  it('initialSnapshot 为 null 时回退到 URL 参数', () => {
+    const { result } = renderWithSnapshot(null, '?seat=2')
+    expect(result.current.filterState.selectedSeats).toEqual([2])
+  })
+})
