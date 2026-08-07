@@ -21,12 +21,22 @@
 代码标识符：`seat`（英雄数据字段）
 别名：位置、slot（与阵型位是不同概念）
 
+**候选池**：
+推荐引擎在某次推荐中考虑的英雄范围。两种模式：仅拥有（`owned-only`，只算用户存档里已拥有的英雄）与全假设（`all-hypothetical`，含未拥有英雄，按默认装备配置计算，给"如果拥有会怎样"的公平基线）。
+代码标识符：`buildCandidatePool`、`candidateMode`
+别名：候选英雄、candidate pool
+
 ## 场景与限制规则
 
 **场景引用**：
 标识玩家目标场景的结构化引用，序列化为 `{kind}:{id}`；kind ∈ campaign（地图）/ adventure（冒险）/ variant（变体）/ trial（试炼）/ timeGate（时空门）。
 代码标识符：`scenarioRef`、`ScenarioRef`
 别名：scenario ref、场景 id
+
+**战役 / 冒险 / 变体**：
+场景引用指向的三层嵌套对象：战役（campaign，即地图）包含若干冒险（adventure），冒险下再有变体（variant）附加限制规则；试炼（trial）与时空门（timeGate）是另两种独立场景类型。
+代码标识符：`campaign` / `adventure` / `variant` / `trial` / `timeGate`（scenarioRef 的 kind）
+别名：地图 / 冒险 / 变体
 
 **强制英雄**：
 场景规则要求必须上场的英雄，不受拥有状态或白名单限制。
@@ -43,12 +53,66 @@
 代码标识符：`patronId`（0 = 自由玩，null = 未导入存档）
 别名：patron（英文，对话用「赞助人」）
 
+**白名单**：
+场景或变体规则：只允许列表中的英雄上场，与赞助人资格是叠加的不同限制层（需同时满足）。
+代码标识符：`only_allow_crusaders`、`by_ids`、`by_tags`、`allowedHeroes`
+别名：only allow crusaders、限定英雄
+
+**标签**：
+英雄或怪物的分类标记，三种用途：(1) 限定条件——白名单或专精解锁按标签筛选可上场英雄；(2) 易伤匹配——按怪物标签条件触发额外伤害；(3) 按标签计数加成——如「每个 [tag] 英雄 +X% 伤害」（count-only 自增益）。英雄标签与怪物标签是不同集合，不互通。
+代码标识符：`tag`/`tags`、`by_tags`、`has_tag_X`、`per_tagged_crusader`（英雄）；`monsterTags`、`enemyTypes`（怪物）
+别名：tag、标记
+
+## 战斗机制
+
+**BUD（基础大招伤害）**：
+Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作大招（ult）伤害结算基准。推荐引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
+代码标识符：`BUD`、`computeSingleHitDamage`、`budCalculation.ts`
+别名：biggest unique damage、大招基准
+
+**易伤**：
+按怪物标签条件匹配的额外伤害加成；只有当场景敌人类型匹配时才生效，是主输出伤害的大头之一。
+代码标识符：`vulnerability`、`computeVulnerabilityFactor`、`isVulnerabilityMatched`
+别名：vulnerability、弱点
+
+**减伤**：
+降低英雄受到伤害的加成，并入生命值通道参与生存评分。代码里中英双形态共存，对话统一用「减伤」。
+代码标识符：`damage_reduction_mult`、`damage_reduction`（effect_string）、`damageReduction`
+别名：damage reduction、免伤
+
+## 成长元素
+
+**装备**：
+英雄持有的战利品槽位物品，提供被动加成（DPS / 全队 / 生命 / 金币 / 暴击五通道）。玩家叫「装备」，代码与数据源用 loot（战利品）。
+代码标识符：`loot`、`loot-catalog.json`、`OwnedHeroLootSlot`、`equipmentMult`
+别名：loot、战利品、gear
+
+**专长**：
+英雄可装备的被动修饰器，提供额外加成或改变技能行为；与「专精」是两个不同概念。
+代码标识符：`feat`、`feat-catalog.json`、`FeatEntry`
+别名：feat
+
+**专精**：
+英雄升级树中的分支强化选择，由 gate 节点解锁；选定后注入对应 ability 信号。外部化为 catalog 便于维护。
+代码标识符：`specialization`、`specialization-catalog.json`、`applyActiveSpecializations`
+别名：specialization
+
+**祝福**：
+来自赞助人或地图的被动全局加成。赞助人祝福随赞助人 perk 解锁；地图祝福是部分战役提供的额外效果。两者都并入全队加成通道。
+代码标识符：`blessing`、`blessings`、`blessingGlobalBuff`、`collectActiveBlessingEffects`
+别名：blessing
+
 ## 推荐目标
 
 **DPS 队 / 主输出（carry）**：
 推荐优化目标之一：最大化单英雄 carryDps（主输出伤害），是默认模式。carry 指承担主要输出的英雄。
 代码标识符：`ScoringMode: 'carry-dps'`、`carryDps`
 别名：评分（已由 scoringMode 优化目标量取代）、carry dps
+
+**辅助英雄（support）**：
+与主输出 carry 对应的角色：通过 buff / 全队加成 / 易伤 / 减伤等支援主输出的英雄。推荐评分按维度信号（carry / support）分别累加。
+代码标识符：`HeroAbilityDimension.support`、`supportSignals`
+别名：support、辅助
 
 **金币队**：
 推荐优化目标之一：最大化全队金币发现。
