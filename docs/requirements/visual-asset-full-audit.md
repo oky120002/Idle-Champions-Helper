@@ -17,4 +17,4 @@
 ## 关联
 
 - [size-and-storage.md](../research/data/visual-asset/size-and-storage.md)（样例体积结论）
-- [animation-repo-size.md](./animation-repo-size.md)（动画存储治理提案）
+- [animation-repo-size.md](../archives/requirements/animation-repo-size.md)（动画存储治理提案）
