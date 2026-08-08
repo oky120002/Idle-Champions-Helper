@@ -86,14 +86,19 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 别名：multi-hit、多目标攻击、多次攻击
 
 **伤害系数**：
-多段攻击中每单发命中的伤害比例。1.0 = 每发满额，0.33 = 每发仅 1/3 伤害。总伤害 = 段数 × 系数。对护甲敌人碎甲时系数无意义（每发只碎一格，不管伤害多少）。
+多段攻击中每单发命中的伤害比例。1.0 = 每发满额，0.33 = 每发仅 1/3 伤害。总伤害 = 段数 × 系数。对护甲敌人碎甲时系数有直接影响——每发伤害必须达到护甲门槛才碎一段，系数低的英雄可能打不动护甲。
 代码标识符：`damageModifier`（攻击定义字段）
 别名：damage modifier、每发伤害比例
 
 **护甲敌人**：
-血条分段显示的敌人（segmented health），每段需被一次命中单独击碎（不看伤害数值），全碎后才能正常击杀。多段攻击英雄是天然克星。代码中无统一字段标识，需从描述文本和效果关键词识别。
-代码标识符：无标准字段；描述关键词 `segmented health` / `armor` / `护甲`
-别名：armored enemies、segmented health、分段血条
+血条分段显示的敌人（armored hit points），每段有伤害门槛（= 总血量 ÷ 段数，boss 通常 50 段）。单发伤害 ≥ 门槛碎一段（溢出浪费），< 门槛完全无效。判定看 BUD 不看 DPS。与「命中型血量」不同——后者每次命中碎一段不看伤害。代码中无统一字段标识，需从描述文本识别。
+代码标识符：无标准字段；描述关键词 `armored hit points` / `armor` / `护甲`
+别名：armored enemies、armored health、分段血条
+
+**命中型血量**：
+敌人血条分段，每次命中碎一段（不看伤害数值，0 伤害也碎），N 次命中击杀。与「护甲敌人」机制不同——护甲需单发伤害达标才碎，命中型只要碰到就碎。变体描述中记为 "hits-based hit points"。
+代码标识符：无标准字段；描述关键词 `hits-based` / `hit points`
+别名：hits-based health、命中型
 
 ## 成长元素
 
@@ -116,6 +121,21 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 来自赞助人或地图的被动全局加成。赞助人祝福随赞助人 perk 解锁；地图祝福是部分战役提供的额外效果。两者都并入全队加成通道。
 代码标识符：`blessing`、`blessings`、`blessingGlobalBuff`、`collectActiveBlessingEffects`
 别名：blessing
+
+**恩宠**：
+战役完成后积累的永久货币，每点未花费的恩宠提供 +1% 全队金币发现。可在祝福上花费（花掉后不再计金币加成）。不同战役有各自的恩宠，互不通用。
+代码标识符：`favor`、`divineFavor`、`patronObjectiveTiers`（赞助人目标层数）
+别名：divine favor、神恩
+
+**传奇装备**：
+独立于普通装备（loot）的附加加成层，每英雄 6 个槽位，只提供全队伤害或英雄伤害两类加成。通过提亚马特试炼获取鳞片在熔铸中升级，等级上限 20。与装备五通道不同，传奇效果不进 loot-catalog。
+代码标识符：`legendaryEffects`（champion-details 顶层字段）、`LegendaryEffect`
+别名：legendary、传奇效果、熔铸
+
+**压制**：
+坦克属性：当场上敌人数量超过坦克的压制值时，所有超出的敌人对全队造成额外伤害。高区域后坦克价值从硬抗转为血量共享，极高区域后仅靠击退/免死/闪避生存。
+代码标识符：`overwhelm`、`overwhelm_start_increase`
+别名：overwhelm、超额敌人伤害
 
 ## 推荐目标
 
