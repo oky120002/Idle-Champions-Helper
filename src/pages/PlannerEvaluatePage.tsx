@@ -17,7 +17,7 @@ import { useI18n } from '../app/i18n'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
 import type { WorkbenchToolbarConfig } from '../components/workbench/workbenchToolbarConfig'
-import { createPlannerComputeRunner } from '../domain/planner/compute/plannerCompute'
+import { createPlannerComputeRunner, type GoldLevelConversion } from '../domain/planner/compute/plannerCompute'
 import type { FormationEvaluation } from '../domain/planner/recommendationEngine'
 import type { CandidateMode } from '../domain/planner/candidatePool'
 import { DEFAULT_MANUAL_STACK_COUNT } from '../domain/planner/placementFit'
@@ -33,6 +33,7 @@ import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerStackCount } from './planner/PlannerStackCount'
 import { PlannerHypotheticalEquipment } from './planner/PlannerHypotheticalEquipment'
+import { PlannerGoldLevel } from './planner/PlannerGoldLevel'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import {
   patchEvaluatePlacements,
@@ -49,6 +50,8 @@ const EMPTY_EVALUATION: FormationEvaluation = {
   scenarioRef: null,
   blocker: null,
 }
+
+type GoldLevelMode = 'none' | 'gold' | 'level'
 
 /** 排序：seat 升序 → id 字典序。 */
 function championSeatComparator(left: Champion, right: Champion): number {
@@ -262,6 +265,13 @@ interface EvaluateReadyContentProps {
   readonly setCandidateMode: (mode: CandidateMode) => void
   readonly manualStackCount: number
   readonly setManualStackCount: (count: number) => void
+  readonly goldLevelMode: GoldLevelMode
+  readonly goldBudget: string
+  readonly globalLevel: number
+  readonly goldLevelConversion: GoldLevelConversion | null
+  readonly onGoldLevelModeChange: (mode: GoldLevelMode) => void
+  readonly onGoldBudgetChange: (value: string) => void
+  readonly onGlobalLevelChange: (value: number) => void
   readonly profileSnapshot: UserProfileSnapshot | null
   readonly equipmentRarity: number
   readonly setEquipmentRarity: (rarity: number) => void
@@ -294,6 +304,13 @@ function EvaluateReadyContent({
   setCandidateMode,
   manualStackCount,
   setManualStackCount,
+  goldLevelMode,
+  goldBudget,
+  globalLevel,
+  goldLevelConversion,
+  onGoldLevelModeChange,
+  onGoldBudgetChange,
+  onGlobalLevelChange,
   profileSnapshot,
   equipmentRarity,
   setEquipmentRarity,
@@ -350,6 +367,15 @@ function EvaluateReadyContent({
           <PlannerScoringMode value={scoringMode} onChange={setScoringMode} />
           <PlannerCandidateMode value={candidateMode} onChange={setCandidateMode} />
           <PlannerStackCount value={manualStackCount} onChange={setManualStackCount} />
+          <PlannerGoldLevel
+            mode={goldLevelMode}
+            goldBudget={goldBudget}
+            globalLevel={globalLevel}
+            conversion={goldLevelConversion}
+            onModeChange={onGoldLevelModeChange}
+            onGoldBudgetChange={onGoldBudgetChange}
+            onGlobalLevelChange={onGlobalLevelChange}
+          />
           {!profileSnapshot ? (
             <PlannerHypotheticalEquipment
               rarity={equipmentRarity}
@@ -482,6 +508,10 @@ export function PlannerEvaluatePage() {
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
   const [equipmentRarity, setEquipmentRarity] = useState(4)
   const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
+  const [goldLevelMode, setGoldLevelMode] = useState<'none' | 'gold' | 'level'>('none')
+  const [goldBudget, setGoldBudget] = useState('')
+  const [globalLevel, setGlobalLevel] = useState(1000)
+  const [goldLevelConversion, setGoldLevelConversion] = useState<GoldLevelConversion | null>(null)
 
   const selectVariantId = useCallback((variantId: string | null) => {
     selectVariantIdBase(variantId)
@@ -499,6 +529,28 @@ export function PlannerEvaluatePage() {
   const runner = useMemo(() => createPlannerComputeRunner(), [])
   useEffect(() => () => runner.dispose(), [runner])
 
+  // 金币/等级换算：debounce + 竞态防护（cancelled flag 防过期响应覆盖）
+  useEffect(() => {
+    if (goldLevelMode === 'none') return
+    let cancelled = false
+    const timer = setTimeout(() => {
+      const input = goldLevelMode === 'gold'
+        ? { mode: 'gold' as const, goldBudget }
+        : { mode: 'level' as const, level: globalLevel }
+      runner.convertGoldLevel(input).then((result) => {
+        if (!cancelled) setGoldLevelConversion(result)
+      }).catch(() => {
+        if (!cancelled) setGoldLevelConversion(null)
+      })
+    }, 300)
+    return () => { cancelled = true; clearTimeout(timer) }
+  }, [goldLevelMode, goldBudget, globalLevel, runner])
+
+  const handleGoldLevelModeChange = useCallback((mode: 'none' | 'gold' | 'level') => {
+    setGoldLevelMode(mode)
+    if (mode === 'none') setGoldLevelConversion(null)
+  }, [])
+
   const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
     () => buildScoringBonusInputs({
       profileSnapshot,
@@ -514,9 +566,19 @@ export function PlannerEvaluatePage() {
     }),
     [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
   )
+  // 金币/等级换算结果 → heroLevelOverride + goldBudget 入参
+  const heroLevelOverride = useMemo(() => {
+    if (goldLevelMode === 'none' || !goldLevelConversion) return undefined
+    return new Map(goldLevelConversion.heroes.map(h => [h.heroId, h.level]))
+  }, [goldLevelMode, goldLevelConversion])
+  const effectiveGoldBudget = useMemo(() => {
+    if (goldLevelMode === 'none') return undefined
+    if (goldLevelMode === 'gold') return goldBudget.length > 0 ? goldBudget : undefined
+    return goldLevelConversion?.maxGold
+  }, [goldLevelMode, goldBudget, goldLevelConversion])
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions }),
-    [candidateMode, scoringMode, manualStackCount, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions],
+    () => ({ candidateMode, scoringMode, manualStackCount, heroLevelOverride, goldBudget: effectiveGoldBudget, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions }),
+    [candidateMode, scoringMode, manualStackCount, heroLevelOverride, effectiveGoldBudget, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -557,6 +619,8 @@ export function PlannerEvaluatePage() {
           candidateMode,
           lockedSlots,
           manualStackCount,
+          heroLevelOverride,
+          goldBudget: effectiveGoldBudget,
           equipmentAdjustmentByHero,
           equipmentHealthByHero,
           equipmentGlobalDpsByHero,
@@ -681,6 +745,13 @@ export function PlannerEvaluatePage() {
       setCandidateMode={setCandidateMode}
       manualStackCount={manualStackCount}
       setManualStackCount={setManualStackCount}
+      goldLevelMode={goldLevelMode}
+      goldBudget={goldBudget}
+      globalLevel={globalLevel}
+      goldLevelConversion={goldLevelConversion}
+      onGoldLevelModeChange={handleGoldLevelModeChange}
+      onGoldBudgetChange={setGoldBudget}
+      onGlobalLevelChange={setGlobalLevel}
       profileSnapshot={profileSnapshot}
       equipmentRarity={equipmentRarity}
       setEquipmentRarity={setEquipmentRarity}
