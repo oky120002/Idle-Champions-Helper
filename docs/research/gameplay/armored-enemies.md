@@ -45,7 +45,22 @@
 | Windfall 黑龙腐蚀 | 攻击覆酸，碎甲/分段敌人每次多碎 1 格 | 描述文本 |
 | Ezmerelda 专精 | 全队对护甲敌人 +100% 伤害（提高超过门槛的概率）| 描述文本 |
 
-### 提取方法
+## 数据源
+
+| 数据来源 | 字段 / 位置 | 说明 |
+|---|---|---|
+| 变体描述文本 | `armored hit points` / `armored HP`（整数段数）| 护甲段数 |
+| 变体描述文本 | `additional armored hit points` | 额外段数 |
+| 变体描述文本 | `armor threshold` | 每段伤害门槛 |
+| `effect_string` | `gazrick_armor_ablation` | Gazrick 护甲剥离（降低门槛 7%/层）|
+| `effect_string` | `lucius_armor_eating_acid` | Lucius 酸液蚀甲（命中碎 2 格）|
+| `raw.upgrades[].snapshots.original.effect` | 升级效果文本 | 碎甲能力扫描位置 |
+| `raw.upgrades[].snapshots.original.effect_keys[].description.desc` | 能力描述文本 | 碎甲能力扫描位置 |
+| `feats[].effects[].effect_string` | 专长效果 | 碎甲能力扫描位置 |
+
+其余碎甲能力（Flint 铸火之契、Grimm 碎志、Minthara 纷争、Hew Maan Kleeb、Windfall 黑龙腐蚀、Ezmerelda 专精）无标准 effect_string，仅存于描述文本。
+
+## 提取方法
 
 无统一字段标识「这个英雄能碎甲」，需从以下位置按关键词扫描：
 
@@ -53,3 +68,9 @@
 - `raw.upgrades[].snapshots.original.effect_keys[].description.desc` — 能力描述文本
 - `feats[].effects[].effect_string` — 专长效果
 - 关键词：`segment`、`armor`、`护甲`、`segmented health`、`armor-based`
+
+## 社区来源
+
+- [Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/5118863332768135681/)
+- [Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/tw8xxp/)
+- [Fandom Wiki — Favored Foes](https://idlechampions.fandom.com/wiki/Favored_Foes)

@@ -4,7 +4,9 @@
 **社区来源**：[Fandom Wiki - Gold formulas](https://idlechampions.fandom.com/wiki/Gold_formulas)、[Fandom Wiki - Divine Favor](https://idlechampions.fandom.com/wiki/Divine_Favor)、[Fandom Wiki - Blessings](https://idlechampions.fandom.com/wiki/Blessings)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/1god1yf/gold_farming_101_an_introduction/)、[Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/1630790987579561612/)
 **可信度**：⚠️ 待确认 — 金币掉落公式和恩宠计算公式来自社区逆向推导，`game-rules.json` 部分验证（`health_gold_ratio: 0.65`）但指数 0.304 等无直接字段
 
-## 金币掉落公式
+## 机制
+
+### 机制
 
 金币掉落基于怪物生命值，经指数变换得到基础值，再乘以全部金币发现加成。
 
@@ -23,7 +25,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
 最终金币 = 基础金币 × 金币发现百分比（含恩宠加成、英雄加成、祝福加成、药水等全部乘性叠加）。
 
-## 金币发现加成来源
+### 金币发现加成来源
 
 金币发现（Gold Find）是乘性叠加的总乘数，来源包括：
 
@@ -33,7 +35,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 4. **药水**：金币发现药水临时提升百分比
 5. **赏金契约（Bounty Contracts）**：使用时立即在当前关卡生成一波金币掉落
 
-## 神圣恩宠系统
+### 神圣恩宠系统
 
 ### 核心循环
 
@@ -80,7 +82,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
 花在祝福上的恩宠不再计入金币发现加成。社区经验法则：单次祝福花费不超过总恩宠的 1%（游戏会警告），整体不超过 10%。
 
-## 金币发现英雄（数据验证）
+### 金币发现英雄（数据验证）
 
 以下 19 名英雄在 `hero-abilities.json` 中携带 `globalGoldMultiplier` 信号（`supportSignals` 或 `carrySignals`）：
 
@@ -108,7 +110,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
 > Rust 另有 `per_gold_find_orders_of_magnitude` stackFunc 影响 DPS（每 10 倍金币发现 = +100% DPS），是金币发现与伤害联动的唯一案例。
 
-## 赞助人 perk 对金币的影响
+### 赞助人 perk 对金币的影响
 
 `patron-perks.json` 中 4 位赞助人共有 7 个金币相关 perk：
 
@@ -122,7 +124,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 | Strahd | T7 | And Prosperous | `global_dps_mult_per_tagged_crusader_mult,...,gold`（按标签英雄同时加 DPS 和金币） |
 | Zariel | T10 | The Golden Halls | `effect_def,1774`（引用 effect-definitions） |
 
-## 数据源字段索引
+## 数据源
 
 | 事实 | 字段位置 |
 |---|---|
@@ -141,3 +143,11 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 - **恩宠转换率**：`10% × log10(event_favor)` 为社区逆向，游戏数据中未直接暴露
 - **英雄金币信号**：19 名英雄的 `globalGoldMultiplier` 信号从 `hero-abilities.json` 直接提取，`source: "official-parsed"` 表示已解析
 - **金币农场策略**：社区共识是设置「金币队」（formation 2），在墙边用火焰呼吸药水击杀后切换金币队拾取，Reddit 多帖确认
+
+## 社区来源
+
+- [Fandom Wiki - Gold formulas](https://idlechampions.fandom.com/wiki/Gold_formulas)
+- [Fandom Wiki - Divine Favor](https://idlechampions.fandom.com/wiki/Divine_Favor)
+- [Fandom Wiki - Blessings](https://idlechampions.fandom.com/wiki/Blessings)
+- [Reddit r/idlechampions — Gold Farming 101](https://www.reddit.com/r/idlechampions/comments/1god1yf/gold_farming_101_an_introduction/)
+- [Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/1630790987579561612/)

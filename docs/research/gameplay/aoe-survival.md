@@ -64,6 +64,26 @@ AoE 过后把血线拉回来，保证下一波 AoE 前满血。
 
 **提取**：`hero-abilities.json` 中 `heroHealthMultiplier`（3 例）和 `globalHealthMultiplier`（1 例）可直接读取。按秒回血类无标准信号，需从描述文本提取。`healing` 角色标签（`hero-abilities.json` → `roles`）可辅助定位治疗英雄。
 
+## 数据源
+
+| 数据文件 | 字段 / 信号 | 用途 |
+|---|---|---|
+| `hero-abilities.json` | `supportSignals[].kind == "damageReduction"`（9 例）| 全队减伤 |
+| `hero-abilities.json` | `heroHealthMultiplier`（3 例）、`globalHealthMultiplier`（1 例）| 治疗 |
+| `hero-abilities.json` | `roles` 含 `healing` | 治疗英雄标签 |
+| `effect_string` | `damage_reduction,<amount>` / `damage_reduction,100` + `targets:["all"]` | 减伤 / 完全免疫 |
+| `effect_string` | `fixed_damage_reduction_all_enemy_attacks,<amount>` | 固定减伤 |
+| `effect_string` | `damage_reduction_ranged,<amount>` | 同列减伤 |
+| `effect_string` | `healing_mult,<amount>` / `global_healing_mult,<amount>` | 治疗 |
+| `effect_string` | `imoen_stoneskin` | 石肤术 |
+| 条件型减伤 | `positionQualifier`、`stackFunc` | 条件限定 |
+
+完全免疫（damage immunity）和临时生命值（temporary health）类无统一 effect key，需扫描描述文本中的 `immune to damage` / `prevents all damage` / `temporary health` / `temporary hit points` / `stoneskin` / `deflect` 等关键词。
+
 ## 与 planner 的关系
 
 当前 planner 的三个目标（DPS / 金币 / 速度）均不覆盖生存能力。阵型被 AoE 灭团时实际 DPS 归零，但模拟器不会反映这一点。生存维度的接入见需求库（待落库）。
+
+## 社区来源
+
+本文为游戏数据直接扫描，无社区来源。

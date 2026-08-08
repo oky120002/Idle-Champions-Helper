@@ -92,9 +92,28 @@ Light of Xaryxis 第四层祝福「Great Shot, Kid!」：全战役暴击伤害 +
 | 普温特（Pwent）| `pwent_bleed_crit,20` | 流血敌人暴击概率加成 |
 | 沃夫加（Wulfgar）| `stun_on_crit,5` | 暴击时眩晕敌人 |
 
+## 数据源
+
+| 数据文件 | 字段 | 说明 |
+|---|---|---|
+| `public/data/v1/game-rules.json` | `ruleName: "default_crit_info"`（`id: 29`）| 暴击基础参数容器 |
+| 同上 | `default_hero_crit_chance` / `default_monster_crit_chance` | 英雄/敌人暴击概率（2.5%）|
+| 同上 | `default_hero_crit_damage` / `default_monster_crit_damage` | 英雄/敌人暴击伤害（+100%）|
+| `hero-abilities.json` | `baseCritChancePercent` | 英雄基础暴击概率覆盖（10 名英雄，基础 20%）|
+| `hero-abilities.json` | `globalCritChance`（加性）| rawEffect: `global_buff_base_crit_chance_add,N` |
+| `hero-abilities.json` | `heroCritChance`（乘性）| rawEffect: `buff_base_crit_chance_mult,N` |
+| `hero-abilities.json` | `heroCritDamage`（乘性）| rawEffect: `buff_base_crit_damage_mult,N` |
+| `hero-abilities.json` | 8 个未解析 rawEffect | `global_buff_base_crit_damage`、`add_crit_effect`、`binwin_critical_combo` 等（parser 缺失，不参与评分）|
+
 ## 验证标注
 
 - **游戏数据确认**：基础值（2.5%/100%）、`baseCritChancePercent`、暴击信号类型与字段名——直接来自 `game-rules.json` 和 `hero-abilities.json`
 - **社区确认**：暴击设置 BUD（开发者 Dev Insights 声明 + 社区实测）、多重暴击机制——Reddit 讨论交叉验证
 - **Wiki 确认**：基础暴击概率 2.5%、暴击额外伤害 100%——Fandom Wiki「Critical Hit」页面
 - **未验证**：暴击伤害加成的叠加方式（加性 vs 乘性）在不同来源间的精确优先级——信号 `amountFunc` 字段提供部分线索（`add`/`mult`），但实战最终值需玩家面板核实
+
+## 社区来源
+
+- [Reddit — Critical hits, some observations](https://www.reddit.com/r/idlechampions/comments/14hyoai/critical_hits_some_observations/)
+- [Reddit — How does Crit work?](https://www.reddit.com/r/idlechampions/comments/1bqxjce/how_does_crit_work/)
+- [Fandom Wiki — Critical Hit](https://idlechampions.fandom.com/wiki/Critical_Hit)

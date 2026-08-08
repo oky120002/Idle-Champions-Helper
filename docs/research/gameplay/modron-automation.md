@@ -76,7 +76,7 @@ Nordom（英雄 100）与 Modron 核心有特殊交互：
 
 > **结论**：Modron 管道加成是阵型外全局乘区，但 planner 当前不建模管道伤害/金币/速度 buff；仅建模了自动重置层数上限和 ult 自动施放假设。
 
-## 游戏数据中的 Modron 字段
+## 数据源
 
 | 数据文件 | 字段 | 值 |
 |---|---|---|
@@ -95,3 +95,12 @@ Nordom（英雄 100）与 Modron 核心有特殊交互：
 - **[数据验证]**：`max_modron_auto_reset_area = 2500`、`modron_ui_requirements` 条件、Nordom 三个 Modron 交互技能——直接从游戏数据 JSON 读取。
 - **[代码验证]**：planner 中三处 Modron 相关代码的实际行为——从源码读取。
 - **[未验证]**：各核心具体输出节点的伤害/金币/速度数值——不在公开游戏数据中，需从游戏内截图或社区配置库获取。
+
+## 社区来源
+
+- [Fandom Wiki — Modron Automation](https://idlechampions.fandom.com/wiki/Modron_Automation)
+- [Fandom Wiki — Modron Core](https://idlechampions.fandom.com/wiki/Modron_Core)
+- [Steam 进阶指南](https://steamcommunity.com/sharedfiles/filedetails/?id=2615977602)
+- [Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/hvnz38/)
+- [官方博客（7 天能量限制）](http://codenameentertainment.com/?page=blog&post_id=1074)
+- [社区核心配置库 Encyclopedia Modronica](https://emmotes.github.io/ic_modron_library/)

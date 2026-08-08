@@ -4,7 +4,7 @@
 **社区来源**：[Fandom Wiki — Debuffs](https://idlechampions.fandom.com/wiki/Debuffs)、[Fandom Wiki — Knockback](https://idlechampions.fandom.com/wiki/Knockback)、[Reddit Buff/Debuff 汇编](https://www.reddit.com/r/idlechampions/comments/b5097r/)、[Reddit Click-Debuff 指南](https://www.reddit.com/r/idlechampions/comments/pihlfl/)、[Reddit 锁Boss讨论](https://www.reddit.com/r/idlechampions/comments/1gpxeen/)
 **可信度**：⚠️ 待确认 — 控制标签（stun/slow/knockback/root）由游戏数据 `summary.tags` 直证，但具体持续时间和数值大多无 parser，依赖社区报告（Wiki 表格最后更新 2021 年）
 
-## 机制概述
+## 机制
 
 控制效果通过普攻或大招施加于敌人，用图标或动画显示在敌人身前或脚下。减益分两类：**怪物减益**（由英雄施加于敌人）和**英雄减益**（由变体规则施加于英雄）。本文聚焦怪物减益。
 
@@ -95,7 +95,7 @@
 
 **角色统计**（165 英雄）：`control` 角色 46 人，`debuff` 角色 40 人。
 
-### 提取方法
+## 提取方法
 
 无统一字段标识具体持续时间和数值，需从以下位置按关键词扫描：
 
@@ -117,3 +117,11 @@
 | 安森狂暴 | 游戏数据确认 | `uggie_inflict_berserk` 效果标识存在，具体机制待补实测 |
 | Boss 狂怒（Enrage） | 社区确认 | Wiki 和 Reddit 均确认 Boss 存活过久自动狂怒，叠层乘算 overwhelm |
 | Wiki 表格时效 | 需核验 | Wiki Debuffs 页面标注「Last update 2021 February」，新英雄（如 Trixie 2024+）不在表格中，由社区帖和游戏数据补充 |
+
+## 社区来源
+
+- [Fandom Wiki — Debuffs](https://idlechampions.fandom.com/wiki/Debuffs)
+- [Fandom Wiki — Knockback](https://idlechampions.fandom.com/wiki/Knockback)
+- [Reddit Buff/Debuff 汇编](https://www.reddit.com/r/idlechampions/comments/b5097r/)
+- [Reddit Click-Debuff 指南](https://www.reddit.com/r/idlechampions/comments/pihlfl/)
+- [Reddit 锁Boss讨论](https://www.reddit.com/r/idlechampions/comments/1gpxeen/)

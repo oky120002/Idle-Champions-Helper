@@ -81,6 +81,17 @@ Fandom Wiki 定义：「health divided into a certain number segments that requi
 
 crit-based 目前无专属克制英雄，核心策略是堆暴击率（如 Catti-brie 标记全队可暴击、Brig Hellclaw Critical Moment）。
 
+## 数据源
+
+| 数据文件 | 字段 / 描述格式 | 说明 |
+|---|---|---|
+| `public/data/v1/variants.json` | `N hits-based HP` / `hits-based health` / `N hits-based hit points` | hits-based 血量标注 |
+| 同上 | `N additional hits-based hit points every N areas` | hits-based 递增段数 |
+| 同上 | `crit-based health` | crit-based 血量标注 |
+| 同上 | `special shield`（须暴击摧毁）| crit-based 护盾变体 |
+| 同上 | `segmented health` / `armored or segmented health` | segmented 上位统称 |
+| 同上 | `static_monsters_by_area` | 刷怪模式 ID（**非**血量类型）|
+
 ## 验证标注
 
 - hits-based / crit-based 机制说明：社区共识（Reddit + Fandom Wiki），与游戏内行为一致 ✅
@@ -89,3 +100,10 @@ crit-based 目前无专属克制英雄，核心策略是堆暴击率（如 Catti
 - crit-based 与 hits-based/armored 三者并列：Volo 变体原文明示 ⚠️（仅 1 处直接证据，机制细节依赖描述文本推断，无官方数值公式）
 - static health 不存在：变体数据穷举确认 + 社区无讨论 ✅
 - segmented 作为 umbrella 术语：Fandom Wiki 用法 + 变体描述用语一致 ✅
+
+## 社区来源
+
+- [Reddit r/idlechampions — armor-based](https://www.reddit.com/r/idlechampions/comments/ihj4wp/armorbased/)
+- [Reddit — Segmented health and Armor](https://www.reddit.com/r/idlechampions/comments/1sgk2nj/)
+- [Fandom Wiki — Favored Foes](https://idlechampions.fandom.com/wiki/Favored_Foes)
+- [Fandom Wiki — Hits based damage](https://idlechampions.fandom.com/wiki/Category:Hits_based_damage)
