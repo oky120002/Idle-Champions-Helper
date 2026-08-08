@@ -150,8 +150,8 @@ describe('findPlannerScenarioForVariant', () => {
         enemyTypes: [],
         allowedHeroes: [],
         allowedTagExpression: [],
-    attributeRequirements: [],
-  occupiedSlotCount: 0,
+        attributeRequirements: [],
+        occupiedSlotCount: 0,
         scenarioWarnings: [],
       },
     ]

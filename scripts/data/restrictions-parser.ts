@@ -182,23 +182,33 @@ function isTrivialRestriction(original: string, display: string): boolean {
   )
 }
 
-// 属性门槛正则：(STAT) (score )?of (N) or (higher|lower)
+// 属性门槛正则（全局）：(STAT) (score )?of (N) or (higher|lower)
 // 匹配 "CON score of 13 or higher" / "CHA of 14 or lower" 等（"score" 可选）。
-// STAT 全大写三字母，N 为数字。忽略大小写。
-const ATTRIBUTE_THRESHOLD_RE = /\b(STR|DEX|CON|INT|WIS|CHA)\s+(?:score\s+)?of\s+(\d+)\s+or\s+(higher|lower)\b/i
+// STAT 全大写三字母，N 为数字。忽略大小写。全局标志用于 matchAll 提取多属性门槛。
+const ATTRIBUTE_THRESHOLD_RE = /\b(STR|DEX|CON|INT|WIS|CHA)\s+(?:score\s+)?of\s+(\d+)\s+or\s+(higher|lower)\b/gi
 
-function parseAttributeRequirement(text: string): AttributeRequirement | null {
-  const match = ATTRIBUTE_THRESHOLD_RE.exec(text)
-  if (match === null) return null
-  const stat = match[1]?.toLowerCase()
-  const value = match[2] ? parseInt(match[2], 10) : NaN
-  const direction = match[3]?.toLowerCase()
-  if (stat === undefined || Number.isNaN(value) || direction === undefined) return null
-  return {
-    stat: stat as AttributeRequirement['stat'],
-    operator: direction === 'higher' ? '>=' : '<=',
-    value,
+/**
+ * 从 restriction 文本提取全部属性门槛。
+ * 按句拆分，排除伤害修饰语句（如 v319 "deal 400% additional damage" 中的 INT 非 usage restriction）。
+ */
+function parseAttributeRequirements(text: string): AttributeRequirement[] {
+  const results: AttributeRequirement[] = []
+  for (const sentence of text.split(/\.\s+/)) {
+    // 跳过伤害修饰句（v319: "Champions with INT of 14 or higher deal 400% additional damage"）
+    if (/\bdeal\b/i.test(sentence)) continue
+    for (const match of sentence.matchAll(ATTRIBUTE_THRESHOLD_RE)) {
+      const stat = match[1]?.toLowerCase()
+      const value = match[2] !== undefined ? parseInt(match[2], 10) : NaN
+      const direction = match[3]?.toLowerCase()
+      if (stat === undefined || Number.isNaN(value) || direction === undefined) continue
+      results.push({
+        stat: stat as AttributeRequirement['stat'],
+        operator: direction === 'higher' ? '>=' : '<=',
+        value,
+      })
+    }
   }
+  return results
 }
 
 /**
@@ -212,6 +222,18 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   const seenAttrs = new Set<string>()
 
   for (const { original, display } of restrictions) {
+    // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
+    const extractedAttrs = original !== '' ? parseAttributeRequirements(original) : []
+    let addedAttr = false
+    for (const req of extractedAttrs) {
+      const key = `${req.stat}${req.operator}${String(req.value)}`
+      if (!seenAttrs.has(key)) {
+        seenAttrs.add(key)
+        attributeRequirements.push(req)
+        addedAttr = true
+      }
+    }
+
     const enCount = original !== '' ? enSlotOccupyCount(original) : null
     const zhCount = display !== '' ? zhSlotOccupyCount(display) : null
     const overrideCount = original !== '' ? matchOverride(original) : null
@@ -219,21 +241,11 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
 
     if (count !== null && count > 0) {
       lockedSlotCount = Math.max(lockedSlotCount, count)
+    } else if (addedAttr) {
+      // 已成功提取属性门槛 → 非未解析，不记 warning。
     } else if (!isTrivialRestriction(original, display) && (original !== '' || display !== '')) {
       // 非 slot-occupying 且非已知无约束 → 记 warning 待手工评估。
       warnings.push(`未解析 restriction：${original !== '' ? original : display}`)
-    }
-
-    // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
-    if (original !== '') {
-      const req = parseAttributeRequirement(original)
-      if (req !== null) {
-        const key = `${req.stat}${req.operator}${req.value}`
-        if (!seenAttrs.has(key)) {
-          seenAttrs.add(key)
-          attributeRequirements.push(req)
-        }
-      }
     }
   }
 

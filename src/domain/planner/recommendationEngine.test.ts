@@ -108,8 +108,8 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     enemyTypes: [],
     allowedHeroes: [],
     allowedTagExpression: [],
-    attributeRequirements: [],
-  occupiedSlotCount: 0,
+        attributeRequirements: [],
+      occupiedSlotCount: 0,
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
 ]
@@ -242,7 +242,7 @@ describe('planner recommendation engine', () => {
       enemyTypes: [],
       allowedHeroes: [],
       allowedTagExpression: [],
-    attributeRequirements: [],
+      attributeRequirements: [],
       occupiedSlotCount: 2,
       scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
     }
@@ -297,8 +297,8 @@ describe('planner recommendation engine', () => {
       enemyTypes: [],
       allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
       allowedTagExpression: [],
-    attributeRequirements: [],
-  occupiedSlotCount: 0,
+        attributeRequirements: [],
+      occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
@@ -356,8 +356,8 @@ describe('planner recommendation engine', () => {
       enemyTypes: [],
       allowedHeroes: [],
       allowedTagExpression: [],
-    attributeRequirements: [],
-  occupiedSlotCount: 0,
+        attributeRequirements: [],
+      occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
     const forcedCollections: PlannerCollections = {
@@ -466,7 +466,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       enemyTypes: [],
       allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
       allowedTagExpression: [],
-    attributeRequirements: [],
+      attributeRequirements: [],
       occupiedSlotCount: 0,
       scenarioWarnings: [],
     }

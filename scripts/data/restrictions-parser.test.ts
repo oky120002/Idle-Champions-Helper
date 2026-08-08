@@ -217,4 +217,26 @@ describe('parseRestrictions — 属性门槛提取', () => {
       { stat: 'str', operator: '>=', value: 13 },
     ])
   })
+
+  it('v187 多属性门槛：STR 13+ AND DEX 14+ AND CON 15+ → 全部提取', () => {
+    const result = parseRestrictions([r('Only Champions with STR of 13 or higher, a DEX of 14 or higher, AND a CON of 15 or higher can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 13 },
+      { stat: 'dex', operator: '>=', value: 14 },
+      { stat: 'con', operator: '>=', value: 15 },
+    ])
+  })
+
+  it('v319 伤害修饰句的属性不提取（INT 14+ 是 damage modifier 非 usage restriction）', () => {
+    const result = parseRestrictions([r('Only Champions with STR of 14 or lower can be used. Rosie and Champions with INT of 14 or higher deal 400% additional damage.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '<=', value: 14 },
+    ])
+  })
+
+  it('属性门槛 restriction 不产生"未解析"警告', () => {
+    const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher may be used.')])
+    expect(result.attributeRequirements).toHaveLength(1)
+    expect(result.warnings).toEqual([])
+  })
 })

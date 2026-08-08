@@ -62,7 +62,7 @@ const scenario: OfficialPlannerScenarioModel = {
   enemyTypes: [],
   allowedHeroes: [],
   allowedTagExpression: [],
-    attributeRequirements: [],
+  attributeRequirements: [],
   occupiedSlotCount: 0,
   scenarioWarnings: [],
 }

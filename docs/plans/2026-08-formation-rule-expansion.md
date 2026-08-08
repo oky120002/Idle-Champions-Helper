@@ -54,17 +54,16 @@ export interface AttributeRequirement {
 }
 ```
 
-- 来源：restriction 文本正则匹配 `(CON|INT|CHA|STR|DEX|WIS) score of N or (higher|lower)`
+- 来源：restriction 文本全局正则匹配 `(CON|INT|CHA|STR|DEX|WIS) (score )?of N or (higher|lower)`；按句拆分排除伤害修饰句（v319 "deal 400% additional damage" 中的 INT 非 usage restriction）；多属性门槛（v187 STR+DEX+CON 等 8 变体）一次性提取
 - 英雄 abilityScores 已在 `HeroAbilityProfile.abilityScores`（build 期从 `champion-details` 投影），planner 直接可用
 
 **改动范围**：
 
 | 文件 | 改动 |
 |---|---|
-| `src/domain/types/formation.ts` | `Variant` 新增 `attributeRequirements: AttributeRequirement[]` |
-| `scripts/data/restrictions-parser.ts` | `parseRestrictions` 新增属性门槛提取 |
-| `scripts/data/normalize-adventures.ts` | `normalizeVariant` 传递 `attributeRequirements` |
-| `scripts/data/buildScenarioModels.ts` | `ScenarioModel` 新增字段 |
+| `src/domain/types/formation.ts` | 定义 `AttributeRequirement` 类型 |
+| `scripts/data/restrictions-parser.ts` | `parseRestrictions` 新增属性门槛提取（全局正则 + 伤害修饰句排除） |
+| `scripts/data/buildScenarioModels.ts` | `ScenarioModel` 新增字段（从 `parseRestrictions` 结果直接取） |
 | `src/domain/planner/plannerModel.ts` | `OfficialPlannerScenarioModel` 新增字段 |
 | `src/domain/planner/recommendationEngine.ts` | 候选过滤消费属性门槛 |
 
@@ -91,9 +90,18 @@ export interface AttributeRequirement {
 - [x] P1: 数据管线传递结构化表达式
 - [x] P1: planner 消费表达式（`matchesTagExpression`）
 - [x] P2: 定义 `AttributeRequirement` 类型
-- [x] P2: 实现属性门槛文本解析 + 测试（`restrictions-parser.test.ts` +6 tests）
+- [x] P2: 实现属性门槛文本解析 + 测试（`restrictions-parser.test.ts` +9 tests）
 - [x] P2: 数据管线传递属性门槛
 - [x] P2: planner 消费属性门槛（`meetsAttributeRequirements`）
 - [x] P3: 提取 `matchesTagExpression` + `meetsAttributeRequirements` 纯函数
-- [x] P4: 全量测试通过（1498/1500，2 预存 governance 失败无关）
+- [x] P4: 全量测试通过（1501/1501）
 - [x] P5: 文档同步 + TODO 清理（atd_77cdaabdd1 + atd_83446e06cd 已删）
+
+## 审计修复（2026-08-08）
+
+提交 `c3b3b442` 后深度审计发现并修复：
+
+- **P1 多属性门槛只提取第一个**（8 变体丢属性）：`parseAttributeRequirement` 非全局正则 `.exec()` 仅返回首个匹配。改为 `matchAll` 全局提取。
+- **P1 属性门槛产生虚假"未解析"警告**（104 场景）：`parseRestrictions` 在属性提取成功后仍走 warning 分支。增加 `addedAttr` 标记跳过。
+- **P2 伤害修饰句误提取**（v319）：全局提取后 "deal ... damage" 中的 INT 被误当 usage restriction。按句拆分排除含 `deal` 的句子。
+- **P2 测试夹具缩进错位**（6 文件 8 处）：`attributeRequirements` 迁移时 sed 式插入缩进不一致。统一修正。
