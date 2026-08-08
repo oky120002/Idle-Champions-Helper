@@ -12,7 +12,18 @@ export async function readRecentFormationDraft(): Promise<FormationDraft | null>
     const store = transaction.objectStore(APP_STORE_NAMES.formationDrafts)
     const raw = await requestToPromise(store.get(RECENT_DRAFT_KEY) as IDBRequest<unknown>)
     await waitForTransaction(transaction)
-    return raw != null ? (parseStoredRecord(raw, formationDraftSchema, 'formation draft') as FormationDraft) : null
+    if (raw == null) {
+      return null
+    }
+    try {
+      return parseStoredRecord(raw, formationDraftSchema, 'formation draft') as FormationDraft
+    } catch {
+      // 腐蚀记录自动清理，避免每次加载重复报错（参照 client.ts readCollectionCache 模式）
+      const deleteTx = database.transaction(APP_STORE_NAMES.formationDrafts, 'readwrite')
+      await requestToPromise(deleteTx.objectStore(APP_STORE_NAMES.formationDrafts).delete(RECENT_DRAFT_KEY))
+      await waitForTransaction(deleteTx)
+      return null
+    }
   } finally {
     database.close()
   }

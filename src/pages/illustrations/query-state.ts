@@ -41,17 +41,6 @@ export function buildFilterSearchParams(filters: IllustrationsFilterState): URLS
   return searchParams
 }
 
-export function buildShareUrl(pathname: string, search: string, hash: string): string | null {
-  if (typeof window === 'undefined') {
-    return null
-  }
-
-  const url = new URL(window.location.href)
-  url.hash = `#${pathname}${search}${hash}`
-
-  return url.toString()
-}
-
 export function readInitialFilterState(search: string): IllustrationsFilterState {
   const searchParams = new URLSearchParams(search)
 

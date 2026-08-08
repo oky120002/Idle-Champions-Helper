@@ -113,7 +113,7 @@ describe('formation draft and preset stores', () => {
 })
 
 describe('stored-record 腐蚀校验（C1）', () => {
-  it('草稿缺 layoutId → 读出拒绝（不静默返回坏数据）', async () => {
+  it('草稿缺 layoutId → 读出自动清理并返回 null（不静默返回坏数据也不重复报错）', async () => {
     await writeRawRecord(APP_STORE_NAMES.formationDrafts, 'recent', {
       schemaVersion: 1,
       dataVersion: 'v1',
@@ -121,11 +121,14 @@ describe('stored-record 腐蚀校验（C1）', () => {
       updatedAt: '2026-04-13T10:00:00.000Z',
     })
 
-    await expect(readRecentFormationDraft()).rejects.toThrow(/存储数据校验失败.*layoutId/)
+    await expect(readRecentFormationDraft()).resolves.toBeNull()
+    // 二次读取不再触发校验（已清理）
+    await expect(readRecentFormationDraft()).resolves.toBeNull()
   })
 
-  it('方案列表含一条缺 id 的腐蚀记录 → 整表读出拒绝', async () => {
-    await writeRawRecord(APP_STORE_NAMES.formationPresets, 'good', createPreset('good', '2026-04-13T09:00:00.000Z'))
+  it('方案列表含一条腐蚀记录 → 跳过坏记录返回有效方案（不连坐）', async () => {
+    const goodPreset = createPreset('good', '2026-04-13T09:00:00.000Z')
+    await writeRawRecord(APP_STORE_NAMES.formationPresets, 'good', goodPreset)
     await writeRawRecord(APP_STORE_NAMES.formationPresets, 'bad', {
       schemaVersion: 1,
       name: '腐蚀方案',
@@ -135,6 +138,8 @@ describe('stored-record 腐蚀校验（C1）', () => {
       updatedAt: '2026-04-13T09:00:00.000Z',
     })
 
-    await expect(listFormationPresets()).rejects.toThrow(/存储数据校验失败.*id/)
+    const presets = await listFormationPresets()
+    expect(presets).toHaveLength(1)
+    expect(presets[0]?.id).toBe('good')
   })
 })

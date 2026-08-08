@@ -31,9 +31,14 @@ export const userProfileSnapshotSchema = z
   })
   .loose()
 
+const scenarioRefSchema = z.object({ kind: z.string(), id: z.string() }).nullable()
+
 export const formationDraftSchema = z
   .object({
+    schemaVersion: z.literal(1),
+    dataVersion: z.string(),
     layoutId: z.string(),
+    scenarioRef: scenarioRefSchema,
     placements: z.record(z.string(), z.string()),
     updatedAt: z.string(),
   })
@@ -58,11 +63,17 @@ export const championFilterSnapshotSchema = z
 export const formationPresetSchema = z
   .object({
     id: z.string(),
+    schemaVersion: z.literal(1),
+    dataVersion: z.string(),
     name: z.string(),
+    description: z.string(),
     layoutId: z.string(),
     placements: z.record(z.string(), z.string()),
+    scenarioRef: scenarioRefSchema,
+    scenarioTags: z.array(z.string()),
     priority: z.enum(['low', 'medium', 'high']),
     filterSnapshot: championFilterSnapshotSchema.nullable().optional(),
+    createdAt: z.string(),
     updatedAt: z.string(),
   })
   .loose()
@@ -73,7 +84,6 @@ export const heroAbilityOverridePatchSchema = z
   })
   .loose()
 
-export const formationPresetArraySchema = z.array(formationPresetSchema)
 export const heroAbilityOverridePatchArraySchema = z.array(heroAbilityOverridePatchSchema)
 
 /**

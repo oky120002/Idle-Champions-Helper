@@ -4,10 +4,16 @@ import { formationPresetSchema, parseStoredRecord } from './stored-record-schema
 
 const validBase = {
   id: 'preset-a',
+  schemaVersion: 1,
+  dataVersion: 'v1',
   name: '方案',
+  description: '',
   layoutId: 'layout-a',
   placements: { 'slot-1': 'bruenor' },
+  scenarioRef: null,
+  scenarioTags: [],
   priority: 'medium',
+  createdAt: '2026-08-07T00:00:00.000Z',
   updatedAt: '2026-08-07T00:00:00.000Z',
 } as const
 
@@ -54,6 +60,6 @@ describe('formationPresetSchema filterSnapshot 兼容', () => {
 
 describe('parseStoredRecord formation preset', () => {
   it('旧记录（无 filterSnapshot）解析后 cast 不 throw', () => {
-    expect(() => parseStoredRecord([validBase], formationPresetSchema.array(), 'test')).not.toThrow()
+    expect(() => parseStoredRecord(validBase, formationPresetSchema, 'test')).not.toThrow()
   })
 })

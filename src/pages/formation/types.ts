@@ -16,7 +16,7 @@ export const DRAFT_SCHEMA_VERSION = 1
 export const PRESET_SCHEMA_VERSION = 1
 export const DRAFT_SAVE_DELAY_MS = 600
 
-export const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['medium', 'high', 'low']
+export const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['high', 'medium', 'low']
 export const LAYOUT_FILTER_OPTIONS = ['all', 'campaign', 'adventure', 'variant'] as const
 
 export type LayoutFilterKind = (typeof LAYOUT_FILTER_OPTIONS)[number]
