@@ -60,7 +60,8 @@ function singleSlotScenario(): OfficialPlannerScenarioModel {
     forcedHeroes: [],
     enemyTypes: [],
     allowedHeroes: [],
-    allowedTags: [],
+    allowedTagExpression: [],
+    attributeRequirements: [],
     occupiedSlotCount: 0,
     scenarioWarnings: [],
   }
@@ -82,7 +83,8 @@ function cursedFarmerScenario(): OfficialPlannerScenarioModel {
     forcedHeroes: [],
     enemyTypes: [],
     allowedHeroes: [],
-    allowedTags: [],
+    allowedTagExpression: [],
+    attributeRequirements: [],
     occupiedSlotCount: 0,
     scenarioWarnings: [],
   }

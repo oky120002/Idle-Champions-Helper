@@ -3,7 +3,7 @@
  * 通用英雄能力类型与 signal semantics 已下沉到 src/domain/abilities/；引擎直接引用 Hero* 名。
  * 此处只保留推荐引擎专属的场景（scenario）类型与 resolver。
  */
-import type { LocalizedText, ScenarioRef, Variant } from '../types'
+import type { AttributeRequirement, LocalizedText, ScenarioRef, TagExpression, Variant } from '../types'
 import type {
   HeroAbilityOverridePatch,
   HeroAbilityProfile,
@@ -33,8 +33,10 @@ export interface OfficialPlannerScenarioModel {
   enemyTypes: string[]
   /** 白名单英雄 id（game_change only_allow_crusaders.by_ids；空=不限）。 */
   allowedHeroes: string[]
-  /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=不限）。 */
-  allowedTags: string[]
+  /** 白名单英雄 tag 表达式（DNF：OR of ANDs；空=不限）。 */
+  allowedTagExpression: TagExpression
+  /** 属性门槛（restriction 文本解析：CON/INT/CHA/STR/DEX/WIS score of N or higher/lower；空=不限）。 */
+  attributeRequirements: AttributeRequirement[]
   /**
    * 被非英雄实体（小鸡/小鬼等）占据的格数（restrictions 文本解析）。
    * formation 搜索可用容量 = slotTopology.length − occupiedSlotCount（见 recommendationEngine）。

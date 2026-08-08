@@ -6,7 +6,7 @@ import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
-import type { FormationSlot, ScenarioRef, Variant } from '../types'
+import type { AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { beamSearch } from './beamSearchRanking'
@@ -391,8 +391,9 @@ function collectEvaluationRestrictionWarnings(
 ): string[] {
   const forcedHeroSet = new Set(scenario.forcedHeroes)
   const allowedHeroSet = new Set(scenario.allowedHeroes)
-  const allowedTagSet = new Set(scenario.allowedTags)
-  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
+  const allowedTagExpression = scenario.allowedTagExpression
+  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagExpression.length > 0
+  const attributeRequirements = scenario.attributeRequirements
   const restrictionWarnings: string[] = []
   for (const heroId of Object.values(placements)) {
     if (forcedHeroSet.has(heroId)) {
@@ -404,9 +405,15 @@ function collectEvaluationRestrictionWarnings(
     if (hasAllowedRestriction) {
       const hero = heroById.get(heroId)
       const allowed = allowedHeroSet.has(heroId)
-        || (hero?.tags.some((tag) => allowedTagSet.has(tag)) ?? false)
+        || (hero != null && matchesTagExpression(hero.tags, allowedTagExpression))
       if (!allowed) {
         restrictionWarnings.push(`${heroId} 不在当前变体的允许名单（only_allow_crusaders）内`)
+      }
+    }
+    if (attributeRequirements.length > 0) {
+      const hero = heroById.get(heroId)
+      if (hero != null && !meetsAttributeRequirements(hero.abilityScores, attributeRequirements)) {
+        restrictionWarnings.push(`${heroId} 不满足当前变体的属性门槛`)
       }
     }
   }
@@ -510,9 +517,37 @@ export function evaluateFormation({
 }
 
 /**
+ * 评估英雄是否满足 tag 表达式（DNF: OR of ANDs）。
+ * 任一 clause 通过即合格：clause 内 required 须全有、forbidden 须全无。
+ * 空表达式返回 false（无子句 = 无 tag 匹配）——调用方用 hasAllowedRestriction 先行判断。
+ */
+function matchesTagExpression(heroTags: readonly string[], expression: TagExpression): boolean {
+  if (expression.length === 0) return false
+  const tagSet = new Set(heroTags)
+  return expression.some((clause) =>
+    clause.required.every((tag) => tagSet.has(tag))
+    && clause.forbidden.every((tag) => !tagSet.has(tag)),
+  )
+}
+
+/**
+ * 评估英雄是否满足全部属性门槛。每条门槛独立判定（AND 语义——须全部满足）。
+ * 英雄 abilityScores 可能缺失某属性 → 视为不满足该门槛（保守淘汰）。
+ */
+function meetsAttributeRequirements(
+  abilityScores: Partial<Record<string, number>>,
+  requirements: readonly AttributeRequirement[],
+): boolean {
+  return requirements.every((req) => {
+    const score = abilityScores[req.stat]
+    if (score === undefined) return false
+    return req.operator === '>=' ? score >= req.value : score <= req.value
+  })
+}
+
+/**
  * buildPlannerRecommendation 专用：按 forced/candidate/allowed 过滤候选英雄并按 seat+heroId 排序。
- * 强制英雄无条件纳入（即使未拥有/不在白名单）；only_allow_crusaders 白名单 by_ids OR by_tags。
- * 提取自 buildPlannerRecommendation 以降主函数复杂度；语义零改变。
+ * 强制英雄无条件纳入（即使未拥有/不在白名单）；only_allow_crusaders 白名单 by_ids OR by_tags 表达式。
  */
 function filterAndSortCandidateHeroes(
   plannerHeroes: readonly ResolvedHeroAbilityProfile[],
@@ -520,7 +555,8 @@ function filterAndSortCandidateHeroes(
   candidateIds: Set<string>,
   hasAllowedRestriction: boolean,
   allowedHeroSet: Set<string>,
-  allowedTagSet: Set<string>,
+  allowedTagExpression: TagExpression,
+  attributeRequirements: readonly AttributeRequirement[],
 ): ResolvedHeroAbilityProfile[] {
   return plannerHeroes
     .filter((hero) => {
@@ -531,9 +567,12 @@ function filterAndSortCandidateHeroes(
       if (!candidateIds.has(hero.heroId)) {
         return false
       }
+      if (!meetsAttributeRequirements(hero.abilityScores, attributeRequirements)) {
+        return false
+      }
       return !hasAllowedRestriction
         || allowedHeroSet.has(hero.heroId)
-        || hero.tags.some((tag) => allowedTagSet.has(tag))
+        || matchesTagExpression(hero.tags, allowedTagExpression)
     })
     .sort((left, right) => {
       // seat 为有限数（JSON 解析），无 NaN 风险；差 0 时按 heroId 字典序
@@ -569,10 +608,10 @@ function resolveCandidateSlots(
       ownedHeroes,
     }),
   )
-  // only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
+  // only_allow_crusaders 白名单（by_ids OR by_tags 表达式）；强制英雄即使未拥有也纳入候选。
   const allowedHeroSet = new Set(scenario.allowedHeroes)
-  const allowedTagSet = new Set(scenario.allowedTags)
-  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
+  const allowedTagExpression = scenario.allowedTagExpression
+  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagExpression.length > 0
   const userLockedSlots = options.lockedSlots ?? {}
   const userLockedSlotSet = new Set(Object.keys(userLockedSlots))
   const forcedHeroSet = new Set([
@@ -580,7 +619,7 @@ function resolveCandidateSlots(
     ...(options.lockedCarryHeroId != null && options.lockedCarryHeroId !== '' ? [options.lockedCarryHeroId] : []),
     ...Object.values(userLockedSlots),
   ])
-  const heroes = filterAndSortCandidateHeroes(collections.plannerHeroes, forcedHeroSet, candidateIds, hasAllowedRestriction, allowedHeroSet, allowedTagSet)
+  const heroes = filterAndSortCandidateHeroes(collections.plannerHeroes, forcedHeroSet, candidateIds, hasAllowedRestriction, allowedHeroSet, allowedTagExpression, scenario.attributeRequirements)
   // 可用容量扣减被占格 = slotTopology.length − occupiedSlotCount − 用户锁槽数。
   // occupiedSlotCount 来自 restrictions 文本解析（小鸡/小鬼等非英雄实体占格数）；
   // 取 sortSlots 前 availableCapacity 个近似——英雄数量正确，避免多填被占格高估 carryDps。

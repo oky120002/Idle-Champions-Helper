@@ -2,6 +2,23 @@ import type { z } from 'zod'
 
 import type { adventureSchema, patronObjectiveTierSchema } from './collection-schemas'
 import type { LocalizedOption, LocalizedText } from './common'
+import type { AbilityScoreKey } from './champions'
+
+/** 单个 tag 子句（AND 内部）：英雄须拥有全部 required tag，且不拥有任何 forbidden tag。 */
+export interface TagClause {
+  required: string[]
+  forbidden: string[]
+}
+
+/** 标签表达式（DNF = OR of ANDs）：英雄匹配任一 clause 即合格。 */
+export type TagExpression = TagClause[]
+
+/** 属性门槛：英雄能力值须满足 operator × value。 */
+export interface AttributeRequirement {
+  stat: AbilityScoreKey
+  operator: '>=' | '<='
+  value: number
+}
 
 export interface VariantAreaHighlight {
   id: string
@@ -81,8 +98,8 @@ export interface Variant {
   forcedHeroIds: string[]
   /** 白名单英雄 id（game_change only_allow_crusaders.by_ids；空=无白名单）。 */
   allowedHeroIds: string[]
-  /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=无 tag 白名单）。 */
-  allowedTags: string[]
+  /** 白名单英雄 tag 表达式（DNF：OR of ANDs，`^`=AND `!`=取反 `|`=OR；空=无 tag 白名单）。 */
+  allowedTagExpression: TagExpression
 }
 
 export interface ScenarioRef {

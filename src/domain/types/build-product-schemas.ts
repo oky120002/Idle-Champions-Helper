@@ -49,6 +49,17 @@ const plannerScenarioSlotSchema = z
   })
   .loose()
 
+const tagClauseSchema = z.object({
+  required: z.array(z.string()),
+  forbidden: z.array(z.string()),
+})
+
+const attributeRequirementSchema = z.object({
+  stat: z.enum(['str', 'dex', 'con', 'int', 'wis', 'cha']),
+  operator: z.enum(['>=', '<=']),
+  value: z.number(),
+})
+
 export const plannerScenarioItemSchema = z
   .object({
     variantId: z.string(),
@@ -57,7 +68,8 @@ export const plannerScenarioItemSchema = z
     slotTopology: z.array(plannerScenarioSlotSchema),
     forcedHeroes: z.array(z.string()),
     allowedHeroes: z.array(z.string()),
-    allowedTags: z.array(z.string()),
+    allowedTagExpression: z.array(tagClauseSchema),
+    attributeRequirements: z.array(attributeRequirementSchema),
     occupiedSlotCount: z.number(),
   })
   .loose()

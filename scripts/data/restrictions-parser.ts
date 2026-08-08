@@ -4,14 +4,22 @@
  * 数据源：`variants.json.items[].restrictions: Array<{original, display}>`（双语自由文本）。
  * 评估结论：`docs/specs/modules/planner/data-source-confirmations.md` §12.1。
  *
- * 不用 NLP，纯关键词模板。只解析高价值 slot-occupying 模式（→ lockedSlotCount）；
+ * 不用 NLP，纯关键词模板。解析两类高价值模式：
+ * 1. slot-occupying（→ lockedSlotCount）
+ * 2. 属性门槛（→ attributeRequirements，CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）
  * flavor 文本 / 完成前置 / 变量递增版不匹配 → warning（12.3 手工补 semantic-overrides.json）。
  * champion-tag 限制（"Only Evil Champions"）已被 mechanics 结构化捕获，不在此重复解析。
  */
 
+import type { AttributeRequirement } from '../../src/domain/types/formation.ts'
+
+export type { AttributeRequirement }
+
 export interface ParsedRestrictions {
   /** 被占据/诅咒的格数（保守取多条中最严的 max，不累加）。 */
   lockedSlotCount: number
+  /** 属性门槛（CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）。 */
+  attributeRequirements: AttributeRequirement[]
   /** 未匹配的 restriction 文本（低频/变量/特殊机制），待手工补 semantic-overrides。 */
   warnings: string[]
 }
@@ -174,13 +182,34 @@ function isTrivialRestriction(original: string, display: string): boolean {
   )
 }
 
+// 属性门槛正则：(STAT) (score )?of (N) or (higher|lower)
+// 匹配 "CON score of 13 or higher" / "CHA of 14 or lower" 等（"score" 可选）。
+// STAT 全大写三字母，N 为数字。忽略大小写。
+const ATTRIBUTE_THRESHOLD_RE = /\b(STR|DEX|CON|INT|WIS|CHA)\s+(?:score\s+)?of\s+(\d+)\s+or\s+(higher|lower)\b/i
+
+function parseAttributeRequirement(text: string): AttributeRequirement | null {
+  const match = ATTRIBUTE_THRESHOLD_RE.exec(text)
+  if (match === null) return null
+  const stat = match[1]?.toLowerCase()
+  const value = match[2] ? parseInt(match[2], 10) : NaN
+  const direction = match[3]?.toLowerCase()
+  if (stat === undefined || Number.isNaN(value) || direction === undefined) return null
+  return {
+    stat: stat as AttributeRequirement['stat'],
+    operator: direction === 'higher' ? '>=' : '<=',
+    value,
+  }
+}
+
 /**
- * 解析 variant restrictions → lockedSlotCount + warnings。
- * 双语（EN original + ZH display）分别尝试；取两者中确定的格数（保守 max）。
+ * 解析 variant restrictions → lockedSlotCount + attributeRequirements + warnings。
+ * 双语（EN original + ZH display）分别尝试；slot count 取保守 max，属性门槛取全量并集。
  */
 export function parseRestrictions(restrictions: readonly RestrictionText[]): ParsedRestrictions {
   let lockedSlotCount = 0
+  const attributeRequirements: AttributeRequirement[] = []
   const warnings: string[] = []
+  const seenAttrs = new Set<string>()
 
   for (const { original, display } of restrictions) {
     const enCount = original !== '' ? enSlotOccupyCount(original) : null
@@ -194,7 +223,19 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
       // 非 slot-occupying 且非已知无约束 → 记 warning 待手工评估。
       warnings.push(`未解析 restriction：${original !== '' ? original : display}`)
     }
+
+    // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
+    if (original !== '') {
+      const req = parseAttributeRequirement(original)
+      if (req !== null) {
+        const key = `${req.stat}${req.operator}${req.value}`
+        if (!seenAttrs.has(key)) {
+          seenAttrs.add(key)
+          attributeRequirements.push(req)
+        }
+      }
+    }
   }
 
-  return { lockedSlotCount, warnings }
+  return { lockedSlotCount, attributeRequirements, warnings }
 }

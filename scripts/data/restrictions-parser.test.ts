@@ -172,3 +172,49 @@ describe('parseRestrictions — ZH 变量递增占格排除', () => {
     expect(result.warnings.length).toBeGreaterThan(0)
   })
 })
+
+describe('parseRestrictions — 属性门槛提取', () => {
+  it('CON score of 13 or higher → { stat: con, operator: >=, value: 13 }', () => {
+    const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'con', operator: '>=', value: 13 },
+    ])
+  })
+
+  it('DEX score of 14 or lower → { stat: dex, operator: <=, value: 14 }', () => {
+    const result = parseRestrictions([r('Only Champions with a DEX score of 14 or lower can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'dex', operator: '<=', value: 14 },
+    ])
+  })
+
+  it('CHA score of 12 or higher (variant 171)', () => {
+    const result = parseRestrictions([r('Only Champions with an INT score of 12 or higher can partake in this adventure.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '>=', value: 12 },
+    ])
+  })
+
+  it('v430 复合 restriction：CHA of 14 or lower + slot-occupy → 同时提取两者', () => {
+    const result = parseRestrictions([r('A Monodrone and a Duodrone take up slots in the formation. Only Champions with CHA of 14 or lower can be used.')])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '<=', value: 14 },
+    ])
+  })
+
+  it('无属性门槛的 restriction → attributeRequirements 为空', () => {
+    const result = parseRestrictions([r('Four slots occupied by chickens.')])
+    expect(result.attributeRequirements).toEqual([])
+  })
+
+  it('同一 restriction 不重复提取相同门槛', () => {
+    const result = parseRestrictions([
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+    ])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 13 },
+    ])
+  })
+})

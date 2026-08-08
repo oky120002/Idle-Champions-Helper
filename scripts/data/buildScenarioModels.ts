@@ -1,3 +1,4 @@
+import type { AttributeRequirement, TagExpression } from '../../src/domain/types/formation.ts'
 import { asArray, asRecord } from './io-utils.ts'
 import { parseRestrictions } from './restrictions-parser.ts'
 
@@ -20,7 +21,8 @@ interface ScenarioModel {
   forcedHeroes: unknown[]
   enemyTypes: unknown[]
   allowedHeroes: unknown[]
-  allowedTags: unknown[]
+  allowedTagExpression: TagExpression
+  attributeRequirements: AttributeRequirement[]
   scenarioWarnings: string[]
   /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析）。 */
   occupiedSlotCount: number
@@ -101,7 +103,7 @@ export function buildOfficialScenarioModel(
 
   const restrictions = asArray(variant.restrictions)
   const allowedHeroIds = asArray(variant.allowedHeroIds)
-  const allowedTags = asArray(variant.allowedTags)
+  const allowedTagExpression = (variant.allowedTagExpression ?? []) as TagExpression
 
   // restrictions 文本模板匹配 → slot-occupying 格数 + 未解析 warning。
   const restrictionTexts = restrictions.map((raw) => {
@@ -122,7 +124,8 @@ export function buildOfficialScenarioModel(
 
   return {
     slotTopology,
-    allowedTags,
+    allowedTagExpression,
+    attributeRequirements: parsedRestrictions.attributeRequirements,
     variantId: variant.id,
     scenarioRef: { kind: 'variant', id: variant.id },
     name: variant.name,
@@ -136,7 +139,7 @@ export function buildOfficialScenarioModel(
       ...mechanicWarnings,
       ...restrictionWarnings,
       ...(formation ? [] : ['当前场景没有匹配的阵型布局。']),
-      ...(allowedHeroIds.length > 0 || allowedTags.length > 0
+      ...(allowedHeroIds.length > 0 || allowedTagExpression.length > 0
         ? ['当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。']
         : []),
     ],

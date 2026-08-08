@@ -15,9 +15,9 @@
 | 类别 | 机制说明 | 游戏数据表现 | 对 planner 的影响 |
 |---|---|---|---|
 | **阵型占位**（escort） | NPC 或物体占据阵型格，不可移除、通常不打伤害 | `slot_escort`(282)、`slot_escort_by_area`(38)、`slot_escort_wandering`(3)；`escortCount` 字段记基础占位数 | 占用格应从可用槽位扣除；`escortCount` 已入 schema 但 planner 未消费 |
-| **英雄白名单** | 只允许特定英雄参战，按 id 或 tag 过滤 | `only_allow_crusaders`(501)；投影为 `allowedHeroIds`(13 非空) + `allowedTags`(122 非空) | planner 已建模：候选英雄按白名单过滤（`filterAndSortCandidateHeroes`） |
-| **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述，无结构化字段；精确匹配 `STAT score of N or higher/lower` 得 31 个，宽松匹配含复合表述得 ~45 个 | 文本未解析，planner 无法自动识别；需先建属性筛选层 |
-| **角色限制** | 按 DPS/Support/Tank/Healing/Speed 角色过滤 | `allowedTags` 含 `!dps`(4)、`!tanking`(2)、`!speed`(2)、`!healing`(1)；`disallow_crusaders`(17) | `!dps` 类已走 `allowedTags` 通道；`disallow_crusaders` 部分未投影 |
+| **英雄白名单** | 只允许特定英雄参战，按 id 或 tag 过滤 | `only_allow_crusaders`(501)；投影为 `allowedHeroIds`(13 非空) + `allowedTagExpression`(121 非空，DNF: OR of ANDs) | planner 已建模：候选英雄按白名单过滤（`filterAndSortCandidateHeroes`），支持 `^`(AND)/`!`(取反)/`|`(OR) 复合表达式 |
+| **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述；2026-08-08 结构化提取为 `attributeRequirements`（104 变体非空）；精确匹配 `(STAT) (score )?of N or higher/lower` | ✅ 已建模：restriction 文本正则解析 → `scenarios.json.attributeRequirements` → planner 候选过滤（`meetsAttributeRequirements`） |
+| **角色限制** | 按 DPS/Support/Tank/Healing/Speed 角色过滤 | `allowedTagExpression` 含 `!dps`(4)、`!tanking`(2)、`!speed`(2)、`!healing`(1)；`disallow_crusaders`(17) | `!dps` 类已走 `allowedTagExpression` 通道；`disallow_crusaders` 部分未投影 |
 | **强制英雄** | 指定英雄必须上场、不可移除 | `force_use_heroes`(329)；投影为 `forcedHeroIds` | planner 已建模：`forceInclude` 约束 + 候选豁免（`recommendationEngine.ts:501`） |
 | **全局效果** | 全队持续增益或减益，如伤害倍率、攻速调整 | `global_effects`(296)；`restrictions` 文本描述 | 未建模；伤害/攻速调整需注入评分参数 |
 | **槽位条件** | 按阵型位置生效的效果（相邻、列、行） | `slot_effects`(94)、`slot_effects_by_area`(7)、`restrict_allowed_slots`(2) | 未建模；需位置条件求值器 |
@@ -82,11 +82,12 @@
 
 | 已建模 | 来源机制 | 消费位置 |
 |---|---|---|
-| 强制英雄 | `force_use_heroes` → `forcedHeroIds` | `recommendationEngine.ts:501` → `formationLegality.ts:40`（注：`forceInclude` 构建在 501 行）|
-| 英雄白名单（id/tag） | `only_allow_crusaders` → `allowedHeroIds`/`allowedTags` | `recommendationEngine.ts:574` |
+| 强制英雄 | `force_use_heroes` → `forcedHeroIds` | `recommendationEngine.ts` → `formationLegality.ts`（`forceInclude` 约束）|
+| 英雄白名单（id/tag） | `only_allow_crusaders` → `allowedHeroIds`/`allowedTagExpression`（DNF） | `recommendationEngine.ts:filterAndSortCandidateHeroes`（`matchesTagExpression`） |
+| 属性门槛 | `restrictions` 文本 → `attributeRequirements` | `recommendationEngine.ts:filterAndSortCandidateHeroes`（`meetsAttributeRequirements`） |
 | 占位数量 | `slot_escort` → `escortCount` | `VariantResultCard.tsx:42` 展示，planner 未消费 |
 
-> 覆盖缺口：128 种 mechanics 中 planner 仅消费 3 种的结构化字段；属性门槛（57 变体）、全局效果（296）、槽位条件（101）、敌人强化（120）、英雄受伤（39+）、永久死亡（36）、阵型锁定（22）、去重限制（13）等均未建模。`restrictions` 文本是当前唯一信息源但未被解析。
+> 覆盖缺口：128 种 mechanics 中 planner 消费强制英雄、英雄白名单（含复合标签表达式）、属性门槛（restriction 文本解析）；全局效果（296）、槽位条件（101）、敌人强化（120）、英雄受伤（39+）、永久死亡（36）、阵型锁定（22）、去重限制（13）等均未建模。
 
 ## 数据源
 
@@ -96,7 +97,7 @@
 
 - `mechanics[]` — 底层机制标记，最可靠的分类依据（128 种，见分类表）
 - `restrictions[].original` — 人类可读描述，属性门槛、特殊规则仅存于此
-- `allowedHeroIds` / `allowedTags` — 白名单投影（仅 `only_allow_crusaders` 时非空）；`|` 分隔表示 OR，`!` 前缀表示取反
+- `allowedHeroIds` / `allowedTagExpression` — 白名单投影（仅 `only_allow_crusaders` 时非空）；tag 表达式为 DNF（OR of ANDs）：`|` = OR，`^` = AND，`!` = 取反
 - `forcedHeroIds` — 强制英雄投影
 - `escortCount` — 基础占位数（递进占位需看 `slot_escort_by_area` + `restrictions` 文本）
 
@@ -109,7 +110,7 @@
 - 变体数量、mechanics 标记频率、字段非空计数：基于 `variants.json`（2026-08-06 快照，1424 条）用 `jq` 统计，覆盖全集
 - 属性门槛：精确正则 `(CON|INT|CHA|STR|DEX|WIS) score of \d+ or (higher|lower)` 得 31 个，宽松匹配含复合表述约 45 个。旧版计数 57 使用的正则 `INT|CHA|STR` 会误匹配子串（如 "INTentions"），已废弃
 - 社区来源（Fandom Wiki、Reddit、Steam）仅作机制概念参考，具体数值与字段以游戏数据为准
-- `allowedTags` 中存在括号、`^` 连接的复合表达式（如 `(chaotic^good)`、`!small^!dwarf^!gnome`），planner 当前按 `|` 拆分 OR，未处理 `^`（AND）和括号语义
+- `allowedTagExpression` 中存在括号、`^` 连接的复合表达式（如 `(chaotic^good)`、`!small^!dwarf^!gnome`），2026-08-08 升级为 DNF 结构（OR of ANDs）正确解析；malformed 数据（v970 `((geneutral`）保守跳过
 
 ## 社区来源
 

@@ -2,7 +2,10 @@
 
 ## 硬规则
 
-- 只做一条硬规则：同一 `seat` 只能出现一名英雄。
+- 同一 `seat` 只能出现一名英雄。
+- 变体英雄白名单（`only_allow_crusaders`）：候选池按 `allowedHeroIds`（id 白名单）和 `allowedTagExpression`（标签表达式，DNF: OR of ANDs）过滤。标签表达式支持 `^`（AND）、`!`（取反）、`|`（OR）和括号组合。
+- 变体属性门槛（restriction 文本解析）：候选池按 `attributeRequirements`（CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）过滤。英雄 abilityScores 缺失某属性时保守视为不满足。
+- 强制英雄（`force_use_heroes`）：`forcedHeroIds` 必须包含在阵型中，豁免白名单和属性门槛过滤。
 - 规则下沉到规则层，不硬编码在 JSX 里。
 
 ## 与方案存档模块的衔接

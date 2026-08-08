@@ -38,7 +38,8 @@ function createVariant(id: string, overrides: Partial<Variant> & Pick<Variant, '
     mechanics: overrides.mechanics ?? [],
     forcedHeroIds: overrides.forcedHeroIds ?? [],
     allowedHeroIds: overrides.allowedHeroIds ?? [],
-    allowedTags: overrides.allowedTags ?? [],
+    allowedTagExpression: overrides.allowedTagExpression ?? [],
+    attributeRequirements: overrides.attributeRequirements ?? [],
   }
 }
 

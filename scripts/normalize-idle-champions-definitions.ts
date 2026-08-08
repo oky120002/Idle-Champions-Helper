@@ -183,8 +183,8 @@ function getRawChecksum(rawDefinitions: RawDefinition): number | undefined {
 /**
  * 从 game_changes 提取英雄限制：
  * - force_use_heroes（{hero_ids:[N]}）→ forcedHeroIds
- * - only_allow_crusaders（{by_ids:{ids:[...]}, by_tags:{tags:"a|b"}}）→ allowedHeroIds + allowedTags（| 为 OR）
- * allowedHeroIds/allowedTags 仅在该变体含 only_allow_crusaders 时非空（hasAllowed 语义）。
+ * - only_allow_crusaders（{by_ids:{ids:[...]}, by_tags:{tags:"a|b"}}）→ allowedHeroIds + allowedTagExpression（DNF：| = OR ^ = AND ! = 取反）
+ * allowedHeroIds/allowedTagExpression 仅在该变体含 only_allow_crusaders 时非空（hasAllowed 语义）。
  */
 
 function groupDefinitionsByHeroId(

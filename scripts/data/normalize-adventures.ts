@@ -1,4 +1,5 @@
 import type { LocalizedText } from '../../src/domain/types/common.ts'
+import type { TagClause, TagExpression } from '../../src/domain/types/formation.ts'
 import {
   compareLocalizedText,
   normalizeLocalizedText,
@@ -114,7 +115,7 @@ interface VariantEnemySummary {
 interface HeroRestrictions {
   forcedHeroIds: string[]
   allowedHeroIds: string[]
-  allowedTags: string[]
+  allowedTagExpression: TagExpression
 }
 
 interface VariantMetadata extends VariantEnemySummary, HeroRestrictions {
@@ -177,7 +178,7 @@ export interface NormalizedVariant {
   mechanics: string[]
   forcedHeroIds: string[]
   allowedHeroIds: string[]
-  allowedTags: string[]
+  allowedTagExpression: TagExpression
 }
 
 export interface NormalizedManualFormationSlot {
@@ -524,7 +525,7 @@ export function normalizeVariant(
     mechanics: metadata?.mechanics ?? [],
     forcedHeroIds: metadata?.forcedHeroIds ?? [],
     allowedHeroIds: metadata?.allowedHeroIds ?? [],
-    allowedTags: metadata?.allowedTags ?? [],
+    allowedTagExpression: metadata?.allowedTagExpression ?? [],
     campaign,
     repeatable,
     patronObjectiveTiers,
@@ -725,10 +726,63 @@ function collectEscortNames(gameChanges: readonly unknown[] = []): string[] {
   return uniqueStrings(names)
 }
 
+/**
+ * 解析单个 tag 子句字符串 → TagClause（AND 内部）。
+ * 输入是 `|`-split 后的单个元素，可能含 `^`(AND)、`!`(取反)、外层括号。
+ * 括号不匹配（malformed 数据如 v970 `((geneutral`）→ null（保守跳过）。
+ */
+export function parseTagClause(raw: string): TagClause | null {
+  let s = raw.trim()
+  // 去外层配对括号：(chaotic^good) → chaotic^good
+  while (s.startsWith('(') && s.endsWith(')')) {
+    const inner = s.slice(1, -1)
+    // 确认括号匹配：去一层后内部不应有多余的 ( 或 )
+    if (inner.includes('(') || inner.includes(')')) {
+      break
+    }
+    s = inner.trim()
+  }
+  // 残留括号 = malformed（如 `evil)^dps)` 或 `((geneutral`）
+  if (s.includes('(') || s.includes(')')) {
+    return null
+  }
+  const required: string[] = []
+  const forbidden: string[] = []
+  for (const atom of s.split('^')) {
+    const tag = atom.trim().toLowerCase()
+    if (tag === '') continue
+    if (tag.startsWith('!')) {
+      const negated = tag.slice(1)
+      if (negated !== '') forbidden.push(negated)
+    } else {
+      required.push(tag)
+    }
+  }
+  if (required.length === 0 && forbidden.length === 0) {
+    return null
+  }
+  return { required, forbidden }
+}
+
+/**
+ * 解析 only_allow_crusaders.by_tags.tags 字符串 → TagExpression（DNF: OR of ANDs）。
+ * `|`=OR 在此处拆分；每个元素经 parseTagClause 解析为单个 AND 子句。
+ */
+export function parseTagExpression(tagsString: string): TagExpression {
+  const expression: TagExpression = []
+  for (const raw of tagsString.split('|')) {
+    const clause = parseTagClause(raw)
+    if (clause !== null) {
+      expression.push(clause)
+    }
+  }
+  return expression
+}
+
 function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRestrictions {
   const forcedHeroIds = new Set<string>()
   const allowedHeroIds = new Set<string>()
-  const allowedTags = new Set<string>()
+  let allowedTagExpression: TagExpression = []
   let hasAllowed = false
 
   for (const change of gameChanges) {
@@ -765,12 +819,7 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
       }
       const tags = asRawRecord(record.by_tags).tags
       if (typeof tags === 'string') {
-        for (const tag of tags.split('|')) {
-          const trimmed = tag.trim()
-          if (trimmed !== '') {
-            allowedTags.add(trimmed)
-          }
-        }
+        allowedTagExpression = parseTagExpression(tags)
       }
     }
   }
@@ -778,7 +827,7 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
   return {
     forcedHeroIds: [...forcedHeroIds],
     allowedHeroIds: hasAllowed ? [...allowedHeroIds] : [],
-    allowedTags: hasAllowed ? [...allowedTags] : [],
+    allowedTagExpression: hasAllowed ? allowedTagExpression : [],
   }
 }
 
