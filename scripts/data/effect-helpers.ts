@@ -250,6 +250,10 @@ function resolveBuffUpgradeSeed(entry: EffectEntry): BuffUpgradeSeed | null {
   }
 
   if (payload.kind === 'buff_upgrade' || payload.kind === 'buff_upgrades') {
+    // 普通形态：就是固定百分比放大 base，不需要叠层计数。
+    // per_hero_expr 不会传到 wrapper（signalPreset 跳过了 attachSignalSemantics），
+    // 但 2026-08-08 全量验证过没问题：带条件的那些效果在 line 764 就被排除了，
+    // 能存活到这里的 wrapper 带的 per_hero_expr 都是数值表达式（int/dex 这种），不是条件判断。
     return {}
   }
 
@@ -785,6 +789,11 @@ export function collectEffectEntries(detail: unknown): {
         // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
         // 合并到 base 的 targetQualifier（AND），避免 wrapper 层 targeting 丢失。
         const wrapperQualifier = normalizeTargetQualifier(entry.effect)
+        // per_hero_expr 不会传到 wrapper：signalPreset 直接用预设信号，不走 attachSignalSemantics，
+        // 所以 wrapper 上的 per_hero_expr 不会被解析。
+        // 2026-08-08 全量验证（287 个 wrapper）确认没问题：带 HasEffect 条件的 buff_upgrade
+        // 全是技能树自带的，在 line 764 就被排除了；能存活到这里的 wrapper 带的都是
+        // int/cha/dex 这类数值算式，不是条件判断，丢掉不影响。
         const preset: HeroAbilitySignal = {
           ...targetSignal,
           targetQualifier: mergeHeroQualifiers(targetSignal.targetQualifier ?? null, wrapperQualifier),

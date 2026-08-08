@@ -64,7 +64,10 @@ function buildEquipmentBuffWrapper(base: HeroAbilitySignal, buff: EquipmentBuff)
     rawEffect: buff.rawEffect,
     value: buff.value,
     bonusScaleOfSignal: base,
-    // plain loot wrapper：不继承 base 的 stack/count/manual 语义（与 build 期 buffSeed=null 一致）。
+    // 普通装备 wrapper：就是固定百分比放大 base，不继承 base 的叠层计数/手动触发等语义。
+    // per_hero_expr 不会传过来（build 管线的预设信号跳过了语义解析步骤）。
+    // 2026-08-08 全量验证（287 个 wrapper）确认没问题：带 HasEffect 条件的效果在更早阶段
+    // 就被排除了，存活 wrapper 带的都是 int/dex 这类数值算式，不是条件判断。
     amountFunc: null,
     stackFunc: null,
     formationCountQualifier: null,
