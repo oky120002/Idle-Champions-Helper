@@ -29,7 +29,7 @@ Modron 核心是完成「分队冒险」（Split The Party）系列任务后获�
 
 **输出加成类别**（社区确认）：英雄伤害、金币发现（gold find）、生命值、速度等。多个输入流接入同一输出可放大加成倍率；Epic Flow（满流）可触发额外加成。
 
-游戏数据中相关谓词（`effect-reference.json`，均标记 `serverOnly: true`）：
+游戏数据中相关谓词（`effect-reference.json`，其中 4 个标记 `serverOnly: true`，12 个 `serverOnly: false`）：
 
 | 谓词 | 语义 |
 |---|---|
@@ -40,7 +40,7 @@ Modron 核心是完成「分队冒险」（Split The Party）系列任务后获�
 | `modron_cores_unlocked` / `highest_modron_core_level` | 已解锁核心数 / 最高核心等级 |
 | `exclude_from_modron` | 标记不受 Modron 加成影响的效果（如过期药剂） |
 
-> 以上谓词在游戏数据中声明为 `serverOnly`，本地 planner **不解析**，仅作参考。
+> 以上谓词中，`modron_core_assigned`、`modron_components`、`modron_cores_unlocked`、`modron_supercharge_every_output` 为 `serverOnly: true`，其余 12 个为 `serverOnly: false`。本地 planner 不解析任何 modron 谓词，仅作参考。
 
 ### 核心等级
 
@@ -82,7 +82,7 @@ Nordom（英雄 100）与 Modron 核心有特殊交互：
 |---|---|---|
 | `game-rules.json` | `max_modron_auto_reset_area.area` | 2500 |
 | `game-rules.json` | `modron_ui_requirements.requirements` | `hero_count_in_seats: {min_seats: 6, count: 2}` |
-| `effect-reference.json` | 16 个 `modron_*` 谓词 | 均 `serverOnly: true`，本地不解析 |
+| `effect-reference.json` | 16 个 `modron_*` 谓词 | 4 个 `serverOnly: true`（`modron_core_assigned`/`modron_components`/`modron_cores_unlocked`/`modron_supercharge_every_output`），12 个 `serverOnly: false`；本地不解析 |
 | `hero-abilities.json` | `nordom_great_modron_puzzle_buff` | 标注「No parser」 |
 | `champion-details/100.json` | `nordom_modron_core_active` × 8 变体 | Nordom 核心编程，按核心类型切换条件 |
 | `champion-details/100.json` | `nordom_modron_xp_buff,20` | Nordom 核心经验 +20% |

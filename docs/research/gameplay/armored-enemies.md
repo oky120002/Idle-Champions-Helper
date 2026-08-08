@@ -2,7 +2,7 @@
 
 **数据快照**：2026-07-20（165 英雄）
 **社区来源**：[Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/5118863332768135681/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/tw8xxp/)、[Fandom Wiki](https://idlechampions.fandom.com/wiki/Favored_Foes)
-**可信度**：✅ 已确认 — 社区说法（门槛=总血量÷段数、低于门槛无效、看 BUD）与游戏数据（`armor threshold` 字段、Gazrick 护甲剥离降低门槛）一致
+**可信度**：✅ 已确认 — 社区说法（门槛=总血量÷段数、低于门槛无效、看 BUD）与游戏数据一致（护甲段数在变体描述中以整数出现，Gazrick 护甲剥离 `gazrick_ablation_amount,15` 直接降低门槛）
 
 ## 机制
 
@@ -22,7 +22,7 @@
 
 - 系数 1.0 的多段英雄：每发满额伤害，大概率超过门槛 → 每发碎一段，高效
 - 系数 0.33 的多段英雄（如法莉德）：每发只有 1/3 伤害。**如果 0.33 × 基础伤害 < 门槛，所有命中完全无效**。能否碎甲取决于英雄基础伤害与门槛的比值
-- Gazrick 护甲剥离：降低门槛 7%/层（最多 60 层），可以大幅降低碎甲门槛，让低伤害命中也能碎段
+- Gazrick 护甲剥离：降低门槛 15%/层（最多 30 层），可以大幅降低碎甲门槛，让低伤害命中也能碎段
 
 ### 特殊变体中的护甲
 
@@ -36,7 +36,7 @@
 
 | 机制 | 效果 | 数据来源 |
 |---|---|---|
-| `gazrick_armor_ablation` | 冰冷攻击降低护甲门槛 7%/层（最多 60 层），使低伤害命中也能碎段 | effect_string + 描述 |
+| `gazrick_armor_ablation` | 冰冷攻击降低护甲门槛 15%/层（最多 30 层），使低伤害命中也能碎段 | `gazrick_ablation_amount,15` + `max_ablation_stacks: 30`（champion-details/98.json）|
 | `lucius_armor_eating_acid` | 酸液攻击命中时碎 2 格（正常 1 格） | 描述文本 |
 | Flint 铸火之契 | 被羁绊的英雄每次命中多碎 1 格 | 描述文本 |
 | Grimm 碎志 | 每次碎甲后后续多碎 1 格，最多叠 +5，换区重置 | 描述文本 |
@@ -51,9 +51,8 @@
 |---|---|---|
 | 变体描述文本 | `armored hit points` / `armored HP`（整数段数）| 护甲段数 |
 | 变体描述文本 | `additional armored hit points` | 额外段数 |
-| 变体描述文本 | `armor threshold` | 每段伤害门槛 |
-| `effect_string` | `gazrick_armor_ablation` | Gazrick 护甲剥离（降低门槛 7%/层）|
-| `effect_string` | `lucius_armor_eating_acid` | Lucius 酸液蚀甲（命中碎 2 格）|
+| `effect_string` | `gazrick_ablation_amount,15` + `max_ablation_stacks:30` | Gazrick 护甲剥离（15%/层，最多 30 层）|
+| `effect_string` | `lucius_armor_eating_acid,100` | Lucius 酸液蚀甲（碎额外段）|
 | `raw.upgrades[].snapshots.original.effect` | 升级效果文本 | 碎甲能力扫描位置 |
 | `raw.upgrades[].snapshots.original.effect_keys[].description.desc` | 能力描述文本 | 碎甲能力扫描位置 |
 | `feats[].effects[].effect_string` | 专长效果 | 碎甲能力扫描位置 |

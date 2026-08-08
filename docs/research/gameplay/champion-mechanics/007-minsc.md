@@ -10,8 +10,8 @@
 
 ## 原话（用户描述）
 
-- 基础攻击「顺势斩」：顺劈距离最近敌人附近的所有目标，3.75 秒冷却。
-- 杀招「直取双眼!」：明斯克和布布同时攻击造成高额顺劈，45 秒冷却。
+- 基础攻击「顺势斩」：顺劈距离最近敌人附近的所有目标，3.75 秒冷却（含外部缩减；游戏数据基准 `cooldown: 4.5s`）。
+- 杀招「直取双眼!」：明斯克和布布同时攻击造成高额顺劈，45 秒冷却（含外部缩减；游戏数据基准 `cooldown: 180s`，`damageModifier: 0.01875`）。
 - 「偏好敌人:兽类」：兽类敌人成为偏好对手，队伍对其造成的伤害 +2.43e06%。
 - 「直吹自擂」：非首领波次刷新时 33% 几率额外刷新 1 名敌人、10% 几率额外 2 名，这些敌人始终是明斯克的偏好对手。**速度标签核心技能。**
 - 即将生效的外部加成（随等级稳定）：关注核心（克兰沃恩赐祝福 +400%）、普通种族（托姆恩赐祝福 +1,500%）、以身作则（扎瑞尔 +150%，疑似赐福）、铁胃（跋折罗·萨法尔 +150%，疑似赐福）、领导冲锋（托姆 -0.5s 基本攻击冷却）。
@@ -27,7 +27,7 @@
 
 ## 机制分析
 
-- 明斯克自身 signal 丰富（built hero-abilities.json：55 carry + 27 support），含 heroDpsMultiplier / globalDpsMultiplier 类自增益与全队 buff。
+- 明斯克自身 signal 丰富（built hero-abilities.json：44 carry + 13 support + 5 unsupported），含 heroDpsMultiplier / globalDpsMultiplier 类自增益与全队 buff。
 - 「偏好敌人:兽类」是 vulnerability 类（monsterTags: 野兽），仅当场景 enemyTypes 含野兽时计入——`evaluatePlacementFit` 按 monsterTags 条件匹配。
 - 「直吹自擂」是刷怪/速度机制，**不直接进 DPS pool**（非伤害倍率），属速度队组建语义，当前评分不消费（speed 维度未接 ScoringMode，见 architecture.md 未接入能力）。
 - 即将生效的 5 条外部加成是 blessing/patron 给的，**不在 hero-abilities.json**（那只有英雄自身技能 signal），是绝对伤害偏差的主因。

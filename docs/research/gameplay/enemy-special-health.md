@@ -49,7 +49,7 @@ Fandom Wiki 定义：「health divided into a certain number segments that requi
 | `4 hits-based hit points` | 4 段命中型血量（Frost Giant） |
 | `4 additional hits-based hit points every 25 areas` | 每 25 区域 +4 段（递增） |
 
-另有 1 处 `armored hit-based health`——同时具备护甲和命中型特征。
+其中 1 处为 `armored hit-based health`（id:81），同时具备护甲和命中型特征（已计入上述 8 处 hits-based）。
 
 ### crit-based（4 处）
 
@@ -73,7 +73,7 @@ Fandom Wiki 定义：「health divided into a certain number segments that requi
 | 溢出结转 | 不结转 | 不结转 | 不结转 |
 | 多段攻击英雄 | 极高效（每段命中各碎一段） | 看暴击率，不天然高效 | 看单段伤害是否过门槛 |
 | 克制手段 | 提升攻击速度 / 多段攻击 | 提升暴击率 / 暴击伤害 | 提升 BUD / 降低门槛 |
-| 变体出现频率 | 8 处 | 4 处 | 45 处 |
+| 变体出现频率 | 8 处 | 4 处 | 44 处（含 armor-based 共 50 处）|
 
 ## 专门克制机制
 

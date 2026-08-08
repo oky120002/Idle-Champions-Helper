@@ -36,16 +36,16 @@
 
 英雄定向加成（`hero_dps_multiplier_mult`）还附带 `filter_targets` 筛选谁能吃到加成，同样分 `by_tags`（264 条）、`stat_score`（199 条）、`attack_type`（28 条）。
 
-**明斯克实例**（6 个槽位完整效果）：
+**明斯克实例**（`champion-details/7.json` legendaryEffects，6 个槽位完整效果）：
 
 | 槽 | 效果 | 条件 | 描述 |
 |---|---|---|---|
-| 1 | 全队 +100% | 无条件 | 基础全队加成 |
-| 2 | 全队 +20%/人 | 女性 × per_crusader | 每名女性英雄叠一层 |
-| 3 | 矮人 +150% | filter: 矮人标签 | 仅矮人吃到 |
-| 4 | 全队 +40%/人 | 力量≥15 × per_crusader | 每名力量达标的英雄叠一层 |
-| 5 | 全英雄 +100% | filter: all_slots | 所有英雄 |
-| 6 | 全英雄 +150% | filter: all_slots | 所有英雄 |
+| 1 | 全队 +10%/人 | per_crusader | 每名阵型英雄叠一层 |
+| 2 | 男性英雄 +125% | filter: by_tags `male` | 仅男性英雄吃到 |
+| 3 | 全队 +30%/人 | per_crusader + tags `human` | 每名人类英雄叠一层 |
+| 4 | 力量≥13 英雄 +150% | filter: stat_score STR≥13 | 仅力量达标英雄吃到 |
+| 5 | 全队 +40%/人 | per_crusader + stat CON≥15 | 每名体质达标英雄叠一层 |
+| 6 | 近战英雄 +150% | filter: attack_type `melee` | 仅近战英雄吃到 |
 
 ### 升级与重铸
 

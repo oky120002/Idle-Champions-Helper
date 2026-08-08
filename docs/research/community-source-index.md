@@ -172,6 +172,26 @@ Idle Champions 社区资源目录 + 已抓取 URL 追踪。每个 URL 对应一�
 | https://steamcommunity.com/app/627690/discussions/0/1743353164079718808/ | Steam（CNE 官方博客） | ✅ |
 | https://idlechampions.fandom.com/wiki/Gold_formulas | Wiki | ✅（同 gold-and-favor） |
 
+### formation-strategy.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://www.reddit.com/r/idlechampions/comments/dqe878/formations_101_an_introduction/ | Reddit | ✅ |
+| https://idlechampions.fandom.com/wiki/Formation_strategy | Wiki | ✅ |
+| https://steamcommunity.com/sharedfiles/filedetails?id=1319319295 | Steam | ✅ |
+
+### aoe-survival.md
+
+无社区来源（游戏数据直接扫描）。
+
+### attack-multi-hit.md
+
+无社区来源（游戏数据直证）。
+
+### feat-and-specialization.md
+
+无社区来源（游戏数据直证）。
+
 ## 使用规则
 
 - 抓取新 URL 前先查此表，已抓过的不重复
