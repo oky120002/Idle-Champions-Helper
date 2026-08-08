@@ -104,3 +104,38 @@ describe('parseTagExpression — edge cases', () => {
     ])
   })
 })
+
+describe('parseTagExpression — compound alignment tags', () => {
+  it('lawful_good expands to lawful^good', () => {
+    expect(parseTagExpression('lawful_good')).toEqual([
+      { required: ['lawful', 'good'], forbidden: [] },
+    ])
+  })
+
+  it('v1740 four corner alignments expand correctly', () => {
+    expect(parseTagExpression('lawful_good|chaotic_good|lawful_evil|chaotic_evil')).toEqual([
+      { required: ['lawful', 'good'], forbidden: [] },
+      { required: ['chaotic', 'good'], forbidden: [] },
+      { required: ['lawful', 'evil'], forbidden: [] },
+      { required: ['chaotic', 'evil'], forbidden: [] },
+    ])
+  })
+
+  it('neutral_good expands to lcneutral^good', () => {
+    expect(parseTagExpression('neutral_good')).toEqual([
+      { required: ['lcneutral', 'good'], forbidden: [] },
+    ])
+  })
+
+  it('neutral_neutral (true neutral) expands to lcneutral^geneutral', () => {
+    expect(parseTagExpression('neutral_neutral')).toEqual([
+      { required: ['lcneutral', 'geneutral'], forbidden: [] },
+    ])
+  })
+
+  it('compound alignment in AND context distributes correctly', () => {
+    expect(parseTagExpression('lawful_good^dps')).toEqual([
+      { required: ['lawful', 'good', 'dps'], forbidden: [] },
+    ])
+  })
+})

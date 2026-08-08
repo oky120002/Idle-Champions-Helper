@@ -15,8 +15,8 @@
 | 类别 | 机制说明 | 游戏数据表现 | 对 planner 的影响 |
 |---|---|---|---|
 | **阵型占位**（escort） | NPC 或物体占据阵型格，不可移除、通常不打伤害 | `slot_escort`(282)、`slot_escort_by_area`(38)、`slot_escort_wandering`(3)；`escortCount` 字段记基础占位数 | 占用格应从可用槽位扣除；`escortCount` 已入 schema 但 planner 未消费 |
-| **英雄白名单** | 只允许特定英雄参战，按 id 或 tag 过滤 | `only_allow_crusaders`(501)；投影为 `allowedHeroIds`(13 非空) + `allowedTagExpression`(121 非空，DNF: OR of ANDs) | planner 已建模：候选英雄按白名单过滤（`filterAndSortCandidateHeroes`），支持 `^`(AND)/`!`(取反)/`|`(OR) 复合表达式 |
-| **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述；2026-08-08 结构化提取为 `attributeRequirements`（104 变体非空）；精确匹配 `(STAT) (score )?of N or higher/lower` | ✅ 已建模：restriction 文本正则解析 → `scenarios.json.attributeRequirements` → planner 候选过滤（`meetsAttributeRequirements`） |
+| **英雄白名单** | 只允许特定英雄参战，按 id 或 tag 过滤 | `only_allow_crusaders`(501)；投影为 `allowedHeroIds`(0 非空) + `allowedTagExpression`(121 非空，DNF: OR of ANDs)；复合对齐标记（`lawful_good` 等）展开为对齐轴 AND（`lawful^good`） | planner 已建模：候选英雄按白名单过滤（`filterAndSortCandidateHeroes`），支持 `^`(AND)/`!`(取反)/`|`(OR) 复合表达式 |
+| **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述；2026-08-08 结构化提取为 `attributeRequirements`（102 变体非空）；使用白名单提取——仅从含「can/may be used」「only use」「take part」的使用门槛语句提取，排除伤害修饰（deal）、伤害免疫（take no damage）、邻接位限制（placed adjacent）等条件效果句 | ✅ 已建模：restriction 文本正则解析 → `scenarios.json.attributeRequirements` → planner 候选过滤（`meetsAttributeRequirements`） |
 | **角色限制** | 按 DPS/Support/Tank/Healing/Speed 角色过滤 | `allowedTagExpression` 含 `!dps`(4)、`!tanking`(2)、`!speed`(2)、`!healing`(1)；`disallow_crusaders`(17) | `!dps` 类已走 `allowedTagExpression` 通道；`disallow_crusaders` 部分未投影 |
 | **强制英雄** | 指定英雄必须上场、不可移除 | `force_use_heroes`(329)；投影为 `forcedHeroIds` | planner 已建模：`forceInclude` 约束 + 候选豁免（`recommendationEngine.ts:501`） |
 | **全局效果** | 全队持续增益或减益，如伤害倍率、攻速调整 | `global_effects`(296)；`restrictions` 文本描述 | 未建模；伤害/攻速调整需注入评分参数 |

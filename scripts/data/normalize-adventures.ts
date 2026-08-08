@@ -808,7 +808,27 @@ function stripMatchingParens(s: string): string | null {
   return null
 }
 
-/** 解析单个原子 tag → TagClause（`!tag`→forbidden，`tag`→required）。 */
+/**
+ * 复合对齐标记 → 英雄对齐轴标签展开映射。
+ *
+ * 游戏数据 `by_tags.tags` 用复合标记（如 `lawful_good`）表示「守序善良」，
+ * 但英雄标签是对齐轴独立的（`lawful` + `good`），无复合标记。
+ * 不展开则 `lawful_good` 匹配 0 英雄（v1740 四角阵营限制全候选池为空）。
+ * 映射依据：英雄 alignment 标签体系（LC 轴 lawful/chaotic/lcneutral × GE 轴 good/evil/geneutral）。
+ */
+const COMPOUND_ALIGNMENT_TAGS: Readonly<Record<string, readonly string[]>> = {
+  lawful_good: ['lawful', 'good'],
+  neutral_good: ['lcneutral', 'good'],
+  chaotic_good: ['chaotic', 'good'],
+  lawful_neutral: ['lawful', 'geneutral'],
+  neutral_neutral: ['lcneutral', 'geneutral'],
+  chaotic_neutral: ['chaotic', 'geneutral'],
+  lawful_evil: ['lawful', 'evil'],
+  neutral_evil: ['lcneutral', 'evil'],
+  chaotic_evil: ['chaotic', 'evil'],
+}
+
+/** 解析单个原子 tag → TagClause（`!tag`→forbidden，`tag`→required；复合对齐标记展开为 AND）。 */
 function parseAtom(tag: string): TagClause | null {
   const t = tag.toLowerCase()
   if (t === '') return null
@@ -816,7 +836,8 @@ function parseAtom(tag: string): TagClause | null {
     const negated = t.slice(1)
     return negated === '' ? null : { required: [], forbidden: [negated] }
   }
-  return { required: [t], forbidden: [] }
+  const expanded = COMPOUND_ALIGNMENT_TAGS[t]
+  return { required: expanded !== undefined ? [...expanded] : [t], forbidden: [] }
 }
 
 /** 分配律：AND 多个 DNF 因子 → 笛卡尔积合并。[[A,B],[C]] → [{…A,…C},{…B,…C}] */

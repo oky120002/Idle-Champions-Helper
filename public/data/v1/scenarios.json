@@ -99608,13 +99608,7 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [
-        {
-          "stat": "int",
-          "operator": ">=",
-          "value": 15
-        }
-      ],
+      "attributeRequirements": [],
       "variantId": "865",
       "scenarioRef": {
         "kind": "variant",
@@ -99646,7 +99640,9 @@
       ],
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
-      "scenarioWarnings": []
+      "scenarioWarnings": [
+        "未解析 restriction：1-2 Mind Flayers spawn with each wave. They don't drop gold or count towards quest progress.\r\nWhen a Mind Flayer spawns it Mind Blasts a random Champion, dealing 25% of their max health and stunning them for 60 seconds. Champions with an INT score of 15 or higher take no damage and are not stunned.（含特殊机制，请人工评估对阵型的影响）"
+      ]
     },
     {
       "slotTopology": [
@@ -199103,25 +199099,29 @@
       "allowedTagExpression": [
         {
           "required": [
-            "lawful_good"
+            "lawful",
+            "good"
           ],
           "forbidden": []
         },
         {
           "required": [
-            "chaotic_good"
+            "chaotic",
+            "good"
           ],
           "forbidden": []
         },
         {
           "required": [
-            "lawful_evil"
+            "lawful",
+            "evil"
           ],
           "forbidden": []
         },
         {
           "required": [
-            "chaotic_evil"
+            "chaotic",
+            "evil"
           ],
           "forbidden": []
         }
@@ -226379,13 +226379,7 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [
-        {
-          "stat": "int",
-          "operator": "<=",
-          "value": 12
-        }
-      ],
+      "attributeRequirements": [],
       "variantId": "1984",
       "scenarioRef": {
         "kind": "variant",
@@ -226410,7 +226404,8 @@
       "occupiedSlotCount": 0,
       "scenarioWarnings": [
         "当前场景含计时或点击限制，攻速与持续输出价值提升。",
-        "未解析 restriction：All ten campaigns unlocked and all three variants of \"The Ring of Regeneration\" completed（含特殊机制，请人工评估对阵型的影响）"
+        "未解析 restriction：All ten campaigns unlocked and all three variants of \"The Ring of Regeneration\" completed（含特殊机制，请人工评估对阵型的影响）",
+        "未解析 restriction：Every time an area's quest is completed your BUD-setting Champion is instantly killed.\r\nYour BUD-setting Champion can not be removed or swapped out of the formation.\r\nEach time a Champion is killed, their DPS is reduced by 50% permanently for the rest of the adventure, stacking multiplicatively.\r\nThe two Treasure Hunters from the third variant join the formation again. They refuse to travel with anyone smarter than them, so only Champions with an INT score of 12 or lower are allowed to be placed adjacent to them.\r\nFire breath potions can't be used during the adventure, and click damage has no effect after area 100.（含特殊机制，请人工评估对阵型的影响）"
       ]
     },
     {

@@ -174,12 +174,8 @@ function zhSlotOccupyCount(text: string): number | null {
 
 function isTrivialRestriction(original: string, display: string): boolean {
   const text = `${original} ${display}`.toLowerCase()
-  // 完成前置 / 空文本 / 明确无限制 → 非 slot-occupying，不算 warning（已知无约束）。
-  return (
-    text.length === 0
-    || text.includes('must have completed')
-    || text.includes('no restrictions')
-  )
+  // 完成前置 / 明确无限制 → 非 slot-occupying，不算 warning（已知无约束）。
+  return text.includes('must have completed') || text.includes('no restrictions')
 }
 
 // 属性门槛正则（全局）：(STAT) (score )?of (N) or (higher|lower)
@@ -187,15 +183,22 @@ function isTrivialRestriction(original: string, display: string): boolean {
 // STAT 全大写三字母，N 为数字。忽略大小写。全局标志用于 matchAll 提取多属性门槛。
 const ATTRIBUTE_THRESHOLD_RE = /\b(STR|DEX|CON|INT|WIS|CHA)\s+(?:score\s+)?of\s+(\d+)\s+or\s+(higher|lower)\b/gi
 
+// 使用门槛语句标记（白名单）：仅从显式声明「谁能上场」的句子提取属性门槛。
+// 排除三类条件效果句（属性模式出现但非使用门槛）：
+//   - 伤害修饰（v319: "Champions with INT of 14 or higher deal 400% additional damage"）
+//   - 伤害免疫（v865: "Champions with INT score of 15 or higher take no damage"）
+//   - 邻接位限制（v1984: "only Champions with INT of 12 or lower are allowed to be placed adjacent"）
+const USAGE_GATE_RE = /\b(?:can|may)\s+(?:be\s+used|partake)\b|\bonly\s+use\b|\btake\s+part\b/i
+
 /**
  * 从 restriction 文本提取全部属性门槛。
- * 按句拆分，排除伤害修饰语句（如 v319 "deal 400% additional damage" 中的 INT 非 usage restriction）。
+ * 按句拆分，仅从使用门槛语句（含「can/may be used」「only use」「take part」等）提取，
+ * 排除伤害修饰/免疫/邻接位限制等条件效果句。
  */
 function parseAttributeRequirements(text: string): AttributeRequirement[] {
   const results: AttributeRequirement[] = []
   for (const sentence of text.split(/\.\s+/)) {
-    // 跳过伤害修饰句（v319: "Champions with INT of 14 or higher deal 400% additional damage"）
-    if (/\bdeal\b/i.test(sentence)) continue
+    if (!USAGE_GATE_RE.test(sentence)) continue
     for (const match of sentence.matchAll(ATTRIBUTE_THRESHOLD_RE)) {
       const stat = match[1]?.toLowerCase()
       const value = match[2] !== undefined ? parseInt(match[2], 10) : NaN

@@ -227,11 +227,21 @@ describe('parseRestrictions — 属性门槛提取', () => {
     ])
   })
 
-  it('v319 伤害修饰句的属性不提取（INT 14+ 是 damage modifier 非 usage restriction）', () => {
+  it('v319 伤害修饰句的属性不提取（INT 14+ 是 damage modifier，不含使用门槛标记）', () => {
     const result = parseRestrictions([r('Only Champions with STR of 14 or lower can be used. Rosie and Champions with INT of 14 or higher deal 400% additional damage.')])
     expect(result.attributeRequirements).toEqual([
       { stat: 'str', operator: '<=', value: 14 },
     ])
+  })
+
+  it('v865 伤害免疫句的属性不提取（INT 15+ 是条件免疫「take no damage」非使用门槛）', () => {
+    const result = parseRestrictions([r('When a Mind Flayer spawns it Mind Blasts a random Champion, dealing 25% of their max health and stunning them for 60 seconds. Champions with an INT score of 15 or higher take no damage and are not stunned.')])
+    expect(result.attributeRequirements).toEqual([])
+  })
+
+  it('v1984 邻接位限制句的属性不提取（INT 12- 是 adjacency 约束「placed adjacent」非全局使用门槛）', () => {
+    const result = parseRestrictions([r('The two Treasure Hunters from the third variant join the formation again. They refuse to travel with anyone smarter than them, so only Champions with an INT score of 12 or lower are allowed to be placed adjacent to them.')])
+    expect(result.attributeRequirements).toEqual([])
   })
 
   it('属性门槛 restriction 不产生"未解析"警告', () => {
