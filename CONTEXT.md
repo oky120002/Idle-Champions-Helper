@@ -17,19 +17,19 @@
 别名：座位、slot（slot 在代码里指阵型位，不是英雄的座位）
 
 **座位**：
-英雄所属的游戏座位编号（bench seat），决定英雄能站哪些阵型位；是英雄的固有属性，不是阵型位。
+英雄所属的游戏座位编号（bench seat），是英雄的固有属性；同座位英雄不能同时上场（互斥约束），不是阵型位。
 代码标识符：`seat`（英雄数据字段）
 别名：位置、slot（与阵型位是不同概念）
 
 **候选池**：
-推荐引擎在某次推荐中考虑的英雄范围。两种模式：仅拥有（`owned-only`，只算用户存档里已拥有的英雄）与全假设（`all-hypothetical`，含未拥有英雄，按默认装备配置计算，给"如果拥有会怎样"的公平基线）。
-代码标识符：`buildCandidatePool`、`candidateMode`
+推荐引擎在某次推荐中考虑的英雄范围。两种模式：仅拥有（`owned-only`，只算用户存档里已拥有的英雄）与全假设（`all-hypothetical`，含未拥有英雄，未拥有者按默认等级/无装备兜底计算）。假设装备配置（rarity + enchant）是独立控件，与候选模式正交。
+代码标识符：`buildCandidatePool`、`CandidateMode`（类型）、`candidateMode`（字段）
 别名：候选英雄、candidate pool
 
 ## 场景与限制规则
 
 **场景引用**：
-标识玩家目标场景的结构化引用，序列化为 `{kind}:{id}`；kind ∈ campaign（地图）/ adventure（冒险）/ variant（变体）/ trial（试炼）/ timeGate（时空门）。
+标识玩家目标场景的结构化引用，结构为 `{kind, id}` 对象；kind ∈ campaign（地图）/ adventure（冒险）/ variant（变体）/ trial（试炼）/ timeGate（时空门）。无名称场景的显示回退标签格式为 `${kind}:${id}`。
 代码标识符：`scenarioRef`、`ScenarioRef`
 别名：scenario ref、场景 id
 
@@ -67,7 +67,7 @@
 
 **BUD（基础大招伤害）**：
 Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作大招（ult）伤害结算基准。推荐引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
-代码标识符：`BUD`、`computeSingleHitDamage`、`budCalculation.ts`
+代码标识符：`computeSingleHitDamage`、`budCalculation.ts`
 别名：biggest unique damage、大招基准
 
 **易伤**：
@@ -77,7 +77,7 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 
 **减伤**：
 降低英雄受到伤害的加成，并入生命值通道参与生存评分。代码里中英双形态共存，对话统一用「减伤」。
-代码标识符：`damage_reduction_mult`、`damage_reduction`（effect_string）、`damageReduction`
+代码标识符：`damage_reduction`（effect_string）、`trials_damage_reduction_mult`（mult 变体）、`damageReduction`（kind）
 别名：damage reduction、免伤
 
 **多段攻击**：
@@ -86,12 +86,12 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 别名：multi-hit、多目标攻击、多次攻击
 
 **伤害系数**：
-多段攻击中每单发命中的伤害比例。1.0 = 每发满额，0.33 = 每发仅 1/3 伤害。总伤害 = 段数 × 系数。对护甲敌人碎甲时系数有直接影响——每发伤害必须达到护甲门槛才碎一段，系数低的英雄可能打不动护甲。
+多段攻击中每单发命中的伤害比例（1.0 = 满额，0.33 = 1/3）。总伤害 = 段数 × 系数。
 代码标识符：`damageModifier`（攻击定义字段）
 别名：damage modifier、每发伤害比例
 
 **护甲敌人**：
-血条分段显示的敌人（armored hit points），每段有伤害门槛（= 总血量 ÷ 段数，boss 通常 50 段）。单发伤害 ≥ 门槛碎一段（溢出浪费），< 门槛完全无效。判定看 BUD 不看 DPS。与「命中型血量」不同——后者每次命中碎一段不看伤害。代码中无统一字段标识，需从描述文本识别。
+血条分段显示的敌人（armored hit points），每段有伤害门槛；单发伤害达标碎一段，未达标无效。判定看 BUD 不看 DPS。与「命中型血量」不同。
 代码标识符：无标准字段；描述关键词 `armored hit points` / `armor` / `护甲`
 别名：armored enemies、armored health、分段血条
 
@@ -118,23 +118,23 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 别名：specialization
 
 **祝福**：
-来自赞助人或地图的被动全局加成。赞助人祝福随赞助人 perk 解锁；地图祝福是部分战役提供的额外效果。两者都并入全队加成通道。
+游戏祝福系统提供的全局加成。两种来源：全局祝福（type 2，跨所有战役生效）与地图祝福（type 1，仅对匹配当前战役的生效）。两者都并入全队加成通道。
 代码标识符：`blessing`、`blessings`、`blessingGlobalBuff`、`collectActiveBlessingEffects`
 别名：blessing
 
 **恩宠**：
 战役完成后积累的永久货币，每点未花费的恩宠提供 +1% 全队金币发现。可在祝福上花费（花掉后不再计金币加成）。不同战役有各自的恩宠，互不通用。
-代码标识符：`favor`、`divineFavor`、`patronObjectiveTiers`（赞助人目标层数）
+代码标识符：`favor`（`CampaignFavorBlessings.favor` 存储字段）
 别名：divine favor、神恩
 
 **传奇装备**：
 独立于普通装备（loot）的附加加成层，每英雄 6 个槽位，只提供全队伤害或英雄伤害两类加成。通过提亚马特试炼获取鳞片在熔铸中升级，等级上限 20。与装备五通道不同，传奇效果不进 loot-catalog。
-代码标识符：`legendaryEffects`（champion-details 顶层字段）、`LegendaryEffect`
+代码标识符：`legendaryEffects`（champion-details 顶层字段）、`ChampionLegendaryEffectDetail`
 别名：legendary、传奇效果、熔铸
 
 **压制**：
 坦克属性：当场上敌人数量超过坦克的压制值时，所有超出的敌人对全队造成额外伤害。高区域后坦克价值从硬抗转为血量共享，极高区域后仅靠击退/免死/闪避生存。
-代码标识符：`overwhelm`、`overwhelm_start_increase`
+代码标识符：`overwhelm_start_increase`（effect key）
 别名：overwhelm、超额敌人伤害
 
 ## 推荐目标
@@ -142,16 +142,16 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 **DPS 队 / 主输出（carry）**：
 推荐优化目标之一：最大化单英雄 carryDps（主输出伤害），是默认模式。carry 指承担主要输出的英雄。
 代码标识符：`ScoringMode: 'carry-dps'`、`carryDps`
-别名：评分（已由 scoringMode 优化目标量取代）、carry dps
+别名：carry dps
 
 **辅助英雄（support）**：
-与主输出 carry 对应的角色：通过 buff / 全队加成 / 易伤 / 减伤等支援主输出的英雄。推荐评分按维度信号（carry / support）分别累加。
-代码标识符：`HeroAbilityDimension.support`、`supportSignals`
+与主输出 carry 对应的角色：通过 buff / 全队加成 / 易伤 / 减伤等支援主输出的英雄。推荐评分按信号桶（carrySignals / supportSignals）分别归类累加。
+代码标识符：`supportSignals`、`SignalBucket`（`'carrySignals' | 'supportSignals'`）、`gainProfile.support`
 别名：support、辅助
 
 **金币队**：
 推荐优化目标之一：最大化全队金币发现。
-代码标识符：`ScoringMode: 'team-gold'`、`teamGoldFind`
+代码标识符：`ScoringMode: 'team-gold'`、`computeTeamGoldFind`
 别名：金币评分
 
 **速度队**：
