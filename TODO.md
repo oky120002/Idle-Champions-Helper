@@ -35,14 +35,4 @@ repair: rebuild
     - 证据：parseAtom 取反分支直接 slice(1) 不查 COMPOUND_ALIGNMENT_TAGS；修复需 De Morgan 展开（!lawful_good → forbidden:lawful OR forbidden:good 两子句）
     - 优先级：低（0 实例触发）
 
-- addedAttr 抑致复合 restriction 条目的特殊机制警告丢失（72 变体） <!-- auto-todo:id=atd_ed67350994 -->
-  - 记录时间: `2026-08-08T22:05:52+08:00`
-  - 严重级别: P2
-  - 类型: issue
-  - 位置: `scripts/data/restrictions-parser.ts:244`
-  - 备注: parseRestrictions 的 addedAttr 标记在属性门槛提取成功后完全抑制该条目的 warning，即使条目同时含未解析的特殊机制句（敌人刷新/伤害调整等）。72 个 variant 受影响——同时含属性门槛和特殊机制的复合 restriction 条目。
-    - 影响：用户丢失「含特殊机制，请人工评估」提示；planner 功能不受影响（属性门槛已正确提取并过滤）
-    - 证据：v254 Rudolph+CHA 15+、v381 Rath Modar+INT 12- 等条目含 3+ 未解析句
-    - 修复方向：改 entry-level addedAttr 为 sentence-level 分析——仅当全部非平凡句均被属性/占格解析时才抑制 warning
-
 <!-- auto-todo:end -->

@@ -178,6 +178,31 @@ function isTrivialRestriction(original: string, display: string): boolean {
   return text.includes('must have completed') || text.includes('no restrictions')
 }
 
+/**
+ * 检查 restriction 文本是否含有未被属性门槛/占格/trivial 句覆盖的残余句子。
+ * 用于属性门槛提取成功后仍检测敌人刷新/伤害调整等特殊机制句，
+ * 避免条目级抑制吞掉复合 restriction 中的特殊机制 warning（72 变体受影响）。
+ */
+function hasResidualMechanics(original: string): boolean {
+  if (original === '') return false
+  // 规范化换行后按句拆分（与 parseAttributeRequirements 一致）。
+  const normalized = original.replace(/\r?\n/g, ' ')
+  for (const sentence of normalized.split(/\.\s+/)) {
+    const s = sentence.trim()
+    if (s === '') continue
+    const lower = s.toLowerCase()
+    // trivial 句（完成前置 / 无限制）
+    if (lower.includes('must have completed') || lower.includes('no restrictions')) continue
+    // 使用门槛句（属性门槛或标签限制「Only Evil Champions can be used」）
+    if (USAGE_GATE_RE.test(s)) continue
+    // 占格句（含 slot + 占据关键词，slot 计数由 enSlotOccupyCount/override 处理）
+    if (lower.includes('slot') && EN_SLOT_OCCUPY_KEYWORDS.some((kw) => lower.includes(kw))) continue
+    // 残余非平凡句 = 特殊机制
+    return true
+  }
+  return false
+}
+
 // 属性门槛正则（全局）：(STAT) (score )?of (N) or (higher|lower)
 // 匹配 "CON score of 13 or higher" / "CHA of 14 or lower" 等（"score" 可选）。
 // STAT 全大写三字母，N 为数字。忽略大小写。全局标志用于 matchAll 提取多属性门槛。
@@ -227,13 +252,11 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   for (const { original, display } of restrictions) {
     // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
     const extractedAttrs = original !== '' ? parseAttributeRequirements(original) : []
-    let addedAttr = false
     for (const req of extractedAttrs) {
       const key = `${req.stat}${req.operator}${String(req.value)}`
       if (!seenAttrs.has(key)) {
         seenAttrs.add(key)
         attributeRequirements.push(req)
-        addedAttr = true
       }
     }
 
@@ -244,8 +267,8 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
 
     if (count !== null && count > 0) {
       lockedSlotCount = Math.max(lockedSlotCount, count)
-    } else if (addedAttr) {
-      // 已成功提取属性门槛 → 非未解析，不记 warning。
+    } else if (extractedAttrs.length > 0 && !hasResidualMechanics(original)) {
+      // 属性门槛提取成功且无残余特殊机制句 → 非未解析，不记 warning。
     } else if (!isTrivialRestriction(original, display) && (original !== '' || display !== '')) {
       // 非 slot-occupying 且非已知无约束 → 记 warning 待手工评估。
       warnings.push(`未解析 restriction：${original !== '' ? original : display}`)

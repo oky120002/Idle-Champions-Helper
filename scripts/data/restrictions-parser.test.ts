@@ -249,4 +249,48 @@ describe('parseRestrictions — 属性门槛提取', () => {
     expect(result.attributeRequirements).toHaveLength(1)
     expect(result.warnings).toEqual([])
   })
+
+  it('重复属性门槛不产生"未解析"警告（addedAttr 抑制修复）', () => {
+    const result = parseRestrictions([
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+    ])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 13 },
+    ])
+    expect(result.warnings).toEqual([])
+  })
+
+  it('v319 属性门槛+伤害修饰 → 属性提取成功但仍 warning（残余特殊机制）', () => {
+    const result = parseRestrictions([r('Only Champions with STR of 14 or lower can be used. Rosie and Champions with INT of 14 or higher deal 400% additional damage.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '<=', value: 14 },
+    ])
+    expect(result.warnings.length).toBe(1)
+  })
+
+  it('v391 属性门槛+Boss机制 → 属性提取成功但仍 warning', () => {
+    const result = parseRestrictions([r('In each boss area Strahd on Horseback appears. You must defeat this additional boss to advance. When defeated, he runs off the screen. Only champions with INT of 13 or higher can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '>=', value: 13 },
+    ])
+    expect(result.warnings.length).toBe(1)
+  })
+
+  it('属性门槛+forced hero flavor → 仍 warning（flavor 句未被解析）', () => {
+    const result = parseRestrictions([r('Only Bards or Champions with a CHA score of 15 or higher can be used. Paultin starts the adventure unlocked and in the formation.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '>=', value: 15 },
+    ])
+    expect(result.warnings.length).toBe(1)
+  })
+
+  it('属性门槛+占格 → 两者提取且无 warning（占格已覆盖占格句）', () => {
+    const result = parseRestrictions([r('A Monodrone and a Duodrone take up slots in the formation. Only Champions with CHA of 14 or lower can be used.')])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '<=', value: 14 },
+    ])
+    expect(result.warnings).toEqual([])
+  })
 })

@@ -113,3 +113,9 @@ export interface AttributeRequirement {
 - **属性门槛误提取——条件效果句被当使用门槛**（v865/v1984）：黑名单（排除 `deal`）漏了「take no damage」（v865 夺心魔 INT 15+ 免疫伤害）和「placed adjacent」（v1984 宝藏猎人 INT 12- 邻接位限制），误提为硬性候选过滤。改用**白名单**：仅从含 `can/may be used`、`only use`、`take part` 的句子提取。全量验证 104→102 变体（排除 2 误报），0 漏报。
 - **复合对齐标记零匹配**（v1740）：游戏 `by_tags.tags` 用 `lawful_good` 等复合标记，英雄标签是对齐轴独立的（`lawful` + `good`），不展开则 0 英雄匹配。`parseAtom` 展开全部 9 种复合对齐为 AND 分量；patch variants.json 同步存量数据。v1740 候选池 0→78 英雄。
 - **死代码清理**：`isTrivialRestriction` 的 `text.length === 0` 恒 false（拼接含空格），移除。
+
+## 审计修复·第三轮（2026-08-08）
+
+提交 `09778734` 后深度审计发现并修复：
+
+- **P2 `addedAttr` 条目级警告全抑制**（65 变体丢 warning）：属性门槛提取成功后完全抑制该条目的 warning，即使同时含敌人刷新/伤害调整等特殊机制句。改为句级分析 `hasResidualMechanics`——仅当全部非平凡句均被属性/trivial/占格覆盖时才抑制。同时修复重复属性门槛产生虚假 warning 的 bug（`addedAttr` → `extractedAttrs.length > 0`）。TODO atd_ed67350994 已删。
