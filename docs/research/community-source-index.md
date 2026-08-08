@@ -98,6 +98,15 @@ Idle Champions 社区资源目录 + 已抓取 URL 追踪。每个 URL 对应一�
 | https://steamcommunity.com/app/627690/discussions/0/1635292137567372667/ | Steam | ✅ |
 | https://www.reddit.com/r/idlechampions/comments/1ae6nqf/ | Reddit | ✅ |
 
+### patrons-blessings.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idle-champions.fandom.com/wiki/Patrons | Wiki | ✅（同 variant-restriction，域名带连字符） |
+| https://idle-champions.fandom.com/wiki/Blessings | Wiki | ✅（同 gold-and-favor） |
+| https://www.reddit.com/r/idlechampions/comments/1ae6nqf/ | Reddit | ✅（同 variant-restriction） |
+| https://emmotes.github.io/ic_spoilers/patron_roster.html | 社区数据挖掘 | ✅ |
+
 ### legendary-forge.md
 
 | URL | 来源 | 状态 |
@@ -128,6 +137,40 @@ Idle Champions 社区资源目录 + 已抓取 URL 追踪。每个 URL 对应一�
 | https://www.reddit.com/r/idlechampions/comments/q747og/maximising_fire_breath_potion_effect/ | Reddit | ✅ |
 | https://steamcommunity.com/app/627690/discussions/0/4390400383726725443/ | Steam | ✅ |
 | https://steamcommunity.com/app/627690/discussions/0/1735462352473180129/ | Steam | ✅ |
+
+### progression-systems.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Seasons | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Time_Gates | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Trials_of_Mount_Tiamat | Wiki | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1c9srei/season_passbattlepass/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1c0gnz1/removing_seasons_has_killed_the_game_for_me/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1abrd7q/time_gate_thread/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1049itm/gaarawarrs_guide_to_the_trials_of_mount_tiamat/ | Reddit | ✅ |
+
+### achievements-campaign-rewards.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Achievements | Wiki | ✅ |
+| https://www.codenameentertainment.com/?page=idle_champions&post_id=1518 | CNE 官方 | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/zfjws7/whats_the_current_achievement_bonus_damage_youre/ | Reddit | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/5002914669823492057 | Steam | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/xlp7ek/champions_unlocked_by_adventure_not_time_gate/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/g20d31/what_champions_can_be_earned_from_campaign/ | Reddit | ✅ |
+
+### pushing-and-wall.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://www.reddit.com/r/idlechampions/comments/14tz8y1/maths_of_enemy_as_areas_increase/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/f923h7/how_high_can_enrage_go/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1n395yj/what_is_the_point_of_the_overwhelm_mechanic_at/ | Reddit | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/3203652426711854932/ | Steam | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/1743353164079718808/ | Steam（CNE 官方博客） | ✅ |
+| https://idlechampions.fandom.com/wiki/Gold_formulas | Wiki | ✅（同 gold-and-favor） |
 
 ## 使用规则
 
