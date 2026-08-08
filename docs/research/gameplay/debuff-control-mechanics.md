@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-06（165 英雄）
 **社区来源**：[Fandom Wiki — Debuffs](https://idlechampions.fandom.com/wiki/Debuffs)、[Fandom Wiki — Knockback](https://idlechampions.fandom.com/wiki/Knockback)、[Reddit Buff/Debuff 汇编](https://www.reddit.com/r/idlechampions/comments/b5097r/)、[Reddit Click-Debuff 指南](https://www.reddit.com/r/idlechampions/comments/pihlfl/)、[Reddit 锁Boss讨论](https://www.reddit.com/r/idlechampions/comments/1gpxeen/)
+**可信度**：⚠️ 待确认 — 控制标签（stun/slow/knockback/root）由游戏数据 `summary.tags` 直证，但具体持续时间和数值大多无 parser，依赖社区报告（Wiki 表格最后更新 2021 年）
 
 ## 机制概述
 

@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-08（165 英雄）
 **社区来源**：[Fandom Wiki - Gold formulas](https://idlechampions.fandom.com/wiki/Gold_formulas)、[Fandom Wiki - Divine Favor](https://idlechampions.fandom.com/wiki/Divine_Favor)、[Fandom Wiki - Blessings](https://idlechampions.fandom.com/wiki/Blessings)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/1god1yf/gold_farming_101_an_introduction/)、[Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/1630790987579561612/)
+**可信度**：⚠️ 待确认 — 金币掉落公式和恩宠计算公式来自社区逆向推导，`game-rules.json` 部分验证（`health_gold_ratio: 0.65`）但指数 0.304 等无直接字段
 
 ## 金币掉落公式
 

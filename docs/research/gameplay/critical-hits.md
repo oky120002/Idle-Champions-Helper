@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-08（165 英雄，`game-rules.json` + `hero-abilities.json`）
 **社区来源**：[Reddit r/idlechampions — Critical hits, some observations](https://www.reddit.com/r/idlechampions/comments/14hyoai/critical_hits_some_observations/)、[Reddit — How does Crit work?](https://www.reddit.com/r/idlechampions/comments/1bqxjce/how_does_crit_work/)、[Fandom Wiki — Critical Hit](https://idlechampions.fandom.com/wiki/Critical_Hit)
+**可信度**：✅ 已确认 — 基础值 2.5%/+100% 由 `game-rules.json` 直证；多重暴击溢出机制 ⚠️ 仅社区观察
 
 ## 机制
 

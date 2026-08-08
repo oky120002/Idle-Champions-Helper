@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-08（`public/data/v1/variants.json`）
 **社区来源**：[Reddit r/idlechampions — armor-based](https://www.reddit.com/r/idlechampions/comments/ihj4wp/armorbased/)、[Reddit — Segmented health and Armor](https://www.reddit.com/r/idlechampions/comments/1sgk2nj/)、[Fandom Wiki — Favored Foes](https://idlechampions.fandom.com/wiki/Favored_Foes)、[Fandom Wiki — Hits based damage](https://idlechampions.fandom.com/wiki/Category:Hits_based_damage)
+**可信度**：✅ 已确认 — hits-based/crit-based 机制由变体描述文本 + 社区交叉确认；crit-based 碎段规则 ⚠️ 仅 1 处并列证据
 
 > 护甲敌人（armored）有[专门文档](./armored-enemies.md)，本文聚焦其余类型并做对比。
 

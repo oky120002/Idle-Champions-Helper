@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-08（165 英雄）
 **社区来源**：[Fandom Wiki — Modron Automation](https://idlechampions.fandom.com/wiki/Modron_Automation)、[Fandom Wiki — Modron Core](https://idlechampions.fandom.com/wiki/Modron_Core)、[Steam 进阶指南](https://steamcommunity.com/sharedfiles/filedetails/?id=2615977602)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/hvnz38/)、[官方博客（7 天能量限制）](http://codenameentertainment.com/?page=blog&post_id=1074)、[社区核心配置库 Encyclopedia Modronica](https://emmotes.github.io/ic_modron_library/)
+**可信度**：⚠️ 待确认 — 核心机制（种类/自动化/7 天限制）由社区+官方博客确认，但各核心管道输出的具体数值不在公开游戏数据中
 
 ## 机制
 

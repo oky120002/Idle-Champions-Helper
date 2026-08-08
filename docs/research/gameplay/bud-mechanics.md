@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-08（165 英雄）
 **社区来源**：[Steam 讨论（含开发博客原文）](https://steamcommunity.com/app/627690/discussions/0/4522261213603379633/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)、[Fandom Wiki](https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage)
+**可信度**：✅ 已确认 — 定义/衰减规则/大招关系来自开发博客一手来源 + 游戏数据字段交叉验证；衰减率精确数值（15s/90%）⚠️ 仅开发博客引用
 
 ## 机制说明
 

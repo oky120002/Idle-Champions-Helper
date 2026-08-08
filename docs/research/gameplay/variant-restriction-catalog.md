@@ -2,6 +2,7 @@
 
 **数据快照**：2026-08-06（`variants.json`，1424 个变体，128 种 mechanics 标记）
 **社区来源**：[Fandom Wiki — Variants](https://idlechampions.fandom.com/wiki/Variants)、[Fandom Wiki — Patrons](https://idlechampions.fandom.com/wiki/Patrons)、[Reddit r/idlechampions — Patrons 101](https://www.reddit.com/r/idlechampions/comments/1ae6nqf/patrons_101_an_introduction/)、[Steam 讨论 — 限制型变体](https://steamcommunity.com/app/627690/discussions/0/1635292137567372667/)
+**可信度**：✅ 已确认 — 计数和分类由 `jq` 对 `variants.json` 全集统计直证，社区来源仅作机制概念参考
 
 ## 概览
 
