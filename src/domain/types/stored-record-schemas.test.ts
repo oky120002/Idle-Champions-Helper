@@ -44,9 +44,7 @@ describe('formationPresetSchema filterSnapshot 兼容', () => {
     }
     const result = formationPresetSchema.safeParse({ ...validBase, filterSnapshot: snapshot })
     expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.filterSnapshot).toEqual(snapshot)
-    }
+    expect(result.success ? result.data.filterSnapshot : null).toEqual(snapshot)
   })
 
   it('filterSnapshot 缺核心字段时拒绝', () => {
