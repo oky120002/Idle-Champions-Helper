@@ -31,19 +31,19 @@
 
 ### 位置关系
 
-位置关系是位置条件效果的核心判据。类型系统定义 30 种位置关系，其中 **21 种实际出现在信号数据中**，覆盖 224 条含显式位置约束的英雄信号（占全部 8320 条信号的约 2.7%，其余位置约束为 `any` 即全局）。高频关系如下：
+位置关系是位置条件效果的核心判据。类型系统定义 30 种位置关系，其中 **20 种实际出现在信号数据中**（排除 `any`），覆盖 169 条含显式位置约束的英雄信号（占全部 8236 条 carry+support 信号的约 2.1%，其余位置约束为 `any` 即全局）。高频关系如下：
 
 | 关系 | 信号数 | 含义 |
 |---|---|---|
-| `adjacent` | 46 | 仅影响物理相邻格子（共享边或角）的英雄 |
-| `aheadColumn` | 26 | 仅影响前方一列（更靠近敌人）的英雄 |
-| `withinTwoSlots` | 18 | BFS 距离 1-2 步以内的英雄 |
-| `sameColumn` | 17 | 同列英雄 |
-| `sameOrBehindColumn` | 17 | 同列或后方一列 |
-| `behindTwoColumns` | 16 | 后方两列以内的英雄 |
-| `allBehindColumns` | 16 | 所有更靠后的列 |
-| `nonAdjacent` | 12 | 不相邻的英雄 |
-| `behindColumn` | 10 | 后方一列的英雄 |
+| `adjacent` | 40 | 仅影响物理相邻格子（共享边或角）的英雄 |
+| `aheadColumn` | 16 | 仅影响前方一列（更靠近敌人）的英雄 |
+| `withinTwoSlots` | 14 | BFS 距离 1-2 步以内的英雄 |
+| `allBehindColumns` | 12 | 所有更靠后的列 |
+| `sameColumn` | 11 | 同列英雄 |
+| `nonAdjacent` | 11 | 不相邻的英雄 |
+| `sameOrBehindColumn` | 11 | 同列或后方一列 |
+| `behindTwoColumns` | 10 | 后方两列以内的英雄 |
+| `behindColumn` | 7 | 后方一列的英雄 |
 
 其余关系包括 `adjacentOrSelf`、`adjacentColumns`（左右相邻两列）、`frontTwoColumns`/`backTwoColumns`（最前/最后两列）、`rearMostColumn`（最后列）、`withinTwoSlotsOrSelf` 等边缘变体。
 
@@ -87,6 +87,6 @@
 
 ## 社区来源
 
-- [Formations 101 — Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/dqe878/formations_101_an_introduction/)——阵型术语定义（格子、列、行、相邻），含 Calliope Song of Protection 距离示例
-- [Formation Strategy — Fandom Wiki](https://idlechampions.fandom.com/wiki/Formation_strategy)——基于 12 基础英雄的阵型推演，含坦克/输出/辅助分工
-- [Optimal Formations — Steam Community](https://steamcommunity.com/sharedfiles/filedetails/?l=german&id=1319319295)——活动与常驻战役的推荐阵型（9/10 人阵型图）
+- [Formations 101 — Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/dqe878/formations_101_an_introduction/) — 阵型术语定义（格子、列、行、相邻），含 Calliope Song of Protection 距离示例
+- [Formation Strategy — Fandom Wiki](https://idlechampions.fandom.com/wiki/Formation_strategy) — 基于 12 基础英雄的阵型推演，含坦克/输出/辅助分工
+- [Optimal Formations — Steam Community](https://steamcommunity.com/sharedfiles/filedetails/?l=german&id=1319319295) — 活动与常驻战役的推荐阵型（9/10 人阵型图）

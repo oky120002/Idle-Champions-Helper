@@ -2,7 +2,7 @@
 
 **数据快照**：2026-08-08（165 英雄）
 **社区来源**：[Steam 讨论（含开发博客原文）](https://steamcommunity.com/app/627690/discussions/0/4522261213603379633/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)、[Fandom Wiki](https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage)
-**可信度**：✅ 已确认 — 定义/衰减规则/大招关系来自开发博客一手来源 + 游戏数据字段交叉验证；衰减率精确数值（15s/90%）⚠️ 仅开发博客引用
+**可信度**：✅ 已确认 — 定义/衰减规则/大招关系来自开发博客一手来源 + 游戏数据字段交叉验证；衰减参数由 `game-rules.json` rule 14 `ultimate_damage_params` 直证
 
 ## 机制
 
@@ -17,10 +17,13 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 
 ### 衰减规则 ✅
 
-- 命中后 **15 秒宽限期**内不衰减
-- 15 秒后开始衰减：每 15 秒损失当前效能的约 **90%**
+- 命中后 **15 秒宽限期**内不衰减（`falloff_delay: 15`）
+- 15 秒后开始衰减，每 **15 秒**一个衰减周期（`falloff_period: 15`），采用指数衰减模式（`mode: "exponential"`），参数 `falloff_exponent: 5`、`falloff_exponent2: 10`
+- BUD 最低衰减至峰值的 **1%**（`min_highest_hit_multiplier: 0.01`）
 - 新的更高命中会重置衰减计时器
 - 若主 DPS 死亡或被换下，BUD 会先经历 15 秒宽限再快速跌落
+
+> 社区通俗说法「每 15 秒衰减 90%」是指数衰减的粗略近似。精确参数见 `game-rules.json` rule 14（`ultimate_damage_params`）。
 
 ### 与大招/点击/火龙息的关系 ✅
 
@@ -46,6 +49,7 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 | `umberto_bud_seconds_per_bee` | `hero-abilities.json`（翁贝托） | 每只蜜蜂附加 N 秒 BUD |
 | `decrease_bud_decay_rate` | `hero-abilities.json`（罗茜，值 50） | 降低 BUD 衰减率（50%）|
 | `apply_when_bud_setting` | `hero-abilities.json`（宾温） | 仅在该英雄设 BUD 时生效 |
+| 衰减参数 | `game-rules.json` rule 14（`ultimate_damage_params`）| `falloff_delay: 15`、`falloff_period: 15`、`mode: "exponential"`、`falloff_exponent: 5`/`falloff_exponent2: 10`、`min_highest_hit_multiplier: 0.01` |
 
 > 上述 BUD 相关效果在数据管线中均标记为 `No parser`，即未进入评分模型。BUD 本身是运行时动态值，不在静态数据中直接出现。
 
@@ -75,7 +79,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 | 大招伤害 = BUD × damageModifier | ✅ 数据确认（`ultimate.damageModifier` 字段存在） |
 | click damage 派生自 BUD | ✅ 社区+数据确认（`effect-reference` 含 `click_damage`） |
 | `deal_bud_damage_when_hit` 按秒数换算 BUD | ✅ 数据确认（参数名 `seconds_worth_of_bud`） |
-| 衰减率精确为每 15 秒 90%（而非近似值） | ⚠️ 社区引用开发博客，但无客户端代码验证 |
+| 衰减率参数（exponential 模式 + exponent 5/10 + floor 1%） | ✅ 数据确认（`game-rules.json` rule 14 `ultimate_damage_params`） |
 
 ## 社区来源
 

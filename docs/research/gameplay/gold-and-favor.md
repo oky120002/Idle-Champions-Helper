@@ -17,7 +17,7 @@
 | 怪物生命值 | `10 × 1.85^(level-1)` | 活动与时间门 |
 | 基础金币 | `health^0.65`（即 `health^health_gold_ratio`）| level < 42 |
 | 基础金币 | `health^(2.8 × level^-0.4)` | 42 ≤ level ≤ 201 |
-| 基础金币 | `health^0.332406` | level > 201 |
+| 基础金币 | `health^0.332406` | level > 201（指数随区域继续缓降，至 2481 降至 0.3187）|
 
 Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
@@ -93,7 +93,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 | Omin | — + `per_hero_attribute` | `gold_multiplier_mult,1` + `buff_upgrade` | 固定 + 属性升级 |
 | Ishi | `per_hero_attribute` ×2 | `gold_multiplier_mult,100` | 按属性百分比 |
 | Rust | — | `gold_multiplier_mult,400` | 固定 +400%（游戏最高单体金币加成） |
-| Ellywick | ×3 | `gold_multiplier_mult,50` + `buff_upgrade` | 多源叠加 |
+| Ellywick | ×2 | `gold_multiplier_mult,50` + `buff_upgrade` | 多源叠加 |
 | Evandra | — | `gold_multiplier_mult,100` | 固定 +100% |
 | Windfall | — | `gold_multiplier_mult,100` | 固定 +100% |
 | Egbert | `egbert_atonement` | `gold_multiplier_mult,100` | 赎罪机制叠加 |
@@ -103,8 +103,8 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 | Eric | `per_hero_attribute` | `gold_multiplier_mult,20` | 按属性 |
 | Penelope | — | `gold_multiplier_mult,1` | 固定 +1% |
 | Dob | `adjacent_champions` | `gold_multiplier_mult,30` | 按相邻英雄 |
-| Merilwen | `per_tagged_crusader_mult` | `gold_mult_per_tagged_crusader_mult,100` | 按标签英雄数 |
-| Gazrick | `per_tagged_crusader_mult` | `gold_mult_per_tagged_crusader_mult,100` | 按标签英雄数 |
+| Merilwen | `per_tagged_crusader_mult` | `gold_mult_per_tagged_crusader_mult,100,oxventure` | 按标签英雄数 |
+| Gazrick | `per_tagged_crusader_mult` | `gold_mult_per_tagged_crusader_mult,100,rivalswaterdeep` | 按标签英雄数 |
 | Regis | `per_mithral_hall_stacks` | `gold_multiplier_mult,100` | 秘银厅叠加 |
 | Mehen | `per_other_stack_count` | `gold_multiplier_mult,0` | 按其他叠加数 |
 

@@ -6,7 +6,7 @@
 
 ## 机制
 
-变体（variant）在基础冒险上叠加规则改写。限制来源有两层：变体自身规则 + 可选的赞助人（patron）全局限制，二者叠加生效。1424 个变体中，629 个带赞助人标记，364 个兼属自由游玩。
+变体（variant）在基础冒险上叠加规则改写。限制来源有两层：变体自身规则 + 可选的赞助人（patron）全局限制，二者叠加生效。1424 个变体中，850 个带赞助人标记，364 个兼属自由游玩。
 
 游戏数据通过 `mechanics` 数组（128 种标记）标注变体使用的底层机制，`restrictions` 数组存人类可读描述。限制效果集中在以下几类。
 
@@ -18,7 +18,7 @@
 | **英雄白名单** | 只允许特定英雄参战，按 id 或 tag 过滤 | `only_allow_crusaders`(501)；投影为 `allowedHeroIds`(13 非空) + `allowedTags`(122 非空) | planner 已建模：候选英雄按白名单过滤（`filterAndSortCandidateHeroes`） |
 | **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述，无结构化字段；57 个变体涉及 | 文本未解析，planner 无法自动识别；需先建属性筛选层 |
 | **角色限制** | 按 DPS/Support/Tank/Healing/Speed 角色过滤 | `allowedTags` 含 `!dps`(4)、`!tanking`(2)、`!speed`(2)、`!healing`(1)；`disallow_crusaders`(17) | `!dps` 类已走 `allowedTags` 通道；`disallow_crusaders` 部分未投影 |
-| **强制英雄** | 指定英雄必须上场、不可移除 | `force_use_heroes`(329)；投影为 `forcedHeroIds` | planner 已建模：`forceInclude` 约束 + 候选豁免（`recommendationEngine.ts:392`） |
+| **强制英雄** | 指定英雄必须上场、不可移除 | `force_use_heroes`(329)；投影为 `forcedHeroIds` | planner 已建模：`forceInclude` 约束 + 候选豁免（`recommendationEngine.ts:501`） |
 | **全局效果** | 全队持续增益或减益，如伤害倍率、攻速调整 | `global_effects`(296)；`restrictions` 文本描述 | 未建模；伤害/攻速调整需注入评分参数 |
 | **槽位条件** | 按阵型位置生效的效果（相邻、列、行） | `slot_effects`(94)、`slot_effects_by_area`(7)、`restrict_allowed_slots`(2) | 未建模；需位置条件求值器 |
 | **英雄特定效果** | 指定英雄获得 buff 或 debuff | `hero_effects`(42) | 未建模；需按英雄 id 注入信号 |
@@ -30,7 +30,7 @@
 | **等级上限** | 英雄等级不可超过指定值 | `max_hero_level`(3) | 未建模；影响成长曲线 |
 | **敌人强化** | 敌人获得额外属性（护甲、血量、伤害、速度） | `add_monster_properties`(39)、`add_monster_properties_by_tag`(56)、`add_monster_properties_by_id`(25) | 未建模；护甲敌人见 [armored-enemies.md](./armored-enemies.md) |
 | **特殊敌人刷新** | 额外或保证出现的敌人波次 | `random_monster_waves`(246)、`guaranteed_monsters`(74)、`random_monster`(31)、`additional_bosses`(39) | 未建模；影响区域推进速度评估 |
-| **金币调整** | 修改金币掉落倍率 | `gold_adjustment`(6)、`crusader_cost_power`(1) | 未建模；影响金币预算评估 |
+| **金币调整** | 修改金币掉落倍率 | `gold_adjustment`(4)、`gold_adjustment_by_area`(2)、`gold_bonus_adjustment`(1)、`crusader_cost_power`(1) | 未建模；影响金币预算评估 |
 | **点击/大招禁用** | 禁用点击伤害或大招 | `click_damage_area_limit`(33)、`disallow_ultimates`(1) | 未建模；点击伤害归零影响低区域推进 |
 | **天气/视野** | 天气效果或视野限制 | `weather`(25)、`darken`(2)、`darken_by_area`(5) | 未建模；`darken` 系列叠加怪物血量增长 |
 | **属性总分** | 按能力值总和过滤（奇/偶/阈值） | `restrictions` 文本描述 | 文本未解析；需能力值求和 + 奇偶判定 |
@@ -62,7 +62,7 @@
 
 变体通常叠加多种机制，最常见的组合：
 
-- **白名单 + 占位**（61 个）：英雄池收窄 + 可用格减少，双重压力
+- **白名单 + 占位**（127 个）：英雄池收窄 + 可用格减少，双重压力
 - **强制英雄 + 英雄效果**：强制英雄同时获得特殊 buff（如 Gromma 4x 伤害 + 攻速减 2s）
 - **全局效果 + 敌人强化**：全队 debuff 叠加强化敌人，典型生存挑战
 - **属性门槛 + 特殊敌人**：英雄池受限的同时面对额外敌人波次
@@ -82,7 +82,7 @@
 
 | 已建模 | 来源机制 | 消费位置 |
 |---|---|---|
-| 强制英雄 | `force_use_heroes` → `forcedHeroIds` | `recommendationEngine.ts:501` → `formationLegality.ts:40` |
+| 强制英雄 | `force_use_heroes` → `forcedHeroIds` | `recommendationEngine.ts:501` → `formationLegality.ts:40`（注：`forceInclude` 构建在 501 行）|
 | 英雄白名单（id/tag） | `only_allow_crusaders` → `allowedHeroIds`/`allowedTags` | `recommendationEngine.ts:574` |
 | 占位数量 | `slot_escort` → `escortCount` | `VariantResultCard.tsx:42` 展示，planner 未消费 |
 

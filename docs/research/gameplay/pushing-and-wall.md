@@ -21,7 +21,7 @@ growth_rate 不是固定值，而是分段递增（`health_growth_rate_curve`）
 | 2001 – 2250 | **3.031** | +49% |
 | 2251+ | **4.531** | 再 +49% |
 
-社区经验法则（Reddit u/enshufalahnah）：每 100 区域约需 e30 伤害增量（区域 300 ≈ e90，区域 1000 ≈ e300）。2001 后 growth_rate 跳升意味着同样 100 区域需要 e45，2251 后需 e67。
+社区经验法则（Reddit u/enshufalahnah）：每 100 区域约需 e30 伤害增量（区域 300 ≈ e90，区域 1000 ≈ e300）。2001 后 growth_rate 跳升意味着同样 100 区域需要 e48，2251 后需 e66。
 
 boss 区域（每 50 层）怪物血量额外 ×1.9，大多数 boss 还有进一步约 ×50 倍率（Fandom Wiki）。
 
@@ -71,7 +71,7 @@ Steam 社区定义（u/thegrassyknoll）：墙是「自然推进大幅放缓的�
 
 ### 金币-血量比衰减
 
-`health_gold_ratio`（金币掉落 = health^ratio 的指数）从区域 1 的 **0.65** 逐步降至区域 2481 的 **0.319**。血量增长持续快于金币产出，加剧软墙效应——后期区域金币跟不上升级需求。
+`health_gold_ratio`（金币掉落 = health^ratio 的指数）从区域 1 的 **0.65** 逐步降至区域 2481 的 **0.3187**。血量增长持续快于金币产出，加剧软墙效应——后期区域金币跟不上升级需求。
 
 ## 数据源
 
@@ -80,7 +80,7 @@ Steam 社区定义（u/thegrassyknoll）：墙是「自然推进大幅放缓的�
 | `game-rules.json` → `monster_base_stats` | `base_health` / `health_growth_rate` / `health_growth_rate_curve` | 血量基础值 10、分段增长率 2.031→3.031→4.531 |
 | 同上 | `base_dps` / `dps_growth_rate` / `dps_growth_rate_curve` | 伤害基础值 1、boss 层倍率 1.75→4→100 亿 |
 | 同上 | `power_boost_time` / `power_boost_growth_rate` / `power_boost_multiplicative` | 狂怒计时器 10 秒、加法叠加 |
-| 同上 | `health_gold_ratio` / `health_gold_ratio_curve` | 金币指数 0.65→0.319（47 段递减） |
+| 同上 | `health_gold_ratio` / `health_gold_ratio_curve` | 金币指数 0.65→0.3187（47 段递减） |
 | 同上 | `base_speed` / `speed_growth_rate` | 怪物攻击速度基础 50、增长率 1（不随区域提升） |
 | 同上 → `max_modron_auto_reset_area` | `area: 2500` | Modron 自动重置上限，与硬墙一致 |
 

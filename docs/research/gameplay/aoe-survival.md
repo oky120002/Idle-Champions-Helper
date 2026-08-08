@@ -19,7 +19,7 @@
 |---|---|---|
 | 每区域首击免疫 | `baldric_dark_bargain_eldath_handler` + `damage_reduction,100` targets:all | "immune to damage for X seconds after the first instance of damage" |
 | 首次攻击免疫 | Mehen 被动，无标准 effect_string | "damage is prevented and the monster is stunned" |
-| 复活+免疫 | Baeloth `najim_resurrect` 系列 | "back to life at 1HP and immune to all damage for X seconds" |
+| 复活+免疫 | Baeloth `revive_with_health_effect` 系列 | "back to life at 1HP and immune to all damage for X seconds" |
 | 替死+免疫 | Strix 被动 | "about to be killed... instead loses... immune to all damage" |
 | 大招全免 | Shadowheart `relic` 系列 | "prevents all damage to your Champions" |
 
@@ -33,7 +33,7 @@
 |---|---|---|
 | 百分比减伤 | `damage_reduction,<amount>` | "reduces the damage taken by... X%" |
 | 固定减伤 | `fixed_damage_reduction_all_enemy_attacks,<amount>` | "take X less damage from all attacks" |
-| 同列减伤 | `damage_reduction_ranged,<amount>` | "take X% less damage from melee/ranged" |
+| 近战/远程减伤 | `damage_reduction_ranged,<amount>` | "take X% less damage from melee/ranged" |
 
 在 `hero-abilities.json` 中归一化为 `damageReduction` 信号（9 例）。`amount` 是减免百分比或固定值。
 
@@ -73,7 +73,7 @@ AoE 过后把血线拉回来，保证下一波 AoE 前满血。
 | `hero-abilities.json` | `roles` 含 `healing` | 治疗英雄标签 |
 | `effect_string` | `damage_reduction,<amount>` / `damage_reduction,100` + `targets:["all"]` | 减伤 / 完全免疫 |
 | `effect_string` | `fixed_damage_reduction_all_enemy_attacks,<amount>` | 固定减伤 |
-| `effect_string` | `damage_reduction_ranged,<amount>` | 同列减伤 |
+| `effect_string` | `damage_reduction_ranged,<amount>` | 近战/远程减伤 |
 | `effect_string` | `healing_mult,<amount>` / `global_healing_mult,<amount>` | 治疗 |
 | `effect_string` | `imoen_stoneskin` | 石肤术 |
 | 条件型减伤 | `positionQualifier`、`stackFunc` | 条件限定 |

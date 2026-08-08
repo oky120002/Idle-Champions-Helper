@@ -1,6 +1,6 @@
 # 成就与战役奖励（Achievements & Campaign Rewards）
 
-**数据快照**：2026-08-08（165 英雄，adventures.json 2026-07-20，26 战役 / 523 冒险）
+**数据快照**：2026-08-08（165 英雄，adventures.json 2026-08-06，26 战役 / 523 冒险）
 **可信度**：⚠️ 待确认 — 成就伤害加成的 1%/5% 规则和加法叠加来自社区多源交叉印证（Wiki + Reddit + Steam），但游戏数据不含成就定义表（服务端追踪），无法直接验证总加成数值；战役/冒险结构从 `adventures.json` 直接验证。
 
 **社区来源**：
@@ -67,7 +67,7 @@
 成就全局伤害加成是**服务端外部乘数**，不在 `hero-abilities.json` 的可解析信号中建模：
 
 - `adventures.json` 的 `rewards` 字段全部为空——奖励逻辑在服务端
-- `effect-reference.json` 的 stats 数组中仅有 8 个成就相关状态变量（服务端追踪，`serverOnly: true` 占多数）
+- `effect-reference.json` 的 stats 数组中仅有 8 个成就相关状态变量（服务端追踪，其中 4 个 `serverOnly: true`）
 - Kent 的 `achievement_global_dps` stackFunc 虽然在 `hero-abilities.json` 中有记录，但成就加成的实际数值不在游戏数据中，planner 无法建模
 - 英雄专属成就触发（`achievement_stat_name`、`laurana_achievement_handler` 等）均为 unsupported signals，当前不进评分
 
