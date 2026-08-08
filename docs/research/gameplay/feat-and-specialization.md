@@ -1,10 +1,13 @@
 # 专长（feat）与专精（specialization）
 
+**数据快照**：2026-07-28（feat-catalog.json + specialization-catalog.json 更新日期）
+**可信度**：✅ 已确认 — 游戏数据直证（feat-catalog.json + specialization-catalog.json），无社区依赖
+
 IC 两大英雄自定义系统：玩家选择带来 dps/金币/速度/生存加成。本文记机制与数据源事实；接入合同与维度映射见 `docs/specs/modules/planner/mechanic-isolation.md`、`docs/specs/modules/planner/dps-mechanics.md`。
 
-## 专长（feat）
+## 机制
 
-**数据源**：`hero_feat_defines`（2517 条，公开 getdefinitions）+ `userDetails.details.heroes[].active_feats`（per-user 已激活 feat id 列表）。
+### 专长（feat）
 
 **机制**：每英雄 2-24 个 feat（中位数 14），玩家选 `feat_slots`（2-4，per-user，从 patron/favor/升级解锁）个激活。feat effect 多类，rarity 0-5（集中在 2-4：rarity 2=603、3=1022、4=878）。相同 effect 的 feat 同 pool 加法叠加。
 
@@ -19,6 +22,16 @@ IC 两大英雄自定义系统：玩家选择带来 dps/金币/速度/生存加�
 
 **明斯克实例**：feat 35（旅店打手 `hero_dps +30%`）/ 38（无私 `global_dps +10%`）/ 399（力量之盔 `buff_upgrades,80,108-112` 偏好敌人 +80%）激活 `[35,38,399]`，feat_slots=3。
 
+### 专精（specialization）
+
+**机制**：英雄升级中的 choice。如明斯克「偏好敌人」（upgrade 108-112，reqLvl 50）选一个怪物类型，对应 vulnerability `monster_with_tag_more_damage,300,<tag>`。
+
+## 数据源
+
+### 专长（feat）
+
+**数据源**：`hero_feat_defines`（2517 条，公开 getdefinitions）+ `userDetails.details.heroes[].active_feats`（per-user 已激活 feat id 列表）。
+
 **接入事实**：
 
 - `feat-catalog.json`（`updatedAt: 2026-07-28`）含 176 个英雄、2012 条 feat entry；每条结构 `{id, rarity, signals: [{dimension, bucket, signal}], buffWrappers}`，dimension 由 effect kind 映射（damage/gold/speed/survival/utility）。
@@ -26,11 +39,9 @@ IC 两大英雄自定义系统：玩家选择带来 dps/金币/速度/生存加�
 - feat wrapper（`buff_upgrades` 增强某 ability，如明斯克 feat 399 偏好敌人 +80%）：通过 `FeatEntry.buffWrappers` 复用 equipment buff wrapper 通道接入，target kind 限 DPS/gold/crit/health；非该范围或复杂变体（递归元家族）不计入。
 - `reduce_attack_cooldown` feat 已归一化但消费层 speed 维度未接入 scoring。
 
-## 专精（specialization）
+### 专精（specialization）
 
 **数据源**：`upgrade_defines` 中带 `specialization_name` / `specialization_graphic_id` 的 choice upgrade（玩家选一个分支）。
-
-**机制**：英雄升级中的 choice。如明斯克「偏好敌人」（upgrade 108-112，reqLvl 50）选一个怪物类型，对应 vulnerability `monster_with_tag_more_damage,300,<tag>`。
 
 **接入事实**：
 
@@ -41,3 +52,7 @@ IC 两大英雄自定义系统：玩家选择带来 dps/金币/速度/生存加�
 - `cooldownReduction`(12) / `attackSpeedMult`(5) 已归一化但消费层 speed/cooldown 维度未接入 scoring。
 
 详细接入合同、wrapper 派生与 active 过滤见 ADR 0017（专精外部选择）与 `docs/specs/modules/planner/mechanic-isolation.md`。
+
+## 社区来源
+
+本文为游戏数据直接分析，无社区来源。

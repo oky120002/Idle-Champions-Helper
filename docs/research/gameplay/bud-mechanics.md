@@ -4,7 +4,7 @@
 **社区来源**：[Steam 讨论（含开发博客原文）](https://steamcommunity.com/app/627690/discussions/0/4522261213603379633/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)、[Fandom Wiki](https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage)
 **可信度**：✅ 已确认 — 定义/衰减规则/大招关系来自开发博客一手来源 + 游戏数据字段交叉验证；衰减率精确数值（15s/90%）⚠️ 仅开发博客引用
 
-## 机制说明
+## 机制
 
 BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大招伤害、火龙息药水和点击伤害的核心基准值。游戏持续追踪阵型中每个英雄的普通攻击，记录其中**单次命中对单个敌人造成的最高伤害**。✅ 社区+数据确认
 
@@ -30,7 +30,7 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 
 > 社区确认 BUD 引入前，大招和火龙息使用旧 DPS 平均值，导致伤害忽高忽低；BUD 使结果更稳定。
 
-## 数据源：游戏数据中的 BUD 字段
+## 数据源
 
 | 字段/效果 | 位置 | 说明 |
 |---|---|---|
@@ -53,7 +53,7 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 
 多段攻击英雄（如法莉德 `damageModifier: 0.33`）每段伤害较低，单次命中可能不足以超过 BUD setter 的单次伤害。但 `deal_bud_damage_when_hit` 类效果可以在命中时直接附加 BUD 值的伤害，绕过「单次命中须 > BUD」的更新规则。
 
-## 本项目建模
+## 提取方法
 
 本项目 `computeSingleHitDamage(heroDps, attackCooldown)` 近似计算单英雄单次伤害（`src/domain/simulator/budCalculation.ts:15`）：
 
@@ -76,3 +76,9 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 | click damage 派生自 BUD | ✅ 社区+数据确认（`effect-reference` 含 `click_damage`） |
 | `deal_bud_damage_when_hit` 按秒数换算 BUD | ✅ 数据确认（参数名 `seconds_worth_of_bud`） |
 | 衰减率精确为每 15 秒 90%（而非近似值） | ⚠️ 社区引用开发博客，但无客户端代码验证 |
+
+## 社区来源
+
+- [Steam 讨论（含开发博客原文）](https://steamcommunity.com/app/627690/discussions/0/4522261213603379633/)
+- [Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)
+- [Fandom Wiki](https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage)

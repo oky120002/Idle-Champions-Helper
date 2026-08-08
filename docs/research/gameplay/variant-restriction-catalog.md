@@ -4,7 +4,7 @@
 **社区来源**：[Fandom Wiki — Variants](https://idlechampions.fandom.com/wiki/Variants)、[Fandom Wiki — Patrons](https://idlechampions.fandom.com/wiki/Patrons)、[Reddit r/idlechampions — Patrons 101](https://www.reddit.com/r/idlechampions/comments/1ae6nqf/patrons_101_an_introduction/)、[Steam 讨论 — 限制型变体](https://steamcommunity.com/app/627690/discussions/0/1635292137567372667/)
 **可信度**：✅ 已确认 — 计数和分类由 `jq` 对 `variants.json` 全集统计直证，社区来源仅作机制概念参考
 
-## 概览
+## 机制
 
 变体（variant）在基础冒险上叠加规则改写。限制来源有两层：变体自身规则 + 可选的赞助人（patron）全局限制，二者叠加生效。1424 个变体中，629 个带赞助人标记，364 个兼属自由游玩。
 
@@ -88,7 +88,9 @@
 
 > 覆盖缺口：128 种 mechanics 中 planner 仅消费 3 种的结构化字段；属性门槛（57 变体）、全局效果（296）、槽位条件（101）、敌人强化（120）、英雄受伤（39+）、永久死亡（36）、阵型锁定（22）、去重限制（13）等均未建模。`restrictions` 文本是当前唯一信息源但未被解析。
 
-## 提取方法
+## 数据源
+
+文件：`public/data/v1/variants.json`（1424 条，128 种 mechanics 标记）。
 
 无统一字段标识「这个变体有什么限制」，需结合多个位置：
 
@@ -97,7 +99,10 @@
 - `allowedHeroIds` / `allowedTags` — 白名单投影（仅 `only_allow_crusaders` 时非空）；`|` 分隔表示 OR，`!` 前缀表示取反
 - `forcedHeroIds` — 强制英雄投影
 - `escortCount` — 基础占位数（递进占位需看 `slot_escort_by_area` + `restrictions` 文本）
-- 关键词扫描 `restrictions` 文本：`INT`/`CHA`/`STR`/`DEX`/`CON`/`WIS` + `score`、`ability score total`、`armored`、`hits-based`、`critical hit`
+
+## 提取方法
+
+关键词扫描 `restrictions` 文本提取属性门槛、护甲、暴击等规则：`INT`/`CHA`/`STR`/`DEX`/`CON`/`WIS` + `score`、`ability score total`、`armored`、`hits-based`、`critical hit`。
 
 ## 验证标注
 
@@ -105,3 +110,10 @@
 - 属性门槛 57 个：按 `restrictions[].original` 正则匹配 `INT|CHA|STR|score of|score is` 计数，可能遗漏使用非标准表述的变体
 - 社区来源（Fandom Wiki、Reddit、Steam）仅作机制概念参考，具体数值与字段以游戏数据为准
 - `allowedTags` 中存在括号、`^` 连接的复合表达式（如 `(chaotic^good)`、`!small^!dwarf^!gnome`），planner 当前按 `|` 拆分 OR，未处理 `^`（AND）和括号语义
+
+## 社区来源
+
+- [Fandom Wiki — Variants](https://idlechampions.fandom.com/wiki/Variants)
+- [Fandom Wiki — Patrons](https://idlechampions.fandom.com/wiki/Patrons)
+- [Reddit r/idlechampions — Patrons 101](https://www.reddit.com/r/idlechampions/comments/1ae6nqf/patrons_101_an_introduction/)
+- [Steam 讨论 — 限制型变体](https://steamcommunity.com/app/627690/discussions/0/1635292137567372667/)
