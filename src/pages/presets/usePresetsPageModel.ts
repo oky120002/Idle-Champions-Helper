@@ -15,7 +15,8 @@ import {
   buildPresetViews,
   buildPresetsMetrics,
   getErrorMessage,
-  errorMessageLocaleText,  parseScenarioTags,
+  errorMessageLocaleText,
+  parseScenarioTags,
 } from './preset-model'
 import type { PresetEditorState, PresetView, PresetsPageModel, PresetsState, StatusMessage } from './types'
 

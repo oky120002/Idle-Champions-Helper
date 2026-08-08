@@ -56,7 +56,7 @@ function scheduleDraftPersistence({
   scenarioRef,
   selectedLayoutId,
   setDraftStatus,
-}: Omit<UseFormationDraftPersistenceOptions, 'locale'>): () => void {
+}: UseFormationDraftPersistenceOptions): () => void {
   if (state.status !== 'ready' || !isDraftPersistenceArmed || editRevision === 0 || selectedLayoutId === '') {
     return () => {}
   }
