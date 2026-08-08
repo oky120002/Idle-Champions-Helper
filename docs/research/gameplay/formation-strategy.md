@@ -45,7 +45,7 @@
 | `behindTwoColumns` | 10 | 后方两列以内的英雄 |
 | `behindColumn` | 7 | 后方一列的英雄 |
 
-其余关系包括 `adjacentOrSelf`、`adjacentColumns`（左右相邻两列）、`frontTwoColumns`/`backTwoColumns`（最前/最后两列）、`rearMostColumn`（最后列）、`withinTwoSlotsOrSelf` 等边缘变体。
+其余关系包括 `adjacentOrSelf`、`adjacentColumns`（左右相邻两列）、`aheadTwoColumns`/`backTwoColumns`（前/后两列）、`allAheadColumns`（所有前方列）、`sameOrAheadColumns`/`sameOrBehindColumns`（同列±方向）、`withinTwoSlotsOrSelf` 等边缘变体。
 
 **距离计算**：相邻关系基于阵型布局的 `adjacentSlotIds`，通过 BFS 计算最短格子距离。例如 `withinTwoSlots` 要求 BFS 距离为 1 或 2（不含自身）。
 

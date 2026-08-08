@@ -2,7 +2,7 @@
 
 **数据快照**：2026-07-20（165 英雄）
 **社区来源**：[Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/5118863332768135681/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/tw8xxp/)、[Fandom Wiki](https://idlechampions.fandom.com/wiki/Favored_Foes)
-**可信度**：✅ 已确认 — 社区说法（门槛=总血量÷段数、低于门槛无效、看 BUD）与游戏数据（`armor threshold` 字段、Gazrick 护甲剥离降低门槛）一致
+**可信度**：✅ 已确认 — 社区说法（门槛=总血量÷段数、低于门槛无效、看 BUD）与游戏数据一致（护甲段数在变体描述中以整数出现，Gazrick 护甲剥离 `gazrick_ablation_amount,15` 直接降低门槛）
 
 ## 机制
 

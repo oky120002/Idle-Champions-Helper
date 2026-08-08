@@ -16,7 +16,7 @@
 |---|---|---|---|
 | **阵型占位**（escort） | NPC 或物体占据阵型格，不可移除、通常不打伤害 | `slot_escort`(282)、`slot_escort_by_area`(38)、`slot_escort_wandering`(3)；`escortCount` 字段记基础占位数 | 占用格应从可用槽位扣除；`escortCount` 已入 schema 但 planner 未消费 |
 | **英雄白名单** | 只允许特定英雄参战，按 id 或 tag 过滤 | `only_allow_crusaders`(501)；投影为 `allowedHeroIds`(13 非空) + `allowedTags`(122 非空) | planner 已建模：候选英雄按白名单过滤（`filterAndSortCandidateHeroes`） |
-| **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述，无结构化字段；57 个变体涉及 | 文本未解析，planner 无法自动识别；需先建属性筛选层 |
+| **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述，无结构化字段；精确匹配 `STAT score of N or higher/lower` 得 31 个，宽松匹配含复合表述得 ~45 个 | 文本未解析，planner 无法自动识别；需先建属性筛选层 |
 | **角色限制** | 按 DPS/Support/Tank/Healing/Speed 角色过滤 | `allowedTags` 含 `!dps`(4)、`!tanking`(2)、`!speed`(2)、`!healing`(1)；`disallow_crusaders`(17) | `!dps` 类已走 `allowedTags` 通道；`disallow_crusaders` 部分未投影 |
 | **强制英雄** | 指定英雄必须上场、不可移除 | `force_use_heroes`(329)；投影为 `forcedHeroIds` | planner 已建模：`forceInclude` 约束 + 候选豁免（`recommendationEngine.ts:501`） |
 | **全局效果** | 全队持续增益或减益，如伤害倍率、攻速调整 | `global_effects`(296)；`restrictions` 文本描述 | 未建模；伤害/攻速调整需注入评分参数 |
@@ -107,7 +107,7 @@
 ## 验证标注
 
 - 变体数量、mechanics 标记频率、字段非空计数：基于 `variants.json`（2026-08-06 快照，1424 条）用 `jq` 统计，覆盖全集
-- 属性门槛 57 个：按 `restrictions[].original` 正则匹配 `INT|CHA|STR|score of|score is` 计数，可能遗漏使用非标准表述的变体
+- 属性门槛：精确正则 `(CON|INT|CHA|STR|DEX|WIS) score of \d+ or (higher|lower)` 得 31 个，宽松匹配含复合表述约 45 个。旧版计数 57 使用的正则 `INT|CHA|STR` 会误匹配子串（如 "INTentions"），已废弃
 - 社区来源（Fandom Wiki、Reddit、Steam）仅作机制概念参考，具体数值与字段以游戏数据为准
 - `allowedTags` 中存在括号、`^` 连接的复合表达式（如 `(chaotic^good)`、`!small^!dwarf^!gnome`），planner 当前按 `|` 拆分 OR，未处理 `^`（AND）和括号语义
 

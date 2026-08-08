@@ -43,7 +43,7 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 | `bud_setter`（target） | `effect-definitions.json`、`champion-details/141.json`（影心）| 目标标签，只作用于当前设 BUD 的英雄 |
 | `if_not_bud_setting_champion`（amount_func） | `champion-details/15.json`（克朗）| 仅在该英雄非 BUD setter 时生效 |
 | `bud_setter_changed`（listener） | `champion-details/15.json` | BUD setter 切换时重新计算的触发器 |
-| `deal_bud_damage_when_hit` | `hero-abilities.json`（法莉德 0.5s、卡菈克 0s、瑞文嘉德 25s） | 命中时附加 N 秒 BUD 伤害 |
+| `deal_bud_damage_when_hit` | `hero-abilities.json`（法莉德 0.5s、卡菈克 0s、瑞文嘉德 25s）；`champion-details/16.json`（格罗玛 10s，含 `deal_bud_damage_in_area`）| 命中时附加 N 秒 BUD 伤害 |
 | `deal_bud_damage_in_area` | `effect-reference.json` | 对区域目标造成 N 秒 BUD 伤害 |
 | `stoki_bud_damage_on_repeat_attack` | `hero-abilities.json`（斯托吉） | 重复攻击附加 BUD 伤害 |
 | `umberto_bud_seconds_per_bee` | `hero-abilities.json`（翁贝托） | 每只蜜蜂附加 N 秒 BUD |
