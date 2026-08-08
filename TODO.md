@@ -33,10 +33,4 @@ repair: rebuild
     - 任务：审计 planner 是否有不该有的限制（patron 资格、英雄拥有状态等），如有则移到外部入参构建
     - 背景：champion filter 层做限制，planner 不碰；用户在 Patron 过滤功能中明确要求
 
-- fetchUserProfilePayloads 吞掉所有 per-mirror 错误：用户无法区分凭证错误与网络故障 <!-- auto-todo:id=atd_24227ab5ba -->
-  - 记录时间: `2026-08-08T10:03:25+08:00`
-  - 类型: issue
-  - 位置: `src/data/user-sync/officialClient.ts:241-260`
-  - 备注: 内层 catch 无条件吞掉 401/403/500/网络断开，外层统一替换为通用失败消息 - 影响：一次凭证错误同步发 5x3=15 个请求才失败，延迟长且无诊断价值
-
 <!-- auto-todo:end -->
