@@ -1,56 +1,45 @@
 import { describe, expect, it } from 'vitest'
-import { parseTagClause, parseTagExpression } from './normalize-adventures.ts'
+import { parseTagExpression } from './normalize-adventures.ts'
 
-describe('parseTagClause', () => {
+describe('parseTagExpression — flat tags', () => {
   it('simple positive tag', () => {
-    expect(parseTagClause('dwarf')).toEqual({ required: ['dwarf'], forbidden: [] })
-  })
-
-  it('negated tag', () => {
-    expect(parseTagClause('!dps')).toEqual({ required: [], forbidden: ['dps'] })
-  })
-
-  it('AND of positive tags (^)', () => {
-    expect(parseTagClause('lawful^good')).toEqual({ required: ['lawful', 'good'], forbidden: [] })
-  })
-
-  it('AND of negated tags', () => {
-    expect(parseTagClause('!small^!dwarf^!gnome')).toEqual({
-      required: [],
-      forbidden: ['small', 'dwarf', 'gnome'],
-    })
-  })
-
-  it('mixed AND', () => {
-    expect(parseTagClause('dragonborn^lawful')).toEqual({
-      required: ['dragonborn', 'lawful'],
-      forbidden: [],
-    })
-  })
-
-  it('strips outer parentheses', () => {
-    expect(parseTagClause('(chaotic^good)')).toEqual({
-      required: ['chaotic', 'good'],
-      forbidden: [],
-    })
+    expect(parseTagExpression('dwarf')).toEqual([
+      { required: ['dwarf'], forbidden: [] },
+    ])
   })
 
   it('lowercases tags', () => {
-    expect(parseTagClause('Dwarf')).toEqual({ required: ['dwarf'], forbidden: [] })
+    expect(parseTagExpression('Dwarf')).toEqual([
+      { required: ['dwarf'], forbidden: [] },
+    ])
   })
 
-  it('returns null for malformed unbalanced parens', () => {
-    expect(parseTagClause('((geneutral')).toBeNull()
-    expect(parseTagClause('evil)^dps)')).toBeNull()
+  it('single negated tag', () => {
+    expect(parseTagExpression('!good')).toEqual([
+      { required: [], forbidden: ['good'] },
+    ])
   })
 
-  it('returns null for empty', () => {
-    expect(parseTagClause('')).toBeNull()
-    expect(parseTagClause('  ')).toBeNull()
+  it('AND of positive tags (^)', () => {
+    expect(parseTagExpression('lawful^good')).toEqual([
+      { required: ['lawful', 'good'], forbidden: [] },
+    ])
+  })
+
+  it('AND of negated tags', () => {
+    expect(parseTagExpression('!small^!dwarf^!gnome')).toEqual([
+      { required: [], forbidden: ['small', 'dwarf', 'gnome'] },
+    ])
+  })
+
+  it('mixed AND', () => {
+    expect(parseTagExpression('dragonborn^lawful')).toEqual([
+      { required: ['dragonborn', 'lawful'], forbidden: [] },
+    ])
   })
 })
 
-describe('parseTagExpression', () => {
+describe('parseTagExpression — OR', () => {
   it('simple OR (| split)', () => {
     expect(parseTagExpression('dwarf|gnome|halfling')).toEqual([
       { required: ['dwarf'], forbidden: [] },
@@ -59,13 +48,7 @@ describe('parseTagExpression', () => {
     ])
   })
 
-  it('single AND clause', () => {
-    expect(parseTagExpression('lawful^good')).toEqual([
-      { required: ['lawful', 'good'], forbidden: [] },
-    ])
-  })
-
-  it('OR of AND clauses', () => {
+  it('OR of AND clauses (each parenthesized)', () => {
     expect(parseTagExpression('(chaotic^good)|(chaotic^neutral)|(neutral^good)')).toEqual([
       { required: ['chaotic', 'good'], forbidden: [] },
       { required: ['chaotic', 'neutral'], forbidden: [] },
@@ -79,27 +62,45 @@ describe('parseTagExpression', () => {
       { required: ['dragonborn'], forbidden: [] },
     ])
   })
+})
 
-  it('all negated AND', () => {
-    expect(parseTagExpression('!small^!dwarf^!gnome^!halfling^!kobold^!goblin')).toEqual([
-      { required: [], forbidden: ['small', 'dwarf', 'gnome', 'halfling', 'kobold', 'goblin'] },
+describe('parseTagExpression — nested parentheses (distribution)', () => {
+  it('v970: ((geneutral|evil)^dps)|(good^support) → 3 DNF clauses', () => {
+    // restriction 原文："only Neutral on good/evil axis and Evil Champions that have the DPS role,
+    // and you can only use Good Champions that have the Support role"
+    // = (geneutral AND dps) OR (evil AND dps) OR (good AND support)
+    expect(parseTagExpression('((geneutral|evil)^dps)|(good^support)')).toEqual([
+      { required: ['geneutral', 'dps'], forbidden: [] },
+      { required: ['evil', 'dps'], forbidden: [] },
+      { required: ['good', 'support'], forbidden: [] },
     ])
   })
 
-  it('single negated tag', () => {
-    expect(parseTagExpression('!good')).toEqual([
-      { required: [], forbidden: ['good'] },
+  it('parenthesized OR distributed over outer AND', () => {
+    expect(parseTagExpression('(a|b)^c')).toEqual([
+      { required: ['a', 'c'], forbidden: [] },
+      { required: ['b', 'c'], forbidden: [] },
     ])
   })
+})
 
-  it('skips malformed clauses (v970 data quality issue)', () => {
-    // v970 raw was `((geneutral|evil)^dps)|(good^support)` — | split inside parens produced:
-    const result = parseTagExpression('((geneutral|evil)^dps)|(good^support)')
-    // Only the valid clause survives; malformed `((geneutral` and `evil)^dps)` are dropped
-    expect(result).toContainEqual({ required: ['good', 'support'], forbidden: [] })
-  })
-
+describe('parseTagExpression — edge cases', () => {
   it('empty string produces empty expression', () => {
     expect(parseTagExpression('')).toEqual([])
+  })
+
+  it('whitespace-only produces empty expression', () => {
+    expect(parseTagExpression('   ')).toEqual([])
+  })
+
+  it('unbalanced parens → skip malformed part', () => {
+    expect(parseTagExpression('((geneutral')).toEqual([])
+    expect(parseTagExpression('evil)^dps)')).toEqual([])
+  })
+
+  it('unbalanced parens in one clause keeps valid clauses', () => {
+    expect(parseTagExpression('good|((evil')).toEqual([
+      { required: ['good'], forbidden: [] },
+    ])
   })
 })

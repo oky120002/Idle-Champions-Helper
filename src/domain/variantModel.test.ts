@@ -42,7 +42,6 @@ function createVariant(
     forcedHeroIds: overrides.forcedHeroIds ?? [],
     allowedHeroIds: overrides.allowedHeroIds ?? [],
     allowedTagExpression: overrides.allowedTagExpression ?? [],
-    attributeRequirements: overrides.attributeRequirements ?? [],
   }
 }
 

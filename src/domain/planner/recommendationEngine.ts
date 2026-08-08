@@ -6,7 +6,7 @@ import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
-import type { AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
+import type { AbilityScoreKey, AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { beamSearch } from './beamSearchRanking'
@@ -535,7 +535,7 @@ function matchesTagExpression(heroTags: readonly string[], expression: TagExpres
  * 英雄 abilityScores 可能缺失某属性 → 视为不满足该门槛（保守淘汰）。
  */
 function meetsAttributeRequirements(
-  abilityScores: Partial<Record<string, number>>,
+  abilityScores: Partial<Record<AbilityScoreKey, number>>,
   requirements: readonly AttributeRequirement[],
 ): boolean {
   return requirements.every((req) => {

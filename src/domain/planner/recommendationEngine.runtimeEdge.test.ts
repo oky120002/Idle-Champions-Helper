@@ -48,7 +48,6 @@ function buildVariant(id: string): Variant {
     forcedHeroIds: [],
     allowedHeroIds: [],
     allowedTagExpression: [],
-    attributeRequirements: [],
   }
 }
 

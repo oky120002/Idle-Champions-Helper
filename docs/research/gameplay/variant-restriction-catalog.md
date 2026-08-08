@@ -110,7 +110,7 @@
 - 变体数量、mechanics 标记频率、字段非空计数：基于 `variants.json`（2026-08-06 快照，1424 条）用 `jq` 统计，覆盖全集
 - 属性门槛：精确正则 `(CON|INT|CHA|STR|DEX|WIS) score of \d+ or (higher|lower)` 得 31 个，宽松匹配含复合表述约 45 个。旧版计数 57 使用的正则 `INT|CHA|STR` 会误匹配子串（如 "INTentions"），已废弃
 - 社区来源（Fandom Wiki、Reddit、Steam）仅作机制概念参考，具体数值与字段以游戏数据为准
-- `allowedTagExpression` 中存在括号、`^` 连接的复合表达式（如 `(chaotic^good)`、`!small^!dwarf^!gnome`），2026-08-08 升级为 DNF 结构（OR of ANDs）正确解析；malformed 数据（v970 `((geneutral`）保守跳过
+- `allowedTagExpression` 中存在括号、`^` 连接的复合表达式（如 `(chaotic^good)`、`!small^!dwarf^!gnome`），2026-08-08 升级为 DNF 结构（OR of ANDs）递归解析，支持嵌套括号分配律（如 v970 `((geneutral|evil)^dps)|(good^support)` → 3 子句）
 
 ## 社区来源
 

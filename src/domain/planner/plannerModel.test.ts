@@ -34,7 +34,6 @@ function createVariant(id: string): Variant {
     forcedHeroIds: [],
     allowedHeroIds: [],
     allowedTagExpression: [],
-    attributeRequirements: [],
     attackMix: { melee: 0, ranged: 0, magic: 0, other: 0 },
     specialEnemyCount: 0,
     escortCount: 0,

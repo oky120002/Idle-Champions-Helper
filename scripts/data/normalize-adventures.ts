@@ -727,56 +727,114 @@ function collectEscortNames(gameChanges: readonly unknown[] = []): string[] {
 }
 
 /**
- * 解析单个 tag 子句字符串 → TagClause（AND 内部）。
- * 输入是 `|`-split 后的单个元素，可能含 `^`(AND)、`!`(取反)、外层括号。
- * 括号不匹配（malformed 数据如 v970 `((geneutral`）→ null（保守跳过）。
- */
-export function parseTagClause(raw: string): TagClause | null {
-  let s = raw.trim()
-  // 去外层配对括号：(chaotic^good) → chaotic^good
-  while (s.startsWith('(') && s.endsWith(')')) {
-    const inner = s.slice(1, -1)
-    // 确认括号匹配：去一层后内部不应有多余的 ( 或 )
-    if (inner.includes('(') || inner.includes(')')) {
-      break
-    }
-    s = inner.trim()
-  }
-  // 残留括号 = malformed（如 `evil)^dps)` 或 `((geneutral`）
-  if (s.includes('(') || s.includes(')')) {
-    return null
-  }
-  const required: string[] = []
-  const forbidden: string[] = []
-  for (const atom of s.split('^')) {
-    const tag = atom.trim().toLowerCase()
-    if (tag === '') continue
-    if (tag.startsWith('!')) {
-      const negated = tag.slice(1)
-      if (negated !== '') forbidden.push(negated)
-    } else {
-      required.push(tag)
-    }
-  }
-  if (required.length === 0 && forbidden.length === 0) {
-    return null
-  }
-  return { required, forbidden }
-}
-
-/**
  * 解析 only_allow_crusaders.by_tags.tags 字符串 → TagExpression（DNF: OR of ANDs）。
- * `|`=OR 在此处拆分；每个元素经 parseTagClause 解析为单个 AND 子句。
+ *
+ * 文法：Expression = Term ('|' Term)*   (OR)
+ *       Term       = Factor ('^' Factor)* (AND)
+ *       Factor     = '!' Tag | Tag | '(' Expression ')'
+ *
+ * `|` 和 `^` 仅在括号外生效；括号内递归解析后做分配律展开（AND over OR → DNF）。
+ * 例：`((geneutral|evil)^dps)|(good^support)` →
+ *   [{required:['geneutral','dps']}, {required:['evil','dps']}, {required:['good','support']}]
  */
 export function parseTagExpression(tagsString: string): TagExpression {
-  const expression: TagExpression = []
-  for (const raw of tagsString.split('|')) {
-    const clause = parseTagClause(raw)
-    if (clause !== null) {
-      expression.push(clause)
+  return parseToDNF(tagsString.trim())
+}
+
+/** 递归解析 → DNF。空串或全 malformed → 空数组（保守丢弃）。 */
+function parseToDNF(input: string): TagClause[] {
+  if (input === '') return []
+
+  // 按括号外 `|` 拆 OR
+  const orParts = splitTopLevel(input, '|')
+  let result: TagClause[] = []
+
+  for (const orPart of orParts) {
+    // 按括号外 `^` 拆 AND
+    const factorDNFs: TagClause[][] = []
+    for (const andPart of splitTopLevel(orPart, '^')) {
+      const trimmed = andPart.trim()
+      if (trimmed === '') continue
+
+      // 括号包裹 → 去匹配外层括号后递归
+      const inner = stripMatchingParens(trimmed)
+      if (inner !== null) {
+        const subDNF = parseToDNF(inner)
+        if (subDNF.length > 0) factorDNFs.push(subDNF)
+        continue
+      }
+      // 残留括号（无法配对）= malformed，保守跳过
+      if (trimmed.includes('(') || trimmed.includes(')')) continue
+
+      const atom = parseAtom(trimmed)
+      if (atom !== null) factorDNFs.push([atom])
+    }
+
+    result = result.concat(distributeAND(factorDNFs))
+  }
+  return result
+}
+
+/** 按分隔符拆分，仅匹配括号深度 0 处。不平衡括号的残片由 parseToDNF 的 includes 检查自然丢弃。 */
+function splitTopLevel(s: string, sep: string): string[] {
+  const parts: string[] = []
+  let depth = 0
+  let start = 0
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i]
+    if (ch === '(') depth++
+    else if (ch === ')') depth--
+    else if (depth === 0 && ch === sep) {
+      parts.push(s.slice(start, i))
+      start = i + 1
     }
   }
-  return expression
+  parts.push(s.slice(start))
+  return parts
+}
+
+/** 若字符串被匹配的外层括号包裹，返回去括号后的内容；否则 null。 */
+function stripMatchingParens(s: string): string | null {
+  if (!s.startsWith('(') || !s.endsWith(')')) return null
+  let depth = 0
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i]
+    if (ch === '(') depth++
+    else if (ch === ')') {
+      depth--
+      if (depth === 0) return i === s.length - 1 ? s.slice(1, -1).trim() : null
+    }
+  }
+  return null
+}
+
+/** 解析单个原子 tag → TagClause（`!tag`→forbidden，`tag`→required）。 */
+function parseAtom(tag: string): TagClause | null {
+  const t = tag.toLowerCase()
+  if (t === '') return null
+  if (t.startsWith('!')) {
+    const negated = t.slice(1)
+    return negated === '' ? null : { required: [], forbidden: [negated] }
+  }
+  return { required: [t], forbidden: [] }
+}
+
+/** 分配律：AND 多个 DNF 因子 → 笛卡尔积合并。[[A,B],[C]] → [{…A,…C},{…B,…C}] */
+function distributeAND(factors: TagClause[][]): TagClause[] {
+  if (factors.length === 0) return []
+  return factors.reduce((acc, factor) => {
+    if (acc.length === 0) return factor
+    const merged: TagClause[] = []
+    for (const a of acc) {
+      for (const b of factor) {
+        merged.push({
+          required: [...a.required, ...b.required],
+          forbidden: [...a.forbidden, ...b.forbidden],
+        })
+      }
+    }
+    return merged
+  }, [] as TagClause[])
 }
 
 function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRestrictions {
