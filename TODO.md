@@ -33,12 +33,6 @@ repair: rebuild
     - 任务：审计 planner 是否有不该有的限制（patron 资格、英雄拥有状态等），如有则移到外部入参构建
     - 背景：champion filter 层做限制，planner 不碰；用户在 Patron 过滤功能中明确要求
 
-- userProfileSnapshotSchema 嵌套字段覆盖不足：equipment/feats/lootBySlot 等经 .loose() 透传无校验，腐蚀可静默进入 scoreFormation <!-- auto-todo:id=atd_6a92065be3 -->
-  - 记录时间: `2026-08-08T10:03:21+08:00`
-  - 类型: issue
-  - 位置: `src/domain/types/stored-record-schemas.ts:18-32`
-  - 备注: 与 #4 level=NaN 同类问题，仅 level 被堵住 - 影响：非 level 字段腐蚀仍静默进入消费方 - 证据：stored-record-schemas.ts ownedHeroItemSchema 只钉 heroId/level/isOwned
-
 - fetchUserProfilePayloads 吞掉所有 per-mirror 错误：用户无法区分凭证错误与网络故障 <!-- auto-todo:id=atd_24227ab5ba -->
   - 记录时间: `2026-08-08T10:03:25+08:00`
   - 类型: issue
