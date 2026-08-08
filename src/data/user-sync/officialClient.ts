@@ -243,16 +243,15 @@ export async function fetchUserProfilePayloads(
   options: FetchUserProfilePayloadsOptions = {},
 ): Promise<UserProfilePayloads> {
   const baseUrls = await resolveOfficialPlayServerBaseUrls(options)
-  let lastError: Error | null = null
 
   for (const baseUrl of baseUrls) {
     try {
       return await fetchUserProfilePayloadsFromBaseUrl(credentials, options, baseUrl)
     } catch (error) {
-      lastError = error instanceof Error ? error : new Error(String(error))
+      const message = error instanceof Error ? error.message : String(error)
       // 认证错误不重试其他 mirror（凭证无效在任何 mirror 结果相同）
-      if (lastError.message.includes('HTTP 401') || lastError.message.includes('HTTP 403')) {
-        throw new Error(`官方数据同步失败：凭证无效或已过期。`)
+      if (message.includes('HTTP 401') || message.includes('HTTP 403')) {
+        throw new Error('官方数据同步失败：凭证无效或已过期。', { cause: error })
       }
     }
   }
