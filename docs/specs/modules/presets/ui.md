@@ -10,7 +10,9 @@
 
 ## 与其他模块的衔接
 
-- 来自阵型编辑：`layoutId`、`placements`、`scenarioRef`、当前数据版本 `dataVersion`。
+- 来自阵型编辑：`layoutId`、`placements`、`scenarioRef`、当前数据版本 `dataVersion`、`filterSnapshot`（保存时的英雄筛选条件快照）。
+- 来自英雄列表页：有活跃筛选时，筛选面板下方显示「带着当前筛选去摆阵型」入口，跳转到 `/formation?<筛选参数>`，阵型页消费同一 URL 协议（共享 param keys）缩小候选池。
+- 恢复方案回阵型页：候选池按方案携带的 `filterSnapshot` 还原（`null` 时为全量候选）。
 
 ## 核心交互
 

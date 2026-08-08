@@ -26,6 +26,9 @@ export function openAppDatabase(): Promise<IDBDatabase> {
 
     request.onerror = () => reject(request.error ?? new Error('打开 IndexedDB 失败。'))
 
+    request.onblocked = () =>
+      reject(new Error('IndexedDB 升级被其他标签页阻塞，请关闭其他标签页后重试。'))
+
     request.onupgradeneeded = () => {
       const database = request.result
 
@@ -54,7 +57,12 @@ export function openAppDatabase(): Promise<IDBDatabase> {
       }
     }
 
-    request.onsuccess = () => resolve(request.result)
+    request.onsuccess = () => {
+      const database = request.result
+      // 其他标签页请求升级时自动释放当前连接，从源头避免 blocking。
+      database.onversionchange = () => database.close()
+      resolve(database)
+    }
   })
 }
 

@@ -55,10 +55,11 @@ export function mockFormationPageCollections({ version, formations, champions }:
   })
 }
 
-export function renderFormationPage() {
+export function renderFormationPage(initialEntry?: string) {
+  const routerProps = initialEntry !== undefined ? { initialEntries: [initialEntry] } : {}
   return render(
     <I18nProvider>
-      <MemoryRouter>
+      <MemoryRouter {...routerProps}>
         <FormationPage />
       </MemoryRouter>
     </I18nProvider>,

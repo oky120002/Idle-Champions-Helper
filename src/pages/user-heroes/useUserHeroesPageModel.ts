@@ -52,14 +52,14 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     locationSearch: filterState.locationSearch,
     stateStatus: state.status,
     filteredCount: derived.filteredChampions.length,
-    visibleCount: state.status === 'ready' ? state.champions.length : 0,
+    visibleCount: derived.filteredChampions.length,
     showAllResults: true,
     transitionKey: filterState.transitionKey,
   })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
 
   function runFilterMutation(mutation: () => void) {
-    motion.prepareResultsViewportTransition('filters')
+    motion.prepareResultsViewportTransition()
     mutation()
   }
 
@@ -118,6 +118,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     rosterSummary: derived.rosterSummary,
     activeRosterMetricFilterId,
     shareLinkState,
+    formationWithFiltersHref: null,
     showResultsQuickNavTop: motion.showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,

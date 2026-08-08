@@ -3,7 +3,7 @@ import type { AppLocale } from '../../app/i18n'
 import type { OwnedHero } from '../../domain/user-profile/types'
 import type { ActiveFilterChip } from '../../features/champion-filters/types'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
-import { filterChampions } from '../../rules/championFilter'
+import { championFilterSnapshotToFilters, filterChampions, hasActiveChampionFilters } from '../../rules/championFilter'
 import { buildActiveFilterChips } from '../champions/champion-filter-model'
 import {
   buildChampionRosterSeatColumns,
@@ -86,19 +86,7 @@ export function useUserHeroesPageDerived({
       return []
     }
 
-    return filterChampions(state.champions, {
-      search: filters.search,
-      seats: filters.selectedSeats,
-      roles: filters.selectedRoles,
-      affiliations: filters.selectedAffiliations,
-      races: filters.selectedRaces,
-      genders: filters.selectedGenders,
-      alignments: filters.selectedAlignments,
-      professions: filters.selectedProfessions,
-      acquisitions: filters.selectedAcquisitions,
-      mechanics: filters.selectedMechanics,
-      patrons: filters.selectedPatrons,
-    })
+    return filterChampions(state.champions, championFilterSnapshotToFilters(filters))
   }, [filters, state])
   const ownedHeroById = useMemo(() => buildOwnedHeroById(ownedHeroes), [ownedHeroes])
   const filteredChampionIds = useMemo(
@@ -199,21 +187,7 @@ export function useUserHeroesPageDerived({
     ...(rosterMetricChip ? [rosterMetricChip] : []),
   ]
   const activeFilters = activeFilterChips.map((chip) => chip.label)
-  const hasActiveFilters =
-    filters.search.trim().length > 0 ||
-    activeRosterMetricFilterId !== null ||
-    [
-      filters.selectedSeats,
-      filters.selectedRoles,
-      filters.selectedAffiliations,
-      filters.selectedRaces,
-      filters.selectedGenders,
-      filters.selectedAlignments,
-      filters.selectedProfessions,
-      filters.selectedAcquisitions,
-      filters.selectedMechanics,
-      filters.selectedPatrons,
-    ].some((group) => group.length > 0)
+  const hasActiveFilters = hasActiveChampionFilters(filters) || activeRosterMetricFilterId !== null
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =
     filters.selectedRaces.length + filters.selectedGenders.length + filters.selectedAlignments.length

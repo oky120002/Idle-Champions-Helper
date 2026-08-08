@@ -14,12 +14,28 @@ import { z } from 'zod'
  * stored-record-schema-sync.test.ts（schema 钉死字段 ⊆ 消费 interface）。
  */
 
-/** OwnedHero 核心：heroId + level（zod4 拒 NaN，#4）+ isOwned；loot/legendary/equipment 嵌套结构由 TS 类型管。 */
+/**
+ * OwnedHero 核心：heroId + level（zod4 拒 NaN，#4）+ isOwned + equipment/feats/
+ * specializations/lootBySlot（消费方 scoreFormation 直接读取，null/类型偏差会 crash）。
+ * legendaryBySlot/unlockedFeats/activeFeats 等嵌套结构由 TS 类型管（.loose 透传）。
+ */
 export const ownedHeroItemSchema = z
   .object({
     heroId: z.string(),
     level: z.number(),
     isOwned: z.boolean(),
+    equipment: z.record(z.string(), z.number()),
+    feats: z.array(z.string()),
+    specializations: z.array(z.string()),
+    lootBySlot: z.record(
+      z.string(),
+      z.object({
+        rarity: z.number(),
+        gild: z.number(),
+        enchant: z.number(),
+        pigment: z.number(),
+      }).loose(),
+    ),
   })
   .loose()
 
@@ -31,21 +47,49 @@ export const userProfileSnapshotSchema = z
   })
   .loose()
 
+const scenarioRefSchema = z.object({ kind: z.string(), id: z.string() }).nullable()
+
 export const formationDraftSchema = z
   .object({
+    schemaVersion: z.literal(1),
+    dataVersion: z.string(),
     layoutId: z.string(),
+    scenarioRef: scenarioRefSchema,
     placements: z.record(z.string(), z.string()),
     updatedAt: z.string(),
+  })
+  .loose()
+
+export const championFilterSnapshotSchema = z
+  .object({
+    search: z.string(),
+    selectedSeats: z.array(z.number()),
+    selectedRoles: z.array(z.string()),
+    selectedAffiliations: z.array(z.string()),
+    selectedRaces: z.array(z.string()),
+    selectedGenders: z.array(z.string()),
+    selectedAlignments: z.array(z.string()),
+    selectedProfessions: z.array(z.string()),
+    selectedAcquisitions: z.array(z.string()),
+    selectedMechanics: z.array(z.string()),
+    selectedPatrons: z.array(z.string()),
   })
   .loose()
 
 export const formationPresetSchema = z
   .object({
     id: z.string(),
+    schemaVersion: z.literal(1),
+    dataVersion: z.string(),
     name: z.string(),
+    description: z.string(),
     layoutId: z.string(),
     placements: z.record(z.string(), z.string()),
+    scenarioRef: scenarioRefSchema,
+    scenarioTags: z.array(z.string()),
     priority: z.enum(['low', 'medium', 'high']),
+    filterSnapshot: championFilterSnapshotSchema.nullable().optional(),
+    createdAt: z.string(),
     updatedAt: z.string(),
   })
   .loose()
@@ -55,9 +99,6 @@ export const heroAbilityOverridePatchSchema = z
     heroId: z.string(),
   })
   .loose()
-
-export const formationPresetArraySchema = z.array(formationPresetSchema)
-export const heroAbilityOverridePatchArraySchema = z.array(heroAbilityOverridePatchSchema)
 
 /**
  * 校验存储记录读出：失败即 throw（带字段路径诊断），由消费方 catch 兜底。

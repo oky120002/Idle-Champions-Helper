@@ -3,6 +3,7 @@ import type { NavigateFunction } from 'react-router-dom'
 import { createErrorStatusMessage, createSuccessStatusMessage } from '../../components/statusMessage'
 import { saveFormationPreset } from '../../data/formationPresetStore'
 import type { FormationLayout, PresetPriority, ScenarioRef } from '../../domain/types'
+import type { CommonFilterSearchState } from '../../features/champion-filters/query-state'
 import { buildPresetId, errorMessageLocaleText, parseScenarioTags } from './formation-model-helpers'
 import {
   DEFAULT_PRESET_FORM_STATE,
@@ -20,6 +21,8 @@ type BuildFormationPresetActionsOptions = {
   presetForm: PresetFormState
   placements: Record<string, string>
   scenarioRef: ScenarioRef | null
+  filterState: CommonFilterSearchState
+  hasActiveFilter: boolean
   setIsSavingPreset: Dispatch<SetStateAction<boolean>>
   setPresetForm: Dispatch<SetStateAction<PresetFormState>>
   setPresetStatus: Dispatch<SetStateAction<StatusMessage | null>>
@@ -34,6 +37,8 @@ export function buildFormationPresetActions({
   presetForm,
   placements,
   scenarioRef,
+  filterState,
+  hasActiveFilter,
   setIsSavingPreset,
   setPresetForm,
   setPresetStatus,
@@ -68,6 +73,7 @@ export function buildFormationPresetActions({
           scenarioRef,
           scenarioTags: parseScenarioTags(presetForm.scenarioTagsInput),
           priority: presetForm.priority,
+          filterSnapshot: hasActiveFilter ? filterState : null,
           createdAt: timestamp,
           updatedAt: timestamp,
         } as const

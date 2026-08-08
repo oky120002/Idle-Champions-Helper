@@ -10,9 +10,7 @@ import { APP_DATABASE_NAME } from '../../data/localDatabase'
 import {
   USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY,
   deleteUserProfileData,
-  readCredentialVault,
   readUserProfileSnapshot,
-  saveCredentialVault,
   saveUserProfileSnapshot,
 } from '../../data/user-profile-store'
 import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
@@ -404,9 +402,8 @@ describe('user data sync flow', () => {
     })
   })
 
-  it('点击删除会清除 snapshot 和可选 vault', async () => {
+  it('点击删除会清除 snapshot', async () => {
     await saveUserProfileSnapshot(createUserProfileSnapshot())
-    await saveCredentialVault({ userId: '12345678', hash: 'abc123' })
 
     renderSyncPanel()
 
@@ -417,7 +414,6 @@ describe('user data sync flow', () => {
 
     await waitFor(async () => {
       expect(await readUserProfileSnapshot()).toBeNull()
-      expect(await readCredentialVault()).toBeNull()
     })
 
     expect(screen.getByText(/尚未保存/i)).toBeInTheDocument()

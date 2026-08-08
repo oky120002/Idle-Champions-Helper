@@ -1,5 +1,5 @@
 import type { FormationPreset } from '../domain/types'
-import { formationPresetArraySchema, parseStoredRecord } from '../domain/types/stored-record-schemas'
+import { formationPresetSchema, parseStoredRecord } from '../domain/types/stored-record-schemas'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from './localDatabase'
 
 function sortByUpdatedAtDescending(items: FormationPreset[]): FormationPreset[] {
@@ -23,8 +23,16 @@ export async function listFormationPresets(): Promise<FormationPreset[]> {
     const store = transaction.objectStore(APP_STORE_NAMES.formationPresets)
     const raw = await requestToPromise(store.getAll() as IDBRequest<unknown[]>)
     await waitForTransaction(transaction)
-    const presets = parseStoredRecord(raw, formationPresetArraySchema, 'formation presets') as FormationPreset[]
-    return sortByUpdatedAtDescending(presets)
+    // 逐条校验：跳过腐蚀记录，不让一条坏数据连坐全部方案
+    const valid: FormationPreset[] = []
+    for (const item of raw) {
+      try {
+        valid.push(parseStoredRecord(item, formationPresetSchema, 'formation preset') as FormationPreset)
+      } catch {
+        // 腐蚀记录跳过
+      }
+    }
+    return sortByUpdatedAtDescending(valid)
   } finally {
     database.close()
   }

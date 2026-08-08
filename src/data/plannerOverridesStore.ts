@@ -1,6 +1,5 @@
 import type { HeroAbilityOverridePatch } from '../domain/abilities/abilityModel'
 import {
-  heroAbilityOverridePatchArraySchema,
   heroAbilityOverridePatchSchema,
   parseStoredRecord,
 } from '../domain/types/stored-record-schemas'
@@ -14,7 +13,16 @@ export async function listPlannerHeroOverrides(): Promise<HeroAbilityOverridePat
     const store = transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides)
     const raw = await requestToPromise(store.getAll() as IDBRequest<unknown[]>)
     await waitForTransaction(transaction)
-    return parseStoredRecord(raw, heroAbilityOverridePatchArraySchema, 'planner hero overrides') as HeroAbilityOverridePatch[]
+    // 逐条校验：跳过腐蚀记录，不让一条坏数据连坐全部
+    const valid: HeroAbilityOverridePatch[] = []
+    for (const item of raw) {
+      try {
+        valid.push(parseStoredRecord(item, heroAbilityOverridePatchSchema, 'planner hero override') as HeroAbilityOverridePatch)
+      } catch {
+        // 腐蚀记录跳过
+      }
+    }
+    return valid
   } finally {
     database.close()
   }

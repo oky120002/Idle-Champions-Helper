@@ -77,7 +77,7 @@ export function usePetsPageModel(): PetsPageModel {
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
 
   function runFilterMutation(mutation: () => void) {
-    motion.prepareResultsViewportTransition('filters')
+    motion.prepareResultsViewportTransition()
     filterState.setShowAllResults(false)
     mutation()
   }
@@ -107,14 +107,14 @@ export function usePetsPageModel(): PetsPageModel {
       updateSourceFilter: (value) => runFilterMutation(() => filterState.setSourceFilter(value)),
       updateAssetFilter: (value) => runFilterMutation(() => filterState.setAssetFilter(value)),
       clearAllFilters: () => {
-        motion.prepareResultsViewportTransition('filters')
+        motion.prepareResultsViewportTransition()
         filterState.setShowAllResults(false)
         filterState.setQuery('')
         filterState.setSourceFilter('all')
         filterState.setAssetFilter('all')
       },
       toggleResultVisibility: () => {
-        motion.prepareResultsViewportTransition('visibility')
+        motion.prepareResultsViewportTransition()
         filterState.setShowAllResults((current) => !current)
       },
       randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),

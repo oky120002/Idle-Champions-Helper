@@ -6,7 +6,6 @@ const RESULTS_SCROLL_DURATION_MS = 340
 const RESULTS_QUICK_NAV_THRESHOLD = 10
 
 type ResultsStateStatus = 'loading' | 'ready' | 'error'
-type ResultsTransitionReason = 'filters' | 'visibility'
 
 type WorkbenchResultsMotionOptions = {
   storageKey: string
@@ -20,7 +19,6 @@ type WorkbenchResultsMotionOptions = {
 
 type PendingResultsTransition = {
   shouldRelocate: boolean
-  reason: ResultsTransitionReason
 }
 
 function buildWorkbenchScrollRestoreKey(storageKey: string, search: string): string {
@@ -135,7 +133,7 @@ export function useWorkbenchResultsMotion({
     [cancelScrollAnimation],
   )
 
-  const prepareResultsViewportTransition = useCallback((reason: ResultsTransitionReason = 'filters') => {
+  const prepareResultsViewportTransition = useCallback(() => {
     const pane = resultsPaneRef.current
 
     if (!pane) {
@@ -144,7 +142,6 @@ export function useWorkbenchResultsMotion({
 
     pendingResultsTransitionRef.current = {
       shouldRelocate: pane.scrollTop > 8,
-      reason,
     }
   }, [])
 
@@ -274,4 +271,4 @@ export function useWorkbenchResultsMotion({
   }
 }
 
-export type { ResultsTransitionReason, WorkbenchResultsMotionOptions, RefObject }
+export type { WorkbenchResultsMotionOptions, RefObject }

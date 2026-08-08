@@ -1,14 +1,14 @@
 import { seatOptions } from './options'
 
-export function readSearchValue(searchParams: URLSearchParams): string {
-  return searchParams.get('q')?.trim() ?? ''
+export function readSearchValue(searchParams: URLSearchParams, key: string): string {
+  return searchParams.get(key)?.trim() ?? ''
 }
 
-export function readSeatValues(searchParams: URLSearchParams): number[] {
+export function readSeatValues(searchParams: URLSearchParams, key: string): number[] {
   return Array.from(
     new Set(
       searchParams
-        .getAll('seat')
+        .getAll(key)
         .map((value) => Number.parseInt(value, 10))
         .filter((value) => seatOptions.includes(value)),
     ),

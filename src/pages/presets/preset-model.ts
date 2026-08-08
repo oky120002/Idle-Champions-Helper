@@ -4,7 +4,7 @@ import { listFormationPresets } from '../../data/formationPresetStore'
 import { buildOrderedChampionsFromPlacements } from '../../domain/championPlacement'
 import { getLocalizedTextPair } from '../../domain/localizedText'
 import type { Champion, FormationLayout, FormationPreset, PresetPriority } from '../../domain/types'
-import { PRESET_SCHEMA_VERSION } from './constants'
+import { PRESET_SCHEMA_VERSION } from '../formation/types'
 import type { PresetEditorState, PresetsMetrics, PresetView } from './types'
 
 export function getErrorMessage(error: unknown): string {

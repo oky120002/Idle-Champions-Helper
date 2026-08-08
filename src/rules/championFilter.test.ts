@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { Champion, ChampionPatronEligibility, LocalizedText } from '../domain/types'
-import { filterChampions } from './championFilter'
+import type { Champion, ChampionFilterSnapshot, ChampionPatronEligibility, LocalizedText } from '../domain/types'
+import { championFilterSnapshotToFilters, filterChampions, hasActiveChampionFilters } from './championFilter'
 
 function localized(original: string, display: string): LocalizedText {
   return { original, display }
@@ -180,5 +180,68 @@ describe('filterChampions', () => {
         patrons: ['5'],
       }).map((champion) => champion.id),
     ).toEqual([])
+  })
+})
+
+describe('championFilterSnapshotToFilters', () => {
+  it('selected* 字段名映射到短字段名，search 直传', () => {
+    const snapshot: ChampionFilterSnapshot = {
+      search: 'bru',
+      selectedSeats: [1],
+      selectedRoles: ['support'],
+      selectedAffiliations: ['aff-1'],
+      selectedRaces: ['dwarf'],
+      selectedGenders: ['male'],
+      selectedAlignments: ['lawful-good'],
+      selectedProfessions: ['fighter'],
+      selectedAcquisitions: ['core'],
+      selectedMechanics: ['m1'],
+      selectedPatrons: ['p1'],
+    }
+    expect(championFilterSnapshotToFilters(snapshot)).toEqual({
+      search: 'bru',
+      seats: [1],
+      roles: ['support'],
+      affiliations: ['aff-1'],
+      races: ['dwarf'],
+      genders: ['male'],
+      alignments: ['lawful-good'],
+      professions: ['fighter'],
+      acquisitions: ['core'],
+      mechanics: ['m1'],
+      patrons: ['p1'],
+    })
+  })
+})
+
+describe('hasActiveChampionFilters', () => {
+  const empty: ChampionFilterSnapshot = {
+    search: '',
+    selectedSeats: [],
+    selectedRoles: [],
+    selectedAffiliations: [],
+    selectedRaces: [],
+    selectedGenders: [],
+    selectedAlignments: [],
+    selectedProfessions: [],
+    selectedAcquisitions: [],
+    selectedMechanics: [],
+    selectedPatrons: [],
+  }
+
+  it('全空返回 false', () => {
+    expect(hasActiveChampionFilters(empty)).toBe(false)
+  })
+
+  it('search 非空返回 true', () => {
+    expect(hasActiveChampionFilters({ ...empty, search: 'bru' })).toBe(true)
+  })
+
+  it('selectedSeats 非空返回 true', () => {
+    expect(hasActiveChampionFilters({ ...empty, selectedSeats: [1] })).toBe(true)
+  })
+
+  it('selectedRaces 非空返回 true', () => {
+    expect(hasActiveChampionFilters({ ...empty, selectedRaces: ['dwarf'] })).toBe(true)
   })
 })

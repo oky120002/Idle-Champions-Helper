@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
   createWorkbenchFilterToolbarItems,
@@ -102,6 +103,11 @@ export function ChampionsPage() {
         <div className="workbench-page__sidebar-stack">
           <ChampionsPrimaryFilters model={model} />
           <ChampionsAdditionalFilters model={model} />
+          {model.formationWithFiltersHref !== null ? (
+            <Link className="action-button action-button--secondary formation-filter-link" to={model.formationWithFiltersHref}>
+              {t({ zh: '带着当前筛选去摆阵型', en: 'Open formation with these filters' })}
+            </Link>
+          ) : null}
         </div>
       )}
       contentHeader={<ChampionsWorkbenchContentHeader model={model} />}

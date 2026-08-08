@@ -140,14 +140,14 @@ function useVariantsDerivedData({ locale, state, selectedCampaign, selectedAdven
   }
 }
 function resetVariantFilters(motion: MotionApi, fs: FilterStateApi) {
-  motion.prepareResultsViewportTransition('filters'); fs.setShowAllResults(false); fs.setSearch('')
+  motion.prepareResultsViewportTransition(); fs.setShowAllResults(false); fs.setSearch('')
   fs.setSelectedCampaign(ALL_CAMPAIGNS); fs.setSelectedAdventureId(''); fs.setSelectedSceneIds([])
   fs.setSelectedEnemyTypeIds([]); fs.setSelectedAttackProfile('__all__'); fs.setSelectedSpecialEnemyRange('__all__')
   fs.setAreaSearch(''); fs.setDetailTab('variants')
 }
 function buildVariantsActions(motion: MotionApi, groups: VariantCampaignGroup[], fs: FilterStateApi) {
   const runFilterMutation = (mutation: () => void) => {
-    motion.prepareResultsViewportTransition('filters')
+    motion.prepareResultsViewportTransition()
     fs.setShowAllResults(false)
     mutation()
   }
@@ -161,7 +161,7 @@ function buildVariantsActions(motion: MotionApi, groups: VariantCampaignGroup[],
       runFilterMutation(() => { fs.setSelectedCampaign(target.campaignId); fs.setSelectedAdventureId(target.adventureId) })
     },
     selectDetailTab: (value: VariantDetailTabId) => {
-      motion.prepareResultsViewportTransition('filters')
+      motion.prepareResultsViewportTransition()
       fs.setDetailTab(value)
     },
     updateSearch: (value: string) => runFilterMutation(() => fs.setSearch(value)),
@@ -175,7 +175,7 @@ function buildVariantsActions(motion: MotionApi, groups: VariantCampaignGroup[],
     toggleScene: (value: string) => runFilterMutation(() => fs.setSelectedSceneIds((current) => toggleVariantSelection(current, value))),
     clearAllFilters: () => resetVariantFilters(motion, fs),
     toggleResultVisibility: () => {
-      motion.prepareResultsViewportTransition('visibility')
+      motion.prepareResultsViewportTransition()
       fs.setShowAllResults((current) => !current)
     },
   }
