@@ -98,6 +98,37 @@ Idle Champions 社区资源目录 + 已抓取 URL 追踪。每个 URL 对应一�
 | https://steamcommunity.com/app/627690/discussions/0/1635292137567372667/ | Steam | ✅ |
 | https://www.reddit.com/r/idlechampions/comments/1ae6nqf/ | Reddit | ✅ |
 
+### legendary-forge.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://www.reddit.com/r/idlechampions/comments/ppl9mg/legendary_forge_101_an_introduction/ | Reddit | ✅ |
+| https://idlechampions.fandom.com/wiki/Forge | Wiki | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/3767858814403754090/ | Steam | ✅ |
+| https://idlechampions.fandom.com/wiki/Trials_of_Mount_Tiamat | Wiki | ✅ |
+
+### familiars.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Familiars | Wiki | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1hf5gy3/have_i_been_using_familiars_wrong | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/9ntn8m/saving_gems_for_familiars_is_it_worth_it | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1ickb8s/automatically_populate_familiars_on_new_adventure | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1ccnpoi/help_with_gem_farming_strategy | Reddit | ✅ |
+
+### potions.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idle-champions.fandom.com/wiki/Potions | Wiki | ✅ |
+| https://codenameentertainment.com/?page=idle_champions&post_id=1776 | CNE 官方 | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/gzsg9u/multiple_potions_at_once/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/8durb1/epic_potions_stackhow/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/q747og/maximising_fire_breath_potion_effect/ | Reddit | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/4390400383726725443/ | Steam | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/1735462352473180129/ | Steam | ✅ |
+
 ## 使用规则
 
 - 抓取新 URL 前先查此表，已抓过的不重复
