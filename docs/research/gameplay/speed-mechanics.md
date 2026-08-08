@@ -120,14 +120,6 @@ Briv（ID 58）独有的跳层机制。游戏数据字段：`briv_unnatural_hast
 
 ## 社区来源
 
-- [Reddit：最低攻击冷却讨论](https://www.reddit.com/r/idlechampions/comments/wkbwxo/what_is_the_minimum_attack_speed_cooldown/)
-- [Steam：Briv 跳层数学](https://steamcommunity.com/app/627690/discussions/0/1872875054775725577/)
-- [Steam：速度英雄对比](https://steamcommunity.com/app/627690/discussions/0/3003298578176303902/)
-- [Fandom Wiki：Briv](https://idlechampions.fandom.com/wiki/Briv)
-- [Fandom Wiki：Speed 分类](https://idlechampions.fandom.com/wiki/Category:Speed)
-
-## 社区来源
-
 - [Reddit — 最低攻击冷却讨论](https://www.reddit.com/r/idlechampions/comments/wkbwxo/what_is_the_minimum_attack_speed_cooldown/)
 - [Steam — Briv 跳层数学](https://steamcommunity.com/app/627690/discussions/0/1872875054775725577/)
 - [Steam — 速度英雄对比](https://steamcommunity.com/app/627690/discussions/0/3003298578176303902/)
