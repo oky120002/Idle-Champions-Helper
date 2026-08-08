@@ -14,12 +14,28 @@ import { z } from 'zod'
  * stored-record-schema-sync.test.ts（schema 钉死字段 ⊆ 消费 interface）。
  */
 
-/** OwnedHero 核心：heroId + level（zod4 拒 NaN，#4）+ isOwned；loot/legendary/equipment 嵌套结构由 TS 类型管。 */
+/**
+ * OwnedHero 核心：heroId + level（zod4 拒 NaN，#4）+ isOwned + equipment/feats/
+ * specializations/lootBySlot（消费方 scoreFormation 直接读取，null/类型偏差会 crash）。
+ * legendaryBySlot/unlockedFeats/activeFeats 等嵌套结构由 TS 类型管（.loose 透传）。
+ */
 export const ownedHeroItemSchema = z
   .object({
     heroId: z.string(),
     level: z.number(),
     isOwned: z.boolean(),
+    equipment: z.record(z.string(), z.number()),
+    feats: z.array(z.string()),
+    specializations: z.array(z.string()),
+    lootBySlot: z.record(
+      z.string(),
+      z.object({
+        rarity: z.number(),
+        gild: z.number(),
+        enchant: z.number(),
+        pigment: z.number(),
+      }).loose(),
+    ),
   })
   .loose()
 
