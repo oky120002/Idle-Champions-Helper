@@ -284,6 +284,7 @@ interface EvaluateReadyContentProps {
   readonly getOptionLabel: (champion: Champion) => string
   readonly championById: Map<string, Champion>
   readonly filling: boolean
+  readonly fillError: string | null
   readonly canFillRemaining: boolean
   readonly onFillRemaining: () => void
 }
@@ -323,6 +324,7 @@ function EvaluateReadyContent({
   getOptionLabel,
   championById,
   filling,
+  fillError,
   canFillRemaining,
   onFillRemaining,
 }: EvaluateReadyContentProps) {
@@ -428,6 +430,18 @@ function EvaluateReadyContent({
         heroNameById={heroNameById}
       />
 
+      {fillError != null && fillError !== '' ? (
+        <section className="surface-card planner-result-card" role="alert" data-testid="planner-evaluate-fill-error">
+          <div className="surface-card__header">
+            <div className="surface-card__header-copy">
+              <p className="surface-card__description">
+                {t({ zh: `计算失败：${fillError}`, en: `Compute failed: ${fillError}` })}
+              </p>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <div className="button-row planner-evaluate-page__actions">
         <button
           type="button"
@@ -508,7 +522,7 @@ export function PlannerEvaluatePage() {
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
   const [equipmentRarity, setEquipmentRarity] = useState(4)
   const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
-  const [goldLevelMode, setGoldLevelMode] = useState<'none' | 'gold' | 'level'>('none')
+  const [goldLevelMode, setGoldLevelMode] = useState<GoldLevelMode>('none')
   const [goldBudget, setGoldBudget] = useState('')
   const [globalLevel, setGlobalLevel] = useState(1000)
   const [goldLevelConversion, setGoldLevelConversion] = useState<GoldLevelConversion | null>(null)
@@ -546,7 +560,7 @@ export function PlannerEvaluatePage() {
     return () => { cancelled = true; clearTimeout(timer) }
   }, [goldLevelMode, goldBudget, globalLevel, runner])
 
-  const handleGoldLevelModeChange = useCallback((mode: 'none' | 'gold' | 'level') => {
+  const handleGoldLevelModeChange = useCallback((mode: GoldLevelMode) => {
     setGoldLevelMode(mode)
     if (mode === 'none') setGoldLevelConversion(null)
   }, [])
@@ -608,8 +622,10 @@ export function PlannerEvaluatePage() {
   )
 
   const [filling, setFilling] = useState(false)
+  const [fillError, setFillError] = useState<string | null>(null)
   async function handleFillRemaining() {
     setFilling(true)
+    setFillError(null)
     try {
       const recommendation = await runner.recommend({
         profileSnapshot,
@@ -634,6 +650,8 @@ export function PlannerEvaluatePage() {
       if (recommendation.result) {
         setEvaluatePlacements({ ...lockedSlots, ...recommendation.result.placements })
       }
+    } catch (caught) {
+      setFillError(caught instanceof Error ? caught.message : String(caught))
     } finally {
       setFilling(false)
     }
@@ -764,6 +782,7 @@ export function PlannerEvaluatePage() {
       getOptionLabel={getOptionLabel}
       championById={championById}
       filling={filling}
+      fillError={fillError}
       canFillRemaining={canFillRemaining}
       onFillRemaining={handleFillRemaining}
     />,
