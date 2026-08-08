@@ -11,16 +11,92 @@ Idle Champions 社区资源目录 + 已抓取 URL 追踪。每个 URL 对应一�
 | Steam 社区讨论 | https://steamcommunity.com/app/627690/discussions/ | 机制问答、攻略 | 中（玩家经验为主） |
 | Gaarawarr Guides | https://www.youtube.com/@Gaarawarr + reddit帖子 | 英雄评测、机制讲解 | 高（社区权威攻略作者） |
 | Codename Entertainment 官方 | https://www.codenameentertainment.com/?page=idle_champions | 补丁说明、英雄公告 | 最高（开发者一手来源） |
+| Encyclopedia Modronica | https://emmotes.github.io/ic_modron_library/ | Modron 核心配置库 | 中高（社区数据挖掘） |
 
 ## 已抓取 URL → 文档映射
 
-| URL | 对应文档 | 抓取状态 |
-|---|---|---|
-| https://steamcommunity.com/app/627690/discussions/0/5118863332768135681/ | `gameplay/armored-enemies.md` | ✅ 已抓取 |
-| https://www.reddit.com/r/idlechampions/comments/tw8xxp/can_someone_please_explain_how_armour_works/ | `gameplay/armored-enemies.md` | ✅ 已抓取 |
-| https://idlechampions.fandom.com/wiki/Favored_Foes | `gameplay/armored-enemies.md` | ✅ 已抓取 |
+### armored-enemies.md
 
-> 子智能体正在补充更多 URL。完成后更新此表。
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://steamcommunity.com/app/627690/discussions/0/5118863332768135681/ | Steam | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/tw8xxp/ | Reddit | ✅ |
+| https://idlechampions.fandom.com/wiki/Favored_Foes | Wiki | ✅ |
+
+### enemy-special-health.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://www.reddit.com/r/idlechampions/comments/1sgk2nj/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/ihj4wp/armorbased/ | Reddit | ✅ |
+| https://idlechampions.fandom.com/wiki/Category:Hits_based_damage | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Favored_Foes | Wiki | ✅（同 armored） |
+
+### bud-mechanics.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://steamcommunity.com/app/627690/discussions/0/4522261213603379633/ | Steam（开发博客原文） | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/fnoaal/ | Reddit（BUD 101） | ✅ |
+| https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage | Wiki | ✅ |
+
+### critical-hits.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Critical_Hit | Wiki | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/14hyoai/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1bqxjce/ | Reddit | ✅ |
+
+### speed-mechanics.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Briv | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Category:Speed | Wiki | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/1872875054775725577/ | Steam | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/3003298578176303902/ | Steam | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/wkbwxo/ | Reddit | ✅ |
+
+### gold-and-favor.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Gold_formulas | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Divine_Favor | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Blessings | Wiki | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/1630790987579561612/ | Steam | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1god1yf/ | Reddit | ✅ |
+
+### debuff-control-mechanics.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Debuffs | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Knockback | Wiki | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1gpxeen/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/b5097r/ | Reddit | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/pihlfl/ | Reddit | ✅ |
+
+### modron-automation.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Modron_Automation | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Modron_Core | Wiki | ✅ |
+| https://steamcommunity.com/sharedfiles/filedetails/?id=2615977602 | Steam | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/hvnz38/ | Reddit | ✅ |
+| http://codenameentertainment.com/?page=blog&post_id=1074 | CNE 官方 | ✅ |
+| https://emmotes.github.io/ic_modron_library/ | Encyclopedia Modronica | ✅ |
+
+### variant-restriction-catalog.md
+
+| URL | 来源 | 状态 |
+|---|---|---|
+| https://idlechampions.fandom.com/wiki/Variants | Wiki | ✅ |
+| https://idlechampions.fandom.com/wiki/Patrons | Wiki | ✅ |
+| https://steamcommunity.com/app/627690/discussions/0/1635292137567372667/ | Steam | ✅ |
+| https://www.reddit.com/r/idlechampions/comments/1ae6nqf/ | Reddit | ✅ |
 
 ## 使用规则
 

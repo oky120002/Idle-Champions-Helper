@@ -6,8 +6,16 @@
 
 - [`champion-mechanics/`](./champion-mechanics/)：英雄 DPS/金币/速度机制实测，配合 planner 英雄参照校准（`docs/specs/modules/planner/champion-reference-verification.md`）
 - [`attack-multi-hit.md`](./attack-multi-hit.md)：多段攻击机制——段数计算、数据源与提取方法
-- [`armored-enemies.md`](./armored-enemies.md)：护甲敌人机制——碎甲策略与专门碎甲能力
+- [`armored-enemies.md`](./armored-enemies.md)：护甲敌人机制——碎甲门槛/BUD 判定与专门碎甲能力
+- [`enemy-special-health.md`](./enemy-special-health.md)：敌人特殊血量——hits-based/crit-based/segmented 对比
 - [`aoe-survival.md`](./aoe-survival.md)：AoE 伤害防御——免疫/减伤/临时生命值/治疗四类机制
+- [`bud-mechanics.md`](./bud-mechanics.md)：BUD（基础大招伤害）——定义、衰减规则、与大招/点击的关系
+- [`critical-hits.md`](./critical-hits.md)：暴击——基础值、多重暴击、与 BUD/护甲的交互
+- [`speed-mechanics.md`](./speed-mechanics.md)：速度机制——冷却缩减、过层加速、Briv 跳层
+- [`gold-and-favor.md`](./gold-and-favor.md)：金币与恩宠——掉落公式、5 类来源、9 种永久恩宠
+- [`debuff-control-mechanics.md`](./debuff-control-mechanics.md)：减益与控制——击退/眩晕/减速/定身/狂暴机制与英雄盘点
+- [`modron-automation.md`](./modron-automation.md)：Modron 自动化——核心/管道加成、自动化功能、planner 影响
+- [`variant-restriction-catalog.md`](./variant-restriction-catalog.md)：变体限制机制目录——128 种 mechanics 分类与 planner 覆盖现状
 
 ## 怎么写
 
