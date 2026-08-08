@@ -243,18 +243,21 @@ export async function fetchUserProfilePayloads(
   options: FetchUserProfilePayloadsOptions = {},
 ): Promise<UserProfilePayloads> {
   const baseUrls = await resolveOfficialPlayServerBaseUrls(options)
+  let lastError: Error | null = null
 
-  try {
-    for (const baseUrl of baseUrls) {
-      try {
-        return await fetchUserProfilePayloadsFromBaseUrl(credentials, options, baseUrl)
-      } catch {
-        // Try the next official play server mirror.
+  for (const baseUrl of baseUrls) {
+    try {
+      return await fetchUserProfilePayloadsFromBaseUrl(credentials, options, baseUrl)
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error))
+      // 认证错误不重试其他 mirror（凭证无效在任何 mirror 结果相同）
+      if (lastError.message.includes('HTTP 401') || lastError.message.includes('HTTP 403')) {
+        throw new Error(`官方数据同步失败：凭证无效或已过期。`)
       }
     }
-
-    throw new Error('All official play server mirrors failed.')
-  } catch {
-    throw new Error('官方数据同步失败：请检查凭证、网络或官方接口可用性。')
   }
+
+  throw new Error(
+    '官方数据同步失败：所有官方服务器均不可用。请检查网络或稍后重试。',
+  )
 }
