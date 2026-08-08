@@ -80,6 +80,21 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 代码标识符：`damage_reduction_mult`、`damage_reduction`（effect_string）、`damageReduction`
 别名：damage reduction、免伤
 
+**多段攻击**：
+英雄一次基础攻击命中多个目标，每个目标算一次独立命中（hit）。游戏描述常说「召唤 X 道射线/飞弹」，代码里记录为目标数（numTargets）而非「段数」或「次数」。段数可通过升级/专长/装备的 `add_attack_targets` 效果提升。
+代码标识符：`numTargets`（基础目标数）、`add_attack_targets`（段数加成效果）、`damageModifier`（每发伤害系数）
+别名：multi-hit、多目标攻击、多次攻击
+
+**伤害系数**：
+多段攻击中每单发命中的伤害比例。1.0 = 每发满额，0.33 = 每发仅 1/3 伤害。总伤害 = 段数 × 系数。对护甲敌人碎甲时系数无意义（每发只碎一格，不管伤害多少）。
+代码标识符：`damageModifier`（攻击定义字段）
+别名：damage modifier、每发伤害比例
+
+**护甲敌人**：
+血条分段显示的敌人（segmented health），每段需被一次命中单独击碎（不看伤害数值），全碎后才能正常击杀。多段攻击英雄是天然克星。代码中无统一字段标识，需从描述文本和效果关键词识别。
+代码标识符：无标准字段；描述关键词 `segmented health` / `armor` / `护甲`
+别名：armored enemies、segmented health、分段血条
+
 ## 成长元素
 
 **装备**：

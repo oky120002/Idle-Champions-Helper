@@ -5,6 +5,9 @@
 ## 主题入口
 
 - [`champion-mechanics/`](./champion-mechanics/)：英雄 DPS/金币/速度机制实测，配合 planner 英雄参照校准（`docs/specs/modules/planner/champion-reference-verification.md`）
+- [`attack-multi-hit.md`](./attack-multi-hit.md)：多段攻击机制——段数计算、数据源与提取方法
+- [`armored-enemies.md`](./armored-enemies.md)：护甲敌人机制——碎甲策略与专门碎甲能力
+- [`aoe-survival.md`](./aoe-survival.md)：AoE 伤害防御——免疫/减伤/临时生命值/治疗四类机制
 
 ## 怎么写
 
