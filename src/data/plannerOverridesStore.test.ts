@@ -87,10 +87,11 @@ describe('planner hero overrides store', () => {
 })
 
 describe('stored-record 腐蚀校验（C1）', () => {
-  it('override 缺 heroId → 列表读出拒绝', async () => {
+  it('列表含腐蚀记录 → 跳过坏记录返回空列表（不连坐）', async () => {
     await writeRawOverride('bad', { carrySignals: [] })
 
-    await expect(listPlannerHeroOverrides()).rejects.toThrow(/存储数据校验失败.*heroId/)
+    const overrides = await listPlannerHeroOverrides()
+    expect(overrides).toEqual([])
   })
 
   it('override 缺 heroId → 单条读出拒绝', async () => {

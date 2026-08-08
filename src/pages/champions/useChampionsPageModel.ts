@@ -37,7 +37,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
 
   function runFilterMutation(mutation: () => void) {
-    motion.prepareResultsViewportTransition('filters')
+    motion.prepareResultsViewportTransition()
     filterState.setShowAllResults(false)
     mutation()
   }
@@ -106,7 +106,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     setMetaFiltersExpanded: filterState.setMetaFiltersExpanded,
     ...filterActions,
     toggleResultVisibility: () => {
-      motion.prepareResultsViewportTransition('visibility')
+      motion.prepareResultsViewportTransition()
       filterState.setShowAllResults((current) => !current)
     },
     randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),

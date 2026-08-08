@@ -3,7 +3,7 @@ import { getCollectionReadSchema } from '../domain/types/collection-schemas'
 import type { SearchDocumentCollection } from '../features/search/searchTypes'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from './localDatabase'
 
-const memoryCache = new Map<string, unknown>()
+const memoryCache = new Map<string, Promise<unknown>>()
 
 export function resolveDataUrl(relativePath: string): string {
   const base = import.meta.env.BASE_URL.endsWith('/')
@@ -38,12 +38,12 @@ export async function loadVersion(): Promise<DataVersion> {
   const cached = memoryCache.get(cacheKey)
 
   if (cached != null) {
-    return cached as DataVersion
+    return cached as Promise<DataVersion>
   }
 
-  const version = await fetchJson<DataVersion>('version.json', { cache: 'no-store' })
-  memoryCache.set(cacheKey, version)
-  return version
+  const promise = fetchJson<DataVersion>('version.json', { cache: 'no-store' })
+  memoryCache.set(cacheKey, promise)
+  return promise
 }
 
 /**
@@ -109,17 +109,25 @@ export async function loadCollectionAtVersion<T>(version: string, name: string):
   const cached = memoryCache.get(cacheKey)
 
   if (cached != null) {
-    return cached as DataCollection<T>
+    return cached as Promise<DataCollection<T>>
   }
 
+  const promise = loadCollectionFromIdbOrFetch<T>(cacheKey, version, name)
+  memoryCache.set(cacheKey, promise)
+  return promise
+}
+
+async function loadCollectionFromIdbOrFetch<T>(
+  cacheKey: string,
+  version: string,
+  name: string,
+): Promise<DataCollection<T>> {
   const idbCached = await readCollectionCache<T>(cacheKey, name)
   if (idbCached) {
-    memoryCache.set(cacheKey, idbCached)
     return idbCached
   }
 
   const collection = await fetchJson<DataCollection<T>>(`${version}/${name}.json`)
-  memoryCache.set(cacheKey, collection)
   await writeCollectionCache(cacheKey, collection)
   return collection
 }
@@ -134,12 +142,12 @@ export async function loadBinaryData(relativePath: string): Promise<ArrayBuffer>
   const cached = memoryCache.get(cacheKey)
 
   if (cached != null) {
-    return cached as ArrayBuffer
+    return cached as Promise<ArrayBuffer>
   }
 
-  const buffer = await fetchArrayBuffer(relativePath)
-  memoryCache.set(cacheKey, buffer)
-  return buffer
+  const promise = fetchArrayBuffer(relativePath)
+  memoryCache.set(cacheKey, promise)
+  return promise
 }
 
 export async function loadChampionDetailAtVersion(
@@ -150,12 +158,12 @@ export async function loadChampionDetailAtVersion(
   const cached = memoryCache.get(cacheKey)
 
   if (cached != null) {
-    return cached as ChampionDetail
+    return cached as Promise<ChampionDetail>
   }
 
-  const detail = await fetchJson<ChampionDetail>(`${version}/champion-details/${championId}.json`)
-  memoryCache.set(cacheKey, detail)
-  return detail
+  const promise = fetchJson<ChampionDetail>(`${version}/champion-details/${championId}.json`)
+  memoryCache.set(cacheKey, promise)
+  return promise
 }
 
 export async function loadChampionDetail(championId: string): Promise<ChampionDetail> {
@@ -168,10 +176,10 @@ export async function loadSearchDocuments(): Promise<SearchDocumentCollection> {
   const cached = memoryCache.get(cacheKey)
 
   if (cached != null) {
-    return cached as SearchDocumentCollection
+    return cached as Promise<SearchDocumentCollection>
   }
 
-  const collection = await fetchJson<SearchDocumentCollection>('v1/search/search-documents.json')
-  memoryCache.set(cacheKey, collection)
-  return collection
+  const promise = fetchJson<SearchDocumentCollection>('v1/search/search-documents.json')
+  memoryCache.set(cacheKey, promise)
+  return promise
 }

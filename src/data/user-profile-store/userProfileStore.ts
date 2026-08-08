@@ -34,38 +34,6 @@ export async function saveUserProfileSnapshot(snapshot: UserProfileSnapshot): Pr
   }
 }
 
-export async function readCredentialVault(): Promise<{ userId: string; hash: string } | null> {
-  const database = await openAppDatabase()
-
-  try {
-    const transaction = database.transaction(APP_STORE_NAMES.credentialVault, 'readonly')
-    const store = transaction.objectStore(APP_STORE_NAMES.credentialVault)
-    const record = await requestToPromise(
-      store.get(CREDENTIAL_KEY) as IDBRequest<{ userId: string; hash: string } | undefined>,
-    )
-    await waitForTransaction(transaction)
-    return record ?? null
-  } finally {
-    database.close()
-  }
-}
-
-export async function saveCredentialVault(credentials: {
-  userId: string
-  hash: string
-}): Promise<void> {
-  const database = await openAppDatabase()
-
-  try {
-    const transaction = database.transaction(APP_STORE_NAMES.credentialVault, 'readwrite')
-    const store = transaction.objectStore(APP_STORE_NAMES.credentialVault)
-    await requestToPromise(store.put(credentials, CREDENTIAL_KEY))
-    await waitForTransaction(transaction)
-  } finally {
-    database.close()
-  }
-}
-
 export async function deleteUserProfileData(): Promise<void> {
   const database = await openAppDatabase()
 

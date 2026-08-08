@@ -7,9 +7,7 @@ import { unwrap } from '../../../tests/utils/dom-assertions'
 import { APP_DATABASE_NAME, APP_STORE_NAMES, openAppDatabase } from '../localDatabase'
 import {
   deleteUserProfileData,
-  readCredentialVault,
   readUserProfileSnapshot,
-  saveCredentialVault,
   saveUserProfileSnapshot,
 } from './userProfileStore'
 
@@ -63,29 +61,12 @@ describe('user profile store', () => {
     expect(loadedSnapshot.schemaVersion).toBe(1)
   })
 
-  it('credential opt-in 为 false 时 vault 保持为空', async () => {
-    const snapshot = createUserProfileSnapshot()
-    await saveUserProfileSnapshot(snapshot)
-
-    const vault = await readCredentialVault()
-    expect(vault).toBeNull()
-  })
-
-  it('删除会清除 snapshot 和 credential vault', async () => {
+  it('删除会清除 snapshot', async () => {
     await saveUserProfileSnapshot(createUserProfileSnapshot())
-    await saveCredentialVault({ userId: '12345678', hash: 'abc123' })
 
     await deleteUserProfileData()
 
     await expect(readUserProfileSnapshot()).resolves.toBeNull()
-    await expect(readCredentialVault()).resolves.toBeNull()
-  })
-
-  it('保存 credential vault 后可以读取', async () => {
-    await saveCredentialVault({ userId: '12345678', hash: 'abc123' })
-
-    const vault = await readCredentialVault()
-    expect(vault).toEqual({ userId: '12345678', hash: 'abc123' })
   })
 })
 

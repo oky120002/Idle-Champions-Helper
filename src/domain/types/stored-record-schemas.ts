@@ -84,8 +84,6 @@ export const heroAbilityOverridePatchSchema = z
   })
   .loose()
 
-export const heroAbilityOverridePatchArraySchema = z.array(heroAbilityOverridePatchSchema)
-
 /**
  * 校验存储记录读出：失败即 throw（带字段路径诊断），由消费方 catch 兜底。
  * passthrough 保留非核心字段；返回值经 cast 还原为消费类型（核心字段已校验、其余原样透传）。
