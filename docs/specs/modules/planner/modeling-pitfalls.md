@@ -100,3 +100,29 @@ golden（ADR 0015）只断言方向（含加成收敛），偏差数值不门控
 - **gain profile 须镜像评分的「丢弃条件」而非仅「路由」**：实际评分 `resolveSignalMultiplier` 恒丢弃的信号（applyManually、未注册 stackFunc）不计入 gain 上界，否则幻影增益挤掉真实候选。两类守卫均在 `aggregateGainByDimension` 内：applyManually（信号自身字段，abilities 层内）；未注册 stackFunc（`REGISTERED_STACK_FUNCS` = `Object.keys(STACK_COUNT_RESOLVERS)` 派生，从 planner/mechanics 导入 abilities——`computeHeroGainProfile` 本就含评分语义，此导入是镜像评分的必要依赖）。
 - **gain profile 测试须覆盖与评分一致的逐 signal 案例**：不只在 gain profile 孤立测加法 / 乘法，还要对 wrapper 等机制断言「gain = 实际评分单 signal 贡献」（见 `abilityModel.test.ts` bonusScaleOfSignal 用例），以及「恒丢弃信号（applyManually）不计入」。
 - **改 gain profile 折算后强制重建数据**：gainProfile 烘进 `hero-abilities.json`（build 期 `computeHeroGainProfile`），代码改完须 `FORCE_DATA_REBUILD=1` 重跑 `buildModels`（或改 `abilityModel.ts` 触发 `computePipelineHash` 变化自动重跑），否则 build-time 烘值仍是旧的（runtime wrapper 注入会重算，但 `applyComputationMode` 裁剪用的是 build-time 值——wrapper 在裁剪之后才注入）。
+
+## 陷阱 6：restriction 文本提取用黑名单而非白名单 + 未校验标签匹配域
+
+restriction 文本解析（`restrictions-parser.ts`）和标签表达式解析（`normalize-adventures.ts:parseTagExpression`）有两类易重犯的假设错误：
+
+### 形态 A：黑名单提取条件效果句
+
+属性门槛提取最初用**黑名单**（排除含 `deal` 的句子），漏了 `take no damage`（v865 夺心魔 INT 15+ 免疫伤害）和 `placed adjacent`（v1984 邻接位限制）——这些条件效果句含属性模式 `(STAT) of N or higher` 但**非使用门槛**，被误提为硬性候选过滤。
+
+**改用白名单**：仅从含使用门槛标记（`can/may be used`、`only use`、`take part`）的句子提取。全量验证排除 2 误报、0 漏报。
+
+### 形态 B：标签表达式与英雄标签域不匹配
+
+游戏 `by_tags.tags` 用复合对齐标记 `lawful_good`，英雄标签是对齐轴独立的（`lawful` + `good`）。不展开则 `lawful_good` 匹配 0 英雄——v1740 四角阵营限制候选池为空。
+
+### 为什么难发现
+
+1. 单元测试只验证「解析器对输入字符串的输出」，不验证「输出能匹配到真实英雄」——零匹配表达式测试全绿。
+2. 黑名单天然无法穷举——每次新增一个排除模式（`deal`），就有新的条件效果模式（`take no damage`）漏网。
+3. 复合标记命名直觉上像合法 tag——不查英雄标签全集不会发现 `lawful_good` 不存在。
+
+### 防范纪律（可执行）
+
+- **文本提取优先白名单**：区分「使用门槛」与「条件效果」时，枚举允许的模式（usage-gate 短语），而非逐个排除不允许的。白名单遇到新条件效果句型自动排除，黑名单遇到新句型自动放行。
+- **解析后校验匹配域**：标签表达式解析后，用全量英雄标签集校验每个 tag 是否存在于英雄标签域。零匹配表达式（整个表达式匹配 0 英雄）是最强信号——要么标签名错（复合标记未展开），要么表达式语义错。
+- **全量 `jq`/python 扫描验证**：新增任何 tag-based 提取后，跑一次 `jq` + python 脚本：对每个变体的表达式，计算匹配英雄数，找出零匹配者。比单元测试更能发现数据层面的假设错误。
