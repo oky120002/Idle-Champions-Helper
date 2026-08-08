@@ -26,4 +26,23 @@ repair: rebuild
   - 位置: `src/domain/simulator/modronInfo.ts`
   - 备注: modronInfo.ts/ultUptime.ts/blessingGlobalBuff.ts 三处消费 modron 数据，但管道(齿轮)的伤害/金币/速度 buff 数值未建模。- 影响：planner 推荐不反映 modron 管道加成- 证据：modron-automation.md 调研，effect-reference.json 中 16 个 modron_* 谓词均 serverOnly
 
+- 取反复合对齐标记（!lawful_good）不展开 De Morgan——forbidden 位置保持字面量 <!-- auto-todo:id=atd_f24a57fc7f -->
+  - 记录时间: `2026-08-08T22:05:12+08:00`
+  - 类型: issue
+  - 位置: `scripts/data/normalize-adventures.ts:816`
+  - 备注: 取反复合对齐标记（如 !lawful_good）不展开 De Morgan（forbidden 位置复合标记保持字面量，因无英雄持有 lawful_good 标记故恒 vacuously true=不排除任何人）。当前全库 0 实例触发，仅理论边界。
+    - 影响：!lawful_good 应排除守序善良英雄，当前不排除任何人（forbidden:lawful_good 无英雄匹配）
+    - 证据：parseAtom 取反分支直接 slice(1) 不查 COMPOUND_ALIGNMENT_TAGS；修复需 De Morgan 展开（!lawful_good → forbidden:lawful OR forbidden:good 两子句）
+    - 优先级：低（0 实例触发）
+
+- addedAttr 抑致复合 restriction 条目的特殊机制警告丢失（72 变体） <!-- auto-todo:id=atd_ed67350994 -->
+  - 记录时间: `2026-08-08T22:05:52+08:00`
+  - 严重级别: P2
+  - 类型: issue
+  - 位置: `scripts/data/restrictions-parser.ts:244`
+  - 备注: parseRestrictions 的 addedAttr 标记在属性门槛提取成功后完全抑制该条目的 warning，即使条目同时含未解析的特殊机制句（敌人刷新/伤害调整等）。72 个 variant 受影响——同时含属性门槛和特殊机制的复合 restriction 条目。
+    - 影响：用户丢失「含特殊机制，请人工评估」提示；planner 功能不受影响（属性门槛已正确提取并过滤）
+    - 证据：v254 Rudolph+CHA 15+、v381 Rath Modar+INT 12- 等条目含 3+ 未解析句
+    - 修复方向：改 entry-level addedAttr 为 sentence-level 分析——仅当全部非平凡句均被属性/占格解析时才抑制 warning
+
 <!-- auto-todo:end -->
