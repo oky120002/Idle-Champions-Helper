@@ -30,7 +30,7 @@ export type TagExpression = TagClause[]  // 英雄匹配任一 clause 即合格
 - `dwarf|gnome` → `[{required:["dwarf"]}, {required:["gnome"]}]`
 - `lawful^good` → `[{required:["lawful","good"]}]`
 - `!small^!dwarf^!gnome` → `[{forbidden:["small","dwarf","gnome"]}]`
-- `(!good^!evil)|dragonborn` → `[{forbidden:["good","evil","chaotic","lawful"]}, {required:["dragonborn"]}]`
+- `(!good^!evil^!chaotic^!lawful)|dragonborn` → `[{forbidden:["good","evil","chaotic","lawful"]}, {required:["dragonborn"]}]`
 
 **改动范围**：
 
@@ -54,7 +54,7 @@ export interface AttributeRequirement {
 }
 ```
 
-- 来源：restriction 文本全局正则匹配 `(CON|INT|CHA|STR|DEX|WIS) (score )?of N or (higher|lower)`；按句拆分排除伤害修饰句（v319 "deal 400% additional damage" 中的 INT 非 usage restriction）；多属性门槛（v187 STR+DEX+CON 等 8 变体）一次性提取
+- 来源：restriction 文本全局正则匹配 `(CON|INT|CHA|STR|DEX|WIS) (score )?of N or (higher|lower)`；按句拆分，**白名单提取**——仅从含使用门槛标记（`can/may be used`、`only use`、`take part`）的句子提取，排除伤害修饰（deal）、伤害免疫（take no damage）、邻接位限制（placed adjacent）等条件效果句；多属性门槛（v187 STR+DEX+CON 等 8 变体）一次性提取
 - 英雄 abilityScores 已在 `HeroAbilityProfile.abilityScores`（build 期从 `champion-details` 投影），planner 直接可用
 
 **改动范围**：
@@ -105,3 +105,11 @@ export interface AttributeRequirement {
 - **P1 属性门槛产生虚假"未解析"警告**（104 场景）：`parseRestrictions` 在属性提取成功后仍走 warning 分支。增加 `addedAttr` 标记跳过。
 - **P2 伤害修饰句误提取**（v319）：全局提取后 "deal ... damage" 中的 INT 被误当 usage restriction。按句拆分排除含 `deal` 的句子。
 - **P2 测试夹具缩进错位**（6 文件 8 处）：`attributeRequirements` 迁移时 sed 式插入缩进不一致。统一修正。
+
+## 审计修复·第二轮（2026-08-08，`52025cb`）
+
+提交 `c1372871` 后深度审计发现并修复：
+
+- **属性门槛误提取——条件效果句被当使用门槛**（v865/v1984）：黑名单（排除 `deal`）漏了「take no damage」（v865 夺心魔 INT 15+ 免疫伤害）和「placed adjacent」（v1984 宝藏猎人 INT 12- 邻接位限制），误提为硬性候选过滤。改用**白名单**：仅从含 `can/may be used`、`only use`、`take part` 的句子提取。全量验证 104→102 变体（排除 2 误报），0 漏报。
+- **复合对齐标记零匹配**（v1740）：游戏 `by_tags.tags` 用 `lawful_good` 等复合标记，英雄标签是对齐轴独立的（`lawful` + `good`），不展开则 0 英雄匹配。`parseAtom` 展开全部 9 种复合对齐为 AND 分量；patch variants.json 同步存量数据。v1740 候选池 0→78 英雄。
+- **死代码清理**：`isTrivialRestriction` 的 `text.length === 0` 恒 false（拼接含空格），移除。
