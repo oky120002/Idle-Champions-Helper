@@ -79,4 +79,13 @@ repair: rebuild
   - 备注:
     - 来源：深度审计 2026-08-09 数据管线子智能体发现
 
+- cooldownReduction 归一化管线缺失——1860 条原始效果产出 0 信号 <!-- auto-todo:id=atd_0cb934b094 -->
+  - 记录时间: `2026-08-09T21:31:56+08:00`
+  - 类型: issue
+  - 位置: `scripts/data 归一化管线（speedResolver 或上游 collect 阶段）`
+  - 备注: 1860 条 reduce_ultimate_cooldown 原始效果（154 英雄）产出 0 信号。speedResolver.ts 已接线（resolverDispatch.ts:25 映射 reduce_ultimate_cooldown → cooldownReduction），但 hero-abilities.json 中 cooldownReduction 条目为 0。
+    - 影响：speed 维度 cooldownReduction 信号完全丢失，speed-scoring-dimension 需求前置依赖
+    - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
+    - 优先级：中
+
 <!-- auto-todo:end -->
