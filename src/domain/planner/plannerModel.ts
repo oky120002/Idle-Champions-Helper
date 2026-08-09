@@ -30,12 +30,14 @@ export interface SegmentConfig {
 export interface ViabilityContext {
   /** 护甲段数（如 "50 armored HP" → 50）。null = 无护甲。吞吐量等效门槛 = monsterHealthAt(area) × segmentsAt(area)。 */
   armor: SegmentConfig | null
-  /** 命中型段数（如 "20 hits-based HP" → 20）。null = 无命中型。 */
+  /** 命中型段数（如 "20 hits-based HP" → 20）。null = 无命中型。同护甲吞吐量模式。 */
   hitsBased: SegmentConfig | null
   /** 全局伤害修正乘数（0.01 = 减 99%；null = 无修正）。乘进 BUD → 抬高 DPS 墙。 */
   damageModifier: number | null
   /** 敌人伤害倍率（3 = 3x；null = 无修正）。乘进 monsterDpsAt → 降低 survivableArea。 */
   enemyDamageMult: number | null
+  /** 每秒持续掉血占比（0.025 = 2.5%/s；null = 无持续掉血）。降低 carry 有效生命 → 降低 survivableArea。 */
+  healthDrainRate: number | null
 }
 
 /** 空 viabilityContext（普通变体）。 */
@@ -44,6 +46,7 @@ export const EMPTY_VIABILITY_CONTEXT: ViabilityContext = {
   hitsBased: null,
   damageModifier: null,
   enemyDamageMult: null,
+  healthDrainRate: null,
 }
 
 export interface OfficialPlannerScenarioModel {

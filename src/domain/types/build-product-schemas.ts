@@ -82,6 +82,7 @@ export const plannerScenarioItemSchema = z
       }).nullable(),
       damageModifier: z.number().nullable(),
       enemyDamageMult: z.number().nullable(),
+      healthDrainRate: z.number().nullable(),
     }),
   })
   .loose()

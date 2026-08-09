@@ -60,7 +60,7 @@ describe('estimateMaxArea — 护甲感知', () => {
     const withArmor = estimateMaxArea({
       bud,
       effectiveHealth: null,
-      viability: { armor: { segments: 50 }, damageModifier: null, enemyDamageMult: null },
+      viability: { armor: { segments: 50 }, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
     })
     expect(withArmor.killableArea).toBeLessThan(noArmor.killableArea)
     expect(withArmor.boundBy).toBe('armor')
@@ -73,8 +73,10 @@ describe('estimateMaxArea — 护甲感知', () => {
       effectiveHealth: null,
       viability: {
         armor: { segments: 4, scaling: { additional: 4, everyAreas: 25 } },
+        hitsBased: null,
         damageModifier: null,
         enemyDamageMult: null,
+        healthDrainRate: null,
       },
     })
     // 段数递增不改变单调性：结果仍是合法面积
@@ -87,12 +89,12 @@ describe('estimateMaxArea — 护甲感知', () => {
     const lowSegments = estimateMaxArea({
       bud,
       effectiveHealth: null,
-      viability: { armor: { segments: 10 }, damageModifier: null, enemyDamageMult: null },
+      viability: { armor: { segments: 10 }, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
     })
     const highSegments = estimateMaxArea({
       bud,
       effectiveHealth: null,
-      viability: { armor: { segments: 200 }, damageModifier: null, enemyDamageMult: null },
+      viability: { armor: { segments: 200 }, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
     })
     expect(highSegments.killableArea).toBeLessThan(lowSegments.killableArea)
   })
@@ -103,7 +105,7 @@ describe('estimateMaxArea — 护甲感知', () => {
     const halfMod = estimateMaxArea({
       bud,
       effectiveHealth: null,
-      viability: { armor: null, damageModifier: 0.5, enemyDamageMult: null },
+      viability: { armor: null, hitsBased: null, damageModifier: 0.5, enemyDamageMult: null, healthDrainRate: null },
     })
     expect(halfMod.killableArea).toBeLessThan(noMod.killableArea)
   })
@@ -117,7 +119,7 @@ describe('estimateMaxArea — 护甲感知', () => {
     const tripleMult = estimateMaxArea({
       bud,
       effectiveHealth,
-      viability: { armor: null, damageModifier: null, enemyDamageMult: 3 },
+      viability: { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: 3, healthDrainRate: null },
     })
     expect(tripleMult.survivableArea).toBeLessThan(noMult.survivableArea)
   })
@@ -127,5 +129,45 @@ describe('estimateMaxArea — 护甲感知', () => {
     const explicit = estimateMaxArea({ bud, effectiveHealth: null, viability: null })
     const omitted = estimateMaxArea({ bud, effectiveHealth: null })
     expect(explicit).toEqual(omitted)
+  })
+})
+
+describe('estimateMaxArea — 命中型 + 持续掉血', () => {
+  test('命中型段数降低 killableArea（与护甲同模式）', () => {
+    const bud = monsterHealthAt(100)
+    const noHits = estimateMaxArea({ bud, effectiveHealth: null })
+    const withHits = estimateMaxArea({
+      bud,
+      effectiveHealth: null,
+      viability: { armor: null, hitsBased: { segments: 20 }, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
+    })
+    expect(withHits.killableArea).toBeLessThan(noHits.killableArea)
+  })
+
+  test('护甲 + 命中型叠加：总段数更高 → killableArea 更低', () => {
+    const bud = monsterHealthAt(100)
+    const armorOnly = estimateMaxArea({
+      bud,
+      effectiveHealth: null,
+      viability: { armor: { segments: 10 }, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
+    })
+    const combined = estimateMaxArea({
+      bud,
+      effectiveHealth: null,
+      viability: { armor: { segments: 10 }, hitsBased: { segments: 10 }, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
+    })
+    expect(combined.killableArea).toBeLessThanOrEqual(armorOnly.killableArea)
+  })
+
+  test('healthDrainRate 降低 survivableArea', () => {
+    const bud = new Decimal('1e100')
+    const effectiveHealth = new Decimal(100)
+    const noDrain = estimateMaxArea({ bud, effectiveHealth })
+    const withDrain = estimateMaxArea({
+      bud,
+      effectiveHealth,
+      viability: { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: 0.025 },
+    })
+    expect(withDrain.survivableArea).toBeLessThanOrEqual(noDrain.survivableArea)
   })
 })

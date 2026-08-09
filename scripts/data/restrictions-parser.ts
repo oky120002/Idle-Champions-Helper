@@ -252,6 +252,10 @@ const SCALING_ADDITIONAL_RE = /(\d+)\s+additional\s+(?:armored|hits-based)\s+hit
 const SCALING_EVERY_RE = /every\s+(\d+)\s+areas/i
 const DAMAGE_REDUCED_RE = /damage\s+(?:is\s+)?reduced\s+by\s+(\d+(?:\.\d+)?)\s*%/i
 const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
+// 持续掉血：「Champions take/lose X% of (their) max health every second」。
+// 排除 random（单目标爆发）和 reduce（伤害削减非掉血）。
+const HEALTH_DRAIN_PCT_RE = /(?:take|takes|lose|loses)\s+(?:damage\s+)?(?:equal\s+to\s+)?(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum|total)\s*health|unavoidable\s+damage)/i
+const EVERY_SECOND_RE = /\b(?:every|each|per)\s+second\b/i
 
 function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | null {
   const baseMatch = text.match(baseRegex)
@@ -292,13 +296,25 @@ function parseEnemyDamageMult(text: string): number | null {
   return Number.isFinite(mult) && mult > 0 ? mult : null
 }
 
+function parseHealthDrainRate(text: string): number | null {
+  if (!EVERY_SECOND_RE.test(text)) return null
+  if (/\brandom\b/i.test(text)) return null
+  if (/\breduc/i.test(text)) return null
+  const match = text.match(HEALTH_DRAIN_PCT_RE)
+  if (!match) return null
+  const pct = parseFloat(match[1])
+  if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
+  return pct / 100
+}
+
 function parseViabilityContext(original: string): ViabilityContext {
-  if (original === '') return { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null }
+  if (original === '') return { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null }
   return {
     armor: parseSegmentConfig(original, ARMOR_SEGMENTS_RE),
     hitsBased: parseSegmentConfig(original, HITS_BASED_SEGMENTS_RE),
     damageModifier: parseDamageModifier(original),
     enemyDamageMult: parseEnemyDamageMult(original),
+    healthDrainRate: parseHealthDrainRate(original),
   }
 }
 
@@ -315,6 +331,7 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   let hitsBased: SegmentConfig | null = null
   let damageModifier: number | null = null
   let enemyDamageMult: number | null = null
+  let healthDrainRate: number | null = null
 
   for (const { original, display } of restrictions) {
     // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
@@ -334,6 +351,7 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
       if (vc.hitsBased) hitsBased = vc.hitsBased
       if (vc.damageModifier != null) damageModifier = vc.damageModifier
       if (vc.enemyDamageMult != null) enemyDamageMult = vc.enemyDamageMult
+      if (vc.healthDrainRate != null) healthDrainRate = vc.healthDrainRate
     }
 
     const enCount = original !== '' ? enSlotOccupyCount(original) : null
@@ -354,7 +372,7 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   return {
     lockedSlotCount,
     attributeRequirements,
-    viabilityContext: { armor, hitsBased, damageModifier, enemyDamageMult },
+    viabilityContext: { armor, hitsBased, damageModifier, enemyDamageMult, healthDrainRate },
     warnings,
   }
 }

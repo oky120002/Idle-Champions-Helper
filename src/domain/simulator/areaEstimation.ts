@@ -44,12 +44,16 @@ export interface SegmentConfig {
  * simulator 不导入 planner 模块——仅声明所需字段的结构。
  */
 export interface ViabilityModifier {
-  /** 护甲段数配置；null = 无护甲。estimateMaxArea 用吞吐量等效门槛 HP × segments。 */
+  /** 护甲段数配置；null = 无护甲。吞吐量等效门槛 HP × segments。 */
   armor: SegmentConfig | null
+  /** 命中型段数配置；null = 无命中型。同护甲吞吐量模式（需 N 次命中）。 */
+  hitsBased: SegmentConfig | null
   /** 全局伤害修正乘数（0.01 = 减 99%）；null = 无修正。乘进 BUD。 */
   damageModifier: number | null
   /** 敌人伤害倍率（3 = 3x）；null = 无修正。乘进 monsterDpsAt。 */
   enemyDamageMult: number | null
+  /** 每秒持续掉血占比（0.025 = 2.5%/s）；null = 无持续掉血。降低有效生命。 */
+  healthDrainRate: number | null
 }
 
 export interface AreaEstimationInput {
@@ -117,23 +121,36 @@ export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResul
 
   const budKillableArea = binarySearchMaxArea(effectiveBud, monsterHealthAt)
 
-  // 护甲吞吐量约束：等效门槛 = HP × segments（需 segments+1 次命中，非每段门槛 HP/segments）。
-  // 每段门槛 HP/segments 始终 ≤ HP，不构成绑定约束；吞吐量惩罚才是护甲变体更难的根因。
+  // 段吞吐量约束（护甲 + 命中型）：等效门槛 = HP × totalSegments。
+  // 每段门槛 HP/segments 始终 ≤ HP，不构成绑定约束；吞吐量惩罚才是更难的根因。
+  // 护甲和命中型可叠加（总命中次数 = armorSeg + hitsSeg）；均 null 时跳过。
   const armorConfig = vc?.armor
-  const armorKillableArea = armorConfig != null
-    ? binarySearchMaxArea(effectiveBud, (area) => monsterHealthAt(area).mul(segmentsAt(area, armorConfig)))
+  const hitsConfig = vc?.hitsBased
+  const segmentKillableArea = (armorConfig != null || hitsConfig != null)
+    ? binarySearchMaxArea(effectiveBud, (area) => {
+        const total = (armorConfig ? segmentsAt(area, armorConfig) : 0)
+          + (hitsConfig ? segmentsAt(area, hitsConfig) : 0)
+        return monsterHealthAt(area).mul(Math.max(1, total))
+      })
     : null
 
-  const killableArea = armorKillableArea != null
-    ? Math.min(budKillableArea, armorKillableArea)
+  const killableArea = segmentKillableArea != null
+    ? Math.min(budKillableArea, segmentKillableArea)
     : budKillableArea
 
+  // 存活约束：effectiveHealth ≥ monsterDps × mult × time。持续掉血降低有效生命。
   const enemyDamageMult = vc?.enemyDamageMult
-  const survivableArea = input.effectiveHealth === null
+  const drainRate = vc?.healthDrainRate
+  const baseHealth = input.effectiveHealth === null
+    ? null
+    : typeof drainRate === 'number' && drainRate > 0 && drainRate < 1
+      ? input.effectiveHealth.mul(1 - drainRate)
+      : input.effectiveHealth
+  const survivableArea = baseHealth === null
     ? MAX_AREA
     : typeof enemyDamageMult === 'number' && enemyDamageMult !== 1
-      ? binarySearchMaxArea(input.effectiveHealth, (area) => monsterDpsAt(area).mul(enemyDamageMult))
-      : binarySearchMaxArea(input.effectiveHealth, monsterDpsAt)
+      ? binarySearchMaxArea(baseHealth, (area) => monsterDpsAt(area).mul(enemyDamageMult))
+      : binarySearchMaxArea(baseHealth, monsterDpsAt)
 
   const area = Math.min(killableArea, survivableArea)
 
@@ -141,7 +158,7 @@ export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResul
   if (area >= MAX_AREA) {
     boundBy = 'max-area'
   } else if (killableArea <= survivableArea) {
-    boundBy = armorKillableArea != null && armorKillableArea < budKillableArea ? 'armor' : 'bud'
+    boundBy = segmentKillableArea != null && segmentKillableArea < budKillableArea ? 'armor' : 'bud'
   } else {
     boundBy = 'survival'
   }

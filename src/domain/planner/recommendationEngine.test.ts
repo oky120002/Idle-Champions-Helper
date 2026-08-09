@@ -153,7 +153,7 @@ const armorCollections: PlannerCollections = {
       allowedTagExpression: [],
       attributeRequirements: [],
       occupiedSlotCount: 0,
-      viabilityContext: { armor: { segments: 200 }, hitsBased: null, damageModifier: null, enemyDamageMult: null },
+      viabilityContext: { armor: { segments: 200 }, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
       scenarioWarnings: [],
     },
   ],

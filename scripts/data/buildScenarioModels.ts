@@ -77,6 +77,12 @@ function projectMechanicsToScenario(
   if (mechanics.has('time_out') || mechanics.has('click_damage_area_limit')) {
     mechanicWarnings.push('当前场景含计时或点击限制，攻速与持续输出价值提升。')
   }
+  if (mechanics.has('perma_death') || mechanics.has('perma_unavailable')) {
+    mechanicWarnings.push('当前场景英雄阵亡后永久离队（永久死亡），生存能力至关重要。')
+  }
+  if (mechanics.has('only_heal_on_revive') || mechanics.has('skip_area_change_heal')) {
+    mechanicWarnings.push('当前场景换区不恢复生命，需要治疗能力或高有效生命。')
+  }
 
   return { mechanicWarnings }
 }

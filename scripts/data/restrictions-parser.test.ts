@@ -325,11 +325,27 @@ describe('parseRestrictions — 可行性上下文', () => {
     expect(result.viabilityContext.armor).toEqual({ segments: 2 })
   })
 
-  it('普通变体：无护甲/命中型/伤害修正', () => {
+  it('普通变体：无护甲/命中型/伤害修正/持续掉血', () => {
     const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher can be used.')])
     expect(result.viabilityContext.armor).toBeNull()
     expect(result.viabilityContext.hitsBased).toBeNull()
     expect(result.viabilityContext.damageModifier).toBeNull()
     expect(result.viabilityContext.enemyDamageMult).toBeNull()
+    expect(result.viabilityContext.healthDrainRate).toBeNull()
+  })
+
+  it('持续掉血：2.5% of max health every second → healthDrainRate=0.025', () => {
+    const result = parseRestrictions([r('All the Champions are poisoned. Every second, Champions take damage equal to 2.5% of their max health.')])
+    expect(result.viabilityContext.healthDrainRate).toBe(0.025)
+  })
+
+  it('持续掉血：4% unavoidable damage every second → healthDrainRate=0.04', () => {
+    const result = parseRestrictions([r('Your Champions take 4% unavoidable damage every second.')])
+    expect(result.viabilityContext.healthDrainRate).toBe(0.04)
+  })
+
+  it('持续掉血排除 random 目标（单目标爆发非全队 DoT）', () => {
+    const result = parseRestrictions([r('Every second, a random Champion takes damage equal to 10% of their max health.')])
+    expect(result.viabilityContext.healthDrainRate).toBeNull()
   })
 })
