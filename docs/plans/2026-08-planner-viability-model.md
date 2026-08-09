@@ -23,13 +23,12 @@
 
 无新数据需求——survival 数据已在 `ScoringResult.areaEstimate`。
 
-- [ ] A1 `steadyStateScoring.ts`：`ScoringResult` + `viabilityFlags`；`ScoringInput` + `minSurvivableArea`
-- [ ] A2 `recommendationEngine.ts:635`：beam search 评分回调检查 survival 约束
-- [ ] A3 `recommendationTypes.ts`：`PlannerResult` + `viability` 字段
-- [ ] A4 `restrictions-parser.ts`：解析伤害削减百分比（K5）→ `damageModifier`
-- [ ] A5 `steadyStateScoring.ts`：`carryDps × damageModifier`（K5 修正）
+- [x] A1 `PlannerRecommendationOptions` + `minSurvivableArea` 字段
+- [x] A2 `scorePlannerFormationWithLegality`：beam search 评分回调检查 survival 约束 → SCORE_ZERO
+- [x] A7 测试：survival-filter + survival-no-threshold（2 用例 ✅）
+- [ ] A3 `recommendationTypes.ts`：`PlannerResult` + `viability` 字段（并入阶段 B ViabilityAssessment）
+- [ ] A4-A5 伤害削减（K5）：并入阶段 B ViabilityContext 统一承载变体修正参数
 - [ ] A6 UI：生存评估展示 + `minSurvivableArea` 控件
-- [ ] A7 测试：survival-pass/fail/no-threshold、damage-debuff-99、beam-rejects-weak
 
 ### 阶段 B：多段攻击 BUD 修正 + 护甲感知
 

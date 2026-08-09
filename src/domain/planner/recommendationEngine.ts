@@ -166,6 +166,11 @@ export interface PlannerRecommendationOptions {
    * 'formation-buff' = 只阵型内聚合，不乘 baseDamage/levelCurve/外部加成（见 architecture.md「投影模式」）。
    */
   aggregateProjection?: AggregateProjection
+  /**
+   * 生存约束阈值：survivableArea 低于此值的阵型被淘汰（SCORE_ZERO）。
+   * 未设 = 仅报告不过滤（现有行为不变）。由 viability 模型驱动（docs/plans/2026-08-planner-viability-model.md 阶段 A）。
+   */
+  minSurvivableArea?: number
 }
 
 /**
@@ -691,7 +696,18 @@ function scorePlannerFormationWithLegality(
       breakdown: null,
     }
   }
-  return scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
+  const scoring = scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
+  const minSurvivableArea = options.minSurvivableArea
+  if (typeof minSurvivableArea === 'number' && scoring.areaEstimate != null) {
+    if (scoring.areaEstimate.survivableArea < minSurvivableArea) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${scoring.areaEstimate.survivableArea} 层，要求 ≥ ${minSurvivableArea} 层`],
+      }
+    }
+  }
+  return scoring
 }
 
 /**

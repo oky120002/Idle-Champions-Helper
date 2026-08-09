@@ -509,3 +509,29 @@ describe('evaluateFormation 指定阵型评估', () => {
     expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(false)
   })
 })
+
+describe('viability: survival constraint', () => {
+  it('minSurvivableArea 过滤掉生存能力不足的阵型', () => {
+    // all-hypothetical 模式，level 1 英雄 baseHealth=1 → effectiveHealth≈1.06，
+    // monsterDpsAt(1-49)=1 → survivableArea≈49。设阈值 50 应全部淘汰。
+    const recommendation = buildPlannerRecommendation({
+      collections,
+      variant: selectedVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical', minSurvivableArea: 50 },
+    })
+    expect(recommendation.blocker).toBe('no-legal-recommendation')
+    expect(recommendation.results.length).toBe(0)
+  })
+
+  it('未设 minSurvivableArea 时正常返回结果（仅报告不过滤）', () => {
+    const recommendation = buildPlannerRecommendation({
+      collections,
+      variant: selectedVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    expect(recommendation.blocker).toBeNull()
+    expect(recommendation.results.length).toBeGreaterThan(0)
+  })
+})
