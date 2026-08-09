@@ -255,6 +255,41 @@ describe('parseRestrictions — 属性门槛提取', () => {
     ])
   })
 
+  // 复合共享值门槛："STAT and STAT of N+"——多 STAT 共享单一 of N direction。
+  // 修复前正则要求 STAT of N 紧邻，复合型首个 STAT 无 of N 后缀 → 只捕获最后一个 STAT。
+  it('复合共享值：STR and CON of 14+ → 两者都提取（atd_5010068521）', () => {
+    const result = parseRestrictions([r('You may only use Champions with a STR and CON of 14+.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 14 },
+      { stat: 'con', operator: '>=', value: 14 },
+    ])
+  })
+
+  it('复合共享值：DEX and STR of 13 or higher → 两者都提取', () => {
+    const result = parseRestrictions([r('Only Champions with DEX and STR of 13 or higher can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'dex', operator: '>=', value: 13 },
+      { stat: 'str', operator: '>=', value: 13 },
+    ])
+  })
+
+  it('复合共享值全词：Strength and Charisma of 14 or higher → 两者都提取', () => {
+    const result = parseRestrictions([r('You may only use Champions with a Strength and Charisma of 14 or higher.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 14 },
+      { stat: 'cha', operator: '>=', value: 14 },
+    ])
+  })
+
+  it('复合共享值 + 独立值混合：INT and WIS of 12+, CHA of 15+ → 三者都提取', () => {
+    const result = parseRestrictions([r('Only Champions with INT and WIS of 12 or higher and CHA of 15 or higher can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '>=', value: 12 },
+      { stat: 'wis', operator: '>=', value: 12 },
+      { stat: 'cha', operator: '>=', value: 15 },
+    ])
+  })
+
   it('v319 伤害修饰句的属性不提取（INT 14+ 是 damage modifier，不含使用门槛标记）', () => {
     const result = parseRestrictions([r('Only Champions with STR of 14 or lower can be used. Rosie and Champions with INT of 14 or higher deal 400% additional damage.')])
     expect(result.attributeRequirements).toEqual([

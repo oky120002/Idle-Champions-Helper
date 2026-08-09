@@ -40,18 +40,6 @@ repair: rebuild
     - 范围：src/ 全目录 + scripts/data/ 数据管线
     - 验证：逐正则溯源使用处，确认业务语义一致，补测覆盖边界
 
-- restrictions-parser 复合属性门槛「STAT and STAT of N+」只捕获最后一个属性 <!-- auto-todo:id=atd_5010068521 -->
-  - 记录时间: `2026-08-09T18:25:56+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/restrictions-parser.ts:213`
-  - 备注: 8 个变体受影响（如 STR and CON of 14+），需语义级解析增强，正则 matchAll 只能捕最后一个 STAT
-
-- applyHealthDrain drainRate>=1 时静默跳过（返回满血而非0） <!-- auto-todo:id=atd_d2d4ed72dc -->
-  - 记录时间: `2026-08-09T18:26:02+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/simulator/areaEstimation.ts:134`
-  - 备注: drainRate=1.0 时 guard drainRate<1 不通过，返回满血而非0（应立即致死）；实际数据最高 0.2 不触发，属防御性隐患
-
 - recommendationEngine warnings 未走 i18n（跨层设计问题） <!-- auto-todo:id=atd_b8b9fcd5b6 -->
   - 记录时间: `2026-08-09T18:26:05+08:00`
   - 类型: follow-up
