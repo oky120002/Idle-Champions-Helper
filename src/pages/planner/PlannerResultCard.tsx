@@ -13,6 +13,13 @@ const CONSTRAINT_LABELS: Record<string, { zh: string; en: string }> = {
   'health-drain': { zh: '持续掉血', en: 'Health drain' },
 }
 
+const BOUND_LABELS: Record<string, { zh: string; en: string }> = {
+  survival: { zh: '存活受限', en: 'survival-bound' },
+  armor: { zh: '护甲受限', en: 'armor-bound' },
+  bud: { zh: '伤害受限', en: 'BUD-bound' },
+  'max-area': { zh: '已达上限', en: 'max-area' },
+}
+
 export type PlannerResultCardProps = PlannerResult & {
   scoringMode?: ScoringMode
   slots: FormationSlot[]
@@ -53,16 +60,7 @@ export function PlannerResultCard({
   const carrySlotId = carryHeroId != null && carryHeroId !== ''
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
-  let boundLabel: string
-  if (areaEstimate?.boundBy === 'survival') {
-    boundLabel = t({ zh: '存活受限', en: 'survival-bound' })
-  } else if (areaEstimate?.boundBy === 'armor') {
-    boundLabel = t({ zh: '护甲受限', en: 'armor-bound' })
-  } else if (areaEstimate?.boundBy === 'bud') {
-    boundLabel = t({ zh: '伤害受限', en: 'BUD-bound' })
-  } else {
-    boundLabel = t({ zh: '已达上限', en: 'max-area' })
-  }
+  const boundLabel = t(BOUND_LABELS[areaEstimate?.boundBy ?? 'max-area'])
 
   return (
     <article

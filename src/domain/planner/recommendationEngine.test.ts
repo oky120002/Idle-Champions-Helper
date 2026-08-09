@@ -610,9 +610,9 @@ describe('viability: armor constraint', () => {
     // 无阈值 → 不过滤 → 有结果（areaEstimate 反映护甲约束但不过滤）
     expect(recommendation.results.length).toBeGreaterThan(0)
     // viability 评估：护甲在活跃约束中
-    const top = recommendation.results[0]!
-    expect(top.viability).not.toBeNull()
-    expect(top.viability!.activeConstraints).toContain('armor')
+    const top = recommendation.results[0]
+    expect(top?.viability).not.toBeNull()
+    expect(top?.viability?.activeConstraints).toContain('armor')
   })
 
   it('普通变体 viability.activeConstraints 为空', () => {
@@ -622,9 +622,9 @@ describe('viability: armor constraint', () => {
       profileSnapshot: null,
       options: { candidateMode: 'all-hypothetical' },
     })
-    const top = recommendation.results[0]!
-    expect(top.viability).not.toBeNull()
-    expect(top.viability!.activeConstraints).toEqual([])
+    const top = recommendation.results[0]
+    expect(top?.viability).not.toBeNull()
+    expect(top?.viability?.activeConstraints).toEqual([])
   })
 })
 
@@ -675,7 +675,7 @@ describe('viability: damage source pattern (K4)', () => {
       options: { candidateMode: 'all-hypothetical' },
     })
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.objectiveValue).not.toBe('0')
+    expect(evaluation.result?.objectiveValue).not.toBe('0')
   })
 
   it('carry 与参考英雄不同列 → SCORE_ZERO（evaluateFormation）', () => {
@@ -688,8 +688,8 @@ describe('viability: damage source pattern (K4)', () => {
       options: { candidateMode: 'all-hypothetical' },
     })
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.objectiveValue).toBe('0')
-    expect(evaluation.result!.warnings.some((w) => w.includes('可造伤害'))).toBe(true)
+    expect(evaluation.result?.objectiveValue).toBe('0')
+    expect(evaluation.result?.warnings.some((w) => w.includes('可造伤害'))).toBe(true)
   })
 
   it('buildPlannerRecommendation 自动避开无效 carry 位置', () => {
@@ -707,11 +707,10 @@ describe('viability: damage source pattern (K4)', () => {
       if (result.carryHeroId == null) continue
       const carrySlot = Object.entries(result.placements).find(([, id]) => id === result.carryHeroId)?.[0]
       const nayeliSlot = Object.entries(result.placements).find(([, id]) => id === 'nayeli')?.[0]
-      if (carrySlot && nayeliSlot) {
-        const carryCol = columnScenario.slotTopology.find((s) => s.slotId === carrySlot)?.column
-        const nayeliCol = columnScenario.slotTopology.find((s) => s.slotId === nayeliSlot)?.column
-        expect(carryCol).toBe(nayeliCol)
-      }
+      if (carrySlot === undefined || nayeliSlot === undefined) continue
+      const carryCol = columnScenario.slotTopology.find((s) => s.slotId === carrySlot)?.column
+      const nayeliCol = columnScenario.slotTopology.find((s) => s.slotId === nayeliSlot)?.column
+      expect(carryCol).toBe(nayeliCol)
     }
   })
 
@@ -725,7 +724,7 @@ describe('viability: damage source pattern (K4)', () => {
       options: { candidateMode: 'all-hypothetical', userDamageDisabledSlots: ['s1'] },
     })
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.objectiveValue).toBe('0')
+    expect(evaluation.result?.objectiveValue).toBe('0')
   })
 
   it('无 damageSourcePattern 的普通变体不受影响', () => {
@@ -737,6 +736,6 @@ describe('viability: damage source pattern (K4)', () => {
       options: { candidateMode: 'all-hypothetical' },
     })
     expect(evaluation.result).not.toBeNull()
-    expect(evaluation.result!.objectiveValue).not.toBe('0')
+    expect(evaluation.result?.objectiveValue).not.toBe('0')
   })
 })

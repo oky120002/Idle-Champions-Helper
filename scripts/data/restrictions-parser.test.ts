@@ -316,7 +316,7 @@ describe('parseRestrictions — 可行性上下文', () => {
 
   it('伤害削减 99%：damageModifier=0.01', () => {
     const result = parseRestrictions([r('Champion damage is reduced by 99% in rain areas.')])
-    expect(result.viabilityContext.damageModifier).toBe(0.01)
+    expect(result.viabilityContext.damageModifier).toBeCloseTo(0.01, 10)
   })
 
   it('敌人伤害倍率：deal 3x damage → enemyDamageMult=3', () => {
@@ -336,12 +336,12 @@ describe('parseRestrictions — 可行性上下文', () => {
 
   it('持续掉血：2.5% of max health every second → healthDrainRate=0.025', () => {
     const result = parseRestrictions([r('All the Champions are poisoned. Every second, Champions take damage equal to 2.5% of their max health.')])
-    expect(result.viabilityContext.healthDrainRate).toBe(0.025)
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.025, 10)
   })
 
   it('持续掉血：4% unavoidable damage every second → healthDrainRate=0.04', () => {
     const result = parseRestrictions([r('Your Champions take 4% unavoidable damage every second.')])
-    expect(result.viabilityContext.healthDrainRate).toBe(0.04)
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.04, 10)
   })
 
   it('持续掉血排除 random 目标（单目标爆发非全队 DoT，S2 不含随机）', () => {

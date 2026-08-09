@@ -245,23 +245,28 @@ function parseAttributeRequirements(text: string): AttributeRequirement[] {
 
 // ─── 可行性上下文解析 ───
 
+// eslint-disable-next-line sonarjs/super-linear-regex -- 固定模式无回溯风险（alternation 分支不重叠）
 const ARMOR_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?armored\s+(?:hit\s+points|HP)/i
+// eslint-disable-next-line sonarjs/super-linear-regex -- 同上
 const HITS_BASED_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?hits-based\s+(?:HP|hit\s+points|health)/i
 const ARMORED_FLAG_RE = /armored\s+hit-based\s+health/i
+// eslint-disable-next-line sonarjs/super-linear-regex -- 同上
 const SCALING_ADDITIONAL_RE = /(\d+)\s+additional\s+(?:armored|hits-based)\s+hit\s+points/i
 const SCALING_EVERY_RE = /every\s+(\d+)\s+areas/i
 const DAMAGE_REDUCED_RE = /damage\s+(?:is\s+)?reduced\s+by\s+(\d+(?:\.\d+)?)\s*%/i
 const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
 // 持续掉血：「Champions take/lose X% of (their) max health every second」。
 // 排除 random（单目标爆发）和 reduce（伤害削减非掉血）。
+// eslint-disable-next-line sonarjs/regex-complexity -- 多变体自然语言模式，拆分后更难维护
 const HEALTH_DRAIN_PCT_RE = /(?:take|takes|lose|loses)\s+(?:damage\s+)?(?:equal\s+to\s+)?(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum|total)\s*health|unavoidable\s+damage)/i
 const EVERY_SECOND_RE = /\b(?:every|each|per)\s+second\b/i
 // S4 burst：every N seconds (N≥2) 打 X% 伤害——等效 drainRate = X/100/N
-const BURST_INTERVAL_RE = /\b(?:every|each)\s+(\d+)(?:[-](\d+))?\s+seconds?\b/i
+const BURST_INTERVAL_RE = /\b(?:every|each)\s+(\d+)(?:-(\d+))?\s+seconds?\b/i
+// eslint-disable-next-line sonarjs/super-linear-regex, sonarjs/regex-complexity -- 多变体自然语言模式
 const BURST_PCT_RE = /(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum)\s*health|of\s+(?:the\s+)?champion|damage)/i
 
 function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | null {
-  const baseMatch = text.match(baseRegex)
+  const baseMatch = baseRegex.exec(text)
   if (!baseMatch) {
     // 检查是否仅有标志（"armored hit-based health"），无具体段数
     if (ARMORED_FLAG_RE.test(text) && baseRegex === ARMOR_SEGMENTS_RE) {
@@ -269,14 +274,14 @@ function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | nu
     }
     return null
   }
-  const segments = parseInt(baseMatch[1]!, 10)
+  const segments = parseInt(baseMatch[1] ?? '', 10)
   if (!Number.isFinite(segments) || segments <= 0) return null
 
-  const scalingAdditionalMatch = text.match(SCALING_ADDITIONAL_RE)
-  const scalingEveryMatch = text.match(SCALING_EVERY_RE)
+  const scalingAdditionalMatch = SCALING_ADDITIONAL_RE.exec(text)
+  const scalingEveryMatch = SCALING_EVERY_RE.exec(text)
   if (scalingAdditionalMatch && scalingEveryMatch) {
-    const additional = parseInt(scalingAdditionalMatch[1]!, 10)
-    const everyAreas = parseInt(scalingEveryMatch[1]!, 10)
+    const additional = parseInt(scalingAdditionalMatch[1] ?? '', 10)
+    const everyAreas = parseInt(scalingEveryMatch[1] ?? '', 10)
     if (Number.isFinite(additional) && additional > 0 && Number.isFinite(everyAreas) && everyAreas > 0) {
       return { segments, scaling: { additional, everyAreas } }
     }
@@ -285,17 +290,17 @@ function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | nu
 }
 
 function parseDamageModifier(text: string): number | null {
-  const match = text.match(DAMAGE_REDUCED_RE)
+  const match = DAMAGE_REDUCED_RE.exec(text)
   if (!match) return null
-  const pct = parseFloat(match[1]!)
+  const pct = parseFloat(match[1] ?? '')
   if (!Number.isFinite(pct) || pct <= 0 || pct >= 100) return null
   return (100 - pct) / 100 // "reduced by 99%" → 0.01
 }
 
 function parseEnemyDamageMult(text: string): number | null {
-  const match = text.match(ENEMY_DAMAGE_MULT_RE)
+  const match = ENEMY_DAMAGE_MULT_RE.exec(text)
   if (!match) return null
-  const mult = parseFloat(match[1]!)
+  const mult = parseFloat(match[1] ?? '')
   return Number.isFinite(mult) && mult > 0 ? mult : null
 }
 
@@ -303,9 +308,9 @@ function parseHealthDrainRate(text: string): number | null {
   if (!EVERY_SECOND_RE.test(text)) return null
   if (/\brandom\b/i.test(text)) return null
   if (/\breduc/i.test(text)) return null
-  const match = text.match(HEALTH_DRAIN_PCT_RE)
+  const match = HEALTH_DRAIN_PCT_RE.exec(text)
   if (!match) return null
-  const pct = parseFloat(match[1]!)
+  const pct = parseFloat(match[1] ?? '')
   if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
   return pct / 100
 }
@@ -313,13 +318,13 @@ function parseHealthDrainRate(text: string): number | null {
 /** S4 burst：X% 伤害 every N 秒（N≥2）→ 等效持续掉血 X/100/N。含随机目标 burst。 */
 function parseBurstDrainRate(text: string): number | null {
   if (/\breduc/i.test(text)) return null
-  const intervalMatch = text.match(BURST_INTERVAL_RE)
+  const intervalMatch = BURST_INTERVAL_RE.exec(text)
   if (!intervalMatch) return null
-  const interval = parseInt(intervalMatch[1]!, 10)
+  const interval = parseInt(intervalMatch[1] ?? '', 10)
   if (!Number.isFinite(interval) || interval < 2) return null
-  const pctMatch = text.match(BURST_PCT_RE)
+  const pctMatch = BURST_PCT_RE.exec(text)
   if (!pctMatch) return null
-  const pct = parseFloat(pctMatch[1]!)
+  const pct = parseFloat(pctMatch[1] ?? '')
   if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
   return pct / 100 / interval
 }
@@ -407,7 +412,7 @@ function lookupHeroName(name: string, heroNameToId: ReadonlyMap<string, string>)
   const lower = name.toLowerCase().trim()
   if (lower.length < 3) return null
   const exact = heroNameToId.get(lower)
-  if (exact) return exact
+  if (exact != null) return exact
   for (const [fullName, id] of heroNameToId) {
     if (fullName.endsWith(' ' + lower)) return id
   }
@@ -426,22 +431,23 @@ function resolveReferenceHero(
   nameRegex: RegExp,
   heroNameToId: ReadonlyMap<string, string>,
 ): string | null {
-  const match = sentence.match(nameRegex)
+  const match = nameRegex.exec(sentence)
   if (match) {
-    // Strip possessive 's / 's suffix（"Ezmerelda's" → "Ezmerelda"，"Lae'zel's" → "Lae'zel"）。
+    // Strip possessive ‘s / ‘s suffix（"Ezmerelda’s" → "Ezmerelda"，"Lae’zel’s" → "Lae’zel"）。
     const token = match[1]?.trim().replace(/['’]s$/i, '')
-    if (token && !PRONOUNS.has(token.toLowerCase())) {
+    if (token != null && token !== '' && !PRONOUNS.has(token.toLowerCase())) {
       const id = lookupHeroName(token, heroNameToId)
-      if (id) return id
+      if (id != null) return id
     }
   }
   // 代词回退："Only [Name] and (the) Champions ..." 前缀中的具名英雄。
-  const onlyMatch = sentence.match(/\bonly\s+(\w[\w\s']*?)\s+and\s+(?:the\s+)?champions/i)
+  // eslint-disable-next-line sonarjs/super-linear-regex -- \w[\w\s']*? 非贪婪限定在 "and champions" 前，回溯可忽略
+  const onlyMatch = /\bonly\s+(\w[\w\s']*?)\s+and\s+(?:the\s+)?champions/i.exec(sentence)
   if (onlyMatch) {
     const name = onlyMatch[1]?.trim()
-    if (name && !PRONOUNS.has(name.toLowerCase())) {
+    if (name != null && name !== '' && !PRONOUNS.has(name.toLowerCase())) {
       const id = lookupHeroName(name, heroNameToId)
-      if (id) return id
+      if (id != null) return id
     }
   }
   return null
@@ -455,7 +461,7 @@ interface PatternMatch {
 }
 
 function parseColumnSpan(token: string | undefined, fallback: number): number {
-  if (!token) return fallback
+  if (token == null) return fallback
   const num = /^\d+$/.test(token) ? parseInt(token, 10) : EN_COLUMN_NUMBERS[token.toLowerCase()]
   return typeof num === 'number' && num > 0 ? num : fallback
 }
@@ -465,28 +471,33 @@ function matchPattern(sentence: string): PatternMatch | null {
   const lower = sentence.toLowerCase()
 
   // not-adjacent: "not next to/adjacent to X" / "next to X deal no damage"
-  if (/\bnot\s+(?:next\s+to|adjacent\s+to)\b/i.test(sentence) ||
-      /\b(?:next\s+to|adjacent\s+to)\s+\w+.*deal\s+no\s+damage/i.test(sentence)) {
+  const notAdjacent = /\bnot\s+(?:next\s+to|adjacent\s+to)\b/i.test(sentence)
+  // eslint-disable-next-line sonarjs/super-linear-regex -- \w+.* 回溯在短句上可忽略
+  const adjacentNoDamage = /\b(?:next\s+to|adjacent\s+to)\s+\w+.*deal\s+no\s+damage/i.test(sentence)
+  if (notAdjacent || adjacentNoDamage) {
     return { kind: 'not-adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
   }
 
   // front-columns: "(N) columns in front of X"
-  const frontMatch = lower.match(/(\d+|one|two|three|four)?\s*columns?\s+in\s+front\b/)
+  // eslint-disable-next-line sonarjs/super-linear-regex -- alternation 分支不重叠
+  const frontMatch = /(\d+|one|two|three|four)?\s*columns?\s+in\s+front\b/.exec(lower)
   if (frontMatch) {
-    const span = frontMatch[1] ? parseColumnSpan(frontMatch[1], 2) : 100
+    const span = frontMatch[1] !== undefined ? parseColumnSpan(frontMatch[1], 2) : 100
     return { kind: 'front-columns', columnSpan: span, nameRegex: /in\s+front\s+of\s+([\w'-]+)/i }
   }
 
   // behind-columns: "(N) column(s) behind X"
-  const behindMatch = lower.match(/(\d+|one|two|three|four)?\s*columns?\s+behind\b/)
+  // eslint-disable-next-line sonarjs/super-linear-regex -- 同上
+  const behindMatch = /(\d+|one|two|three|four)?\s*columns?\s+behind\b/.exec(lower)
   if (behindMatch) {
-    const span = behindMatch[1] ? parseColumnSpan(behindMatch[1], 1) : 1
+    const span = behindMatch[1] !== undefined ? parseColumnSpan(behindMatch[1], 1) : 1
     return { kind: 'behind-columns', columnSpan: span, nameRegex: /behind\s+([\w'-]+)/i }
   }
 
   // same-column: "in X's column" / "X's column"（排除 front/behind/back）
   if (/\bcolumn\b/i.test(sentence) && !/\b(?:front|behind|back)\b/i.test(sentence)) {
-    return { kind: 'same-column', nameRegex: /(\w[\w'-]*)['']?s?\s+column/i }
+    // eslint-disable-next-line sonarjs/super-linear-regex -- [\w'-]* 回溯在短名字 token 上可忽略
+    return { kind: 'same-column', nameRegex: /(\w[\w'-]*)'?s?\s+column/i }
   }
 
   // adjacent (positive): "next to/adjacent to X can deal damage"
@@ -511,7 +522,7 @@ export function parseDamageSourcePattern(
   heroNameToId: ReadonlyMap<string, string>,
 ): DamageSourcePattern | null {
   for (const { original } of restrictions) {
-    if (!original) continue
+    if (original === '') continue
     const normalized = original.replace(/\r?\n/g, ' ')
     for (const rawSentence of normalized.split(/\.\s+/)) {
       const sentence = rawSentence.trim()
@@ -525,7 +536,7 @@ export function parseDamageSourcePattern(
       if (!patternMatch) continue
 
       const referenceHeroId = resolveReferenceHero(sentence, patternMatch.nameRegex, heroNameToId)
-      if (!referenceHeroId) continue // NPC 引用或未识别名，交 UI
+      if (referenceHeroId === null) continue // NPC 引用或未识别名，交 UI
 
       return {
         kind: patternMatch.kind,

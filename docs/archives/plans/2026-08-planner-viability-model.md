@@ -2,8 +2,8 @@
 
 **创建**：2026-08-09
 **Type**: milestone
-**Status**: Accepted
-**需求**：`docs/requirements/2026-08-planner-formation-viability.md`
+**Status**: Landed
+**需求**：`docs/archives/requirements/2026-08-planner-formation-viability.md`
 
 ## 目标
 

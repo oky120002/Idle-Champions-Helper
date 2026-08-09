@@ -17,7 +17,7 @@
 
 ### 深度调研发现的完整约束图谱
 
-2026-08-09 深度调研发现，通关约束远不止用户最初发现的「生存 + 护甲」。完整 10 维约束图谱见 [viability-constraint-taxonomy.md](../research/gameplay/viability-constraint-taxonomy.md)，按「能否击杀」「能否存活」「策略」分类。
+2026-08-09 深度调研发现，通关约束远不止用户最初发现的「生存 + 护甲」。完整 10 维约束图谱见 [viability-constraint-taxonomy.md](../../research/gameplay/viability-constraint-taxonomy.md)，按「能否击杀」「能否存活」「策略」分类。
 
 ### 现有 planner 的不足
 

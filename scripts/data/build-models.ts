@@ -88,7 +88,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     heroAbilities.push(buildOfficialHeroModel(champion, detailRecord))
     const nameRecord = asRecord(champion.name) ?? {}
     const nameOriginal = typeof nameRecord.original === 'string' ? nameRecord.original.toLowerCase() : ''
-    if (nameOriginal) heroNameToId.set(nameOriginal, championId)
+    if (nameOriginal !== '') heroNameToId.set(nameOriginal, championId)
     // 专精 upgrade → 按 heroId 索引的可选 signal catalog（ADR 0017）；无专精的英雄不进 catalog。
     const specializationEntries = buildSpecializationEntries(detailRecord)
     if (specializationEntries.length > 0) {

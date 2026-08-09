@@ -9,13 +9,13 @@ import type { EquipmentBuff } from '../buffs/equipmentMult'
 import type { AbilityScoreKey, AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
 import { applyComputationMode, type ComputationMode } from './computationMode'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
 import { buildPlannerExplanations } from './plannerNarrative'
-import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import {
   type PlannerCollections,
   type PlannerPlacementEntry,
@@ -392,7 +392,7 @@ function scorePlannerFormation(
   if (scoring.carryHeroId != null) {
     const carrySlotId = Object.entries(placements).find(([, id]) => id === scoring.carryHeroId)?.[0]
     // 层 2：用户手动标记。
-    if (carrySlotId != null && options.userDamageDisabledSlots?.includes(carrySlotId)) {
+    if (carrySlotId != null && (options.userDamageDisabledSlots?.includes(carrySlotId) ?? false)) {
       return {
         ...scoring,
         objectiveValue: SCORE_ZERO,
@@ -417,6 +417,7 @@ function scorePlannerFormation(
  * 强制英雄（forcedHeroes）豁免——其未拥有/不在白名单是 force_use_heroes 的设计预期。
  * 提取自 evaluateFormation 以降主函数复杂度；语义零改变。
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 三条独立限制检查在同一循环，拆开反增打开文件数
 function collectEvaluationRestrictionWarnings(
   placements: Record<string, string>,
   heroById: Map<string, ResolvedHeroAbilityProfile>,
@@ -715,9 +716,9 @@ function isCarryInDamageValidSlot(
   if (!pattern) return true
   const slotByHero = new Map(Object.entries(placements).map(([slot, id]) => [id, slot]))
   const carrySlotId = slotByHero.get(carryHeroId)
-  if (!carrySlotId) return true
+  if (carrySlotId === undefined) return true
   const refSlotId = slotByHero.get(pattern.referenceHeroId)
-  if (!refSlotId) return true
+  if (refSlotId === undefined) return true
   const topology = scenario.slotTopology
   const carrySlot = topology.find((s) => s.slotId === carrySlotId)
   const refSlot = topology.find((s) => s.slotId === refSlotId)
@@ -772,7 +773,7 @@ function scorePlannerFormationWithLegality(
       return {
         ...scoring,
         objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${scoring.areaEstimate.survivableArea} 层，要求 ≥ ${minSurvivableArea} 层`],
+        warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${String(scoring.areaEstimate.survivableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
       }
     }
     // 护甲约束：护甲变体额外检查击杀侧（B6 已把护甲门槛烤进 killableArea）
@@ -780,7 +781,7 @@ function scorePlannerFormationWithLegality(
       return {
         ...scoring,
         objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, `护甲击杀能力不足：预估可击杀 ${scoring.areaEstimate.killableArea} 层，要求 ≥ ${minSurvivableArea} 层`],
+        warnings: [...scoring.warnings, `护甲击杀能力不足：预估可击杀 ${String(scoring.areaEstimate.killableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
       }
     }
   }
