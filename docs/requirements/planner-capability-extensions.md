@@ -27,12 +27,12 @@
   - [x] 金币预算（金币/等级互斥控件 → worker 换算 → `heroLevelOverride` + `goldBudget` + 专精门控，2026-08-06 落地）
 - [ ] **未建模加成源补建**（部分）—— modron（齿轮）/ 成就 / 药水 / gem 等伤害加成来源接入评估；逐类需核定 amount 与生效条件
   - [x] vulnerability 易伤（场景 `enemyTypes` 匹配 + add/mult pool 聚合，`src/domain/planner/scoring/vulnerabilityFactor.ts`）
-  - [ ] modron 齿轮（simulator 层 `modronInfo.ts` 有数据，planner 未消费）
+  - [ ] modron 齿轮（管道加成）：核心定义不在公开 JSON，存档只存管道配置，社区无完整计算公式；接入需 M2 里程碑（userdetails 导入 + 核心定义数据 + 管道引擎），详见 `docs/research/gameplay/modron-automation.md`「接入不可行性分析」
   - [ ] 成就 / 药水 / gem（planner 无建模）
 
 ## 为何暂缓
 
-主体加成（同 key 跨源加法、五通道装备加成、专精注入）已正确建模并稳态。上表中表达式求值器的存档依赖谓词、vulnerability 易伤、装备 / 专精 / feat 手动参数已落地；剩余项中，表达式求值器（`HasEffect` / `ByID`）与 simulator 接入评估链路是多数高阶扩展的前置基建；modron 已有 simulator 数据，接入评估的边际成本相对可控。任何新增能力都必须可解释、可回归验证；无法静态求值的效果不得静默进入目标值。
+主体加成（同 key 跨源加法、五通道装备加成、专精注入）已正确建模并稳态。上表中表达式求值器的存档依赖谓词、vulnerability 易伤、装备 / 专精 / feat 手动参数已落地；剩余项中，表达式求值器（`HasEffect` / `ByID`）与 simulator 接入评估链路是多数高阶扩展的前置基建；modron 管道加成经 2026-08-09 深度调研确认接入需 M2 里程碑（核心定义不在公开 JSON + 存档只存管道配置 + 社区无完整计算公式），详见 `docs/research/gameplay/modron-automation.md`「接入不可行性分析」。任何新增能力都必须可解释、可回归验证；无法静态求值的效果不得静默进入目标值。
 
 ## 关联
 
