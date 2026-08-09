@@ -4,7 +4,7 @@ import { REGISTERED_STACK_FUNCS } from '../planner/mechanics/stackCountResolver'
 
 /**
  * 英雄能力表达层（hero-agnostic）。算法-英雄握手点唯一：HeroAbilityProfile。
- * 本文件不含推荐引擎语义；推荐引擎消费此处类型。
+ * 本文件不含推算引擎语义；推算引擎消费此处类型。
  */
 
 export type HeroAbilityKind =

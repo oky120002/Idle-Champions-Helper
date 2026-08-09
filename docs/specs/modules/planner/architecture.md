@@ -2,7 +2,7 @@
 
 ## 系统定位
 
-planner 是个人成长导向阵型决策台的核心模块：在用户当前拥有英雄、装备、feat、传奇、专精与场景限制下，自动推荐较优的上场英雄与站位。不做黑盒全自动最优解，按本地优先、可解释、可验证原则，输出可追溯的推荐结果与加成拆解。
+planner 是最佳阵型自动推算工具的核心模块：在用户当前拥有英雄、装备、feat、传奇、专精与场景限制下，自动推算最优上场英雄与站位。按本地优先、可解释、可验证原则，输出可追溯的推算结果与加成拆解。
 
 ## 计算原则
 
@@ -146,11 +146,11 @@ scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 
 ## 命名约定
 
-通用符号（英雄能力、数据产物）去除 `Planner` 前缀，专属推荐引擎模块保留：
+通用符号（英雄能力、数据产物）去除 `Planner` 前缀，专属推算引擎模块保留：
 
 - 能力层类型与函数去前缀：`HeroAbilitySignal`、`matchesHeroQualifier`、`attachSignalSemantics`、`resolveHeroAbilityProfiles`。
 - JSON 产物与 IndexedDB key 按通用性命名：`hero-abilities.json`、`scenarios.json`、`semantic-overrides.json`；IndexedDB store `heroAbilityOverrides`。
-- 推荐引擎模块保留 `planner` 命名（`src/domain/planner/`：recommendationEngine / beamSearch / steadyStateScoring / candidatePool / placementFit）。
+- 推算引擎模块保留 `planner` 命名（`src/domain/planner/`：recommendationEngine / beamSearch / steadyStateScoring / candidatePool / placementFit）。
 
 ## BUD 与 DPS 的取舍
 

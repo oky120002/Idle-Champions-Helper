@@ -1,6 +1,6 @@
 # 阵型推荐英雄与站位设计
 
-推荐引擎的纯算法与数据模型设计。评估与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准——pool 聚合 + carryDps，输出层字段 `objectiveValue`（carry-dps 模式 = carryDps，team-gold 模式 = teamGoldFind）。本文不展开视觉稿、交互稿或逐帧战斗模拟。
+推算引擎的纯算法与数据模型设计。评估与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准——pool 聚合 + carryDps，输出层字段 `objectiveValue`（carry-dps 模式 = carryDps，team-gold 模式 = teamGoldFind）。本文不展开视觉稿、交互稿或逐帧战斗模拟。
 
 ## 1. 核心结论
 - 推荐目标不是整队总 DPS，而是**单一 C 位英雄的最终输出代理值**。
@@ -11,14 +11,14 @@
 - 官方不会提供可靠的敌对单位血量模型；planner 也**不需要**考虑敌方血量，只堆高 C 位输出代理值。
 
 ## 2. 数据分层与 merge
-- 推荐引擎不直接读取零散的 `champion-details`、`variants`、`formations` 和原始 effect string 做现场聚合，而是统一消费 merge 后的 planner model。
+- 推算引擎不直接读取零散的 `champion-details`、`variants`、`formations` 和原始 effect string 做现场聚合，而是统一消费 merge 后的 planner model。
 - 官方归一化 hero ability model：由官方数据获取流水线新增一步「阵型推荐归一化」，产出到 `public/data/v1/hero-abilities.json` 与 `public/data/v1/scenarios.json`。
 - `hero-abilities.json`：每个英雄的推荐专用画像，包含 `baseDamage` / `costCurves`、support 语义、位置条件、标签条件、增伤方向、unsupported 缺口、`gainProfile`（build 期预算的各维度收益，供计算模式排序裁剪候选）。
 - `scenarios.json`：每个 scenario 的布局、锁槽、强制 / 禁用英雄、拓扑关系、目标区域等推荐输入。
 - 仓库语义补丁：`scripts/data/semantic-overrides.json`，补官方自动解析拿不到或不稳定的语义，例如顶部 / 底部、前后、同列、身后、职业 / 性别 / 阵营 / 角色条件、特殊激活条件。
 - 浏览器本地 override：IndexedDB store `heroAbilityOverrides`，按英雄全局存储，只允许覆盖语义字段；不改原始官方英雄详情，不改公共静态产物，不进生产构建。
 - 固定优先级：`官方 planner model < 仓库语义补丁 < 浏览器本地 override`。
-- 推荐引擎、模拟器和所有消费者只读 merge 后的 resolved model，不再分散拼接源数据。
+- 推算引擎、模拟器和所有消费者只读 merge 后的 resolved model，不再分散拼接源数据。
 
 ## 3. 核心模型
 - `ResolvedHeroAbilityProfile` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`baseDamage`、`costCurves`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。

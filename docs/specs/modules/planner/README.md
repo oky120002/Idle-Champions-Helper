@@ -1,6 +1,6 @@
 # planner 模块文档入口
 
-- 作用：自动阵型计划器的产品范围、架构、数据、推荐评估与运行时合同。
+- 作用：最佳阵型推算引擎的产品范围、架构、数据、推算评估与运行时合同。
 - 边界：本目录是功能与设计事实源；历史任务包见 `.ralph/tasks/planner/`，仅作存档，不反映当前结构。
 
 ## 文档导览
@@ -14,7 +14,7 @@
 
 ### 推荐与评估
 
-- `recommendation.md`：推荐英雄、站位规则、模型字段、条件匹配语义与 merge 策略。
+- `recommendation.md`：推算英雄选择、站位规则、模型字段、条件匹配语义与 merge 策略。
 - `search-and-ranking.md`：搜索、排序与输出合同。
 - `simulator.md`：GameNumber、英雄等级、加成聚合与 DPS 公式、评估维度、计算模式。
 - `computation-runtime.md`：Web Worker、推图预估、输出合同、UI 与测试覆盖。

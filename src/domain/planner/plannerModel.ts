@@ -1,7 +1,7 @@
 /**
- * planner 推荐引擎模型入口。
+ * planner 推算引擎模型入口。
  * 通用英雄能力类型与 signal semantics 已下沉到 src/domain/abilities/；引擎直接引用 Hero* 名。
- * 此处只保留推荐引擎专属的场景（scenario）类型与 resolver。
+ * 此处只保留推算引擎专属的场景（scenario）类型与 resolver。
  */
 import type { AttributeRequirement, LocalizedText, ScenarioRef, TagExpression, Variant } from '../types'
 import type {

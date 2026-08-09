@@ -1,19 +1,19 @@
-# 0009. 推荐引擎用真实目标量 carryDps + pool 聚合 + beam search
+# 0009. 推算引擎用真实目标量 carryDps + pool 聚合 + beam search
 
 **状态**: Accepted
 **决策日期**: 2026-07-30（回填）
 
 ## 背景
 
-planner 要在「拥有英雄 × 阵型 × 场景限制」下推荐较优上场英雄与站位。早期版本用启发式 `score` + `heuristicRoleMultiplier` + `isCarryViable` 给英雄打分；需确定推荐引擎优化什么、怎么搜。本决策随 planner 开发确立，早于 ADR 约定（0006），现回填。
+planner 要在「拥有英雄 × 阵型 × 场景限制」下推算最优上场英雄与站位。早期版本用启发式 `score` + `heuristicRoleMultiplier` + `isCarryViable` 给英雄打分；需确定推算引擎优化什么、怎么搜。本决策随 planner 开发确立，早于 ADR 约定（0006），现回填。
 
 ## 决策
 
-推荐引擎用「真实目标量 + pool 聚合 + deterministic beam search」：
+推算引擎用「真实目标量 + pool 聚合 + deterministic beam search」：
 
 - `placementFit` 是 pool 聚合器（pool 内 add 相加 / mult 相乘，pool 间乘法），产出**真实目标量**而非启发式评估：carry-dps 模式 = `carryDps`，team-gold 模式 = `teamGoldFind`，均 GameNumber。
 - 搜索单位是**完整阵型**（有且仅一个主 C 位），deterministic beam search 按目标量最大化，同分 deterministic tie-breaker。
-- 不做黑盒全自动最优解（产品定位：可解释、可验证、本地优先），输出可追溯加成拆解（`SimulationBreakdown`）。
+- 按本地优先、可解释、可验证原则推算最优阵型，输出可追溯加成拆解（`SimulationBreakdown`），不做无法追溯的黑盒。
 - 旧 `score` / `heuristicRoleMultiplier` / `isCarryViable` 淘汰。
 
 ## 后果

@@ -1,6 +1,6 @@
 # Idle Champions 辅助站
 
-《Idle Champions of the Forgotten Realms》个人成长导向的阵型决策台。仓库级硬约束见 `AGENTS.md`，完整文档索引见 `docs/README.md`。
+《Idle Champions of the Forgotten Realms》最佳阵型自动推算工具。仓库级硬约束见 `AGENTS.md`，完整文档索引见 `docs/README.md`。
 
 ## 根本目标
 

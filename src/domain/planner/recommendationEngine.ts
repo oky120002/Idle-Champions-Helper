@@ -1,4 +1,4 @@
-/* eslint-disable max-lines -- planner 推荐引擎主入口：evaluateFormation + buildPlannerRecommendation 两入口 + 9 个紧密协作的子函数。拆到多个文件会让推荐流程修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
+/* eslint-disable max-lines -- planner 推算引擎主入口：evaluateFormation + buildPlannerRecommendation 两入口 + 9 个紧密协作的子函数。拆到多个文件会让推荐流程修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
 import { toGameNumber, parseGameNumber, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
