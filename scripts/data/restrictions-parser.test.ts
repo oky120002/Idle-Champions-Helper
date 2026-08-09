@@ -171,6 +171,17 @@ describe('parseRestrictions — ZH 变量递增占格排除', () => {
     expect(result.lockedSlotCount).toBe(0)
     expect(result.warnings.length).toBeGreaterThan(0)
   })
+
+  // 回归：v384「Dragonbait 占一格，每经过 10 区域气味变化」——「每经过」不涉及占格，
+  // 不应误判为变量递增。原 ZH_AREA_INCREMENT_RE 的裸「每经过」匹配项不区分上下文，
+  // 致固定 1 格被清零。修复后「每经过」须同句含占格语言才触发。
+  it('ZH「每经过 N 区域」非占格语境不误判变量递增（v384 Dragonbait 固定 1 格）', () => {
+    const result = parseRestrictions([r(
+      'Dragonbait takes up a slot in the formation.',
+      '龙饵占据阵型中的一格，缅怀他失去的朋友阿图斯。每经过 10 个区域，龙饵的气味会发生改变',
+    )])
+    expect(result.lockedSlotCount).toBe(1)
+  })
 })
 
 describe('parseRestrictions — 属性门槛提取', () => {
@@ -293,12 +304,66 @@ describe('parseRestrictions — 属性门槛提取', () => {
     ])
     expect(result.warnings).toEqual([])
   })
+
+  it('全词属性名：Constitution of 14 or higher → { stat: con, >=, 14 }', () => {
+    const result = parseRestrictions([r('Only Champions with a Constitution of 14 or higher may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'con', operator: '>=', value: 14 },
+    ])
+  })
+
+  it('全词属性名：Strength of 12 or higher → { stat: str, >=, 12 }', () => {
+    const result = parseRestrictions([r('Only Champions with Strength of 12 or higher may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 12 },
+    ])
+  })
+
+  it('全词属性名：Charisma of 18 or higher → { stat: cha, >=, 18 }', () => {
+    const result = parseRestrictions([r('Only Champions with Charisma of 18 or higher may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '>=', value: 18 },
+    ])
+  })
+
+  it('"+ 记法：CON of 15+ → { stat: con, >=, 15 }', () => {
+    const result = parseRestrictions([r('Only Champions with CON of 15+ may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'con', operator: '>=', value: 15 },
+    ])
+  })
+
+  it('全词属性名 + "+" 记法：Intelligence of 13+ → { stat: int, >=, 13 }', () => {
+    const result = parseRestrictions([r('Only Champions with Intelligence of 13+ may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '>=', value: 13 },
+    ])
+  })
+
+  it('"or more" 写法：wisdom score of 13 or more → { stat: wis, >=, 13 }', () => {
+    const result = parseRestrictions([r('Only Champions with a wisdom score of 13 or more may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'wis', operator: '>=', value: 13 },
+    ])
+  })
+
+  it('"or less" 写法：INT of 11 or less → { stat: int, <=, 11 }', () => {
+    const result = parseRestrictions([r('Only Champions with INT of 11 or less may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '<=', value: 11 },
+    ])
+  })
 })
 
 describe('parseRestrictions — 可行性上下文', () => {
   it('护甲段数：200 armored HP → armor.segments=200', () => {
     const result = parseRestrictions([r('After area 10, a giant Intellect Devourer appears. It has 200 armored hit points.')])
     expect(result.viabilityContext.armor).toEqual({ segments: 200 })
+  })
+
+  it('护甲段数：4 armored health（非 hit points）→ armor.segments=4', () => {
+    const result = parseRestrictions([r('Enemies have 4 armored health.')])
+    expect(result.viabilityContext.armor).toEqual({ segments: 4 })
   })
 
   it('命中型段数：20 hits-based HP → hitsBased.segments=20', () => {

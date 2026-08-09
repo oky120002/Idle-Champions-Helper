@@ -38,7 +38,8 @@ const EN_NUMBER_WORDS: Record<string, number> = {
 }
 
 // slot-occupy 语义关键词（EN）。文本须同时含 slot + 其中之一才算 slot-occupying。
-const EN_SLOT_OCCUPY_KEYWORDS = ['take up', 'taken up', 'occupied', 'cursed', 'took up']
+// 含 takes up / taking up（includes("take up") 对它们返回 false，须显式列出）。
+const EN_SLOT_OCCUPY_KEYWORDS = ['take up', 'takes up', 'taking up', 'taken up', 'occupied', 'cursed', 'took up']
 
 // 变量/递增模式（排除）：随层数递增占据格数的文本不产生确定 lockedSlotCount（保守 warning）。
 // 注意：cursed slots「change slots every 15 seconds」是固定 N 格轮换位置（计数不变），不算变量。
@@ -49,7 +50,7 @@ const EN_NUMBER_SLOTS_RE = /\b(\d+|one|two|three|four|five|six|seven|eight)\s+(?
 // 回退：含 "take up slots" / "took up slots"（复数 occupy，无数词邻接 slots）时，
 // 取文本首个数词（通常 = 占位实体数，如 "Two shipwrights take up slots"）。
 const EN_FIRST_NUMBER_RE = /\b(\d+|one|two|three|four|five|six|seven|eight)\b/i
-const EN_TAKE_UP_SLOTS_RE = /\b(?:take|took)\s+up\s+slots\b/i
+const EN_TAKE_UP_SLOTS_RE = /\b(?:take|takes|taking|took)\s+up\s+slots\b/i
 
 function enSlotOccupyCount(text: string): number | null {
   const lower = text.toLowerCase()
@@ -143,9 +144,11 @@ const ZH_DIGITS: Record<string, number> = {
 // 不是 NPC 换位置；若用孤立「移动」会误判变量递增（每 50 区域 +1 格）为位置轮换，
 // 跳过排除、误产 occ。只收明确的位置变化短语（阵型中移动 / 改变位置 / 变换位置 / 切换位置）。
 const ZH_POSITION_ROTATION_RE = /阵型中移动|移动位置|改变位置|变换位置|切换位置|换位置|换格/
-// 区域递增占格标记：「每经过 N 区域」「每 N 个区域」「额外 N 格」——计数随区域增长。
+// 区域递增占格标记：「每经过 N 区域...格/占」（须同一句内含占格语言，排除气味/复活等无关「每经过」）、
+// 「每 N 个区域」「额外 N 格」——计数随区域增长。
 // 注意：「每 N 秒换格」是固定 N 格轮换位置（计数不变），不在此列（无区域递增标记）。
-const ZH_AREA_INCREMENT_RE = /每经过|每\s*\d+\s*个?区域|额外\s*[一二两三四五六七八九\d]/
+// eslint-disable-next-line sonarjs/super-linear-regex -- [^。]{0,50} 有上限，短文本无回溯风险
+const ZH_AREA_INCREMENT_RE = /每经过[^。]{0,50}?(?:格|占)|每\s*\d+\s*个?区域|额外\s*[一二两三四五六七八九\d]/
 
 function zhSlotOccupyCount(text: string): number | null {
   // 先判定 slot-occupy 语义：含「格」+「占据/占用/被...占」。
@@ -207,10 +210,22 @@ function hasResidualMechanics(original: string): boolean {
   return false
 }
 
-// 属性门槛正则（全局）：(STAT) (score )?of (N) or (higher|lower)
-// 匹配 "CON score of 13 or higher" / "CHA of 14 or lower" 等（"score" 可选）。
-// STAT 全大写三字母，N 为数字。忽略大小写。全局标志用于 matchAll 提取多属性门槛。
-const ATTRIBUTE_THRESHOLD_RE = /\b(STR|DEX|CON|INT|WIS|CHA)\s+(?:score\s+)?of\s+(\d+)\s+or\s+(higher|lower)\b/gi
+// 属性门槛正则（全局）：(STAT) (score )?of (N) (direction)
+// 覆盖：缩写（CON）和全词（Constitution）、+ 记法（15+）、or higher/lower/more/less。
+// 匹配 "CON score of 13 or higher" / "Constitution of 14 or higher" / "CON of 15+" 等。
+// STAT 缩写或全词（忽略大小写）。全局标志用于 matchAll 提取多属性门槛。
+// eslint-disable-next-line sonarjs/super-linear-regex -- alternation 分支不重叠（全词 vs 缩写无公共前缀）
+const ATTRIBUTE_THRESHOLD_RE = /\b(str|dex|con|int|wis|cha|strength|dexterity|constitution|intelligence|wisdom|charisma)\s+(?:score\s+)?of\s+(\d+)\s*(\+|or\s+(?:higher|more|lower|less))/gi
+
+/** 属性名（缩写或全词，小写）→ 统一缩写 key。 */
+const ATTRIBUTE_STAT_MAP: Record<string, AttributeRequirement['stat']> = {
+  str: 'str', strength: 'str',
+  dex: 'dex', dexterity: 'dex',
+  con: 'con', constitution: 'con',
+  int: 'int', intelligence: 'int',
+  wis: 'wis', wisdom: 'wis',
+  cha: 'cha', charisma: 'cha',
+}
 
 // 使用门槛语句标记（白名单）：仅从显式声明「谁能上场」的句子提取属性门槛。
 // 排除三类条件效果句（属性模式出现但非使用门槛）：
@@ -229,15 +244,14 @@ function parseAttributeRequirements(text: string): AttributeRequirement[] {
   for (const sentence of text.split(/\.\s+/)) {
     if (!USAGE_GATE_RE.test(sentence)) continue
     for (const match of sentence.matchAll(ATTRIBUTE_THRESHOLD_RE)) {
-      const stat = match[1]?.toLowerCase()
+      const statRaw = match[1]?.toLowerCase()
       const value = match[2] !== undefined ? parseInt(match[2], 10) : NaN
-      const direction = match[3]?.toLowerCase()
-      if (stat === undefined || Number.isNaN(value) || direction === undefined) continue
-      results.push({
-        stat: stat as AttributeRequirement['stat'],
-        operator: direction === 'higher' ? '>=' : '<=',
-        value,
-      })
+      const direction = match[3] // "+", "or higher", "or more", "or lower", "or less"
+      if (statRaw === undefined || Number.isNaN(value) || direction === undefined) continue
+      const stat = ATTRIBUTE_STAT_MAP[statRaw]
+      if (stat === undefined) continue
+      const isLower = direction === 'or lower' || direction === 'or less'
+      results.push({ stat, operator: isLower ? '<=' : '>=', value })
     }
   }
   return results
@@ -246,12 +260,12 @@ function parseAttributeRequirements(text: string): AttributeRequirement[] {
 // ─── 可行性上下文解析 ───
 
 // eslint-disable-next-line sonarjs/super-linear-regex -- 固定模式无回溯风险（alternation 分支不重叠）
-const ARMOR_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?armored\s+(?:hit\s+points|HP)/i
+const ARMOR_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?armored\s+(?:hit\s+points|HP|health)/i
 // eslint-disable-next-line sonarjs/super-linear-regex -- 同上
 const HITS_BASED_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?hits-based\s+(?:HP|hit\s+points|health)/i
 const ARMORED_FLAG_RE = /armored\s+hit-based\s+health/i
 // eslint-disable-next-line sonarjs/super-linear-regex -- 同上
-const SCALING_ADDITIONAL_RE = /(\d+)\s+additional\s+(?:armored|hits-based)\s+hit\s+points/i
+const SCALING_ADDITIONAL_RE = /(\d+)\s+additional\s+(?:armored|hits-based)\s+(?:hit\s+points|HP|health)/i
 const SCALING_EVERY_RE = /every\s+(\d+)\s+areas/i
 const DAMAGE_REDUCED_RE = /damage\s+(?:is\s+)?reduced\s+by\s+(\d+(?:\.\d+)?)\s*%/i
 const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
