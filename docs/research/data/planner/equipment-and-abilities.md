@@ -28,7 +28,7 @@
 ### 已知缺口
 
 - **loot-catalog 与 champion-details.loot 同源双路径**：`buildLootCatalog`（normalize-idle-champions-definitions）与 `normalizeChampionLoot`（normalize-champions）各自从 raw `loot_defines` 读取 (slot, rarity, effect)，当前数据一致；任一路径单独改动都会产生静默漂移风险。
-- **当前只算 global_dps**：`equipmentMult` / `theoreticalLootMult` 只计 `global_dps_multiplier_mult`；`hero_dps_multiplier_mult`（对 carry 自身 DPS 同为乘子）、`buff_upgrade` 等未纳入调整比。owned 装备若以 hero_dps 为主，调整比近似为 1（不下调），hero_dps loot over-count 仍存在。
+- **hero_dps 已建模**：`computeEquipmentMult`（`equipmentMult.ts:167-186`）按 owned (slot, rarity) 累加 `hero_dps_multiplier_mult`，`steadyStateScoring.ts:306-313` 将 `(multiplier-1)×100` 并入 `damage:hero` unified 池 addPercent（与 ability hero_dps 同 key 加法，非独立乘进 carryDps）。`buff_upgrade` 已接 owned-aware wrapper 通道（见 damage-mechanic-inventory.md §4 装备行）。
 - **gild / enchant 无曲线**：`game_rule_defines` 无 gilding/enchant 缩放曲线（服务端公式）。`OwnedHeroLootSlot.gild/enchant` 暂不建模。
 - **feat / legendary**：同 loot 结构（`detail.feats` / `detail.legendaryEffects`），理论基线已全量纳入；当前未按玩家实际选择的 feat（`OwnedHero.activeFeats`）和传奇等级（`OwnedHeroLegendarySlot.level`）裁剪。
 

@@ -68,7 +68,7 @@
 - `top` / `bottom`、跨行扇区、动态连锁等布局规则（缺稳定拓扑事实源）。
 - `HasEffect(...)` 等运行时状态表达式（缺稳定事实源）。
 - hero 私有 stack 体系（`per_mithral_hall_stacks` / `per_aerois_synergy` 等阵营专属协同）。
-- `EligibleForPatron(...)`（需 `patronEligibility` 事实源 + 当前 patron 上下文）。
+- `EligibleForPatron(arbitrary)`（需任意 patron 上下文）；`EligibleForPatron(current)` 已实现（当前 patron 上下文，见 `expression-evaluator.md`）。
 - 数值 `per_hero_expr`（`min` / `max` / `floor` / `GetUpgradeAmount` / `levels_past_softcap` 等，用于 stack 数量计算）——stack 数当前靠 `STACK_COUNT_RESOLVERS` 查表，不解析数值表达式，详见 `expression-evaluator.md`。
 - 未稳定覆盖的 `stack_func` / `amount_func` 组合。
 
