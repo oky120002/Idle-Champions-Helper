@@ -28,6 +28,8 @@ interface HeroAbilityItem {
   heroId: string
   baseAttackDamageTypes: string[]
   baseAttackCooldown: number
+  numTargets?: number | null
+  damageModifier?: number | null
   age: number
   abilityScores: { str: number; dex: number; con: number; int: number; wis: number; cha: number }
   carrySignals: HeroSignal[]

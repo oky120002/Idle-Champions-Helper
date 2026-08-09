@@ -165,6 +165,10 @@ export interface HeroAbilityProfile {
   tags: string[]
   baseAttackDamageTypes: string[]
   baseAttackCooldown: number | null
+  /** 基础攻击每次命中目标数（来自 champion-details attacks.base.numTargets，默认 1）。BUD = carryDps × cooldown / numTargets。 */
+  numTargets?: number | null
+  /** 每发伤害系数（来自 champion-details attacks.base.damageModifier，默认 1.0；如法莉德 0.33）。 */
+  damageModifier?: number | null
   age: number | null
   abilityScores: Partial<Record<AbilityScoreKey, number>>
   baseDamage: number
