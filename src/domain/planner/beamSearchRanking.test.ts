@@ -126,3 +126,62 @@ describe('beam search ranking', () => {
     }
   })
 })
+
+describe('beam search lockedPlacements', () => {
+  const heroes = [
+    { heroId: 'bruenor', seat: 1 },
+    { heroId: 'celeste', seat: 2 },
+    { heroId: 'nayeli', seat: 3 },
+    { heroId: 'jarlaxle', seat: 4 },
+  ]
+
+  it('锁定槽位出现在所有结果的相同位置', () => {
+    const results = beamSearch({
+      heroes,
+      slots: ['s2', 's3'],
+      beamWidth: 4,
+      lockedPlacements: { s1: 'bruenor' },
+      scoreFormation: (placements) => makeResult(Object.keys(placements).length),
+    })
+    expect(results.length).toBeGreaterThan(0)
+    for (const result of results) {
+      expect(result.placements.s1).toBe('bruenor')
+    }
+  })
+
+  it('锁定英雄的 seat 被预留（不同 seat 英雄才可入阵）', () => {
+    // bruenor(seat 1) 锁在 s1 → 另一个 seat 1 英雄不可入阵（seat 冲突在初始 candidate 预占）
+    const heroesWithSeatConflict = [
+      { heroId: 'bruenor', seat: 1 },
+      { heroId: 'bruenor-alt', seat: 1 },
+      { heroId: 'celeste', seat: 2 },
+    ]
+    const results = beamSearch({
+      heroes: heroesWithSeatConflict,
+      slots: ['s2'],
+      beamWidth: 8,
+      lockedPlacements: { s1: 'bruenor' },
+      scoreFormation: (placements) => makeResult(Object.keys(placements).length),
+    })
+    for (const result of results) {
+      const placedHeroes = Object.values(result.placements)
+      // bruenor-alt(seat 1) 不应出现——seat 1 已被锁定的 bruenor 预占
+      expect(placedHeroes).not.toContain('bruenor-alt')
+    }
+  })
+
+  it('锁定英雄不可重复放置在其他槽位', () => {
+    const results = beamSearch({
+      heroes,
+      slots: ['s2', 's3', 's4'],
+      beamWidth: 4,
+      lockedPlacements: { s1: 'bruenor' },
+      scoreFormation: (placements) => makeResult(Object.keys(placements).length),
+    })
+    for (const result of results) {
+      const placedHeroes = Object.values(result.placements)
+      // bruenor 只出现一次（锁定的 s1），不在其他槽位重复
+      expect(placedHeroes.filter((id) => id === 'bruenor')).toHaveLength(1)
+    }
+  })
+})
