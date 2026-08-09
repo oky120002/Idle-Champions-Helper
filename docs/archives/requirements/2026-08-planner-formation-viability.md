@@ -1,5 +1,6 @@
 # planner 阵型通关可行性模型
 
+**状态**: 已落地（2026-08-09，证据：commit `1bb34e40` + 执行计划 `archives/plans/2026-08-planner-viability-model.md`）
 **优先级**：已接受（2026-08-09，执行计划 `docs/plans/2026-08-planner-viability-model.md`）
 
 ## 背景：为什么需要这个

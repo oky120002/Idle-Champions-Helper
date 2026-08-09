@@ -98,6 +98,6 @@ viability 模型 A-E + D2 全部落地后（commit `1bb34e40`），10 维约束�
 ## 关联
 
 - **约束图谱**：`docs/research/gameplay/viability-constraint-taxonomy.md`（K3/S3/P0 行）
-- **执行计划**：`docs/plans/2026-08-planner-viability-model.md`（已完成的 A-E + D2）
+- **执行计划**：`docs/archives/plans/2026-08-planner-viability-model.md`（已完成的 A-E + D2）
 - **当前 warning 实现**：`scripts/data/buildScenarioModels.ts:75-93`（`projectMechanicsToScenario`）
 - **面积预估模型**：`src/domain/simulator/areaEstimation.ts`（`estimateMaxArea`）
