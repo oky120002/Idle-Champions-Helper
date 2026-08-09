@@ -266,14 +266,14 @@ function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | nu
     }
     return null
   }
-  const segments = parseInt(baseMatch[1], 10)
+  const segments = parseInt(baseMatch[1]!, 10)
   if (!Number.isFinite(segments) || segments <= 0) return null
 
   const scalingAdditionalMatch = text.match(SCALING_ADDITIONAL_RE)
   const scalingEveryMatch = text.match(SCALING_EVERY_RE)
   if (scalingAdditionalMatch && scalingEveryMatch) {
-    const additional = parseInt(scalingAdditionalMatch[1], 10)
-    const everyAreas = parseInt(scalingEveryMatch[1], 10)
+    const additional = parseInt(scalingAdditionalMatch[1]!, 10)
+    const everyAreas = parseInt(scalingEveryMatch[1]!, 10)
     if (Number.isFinite(additional) && additional > 0 && Number.isFinite(everyAreas) && everyAreas > 0) {
       return { segments, scaling: { additional, everyAreas } }
     }
@@ -284,7 +284,7 @@ function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | nu
 function parseDamageModifier(text: string): number | null {
   const match = text.match(DAMAGE_REDUCED_RE)
   if (!match) return null
-  const pct = parseFloat(match[1])
+  const pct = parseFloat(match[1]!)
   if (!Number.isFinite(pct) || pct <= 0 || pct >= 100) return null
   return (100 - pct) / 100 // "reduced by 99%" → 0.01
 }
@@ -292,7 +292,7 @@ function parseDamageModifier(text: string): number | null {
 function parseEnemyDamageMult(text: string): number | null {
   const match = text.match(ENEMY_DAMAGE_MULT_RE)
   if (!match) return null
-  const mult = parseFloat(match[1])
+  const mult = parseFloat(match[1]!)
   return Number.isFinite(mult) && mult > 0 ? mult : null
 }
 
@@ -302,7 +302,7 @@ function parseHealthDrainRate(text: string): number | null {
   if (/\breduc/i.test(text)) return null
   const match = text.match(HEALTH_DRAIN_PCT_RE)
   if (!match) return null
-  const pct = parseFloat(match[1])
+  const pct = parseFloat(match[1]!)
   if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
   return pct / 100
 }

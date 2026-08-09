@@ -15,6 +15,7 @@ import { checkFormationLegality, type LegalityViolation } from './formationLegal
 import { applyComputationMode, type ComputationMode } from './computationMode'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
 import { buildPlannerExplanations } from './plannerNarrative'
+import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import {
   type PlannerCollections,
   type PlannerPlacementEntry,
@@ -457,7 +458,7 @@ function buildEvaluationFormationResult(
     ),
     warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
     areaEstimate: scoring.areaEstimate ?? null,
-    viability: buildViabilityAssessment(scenario, scoring.areaEstimate),
+    viability: buildViabilityAssessment(scenario, scoring.areaEstimate ?? null),
     breakdown: scoring.breakdown,
     placements,
     placementEntries,
@@ -747,7 +748,7 @@ function selectTopKByCarry<T extends { objectiveValue: GameNumberValue; carryHer
  */
 function buildViabilityAssessment(
   scenario: ResolvedPlannerScenarioModel,
-  areaEstimate: { boundBy: string } | null,
+  areaEstimate: AreaEstimationResult | null,
 ): ViabilityAssessment {
   const vc = scenario.viabilityContext
   const active: string[] = []
@@ -756,7 +757,7 @@ function buildViabilityAssessment(
   if (vc.damageModifier != null) active.push('damage-reduction')
   if (vc.enemyDamageMult != null) active.push('enemy-buff')
   if (vc.healthDrainRate != null) active.push('health-drain')
-  return { activeConstraints: active, boundBy: areaEstimate?.boundBy as ViabilityAssessment['boundBy'] ?? null }
+  return { activeConstraints: active, boundBy: areaEstimate?.boundBy ?? null }
 }
 
 /**
@@ -803,7 +804,7 @@ function buildRecommendationResults(
       ),
       warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
       areaEstimate: top.areaEstimate ?? null,
-      viability: buildViabilityAssessment(scenario, top.areaEstimate),
+      viability: buildViabilityAssessment(scenario, top.areaEstimate ?? null),
       breakdown: top.breakdown,
       placementEntries,
     }

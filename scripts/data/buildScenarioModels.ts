@@ -26,6 +26,8 @@ interface ScenarioModel {
   scenarioWarnings: string[]
   /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析）。 */
   occupiedSlotCount: number
+  /** 变体可行性上下文（restrictions 解析；护甲/伤害修正等）。 */
+  viabilityContext: unknown
 }
 
 function contextMatchesVariant(
