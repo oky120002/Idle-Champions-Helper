@@ -344,8 +344,24 @@ describe('parseRestrictions — 可行性上下文', () => {
     expect(result.viabilityContext.healthDrainRate).toBe(0.04)
   })
 
-  it('持续掉血排除 random 目标（单目标爆发非全队 DoT）', () => {
+  it('持续掉血排除 random 目标（单目标爆发非全队 DoT，S2 不含随机）', () => {
     const result = parseRestrictions([r('Every second, a random Champion takes damage equal to 10% of their max health.')])
+    // S2 excludes random, but S4 burst captures it (every 1s = continuous, handled by S2 path → null)
     expect(result.viabilityContext.healthDrainRate).toBeNull()
+  })
+
+  it('S4 burst：40% damage every 8 seconds → healthDrainRate=0.05', () => {
+    const result = parseRestrictions([r('Bits of crumbling temple fall on your Champions every 8 seconds, dealing 40% damage to a random Champion.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.05, 5)
+  })
+
+  it('S4 burst：90% of max health every 5 seconds → healthDrainRate=0.18', () => {
+    const result = parseRestrictions([r('In outdoor areas, lightning strikes your formation every 5 seconds, dealing 90% of max health to a random Champion.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.18, 5)
+  })
+
+  it('S4 burst：10% of max health every 3 seconds → healthDrainRate≈0.033', () => {
+    const result = parseRestrictions([r('Every 3 seconds, each Champion takes 10% of their max health as damage.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(10 / 100 / 3, 5)
   })
 })

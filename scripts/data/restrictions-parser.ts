@@ -256,6 +256,9 @@ const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
 // 排除 random（单目标爆发）和 reduce（伤害削减非掉血）。
 const HEALTH_DRAIN_PCT_RE = /(?:take|takes|lose|loses)\s+(?:damage\s+)?(?:equal\s+to\s+)?(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum|total)\s*health|unavoidable\s+damage)/i
 const EVERY_SECOND_RE = /\b(?:every|each|per)\s+second\b/i
+// S4 burst：every N seconds (N≥2) 打 X% 伤害——等效 drainRate = X/100/N
+const BURST_INTERVAL_RE = /\b(?:every|each)\s+(\d+)(?:[-](\d+))?\s+seconds?\b/i
+const BURST_PCT_RE = /(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum)\s*health|of\s+(?:the\s+)?champion|damage)/i
 
 function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | null {
   const baseMatch = text.match(baseRegex)
@@ -307,14 +310,31 @@ function parseHealthDrainRate(text: string): number | null {
   return pct / 100
 }
 
+/** S4 burst：X% 伤害 every N 秒（N≥2）→ 等效持续掉血 X/100/N。含随机目标 burst。 */
+function parseBurstDrainRate(text: string): number | null {
+  if (/\breduc/i.test(text)) return null
+  const intervalMatch = text.match(BURST_INTERVAL_RE)
+  if (!intervalMatch) return null
+  const interval = parseInt(intervalMatch[1]!, 10)
+  if (!Number.isFinite(interval) || interval < 2) return null
+  const pctMatch = text.match(BURST_PCT_RE)
+  if (!pctMatch) return null
+  const pct = parseFloat(pctMatch[1]!)
+  if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
+  return pct / 100 / interval
+}
+
 function parseViabilityContext(original: string): ViabilityContext {
   if (original === '') return { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null }
+  const continuous = parseHealthDrainRate(original)
+  const burst = parseBurstDrainRate(original)
+  const drainSum = (continuous ?? 0) + (burst ?? 0)
   return {
     armor: parseSegmentConfig(original, ARMOR_SEGMENTS_RE),
     hitsBased: parseSegmentConfig(original, HITS_BASED_SEGMENTS_RE),
     damageModifier: parseDamageModifier(original),
     enemyDamageMult: parseEnemyDamageMult(original),
-    healthDrainRate: parseHealthDrainRate(original),
+    healthDrainRate: drainSum > 0 ? drainSum : null,
   }
 }
 
