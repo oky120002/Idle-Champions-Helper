@@ -65,21 +65,26 @@
 
 ## 验收
 
-- 护甲变体推荐结果反映碎甲能力（不碎甲的阵型被淘汰）
-- AoE 变体推荐结果反映生存能力（扛不住的阵型被淘汰）
-- 普通变体行为不变（不激活额外约束）
-- `PlannerResult.viability` 非空且反映实际评估
-- 所有现有测试不退化
+- ✅ 护甲变体推荐结果反映碎甲能力（不碎甲的阵型被淘汰）
+- ⬜ AoE 变体推荐结果反映生存能力（扛不住的阵型被淘汰）— 待 E2（S4 AoE burst）
+- ✅ 普通变体行为不变（不激活额外约束）
+- ✅ `PlannerResult.viability` 非空且反映实际评估
+- ✅ 所有现有测试不退化（1538 pass + build clean）
 
 ## 验证
 
-1. `npx vitest run` — 各阶段新增用例
-2. `npm run signal-coverage` — 多段攻击字段进 profile 后更新 baseline
-3. `npm run simulate -- recommend --variant <armored-variant-id>` — CLI JSON 检查 viability
-4. `npm run build` — Pages 兼容
+1. ✅ `npx vitest run` — 1538 pass（+17 新增用例）
+2. ✅ `npm run signal-coverage` — 无漂移（exit 0）
+3. ✅ `npm run build` — Pages 兼容（tsc -b + vite build clean）
 
 ## 落地后 specs 更新点
 
-- `architecture.md`「未接入能力」移除 viability 项
-- `simulator.md` 增加 viabilityContext 入参 + 护甲感知 areaEstimation
-- `computation-runtime.md` 更新推图预估输出合同
+- ✅ `simulator.md` 增加推图层数预估 + 可行性约束章节（ViabilityContext 5 字段 + 机制警告）
+- ✅ `computation-runtime.md` 更新推图预估公式（segmentMultiplier / drainRate / enemyDamageMult）+ ViabilityAssessment 输出合同
+- `architecture.md`「未接入能力」：viability 未列入（无需移除），K4 伤害来源限制 + S4 AoE burst 仍为未接入
+
+## 剩余工作（后续迭代）
+
+- **D2（K4 伤害来源限制 ~137 变体）**：高复杂度语义解析（"只有特定位置/英雄/tag 能打伤害"），需 restrictions 文本模式扫描 + carry 位置验证
+- **E2（S4 AoE 爆发）**：需 burst 伤害模型（免疫/减伤/临时HP 评估 vs 单次爆发）
+- **A6（UI）**：viability 评估展示（activeConstraints + boundBy）+ minSurvivableArea 控件
