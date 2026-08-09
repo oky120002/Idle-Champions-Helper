@@ -1,7 +1,7 @@
 # 0005. 部署主方案：GitHub Pages + HashRouter
 
-**Status**: Accepted
-**Decided**: 2026-07-27
+**状态**: Accepted
+**决策日期**: 2026-07-27
 
 ## 背景
 

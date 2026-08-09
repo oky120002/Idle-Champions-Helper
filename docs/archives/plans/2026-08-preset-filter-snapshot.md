@@ -1,9 +1,9 @@
 # 方案存档筛选条件快照
 
-**Status**: Landed
-**Type**: change
-**Scope**: presets
-**Created**: 2026-08-07
+**状态**: 已落地
+**类型**: change
+**范围**: presets
+**创建日期**: 2026-08-07
 
 ## 目标
 
@@ -68,7 +68,7 @@
 
 - [x] specs 更新：`presets/scope-and-model.md`（filterSnapshot 字段）、`presets/ui.md`（筛选快照恢复交互）、`formation/` 相关 specs（阵型页消费筛选）
 - [x] requirements 状态更新：`preset-integration-extensions.md §1` 打钩
-- [x] plan Status → Landed → 移 `archives/plans/`
+- [x] plan 状态 → 已落地 → 移 `archives/plans/`
 
 ## 验收
 
@@ -85,4 +85,4 @@
   - `specs/modules/presets/ui.md`：筛选快照保存与恢复交互
   - `specs/modules/champions/` 或 `specs/modules/formation/`：阵型页消费英雄列表筛选的跨页衔接
 - requirements/ 更新：`preset-integration-extensions.md §1` 打钩（若全部子项落地则整体归档）
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`

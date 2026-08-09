@@ -1,9 +1,9 @@
 # 英雄筛选：赞助人（Patron）过滤
 
-**Status**: Landed
-**Type**: change
-**Scope**: champions
-**Created**: 2026-08-06
+**状态**: 已落地
+**类型**: change
+**范围**: champions
+**创建日期**: 2026-08-06
 
 ## 目标
 
@@ -43,5 +43,5 @@
   - `docs/specs/modules/champions/filter/rules.md`：当前筛选规则加 Patron 维度
   - `docs/specs/modules/champions/filter/scope-and-data.md`：数据合同加 patrons enum 消费
 - `requirements/champion-filter-extensions.md` 子项 1 打钩
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`
 - **specs/ 永不引用本 plan**（规范描述最终态，不描述交付过程）

@@ -1,6 +1,6 @@
 # plans/ —— 变更与里程碑
 
-确认要做、准备执行的变更计划。`Accepted → Landed`；达到 `Landed` 后移动到 `archives/plans/`。承载「按什么顺序改」，**不描述系统现状**（现状在 `specs/`），**不做需求积压**（需求在 `requirements/`）。
+确认要做、准备执行的变更计划。`已确认 → 已落地`；达到 `已落地` 后移动到 `archives/plans/`。承载「按什么顺序改」，**不描述系统现状**（现状在 `specs/`），**不做需求积压**（需求在 `requirements/`）。
 
 ## 与 requirements/ 的区别
 
@@ -15,10 +15,10 @@ Requirement 是需求意图（可能永远不做），Plan 是执行计划（确
 - **change**：常规变更（新增/重构/修复的范围规划）
 - **milestone**：大阶段里程碑（含多阶段 checklist）
 
-## Status 生命周期
+## 状态生命周期
 
-- `Accepted`：确认要做，准备执行
-- `Landed`：已实现（`specs/` 已更新为最终态）→ 移 `archives/plans/`
+- `已确认`：确认要做，准备执行
+- `已落地`：已实现（`specs/` 已更新为最终态）→ 移 `archives/plans/`
 
 ## 里程碑怎么写
 
@@ -38,6 +38,6 @@ Requirement 是需求意图（可能永远不做），Plan 是执行计划（确
 
 1. plan 完成 → 更新 `specs/` 描述新现状（不写迁移叙事）
 2. 所有 checkbox 闭合才能归档；执行中发现的后续项直接写 TODO/requirements，不作为悬空 checkbox 留在计划里
-3. plan 标 `Status: Landed`
+3. plan 标 `状态: 已落地`
 4. 移到 `archives/plans/`
 5. 落地期间产生的持久决策 → 写 ADR（`decisions/`）

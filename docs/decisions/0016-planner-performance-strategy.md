@@ -1,7 +1,7 @@
 # 0016. planner 性能策略：候选裁剪 + Web Worker 卸载
 
-**Status**: Accepted
-**Decided**: 2026-07-30（回填）
+**状态**: Accepted
+**决策日期**: 2026-07-30（回填）
 
 ## 背景
 

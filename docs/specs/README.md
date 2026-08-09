@@ -25,6 +25,6 @@
 ## 何时写/更新
 
 - 实现了新功能/改了行为 → 更新对应 specs
-- plan 落地（`plans/` Status: Landed）→ 按其「落地后」清单更新 specs
+- plan 落地（`plans/` 状态: 已落地）→ 按其「落地后」清单更新 specs
 
 详细的模块结构见 [`modules/README.md`](./modules/README.md)；跨类型写作与生命周期规则见 [`governance.md`](../governance.md)。

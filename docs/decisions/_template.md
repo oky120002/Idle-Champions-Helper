@@ -1,8 +1,8 @@
 # NNNN. <决策标题>
 
-**Status**: Draft
-**Decided**: YYYY-MM-DD
-**Superseded by**: NNNN（被取代时填，否则留空）
+**状态**: Draft
+**决策日期**: YYYY-MM-DD
+**取代于**: NNNN（被取代时填，否则留空）
 
 ## 背景
 

@@ -1,4 +1,4 @@
-**Status**: Landed
+**状态**: 已落地
 
 # Lint 修法表
 

@@ -1,9 +1,9 @@
 # Lint 违规渐进式修复
 
-**Status**: Landed
-**Type**: milestone
-**Scope**: system
-**Created**: 2026-08-04
+**状态**: 已落地
+**类型**: milestone
+**范围**: system
+**创建日期**: 2026-08-04
 
 ## 目标
 
@@ -125,7 +125,7 @@
   - **跳过**（低价值 / 工程量大）：
     - shorthand-property-grouping 属性重排（~50+ 处，纯装饰性，无法可靠回退）
     - max-lines-per-function 函数提取（18+ 文件，多数也服务 cognitive-complexity）
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`
 - **specs/ 永不引用本 milestone**
 
 ## 失败恢复（新 session 接手）

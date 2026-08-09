@@ -21,6 +21,6 @@
 ## 何时移入
 
 - investigations：问题解决并验证后，从主结构移入
-- plans：Status 变 `Landed` 后移入 `archives/plans/`
+- plans：状态变 `已落地` 后移入 `archives/plans/`
 - requirements：需求实现落地或被否决后立即移入；重复/无效提案直接删除不归档
 - 不主动清理（历史可追溯），但也不让它在主结构占位

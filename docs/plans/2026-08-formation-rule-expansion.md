@@ -1,9 +1,9 @@
 # 阵型编辑规则扩展——标签表达式 + 属性门槛
 
-**Status**: Accepted
-**Type**: change
-**Scope**: planner
-**Created**: 2026-08-08
+**状态**: 已确认
+**类型**: change
+**范围**: planner
+**创建日期**: 2026-08-08
 **需求**：`docs/requirements/formation-rule-expansion.md`（子项 4 标签资格限制 + TODO `atd_77cdaabdd1` / `atd_83446e06cd`）
 
 ## 问题

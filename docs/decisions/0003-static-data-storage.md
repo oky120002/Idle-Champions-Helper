@@ -1,7 +1,7 @@
 # 0003. 静态站数据存储：版本化 JSON + IndexedDB 四层分层
 
-**Status**: Accepted
-**Decided**: 2026-07-27
+**状态**: Accepted
+**决策日期**: 2026-07-27
 
 ## 背景
 

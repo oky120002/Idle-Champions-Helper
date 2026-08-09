@@ -1,9 +1,9 @@
 # 文档全量审计与清理
 
-**Status**: Landed
-**Type**: milestone
-**Scope**: system
-**Created**: 2026-08-06
+**状态**: 已落地
+**类型**: milestone
+**范围**: system
+**创建日期**: 2026-08-06
 
 ## 目标
 
@@ -23,7 +23,7 @@ docs/ 下约 110 个 md、根目录 4 个（AGENTS/README/TODO + .impeccable.md�
 ### 阶段 1：变更文档处置
 
 - [x] 7 个 Draft change 核对——全部仍在 Draft（功能未完整实现，保留为活跃路线图）
-- [x] 2 个 Accepted lint-fix plan 标 Landed 并移入 archives/plans/ —— 验证：eslint 0 违规
+- [x] 2 个 已确认的 lint-fix plan 标为已落地 并移入 archives/plans/ —— 验证：eslint 0 违规
 
 ### 阶段 2：分区域并行深度审计（7 子智能体）
 
@@ -57,5 +57,5 @@ docs/ 下约 110 个 md、根目录 4 个（AGENTS/README/TODO + .impeccable.md�
 ## 落地后
 
 - specs/ 已更新为当前态
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`
 - **specs/ 永不引用本 milestone**

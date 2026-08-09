@@ -1,9 +1,9 @@
 # DPS 机制抽象体系 + 英雄参照测试框架
 
-**Status**: Landed
-**Type**: milestone
-**Scope**: planner
-**Created**: 2026-07-27
+**状态**: 已落地
+**类型**: milestone
+**范围**: planner
+**创建日期**: 2026-07-27
 
 ## 目标
 
@@ -42,7 +42,7 @@
 - runbooks/：`verify-formation-simulator.md` + `add-champion-reference.md`（新建）+ README 索引
 - research/：`gameplay/` 新主题 + `champion-mechanics/vi-95.md`（蔚实测）
 - `package.json`：`test:simulator` 脚本
-- 本 change Status → Landed → 已移 `archives/plans/`
+- 本 change 状态 → 已落地 → 已移 `archives/plans/`
 - **specs/ 永不引用本 milestone**（规范描述最终态，不描述交付过程）
 
 ## 勘误后记（2026-07-28 深度审计）

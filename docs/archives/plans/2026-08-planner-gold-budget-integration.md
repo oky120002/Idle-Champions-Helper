@@ -1,9 +1,9 @@
 # 金币预算接入评估链路
 
-**Status**: Landed
-**Type**: change
-**Scope**: planner
-**Created**: 2026-08-06
+**状态**: 已落地
+**类型**: change
+**范围**: planner
+**创建日期**: 2026-08-06
 
 ## 目标
 
@@ -75,7 +75,7 @@
 
 - [x] specs 更新：`simulator.md`（金币预算换算 + 专精等级门控最终态）、`requirements.md`（等级来源扩展为金币/等级二选一）
 - [x] requirements 状态更新：`planner-capability-extensions.md` 金币预算子项打钩
-- [x] 数据重建后 plan Status → Landed → 移 `archives/plans/`
+- [x] 数据重建后 plan 状态 → 已落地 → 移 `archives/plans/`
 
 ## 验收
 
@@ -91,4 +91,4 @@
   - `specs/modules/planner/simulator.md`：金币预算换算 + 专精等级门控最终态
   - `specs/modules/planner/requirements.md`：等级来源扩展为金币/等级二选一
   - `specs/guidelines/ai-first-ts-tsx.md` §6：gameNumber.ts 路径更新（如迁移）
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`

@@ -1,7 +1,7 @@
 # 0009. 推荐引擎用真实目标量 carryDps + pool 聚合 + beam search
 
-**Status**: Accepted
-**Decided**: 2026-07-30（回填）
+**状态**: Accepted
+**决策日期**: 2026-07-30（回填）
 
 ## 背景
 

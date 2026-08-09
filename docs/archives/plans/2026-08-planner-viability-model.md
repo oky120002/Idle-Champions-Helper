@@ -1,8 +1,8 @@
 # planner 阵型通关可行性模型
 
 **创建**：2026-08-09
-**Type**: milestone
-**Status**: Landed
+**类型**: milestone
+**状态**: 已落地
 **需求**：`docs/archives/requirements/2026-08-planner-formation-viability.md`
 
 ## 目标

@@ -1,7 +1,7 @@
 # 0017. 专精外部选择（build catalog + runtime 按玩家选择注入）
 
-**Status**: Accepted
-**Decided**: 2026-07-30
+**状态**: Accepted
+**决策日期**: 2026-07-30
 
 ## 背景
 

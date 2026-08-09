@@ -1,9 +1,9 @@
 # gameplay 调研文档对账审计
 
-**Status**: Accepted
-**Type**: change
-**Scope**: system
-**Created**: 2026-08-08
+**状态**: 已确认
+**类型**: change
+**范围**: system
+**创建日期**: 2026-08-08
 **目标**：逐篇把 `docs/research/gameplay/` 的社区调研结论与游戏数据（`public/data/v1/`）交叉核对；社区是辅助，游戏数据是权威。冲突以游戏数据覆盖；过时/失效/错误能修则修，不能修则删。
 
 ## 审计范围

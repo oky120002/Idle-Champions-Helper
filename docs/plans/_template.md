@@ -1,9 +1,9 @@
 # <标题>
 
-**Status**: Accepted
-**Type**: change | milestone
-**Scope**: <模块名 | system>
-**Created**: YYYY-MM-DD
+**状态**: 已确认
+**类型**: change | milestone
+**范围**: <模块名 | system>
+**创建日期**: YYYY-MM-DD
 
 ## 目标
 
@@ -28,5 +28,5 @@
 - specs/ 更新点：
   - `<specs/path>`：<改什么>
   - `<specs/path>`：<改什么>
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`
 - **specs/ 永不引用本 milestone**（规范描述最终态，不描述交付过程）

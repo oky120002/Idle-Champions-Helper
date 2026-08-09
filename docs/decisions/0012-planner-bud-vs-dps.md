@@ -1,7 +1,7 @@
 # 0012. BUD vs DPS：相对比较用 DPS，绝对推图用 BUD
 
-**Status**: Accepted
-**Decided**: 2026-07-30（回填）
+**状态**: Accepted
+**决策日期**: 2026-07-30（回填）
 
 ## 背景
 

@@ -1,9 +1,9 @@
 # research 决策抽取
 
-**Status**: Landed
-**Type**: change
-**Scope**: system
-**Created**: 2026-07-27
+**状态**: 已落地
+**类型**: change
+**范围**: system
+**创建日期**: 2026-07-27
 
 ## 目标
 
@@ -34,7 +34,7 @@
 每篇三分：
 
 - **事实**（字段 / 格式 / 链路 / 数据）→ 留 `research/`（可改 `-facts.md` 后缀）
-- **决策 / 推荐方案**（多方案对比 + 选定）→ `decisions/NNNN-<slug>.md`（Status: Accepted）
+- **决策 / 推荐方案**（多方案对比 + 选定）→ `decisions/NNNN-<slug>.md`（状态: Accepted）
 - **后续建议**（如有）→ `plans/`
 
 注：只有「多方案对比 + 选定」的才抽 ADR；纯实现建议（无多方案对比）可留 research 或归 changes。
@@ -64,4 +64,4 @@
   - 13 篇 research/data 文档裁为纯事实 + 指针；改名 `source-decision.md → source-facts.md`、`advanced-fields-and-contract.md → advanced-fields.md`；删除 `contract-and-page-shape.md`（合同已在 specs）
   - 顺手修阶段 4 模块 README 拆分残留（formation / filter / illustration / presets）与 `design/README` 的 `.impeccable.md` 相对路径
 - 验证：`docs/research/` 无多方案推荐 header（剩余 `## 结论` 均为事实性结论，属验收豁免）；断链检查真实导航链接为 0；`npm run typecheck` 通过
-- 本 change Status → Landed → 移 `archives/plans/`
+- 本 change 状态 → 已落地 → 移 `archives/plans/`

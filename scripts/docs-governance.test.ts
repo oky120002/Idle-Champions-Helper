@@ -156,7 +156,7 @@ describe('documentation governance', () => {
     for (const directory of ['decisions', 'plans']) {
       for (const file of markdownFiles(resolve(docsRoot, directory))) {
         if (file.endsWith('/README.md') || extname(file) !== '.md') continue
-        if (!readFileSync(file, 'utf8').includes('**Status**:')) {
+        if (!readFileSync(file, 'utf8').includes('**状态**:')) {
           missingStatus.push(relativeToRepository(file))
         }
       }
@@ -171,12 +171,12 @@ describe('documentation governance', () => {
 
     for (const file of markdownFiles(resolve(docsRoot, 'plans')).filter((path) => !path.endsWith('/README.md') && !path.endsWith('/_template.md'))) {
       const markdown = readFileSync(file, 'utf8')
-      if (!/^\*\*Status\*\*: Accepted$/m.test(markdown)) invalidActivePlans.push(relativeToRepository(file))
+      if (!/^\*\*状态\*\*: 已确认$/m.test(markdown)) invalidActivePlans.push(relativeToRepository(file))
     }
 
     for (const file of markdownFiles(resolve(docsRoot, 'archives/plans')).filter((path) => !path.endsWith('/README.md'))) {
       const markdown = readFileSync(file, 'utf8')
-      if (!/^\*\*Status\*\*: Landed$/m.test(markdown)) invalidArchivedPlans.push(relativeToRepository(file))
+      if (!/^\*\*状态\*\*: 已落地$/m.test(markdown)) invalidArchivedPlans.push(relativeToRepository(file))
     }
 
     expect(invalidActivePlans).toEqual([])

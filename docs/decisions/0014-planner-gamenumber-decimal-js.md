@@ -1,7 +1,7 @@
 # 0014. GameNumber 用 decimal.js
 
-**Status**: Accepted
-**Decided**: 2026-07-30
+**状态**: Accepted
+**决策日期**: 2026-07-30
 
 ## 背景
 

@@ -1,7 +1,7 @@
 # 0001. 立绘资源用站内静态衍生图，不直连官方 mobile_assets
 
-**Status**: Accepted
-**Decided**: 2026-07-27
+**状态**: Accepted
+**决策日期**: 2026-07-27
 
 ## 背景
 

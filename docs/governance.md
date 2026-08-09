@@ -66,8 +66,8 @@
 | Spec 活跃规范 | `specs/` | 系统现在是什么 | 随实现重写 | 禁迁移叙事；只描述「现在是什么」；**永不引用 plans/milestone** |
 | Requirement 需求 | `requirements/` | 将来可能做什么 | 落地/否决后立即归档 | 有明确需求描述和暂缓理由；不做排期；被接受后在 `plans/` 新建执行计划，提案保留至实现完成 |
 | Research 调研 | `research/` | 外部事实是什么 | 活跃，事实优先 | 不含决策/建议段落；决策指向 `decisions/` |
-| Decision 决策 | `decisions/` | 为什么这样选 | append-only | `**Status**: Draft/Accepted/Superseded`；推翻→新 ADR，细节更新→改原文（见 `decisions/README.md`） |
-| Plan 计划 | `plans/` | 接下来按什么步骤改 | `Accepted→Landed` | 确认要做时才创建；落地后 `specs/` 更新，保留 `Landed` 状态并移入 `archives/plans/` |
+| Decision 决策 | `decisions/` | 为什么这样选 | append-only | `**状态**: Draft/Accepted/Superseded`；推翻→新 ADR，细节更新→改原文（见 `decisions/README.md`） |
+| Plan 计划 | `plans/` | 接下来按什么步骤改 | `已确认→已落地` | 确认要做时才创建；落地后 `specs/` 更新，保留 `已落地` 状态并移入 `archives/plans/` |
 | Runbook 操作手册 | `runbooks/` | 当前怎样操作 | 随操作更新 | 写当前可执行步骤；不写事故经过或方案讨论 |
 | Audit 审计 | `audits/` | 验证/审计了什么 | 时点快照，保留作基线 | 一次性结构化排查；结论分流到对应类型；是时点快照，随项目演进过时属预期，当前态查 `specs/` |
 | Archive 归档 | `archives/` | 过去发生了什么 | 冷存储 | 仅考古读取；默认不进入 |
@@ -93,8 +93,8 @@
 ### 怎么更新
 
 - 代码改了 → 更新 `specs/` 描述新现状（不写迁移叙事）
-- 决策变了 → 新 ADR（`decisions/`，旧的不删，标 `Status: Superseded by NNNN`）
-- plan 落地 → 更新 `specs/` + plan 标 `Status: Landed` → 移 `archives/plans/`；归档位置不新增状态
+- 决策变了 → 新 ADR（`decisions/`，旧的不删，标 `状态: Superseded by NNNN`）
+- plan 落地 → 更新 `specs/` + plan 标 `状态: 已落地` → 移 `archives/plans/`；归档位置不新增状态
 - 需求落地 → 更新 `specs/` 为新现状 + 需求文件加终态头 → 移 `archives/requirements/`；否决只加终态头移归档；重复或无效提案直接删除
 - 操作变化 → 原地更新 `runbooks/`；一次性事故证据另存 `archives/investigations/`
 
@@ -126,12 +126,12 @@
 | [`specs/guidelines/design/README.md`](./specs/guidelines/design/README.md) | design 子目录入口：视觉规范何时读/何时补 |
 | [`specs/product/README.md`](./specs/product/README.md) | product 写作规则：描述产品现状、不写里程碑/变更叙事 |
 | [`requirements/README.md`](./requirements/README.md) | 需求库规则：与 plans 区别、终态标记格式、落地/否决后立即归档 |
-| [`plans/README.md`](./plans/README.md) | 计划规则：change/milestone 类型、Status 生命周期、落地流程、铁律 |
-| [`decisions/README.md`](./decisions/README.md) | ADR 规则：命名补零、append-only、Status 生命周期 |
+| [`plans/README.md`](./plans/README.md) | 计划规则：change/milestone 类型、状态生命周期、落地流程、铁律 |
+| [`decisions/README.md`](./decisions/README.md) | ADR 规则：命名补零、append-only、状态生命周期 |
 | [`research/README.md`](./research/README.md) | 调研规则：只记事实、不含决策/建议、带数据快照日期 |
 | [`runbooks/README.md`](./runbooks/README.md) | 手册写作规则：可复现前提/命令/判断/验证 |
 | [`audits/README.md`](./audits/README.md) | 审计报告规则：命名（-audit/-recon）、与其他目录关系、保留作基线 |
 | [`archives/README.md`](./archives/README.md) | 归档总规则：子目录、何时移入、进入后不再更新 |
 | [`archives/requirements/README.md`](./archives/requirements/README.md) | 需求归档规则：终态标记、何时进入 |
-| [`scripts/docs-governance.test.ts`](../scripts/docs-governance.test.ts) | 可执行约束：目录结构、断链、体量、迁移叙事、Status |
+| [`scripts/docs-governance.test.ts`](../scripts/docs-governance.test.ts) | 可执行约束：目录结构、断链、体量、迁移叙事、状态 |
 | [`decisions/0006-document-taxonomy.md`](./decisions/0006-document-taxonomy.md) | 文档分类决策依据（ADR） |

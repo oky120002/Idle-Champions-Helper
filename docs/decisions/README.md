@@ -2,7 +2,7 @@
 
 append-only。每个决策一个文件，编号 NNNN。区分两种变更：
 
-- **决策被推翻**（选了不同方案）→ 新开 ADR，旧的不删（标 `Status: Superseded by NNNN`）
+- **决策被推翻**（选了不同方案）→ 新开 ADR，旧的不删（标 `状态: Superseded by NNNN`）
 - **实施细节更新**（分类计数、术语、措辞、版本号）→ 直接改原 ADR，使其始终反映当前态，不新开 ADR
 
 ## 命名
@@ -11,7 +11,7 @@ append-only。每个决策一个文件，编号 NNNN。区分两种变更：
 
 **编号冲突**：分支合并时若发现编号已被占用（如另一分支已用该号），顺延到下一个未占用的编号。
 
-## Status 生命周期
+## 状态生命周期
 
 - `Draft`：起草中，未确认
 - `Accepted`：已采纳（specs/ 据此实现）
@@ -19,7 +19,7 @@ append-only。每个决策一个文件，编号 NNNN。区分两种变更：
 
 ## 文件结构
 
-见 [`_template.md`](./_template.md)：Status 行 + Decided 日期 + 背景/决策/后果/替代方案/关联。
+见 [`_template.md`](./_template.md)：状态行 + 决策日期 + 背景/决策/后果/替代方案/关联。
 
 ## 何时写 ADR
 

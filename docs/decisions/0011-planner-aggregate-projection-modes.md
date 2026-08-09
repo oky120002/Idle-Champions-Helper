@@ -1,7 +1,7 @@
 # 0011. 投影模式 aggregateProjection：阵型倍率 vs 绝对 DPS 双模
 
-**Status**: Accepted
-**Decided**: 2026-07-30（回填）
+**状态**: Accepted
+**决策日期**: 2026-07-30（回填）
 
 ## 背景
 
