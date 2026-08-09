@@ -1,6 +1,6 @@
 # planner 阵型通关可行性模型
 
-**优先级**：待评
+**优先级**：已接受（2026-08-09，执行计划 `docs/plans/2026-08-planner-viability-model.md`）
 
 ## 背景：为什么需要这个
 
@@ -13,6 +13,10 @@
 3. **boss 成对出现 + 周期性大面积 AoE**，一波 AoE 下来全队只剩一两人
 
 用户当前用法莉德（5 段攻击，座位 7）站中间打伤害，但阵型扛不住 AoE，反复灭团。
+
+### 深度调研发现的完整约束图谱
+
+2026-08-09 深度调研发现，通关约束远不止用户最初发现的「生存 + 护甲」。完整 10 维约束图谱见 [viability-constraint-taxonomy.md](../research/gameplay/viability-constraint-taxonomy.md)，按「能否击杀」「能否存活」「策略」分类。
 
 ### 现有 planner 的不足
 
@@ -134,15 +138,15 @@ planner 当前有三个优化目标：DPS、金币、速度，每次选一个最
 
 目前变体规则以非结构化文本存储（`restrictions` 数组），planner 不消费。需要将关键规则提取为结构化标记。
 
-## 为何暂缓
+## 为何此前暂缓 / 现在接受
 
-子项一（护甲 DPS）和子项二（生存维度）各自是中等复杂度的建模任务。子项三（通关判定）需要改变 planner 的搜索/排序架构——从「单目标最大化」变为「多约束过滤 + 单目标排序」。子项四（变体感知）需要将非结构化的变体描述文本映射为结构化约束，工程量和语义判断都很大。
-
-护甲击破机制已通过社区调研确认（见下），但碎甲阶段与击杀阶段的精确数学模型、生存门槛的量化方法仍需设计验证。整体方案需要分阶段推进。
+此前暂缓因为子项三（通关判定）需要改变 planner 搜索/排序架构，子项四（变体感知）需要文本→结构化映射。2026-08-09 深度调研后确认：约束图谱虽然 10 维，但架构上不需要 10 个并行系统——所有约束都是对已有两个检查（击杀 + 存活）的修饰和扩展。`ViabilityContext` 作为 scenario 参数上的新字段传入计算器，不改变 hermetic 边界。按 ROI 分 5 阶段实施。
 
 ## 关联
 
-- 机制文档：`docs/research/gameplay/attack-multi-hit.md`、`armored-enemies.md`、`aoe-survival.md`
+- **执行计划**：`docs/plans/2026-08-planner-viability-model.md`
+- **约束图谱**：`docs/research/gameplay/viability-constraint-taxonomy.md`（完整 10 维）
+- 机制文档：`docs/research/gameplay/attack-multi-hit.md`、`armored-enemies.md`、`aoe-survival.md`、`enemy-special-health.md`、`bud-mechanics.md`
 - 统一语言：`CONTEXT.md`（多段攻击、伤害系数、护甲敌人、减伤）
 - 现有能力：`docs/requirements/planner-capability-extensions.md`（综合目标、逐步模拟子项）
 - planner 架构：`docs/specs/modules/planner/architecture.md`（投影模式、外部加成入参契约）
