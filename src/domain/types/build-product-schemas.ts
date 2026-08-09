@@ -73,12 +73,12 @@ export const plannerScenarioItemSchema = z
     occupiedSlotCount: z.number(),
     viabilityContext: z.object({
       armor: z.object({
-        segments: z.number(),
-        scaling: z.object({ additional: z.number(), everyAreas: z.number() }).optional(),
+        segments: z.number().int().positive(),
+        scaling: z.object({ additional: z.number().int().positive(), everyAreas: z.number().int().positive() }).optional(),
       }).nullable(),
       hitsBased: z.object({
-        segments: z.number(),
-        scaling: z.object({ additional: z.number(), everyAreas: z.number() }).optional(),
+        segments: z.number().int().positive(),
+        scaling: z.object({ additional: z.number().int().positive(), everyAreas: z.number().int().positive() }).optional(),
       }).nullable(),
       damageModifier: z.number().nullable(),
       enemyDamageMult: z.number().nullable(),
