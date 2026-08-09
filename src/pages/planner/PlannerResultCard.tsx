@@ -47,6 +47,8 @@ export function PlannerResultCard({
   let boundLabel: string
   if (areaEstimate?.boundBy === 'survival') {
     boundLabel = t({ zh: '存活受限', en: 'survival-bound' })
+  } else if (areaEstimate?.boundBy === 'armor') {
+    boundLabel = t({ zh: '护甲受限', en: 'armor-bound' })
   } else if (areaEstimate?.boundBy === 'bud') {
     boundLabel = t({ zh: '伤害受限', en: 'BUD-bound' })
   } else {
