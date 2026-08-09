@@ -81,3 +81,9 @@ carryDps = baseDps × levelCurve × damagePool × crit × vuln × globalBuff × 
 - **P1 登记**：外部加成池分裂（§2）+ spec/TODO 漂移，均带明确动作与「须协同」约束。
 - **验证安全**：§3 七项核心区域核查无 bug；近期四个机制重构无回归。
 
+## 6. 增量修复（2026-08-10，分支 `opencode/dev3`）
+
+| 项 | 动作 | commit |
+|----|------|--------|
+| 复合属性门槛解析遗漏（atd_5010068521） | **已修复** `96a89ac`：正则 `(STAT (and STAT)*)` 捕获复合 stat 组共享单一 `of N direction`；7 变体修正（v631/721/838/840/1216/1230/1875，各从 1→2 属性门槛） | `96a89ac` |
+

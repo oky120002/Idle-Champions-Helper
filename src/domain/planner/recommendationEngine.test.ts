@@ -932,3 +932,57 @@ describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behi
     expect(invalid).toBe('0')
   })
 })
+
+// attributeRequirements 过滤：不满足属性门槛的英雄被排除出候选池。
+// 此前所有场景 attributeRequirements:[]，过滤路径从未被测试。
+describe('attributeRequirements 候选过滤', () => {
+  it('不满足 STR 13+ 的英雄被排除出推荐候选', () => {
+    const attrVariant = createVariant('variant-attr', { campaign, name: text('Attr Gate', '属性门槛') })
+    const heroesWithScores: HeroAbilityProfile[] = plannerHeroes.map((h) =>
+      h.heroId === 'jarlaxle'
+        ? { ...h, abilityScores: { str: 10 } } // jarlaxle STR 10 < 13 → 被排除
+        : h.heroId === 'asharra'
+          ? { ...h, abilityScores: { str: 15 } } // asharra STR 15 ≥ 13 → 通过
+          : { ...h, abilityScores: { str: 14 } },
+    )
+    const attrCollections: PlannerCollections = {
+      variants: [attrVariant],
+      plannerHeroes: heroesWithScores,
+      plannerScenarios: [{
+        variantId: attrVariant.id,
+        scenarioRef: { kind: 'variant', id: attrVariant.id },
+        name: attrVariant.name,
+        formationLayoutId: 'layout-attr',
+        objectiveArea: attrVariant.objectiveArea,
+        slotTopology: [
+          { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+          { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+          { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+          { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+        ],
+        forcedHeroes: [],
+        enemyTypes: [],
+        allowedHeroes: [],
+        allowedTagExpression: [],
+        attributeRequirements: [{ stat: 'str', operator: '>=', value: 13 }],
+        occupiedSlotCount: 0,
+        viabilityContext: EMPTY_VIABILITY_CONTEXT,
+        damageSourcePattern: null,
+        scenarioWarnings: [],
+      }],
+    }
+
+    const recommendation = buildPlannerRecommendation({
+      collections: attrCollections,
+      variant: attrVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical' },
+    })
+
+    // jarlaxle(STR 10) 被排除——不出现在任何推荐结果的 placements 中
+    for (const result of recommendation.results) {
+      const placedHeroes = Object.values(result.placements)
+      expect(placedHeroes).not.toContain('jarlaxle')
+    }
+  })
+})

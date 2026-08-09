@@ -156,3 +156,18 @@ vitest **1297**（批 5 后 1235 + feedback 34 + hook 15 + browser-codec 4 + wal
 
 行为覆盖与断言强度透镜（非组织整改），见独立文件 `test-depth-audit.md`（结论：深度健康，P0/P1 新增 0；澄清 `steadyStateScoring.test.ts:495` 非乘法模型编码；§2 回归用例跟随修复；交叉引用 signal-coverage 假门）。
 
+## 10. 增量补强（2026-08-10，分支 `opencode/dev3`）
+
+承接轮 5-8 审计基线，针对函数级复审后仍存的真缺口与断言偏弱项补测。
+
+| 区域 | 缺口类型 | 补测 | commit |
+|------|----------|------|--------|
+| `lockedPlacements`（beam search 用户锁槽） | 真缺口（零覆盖，活跃生产功能） | 3 用例：锁定槽位恒在结果、seat 预留防同 seat 入阵、锁定英雄不重复放置 | `619adf5` |
+| `lockedCarryHeroId`（scoring 用户锁 C 位） | 真缺口（零覆盖，活跃生产功能） | 3 用例：锁定弱 carry < 自由选择、锁定不在阵型→0、undefined/空向后兼容 | `619adf5` |
+| `damageSourcePattern` 4/5 模式 | 真缺口（仅 same-column 有测，adjacent/not-adjacent/front-columns/behind-columns 零覆盖） | 4 用例 × valid/invalid 钉值（3 列拓扑夹具） | `9cad422` |
+| `attributeRequirements` 候选过滤 | 真缺口（所有场景 `[]`，过滤路径从未被测） | 1 用例：STR 13+ 门槛排除不合格英雄 | `9cad422` |
+| 复合属性门槛解析 | 已知缺陷修复（atd_5010068521） | 4 钉值测试 + 7 变体数据修正（`96a89ac`） | `96a89ac` |
+| `applyHealthDrain drainRate≥1` | 过时 TODO（已修复+测试 areaEstimation.test.ts:185） | TODO 清理（`atd_d2d4ed72dc` 删除） | `96a89ac` |
+
+度量：vitest 1581→**1596**（+15）；typecheck ✅；全绿。
+
