@@ -24,8 +24,8 @@ Idle Champions 的推进速度由三个独立可叠加的维度决定（调研 `
 
 planner 评分链路解析了攻速信号但完全不消费：
 
-- `attackSpeedMult`：22 个信号（`hero-abilities.json` 实测，含过层加速信号归一化），对应 `reduce_attack_cooldown,X` 等英雄能力
-- `cooldownReduction`：类型存在但 **0 个信号产出**（类型预留，parser 从未生成此 kind）。`speedResolver.ts` 已映射 `reduce_ultimate_cooldown` → `cooldownReduction`（`resolverDispatch.ts:25`），但原始 1860 条 `reduce_ultimate_cooldown`（154 英雄）归一化产出缺失——`damage-mechanic-inventory.md` 记载"~620 cooldownReduction"与实际不符（2026-08-09 Python 逐值核验，见 TODO `atd_0cb934b094`）。
+- `attackSpeedMult`：22 个信号（`hero-abilities.json` 实测，来自 upgrade/ability 源），对应 `reduce_attack_cooldown,X` / `time_scale` 等英雄能力
+- `cooldownReduction`：hero-abilities.json base profile 中 **0 个**——非管线 bug，2026-08-09 排查确认：624 条 `reduce_ultimate_cooldown` effect_string 分两路——12 条专精源正确进 `specialization-catalog.json`（`cooldownReduction` 12 条已验证）；612 条装备源被 `buildHeroModels` loot 过滤（防双重计数，正确行为），但装备五通道（`SIMPLE_VALUE_KINDS`）不含 speed/cooldown kind，无 owned-aware 通道接手。此缺口随本需求一并解决（见 TODO `atd_0cb934b094`）。
 
 评分链路 5 处显式排除速度维度：
 1. `evaluatePlacementFit` 只传 `dimension: ['damage', 'crit', 'vulnerability']` 和 `'survival'`——从不传 `'speed'`

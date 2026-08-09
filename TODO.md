@@ -79,13 +79,13 @@ repair: rebuild
   - 备注:
     - 来源：深度审计 2026-08-09 数据管线子智能体发现
 
-- cooldownReduction 归一化管线缺失——1860 条原始效果产出 0 信号 <!-- auto-todo:id=atd_0cb934b094 -->
+- cooldownReduction 装备源无 owned-aware 通道（非管线 bug，已查明设计缺口） <!-- auto-todo:id=atd_0cb934b094 -->
   - 记录时间: `2026-08-09T21:31:56+08:00`
-  - 类型: issue
-  - 位置: `scripts/data 归一化管线（speedResolver 或上游 collect 阶段）`
-  - 备注: 1860 条 reduce_ultimate_cooldown 原始效果（154 英雄）产出 0 信号。speedResolver.ts 已接线（resolverDispatch.ts:25 映射 reduce_ultimate_cooldown → cooldownReduction），但 hero-abilities.json 中 cooldownReduction 条目为 0。
-    - 影响：speed 维度 cooldownReduction 信号完全丢失，speed 维度需求（2026-08-planner-speed-dimension）前置依赖
-    - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
-    - 优先级：中
+  - 类型: follow-up
+  - 位置: `src/domain/buffs/equipmentMult.ts（装备五通道缺 speed/cooldown kind）`
+  - 备注: 2026-08-09 深度排查根因：624 条 reduce_ultimate_cooldown effect_string（非原记 1860）分两路——12 条专精源正确进 specialization-catalog.json（cooldownReduction 12 条已验证）；612 条装备源被 buildHeroModels loot 过滤丢弃（防双重计数，正确行为），但装备五通道（SIMPLE_VALUE_KINDS）不含 reduce_ultimate_cooldown/reduce_attack_cooldown，无 owned-aware 通道接手。speedResolver 接线正确，pipeline 无 bug。此缺口随 speed 维度需求（2026-08-planner-speed-dimension）一并解决——在装备通道扩展 speed kind 或在 speed 评分实现时统一处理。
+    - 影响：装备源 cooldown 缩减信号未建模（speed 维度未消费，当前无评分影响）
+    - 证据：npx tsx 实跑 collectEffectEntries + specialization-catalog.json 验证 + Python 逐源分类（loot 612 / upgrade_ek 12 全专精）
+    - 优先级：中（随 speed 维度推进时解决）
 
 <!-- auto-todo:end -->
