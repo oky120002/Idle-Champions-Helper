@@ -8388,7 +8388,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "67",
       "scenarioRef": {
         "kind": "variant",
@@ -8422,9 +8428,7 @@
         "healthDrainRate": null
       },
       "damageSourcePattern": null,
-      "scenarioWarnings": [
-        "未解析 restriction：Only champions with a wisdom score of 13 or more, plus Dhadius (of course), may be used.（含特殊机制，请人工评估对阵型的影响）"
-      ]
+      "scenarioWarnings": []
     },
     {
       "slotTopology": [
@@ -46053,7 +46057,7 @@
         "monstrosity"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 1,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -46063,7 +46067,7 @@
       },
       "damageSourcePattern": null,
       "scenarioWarnings": [
-        "未解析 restriction：Dragonbait takes up a slot in the formation and mourns the loss of his friend, Artus. Every 10 areas Dragonbait's scent changes, empowering the enemies or debuffing the champions.（含特殊机制，请人工评估对阵型的影响）"
+        "当前场景有 1 个槽位被非英雄实体占据，不参与英雄占位。"
       ]
     },
     {
@@ -56104,7 +56108,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": ">=",
+          "value": 12
+        }
+      ],
       "variantId": "460",
       "scenarioRef": {
         "kind": "variant",
@@ -59394,7 +59404,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "485",
       "scenarioRef": {
         "kind": "variant",
@@ -59432,9 +59448,7 @@
         "healthDrainRate": null
       },
       "damageSourcePattern": null,
-      "scenarioWarnings": [
-        "未解析 restriction：Only Champions with Intelligence of 13 or higher can be used（含特殊机制，请人工评估对阵型的影响）"
-      ]
+      "scenarioWarnings": []
     },
     {
       "slotTopology": [
@@ -60204,7 +60218,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 15
+        }
+      ],
       "variantId": "491",
       "scenarioRef": {
         "kind": "variant",
@@ -60244,9 +60264,7 @@
         "healthDrainRate": null
       },
       "damageSourcePattern": null,
-      "scenarioWarnings": [
-        "未解析 restriction：Krydle starts out in the formation and can not be moved, removed, or swapped out Only Champions with a CHA score of 15+ can be used（含特殊机制，请人工评估对阵型的影响）"
-      ]
+      "scenarioWarnings": []
     },
     {
       "slotTopology": [
@@ -72309,7 +72327,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 17
+        }
+      ],
       "variantId": "598",
       "scenarioRef": {
         "kind": "variant",
@@ -72624,7 +72648,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": ">=",
+          "value": 15
+        }
+      ],
       "variantId": "601",
       "scenarioRef": {
         "kind": "variant",
@@ -81681,7 +81711,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": "<=",
+          "value": 10
+        }
+      ],
       "variantId": "673",
       "scenarioRef": {
         "kind": "variant",
@@ -83045,7 +83081,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": "<=",
+          "value": 11
+        }
+      ],
       "variantId": "683",
       "scenarioRef": {
         "kind": "variant",
@@ -83682,7 +83724,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 16
+        }
+      ],
       "variantId": "688",
       "scenarioRef": {
         "kind": "variant",
@@ -101275,7 +101323,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "840",
       "scenarioRef": {
         "kind": "variant",
@@ -105881,7 +105935,18 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "874",
       "scenarioRef": {
         "kind": "variant",
@@ -119452,7 +119517,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 25
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -122059,7 +122126,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1006",
       "scenarioRef": {
         "kind": "variant",
@@ -123934,7 +124007,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 17
+        }
+      ],
       "variantId": "1020",
       "scenarioRef": {
         "kind": "variant",
@@ -126967,7 +127046,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 16
+        }
+      ],
       "variantId": "1058",
       "scenarioRef": {
         "kind": "variant",
@@ -134760,7 +134845,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1119",
       "scenarioRef": {
         "kind": "variant",
@@ -135413,7 +135504,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1124",
       "scenarioRef": {
         "kind": "variant",
@@ -140147,7 +140244,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": "<=",
+          "value": 10
+        }
+      ],
       "variantId": "1161",
       "scenarioRef": {
         "kind": "variant",
@@ -140802,7 +140905,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": "<=",
+          "value": 13
+        }
+      ],
       "variantId": "1166",
       "scenarioRef": {
         "kind": "variant",
@@ -147291,7 +147400,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1216",
       "scenarioRef": {
         "kind": "variant",
@@ -148043,7 +148158,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 18
+        }
+      ],
       "variantId": "1221",
       "scenarioRef": {
         "kind": "variant",
@@ -149277,7 +149398,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1230",
       "scenarioRef": {
         "kind": "variant",
@@ -149973,7 +150100,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": ">=",
+          "value": 12
+        }
+      ],
       "variantId": "1235",
       "scenarioRef": {
         "kind": "variant",
@@ -156436,7 +156569,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": "<=",
+          "value": 12
+        }
+      ],
       "variantId": "1284",
       "scenarioRef": {
         "kind": "variant",
@@ -158775,7 +158914,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1301",
       "scenarioRef": {
         "kind": "variant",
@@ -160521,7 +160666,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 17
+        }
+      ],
       "variantId": "1331",
       "scenarioRef": {
         "kind": "variant",
@@ -161574,7 +161725,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": ">=",
+          "value": 17
+        }
+      ],
       "variantId": "1338",
       "scenarioRef": {
         "kind": "variant",
@@ -162785,7 +162942,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1347",
       "scenarioRef": {
         "kind": "variant",
@@ -165541,7 +165704,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 4
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -167150,7 +167315,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": "<=",
+          "value": 13
+        }
+      ],
       "variantId": "1377",
       "scenarioRef": {
         "kind": "variant",
@@ -167343,7 +167514,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": ">=",
+          "value": 15
+        }
+      ],
       "variantId": "1378",
       "scenarioRef": {
         "kind": "variant",
@@ -170703,7 +170880,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1401",
       "scenarioRef": {
         "kind": "variant",
@@ -171503,7 +171686,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1406",
       "scenarioRef": {
         "kind": "variant",
@@ -172215,7 +172404,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": "<=",
+          "value": 13
+        }
+      ],
       "variantId": "1411",
       "scenarioRef": {
         "kind": "variant",
@@ -176749,7 +176944,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": "<=",
+          "value": 12
+        }
+      ],
       "variantId": "1442",
       "scenarioRef": {
         "kind": "variant",
@@ -176783,7 +176984,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 4
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -177642,7 +177845,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1448",
       "scenarioRef": {
         "kind": "variant",
@@ -178169,7 +178378,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": "<=",
+          "value": 12
+        }
+      ],
       "variantId": "1452",
       "scenarioRef": {
         "kind": "variant",
@@ -178864,7 +179079,18 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 15
+        },
+        {
+          "stat": "wis",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1457",
       "scenarioRef": {
         "kind": "variant",
@@ -180990,7 +181216,18 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1473",
       "scenarioRef": {
         "kind": "variant",
@@ -183547,7 +183784,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1492",
       "scenarioRef": {
         "kind": "variant",
@@ -184270,7 +184513,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 8
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -184733,7 +184978,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 15
+        }
+      ],
       "variantId": "1501",
       "scenarioRef": {
         "kind": "variant",
@@ -187745,7 +187996,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": ">=",
+          "value": 15
+        }
+      ],
       "variantId": "1523",
       "scenarioRef": {
         "kind": "variant",
@@ -195275,7 +195532,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": ">=",
+          "value": 16
+        }
+      ],
       "variantId": "1608",
       "scenarioRef": {
         "kind": "variant",
@@ -195448,7 +195711,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 17
+        }
+      ],
       "variantId": "1609",
       "scenarioRef": {
         "kind": "variant",
@@ -195966,7 +196235,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "int",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1614",
       "scenarioRef": {
         "kind": "variant",
@@ -202915,7 +203190,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "str",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1674",
       "scenarioRef": {
         "kind": "variant",
@@ -203118,7 +203399,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 25
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -212006,7 +212289,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 15
+        }
+      ],
       "variantId": "1766",
       "scenarioRef": {
         "kind": "variant",
@@ -215494,7 +215783,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 25
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -217228,7 +217519,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 3,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 25
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -219091,7 +219384,18 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "wis",
+          "operator": ">=",
+          "value": 14
+        },
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 16
+        }
+      ],
       "variantId": "1834",
       "scenarioRef": {
         "kind": "variant",
@@ -221333,7 +221637,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 4
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -224972,7 +225278,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": ">=",
+          "value": 13
+        }
+      ],
       "variantId": "1875",
       "scenarioRef": {
         "kind": "variant",
@@ -226198,7 +226510,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 14
+        }
+      ],
       "variantId": "1884",
       "scenarioRef": {
         "kind": "variant",
@@ -226381,7 +226699,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": "<=",
+          "value": 13
+        }
+      ],
       "variantId": "1885",
       "scenarioRef": {
         "kind": "variant",
@@ -226965,7 +227289,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 25
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -227897,7 +228223,9 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "viabilityContext": {
-        "armor": null,
+        "armor": {
+          "segments": 4
+        },
         "hitsBased": null,
         "damageModifier": null,
         "enemyDamageMult": null,
@@ -232775,7 +233103,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "cha",
+          "operator": "<=",
+          "value": 13
+        }
+      ],
       "variantId": "1932",
       "scenarioRef": {
         "kind": "variant",
@@ -234080,7 +234414,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "dex",
+          "operator": ">=",
+          "value": 16
+        }
+      ],
       "variantId": "1944",
       "scenarioRef": {
         "kind": "variant",
@@ -236107,7 +236447,13 @@
         }
       ],
       "allowedTagExpression": [],
-      "attributeRequirements": [],
+      "attributeRequirements": [
+        {
+          "stat": "con",
+          "operator": "<=",
+          "value": 12
+        }
+      ],
       "variantId": "1966",
       "scenarioRef": {
         "kind": "variant",
