@@ -20,7 +20,7 @@ import { localizedTextSchema } from './common.ts'
 const localizedText = localizedTextSchema
 
 /**
- * hero-abilities.json item：英雄能力 profile（planner 评分核心数据源）。
+ * hero-abilities.json item：英雄能力 profile（planner 评估核心数据源）。
  * 钉 identity + 座位 + DPS/暴击 base + signal 列表存在性；signal 元素结构由 HeroAbilitySignal 类型管。
  */
 export const heroAbilityProfileItemSchema = z
@@ -71,6 +71,24 @@ export const plannerScenarioItemSchema = z
     allowedTagExpression: z.array(tagClauseSchema),
     attributeRequirements: z.array(attributeRequirementSchema),
     occupiedSlotCount: z.number(),
+    viabilityContext: z.object({
+      armor: z.object({
+        segments: z.number(),
+        scaling: z.object({ additional: z.number(), everyAreas: z.number() }).optional(),
+      }).nullable(),
+      hitsBased: z.object({
+        segments: z.number(),
+        scaling: z.object({ additional: z.number(), everyAreas: z.number() }).optional(),
+      }).nullable(),
+      damageModifier: z.number().nullable(),
+      enemyDamageMult: z.number().nullable(),
+      healthDrainRate: z.number().nullable(),
+    }),
+    damageSourcePattern: z.object({
+      kind: z.enum(['same-column', 'adjacent', 'not-adjacent', 'front-columns', 'behind-columns']),
+      referenceHeroId: z.string(),
+      columnSpan: z.number().optional(),
+    }).nullable(),
   })
   .loose()
 

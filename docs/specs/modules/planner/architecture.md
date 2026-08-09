@@ -61,7 +61,7 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 
 ## 入参契约
 
-下表登记全部入参的代码消费状态。`consumed` = 已接入评分链路。
+下表登记全部入参的代码消费状态。`consumed` = 已接入评估链路。
 
 **A. 基础数据（`PlannerCollections`，启动加载 / 缓存，非 per-call）**
 
@@ -90,7 +90,7 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 
 ## 未接入能力
 
-架构层当前未接入评分的能力边界（细节见各专题文档）：等级基线估算（`simulator.md`）、familiar / modron 状态（入参契约表登记，未消费）。其余按主题归位：ult / click / modron 辅助指标（`computation-runtime.md`）、数值表达式（`expression-evaluator.md`）、speed 评分模式（`simulator.md`）、尚不支持的 carry / 计数条件（`recommendation.md`）、孤儿机制扫描（`dps-mechanic-abstraction.md`）。
+架构层当前未接入评估的能力边界（细节见各专题文档）：等级基线估算（`simulator.md`）、familiar / modron 状态（入参契约表登记，未消费）。其余按主题归位：ult / click / modron 辅助指标（`computation-runtime.md`）、数值表达式（`expression-evaluator.md`）、speed 优化模式（`simulator.md`）、尚不支持的 carry / 计数条件（`recommendation.md`）、孤儿机制扫描（`dps-mechanic-abstraction.md`）。
 
 ## 决策记录（ADR）
 
@@ -104,7 +104,7 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 - `0013` DPS 机制抽象阈值（≥2 通用路径，>10 升级注册表）
 - `0014` GameNumber 用 decimal.js
 - `0015` 英雄参照作重构回归守护（非绝对精度标尺）
-- `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量评分 / 降 beam）
+- `0016` 性能策略：候选裁剪 + Worker 卸载（否决增量求值 / 降 beam）
 - `0017` 专精外部选择（build catalog + runtime 按玩家选择注入）
 
 ## 三层架构
@@ -121,7 +121,7 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 搜索层（beamSearch）          按 objective 最大化做 deterministic beam search
 ```
 
-- placementFit 是 pool 聚合器，不产出启发式「评分」。
+- placementFit 是 pool 聚合器，不产出启发式「评估」。
 - 每种模式用真实目标量：carry-dps = `carryDps`；team-gold = `teamGoldFind`。
 - 算法与英雄的握手点唯一：`HeroAbilityProfile`。
 - 任何无法静态计算的变量进入 `warnings`，不静默计入 `objectiveValue`。
@@ -176,4 +176,4 @@ CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（
 
 - 数据、隐私、目录与存储：`data-and-privacy.md`
 - 推荐英雄、站位、模型字段与条件匹配：`recommendation.md`
-- 数字层、加成聚合与评分维度 / Web Worker、推图预估、输出合同与 UI：`simulator.md` / `computation-runtime.md`
+- 数字层、加成聚合与评估维度 / Web Worker、推图预估、输出合同与 UI：`simulator.md` / `computation-runtime.md`

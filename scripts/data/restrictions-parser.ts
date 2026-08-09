@@ -4,22 +4,26 @@
  * 数据源：`variants.json.items[].restrictions: Array<{original, display}>`（双语自由文本）。
  * 评估结论：`docs/specs/modules/planner/data-source-confirmations.md` §12.1。
  *
- * 不用 NLP，纯关键词模板。解析两类高价值模式：
+ * 不用 NLP，纯关键词模板。解析以下高价值模式：
  * 1. slot-occupying（→ lockedSlotCount）
  * 2. 属性门槛（→ attributeRequirements，CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）
+ * 3. 可行性上下文（→ viabilityContext，护甲段数/命中型/伤害修正等）
  * flavor 文本 / 完成前置 / 变量递增版不匹配 → warning（12.3 手工补 semantic-overrides.json）。
  * champion-tag 限制（"Only Evil Champions"）已被 mechanics 结构化捕获，不在此重复解析。
  */
 
 import type { AttributeRequirement } from '../../src/domain/types/formation.ts'
+import type { DamageSourcePattern, SegmentConfig, ViabilityContext } from '../../src/domain/planner/plannerModel.ts'
 
-export type { AttributeRequirement }
+export type { AttributeRequirement, DamageSourcePattern, SegmentConfig, ViabilityContext }
 
 export interface ParsedRestrictions {
   /** 被占据/诅咒的格数（保守取多条中最严的 max，不累加）。 */
   lockedSlotCount: number
   /** 属性门槛（CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）。 */
   attributeRequirements: AttributeRequirement[]
+  /** 可行性上下文（护甲/伤害修正等）。 */
+  viabilityContext: ViabilityContext
   /** 未匹配的 restriction 文本（低频/变量/特殊机制），待手工补 semantic-overrides。 */
   warnings: string[]
 }
@@ -239,8 +243,108 @@ function parseAttributeRequirements(text: string): AttributeRequirement[] {
   return results
 }
 
+// ─── 可行性上下文解析 ───
+
+// eslint-disable-next-line sonarjs/super-linear-regex -- 固定模式无回溯风险（alternation 分支不重叠）
+const ARMOR_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?armored\s+(?:hit\s+points|HP)/i
+// eslint-disable-next-line sonarjs/super-linear-regex -- 同上
+const HITS_BASED_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?hits-based\s+(?:HP|hit\s+points|health)/i
+const ARMORED_FLAG_RE = /armored\s+hit-based\s+health/i
+// eslint-disable-next-line sonarjs/super-linear-regex -- 同上
+const SCALING_ADDITIONAL_RE = /(\d+)\s+additional\s+(?:armored|hits-based)\s+hit\s+points/i
+const SCALING_EVERY_RE = /every\s+(\d+)\s+areas/i
+const DAMAGE_REDUCED_RE = /damage\s+(?:is\s+)?reduced\s+by\s+(\d+(?:\.\d+)?)\s*%/i
+const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
+// 持续掉血：「Champions take/lose X% of (their) max health every second」。
+// 排除 random（单目标爆发）和 reduce（伤害削减非掉血）。
+// eslint-disable-next-line sonarjs/regex-complexity -- 多变体自然语言模式，拆分后更难维护
+const HEALTH_DRAIN_PCT_RE = /(?:take|takes|lose|loses)\s+(?:damage\s+)?(?:equal\s+to\s+)?(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum|total)\s*health|unavoidable\s+damage)/i
+const EVERY_SECOND_RE = /\b(?:every|each|per)\s+second\b/i
+// S4 burst：every N seconds (N≥2) 打 X% 伤害——等效 drainRate = X/100/N
+const BURST_INTERVAL_RE = /\b(?:every|each)\s+(\d+)(?:-(\d+))?\s+seconds?\b/i
+// eslint-disable-next-line sonarjs/super-linear-regex, sonarjs/regex-complexity -- 多变体自然语言模式
+const BURST_PCT_RE = /(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum)\s*health|of\s+(?:the\s+)?champion|damage)/i
+
+function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | null {
+  const baseMatch = baseRegex.exec(text)
+  if (!baseMatch) {
+    // 检查是否仅有标志（"armored hit-based health"），无具体段数
+    if (ARMORED_FLAG_RE.test(text) && baseRegex === ARMOR_SEGMENTS_RE) {
+      return { segments: 1 } // 标志存在但无段数 → 默认 1（保守最小值）
+    }
+    return null
+  }
+  const segments = parseInt(baseMatch[1] ?? '', 10)
+  if (!Number.isFinite(segments) || segments <= 0) return null
+
+  const scalingAdditionalMatch = SCALING_ADDITIONAL_RE.exec(text)
+  const scalingEveryMatch = SCALING_EVERY_RE.exec(text)
+  if (scalingAdditionalMatch && scalingEveryMatch) {
+    const additional = parseInt(scalingAdditionalMatch[1] ?? '', 10)
+    const everyAreas = parseInt(scalingEveryMatch[1] ?? '', 10)
+    if (Number.isFinite(additional) && additional > 0 && Number.isFinite(everyAreas) && everyAreas > 0) {
+      return { segments, scaling: { additional, everyAreas } }
+    }
+  }
+  return { segments }
+}
+
+function parseDamageModifier(text: string): number | null {
+  const match = DAMAGE_REDUCED_RE.exec(text)
+  if (!match) return null
+  const pct = parseFloat(match[1] ?? '')
+  if (!Number.isFinite(pct) || pct <= 0 || pct >= 100) return null
+  return (100 - pct) / 100 // "reduced by 99%" → 0.01
+}
+
+function parseEnemyDamageMult(text: string): number | null {
+  const match = ENEMY_DAMAGE_MULT_RE.exec(text)
+  if (!match) return null
+  const mult = parseFloat(match[1] ?? '')
+  return Number.isFinite(mult) && mult > 0 ? mult : null
+}
+
+function parseHealthDrainRate(text: string): number | null {
+  if (!EVERY_SECOND_RE.test(text)) return null
+  if (/\brandom\b/i.test(text)) return null
+  if (/\breduc/i.test(text)) return null
+  const match = HEALTH_DRAIN_PCT_RE.exec(text)
+  if (!match) return null
+  const pct = parseFloat(match[1] ?? '')
+  if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
+  return pct / 100
+}
+
+/** S4 burst：X% 伤害 every N 秒（N≥2）→ 等效持续掉血 X/100/N。含随机目标 burst。 */
+function parseBurstDrainRate(text: string): number | null {
+  if (/\breduc/i.test(text)) return null
+  const intervalMatch = BURST_INTERVAL_RE.exec(text)
+  if (!intervalMatch) return null
+  const interval = parseInt(intervalMatch[1] ?? '', 10)
+  if (!Number.isFinite(interval) || interval < 2) return null
+  const pctMatch = BURST_PCT_RE.exec(text)
+  if (!pctMatch) return null
+  const pct = parseFloat(pctMatch[1] ?? '')
+  if (!Number.isFinite(pct) || pct <= 0 || pct > 100) return null
+  return pct / 100 / interval
+}
+
+function parseViabilityContext(original: string): ViabilityContext {
+  if (original === '') return { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null }
+  const continuous = parseHealthDrainRate(original)
+  const burst = parseBurstDrainRate(original)
+  const drainSum = (continuous ?? 0) + (burst ?? 0)
+  return {
+    armor: parseSegmentConfig(original, ARMOR_SEGMENTS_RE),
+    hitsBased: parseSegmentConfig(original, HITS_BASED_SEGMENTS_RE),
+    damageModifier: parseDamageModifier(original),
+    enemyDamageMult: parseEnemyDamageMult(original),
+    healthDrainRate: drainSum > 0 ? drainSum : null,
+  }
+}
+
 /**
- * 解析 variant restrictions → lockedSlotCount + attributeRequirements + warnings。
+ * 解析 variant restrictions → lockedSlotCount + attributeRequirements + viabilityContext + warnings。
  * 双语（EN original + ZH display）分别尝试；slot count 取保守 max，属性门槛取全量并集。
  */
 export function parseRestrictions(restrictions: readonly RestrictionText[]): ParsedRestrictions {
@@ -248,6 +352,11 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   const attributeRequirements: AttributeRequirement[] = []
   const warnings: string[] = []
   const seenAttrs = new Set<string>()
+  let armor: SegmentConfig | null = null
+  let hitsBased: SegmentConfig | null = null
+  let damageModifier: number | null = null
+  let enemyDamageMult: number | null = null
+  let healthDrainRate: number | null = null
 
   for (const { original, display } of restrictions) {
     // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
@@ -258,6 +367,16 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
         seenAttrs.add(key)
         attributeRequirements.push(req)
       }
+    }
+
+    // 可行性上下文从 EN original 提取
+    if (original !== '') {
+      const vc = parseViabilityContext(original)
+      if (vc.armor) armor = vc.armor
+      if (vc.hitsBased) hitsBased = vc.hitsBased
+      if (vc.damageModifier != null) damageModifier = vc.damageModifier
+      if (vc.enemyDamageMult != null) enemyDamageMult = vc.enemyDamageMult
+      if (vc.healthDrainRate != null) healthDrainRate = vc.healthDrainRate
     }
 
     const enCount = original !== '' ? enSlotOccupyCount(original) : null
@@ -275,5 +394,156 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
     }
   }
 
-  return { lockedSlotCount, attributeRequirements, warnings }
+  return {
+    lockedSlotCount,
+    attributeRequirements,
+    viabilityContext: { armor, hitsBased, damageModifier, enemyDamageMult, healthDrainRate },
+    warnings,
+  }
+}
+
+// ─── 伤害来源位置限制解析 ───
+
+const EN_COLUMN_NUMBERS: Record<string, number> = { one: 1, two: 2, three: 3, four: 4 }
+const PRONOUNS = new Set(['him', 'her', 'them', 'his', 'hers', 'theirs', 'it'])
+
+/** 精确匹配后回退后缀匹配（"van richten" → "rudolph van richten"）。 */
+function lookupHeroName(name: string, heroNameToId: ReadonlyMap<string, string>): string | null {
+  const lower = name.toLowerCase().trim()
+  if (lower.length < 3) return null
+  const exact = heroNameToId.get(lower)
+  if (exact != null) return exact
+  for (const [fullName, id] of heroNameToId) {
+    if (fullName.endsWith(' ' + lower)) return id
+  }
+  return null
+}
+
+/**
+ * 从位置关键词附近提取参考英雄名，解析为 heroId。
+ *
+ * 策略：用模式正则捕获名字 token（"in front of Presto" → "Presto"）。
+ * 若 token 是代词（him/her/them），回退到 "Only [Name] and Champions" 前缀。
+ * 若均非已知 champion 名 → null（NPC 引用如 Mirt/skunk，交 UI 层）。
+ */
+function resolveReferenceHero(
+  sentence: string,
+  nameRegex: RegExp,
+  heroNameToId: ReadonlyMap<string, string>,
+): string | null {
+  const match = nameRegex.exec(sentence)
+  if (match) {
+    // Strip possessive ‘s / ‘s suffix（"Ezmerelda’s" → "Ezmerelda"，"Lae’zel’s" → "Lae’zel"）。
+    const token = match[1]?.trim().replace(/['’]s$/i, '')
+    if (token != null && token !== '' && !PRONOUNS.has(token.toLowerCase())) {
+      const id = lookupHeroName(token, heroNameToId)
+      if (id != null) return id
+    }
+  }
+  // 代词回退："Only [Name] and (the) Champions ..." 前缀中的具名英雄。
+  // eslint-disable-next-line sonarjs/super-linear-regex -- \w[\w\s']*? 非贪婪限定在 "and champions" 前，回溯可忽略
+  const onlyMatch = /\bonly\s+(\w[\w\s']*?)\s+and\s+(?:the\s+)?champions/i.exec(sentence)
+  if (onlyMatch) {
+    const name = onlyMatch[1]?.trim()
+    if (name != null && name !== '' && !PRONOUNS.has(name.toLowerCase())) {
+      const id = lookupHeroName(name, heroNameToId)
+      if (id != null) return id
+    }
+  }
+  return null
+}
+
+interface PatternMatch {
+  kind: DamageSourcePattern['kind']
+  columnSpan?: number
+  /** 参考英雄名提取正则（捕获组 1 = 名字 token）。 */
+  nameRegex: RegExp
+}
+
+function parseColumnSpan(token: string | undefined, fallback: number): number {
+  if (token == null) return fallback
+  const num = /^\d+$/.test(token) ? parseInt(token, 10) : EN_COLUMN_NUMBERS[token.toLowerCase()]
+  return typeof num === 'number' && num > 0 ? num : fallback
+}
+
+/** 按优先级尝试匹配模式；返回模式 + 名字提取正则。 */
+function matchPattern(sentence: string): PatternMatch | null {
+  const lower = sentence.toLowerCase()
+
+  // not-adjacent: "not next to/adjacent to X" / "next to X deal no damage"
+  const notAdjacent = /\bnot\s+(?:next\s+to|adjacent\s+to)\b/i.test(sentence)
+  // eslint-disable-next-line sonarjs/super-linear-regex -- \w+.* 回溯在短句上可忽略
+  const adjacentNoDamage = /\b(?:next\s+to|adjacent\s+to)\s+\w+.*deal\s+no\s+damage/i.test(sentence)
+  if (notAdjacent || adjacentNoDamage) {
+    return { kind: 'not-adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
+  }
+
+  // front-columns: "(N) columns in front of X"
+  // eslint-disable-next-line sonarjs/super-linear-regex -- alternation 分支不重叠
+  const frontMatch = /(\d+|one|two|three|four)?\s*columns?\s+in\s+front\b/.exec(lower)
+  if (frontMatch) {
+    const span = frontMatch[1] !== undefined ? parseColumnSpan(frontMatch[1], 2) : 100
+    return { kind: 'front-columns', columnSpan: span, nameRegex: /in\s+front\s+of\s+([\w'-]+)/i }
+  }
+
+  // behind-columns: "(N) column(s) behind X"
+  // eslint-disable-next-line sonarjs/super-linear-regex -- 同上
+  const behindMatch = /(\d+|one|two|three|four)?\s*columns?\s+behind\b/.exec(lower)
+  if (behindMatch) {
+    const span = behindMatch[1] !== undefined ? parseColumnSpan(behindMatch[1], 1) : 1
+    return { kind: 'behind-columns', columnSpan: span, nameRegex: /behind\s+([\w'-]+)/i }
+  }
+
+  // same-column: "in X's column" / "X's column"（排除 front/behind/back）
+  if (/\bcolumn\b/i.test(sentence) && !/\b(?:front|behind|back)\b/i.test(sentence)) {
+    // eslint-disable-next-line sonarjs/super-linear-regex -- [\w'-]* 回溯在短名字 token 上可忽略
+    return { kind: 'same-column', nameRegex: /(\w[\w'-]*)'?s?\s+column/i }
+  }
+
+  // adjacent (positive): "next to/adjacent to X can deal damage"
+  if (/\b(?:next\s+to|adjacent\s+to)\b/i.test(sentence)) {
+    return { kind: 'adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
+  }
+
+  return null
+}
+
+/**
+ * 从 restrictions 文本解析伤害来源位置限制模式。
+ *
+ * 解析高频位置模式（same-column / adjacent / not-adjacent / front-columns / behind-columns），
+ * 通过位置关键词附近的名字 + champion 名表解析参考英雄。
+ * NPC 引用（Mirt、skunk、Elminster 等）不在名表中 → 返回 null（交 UI 层）。
+ *
+ * @param heroNameToId champion original 名（小写）→ heroId 映射。
+ */
+export function parseDamageSourcePattern(
+  restrictions: readonly RestrictionText[],
+  heroNameToId: ReadonlyMap<string, string>,
+): DamageSourcePattern | null {
+  for (const { original } of restrictions) {
+    if (original === '') continue
+    const normalized = original.replace(/\r?\n/g, ' ')
+    for (const rawSentence of normalized.split(/\.\s+/)) {
+      const sentence = rawSentence.trim()
+      if (sentence === '') continue
+      const lower = sentence.toLowerCase()
+
+      const hasDamageConstraint = lower.includes('deal damage') || lower.includes('deal no damage')
+      if (!hasDamageConstraint) continue
+
+      const patternMatch = matchPattern(sentence)
+      if (!patternMatch) continue
+
+      const referenceHeroId = resolveReferenceHero(sentence, patternMatch.nameRegex, heroNameToId)
+      if (referenceHeroId === null) continue // NPC 引用或未识别名，交 UI
+
+      return {
+        kind: patternMatch.kind,
+        referenceHeroId,
+        ...(patternMatch.columnSpan != null ? { columnSpan: patternMatch.columnSpan } : {}),
+      }
+    }
+  }
+  return null
 }

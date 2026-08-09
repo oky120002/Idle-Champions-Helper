@@ -17,7 +17,7 @@ function percentToMultiplier(percent: number): number {
 /**
  * 动态层数假设默认值（manualStackCount 缺省时用）。1000 ≈ area=100 冒险的出言不逊上限（0.33%/层）。
  * 仅贴合低 value/层的 dynamic-stack-multiply signal（如出言不逊）；高 value（>103%）signal 在 1000 层下
- * 溢出 → 降级 warning 不计分（见 resolveSignalMultiplier 溢出分支）。中 value（10–103%）signal 会得大但有限的乘数，
+ * 溢出 → 降级 warning 不计入目标值（见 resolveSignalMultiplier 溢出分支）。中 value（10–103%）signal 会得大但有限的乘数，
  * 属全局单值假设的已知近似（不同 signal 层数源差异大，精确化依赖 per-signal 层数表达式解析，见 095-vi.md）。
  * UI 可手动覆盖（评估页/计划页）；见 champion-reference-verification.md。
  */
@@ -29,7 +29,7 @@ export const DEFAULT_MANUAL_STACK_COUNT = 1000
  * 须排除「有 stackFunc」的信号——它们的层数源是 stackFunc（per_tagged/per_crusader/per_mithral_hall_stacks
  * 等），非 area-based manual 层数。旧实现无条件短路致这类信号（如 hero32 buff_upgrade,100,11503
  * stackFunc=per_mithral_hall_stacks）被 (1+value/100)^1000 灾难高估（2^1000≈10^301）；改走 stackFunc
- * 路径后，注册的 stackFunc 按真实阵型计数、未注册的（per_mithral_hall_stacks）安全不计分。
+ * 路径后，注册的 stackFunc 按真实阵型计数、未注册的（per_mithral_hall_stacks）安全不计入目标值。
  */
 function resolveStacksMultiplySignal(
   input: EvaluatePlacementFitInput,
@@ -41,15 +41,15 @@ function resolveStacksMultiplySignal(
   const stackCount = input.manualStackCount ?? DEFAULT_MANUAL_STACK_COUNT
   const mult = percentToMultiplier(signal.value) ** stackCount
   if (!Number.isFinite(mult)) {
-    return { ok: false, warning: `${signal.rawEffect} 乘算堆叠溢出，当前不计分。` }
+    return { ok: false, warning: `${signal.rawEffect} 乘算堆叠溢出，当前不计入目标值。` }
   }
-  // bonus-scale-linkage：联动 signal 只在基础 signal 可计分时生效（依赖检查，不卷入数值）。
+  // bonus-scale-linkage：联动 signal 只在基础 signal 可计入目标值时生效（依赖检查，不卷入数值）。
   // multiplier>1 守护与 applySignalPercent 对称——基础 0 层（value^0=1，如善良榜样无 good 英雄）
   // 时联动 signal 不生效（基础无效应不放大），防 future 英雄 stacksMultiply+bonusScaleOfSignal 触发。
   if (signal.bonusScaleOfSignal) {
     const dep = resolveSignalMultiplier(input, signal.bonusScaleOfSignal)
     if (!dep.ok || dep.multiplier <= 1) {
-      return { ok: false, warning: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计分。` }
+      return { ok: false, warning: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计入目标值。` }
     }
   }
   return { ok: true, multiplier: mult }
@@ -71,7 +71,7 @@ function applySignalPercentToMultiplier(
   if (!baseMultiplierResult.ok || baseMultiplierResult.multiplier <= 1) {
     return {
       ok: false,
-      warning: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计分。`,
+      warning: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计入目标值。`,
     }
   }
 
@@ -99,7 +99,7 @@ function resolveMultStackSignal(
   if (percent === null) {
     return {
       ok: false,
-      warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
+      warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计入目标值。`,
     }
   }
   return applySignalPercentToMultiplier(input, signal, percent)
@@ -112,7 +112,7 @@ export function resolveSignalMultiplier(
   if (signal.applyManually === true) {
     return {
       ok: false,
-      warning: `${signal.rawEffect} 依赖手动触发或专精选择，当前不计分。`,
+      warning: `${signal.rawEffect} 依赖手动触发或专精选择，当前不计入目标值。`,
     }
   }
 
@@ -131,7 +131,7 @@ export function resolveSignalMultiplier(
   if (!resolver) {
     return {
       ok: false,
-      warning: `${signal.rawEffect} 的叠层方式(${signal.amountFunc ?? 'null'} / ${stackFunc}) 尚未稳定解析，当前不计分。`,
+      warning: `${signal.rawEffect} 的叠层方式(${signal.amountFunc ?? 'null'} / ${stackFunc}) 尚未稳定解析，当前不计入目标值。`,
     }
   }
 
@@ -139,7 +139,7 @@ export function resolveSignalMultiplier(
   if (count === null) {
     return {
       ok: false,
-      warning: `${signal.rawEffect} 需要${resolver.contextLabel}上下文，当前不计分。`,
+      warning: `${signal.rawEffect} 需要${resolver.contextLabel}上下文，当前不计入目标值。`,
     }
   }
 
@@ -154,6 +154,6 @@ export function resolveSignalMultiplier(
 
   return {
     ok: false,
-    warning: `${signal.rawEffect} 的叠层方式(${String(amountFunc)} / ${stackFunc}) 尚未稳定解析，当前不计分。`,
+    warning: `${signal.rawEffect} 的叠层方式(${String(amountFunc)} / ${stackFunc}) 尚未稳定解析，当前不计入目标值。`,
   }
 }

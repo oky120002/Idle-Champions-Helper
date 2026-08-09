@@ -25,7 +25,7 @@
 | 2 | version.json 加载失败 | `loadVersion` reject（在 Promise.all 前）→ error 态同上 | 同上 | 同上 | 健康 |
 | 3 | profile 快照 IndexedDB 读失败 | `resolveUserProfileSnapshot` 内部 catch → `snapshot:null`+`errorMessage`；`errorMessage` 被 `usePlannerCollections:89` 丢弃 | ✗ | planner 继续运行（owned-only→missing-profile blocker；all-hypothetical→正常） | **P2：错误信息静默丢弃** |
 | 4 | profile 快照腐蚀（NaN level / wrong shape） | ~~IndexedDB 裸 cast 无校验~~→ 读出处 zod 校验失败即 throw（消费方 catch→null）；scoreFormation 不崩溃，NaN dps 与 ZERO 比较恒 false→`bestCarryHeroId=null`、`objectiveValue='0'`（静默零分） | ✗（本轮补测）+ C1 腐蚀测试 | DPS 显示 0 无诊断 | **✅ 已收口（C1，2026-08-01）**：stored-record-schemas 读出校验，level=NaN 直击拒绝 |
-| 5 | semantic-overrides fetch reject | `.catch(()=>EMPTY_OVERRIDE_COLLECTION)`（`plannerModel.ts:23`）静默降级 | ✗ | 无 repo override，评分照常 | 健康（静默但安全） |
+| 5 | semantic-overrides fetch reject | `.catch(()=>EMPTY_OVERRIDE_COLLECTION)`（`plannerModel.ts:23`）静默降级 | ✗ | 无 repo override，评估照常 | 健康（静默但安全） |
 | 6 | semantic-overrides valid-JSON-wrong-shape | `.catch` 不触发（非 reject）；`resolveHeroAbilityProfiles` 消费——缺 heroId 条目在 map 建键时不匹配任何英雄，静默忽略 | ✗（本轮补测） | 无影响 | 健康 |
 | 7 | effect_def 引用缺失 template | `resolveEffectDefinitionKeys` 返回 null；globalBuff 路径因 `parseEffectKind('effect_def,X')≠global_dps` 跳过，externalHeroDps 路径 `if(!keys) continue` 丢弃——均低估不误用 | ✗ | 当前数据 0 悬空，不可触发 | 健康 |
 | 8 | forced∩banned 同英雄冲突 | forced 让英雄进候选，`checkFormationLegality` 判 `bannedChampion`→全部 beam 结果非法→`no-legal-recommendation`（banned 胜出，不放非法阵型） | ✗（本轮补测） | 当前 bannedHeroes 恒空→不可达（§5） | 健康；防御测试随死代码删除（§5 已收口） |
@@ -50,7 +50,7 @@
 | `useScenarioLabelLookup.ts:28` | 空 lookup | 安全 |
 | `useUserHeroesPageModel.ts:31` / `ChampionRosterFlyout.tsx:87,111` / `useChampionDetailResources.ts:76,113,138` / `usePetsCollectionState.ts:62` | 各自空/默认 | 安全（可选数据） |
 
-**关键观察**：`usePlannerCollections` 的 8 数据源 **all-or-nothing**（无逐源降级），与 champions/pets/illustrations 页的逐源 `.catch(()=>empty)` 不对称。这是 planner 的**合理设计**——缺任一核心源（heroes/scenarios/feats/...）评分失真，不如整体报错让用户感知。非缺陷。
+**关键观察**：`usePlannerCollections` 的 8 数据源 **all-or-nothing**（无逐源降级），与 champions/pets/illustrations 页的逐源 `.catch(()=>empty)` 不对称。这是 planner 的**合理设计**——缺任一核心源（heroes/scenarios/feats/...）评估失真，不如整体报错让用户感知。非缺陷。
 
 ## 4. 版本一致性
 

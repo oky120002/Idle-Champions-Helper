@@ -40,6 +40,8 @@ export function usePlannerPageModel() {
   const [computationMode, setComputationMode] = useState<ComputationMode>('p50')
   // 动态层数假设（dynamic-stack-multiply，如蔚出言不逊）；默认与引擎 DEFAULT_MANUAL_STACK_COUNT 同源。
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
+  // 生存阈值：低于此层数的阵型被淘汰。null = 不设（仅报告不过滤）。
+  const [minSurvivableArea, setMinSurvivableArea] = useState<number | null>(null)
   // 金币/等级互斥（none=不启用，用存档等级；gold=金币预算换算等级；level=全局统一等级）
   const [goldLevelMode, setGoldLevelMode] = useState<'none' | 'gold' | 'level'>('none')
   const [goldBudget, setGoldBudget] = useState('')
@@ -51,6 +53,8 @@ export function usePlannerPageModel() {
   const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
+  // 用户标记的不可造伤害槽位（UI 层 2，默认全可打）。
+  const [userDamageDisabledSlots, setUserDamageDisabledSlots] = useState<readonly string[]>([])
   const [selectedResultIndex, setSelectedResultIndex] = useState(0)
   // 专精选择 override（session 级 working copy，不写回 IndexedDB）：heroId → 选中的 upgradeId 列表。
   const [specializationOverrides, setSpecializationOverrides] = useState<SpecializationOverrideMap>({})
@@ -117,6 +121,8 @@ export function usePlannerPageModel() {
       candidateMode,
       computationMode,
       manualStackCount,
+      ...(minSurvivableArea != null ? { minSurvivableArea } : {}),
+      ...(userDamageDisabledSlots.length > 0 ? { userDamageDisabledSlots } : {}),
       lockedCarryHeroId,
       lockedSlots,
       equipmentAdjustmentByHero,
@@ -130,7 +136,7 @@ export function usePlannerPageModel() {
       heroLevelOverride,
       goldBudget: effectiveGoldBudget,
     }),
-    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, heroLevelOverride, effectiveGoldBudget],
+    [scoringMode, candidateMode, computationMode, manualStackCount, minSurvivableArea, userDamageDisabledSlots, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, heroLevelOverride, effectiveGoldBudget],
   )
   // 有效 snapshot = 存档 + 专精 override；engine 按 OwnedHero.specializations 注入 signal（ADR 0017）。
   // 无 override 时同引用返回，避免 usePlannerRecommendation 无谓重算。
@@ -150,6 +156,7 @@ export function usePlannerPageModel() {
     setSelectedResultIndex(0)
     setLockedSlots({})
     setLockedCarryHeroId(null)
+    setUserDamageDisabledSlots([])
   }, [selectVariantIdBase])
   const selectScoringMode = useCallback((mode: ScoringMode) => {
     setScoringMode(mode)
@@ -165,6 +172,10 @@ export function usePlannerPageModel() {
   }, [])
   const selectManualStackCount = useCallback((count: number) => {
     setManualStackCount(count)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectMinSurvivableArea = useCallback((area: number | null) => {
+    setMinSurvivableArea(area)
     setSelectedResultIndex(0)
   }, [])
   const selectGoldLevelMode = useCallback((mode: 'none' | 'gold' | 'level') => {
@@ -184,6 +195,14 @@ export function usePlannerPageModel() {
     setLockedSlots((current) => ({ ...current, [slotId]: heroId }))
   }, [])
   const clearSlotLock = useCallback((slotId: string) => setLockedSlots((current) => Object.fromEntries(Object.entries(current).filter(([key]) => key !== slotId))), [])
+  const toggleDamageSlot = useCallback((slotId: string) => {
+    setUserDamageDisabledSlots((current) =>
+      current.includes(slotId)
+        ? current.filter((id) => id !== slotId)
+        : [...current, slotId],
+    )
+    setSelectedResultIndex(0)
+  }, [])
   const selectResultIndex = useCallback((index: number) => setSelectedResultIndex(index), [])
   const setHeroSpecializationOverride = useCallback((heroId: string, upgradeIds: string[]) => {
     setSpecializationOverrides((current) => ({ ...current, [heroId]: upgradeIds }))
@@ -211,6 +230,7 @@ export function usePlannerPageModel() {
     loadError,
     loadState,
     manualStackCount,
+    minSurvivableArea,
     profileSnapshot,
     recommendLoading,
     recommendError,
@@ -218,14 +238,17 @@ export function usePlannerPageModel() {
     selectedResultIndex,
     selectedVariantId,
     specializationOverrides,
+    userDamageDisabledSlots,
     clearHeroSpecializationOverride,
     clearSlotLock,
+    toggleDamageSlot,
     selectCandidateMode,
     selectComputationMode,
     selectEquipmentEnchant,
     selectEquipmentRarity,
     selectGoldLevelMode,
     selectManualStackCount,
+    selectMinSurvivableArea,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,

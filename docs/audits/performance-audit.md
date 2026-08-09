@@ -23,7 +23,7 @@
 
 测量脚本：既有 `scripts/simulator/benchmark.ts`（`npm run simulate:benchmark`）测 wall-clock；临时 probe（计数器注入 `scoreFormation` 首行 + `structuredClone` 计时，测完 revert + 删除，未入仓）。
 
-## 2. 评分热路径
+## 2. 评估热路径
 
 **实测方法**：临时在 `steadyStateScoring.ts` `scoreFormation` 首行注入 `globalThis.__scoreFormationCount` 计数器，跑真实数据（164 英雄 / 1413 场景，全英雄已拥有 worst-case）3 个代表性 variant，测完 `git checkout` revert。
 
@@ -49,7 +49,7 @@
 **结论**：
 - 调用次数随 (候选英雄 × 槽 × beamWidth) 增长，持有量近似线性缩放——**真实玩家（40-60 英雄）亚秒级**，仅 worst-case 全英雄 + full 模式才到 3.8s。
 - **默认 p50 模式**（`recommendationEngine.ts:40` `?? 'p50'`）已把 worst-case 砍半到 ~1.9s median；p50/p90 经 `applyComputationMode` 按席位收益裁剪候选，是有效的内置节流。
-- 内层已优化：`steadyStateScoring.ts:251` 一次跑 damage/crit/vulnerability 三维度（注释自述 ~3× 加速）；`beamSearchRanking.ts:50-54` 收口复用最后一轮评分，不重复评分最终候选。
+- 内层已优化：`steadyStateScoring.ts:251` 一次跑 damage/crit/vulnerability 三维度（注释自述 ~3× 加速）；`beamSearchRanking.ts:50-54` 收口复用最后一轮评估，不重复评估最终候选。
 - **`decimal.js` log10 非瓶颈**：`log10GameNumber`（`gameNumber.ts:149`，`.log(10)` 慢 1000×）生产调用方 **0 个**（全仓非测试仅 `recommendationEngine.ts:30` 一处注释引用）；beamSearch 排序用的 `compareGameNumbers` 走 `.lt/.gt`（`gameNumber.ts:153-157`）。memory 说法核实属实。
 
 **对照零预算**：推荐是 CPU-bound 同步搜索，已卸载 Worker（主线程不冻）+ 150ms debounce + requestId 丢弃旧回包（`usePlannerCompute.ts:11,52-56`）。worst-case 2-4s 等待是穷举式 beam search 的固有成本，非缺陷；realistic 持有量亚秒级。**可接受**。
@@ -110,7 +110,7 @@
 
 | 透镜问题 | 实测回答 | 判定 |
 |---|---|---|
-| 评分热路径影响交互？ | worst-case 2-4s（全英雄+full），默认 p50 ~1.9s，realistic 亚秒；Worker 不冻 UI | 可接受 |
+| 评估热路径影响交互？ | worst-case 2-4s（全英雄+full），默认 p50 ~1.9s，realistic 亚秒；Worker 不冻 UI | 可接受 |
 | Worker 序列化拖累？ | 32ms 一次性 init，复用率极高 | 非瓶颈 |
 | 7.2MB 全量 fetch 必要？ | gzip 仅 1.0MB 传输；parse 17.8MB 一次性；memoryCache 会话内复用 | 可接受 |
 | bundle/首屏过重？ | entry ~72kB + planner ~76kB gzip；路由全 lazy | 健康 |

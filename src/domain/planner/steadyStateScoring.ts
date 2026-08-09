@@ -1,4 +1,4 @@
-/* eslint-disable max-lines -- planner 核心评分引擎：scoreFormation 主流程 + 7 个紧密协作的子函数。拆到多个文件会让评分逻辑修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
+/* eslint-disable max-lines -- planner 核心求值引擎：scoreFormation 主流程 + 7 个紧密协作的子函数。拆到多个文件会让求值逻辑修改需同时打开多个单元，破坏 AI-first 一跳命中率（CLAUDE.md 根目标）。 */
 import { toGameNumber, multiplyGameNumbers, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
@@ -100,7 +100,7 @@ export interface ScoringInput {
    */
   aggregateProjection?: AggregateProjection | undefined
   /**
-   * 金币预算值（评分链路暂不消费，预留扩展——未来金币相关加成建模时使用）。
+   * 金币预算值（评估链路暂不消费，预留扩展——未来金币相关加成建模时使用）。
    * 由调用方从 options.goldBudget（游戏记数法字符串）解析后传入。
    */
   goldBudget?: GameNumberValue | undefined
@@ -152,7 +152,7 @@ export interface SimulationBreakdown {
 }
 
 export interface ScoringResult {
-  /** 当前模式优化目标量：carry-dps=carryDps，team-gold=teamGoldFind。取代旧"评分"概念。 */
+  /** 当前模式优化目标量：carry-dps=carryDps，team-gold=teamGoldFind。取代旧启发式评分（score）概念。 */
   objectiveValue: GameNumberValue
   warnings: string[]
   carryHeroId: string | null
@@ -487,8 +487,8 @@ function computeAreaEstimateForBestCarry(
   )
   // ponytail: BUD 用 carry 单次伤害近似（carryDps × attackCooldown）；carry 通常设 BUD，
   // 绝对值偏差归 7.5 BUD 实测校准。相对比较保序。
-  const bud = computeSingleHitDamage(bestCarryDps, bestCarryEntry.hero.baseAttackCooldown)
-  return estimateMaxArea({ bud, effectiveHealth })
+  const bud = computeSingleHitDamage(bestCarryDps, bestCarryEntry.hero.baseAttackCooldown, bestCarryEntry.hero.numTargets)
+  return estimateMaxArea({ bud, effectiveHealth, viability: input.scenario.viabilityContext })
 }
 
 /**

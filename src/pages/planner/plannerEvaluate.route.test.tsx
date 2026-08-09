@@ -25,7 +25,7 @@ import { deleteUserProfileData } from '../../data/user-profile-store'
 import type { HeroAbilityProfile } from '../../domain/abilities/abilityModel'
 import type { EffectDefinitionEntry } from '../../domain/buffs/effectDefinitionDps'
 import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
-import type { OfficialPlannerScenarioModel } from '../../domain/planner/plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from '../../domain/planner/plannerModel'
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../domain/types'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
@@ -141,6 +141,8 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
       allowedTagExpression: [],
     attributeRequirements: [],
       occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     },
     {
@@ -159,6 +161,8 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
       allowedTagExpression: [],
     attributeRequirements: [],
       occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     },
   ],

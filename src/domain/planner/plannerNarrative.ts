@@ -1,7 +1,7 @@
 /**
  * 推荐结果的双语叙事文案生成（展示层关注点）。
  * 纯函数：消费已成型的 scenario / placement / hero / signal 数据，产出 PlannerNarrativeLine[]。
- * 与推荐引擎的搜索/评分逻辑解耦——文案措辞调整不波及引擎算法，反之亦然。
+ * 与推荐引擎的搜索/评估逻辑解耦——文案措辞调整不波及引擎算法，反之亦然。
  * PlannerResult.explanations 被 UI 与 CLI 双消费（见 recommendationTypes），故留在 domain 层。
  */
 import { formatGameNumber, type GameNumberValue } from '../gameNumber'

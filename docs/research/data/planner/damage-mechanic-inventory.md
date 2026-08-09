@@ -84,16 +84,16 @@
 **D. modron / gem / favor（机制 effect key 在 effectKeys，actual 值在私有存档）**：
 - modron：`increase_all_modron_buffs` 等，actual 在 `userdetails.modron_saves`；`src/domain/simulator/modronInfo.ts` 只读 `max_ni_auto_reset_area`(=2500) 做 UI 建议，不消费 buff 值。
 - favor（神恩）：`bonus_favor_earned_from_reset` 等；`user-profile/types.ts:56` 有 `favor` 字段但 `src/domain/planner + buffs + simulator` 零消费（**存了不用**）；神恩→DPS 公式在服务端黑箱。
-- gem（宝石）：`increase_boss_gems` 等属奖励类，非阵型评分因子。
+- gem（宝石）：`increase_boss_gems` 等属奖励类，非阵型评估因子。
 
-**E. 动态触发 / 跨冒险存档机制家族（5 类，静态评分不可消费）**：
+**E. 动态触发 / 跨冒险存档机制家族（5 类，静态评估不可消费）**：
 - **位置阵型技能元加成 / 复制**（12 effect key、8 英雄）：放大、复制、反转他人的位置/阵型技能（formation ability = 相邻·列 buff 这类位置加成本身），是 `buff_upgrade`（放大 upgrade）的同层元加成，作用对象换成阵型技能。`buff_incoming_formation_abilities`（漆黑毒蛇 40）、`buff_outgoing_formation_abilities[_per_crusader]`、`buff_positional_formation_abilities[_per_crusader]`（索剌克 120、瑞文嘉德公爵 149、乌尔科莉亚 68）、`receive_all_formation_abilities[_for]`、`duplicate_target_formation_abilities`、`valentine_socialite`（瓦伦汀 103）、`beadle_share_the_glory`（比德尔 64）、`apply_feats_positionally`（德萝拉 139）、`invert_formation_ability_targets`（战争公爵 116）、`disable_hero_formation_abilities`。依赖运行时阵型技能实例集合，静态期无法求值。
 - **伤害回声 / 镜像副本**（哨兵系 + 阿夫伦）：`create_echo` + `buff_amplification_amount`（放大）+ `buff_resolution_chance/amount`（决心）+ `sentry_aerois_synergy[_stacks/contribution]`（埃罗伊斯协同池，哨兵 52）；`reya_echoes_of_zariel`（蕾雅 86）；`mirror_image[_damage_increase/duration/preference]`（阿夫伦 51）。创造伤害副本/镜像分身，依赖动态触发与持续时长。
 - **预付权衡**（莫尔甘 55）：`paid_up_front_increase_dps`（DPS↑，且每收集 10ⁿ 金币再↑）+ `paid_up_front_gold_reduce`（金币↓ negative）。DPS/金币跨域权衡，且依赖金币收集动态累计。
 - **宿敌持久计数**（佐布 22）：`zorbu_lifelong_enemies`（跨冒险命中计数）+ `hero_dps_mult_percent_lifelong_enemies`（按宿敌总增益数加 DPS）+ `lifelong_enemies_count_amount`。依赖跨冒险持久状态（userdetails 存档），单冒险快照不可得。
 - **加性/计数变体 No parser**（各 1 条，量小）：`hero_dps_multiplier_add`（卡兹琳 166）、`hero_dps_multiplier_reduce`（塔林 74）、`hero_dps_mult_per_briv_steelbones`（布里夫 58，按钢骨层数）——§2 #4/#7 列为代表 key 但 parser 实际只接 `mult` 主体变体，这些变体未接，ROI 低登记不补。
 
-**量级判断**：speed/cooldown 维度已解析未消费是**最大真实缺口**；装备 `buff_upgrade` owned wrapper 通道已接（ability 源静态 buff_upgrade 与 base effect_string snapshot 双重计数风险见 `modeling-pitfalls.md`）；modron/favor/药水需先解决私有存档（userdetails）导入通道；§5E 五家族依赖动态触发/跨冒险存档，静态评分不可消费，登记不建模。
+**量级判断**：speed/cooldown 维度已解析未消费是**最大真实缺口**；装备 `buff_upgrade` owned wrapper 通道已接（ability 源静态 buff_upgrade 与 base effect_string snapshot 双重计数风险见 `modeling-pitfalls.md`）；modron/favor/药水需先解决私有存档（userdetails）导入通道；§5E 五家族依赖动态触发/跨冒险存档，静态评估不可消费，登记不建模。
 
 ## 6. 高风险机制模式（对 planner 建模有结构性影响）
 
@@ -126,11 +126,11 @@
 
 | 里程碑 | 范围 | 价值 | 成本 / 前置 |
 |---|---|---|---|
-| **M0** | DPS 五通道 hero_dps/global_dps/health/gold/crit + `buff_upgrade` owned-aware wrapper | 主评分载体 | 已完成 |
+| **M0** | DPS 五通道 hero_dps/global_dps/health/gold/crit + `buff_upgrade` owned-aware wrapper | 主目标量载体 | 已完成 |
 | **M1 速度队** | `attackSpeedMult` 22 + `cooldownReduction` 620 已解析未消费 | 高（速度队核心，根 README 已登记） | 高：需 BUD 精确建模（当前 BUD 用静态 `baseAttackCooldown`），cooldown/攻速进入秒级 DPS |
 | **M2 私有存档导入** | 药水 790 + modron + favor + 佐布宿敌计数 | 高（`event_buff` 670 等账号级加成，actual 全在 userdetails） | 高：需 userdetails 存档导入通道 + zod schema（favor 字段存了不用，见 §5D） |
 | **M3 survival health 精化** | `increase_health_by_source_percent` target=`other`（31 条） | 低（survival 是推图约束，不进 carryDps） | 低：data-blindspot A4 确认 `excludeSelf + any` 可行，救回 31 条 |
-| **M4 登记不建模** | §5E 五家族 + hero_dps 位置限定符 6 类（tallest/middle_column/snowflake/slot_if_expr/active_campaign/other） | — | 依赖动态触发 / 跨冒险存档 / 运行时阵型实例集，静态评分不可消费；已有 unsupported note 追踪 |
+| **M4 登记不建模** | §5E 五家族 + hero_dps 位置限定符 6 类（tallest/middle_column/snowflake/slot_if_expr/active_campaign/other） | — | 依赖动态触发 / 跨冒险存档 / 运行时阵型实例集，静态评估不可消费；已有 unsupported note 追踪 |
 
 ## 关联
 

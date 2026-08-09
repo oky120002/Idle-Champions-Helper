@@ -99,7 +99,7 @@ export const STACK_COUNT_RESOLVERS: Record<string, {
 
 /**
  * scorer 已注册的 stackFunc 名集合（STACK_COUNT_RESOLVERS keys 的派生视图，单一源无重复）。
- * 供 gain profile（abilityModel.aggregateGainByDimension）跳过未注册 stackFunc 信号——实际评分
+ * 供 gain profile（abilityModel.aggregateGainByDimension）跳过未注册 stackFunc 信号——实际评估
  * resolveSignalMultiplier 走 stackFunc 路径找不到 resolver 恒丢弃，gain 须对称不计入。
  */
 export const REGISTERED_STACK_FUNCS: ReadonlySet<string> = new Set(Object.keys(STACK_COUNT_RESOLVERS))

@@ -7,7 +7,7 @@
 
 ## 目标
 
-用游戏表现层机制反推、校准模拟器评分。搭通用 DPS 机制抽象 + 可持续扩充的英雄参照测试框架（蔚 hero_id=95 为首份样例），不针对单个英雄写死。
+用游戏表现层机制反推、校准模拟器评估。搭通用 DPS 机制抽象 + 可持续扩充的英雄参照测试框架（蔚 hero_id=95 为首份样例），不针对单个英雄写死。
 
 ## 范围
 
@@ -51,4 +51,4 @@
 
 - **「验收」pool 倍率偏差 < 1% 属研究分解非代码产出**：`16384×577×1.2×2.578≈2.92e7` 是研究 flat-factor 手搓分解（vi-95.md 标注「非代码产出」），对照游戏善良榜样「叠层系数」。代码实际 damage:hero pool 聚合蔚全部 damage signal（含 buff_upgrade 修饰按 base.value 折算进 addPercent），与游戏单能力叠层系数非直接可比。逐项 `multiplierChecks`（per-signal 16384/576）是有效自动化校准；pool 级 `calibrationTarget` 当前不作为断言。
 - **蔚角色定位**：蔚是善良榜样的**提供者（support）**，非自身 carry。善良榜样 `target=geneutral`（伦理中立阵营），蔚自身 `Neutral Good` 无 geneutral 标签。早期参照把蔚当 carry 吃自身善良榜样是概念错误，已修正参照数据与测试（geneutral mock carry + 蔚 support）。
-- **heroDpsMultiplier 阵型 buff 定位缺陷（核心评分 bug，已修）**：`attachSignalSemantics` 曾对 `targets:['all']` 的 relation='any' 设 positionQualifier=null，被 `resolvePositionRelation` 当 heroDpsMultiplier 类型默认 'self'，导致 support 位的阵型 hero_dps buff（蔚善良榜样等）永不对 carry 生效。已修：`targets:['all']` 显式设 `{relation:'any'}`（见 vi-95.md「评分链路修复记录」）。手搓测试信号曾用 carry=support=同槽位 + 塞 geneutral 双重掩盖此缺陷——真实数据端到端测试组已补齐。
+- **heroDpsMultiplier 阵型 buff 定位缺陷（核心评估 bug，已修）**：`attachSignalSemantics` 曾对 `targets:['all']` 的 relation='any' 设 positionQualifier=null，被 `resolvePositionRelation` 当 heroDpsMultiplier 类型默认 'self'，导致 support 位的阵型 hero_dps buff（蔚善良榜样等）永不对 carry 生效。已修：`targets:['all']` 显式设 `{relation:'any'}`（见 vi-95.md「评估链路修复记录」）。手搓测试信号曾用 carry=support=同槽位 + 塞 geneutral 双重掩盖此缺陷——真实数据端到端测试组已补齐。

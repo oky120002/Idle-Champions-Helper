@@ -1,5 +1,5 @@
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
-import type { OfficialPlannerScenarioModel } from './plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './plannerModel'
 
 export function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
@@ -42,6 +42,8 @@ export const scenario: OfficialPlannerScenarioModel = {
   allowedTagExpression: [],
   attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
   scenarioWarnings: [],
 }
 

@@ -104,7 +104,7 @@ describe('signal coverage report', () => {
     expect(report.topUnsupportedEffectNames[1]).toEqual({ key: 'mystery_effect', count: 1 })
   })
 
-  it('区分可计分、手动触发和未覆盖组合', () => {
+  it('区分可计入目标值、手动触发和未覆盖组合', () => {
     const report = generateSignalCoverageReport([
       {
         upgrades: [

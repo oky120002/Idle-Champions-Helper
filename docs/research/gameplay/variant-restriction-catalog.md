@@ -19,10 +19,10 @@
 | **属性门槛** | 按能力值（INT/CHA/STR/DEX/CON/WIS）筛选英雄，常见 ≥13 或 ≤14 | `restrictions` 文本描述；2026-08-08 结构化提取为 `attributeRequirements`（102 变体非空）；使用白名单提取——仅从含「can/may be used」「only use」「take part」的使用门槛语句提取，排除伤害修饰（deal）、伤害免疫（take no damage）、邻接位限制（placed adjacent）等条件效果句 | ✅ 已建模：restriction 文本正则解析 → `scenarios.json.attributeRequirements` → planner 候选过滤（`meetsAttributeRequirements`） |
 | **角色限制** | 按 DPS/Support/Tank/Healing/Speed 角色过滤 | `allowedTagExpression` 含 `!dps`(4)、`!tanking`(2)、`!speed`(2)、`!healing`(1)；`disallow_crusaders`(17) | `!dps` 类已走 `allowedTagExpression` 通道；`disallow_crusaders` 部分未投影 |
 | **强制英雄** | 指定英雄必须上场、不可移除 | `force_use_heroes`(329)；投影为 `forcedHeroIds` | planner 已建模：`forceInclude` 约束 + 候选豁免（`recommendationEngine.ts:501`） |
-| **全局效果** | 全队持续增益或减益，如伤害倍率、攻速调整 | `global_effects`(296)；`restrictions` 文本描述 | 未建模；伤害/攻速调整需注入评分参数 |
+| **全局效果** | 全队持续增益或减益，如伤害倍率、攻速调整 | `global_effects`(296)；`restrictions` 文本描述 | 未建模；伤害/攻速调整需注入评估参数 |
 | **槽位条件** | 按阵型位置生效的效果（相邻、列、行） | `slot_effects`(94)、`slot_effects_by_area`(7)、`restrict_allowed_slots`(2) | 未建模；需位置条件求值器 |
 | **英雄特定效果** | 指定英雄获得 buff 或 debuff | `hero_effects`(42) | 未建模；需按英雄 id 注入信号 |
-| **英雄受伤** | 随机或定时对英雄造成伤害 | `random_crusader_damage`(39)、`moving_effects`(6)、`stacking_effect`(5) | 未建模；属生存维度，影响 survival 评分 |
+| **英雄受伤** | 随机或定时对英雄造成伤害 | `random_crusader_damage`(39)、`moving_effects`(6)、`stacking_effect`(5) | 未建模；属生存维度，影响 survival 评估 |
 | **永久死亡** | 英雄阵亡后不可复活或永久离队 | `perma_death`(24)、`perma_unavailable`(12) | 未建模；影响生存策略权重 |
 | **阵型锁定** | 放置后不可交换或移除 | `no_formation_removal_allowed`(22) | 未建模；影响推荐策略 |
 | **去重限制** | 阵型中同类 tag 唯一（如仅一种族/职业/阵营） | `max_active_by_tags`(10)、`unique_stats`(2)、`max_active_affiliations`(1) | 未建模；属组合约束，需新增约束类型 |

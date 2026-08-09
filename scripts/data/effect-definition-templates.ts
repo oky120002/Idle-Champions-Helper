@@ -3,7 +3,7 @@ import type { JsonValue } from '../../src/domain/types'
 type RawDefinition = Record<string, unknown>
 
 /**
- * effect_def 的 effect_key 精简 template（只保留 DPS 评分需要的字段）。
+ * effect_def 的 effect_key 精简 template（只保留 DPS 评估需要的字段）。
  *
  * effect_def（effect_defines，公开 2872 条）被 patron_perk / blessing 的 `effect_def,<id>` 引用。
  * 本 template 供运行时解引用：
@@ -12,7 +12,7 @@ type RawDefinition = Record<string, unknown>
  *   解析为 HeroQualifier，按 carry 匹配（hero_dps per-carry 生效条件）。
  * - `targets`：阵型作用范围（all/col_num/slots/by_tags/heroes）。
  *
- * 非 DPS effect_def（healing/gold/cooldown...）整体丢弃——评分只消费 DPS。
+ * 非 DPS effect_def（healing/gold/cooldown...）整体丢弃——评估只消费 DPS。
  */
 export interface EffectDefinitionKeyTemplate {
   effectString: string

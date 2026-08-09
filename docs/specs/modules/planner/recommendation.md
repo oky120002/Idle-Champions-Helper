@@ -1,11 +1,11 @@
 # 阵型推荐英雄与站位设计
 
-推荐引擎的纯算法与数据模型设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准——pool 聚合 + carryDps，输出层字段 `objectiveValue`（carry-dps 模式 = carryDps，team-gold 模式 = teamGoldFind）。本文不展开视觉稿、交互稿或逐帧战斗模拟。
+推荐引擎的纯算法与数据模型设计。评估与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准——pool 聚合 + carryDps，输出层字段 `objectiveValue`（carry-dps 模式 = carryDps，team-gold 模式 = teamGoldFind）。本文不展开视觉稿、交互稿或逐帧战斗模拟。
 
 ## 1. 核心结论
 - 推荐目标不是整队总 DPS，而是**单一 C 位英雄的最终输出代理值**。
 - 一个阵型必须先确定 C 位，再围绕这个 C 位选择 support、站位和激活条件。
-- 非 C 位英雄的价值，只通过「是否提高当前 C 位输出」来计分；其自身输出不进入主评分。
+- 非 C 位英雄的价值，只通过「是否提高当前 C 位输出」来计入目标值；其自身输出不进入主目标量。
 - 后期推关语境下，默认关键技能都已解锁；不考虑技能等级门槛。
 - 不同关卡 / 变体的阵型布局不同，推荐必须绑定具体 `scenario + formation layout`。
 - 官方不会提供可靠的敌对单位血量模型；planner 也**不需要**考虑敌方血量，只堆高 C 位输出代理值。
@@ -39,14 +39,14 @@
 - `scoreBreakdown` 的每一条都必须带 `signalKind`、`rawEffect`、`multiplier`、`active`、`reasonCode`、`source`。
 
 ### 3.2 判定顺序（evaluatePlacementFit 五道门控）
-1. dimension 过滤：signal 维度是否属于本次评分请求的维度集合。
+1. dimension 过滤：signal 维度是否属于本次评估请求的维度集合。
 2. 等级解锁门控：`signal.requiredLevel <= supportLevel`，否则 `level-locked`。
 3. 位置条件：`matchesPositionQualifier`（relation = self / adjacent / 列方向 / 图距离等），否则 `position-mismatch`。
 4. 目标条件：`matchesHeroQualifier`（carry 是否符合 `targetQualifier`），否则 `tag-mismatch` / `stat-mismatch`。
 5. multiplier 解析：`resolveSignalMultiplier`（amountFunc / stackFunc / bonusScaleOfSignal），无法稳定解析则 `unsupported-composition`。
 6. 命中后按 signal 的组合语义计算 multiplier：普通百分比直接换算；formation 计数类再结合 `amountFunc + stackFunc` 求值。
 7. 若 signal 带 `bonusScaleOfSignal`，则先求出基础 signal 的有效百分比，再把当前 signal 视为「对该百分比的增量」；不能把基础 signal 再完整重复计一遍。
-8. 未命中只记录原因，不计分；语义缺失、需要手动触发、或组合方式不稳定的规则，只进入 `warnings`。
+8. 未命中只记录原因，不计入目标值；语义缺失、需要手动触发、或组合方式不稳定的规则，只进入 `warnings`。
 
 ### 3.3 已支持的条件
 - `globalDpsMultiplier`：默认对 carry 生效（global 池，relation=any）。
@@ -60,10 +60,10 @@
 - 计数限定可按相对站位子集计数（`formationCountPositionQualifier.relation`，如「每个相邻英雄」「每个非相邻英雄」），不仅按整队。
 - `excludeSelf` 排除 support 自身。
 - 组合语义：`amountFunc=add` 走线性累加，`amountFunc=mult` 走乘方法；拿不准的组合直接降级 warning。
-- `applyManually=true` 的效果不计分，只保留 warning。
+- `applyManually=true` 的效果不计入目标值，只保留 warning。
 
 ### 3.4 尚不支持的条件
-进入 `unsupportedSignals` + `warnings`，不计分（「宁可不准，不可错」）：
+进入 `unsupportedSignals` + `warnings`，不计入目标值（「宁可不准，不可错」）：
 
 - `top` / `bottom`、跨行扇区、动态连锁等布局规则（缺稳定拓扑事实源）。
 - `HasEffect(...)` 等运行时状态表达式（缺稳定事实源）。
@@ -90,6 +90,6 @@
 - `hero_dps_mult_per_col_behind`：按 carry 相对 source hero 落后多少列乘算叠层。
 
 ### 3.7 buff_upgrade 派生 signal
-`buff_upgrade*` 稳定支持「派生 signal over base signal」：若被增强的基础升级本身已可见于 planner，wrapper 会产出和基础 signal 同受益目标、同站位语义的派生 signal，并通过 `bonusScaleOfSignal` 把加法 / 乘法增量带入评分。装备源 buff_upgrade wrapper 由 `applyEquipmentBuffsToProfile` 按 target upgradeId 反查 direct base signal 注入（owned-aware，与 feat / 专精同层）。
+`buff_upgrade*` 稳定支持「派生 signal over base signal」：若被增强的基础升级本身已可见于 planner，wrapper 会产出和基础 signal 同受益目标、同站位语义的派生 signal，并通过 `bonusScaleOfSignal` 把加法 / 乘法增量带入评估。装备源 buff_upgrade wrapper 由 `applyEquipmentBuffsToProfile` 按 target upgradeId 反查 direct base signal 注入（owned-aware，与 feat / 专精同层）。
 
-`buff_upgrade_per_any_crusader_where_mult` / `buff_upgrade_mult_by_distance_from_source_mult` 等复杂变体只要 comparison 能归一化成静态 qualifier（属性 / 年龄 / cooldown 阈值）或邻接图距离，就进入评分；不可归一化的降级 warning。
+`buff_upgrade_per_any_crusader_where_mult` / `buff_upgrade_mult_by_distance_from_source_mult` 等复杂变体只要 comparison 能归一化成静态 qualifier（属性 / 年龄 / cooldown 阈值）或邻接图距离，就进入评估；不可归一化的降级 warning。

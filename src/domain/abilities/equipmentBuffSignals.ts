@@ -31,8 +31,8 @@ import {
  * 接受 buff_upgrade 放大的 base signal kind。wrapper 机制（bonusScaleOfSignal 联动，resolveSignalMultiplier
  * kind 无关）对这些 kind 都正确：damage/gold/survival 走加性池 addPercent 累加、crit/vulnerability 走因子
  * （computeCritFactor/computeVulnerabilityFactor 也 addPercent 累加，与池同构）——wrapper 放大 base.value
- * ×wrapper_percent，base+wrapper 合并入同一 pool/factor。attackSpeed/cooldown 暂不收：base 不进评分
- *（speed/cooldown dimension 无 evaluatePlacementFit 消费），注入 wrapper 也不评分=无效，需先让 speed 进评分。
+ * ×wrapper_percent，base+wrapper 合并入同一 pool/factor。attackSpeed/cooldown 暂不收：base 不进目标值
+ *（speed/cooldown dimension 无 evaluatePlacementFit 消费），注入 wrapper 也不评估=无效，需先让 speed 进评估。
  */
 const SUPPORTED_BUFF_TARGET_KINDS = new Set<HeroAbilityKind>([
   'heroDpsMultiplier',

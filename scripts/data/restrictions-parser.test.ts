@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { parseRestrictions } from './restrictions-parser'
+import { parseDamageSourcePattern, parseRestrictions } from './restrictions-parser'
 
 const r = (original: string, display = ''): { original: string; display: string } => ({ original, display })
 
@@ -292,5 +292,177 @@ describe('parseRestrictions — 属性门槛提取', () => {
       { stat: 'cha', operator: '<=', value: 14 },
     ])
     expect(result.warnings).toEqual([])
+  })
+})
+
+describe('parseRestrictions — 可行性上下文', () => {
+  it('护甲段数：200 armored HP → armor.segments=200', () => {
+    const result = parseRestrictions([r('After area 10, a giant Intellect Devourer appears. It has 200 armored hit points.')])
+    expect(result.viabilityContext.armor).toEqual({ segments: 200 })
+  })
+
+  it('命中型段数：20 hits-based HP → hitsBased.segments=20', () => {
+    const result = parseRestrictions([r('Each wave spawns 1-3 shadar-kai warriors with 20 hits-based HP.')])
+    expect(result.viabilityContext.hitsBased).toEqual({ segments: 20 })
+  })
+
+  it('段数递增：4 hits-based +4 every 25 areas → scaling', () => {
+    const result = parseRestrictions([r('Additional Frost Giants start with 4 hits-based hit points. Every 25 areas they gain 4 additional hits-based hit points.')])
+    expect(result.viabilityContext.hitsBased).toEqual({
+      segments: 4,
+      scaling: { additional: 4, everyAreas: 25 },
+    })
+  })
+
+  it('伤害削减 99%：damageModifier=0.01', () => {
+    const result = parseRestrictions([r('Champion damage is reduced by 99% in rain areas.')])
+    expect(result.viabilityContext.damageModifier).toBeCloseTo(0.01, 10)
+  })
+
+  it('敌人伤害倍率：deal 3x damage → enemyDamageMult=3', () => {
+    const result = parseRestrictions([r('Beasts deal 3x damage and have 2 additional armored hit points.')])
+    expect(result.viabilityContext.enemyDamageMult).toBe(3)
+    expect(result.viabilityContext.armor).toEqual({ segments: 2 })
+  })
+
+  it('普通变体：无护甲/命中型/伤害修正/持续掉血', () => {
+    const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher can be used.')])
+    expect(result.viabilityContext.armor).toBeNull()
+    expect(result.viabilityContext.hitsBased).toBeNull()
+    expect(result.viabilityContext.damageModifier).toBeNull()
+    expect(result.viabilityContext.enemyDamageMult).toBeNull()
+    expect(result.viabilityContext.healthDrainRate).toBeNull()
+  })
+
+  it('持续掉血：2.5% of max health every second → healthDrainRate=0.025', () => {
+    const result = parseRestrictions([r('All the Champions are poisoned. Every second, Champions take damage equal to 2.5% of their max health.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.025, 10)
+  })
+
+  it('持续掉血：4% unavoidable damage every second → healthDrainRate=0.04', () => {
+    const result = parseRestrictions([r('Your Champions take 4% unavoidable damage every second.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.04, 10)
+  })
+
+  it('持续掉血排除 random 目标（单目标爆发非全队 DoT，S2 不含随机）', () => {
+    const result = parseRestrictions([r('Every second, a random Champion takes damage equal to 10% of their max health.')])
+    // S2 excludes random, but S4 burst captures it (every 1s = continuous, handled by S2 path → null)
+    expect(result.viabilityContext.healthDrainRate).toBeNull()
+  })
+
+  it('S4 burst：40% damage every 8 seconds → healthDrainRate=0.05', () => {
+    const result = parseRestrictions([r('Bits of crumbling temple fall on your Champions every 8 seconds, dealing 40% damage to a random Champion.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.05, 5)
+  })
+
+  it('S4 burst：90% of max health every 5 seconds → healthDrainRate=0.18', () => {
+    const result = parseRestrictions([r('In outdoor areas, lightning strikes your formation every 5 seconds, dealing 90% of max health to a random Champion.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.18, 5)
+  })
+
+  it('S4 burst：10% of max health every 3 seconds → healthDrainRate≈0.033', () => {
+    const result = parseRestrictions([r('Every 3 seconds, each Champion takes 10% of their max health as damage.')])
+    expect(result.viabilityContext.healthDrainRate).toBeCloseTo(10 / 100 / 3, 5)
+  })
+})
+
+describe('parseDamageSourcePattern — 伤害来源位置限制', () => {
+  // 模拟 champion 名表（name → id）
+  const names = new Map<string, string>([
+    ['ezmerelda', '70'],
+    ['lae\'zel', '128'],
+    ['presto', '144'],
+    ['volo', '159'],
+    ['vlithryn', '162'],
+    ['thellora', '139'],
+    ['umberto', '151'],
+    ['virgil', '115'],
+    ['dob', '105'],
+    ['kalix', '158'],
+    ['raistlin', '173'],
+    ['k\'thriss', '38'],
+    ['rudolph van richten', '177'],
+    ['flint', '178'],
+  ])
+
+  it('same-column："Only Champions in Ezmerelda\'s column can deal damage"', () => {
+    const result = parseDamageSourcePattern([r('Only Champions in Ezmerelda\'s column can deal damage.')], names)
+    expect(result).toEqual({ kind: 'same-column', referenceHeroId: '70' })
+  })
+
+  it('same-column：Lae\'zel 名含撇号', () => {
+    const result = parseDamageSourcePattern([r('Only Champions in Lae\'zel\'s column can deal damage.')], names)
+    expect(result).toEqual({ kind: 'same-column', referenceHeroId: '128' })
+  })
+
+  it('adjacent："Only Champions next to Virgil can deal damage"', () => {
+    const result = parseDamageSourcePattern([r('Only Champions next to Virgil can deal damage.')], names)
+    expect(result).toEqual({ kind: 'adjacent', referenceHeroId: '115' })
+  })
+
+  it('adjacent + 代词："Only Imoen and Champions next to her can deal damage"', () => {
+    const namesWithImoen = new Map(names).set('imoen', '117')
+    const result = parseDamageSourcePattern([r('Only Imoen and Champions next to her can deal damage.')], namesWithImoen)
+    expect(result).toEqual({ kind: 'adjacent', referenceHeroId: '117' })
+  })
+
+  it('not-adjacent："Champions next to Dob deal no damage"', () => {
+    const result = parseDamageSourcePattern([r('Champions next to Dob deal no damage.')], names)
+    expect(result).toEqual({ kind: 'not-adjacent', referenceHeroId: '105' })
+  })
+
+  it('not-adjacent + 代词："Only Kalix and Champions not adjacent to him can deal damage"', () => {
+    const result = parseDamageSourcePattern([r('Only Kalix and Champions not adjacent to him can deal damage.')], names)
+    expect(result).toEqual({ kind: 'not-adjacent', referenceHeroId: '158' })
+  })
+
+  it('front-columns："two columns in front of Presto"', () => {
+    const result = parseDamageSourcePattern([r('Only Champions in the two columns in front of Presto can deal damage.')], names)
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '144', columnSpan: 2 })
+  })
+
+  it('front-columns + 代词 + "and the Champions"', () => {
+    const result = parseDamageSourcePattern([r('Only Volo and the Champions in the two columns in front of him can deal damage.')], names)
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '159', columnSpan: 2 })
+  })
+
+  it('front-columns 无数词 = 全部前方列（span=100）', () => {
+    const result = parseDamageSourcePattern([r('Only Vlithryn and Champions in the columns in front of her can deal damage.')], names)
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '162', columnSpan: 100 })
+  })
+
+  it('behind-columns："column behind her"', () => {
+    const result = parseDamageSourcePattern([r('Only Thellora and Champions in the column behind her can deal damage.')], names)
+    expect(result).toEqual({ kind: 'behind-columns', referenceHeroId: '139', columnSpan: 1 })
+  })
+
+  it('NPC 引用（Mirt 不在名表）→ null', () => {
+    const result = parseDamageSourcePattern([r('Only Champions in Mirt\'s column can deal damage.')], names)
+    expect(result).toBeNull()
+  })
+
+  it('NPC 引用（skunk 不在名表）→ null', () => {
+    const result = parseDamageSourcePattern([r('Champions adjacent to a skunk deal no damage, but their formation abilities are active.')], names)
+    expect(result).toBeNull()
+  })
+
+  it('非位置型 damage 约束 → null', () => {
+    const result = parseDamageSourcePattern([r('Every 15 seconds a random Champion gets distracted and has their DPS disabled for 30 seconds.')], names)
+    expect(result).toBeNull()
+  })
+
+  it('无 deal damage 句 → null', () => {
+    const result = parseDamageSourcePattern([r('Must have completed "The Trickster\'s Delight".')], names)
+    expect(result).toBeNull()
+  })
+
+  it('多句 restriction 只取 damage-dealing 句', () => {
+    const result = parseDamageSourcePattern([r('Presto joins the formation. He can\'t be moved or removed. Only Champions in the two columns in front of Presto can deal damage. Getting to know Presto.')], names)
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '144', columnSpan: 2 })
+  })
+
+  it('后缀匹配："Van Richten" → "rudolph van richten"', () => {
+    const result = parseDamageSourcePattern([r('Only Van Richten and the Champions in the column in front of him can deal damage.')], names)
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '177', columnSpan: 100 })
   })
 })

@@ -9,6 +9,7 @@ import type { EquipmentBuff } from '../buffs/equipmentMult'
 import type { AbilityScoreKey, AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
@@ -21,6 +22,7 @@ import {
   type PlannerRecommendation,
   type PlannerRecommendationBlocker,
   type PlannerResult,
+  type ViabilityAssessment,
 } from './recommendationTypes'
 import { scoreFormation, type AggregateProjection, type ScoringMode, type ScoringResult } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
@@ -30,7 +32,7 @@ const PLANNER_TOP_K = 3
  * beam search 默认宽度（每轮保留的候选阵型数）。越大越精确越慢；越小越快越可能漏最优。
  * 实测（benchmark beamWidth 扫描）：width=8 安全；width=4 多数 variant 无损但偶发质量塌方；
  * width≤3 在候选多的 variant 上 objectiveValue 崩溃（log10 比 -4）。故默认保守留 8——
- * 真正可靠的加速走 computationMode 候选裁剪（少评分次数，非降搜索质量）。
+ * 真正可靠的加速走 computationMode 候选裁剪（少求值次数，非降搜索质量）。
  * 调用方可经 PlannerRecommendationOptions.beamWidth 覆盖（CLI/测试/调优）。
  */
 const PLANNER_BEAM_WIDTH = 8
@@ -152,7 +154,7 @@ export interface PlannerRecommendationOptions {
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
   /**
-   * 全局金币预算（游戏记数法字符串，如 `"1.50e92"`）。评分链路暂不消费，预留扩展。
+   * 全局金币预算（游戏记数法字符串，如 `"1.50e92"`）。评估链路暂不消费，预留扩展。
    * 等级模式时由调用方反算（computeMaxGoldForLevel）后传入。
    */
   goldBudget?: string | undefined
@@ -166,6 +168,16 @@ export interface PlannerRecommendationOptions {
    * 'formation-buff' = 只阵型内聚合，不乘 baseDamage/levelCurve/外部加成（见 architecture.md「投影模式」）。
    */
   aggregateProjection?: AggregateProjection
+  /**
+   * 生存约束阈值：survivableArea 低于此值的阵型被淘汰（SCORE_ZERO）。
+   * 未设 = 仅报告不过滤（现有行为不变）。由 viability 模型驱动（docs/plans/2026-08-planner-viability-model.md 阶段 A）。
+   */
+  minSurvivableArea?: number
+  /**
+   * 用户手动标记的不可造伤害槽位（UI 层 2，默认全部可打）。
+   * carry 落在这些槽位 → SCORE_ZERO；与系统解析的 damageSourcePattern 叠加。
+   */
+  userDamageDisabledSlots?: readonly string[]
 }
 
 /**
@@ -338,7 +350,7 @@ function attachOwnedSaveContext(
 }
 
 /**
- * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评分上下文 + options 对称透传。
+ * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评估上下文 + options 对称透传。
  * 抽成单一来源，结构性锁定两入口透传一致——否则新增透传字段（如 aggregateProjection）漏改一处，
  * evaluate 与 recommend 会对同一阵型算出不同 DPS 且无诊断。
  */
@@ -356,7 +368,7 @@ function scorePlannerFormation(
   scoringMode: ScoringMode,
   options: PlannerRecommendationOptions,
 ) {
-  return scoreFormation({
+  const scoring = scoreFormation({
     placements,
     heroesById,
     scenario,
@@ -375,6 +387,28 @@ function scorePlannerFormation(
     aggregateProjection: options.aggregateProjection,
     goldBudget: parseGoldBudget(options.goldBudget),
   })
+  // 伤害来源位置限制：carry 在不可造伤害位置 → DPS 归零（事实约束，非用户过滤）。
+  // 在 scorePlannerFormation 而非 scorePlannerFormationWithLegality 生效，使 evaluateFormation 也反映。
+  if (scoring.carryHeroId != null) {
+    const carrySlotId = Object.entries(placements).find(([, id]) => id === scoring.carryHeroId)?.[0]
+    // 层 2：用户手动标记。
+    if (carrySlotId != null && (options.userDamageDisabledSlots?.includes(carrySlotId) ?? false)) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, '核心英雄在用户标记的不可造伤害位置。'],
+      }
+    }
+    // 层 1：系统解析的位置限制模式。
+    if (!isCarryInDamageValidSlot(placements, scenario, scoring.carryHeroId)) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, '核心英雄不在可造伤害的位置。'],
+      }
+    }
+  }
+  return scoring
 }
 
 /**
@@ -383,6 +417,7 @@ function scorePlannerFormation(
  * 强制英雄（forcedHeroes）豁免——其未拥有/不在白名单是 force_use_heroes 的设计预期。
  * 提取自 evaluateFormation 以降主函数复杂度；语义零改变。
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity -- 三条独立限制检查在同一循环，拆开反增打开文件数
 function collectEvaluationRestrictionWarnings(
   placements: Record<string, string>,
   heroById: Map<string, ResolvedHeroAbilityProfile>,
@@ -451,6 +486,7 @@ function buildEvaluationFormationResult(
     ),
     warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
     areaEstimate: scoring.areaEstimate ?? null,
+    viability: buildViabilityAssessment(scenario, scoring.areaEstimate ?? null),
     breakdown: scoring.breakdown,
     placements,
     placementEntries,
@@ -668,6 +704,45 @@ function applyAugmentsAndBuildRules(
 }
 
 /**
+ * 检查 carry 是否在可造伤害位置（系统解析的位置限制模式）。
+ * 模式依赖参考英雄的 placement，动态求值。参考英雄/carry 未放置时返回 true（跳过检查）。
+ */
+function isCarryInDamageValidSlot(
+  placements: Record<string, string>,
+  scenario: ResolvedPlannerScenarioModel,
+  carryHeroId: string,
+): boolean {
+  const pattern = scenario.damageSourcePattern
+  if (!pattern) return true
+  const slotByHero = new Map(Object.entries(placements).map(([slot, id]) => [id, slot]))
+  const carrySlotId = slotByHero.get(carryHeroId)
+  if (carrySlotId === undefined) return true
+  const refSlotId = slotByHero.get(pattern.referenceHeroId)
+  if (refSlotId === undefined) return true
+  const topology = scenario.slotTopology
+  const carrySlot = topology.find((s) => s.slotId === carrySlotId)
+  const refSlot = topology.find((s) => s.slotId === refSlotId)
+  if (!carrySlot || !refSlot) return true
+
+  switch (pattern.kind) {
+    case 'same-column':
+      return carrySlot.column === refSlot.column
+    case 'adjacent':
+      return carrySlotId === refSlotId || refSlot.adjacentSlotIds.includes(carrySlotId)
+    case 'not-adjacent':
+      return carrySlotId === refSlotId || !refSlot.adjacentSlotIds.includes(carrySlotId)
+    case 'front-columns': {
+      const span = pattern.columnSpan ?? 2
+      return carrySlot.column >= Math.max(1, refSlot.column - span) && carrySlot.column <= refSlot.column
+    }
+    case 'behind-columns': {
+      const span = pattern.columnSpan ?? 1
+      return carrySlot.column >= refSlot.column && carrySlot.column <= refSlot.column + span
+    }
+  }
+}
+
+/**
  * beamSearch 的 scoreFormation callback：先做合法性检查（非法返回 SCORE_ZERO + warning），
  * 合法则调 scorePlannerFormation 求值。提取自 buildPlannerRecommendation 内联 callback；语义零改变。
  */
@@ -691,7 +766,26 @@ function scorePlannerFormationWithLegality(
       breakdown: null,
     }
   }
-  return scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
+  const scoring = scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
+  const minSurvivableArea = options.minSurvivableArea
+  if (typeof minSurvivableArea === 'number' && scoring.areaEstimate != null) {
+    if (scoring.areaEstimate.survivableArea < minSurvivableArea) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${String(scoring.areaEstimate.survivableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
+      }
+    }
+    // 护甲约束：护甲变体额外检查击杀侧（B6 已把护甲门槛烤进 killableArea）
+    if (scenario.viabilityContext.armor != null && scoring.areaEstimate.killableArea < minSurvivableArea) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, `护甲击杀能力不足：预估可击杀 ${String(scoring.areaEstimate.killableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
+      }
+    }
+  }
+  return scoring
 }
 
 /**
@@ -713,6 +807,24 @@ function selectTopKByCarry<T extends { objectiveValue: GameNumberValue; carryHer
   return [...bestByCarry.values()]
     .sort((left, right) => compareGameNumbers(right.objectiveValue, left.objectiveValue))
     .slice(0, PLANNER_TOP_K)
+}
+
+/**
+ * 从 scenario.viabilityContext + areaEstimate 构建 ViabilityAssessment。
+ * activeConstraints = 非 null 字段标识；boundBy 来自 areaEstimate。
+ */
+function buildViabilityAssessment(
+  scenario: ResolvedPlannerScenarioModel,
+  areaEstimate: AreaEstimationResult | null,
+): ViabilityAssessment {
+  const vc = scenario.viabilityContext
+  const active: string[] = []
+  if (vc.armor) active.push('armor')
+  if (vc.hitsBased) active.push('hits-based')
+  if (vc.damageModifier != null) active.push('damage-reduction')
+  if (vc.enemyDamageMult != null) active.push('enemy-buff')
+  if (vc.healthDrainRate != null) active.push('health-drain')
+  return { activeConstraints: active, boundBy: areaEstimate?.boundBy ?? null }
 }
 
 /**
@@ -759,6 +871,7 @@ function buildRecommendationResults(
       ),
       warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
       areaEstimate: top.areaEstimate ?? null,
+      viability: buildViabilityAssessment(scenario, top.areaEstimate ?? null),
       breakdown: top.breakdown,
       placementEntries,
     }

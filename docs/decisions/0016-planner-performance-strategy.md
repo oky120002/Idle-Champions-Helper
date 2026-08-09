@@ -5,7 +5,7 @@
 
 ## 背景
 
-beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评分，全英雄 worst case ~8s，主线程同步跑致 UI 完全冻结（连 loading 都画不出）。需性能策略且不损结果正确性。本决策早于 ADR 约定，现回填。
+beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型求值，全英雄 worst case ~8s，主线程同步跑致 UI 完全冻结（连 loading 都画不出）。需性能策略且不损结果正确性。本决策早于 ADR 约定，现回填。
 
 ## 决策
 
@@ -23,9 +23,9 @@ beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评�
 
 ## 替代方案
 
-- **增量评分**：不选——经深入调研确认严格等价下不可行：632 个 count-dependent signal（`per_crusader`/`per_hero_attribute`/`per_tagged_crusader_mult`/`per_target_crusader`/`per_upgrade_targets`，96% 英雄）的 multiplier 依赖整队计数，加入英雄会改变已有 `(carry,support)` 对结果；严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)，与全量同级。
+- **增量求值**：不选——经深入调研确认严格等价下不可行：632 个 count-dependent signal（`per_crusader`/`per_hero_attribute`/`per_tagged_crusader_mult`/`per_target_crusader`/`per_upgrade_targets`，96% 英雄）的 multiplier 依赖整队计数，加入英雄会改变已有 `(carry,support)` 对结果；严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)，与全量同级。
 - **降 beam 宽度**：不选——benchmark 实测 `beamWidth=4` 多数 variant 无损但偶发 objectiveValue 塌方、`≤3` 候选多的 variant 直接崩溃，非可靠加速。
 
 ## 关联
 
-- 落地：`specs/modules/planner/simulator.md`（计算模式 / 增量评分不可行）、`computation-runtime.md`（Web Worker 架构）
+- 落地：`specs/modules/planner/simulator.md`（计算模式 / 增量求值不可行）、`computation-runtime.md`（Web Worker 架构）

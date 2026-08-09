@@ -7,7 +7,7 @@ const heroFeats: FeatEntry[] = [
   { id: '35', rarity: 2, signals: [{ dimension: 'damage', bucket: 'carrySignals', signal: { kind: 'heroDpsMultiplier', value: 30, rawEffect: 'hero_dps_multiplier_mult,30', source: 'official-parsed' } }] },
   // global_dps 全队 → supportSignals
   { id: '38', rarity: 2, signals: [{ dimension: 'damage', bucket: 'supportSignals', signal: { kind: 'globalDpsMultiplier', value: 10, rawEffect: 'global_dps_multiplier_mult,10', source: 'official-parsed' } }] },
-  // crit 维度 feat（heroCritChance）——carry-dps 评分用 crit 维度，不得被 scoringMode 预过滤丢弃
+  // crit 维度 feat（heroCritChance）——carry-dps 评估用 crit 维度，不得被 scoringMode 预过滤丢弃
   { id: 'crit1', rarity: 2, signals: [{ dimension: 'crit', bucket: 'supportSignals', signal: { kind: 'heroCritChance', value: 20, rawEffect: 'buff_base_crit_chance_add,20', source: 'official-parsed' } }] },
   { id: '1', rarity: 3, signals: [{ dimension: 'gold', bucket: 'supportSignals', signal: { kind: 'globalGoldMultiplier', value: 25, rawEffect: 'gold_multiplier_mult,25', source: 'official-parsed' } }] },
 ]

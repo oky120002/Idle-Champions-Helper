@@ -750,13 +750,13 @@ export function collectEffectEntries(detail: unknown): {
       continue
     }
 
-    // 审计根因（2026-07-28）：buff-upgrade-progression-exclusion（归一化期排除，非评分机制）
+    // 审计根因（2026-07-28）：buff-upgrade-progression-exclusion（归一化期排除，非评估机制）
     // IC 的 effect_def effect_string 是满级 snapshot 计算值，已含该 ability 自身 upgrade 树的全部静态
     // buff_upgrade 贡献（ranked effectReference 节点 + 同 ability 源 effect_keys 静态修饰，如蔚劝人向善）。
     // 证据：蔚善良榜样 effect_string=300 含 20 条 ranked buff_upgrade,100,12312 + 劝人向善 buff_upgrade,200,12312，
     // 游戏显示 per-stack 恰好 +300%（4^7=16384），叠层系数 2.92e7=4^7×576×1.2×2.578 只含 2 个外部修饰器
     // （道德规范专长 / 时髦披肩装备）。若独立 ×3 则叠层系数应 8.76e7，实测 2.92e7 → 劝人向善贡献已在 300。
-    // 故 ability 源（upgrade effectReference / effect_keys）的静态 plain buff_upgrade 不再派生计分信号，
+    // 故 ability 源（upgrade effectReference / effect_keys）的静态 plain buff_upgrade 不再派生计入目标值信号，
     // 否则每条叠 base.value×X/100 进 addPercent → 蔚 damage:hero pool 6.4e8 vs 游戏 2.92e7（22× 高估），
     // 影响 162/164 英雄、4727 条 ability 源静态 entry。
     // 保留三类运行时修饰：(1) stacks_multiply 动态（area 依赖，如蔚出言不逊）；(2) 复杂 wrapper（per_tagged /

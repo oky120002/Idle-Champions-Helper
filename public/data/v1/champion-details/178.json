@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06",
+  "updatedAt": "2026-08-09",
   "upgrades": [
     {
       "id": "20129",
@@ -857,7 +857,15 @@
             "id": 2800,
             "flavour_text": "",
             "description": {
-              "desc": "Until he takes damage in an area, Flint gains $(if feat_assigned 2717)$stacks_per_hit Initiative stacks$(else)an Initiative stack$(fi) whenever he attacks an enemy. Once he has taken damage, Flint gains Follow-Through stacks when he attacks instead. The damage of Forged Bonds is increased by $(not_buffed amount___3)% for each Follow-Through stack he has, stacking multiplicatively. The number of Follow-Through stacks can not exceed the number of Initiative stacks he has gained, and Initiative caps at $max_stacks___2 stacks. Both stacks reset when changing areas or when Flint is moved in the formation or removed from it."
+              "conditions": [
+                {
+                  "condition": "feat_assigned 2717",
+                  "desc": "Until he takes damage in an area, Flint gains $stacks_per_hit Initiative stacks whenever he attacks an enemy. Once he has taken damage, Flint gains Follow-Through stacks when he attacks instead. The damage of Forged Bonds is increased by $(not_buffed amount___3)% for each Follow-Through stack he has, stacking multiplicatively. The number of Follow-Through stacks can not exceed the number of Initiative stacks he has gained, and Initiative caps at $max_stacks___2 stacks. Both stacks reset when changing areas or when Flint is moved in the formation or removed from it."
+                },
+                {
+                  "desc": "Until he takes damage in an area, Flint gains an Initiative stack whenever he attacks an enemy. Once he has taken damage, Flint gains Follow-Through stacks when he attacks instead. The damage of Forged Bonds is increased by $(not_buffed amount___3)% for each Follow-Through stack he has, stacking multiplicatively. The number of Follow-Through stacks can not exceed the number of Initiative stacks he has gained, and Initiative caps at $max_stacks___2 stacks. Both stacks reset when changing areas or when Flint is moved in the formation or removed from it."
+                }
+              ]
             },
             "effect_keys": [
               {
@@ -899,7 +907,15 @@
             "id": 2800,
             "flavour_text": "",
             "description": {
-              "desc": "在某区域内未受到伤害之前，弗林特每次攻击敌人时，会获得 $(if feat_assigned 2717)$ 层/次 先攻层数 $(else) 1 层 先攻层数$(fi)。一旦受到伤害，弗林特在攻击时将转为获得“后续打击”层数。 他拥有的每层“后续打击”堆叠，都会使“锻造之契”的伤害提高 $(未受增益时的数值___3)%$，且效果呈乘法叠加。 “后劲”层数不得超过其获得的“先攻”层数，且“先攻”层数上限为 $max_stacks___2 层$。当切换区域，或弗林特在阵型中被移动或移出阵型时，这两种层数均会重置。"
+              "conditions": [
+                {
+                  "condition": "feat_assigned 2717",
+                  "desc": "在某区域内未受到伤害之前，弗林特每次攻击敌人时都会获得 $stacks_per_hit 点先攻层数。一旦受到伤害，弗林特攻击时将转为获得“后续打击”层数。 每拥有一个“后续攻击”层数，“锻造的纽带”的伤害将增加 $(not_buffed amount___3)%，且层数效果呈乘法叠加。 “后劲”层数不得超过其获得的“先攻”层数，且“先攻”层数上限为 $max_stacks___2 层。“先攻”和“后劲”层数在切换区域、弗林特在阵型中被移动或移出阵型时均会重置。"
+                },
+                {
+                  "desc": "在某区域内未受到伤害时，弗林特每次攻击敌人都会获得一个“先攻”层数。一旦受到伤害，弗林特攻击敌人时将转为获得“后续攻击”层数。他拥有的每个“后续攻击”层数都会使“锻造的纽带”的伤害提高 $(not_buffed amount___3)%，且层数效果呈乘法叠加。 “后劲”层数不得超过其获得的“先攻”层数，且“先攻”层数上限为 $max_stacks___2 层。“先攻”和“后劲”层数在切换区域、弗林特在阵型中被移动或移出阵型时均会重置。"
+                }
+              ]
             },
             "effect_keys": [
               {
@@ -3185,7 +3201,7 @@
           "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3208,7 +3224,7 @@
           "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3231,7 +3247,7 @@
           "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -3254,7 +3270,7 @@
           "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
         }
       ],
-      "allowGoldenEpic": false,
+      "allowGoldenEpic": true,
       "isGoldenEpic": false
     },
     {
@@ -8270,7 +8286,8 @@
                 "effect_string": "buff_upgrades,10,20134,20135,20136",
                 "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4338,
@@ -8285,7 +8302,8 @@
                 "effect_string": "buff_upgrades,10,20134,20135,20136",
                 "description": "将弗林特第一组专精的效果提高 $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },
@@ -8305,7 +8323,8 @@
                 "effect_string": "buff_upgrades,30,20134,20135,20136",
                 "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4339,
@@ -8320,7 +8339,8 @@
                 "effect_string": "buff_upgrades,30,20134,20135,20136",
                 "description": "将弗林特第一组专精的效果提高 $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },
@@ -8340,7 +8360,8 @@
                 "effect_string": "buff_upgrades,50,20134,20135,20136",
                 "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4340,
@@ -8355,7 +8376,8 @@
                 "effect_string": "buff_upgrades,50,20134,20135,20136",
                 "description": "将弗林特第一组专精的效果提高 $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },
@@ -8375,7 +8397,8 @@
                 "effect_string": "buff_upgrades,100,20134,20135,20136",
                 "description": "Increases the effect of Flint's first set of Specializations by $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           },
           "display": {
             "id": 4341,
@@ -8390,7 +8413,8 @@
                 "effect_string": "buff_upgrades,100,20134,20135,20136",
                 "description": "将弗林特第一组专精的效果提高 $(amount)%"
               }
-            ]
+            ],
+            "allow_ge": true
           }
         }
       },

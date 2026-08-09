@@ -5,6 +5,21 @@ import { useI18n } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 import { PlannerBreakdown } from './PlannerBreakdown'
 
+const CONSTRAINT_LABELS: Record<string, { zh: string; en: string }> = {
+  armor: { zh: '护甲', en: 'Armor' },
+  'hits-based': { zh: '命中型', en: 'Hits-based' },
+  'damage-reduction': { zh: '伤害削减', en: 'Dmg reduction' },
+  'enemy-buff': { zh: '敌人强化', en: 'Enemy buff' },
+  'health-drain': { zh: '持续掉血', en: 'Health drain' },
+}
+
+const BOUND_LABELS: Record<string, { zh: string; en: string }> = {
+  survival: { zh: '存活受限', en: 'survival-bound' },
+  armor: { zh: '护甲受限', en: 'armor-bound' },
+  bud: { zh: '伤害受限', en: 'BUD-bound' },
+  'max-area': { zh: '已达上限', en: 'max-area' },
+}
+
 export type PlannerResultCardProps = PlannerResult & {
   scoringMode?: ScoringMode
   slots: FormationSlot[]
@@ -19,6 +34,7 @@ export function PlannerResultCard({
   explanations,
   warnings,
   areaEstimate,
+  viability,
   breakdown,
   scoringMode = 'carry-dps',
   slots,
@@ -44,14 +60,7 @@ export function PlannerResultCard({
   const carrySlotId = carryHeroId != null && carryHeroId !== ''
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
-  let boundLabel: string
-  if (areaEstimate?.boundBy === 'survival') {
-    boundLabel = t({ zh: '存活受限', en: 'survival-bound' })
-  } else if (areaEstimate?.boundBy === 'bud') {
-    boundLabel = t({ zh: '伤害受限', en: 'BUD-bound' })
-  } else {
-    boundLabel = t({ zh: '已达上限', en: 'max-area' })
-  }
+  const boundLabel = t(BOUND_LABELS[areaEstimate?.boundBy ?? 'max-area'])
 
   return (
     <article
@@ -130,7 +139,7 @@ export function PlannerResultCard({
             {explanations.length > 0 && (
               <section data-section="explanations" className="planner-result-card__explanations">
                 <h4 className="planner-result-card__section-title">
-                  {t({ zh: '评分依据', en: 'Why this result' })}
+                  {t({ zh: '推荐依据', en: 'Why this result' })}
                 </h4>
                 <ul>
                   {explanations.map((line, index) => (
@@ -156,6 +165,17 @@ export function PlannerResultCard({
                     en: `bound: ${boundLabel} (killable ${String(areaEstimate.killableArea)} / survivable ${String(areaEstimate.survivableArea)}, uncalibrated)`,
                   })}
                 </p>
+                {viability != null && viability.activeConstraints.length > 0 ? (
+                  <p className="planner-result-card__viability-constraints" data-testid="planner-viability-constraints">
+                    {t({ zh: '活跃约束：', en: 'Active constraints: ' })}
+                    {viability.activeConstraints.map((key) => {
+                      const label = CONSTRAINT_LABELS[key]
+                      return label
+                        ? t(label)
+                        : key
+                    }).join(t({ zh: '、', en: ', ' }))}
+                  </p>
+                ) : null}
               </section>
             ) : null}
 

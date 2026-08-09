@@ -1,5 +1,5 @@
 import type { FormationSlot, ScenarioRef, Variant } from '../types'
-import type { AreaEstimationResult } from '../simulator/areaEstimation'
+import type { AreaBound, AreaEstimationResult } from '../simulator/areaEstimation'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { FeatCatalog } from '../abilities/featSignals'
 import type { SpecializationCatalog } from '../abilities/specializationSignals'
@@ -19,11 +19,19 @@ export interface PlannerPlacementEntry {
   seat: number | null
 }
 
+/** 变体可行性约束评估摘要（UI 展示用；普通变体 activeConstraints 为空）。 */
+export interface ViabilityAssessment {
+  /** 活跃约束标识（viabilityContext 中非 null 的字段；空 = 普通变体无额外约束）。 */
+  activeConstraints: readonly string[]
+  /** 绑定约束（最先卡住的那个）；null = 未评估或缺 carry。 */
+  boundBy: AreaBound | null
+}
+
 export interface PlannerResult {
   /**
    * 当前推荐模式主目标量的游戏记数法字符串（可超 Number.MAX_VALUE）。
    * carry-dps 模式 = carryDps；team-gold 模式 = teamGoldFind；UI 按 scoringMode 切换显示标签。
-   * 取代旧"评分（score）"概念——值是真实优化目标量，非启发式角色权重评分。
+   * 取代旧"评估（score）"概念——值是真实优化目标量，非启发式角色权重评估。
    */
   objectiveValue: string
   /**
@@ -37,6 +45,8 @@ export interface PlannerResult {
   warnings: string[]
   /** 推图层数预估；team-gold 模式或缺 carry 时为 null。绝对值未校准，仅相对比较参考。 */
   areaEstimate?: AreaEstimationResult | null
+  /** 可行性约束评估摘要（活跃约束 + 绑定约束）；普通变体 activeConstraints 为空。 */
+  viability?: ViabilityAssessment | null
   /**
    * 结构化加成拆解（阵型模拟 JSON 契约）：baseDps/factors/pools/contributions，
    * UI 据此渲染每位英雄加成，CLI 据此输出 JSON；team-gold 模式或缺 carry 时为 null。

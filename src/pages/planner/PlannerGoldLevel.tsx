@@ -16,7 +16,7 @@ export interface PlannerGoldLevelProps {
 /**
  * 金币/等级互斥控件（金币预算 → per-hero 等级换算，或全局统一等级）。
  * 不启用时用存档等级（默认）；金币模式输入预算后 worker 异步换算每个英雄可达等级；
- * 等级模式输入统一等级后反算金币。换算结果驱动 heroLevelOverride + goldBudget 传入评分链路。
+ * 等级模式输入统一等级后反算金币。换算结果驱动 heroLevelOverride + goldBudget 传入评估链路。
  */
 export function PlannerGoldLevel({ mode, goldBudget, globalLevel, conversion, onModeChange, onGoldBudgetChange, onGlobalLevelChange }: PlannerGoldLevelProps) {
   const { t } = useI18n()

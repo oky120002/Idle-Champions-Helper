@@ -11,6 +11,7 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerComputationMode } from './planner/PlannerComputationMode'
 import { PlannerStackCount } from './planner/PlannerStackCount'
+import { PlannerSurvivableArea } from './planner/PlannerSurvivableArea'
 import { PlannerGoldLevel } from './planner/PlannerGoldLevel'
 import { PlannerHypotheticalEquipment } from './planner/PlannerHypotheticalEquipment'
 import { PlannerSpecializationPanel } from './planner/PlannerSpecializationPanel'
@@ -20,6 +21,7 @@ import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { PlannerTopLineups } from './planner/PlannerTopLineups'
 import { PlannerCarryLock } from './planner/PlannerCarryLock'
 import { PlannerSlotLock } from './planner/PlannerSlotLock'
+import { PlannerDamageSlots } from './planner/PlannerDamageSlots'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
 
 function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnType<typeof useI18n>['t']) {
@@ -77,9 +79,11 @@ export function PlannerPage() {
     globalLevel,
     lockedCarryHeroId,
     lockedSlots,
+    userDamageDisabledSlots,
     loadError,
     loadState,
     manualStackCount,
+    minSurvivableArea,
     plannerRecommendation,
     profileSnapshot,
     recommendError,
@@ -90,12 +94,14 @@ export function PlannerPage() {
     specializationOverrides,
     clearHeroSpecializationOverride,
     clearSlotLock,
+    toggleDamageSlot,
     selectCandidateMode,
     selectComputationMode,
     selectEquipmentEnchant,
     selectEquipmentRarity,
     selectGoldLevelMode,
     selectManualStackCount,
+    selectMinSurvivableArea,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
@@ -212,6 +218,7 @@ export function PlannerPage() {
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                   <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
                   <PlannerStackCount value={manualStackCount} onChange={selectManualStackCount} />
+                  <PlannerSurvivableArea value={minSurvivableArea} onChange={selectMinSurvivableArea} />
                   <PlannerGoldLevel
                     mode={goldLevelMode}
                     goldBudget={goldBudget}
@@ -312,6 +319,11 @@ export function PlannerPage() {
                       lockedSlots={lockedSlots}
                       onLock={lockSlot}
                       onClearLock={clearSlotLock}
+                    />
+                    <PlannerDamageSlots
+                      slots={plannerRecommendation.slots}
+                      disabledSlots={userDamageDisabledSlots}
+                      onToggle={toggleDamageSlot}
                     />
                     <PlannerSavePreset
                       result={selectedResult}

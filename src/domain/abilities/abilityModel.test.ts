@@ -111,8 +111,8 @@ describe('computeHeroGainProfile', () => {
     expect(gain.support).toEqual({})
   })
 
-  it('applyManually 信号不计入 gain（实际评分恒丢弃，幻影增益会挤掉同席位真实候选）', () => {
-    // applyManually（手动触发/专精门控）在 resolveSignalMultiplier 首分支返回 ok:false 永不计分；
+  it('applyManually 信号不计入 gain（实际评估恒丢弃，幻影增益会挤掉同席位真实候选）', () => {
+    // applyManually（手动触发/专精门控）在 resolveSignalMultiplier 首分支返回 ok:false 永不计入目标值；
     // gain 须对称跳过，否则 p50 裁剪可能误留 phantom 强、误裁真强。
     const manual = { ...signal('heroDpsMultiplier', 999), applyManually: true }
     const real = signal('globalDpsMultiplier', 100)
@@ -121,7 +121,7 @@ describe('computeHeroGainProfile', () => {
   })
 
   it('未注册 stackFunc 信号不计入 gain（resolveSignalMultiplier 找不到 resolver 恒丢弃）', () => {
-    // per_mithral_hall_stacks 等 stackFunc 不在 STACK_COUNT_RESOLVERS → 实际评分走 stackFunc 路径
+    // per_mithral_hall_stacks 等 stackFunc 不在 STACK_COUNT_RESOLVERS → 实际评估走 stackFunc 路径
     // 无 resolver 返回 ok:false；gain 须对称跳过，否则 stacksMultiply+未注册 stackFunc 幻影高增益挤掉真候选。
     const unregistered = { ...signal('heroDpsMultiplier', 999), stacksMultiply: true, stackFunc: 'per_mithral_hall_stacks' }
     const real = signal('globalDpsMultiplier', 100)
@@ -129,7 +129,7 @@ describe('computeHeroGainProfile', () => {
     expect(gain.self.damage).toBe(2) // 仅 real 计入；unregistered 999% stacksMultiply 幻影不计
   })
 
-  it('buff_upgrade wrapper（bonusScaleOfSignal）按 base.value×value/100 折算 addPercent（与评分池聚合一致）', () => {
+  it('buff_upgrade wrapper（bonusScaleOfSignal）按 base.value×value/100 折算 addPercent（与评估池聚合一致）', () => {
     // base +300% (×4) + wrapper 100% 放大 base → 实际贡献 base.value×100/100=300% → 合 +600% (×7)。
     // 旧实现直接 += wrapper.value(100) → 合 +400% (×5)：base.value≠100 时低估，致 computationMode 误裁强候选。
     const base = signal('heroDpsMultiplier', 300)
@@ -153,7 +153,7 @@ describe('computeHeroGainProfile', () => {
   })
 
   it('stacksMultiply（无 stackFunc）走 multFactor，count=1 上界 = 1+value/100（与 pool 路由对称）', () => {
-    // 实际评分 placementFit：stacksMultiply→multFactor，multiplier=(1+value/100)^count。
+    // 实际评估 placementFit：stacksMultiply→multFactor，multiplier=(1+value/100)^count。
     // gain count=1：value=50 → multFactor ×= 1.5。旧实现走 addPercent += 50（单信号巧合等价，混池见下）。
     const gain = computeHeroGainProfile([{ ...signal('heroDpsMultiplier', 50), stacksMultiply: true }], [])
     expect(gain.self.damage).toBe(1.5)
@@ -161,7 +161,7 @@ describe('computeHeroGainProfile', () => {
 
   it('stacksMultiply 与 add 信号同维度：(1+add/100)×multFactor（混池路由对称）', () => {
     // add +100% (×2) × stacksMultiply +50% (×1.5) = 3.0。
-    // 旧实现 stacksMultiply 误走 addPercent → 合 +150% (×2.5)：混池路由错误（实际评分走 multFactor）。
+    // 旧实现 stacksMultiply 误走 addPercent → 合 +150% (×2.5)：混池路由错误（实际评估走 multFactor）。
     const gain = computeHeroGainProfile(
       [signal('globalDpsMultiplier', 100), { ...signal('heroDpsMultiplier', 50), stacksMultiply: true }],
       [],

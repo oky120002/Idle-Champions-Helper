@@ -13,7 +13,7 @@ import { describe, expect, it } from 'vitest'
 
 import { unwrap } from '../../../../tests/utils/dom-assertions'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
-import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
+import { resolvePlannerModel, type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from '../plannerModel'
 import { evaluatePlacementFit } from '../placementFit'
 import { vi95ReferenceData } from './vi95ReferenceData'
 
@@ -64,6 +64,8 @@ const scenario: OfficialPlannerScenarioModel = {
   allowedTagExpression: [],
   attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
   scenarioWarnings: [],
 }
 
@@ -82,7 +84,7 @@ function expectWithinTolerance(actual: number, expected: number, tolerance: numb
   expect(deviation).toBeLessThanOrEqual(tolerance)
 }
 
-// 加载 built hero-abilities.json 的真实蔚 profile（归一化产物）。真实数据端到端验证 归一化→评分 全链路，
+// 加载 built hero-abilities.json 的真实蔚 profile（归一化产物）。真实数据端到端验证 归一化→评估 全链路，
 // 防 amountFunc/stackFunc/targetQualifier/bonusScaleOfSignal 等字段回归（smoke.test.ts 只验形状不验 multiplier）。
 function loadRealVi(): HeroAbilityProfile {
   const dataDir = path.resolve(__dirname, '../../../../public/data/v1')

@@ -35,10 +35,12 @@ worker → UI:
 `src/domain/simulator/areaEstimation.ts` + `src/domain/simulator/monsterStats.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`，结合 survival 约束（effectiveHealth 不足 monster_damage 时限制推图层数）。
 
 ```
-killableArea    = max area where BUD ≥ monsterHealthAt(area)
-survivableArea  = max area where effectiveHealth ≥ monsterDpsAt(area)
+killableArea    = max area where BUD ≥ monsterHealthAt(area) × segmentMultiplier
+survivableArea  = max area where effectiveHealth × (1 − drainRate) ≥ monsterDpsAt(area) × enemyDamageMult
 estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
 ```
+
+`segmentMultiplier` / `drainRate` / `enemyDamageMult` 来自变体可行性上下文（`ViabilityContext`，经 `scenario` 参数传入）。普通变体全 null → 行为与旧公式一致。约束模型细节见 `simulator.md`。
 
 怪物 stats 是全局 game rule（`monster_base_stats.rule`），按 per-area stepped curve 逐层复合累积，内联在 `monsterStats.ts`（非运行时加载 game-rules.json）。数据源字段与缩放公式见 `docs/research/data/planner/monster-and-area-scaling.md`。
 
@@ -55,6 +57,8 @@ estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
 - `factors`：`damagePool` / `crit` / `vulnerability` / `globalBuff` / `heroDpsPool`（`carryDps = baseDps × 各因子之积`）。`globalBuff` / `heroDpsPool` 是 unified 池——ability 源与外部加成（patron / blessing / 装备）同 key 加法合并后的单一池因子；`damagePool` 为残余非 global / hero 池。作单一因子外露以保证因子之积可复现 carryDps。
 - `pools`：damage 维度聚合池（`dimension:scope`，`addPercent` / `multFactor` / `poolMultiplier`）。
 - `contributions`：每位支持位的 active signal 拆解（`signalKind` / `multiplier` / `reasonCode` / `rawEffect`）。
+
+`PlannerResult.viability`（`ViabilityAssessment`）：活跃约束标识（`activeConstraints`，如 `['armor', 'health-drain']`）+ 绑定约束（`boundBy`，来自 areaEstimate）。普通变体 activeConstraints 为空。
 
 `evaluateFormation` 合法性违规（seat 冲突 / locked / `only_allow_crusaders` 白名单外）与未拥有英雄的 level 1 回退作为 warning 附加，仍出拆解（强制英雄豁免未拥有 / 白名单检查）。
 
@@ -80,11 +84,11 @@ planner 页面是工作台，不是 landing page。
 
 ## 未接入的辅助指标
 
-ult buff（`ultUptime.ts`）、click damage（`clickDamage.ts`）、modron reset（`modronInfo.ts`）的折算函数已实现但**零生产调用**，不进评分 / 排序 / 输出合同。接入后 ult buff 按 modron 自动施放 uptime 折算、click damage 由 BUD 派生、modron reset 给出层数建议。
+ult buff（`ultUptime.ts`）、click damage（`clickDamage.ts`）、modron reset（`modronInfo.ts`）的折算函数已实现但**零生产调用**，不进目标值 / 排序 / 输出合同。接入后 ult buff 按 modron 自动施放 uptime 折算、click damage 由 BUD 派生、modron reset 给出层数建议。
 
 ## 测试覆盖
 
 - 数字：`1.50e92`、`4.08e167`、`1e1000`、加法阈值、排序稳定性。
 - 模拟器：effect parser、unsupported warning、各维度 pool 聚合、baseDps / survival / bud / area 公式。
-- Planner：候选池、合法性、稳态评分、beam search、计算模式裁剪、evaluateFormation。
+- Planner：候选池、合法性、稳态求值、beam search、计算模式裁剪、evaluateFormation。
 - UI：profile 状态、场景选择、结果卡、保存 preset、loading 翻转 / requestId 丢弃 / debounce。

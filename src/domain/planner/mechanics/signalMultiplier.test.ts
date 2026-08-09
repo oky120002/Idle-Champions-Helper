@@ -7,7 +7,7 @@ import { buildSignal, buildInput, createHero } from './mechanicTestFixtures'
 const baseInput = { carryHero: createHero('carry'), supportHero: createHero('support') }
 
 describe('resolveSignalMultiplier · applyManually 守卫', () => {
-  it('applyManually signal → 不计分 warning', () => {
+  it('applyManually signal → 不计入目标值 warning', () => {
     const r = resolveSignalMultiplier(buildInput(baseInput), buildSignal({ value: 100, applyManually: true }))
     expect(r.ok).toBe(false)
   })
@@ -44,13 +44,13 @@ describe('resolveSignalMultiplier · dynamic-stack-multiply', () => {
     expect(r.ok && r.multiplier).toBeGreaterThan(1)
   })
 
-  it('高 value 在大 count 下溢出 → 不计分 warning', () => {
+  it('高 value 在大 count 下溢出 → 不计入目标值 warning', () => {
     // value=200 → per-stack 3；3^1000 = Infinity
     const r = resolveSignalMultiplier(buildInput(baseInput), buildSignal({ value: 200, stacksMultiply: true }))
     expect(r.ok).toBe(false)
   })
 
-  it('bonusScaleOfSignal 基础未生效（multiplier<=1）→ 联动不计分', () => {
+  it('bonusScaleOfSignal 基础未生效（multiplier<=1）→ 联动不计入目标值', () => {
     const base = buildSignal({ value: 100, stacksMultiply: true })
     // count=0 → 2^0 = 1 (<=1) → 联动 warning
     const r = resolveSignalMultiplier(
@@ -63,12 +63,12 @@ describe('resolveSignalMultiplier · dynamic-stack-multiply', () => {
   it('【stacksMultiply + stackFunc】不短路 manualStackCount，改走 stackFunc 计数路径', () => {
     // hero32 真实回归：buff_upgrade,100,11503 stacksMultiply=true + stackFunc=per_mithral_hall_stacks。
     // 旧实现 stacksMultiply 分支无条件短路 → (1+100/100)^1000 = 2^1000≈10^301 灾难高估。
-    // 现 stacksMultiply 分支排除有 stackFunc 的信号 → 落 stackFunc 路径，未注册 → 不计分（安全）。
+    // 现 stacksMultiply 分支排除有 stackFunc 的信号 → 落 stackFunc 路径，未注册 → 不计入目标值（安全）。
     const r = resolveSignalMultiplier(
       buildInput({ ...baseInput, manualStackCount: 1000 }),
       buildSignal({ value: 100, stacksMultiply: true, stackFunc: 'per_mithral_hall_stacks', amountFunc: 'mult' }),
     )
-    expect(r.ok).toBe(false) // per_mithral_hall_stacks 未注册 → 不计分（非 2^1000 灾难高估）
+    expect(r.ok).toBe(false) // per_mithral_hall_stacks 未注册 → 不计入目标值（非 2^1000 灾难高估）
   })
 
   it('【stacksMultiply + 注册 stackFunc】按 stackFunc 真实阵型计数（非 manualStackCount）', () => {
@@ -108,13 +108,13 @@ describe('resolveSignalMultiplier · bonusScaleOfSignal 折叠（22× 高估回�
     expect(r.ok && r.multiplier).toBe(2) // 非 4
   })
 
-  it('基础 multiplier<=1（value=0）→ 修饰不计分（依赖未生效）', () => {
+  it('基础 multiplier<=1（value=0）→ 修饰不计入目标值（依赖未生效）', () => {
     const base = buildSignal({ value: 0 })
     const r = resolveSignalMultiplier(buildInput(baseInput), buildSignal({ value: 100, bonusScaleOfSignal: base }))
     expect(r.ok).toBe(false)
   })
 
-  it('基础不可解析（applyManually）→ 修饰不计分', () => {
+  it('基础不可解析（applyManually）→ 修饰不计入目标值', () => {
     const base = buildSignal({ value: 100, applyManually: true })
     const r = resolveSignalMultiplier(buildInput(baseInput), buildSignal({ value: 100, bonusScaleOfSignal: base }))
     expect(r.ok).toBe(false)
@@ -154,7 +154,7 @@ describe('resolveSignalMultiplier · formation-count（amountFunc add/mult 等�
     expect(r.ok && r.multiplier).toBe(4)
   })
 
-  it('未知 stackFunc → 不计分 warning', () => {
+  it('未知 stackFunc → 不计入目标值 warning', () => {
     const r = resolveSignalMultiplier(
       formationInput,
       buildSignal({ value: 100, stackFunc: 'unknown_func', amountFunc: 'add' }),
@@ -162,7 +162,7 @@ describe('resolveSignalMultiplier · formation-count（amountFunc add/mult 等�
     expect(r.ok).toBe(false)
   })
 
-  it('stackFunc + 未知 amountFunc → 不计分 warning', () => {
+  it('stackFunc + 未知 amountFunc → 不计入目标值 warning', () => {
     const r = resolveSignalMultiplier(
       formationInput,
       buildSignal({ value: 100, stackFunc: 'per_crusader', amountFunc: null }),

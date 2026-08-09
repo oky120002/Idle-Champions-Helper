@@ -69,7 +69,7 @@
 - `adventures.json` 的 `rewards` 字段全部为空——奖励逻辑在服务端
 - `effect-reference.json` 的 stats 数组中仅有 8 个成就相关状态变量（服务端追踪，其中 4 个 `serverOnly: true`）
 - Kent 的 `achievement_global_dps` stackFunc 虽然在 `hero-abilities.json` 中有记录，但成就加成的实际数值不在游戏数据中，planner 无法建模
-- 英雄专属成就触发（`achievement_stat_name`、`laurana_achievement_handler` 等）均为 unsupported signals，当前不进评分
+- 英雄专属成就触发（`achievement_stat_name`、`laurana_achievement_handler` 等）均为 unsupported signals，当前不进目标值
 
 ## 数据源
 

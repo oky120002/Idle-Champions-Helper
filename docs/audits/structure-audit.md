@@ -27,7 +27,7 @@
 
 | 文件 | 行 | 现状判断 |
 |------|----|----------|
-| `src/domain/planner/steadyStateScoring.ts` | 421 | 321-480 应拆。核心评分循环（`scoreFormation`+`scoreTeamGold`）内聚，拆开会割裂 carry 遍历+pool 聚合的紧耦合；crit/vuln/dimension 因子已下沉 `scoring/`。**倾向保留**，除非找到独立子 Concern |
+| `src/domain/planner/steadyStateScoring.ts` | 421 | 321-480 应拆。核心评估循环（`scoreFormation`+`scoreTeamGold`）内聚，拆开会割裂 carry 遍历+pool 聚合的紧耦合；crit/vuln/dimension 因子已下沉 `scoring/`。**倾向保留**，除非找到独立子 Concern |
 | `src/data/user-sync/userProfileNormalizer.ts` | 420 | 321-480 应拆。normalize 各字段提取，若多段独立可按字段族拆；须先确认是否共享中间状态 |
 | `src/domain/abilities/abilityModel.ts` | 392 | 321-480 应拆。类型 + `DIMENSION_BY_KIND`/`POOL_SCOPE_BY_KIND` 静态映射 + `computeHeroGainProfile` + `appendHeroAbilitySignals` 等。类型与映射/函数可分；但作为 abilities 域的单一类型源，拆开可能增加跨文件跳转。**倾向保留**，映射下沉收益有限 |
 | `src/pages/champions/championRoster.ts` | 347 | 321-480 应拆。页面聚合逻辑，须读后判断 |

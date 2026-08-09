@@ -3,7 +3,7 @@ import { unwrap } from '../../../tests/utils/dom-assertions'
 import { compareGameNumbers, toGameNumber } from '../gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { scoreFormation } from './steadyStateScoring'
-import type { OfficialPlannerScenarioModel } from './plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './plannerModel'
 
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
@@ -46,11 +46,13 @@ const scenario: OfficialPlannerScenarioModel = {
   allowedTagExpression: [],
   attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
   scenarioWarnings: [],
 }
 
 describe('steady state scoring', () => {
-  it('relation=adjacent 支持位靠近 carry 时评分更高', () => {
+  it('relation=adjacent 支持位靠近 carry 时目标量更高', () => {
     const carry = createHero('carry', {
       seat: 1,
       roles: ['dps'],
@@ -614,7 +616,7 @@ describe('steady state scoring', () => {
   })
 
   describe('heroLevels / goldBudget 入参透传', () => {
-    it('不同 heroLevels → 不同 carryDps（等级影响评分）', () => {
+    it('不同 heroLevels → 不同 carryDps（等级影响目标量）', () => {
       const carry = createHero('carry', { seat: 1, baseDamage: 1 })
       const heroesById = new Map([['carry', carry]])
       const placements = { s1: 'carry' }

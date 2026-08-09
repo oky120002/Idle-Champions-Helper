@@ -44,7 +44,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 | 部分 | 149 瑞文嘉德公爵 | 2 | base crit 丢，2 条其他 crit 信号 |
 | 对照 | 25 凯蒂布莉儿 | 8 | 走 heroCritChance 正常建模，base crit 丢但其他 crit 补偿足 |
 
-影响：crit 进评分（`scoreFormation → computeCritFactor`），「全丢」7 英雄的 crit_factor 归一为 1.0（按无 crit 处理），实际应有 20% base chance 的期望增益（chance 是基线 2.5% 的 8 倍）。carry-dps 排序时系统性低估暴击流 carry（Drizzt/贾拉索/沃夫加尤甚）。
+影响：crit 进评估（`scoreFormation → computeCritFactor`），「全丢」7 英雄的 crit_factor 归一为 1.0（按无 crit 处理），实际应有 20% base chance 的期望增益（chance 是基线 2.5% 的 8 倍）。carry-dps 排序时系统性低估暴击流 carry（Drizzt/贾拉索/沃夫加尤甚）。
 
 ### 3.2 `hero_dps_multiplier_mult` 残留 6 条 — 位置/条件限定符被丢
 
@@ -63,7 +63,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 **调研结论（A4，2026-08-01）→ 登记不修**。逐类对照限定符解析基建（`heroTargetingRelation.ts` 的 `normalizeTargetRelation` 只产静态 `HeroPositionRelation` 或 `any`；`placementSlotRelation.ts` 的 `matchesSlotRelation` 只评估静态列差/邻接）：
 
-- `tallest_column` / `slot_if_expr`：依赖**当前阵型填充状态**（最高列随阵型变；slot_if_expr 是槽位条件表达式），非静态关系，需在评分期加每阵型动态评估器——超出「扩位置词表」范畴。
+- `tallest_column` / `slot_if_expr`：依赖**当前阵型填充状态**（最高列随阵型变；slot_if_expr 是槽位条件表达式），非静态关系，需在评估期加每阵型动态评估器——超出「扩位置词表」范畴。
 - `snowflake`：**阵型形状**条件（是否雪花布局），属形状匹配另一维度，非位置关系。
 - `active_campaign`：**战役**条件，需 scenario.campaign 匹配，另一维度。
 - `middle_columns`：几何上最接近，但「中间列」定义依赖布局宽度、无现成枚举，加它要动 `HeroPositionRelation` + `matchesSlotRelation` + 映射 4 处，救 1 条信号不抵。

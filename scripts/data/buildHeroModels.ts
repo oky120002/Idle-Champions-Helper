@@ -168,6 +168,8 @@ export function buildOfficialHeroModel(
     tags: champion.tags as string[],
     baseAttackDamageTypes: (base.damageTypes as string[] | undefined) ?? [],
     baseAttackCooldown: typeof base.cooldown === 'number' ? base.cooldown : null,
+    numTargets: typeof base.numTargets === 'number' && base.numTargets > 0 ? base.numTargets : null,
+    damageModifier: (() => { const dm = Number(base.damageModifier); return Number.isFinite(dm) && dm > 0 ? dm : null })(),
     age: typeof characterSheet.age === 'number' ? characterSheet.age : null,
     abilityScores: (characterSheet.abilityScores as HeroAbilityProfile['abilityScores'] | undefined) ?? {},
     // build 期预算各维度收益，供 computationMode 按收益排序裁剪候选（见 src/domain/planner/computationMode.ts）。

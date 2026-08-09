@@ -53,7 +53,7 @@
 
 ### 位置条件效果如何触发
 
-英雄的增益信号在 `hero-abilities.json` 中通过 `positionQualifier.relation` 字段声明位置约束。评分引擎在计算某个支援英雄对输出的增益时，会检查两者的位置关系是否满足信号声明的关系——不满足则该信号不生效。
+英雄的增益信号在 `hero-abilities.json` 中通过 `positionQualifier.relation` 字段声明位置约束。推荐引擎在计算某个支援英雄对输出的增益时，会检查两者的位置关系是否满足信号声明的关系——不满足则该信号不生效。
 
 ### 站位策略
 
@@ -81,7 +81,7 @@
 
 1. 阵型布局：`formations.json` 每个 `slot` 直接声明 `column`、`row` 和 `adjacentSlotIds`，由冒险关联决定当前阵型。
 2. IC 原始 target → 关系枚举：`heroTargetingRelation.ts` 的 `STRING_RELATION_MAP` 将游戏原始字符串（如 `adj`、`col`、`next_col`、`behind`）映射为 `HeroPositionRelation`；对象形式（`{type:"distance", distance:2}`、`{type:"exactly_x_behind", num_columns:1}`）由 `normalizeObjectRelation()` 处理。
-3. 评分期校验：`placementSlotRelation.ts` 的 `matchesSlotRelation()` 在 planner 评估每个支援→输出增益对时，按 BFS 距离（相邻类）或列差值（列类）判定位置关系是否满足。
+3. 评估期校验：`placementSlotRelation.ts` 的 `matchesSlotRelation()` 在 planner 评估每个支援→输出增益对时，按 BFS 距离（相邻类）或列差值（列类）判定位置关系是否满足。
 
 注意：尽管阵型布局有行信息，**游戏中不存在基于"同排"的位置条件效果**——所有位置关系均基于相邻距离或列方向，行仅用于渲染定位。
 

@@ -116,7 +116,7 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       continue
     }
 
-    // 等级解锁门控：signal 所需等级 > support 当前等级 → 未解锁，不计分。
+    // 等级解锁门控：signal 所需等级 > support 当前等级 → 未解锁，不计入目标值。
     if (typeof signal.requiredLevel === 'number' && signal.requiredLevel > supportLevel) {
       scoreBreakdown.push(buildInactiveScorePart(signal, 'level-locked'))
       continue
