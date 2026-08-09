@@ -147,8 +147,7 @@ const ZH_POSITION_ROTATION_RE = /阵型中移动|移动位置|改变位置|变�
 // 区域递增占格标记：「每经过 N 区域...格/占」（须同一句内含占格语言，排除气味/复活等无关「每经过」）、
 // 「每 N 个区域」「额外 N 格」——计数随区域增长。
 // 注意：「每 N 秒换格」是固定 N 格轮换位置（计数不变），不在此列（无区域递增标记）。
-// eslint-disable-next-line sonarjs/super-linear-regex -- [^。]{0,50} 有上限，短文本无回溯风险
-const ZH_AREA_INCREMENT_RE = /每经过[^。]{0,50}?(?:格|占)|每\s*\d+\s*个?区域|额外\s*[一二两三四五六七八九\d]/
+const ZH_AREA_INCREMENT_RE = /每经过[^。]{0,50}?[格占]|每\s*\d+\s*个?区域|额外\s*[一二两三四五六七八九\d]/
 
 function zhSlotOccupyCount(text: string): number | null {
   // 先判定 slot-occupy 语义：含「格」+「占据/占用/被...占」。
@@ -210,13 +209,6 @@ function hasResidualMechanics(original: string): boolean {
   return false
 }
 
-// 属性门槛正则（全局）：(STAT) (score )?of (N) (direction)
-// 覆盖：缩写（CON）和全词（Constitution）、+ 记法（15+）、or higher/lower/more/less。
-// 匹配 "CON score of 13 or higher" / "Constitution of 14 or higher" / "CON of 15+" 等。
-// STAT 缩写或全词（忽略大小写）。全局标志用于 matchAll 提取多属性门槛。
-// eslint-disable-next-line sonarjs/super-linear-regex -- alternation 分支不重叠（全词 vs 缩写无公共前缀）
-const ATTRIBUTE_THRESHOLD_RE = /\b(str|dex|con|int|wis|cha|strength|dexterity|constitution|intelligence|wisdom|charisma)\s+(?:score\s+)?of\s+(\d+)\s*(\+|or\s+(?:higher|more|lower|less))/gi
-
 /** 属性名（缩写或全词，小写）→ 统一缩写 key。 */
 const ATTRIBUTE_STAT_MAP: Record<string, AttributeRequirement['stat']> = {
   str: 'str', strength: 'str',
@@ -226,6 +218,15 @@ const ATTRIBUTE_STAT_MAP: Record<string, AttributeRequirement['stat']> = {
   wis: 'wis', wisdom: 'wis',
   cha: 'cha', charisma: 'cha',
 }
+
+// 属性门槛正则（全局）：(STAT) (score )?of (N) (direction)
+// 覆盖：缩写（CON）和全词（Constitution）、+ 记法（15+）、or higher/lower/more/less。
+// 匹配 "CON score of 13 or higher" / "Constitution of 14 or higher" / "CON of 15+" 等。
+// STAT 缩写或全词从 ATTRIBUTE_STAT_MAP 派生（单一数据源，避免两处重复维护）。
+const ATTRIBUTE_THRESHOLD_RE = new RegExp(
+  String.raw`\b(${Object.keys(ATTRIBUTE_STAT_MAP).join('|')})\s+(?:score\s+)?of\s+(\d+)\s*(\+|or\s+(?:higher|more|lower|less))`,
+  'gi',
+)
 
 // 使用门槛语句标记（白名单）：仅从显式声明「谁能上场」的句子提取属性门槛。
 // 排除三类条件效果句（属性模式出现但非使用门槛）：
