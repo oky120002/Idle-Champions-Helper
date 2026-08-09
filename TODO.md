@@ -58,4 +58,25 @@ repair: rebuild
   - 位置: `src/domain/planner/recommendationEngine.ts:776`
   - 备注: engine 产出的 warning 是中文裸字符串，UI 直接渲染不经 t()；en-US locale 下用户看到中文 warning
 
+- PlannerDamageSlots 不展示系统解析的 damageSourcePattern 位置限制（25 变体） <!-- auto-todo:id=atd_633996a2a3 -->
+  - 记录时间: `2026-08-09T19:46:48+08:00`
+  - 类型: optimization
+  - 位置: `src/pages/planner/PlannerDamageSlots.tsx`
+  - 备注:
+    - 来源：深度审计 2026-08-09 UI 子智能体发现
+
+- EN 递增占格模式检测覆盖不足（variant 116 等） <!-- auto-todo:id=atd_1d344ad97a -->
+  - 记录时间: `2026-08-09T19:46:55+08:00`
+  - 类型: issue
+  - 位置: `scripts/data/restrictions-parser.ts:46`
+  - 备注:
+    - 来源：深度审计 2026-08-09 数据管线子智能体发现
+
+- schema 未钉 enemyTypes/scenarioRef/objectiveArea/scenarioWarnings 等消费字段 <!-- auto-todo:id=atd_6752294b13 -->
+  - 记录时间: `2026-08-09T19:46:59+08:00`
+  - 类型: optimization
+  - 位置: `src/domain/types/build-product-schemas.ts:63`
+  - 备注:
+    - 来源：深度审计 2026-08-09 数据管线子智能体发现
+
 <!-- auto-todo:end -->
