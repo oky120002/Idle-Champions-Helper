@@ -938,13 +938,11 @@ describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behi
 describe('attributeRequirements 候选过滤', () => {
   it('不满足 STR 13+ 的英雄被排除出推荐候选', () => {
     const attrVariant = createVariant('variant-attr', { campaign, name: text('Attr Gate', '属性门槛') })
-    const heroesWithScores: HeroAbilityProfile[] = plannerHeroes.map((h) =>
-      h.heroId === 'jarlaxle'
-        ? { ...h, abilityScores: { str: 10 } } // jarlaxle STR 10 < 13 → 被排除
-        : h.heroId === 'asharra'
-          ? { ...h, abilityScores: { str: 15 } } // asharra STR 15 ≥ 13 → 通过
-          : { ...h, abilityScores: { str: 14 } },
-    )
+    const heroesWithScores: HeroAbilityProfile[] = plannerHeroes.map((h) => {
+      if (h.heroId === 'jarlaxle') return { ...h, abilityScores: { str: 10 } } // STR 10 < 13 → 被排除
+      if (h.heroId === 'asharra') return { ...h, abilityScores: { str: 15 } } // STR 15 ≥ 13 → 通过
+      return { ...h, abilityScores: { str: 14 } }
+    })
     const attrCollections: PlannerCollections = {
       variants: [attrVariant],
       plannerHeroes: heroesWithScores,
