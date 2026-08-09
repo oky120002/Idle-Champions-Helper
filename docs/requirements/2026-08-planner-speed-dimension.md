@@ -49,28 +49,34 @@ ic.byteglow.com 有 Speed 页面（社区速度计算器），但仅展示英雄
 
 ## 需要做什么
 
-### 阶段一：动态 BUD（前置基建）
+### 核心认知修正（2026-08-10）
 
-社区确认 BUD 公式：`BUD = 最高单次伤害 / 攻击间隔`（[BUD 101](https://www.reddit.com/r/idlechampions/comments/fnoaal/)）。攻速是分母——攻速越快，BUD 越高。
+速度 ≠ 杀怪快慢。速度英雄通过 11 类完全不同的机制加速过层（跳层/任务需求缩减/任务进度倍增/敌人刷新加速/额外刷新/游戏加速/区域转换加速/条件过关/同步刷新/预刷新/初期冲层），与 DPS/BUD 正交。详细机制分析见 `docs/research/gameplay/speed-mechanics.md`。
 
-将 `budCalculation.ts` 从仅用 carry 自身冷却升级为纳入阵型级缩减：
+**放弃「动态 BUD」方案**——攻速缩减降低 cooldown → 降低单次命中伤害 → 降低 BUD（IC 真实机制：慢攻击英雄更容易设 BUD）。把 DPS 当 BUD 会严重高估面积估算。
 
-- 输入：阵型中所有 `attackSpeedMult` 信号（相邻/全队冷却缩减）+ Widdle 特殊覆盖
-- 处理：`effectiveCooldown = max(carryBaseAttackCooldown × (1 - totalReduction), carryBaseAttackCooldown × 0.25)`
-- 输出：动态 BUD = `carrySingleHitDamage / effectiveCooldown`（当前是 `/ baseAttackCooldown`）
+### 阶段一：速度效果建模（基建）
 
-### 阶段二：速度评分维度
+将 11 类速度效果建模为**区域推进效率因子**（详见 speed-mechanics.md「速度效益量化模型」）：
 
-新增 `ScoringMode = 'speed'`（与 `carry-dps` / `team-gold` 并列），或在现有 `carry-dps` 模式下将动态 BUD 替代静态 BUD：
+- **可静态计算的效果**（类型 2-7、9-10）：任务需求缩减、任务进度倍增、刷新加速、额外刷新、游戏加速、区域转换加速、同步刷新、预刷新 → 各自一个乘数因子
+- **需假设值的效果**（类型 1、8、11）：Briv 跳层（跨重置堆叠）、Lae'zel/Halsin 条件过关（触发频率）、Thellora 初期冲层（favor 依赖）→ 用户输入假设值
 
-- 动态 BUD 影响 `objectiveValue`（carryDps = BUD-based），使速度英雄的贡献反映在评分中
-- `areaEstimate` 自动受益（BUD 上升 → 可推区域上升）
+输出：`speedMultiplier`（阵型级综合速度因子），而非 DPS/BUD 改动。
+
+### 阶段二：team-speed 评分模式
+
+新增 `ScoringMode = 'team-speed'`（与 `carry-dps` / `team-gold` 并列）：
+
+- `objectiveValue` = `speedMultiplier`（区域推进效率，越高越快）
+- 不影响 carry-dps 模式的 BUD/DPS 计算——速度是独立优化目标
+- beam search 按 speedMultiplier 排序，推荐速度最优阵型
 
 ### 不建模的部分
 
-- **过层加速**（Deekin 刷新、Sentry 击杀门槛、Hew Maan 击杀数缩减）：依赖运行时敌人刷新逻辑，静态评估不可消费
-- **Briv 跳层**：依赖跨重置持久状态（钢骨堆叠），单冒险快照不可得；且跳层影响的是过层效率而非 DPS
-- **Shandie 游戏加速**：`time_scale_when_not_attacked,25,30` 是全局游戏速度 ×1.25，影响所有速率但不改变 BUD 本身
+- **精确过层时间模拟**（逐区击杀时间线）：依赖运行时敌人刷新逻辑，超出静态评估范围
+- **Briv 钢骨自给自足计算**：需跨重置模拟，标记为假设输入
+- **Modron 速度核心 buff**：数据不可得（serverOnly），随 M2 里程碑
 
 ## 已有基建
 
@@ -85,14 +91,17 @@ ic.byteglow.com 有 Speed 页面（社区速度计算器），但仅展示英雄
 
 ## 为何暂缓
 
-阶段一（动态 BUD）是**最高价值单一缺口**（里程碑 M1），但也是工程量最大的：需要把 BUD 从单常量改为依赖阵型上下文的派生值，涉及 budCalculation → areaEstimation → scoring 全链路改动。阶段二相对轻量。
+速度维度是**最高价值单一缺口**（里程碑 M1），也是工程量最大的。核心挑战不是 BUD 改造（已否决），而是：
 
-此需求与 [[2026-08-planner-area-dashboard]]（推图仪表盘）强耦合——准确的可推层数依赖动态 BUD。
+1. **11 类异构机制**需逐类建模——每类有不同的数学结构和数据依赖（详见 speed-mechanics.md）
+2. **objectiveValue 量纲设计**——速度效益不直接对应标量，需将异构效果融合为统一的「区域推进效率」指标
+3. **运行时依赖**——3 类效果（Briv 跳层 / 条件过关 / 初期冲层）需用户假设值或跨重置状态
+4. **效果数据不在 hero-abilities 信号池**——速度效果多为 hero-specific handler（`minsc_boastful` / `hewmaan_fellow_humans` 等），需从 champion-details 原始数据提取而非复用现有信号管线
 
 ## 关联
 
-- 社区来源：[Speed Champions 101](https://www.reddit.com/r/idlechampions/comments/1aleren/speed_champions_101_an_introduction/)、[BUD 101](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)、[Briv 跳层路线计算器](https://emmotes.github.io/ic_scripting_routes/)、[Byteglow Speed](https://ic.byteglow.com/speed)
-- 调研：`docs/research/gameplay/bud-mechanics.md`（BUD 定义与衰减规则）
+- 调研：`docs/research/gameplay/speed-mechanics.md`（11 类机制全貌 + 社区 Speed 101）
+- 社区来源：[Speed Champions 101 — Gaarawarr](https://www.reddit.com/r/idlechampions/comments/1aleren/speed_champions_101_an_introduction/)、[Steam — Briv+Hew Maan 自动化攻略](https://steamcommunity.com/sharedfiles/filedetails/?id=2615977602)、[Steam — Briv 跳层数学](https://steamcommunity.com/app/627690/discussions/0/1872875054775725577/)、[Byteglow Speed](https://ic.byteglow.com/speed)
 - 里程碑：`docs/research/data/planner/damage-mechanic-inventory.md` §8 M1
 - 需求：`planner-capability-extensions.md`（逐步模拟子项）
 - 关联需求：`2026-08-planner-area-dashboard.md`（推图仪表盘，依赖动态 BUD）
