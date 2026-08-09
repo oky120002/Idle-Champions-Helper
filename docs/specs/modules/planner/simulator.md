@@ -81,6 +81,30 @@ deterministic beam search。默认参数由领域常量集中管理（不写死 
 
 搜索单位是**完整阵型**，不是逐槽位贪心；无论手动锁定 carry 还是自动枚举，完整阵型搜索时都必须有且仅有一个主 C 位。
 
+## 推图层数预估 + 可行性约束
+
+`estimateMaxArea`（`areaEstimation.ts`）取 killableArea 与 survivableArea 的 min 作为推图极限。每个约束都是关于层数的单调函数，墙 = min(所有约束)。
+
+```
+killableArea   = max area where BUD ≥ monsterHealthAt(area) × segmentMultiplier
+survivableArea = max area where effectiveHealth × (1 − drainRate) ≥ monsterDpsAt(area) × enemyDamageMult
+estimatedArea  = min(killableArea, survivableArea, MAX_AREA)
+```
+
+可行性约束（`ViabilityContext`，经 `scenario.viabilityContext` 传入，`restrictions-parser.ts` 从变体描述文本解析）：
+
+| 约束 | 字段 | 模型 | 命中变体 |
+|------|------|------|----------|
+| 护甲 | `armor: SegmentConfig` | 吞吐量等效门槛 HP × segments（每段门槛 HP/N 始终 ≤ HP，不构成绑定约束；吞吐量惩罚是根因） | 17 |
+| 命中型 | `hitsBased: SegmentConfig` | 同护甲吞吐量模式（需 N 次命中，可叠加） | 2 |
+| 伤害削减 | `damageModifier: number` | BUD × damageModifier（0.01 = 减 99%） | 19 |
+| 敌人强化 | `enemyDamageMult: number` | monsterDpsAt × mult | 3 |
+| 持续掉血 | `healthDrainRate: number` | effectiveHealth × (1 − rate)（每秒掉血降低有效生命） | 8 |
+
+机制警告（`projectMechanicsToScenario`，从 mechanics 结构化标记映射，不改面积预估）：永久死亡（`perma_death`/`perma_unavailable`）、不回血（`only_heal_on_revive`/`skip_area_change_heal`）、暴击门控（`debuff_until_crit`，全英雄有基础 2.5% 暴击率故不改变预估）。
+
+beam search 过滤（`scorePlannerFormationWithLegality`）：`minSurvivableArea` 选项检查 survivableArea + 护甲变体额外检查 killableArea（与生存过滤同构），不达标的阵型返回 SCORE_ZERO。
+
 ## 计算模式（性能优化）
 
 beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型求值，全英雄 worst case 一次推荐约 8s。计算模式通过「预计算收益 + 按席位裁剪候选」减少求值次数。
