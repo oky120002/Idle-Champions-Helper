@@ -142,6 +142,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
     attributeRequirements: [],
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     },
     {
@@ -161,6 +162,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
     attributeRequirements: [],
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     },
   ],

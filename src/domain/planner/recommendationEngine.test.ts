@@ -111,6 +111,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
         attributeRequirements: [],
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
 ]
@@ -154,6 +155,7 @@ const armorCollections: PlannerCollections = {
       attributeRequirements: [],
       occupiedSlotCount: 0,
       viabilityContext: { armor: { segments: 200 }, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
+    damageSourcePattern: null,
       scenarioWarnings: [],
     },
   ],
@@ -284,6 +286,7 @@ describe('planner recommendation engine', () => {
       attributeRequirements: [],
       occupiedSlotCount: 2,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
     }
     const occupiedCollections: PlannerCollections = {
@@ -340,6 +343,7 @@ describe('planner recommendation engine', () => {
         attributeRequirements: [],
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
@@ -400,6 +404,7 @@ describe('planner recommendation engine', () => {
         attributeRequirements: [],
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     }
     const forcedCollections: PlannerCollections = {
@@ -511,6 +516,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       attributeRequirements: [],
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
@@ -619,5 +625,118 @@ describe('viability: armor constraint', () => {
     const top = recommendation.results[0]!
     expect(top.viability).not.toBeNull()
     expect(top.viability!.activeConstraints).toEqual([])
+  })
+})
+
+describe('viability: damage source pattern (K4)', () => {
+  // 变体：强制英雄 Nayeli（id nayeli）在阵型中。
+  // 伤害来源限制：only same-column → carry 必须与 Nayeli 同列。
+  const columnVariant = createVariant('variant-col', {
+    campaign,
+    name: text('Column Lock', '列锁定'),
+    forcedHeroIds: ['nayeli'],
+  })
+  // 拓扑：s1/s2 在 column 1，s3/s4 在 column 2。
+  const columnScenario: OfficialPlannerScenarioModel = {
+    variantId: columnVariant.id,
+    scenarioRef: { kind: 'variant', id: columnVariant.id },
+    name: columnVariant.name,
+    formationLayoutId: 'layout-col',
+    objectiveArea: columnVariant.objectiveArea,
+    slotTopology: [
+      { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2', 's3'] },
+      { slotId: 's2', row: 2, column: 1, adjacentSlotIds: ['s1', 's3'] },
+      { slotId: 's3', row: 1, column: 2, adjacentSlotIds: ['s1', 's2', 's4'] },
+      { slotId: 's4', row: 2, column: 2, adjacentSlotIds: ['s2', 's3'] },
+    ],
+    forcedHeroes: ['nayeli'],
+    enemyTypes: [],
+    allowedHeroes: [],
+    allowedTagExpression: [],
+    attributeRequirements: [],
+    occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: { kind: 'same-column', referenceHeroId: 'nayeli' },
+    scenarioWarnings: [],
+  }
+  const columnCollections: PlannerCollections = {
+    variants: [columnVariant],
+    plannerHeroes,
+    plannerScenarios: [columnScenario],
+  }
+
+  it('carry 与参考英雄同列 → 正常评分（evaluateFormation）', () => {
+    // Nayeli(s3,col2) + Jarlaxle(s4,col2) → carry(Jarlaxle) 同列 → 有效
+    const evaluation = evaluateFormation({
+      collections: columnCollections,
+      variant: columnVariant,
+      profileSnapshot: null,
+      placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    expect(evaluation.result).not.toBeNull()
+    expect(evaluation.result!.objectiveValue).not.toBe('0')
+  })
+
+  it('carry 与参考英雄不同列 → SCORE_ZERO（evaluateFormation）', () => {
+    // Nayeli(s1,col1) + Jarlaxle(s3,col2) → carry(Jarlaxle) 不同列 → 无效
+    const evaluation = evaluateFormation({
+      collections: columnCollections,
+      variant: columnVariant,
+      profileSnapshot: null,
+      placements: { s1: 'nayeli', s2: 'bruenor', s3: 'jarlaxle', s4: 'celeste' },
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    expect(evaluation.result).not.toBeNull()
+    expect(evaluation.result!.objectiveValue).toBe('0')
+    expect(evaluation.result!.warnings.some((w) => w.includes('可造伤害'))).toBe(true)
+  })
+
+  it('buildPlannerRecommendation 自动避开无效 carry 位置', () => {
+    // beam search 应该把 carry 放在与 Nayeli 同列的位置，或选另一个 carry。
+    const recommendation = buildPlannerRecommendation({
+      collections: columnCollections,
+      variant: columnVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    // 应有结果（至少存在 carry 在同列的合法阵型）
+    expect(recommendation.results.length).toBeGreaterThan(0)
+    // 每个结果的 carry 应在同列
+    for (const result of recommendation.results) {
+      if (result.carryHeroId == null) continue
+      const carrySlot = Object.entries(result.placements).find(([, id]) => id === result.carryHeroId)?.[0]
+      const nayeliSlot = Object.entries(result.placements).find(([, id]) => id === 'nayeli')?.[0]
+      if (carrySlot && nayeliSlot) {
+        const carryCol = columnScenario.slotTopology.find((s) => s.slotId === carrySlot)?.column
+        const nayeliCol = columnScenario.slotTopology.find((s) => s.slotId === nayeliSlot)?.column
+        expect(carryCol).toBe(nayeliCol)
+      }
+    }
+  })
+
+  it('用户标记不可造伤害槽位 → carry 在该槽位时 SCORE_ZERO', () => {
+    // 用户标记 s1 为不可造伤害，carry(Jarlaxle) 放在 s1 → 无效
+    const evaluation = evaluateFormation({
+      collections: columnCollections,
+      variant: columnVariant,
+      profileSnapshot: null,
+      placements: { s1: 'jarlaxle', s2: 'celeste', s3: 'nayeli', s4: 'bruenor' },
+      options: { candidateMode: 'all-hypothetical', userDamageDisabledSlots: ['s1'] },
+    })
+    expect(evaluation.result).not.toBeNull()
+    expect(evaluation.result!.objectiveValue).toBe('0')
+  })
+
+  it('无 damageSourcePattern 的普通变体不受影响', () => {
+    const evaluation = evaluateFormation({
+      collections,
+      variant: selectedVariant,
+      profileSnapshot: null,
+      placements: { s1: 'bruenor', s2: 'celeste', s3: 'nayeli', s4: 'jarlaxle' },
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    expect(evaluation.result).not.toBeNull()
+    expect(evaluation.result!.objectiveValue).not.toBe('0')
   })
 })

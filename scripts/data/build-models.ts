@@ -75,6 +75,8 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
 
   const heroAbilities: HeroAbilityProfile[] = []
   const specializationCatalog: Record<string, SpecializationEntry[]> = {}
+  // champion original 名（小写）→ heroId，供 restrictions-parser 解析伤害来源限制的参考英雄。
+  const heroNameToId = new Map<string, string>()
   for (const championRaw of asArray(championsRecord.items)) {
     const champion = asRecord(championRaw)
     if (!champion) continue
@@ -84,6 +86,9 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
     const detail = await readJson(path.join(versionDir, 'champion-details', `${championId}.json`))
     const detailRecord = asRecord(detail) ?? {}
     heroAbilities.push(buildOfficialHeroModel(champion, detailRecord))
+    const nameRecord = asRecord(champion.name) ?? {}
+    const nameOriginal = typeof nameRecord.original === 'string' ? nameRecord.original.toLowerCase() : ''
+    if (nameOriginal) heroNameToId.set(nameOriginal, championId)
     // 专精 upgrade → 按 heroId 索引的可选 signal catalog（ADR 0017）；无专精的英雄不进 catalog。
     const specializationEntries = buildSpecializationEntries(detailRecord)
     if (specializationEntries.length > 0) {
@@ -94,7 +99,7 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   const scenarioModels = asArray(variantsRecord.items)
     .map((variantRaw) => {
       const variant = asRecord(variantRaw) ?? {}
-      return buildOfficialScenarioModel(variant, asArray(formationsRecord.items))
+      return buildOfficialScenarioModel(variant, asArray(formationsRecord.items), heroNameToId)
     })
 
   await writeJson(path.join(versionDir, 'hero-abilities.json'), {

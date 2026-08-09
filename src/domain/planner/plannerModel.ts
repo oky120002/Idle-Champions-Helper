@@ -49,6 +49,26 @@ export const EMPTY_VIABILITY_CONTEXT: ViabilityContext = {
   healthDrainRate: null,
 }
 
+/**
+ * 伤害来源位置限制模式（restrictions 文本解析）。
+ * carry 不在可造伤害位置 → DPS 归零（SCORE_ZERO）。支援位不受影响（formation abilities are active）。
+ * 模式依赖参考英雄位置，在评分时按 placements 动态求值。
+ */
+export interface DamageSourcePattern {
+  /**
+   * 'same-column'：carry 须与参考英雄同列。
+   * 'adjacent'：carry 须在参考英雄的相邻槽位（含参考英雄自身槽位）。
+   * 'not-adjacent'：carry 须不在相邻槽位（含参考英雄自身槽位）。
+   * 'front-columns'：carry 须在参考英雄及其前方 N 列（column ≤ refCol，下界 refCol−span）。
+   * 'behind-columns'：carry 须在参考英雄及其后方 N 列（column ≥ refCol，上界 refCol+span）。
+   */
+  kind: 'same-column' | 'adjacent' | 'not-adjacent' | 'front-columns' | 'behind-columns'
+  /** 参考英雄 ID（restrictions 中具名、在 champion 名表中解析到的 forced hero）。 */
+  referenceHeroId: string
+  /** front/behind-columns 的列跨度（默认 2 / 1）；大值（如 100）表示不限列数。 */
+  columnSpan?: number
+}
+
 export interface OfficialPlannerScenarioModel {
   variantId: string
   scenarioRef: ScenarioRef
@@ -73,6 +93,8 @@ export interface OfficialPlannerScenarioModel {
   occupiedSlotCount: number
   /** 变体可行性上下文（restrictions 解析；全 null = 普通变体）。 */
   viabilityContext: ViabilityContext
+  /** 伤害来源位置限制（restrictions 解析；null = 无位置限制）。carry 在无效位置 → DPS 归零。 */
+  damageSourcePattern: DamageSourcePattern | null
 }
 
 export type ResolvedPlannerScenarioModel = OfficialPlannerScenarioModel

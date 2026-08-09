@@ -92,6 +92,7 @@ function buildScenario(
     attributeRequirements: [],
     occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
     ...overrides,
   }
 }

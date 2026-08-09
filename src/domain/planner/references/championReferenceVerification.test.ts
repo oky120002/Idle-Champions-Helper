@@ -65,6 +65,7 @@ const scenario: OfficialPlannerScenarioModel = {
   attributeRequirements: [],
   occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
+    damageSourcePattern: null,
   scenarioWarnings: [],
 }
 

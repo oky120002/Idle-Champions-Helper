@@ -84,6 +84,11 @@ export const plannerScenarioItemSchema = z
       enemyDamageMult: z.number().nullable(),
       healthDrainRate: z.number().nullable(),
     }),
+    damageSourcePattern: z.object({
+      kind: z.enum(['same-column', 'adjacent', 'not-adjacent', 'front-columns', 'behind-columns']),
+      referenceHeroId: z.string(),
+      columnSpan: z.number().optional(),
+    }).nullable(),
   })
   .loose()
 

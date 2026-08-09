@@ -13,9 +13,9 @@
  */
 
 import type { AttributeRequirement } from '../../src/domain/types/formation.ts'
-import type { SegmentConfig, ViabilityContext } from '../../src/domain/planner/plannerModel.ts'
+import type { DamageSourcePattern, SegmentConfig, ViabilityContext } from '../../src/domain/planner/plannerModel.ts'
 
-export type { AttributeRequirement, SegmentConfig, ViabilityContext }
+export type { AttributeRequirement, DamageSourcePattern, SegmentConfig, ViabilityContext }
 
 export interface ParsedRestrictions {
   /** 被占据/诅咒的格数（保守取多条中最严的 max，不累加）。 */
@@ -395,4 +395,144 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
     viabilityContext: { armor, hitsBased, damageModifier, enemyDamageMult, healthDrainRate },
     warnings,
   }
+}
+
+// ─── 伤害来源位置限制解析 ───
+
+const EN_COLUMN_NUMBERS: Record<string, number> = { one: 1, two: 2, three: 3, four: 4 }
+const PRONOUNS = new Set(['him', 'her', 'them', 'his', 'hers', 'theirs', 'it'])
+
+/** 精确匹配后回退后缀匹配（"van richten" → "rudolph van richten"）。 */
+function lookupHeroName(name: string, heroNameToId: ReadonlyMap<string, string>): string | null {
+  const lower = name.toLowerCase().trim()
+  if (lower.length < 3) return null
+  const exact = heroNameToId.get(lower)
+  if (exact) return exact
+  for (const [fullName, id] of heroNameToId) {
+    if (fullName.endsWith(' ' + lower)) return id
+  }
+  return null
+}
+
+/**
+ * 从位置关键词附近提取参考英雄名，解析为 heroId。
+ *
+ * 策略：用模式正则捕获名字 token（"in front of Presto" → "Presto"）。
+ * 若 token 是代词（him/her/them），回退到 "Only [Name] and Champions" 前缀。
+ * 若均非已知 champion 名 → null（NPC 引用如 Mirt/skunk，交 UI 层）。
+ */
+function resolveReferenceHero(
+  sentence: string,
+  nameRegex: RegExp,
+  heroNameToId: ReadonlyMap<string, string>,
+): string | null {
+  const match = sentence.match(nameRegex)
+  if (match) {
+    // Strip possessive 's / 's suffix（"Ezmerelda's" → "Ezmerelda"，"Lae'zel's" → "Lae'zel"）。
+    const token = match[1]?.trim().replace(/['’]s$/i, '')
+    if (token && !PRONOUNS.has(token.toLowerCase())) {
+      const id = lookupHeroName(token, heroNameToId)
+      if (id) return id
+    }
+  }
+  // 代词回退："Only [Name] and (the) Champions ..." 前缀中的具名英雄。
+  const onlyMatch = sentence.match(/\bonly\s+(\w[\w\s']*?)\s+and\s+(?:the\s+)?champions/i)
+  if (onlyMatch) {
+    const name = onlyMatch[1]?.trim()
+    if (name && !PRONOUNS.has(name.toLowerCase())) {
+      const id = lookupHeroName(name, heroNameToId)
+      if (id) return id
+    }
+  }
+  return null
+}
+
+interface PatternMatch {
+  kind: DamageSourcePattern['kind']
+  columnSpan?: number
+  /** 参考英雄名提取正则（捕获组 1 = 名字 token）。 */
+  nameRegex: RegExp
+}
+
+function parseColumnSpan(token: string | undefined, fallback: number): number {
+  if (!token) return fallback
+  const num = /^\d+$/.test(token) ? parseInt(token, 10) : EN_COLUMN_NUMBERS[token.toLowerCase()]
+  return typeof num === 'number' && num > 0 ? num : fallback
+}
+
+/** 按优先级尝试匹配模式；返回模式 + 名字提取正则。 */
+function matchPattern(sentence: string): PatternMatch | null {
+  const lower = sentence.toLowerCase()
+
+  // not-adjacent: "not next to/adjacent to X" / "next to X deal no damage"
+  if (/\bnot\s+(?:next\s+to|adjacent\s+to)\b/i.test(sentence) ||
+      /\b(?:next\s+to|adjacent\s+to)\s+\w+.*deal\s+no\s+damage/i.test(sentence)) {
+    return { kind: 'not-adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
+  }
+
+  // front-columns: "(N) columns in front of X"
+  const frontMatch = lower.match(/(\d+|one|two|three|four)?\s*columns?\s+in\s+front\b/)
+  if (frontMatch) {
+    const span = frontMatch[1] ? parseColumnSpan(frontMatch[1], 2) : 100
+    return { kind: 'front-columns', columnSpan: span, nameRegex: /in\s+front\s+of\s+([\w'-]+)/i }
+  }
+
+  // behind-columns: "(N) column(s) behind X"
+  const behindMatch = lower.match(/(\d+|one|two|three|four)?\s*columns?\s+behind\b/)
+  if (behindMatch) {
+    const span = behindMatch[1] ? parseColumnSpan(behindMatch[1], 1) : 1
+    return { kind: 'behind-columns', columnSpan: span, nameRegex: /behind\s+([\w'-]+)/i }
+  }
+
+  // same-column: "in X's column" / "X's column"（排除 front/behind/back）
+  if (/\bcolumn\b/i.test(sentence) && !/\b(?:front|behind|back)\b/i.test(sentence)) {
+    return { kind: 'same-column', nameRegex: /(\w[\w'-]*)['']?s?\s+column/i }
+  }
+
+  // adjacent (positive): "next to/adjacent to X can deal damage"
+  if (/\b(?:next\s+to|adjacent\s+to)\b/i.test(sentence)) {
+    return { kind: 'adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
+  }
+
+  return null
+}
+
+/**
+ * 从 restrictions 文本解析伤害来源位置限制模式。
+ *
+ * 解析高频位置模式（same-column / adjacent / not-adjacent / front-columns / behind-columns），
+ * 通过位置关键词附近的名字 + champion 名表解析参考英雄。
+ * NPC 引用（Mirt、skunk、Elminster 等）不在名表中 → 返回 null（交 UI 层）。
+ *
+ * @param heroNameToId champion original 名（小写）→ heroId 映射。
+ */
+export function parseDamageSourcePattern(
+  restrictions: readonly RestrictionText[],
+  heroNameToId: ReadonlyMap<string, string>,
+): DamageSourcePattern | null {
+  for (const { original } of restrictions) {
+    if (!original) continue
+    const normalized = original.replace(/\r?\n/g, ' ')
+    for (const rawSentence of normalized.split(/\.\s+/)) {
+      const sentence = rawSentence.trim()
+      if (sentence === '') continue
+      const lower = sentence.toLowerCase()
+
+      const hasDamageConstraint = lower.includes('deal damage') || lower.includes('deal no damage')
+      if (!hasDamageConstraint) continue
+
+      const patternMatch = matchPattern(sentence)
+      if (!patternMatch) continue
+
+      const referenceHeroId = resolveReferenceHero(sentence, patternMatch.nameRegex, heroNameToId)
+      if (!referenceHeroId) continue // NPC 引用或未识别名，交 UI
+
+      return {
+        kind: patternMatch.kind,
+        referenceHeroId,
+        ...(patternMatch.columnSpan != null ? { columnSpan: patternMatch.columnSpan } : {}),
+      }
+    }
+  }
+  return null
 }

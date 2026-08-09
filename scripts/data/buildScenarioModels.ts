@@ -1,6 +1,6 @@
 import type { AttributeRequirement, TagExpression } from '../../src/domain/types/formation.ts'
 import { asArray, asRecord } from './io-utils.ts'
-import { parseRestrictions } from './restrictions-parser.ts'
+import { parseDamageSourcePattern, parseRestrictions } from './restrictions-parser.ts'
 
 interface SlotTopologyEntry {
   slotId: unknown
@@ -28,6 +28,8 @@ interface ScenarioModel {
   occupiedSlotCount: number
   /** 变体可行性上下文（restrictions 解析；护甲/伤害修正等）。 */
   viabilityContext: unknown
+  /** 伤害来源位置限制（restrictions 解析；null = 无）。 */
+  damageSourcePattern: unknown
 }
 
 function contextMatchesVariant(
@@ -95,6 +97,7 @@ function projectMechanicsToScenario(
 export function buildOfficialScenarioModel(
   variant: Record<string, unknown>,
   formations: unknown[],
+  heroNameToId: ReadonlyMap<string, string>,
 ): ScenarioModel {
   const formation = findFormationForVariant(formations, variant)
   const slotTopology: SlotTopologyEntry[] = formation
@@ -126,6 +129,7 @@ export function buildOfficialScenarioModel(
     return { original, display }
   })
   const parsedRestrictions = parseRestrictions(restrictionTexts)
+  const damageSourcePattern = parseDamageSourcePattern(restrictionTexts, heroNameToId)
   const restrictionWarnings: string[] = []
   if (parsedRestrictions.lockedSlotCount > 0) {
     restrictionWarnings.push(`当前场景有 ${String(parsedRestrictions.lockedSlotCount)} 个槽位被非英雄实体占据，不参与英雄占位。`)
@@ -147,6 +151,7 @@ export function buildOfficialScenarioModel(
     allowedHeroes: allowedHeroIds,
     occupiedSlotCount: parsedRestrictions.lockedSlotCount,
     viabilityContext: parsedRestrictions.viabilityContext,
+    damageSourcePattern,
     scenarioWarnings: [
       ...mechanicWarnings,
       ...restrictionWarnings,

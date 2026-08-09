@@ -54,7 +54,7 @@
 ### 阶段 D：高级击杀约束（K3/K4）
 
 - [x] D1 暴击门控（K3）：`debuff_until_crit` tag → scenarioWarnings（所有英雄有基础暴击率，不改变面积预估）
-- [ ] D2 伤害来源限制（K4）：解析 + carry 位置验证
+- [x] D2 伤害来源限制（K4）：两层方案（系统解析 25 变体 + UI 手动标记）已落地
 - [x] D3 命中型频率（K2）：hitsBased 进 estimateMaxArea 吞吐量约束（与护甲同模式，2 变体）
 
 ### 阶段 E：策略约束 + AoE 爆发（P0/S4）
@@ -73,7 +73,7 @@
 
 ## 验证
 
-1. ✅ `npx vitest run` — 1538 pass（+17 新增用例）
+1. ✅ `npx vitest run` — 1562 pass（+21 新增用例：parser 16 + scoring 5）
 2. ✅ `npm run signal-coverage` — 无漂移（exit 0）
 3. ✅ `npm run build` — Pages 兼容（tsc -b + vite build clean）
 
@@ -81,7 +81,7 @@
 
 - ✅ `simulator.md` 增加推图层数预估 + 可行性约束章节（ViabilityContext 5 字段 + 机制警告）
 - ✅ `computation-runtime.md` 更新推图预估公式（segmentMultiplier / drainRate / enemyDamageMult）+ ViabilityAssessment 输出合同
-- `architecture.md`「未接入能力」：viability 未列入（无需移除），K4 伤害来源限制 + S4 AoE burst 仍为未接入
+- `architecture.md`「未接入能力」：viability + K4 伤害来源限制 + S4 AoE burst 均已接入（无需更新未接入清单）
 
 ## 剩余工作评估（2026-08-09 调研）
 

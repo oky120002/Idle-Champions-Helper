@@ -173,6 +173,11 @@ export interface PlannerRecommendationOptions {
    * 未设 = 仅报告不过滤（现有行为不变）。由 viability 模型驱动（docs/plans/2026-08-planner-viability-model.md 阶段 A）。
    */
   minSurvivableArea?: number
+  /**
+   * 用户手动标记的不可造伤害槽位（UI 层 2，默认全部可打）。
+   * carry 落在这些槽位 → SCORE_ZERO；与系统解析的 damageSourcePattern 叠加。
+   */
+  userDamageDisabledSlots?: readonly string[]
 }
 
 /**
@@ -363,7 +368,7 @@ function scorePlannerFormation(
   scoringMode: ScoringMode,
   options: PlannerRecommendationOptions,
 ) {
-  return scoreFormation({
+  const scoring = scoreFormation({
     placements,
     heroesById,
     scenario,
@@ -382,6 +387,28 @@ function scorePlannerFormation(
     aggregateProjection: options.aggregateProjection,
     goldBudget: parseGoldBudget(options.goldBudget),
   })
+  // 伤害来源位置限制：carry 在不可造伤害位置 → DPS 归零（事实约束，非用户过滤）。
+  // 在 scorePlannerFormation 而非 scorePlannerFormationWithLegality 生效，使 evaluateFormation 也反映。
+  if (scoring.carryHeroId != null) {
+    const carrySlotId = Object.entries(placements).find(([, id]) => id === scoring.carryHeroId)?.[0]
+    // 层 2：用户手动标记。
+    if (carrySlotId != null && options.userDamageDisabledSlots?.includes(carrySlotId)) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, '核心英雄在用户标记的不可造伤害位置。'],
+      }
+    }
+    // 层 1：系统解析的位置限制模式。
+    if (!isCarryInDamageValidSlot(placements, scenario, scoring.carryHeroId)) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, '核心英雄不在可造伤害的位置。'],
+      }
+    }
+  }
+  return scoring
 }
 
 /**
@@ -673,6 +700,45 @@ function applyAugmentsAndBuildRules(
     warnings: scenario.scenarioWarnings,
   }
   return { heroById, heroSeats, heroLevels, scenarioVariantRules }
+}
+
+/**
+ * 检查 carry 是否在可造伤害位置（系统解析的位置限制模式）。
+ * 模式依赖参考英雄的 placement，动态求值。参考英雄/carry 未放置时返回 true（跳过检查）。
+ */
+function isCarryInDamageValidSlot(
+  placements: Record<string, string>,
+  scenario: ResolvedPlannerScenarioModel,
+  carryHeroId: string,
+): boolean {
+  const pattern = scenario.damageSourcePattern
+  if (!pattern) return true
+  const slotByHero = new Map(Object.entries(placements).map(([slot, id]) => [id, slot]))
+  const carrySlotId = slotByHero.get(carryHeroId)
+  if (!carrySlotId) return true
+  const refSlotId = slotByHero.get(pattern.referenceHeroId)
+  if (!refSlotId) return true
+  const topology = scenario.slotTopology
+  const carrySlot = topology.find((s) => s.slotId === carrySlotId)
+  const refSlot = topology.find((s) => s.slotId === refSlotId)
+  if (!carrySlot || !refSlot) return true
+
+  switch (pattern.kind) {
+    case 'same-column':
+      return carrySlot.column === refSlot.column
+    case 'adjacent':
+      return carrySlotId === refSlotId || refSlot.adjacentSlotIds.includes(carrySlotId)
+    case 'not-adjacent':
+      return carrySlotId === refSlotId || !refSlot.adjacentSlotIds.includes(carrySlotId)
+    case 'front-columns': {
+      const span = pattern.columnSpan ?? 2
+      return carrySlot.column >= Math.max(1, refSlot.column - span) && carrySlot.column <= refSlot.column
+    }
+    case 'behind-columns': {
+      const span = pattern.columnSpan ?? 1
+      return carrySlot.column >= refSlot.column && carrySlot.column <= refSlot.column + span
+    }
+  }
 }
 
 /**
