@@ -45,7 +45,13 @@
 
 传奇效果的基础数值约 10%-150% per slot（`global_dps_multiplier_mult,100` = 全队 +100%）。6 件全传奇、全队加成型英雄的累积效果可达 6 × 100% = 全队 +600%——这是显著的 DPS 倍率，忽略它会让推荐结果严重低估拥有传奇装备的阵型。
 
-升级等级放大效果值（每级提升固定百分比），20 级满级传奇的效果值约为 1 级的 2-3 倍。
+升级等级放大效果值。社区确认的缩放公式（[Steam 英雄能力公式帖](https://steamcommunity.com/app/627690/discussions/0/4336482609599058214/)）：
+
+```
+effect = gear_base × (1 + (ilvl - 1) × 0.004)
+```
+
+每级 ×2 倍率，20 级满级约为基线的 524,288×。升级消耗：每级 +153 鳞片（线性递增）+ 神眷（消耗当前 90%，最低需求 e10→e100 指数递增）。
 
 ## 需要做什么
 
@@ -96,13 +102,13 @@
 
 ## 为何暂缓
 
-阶段一（评分接入）工程量中等：需要新建传奇效果提取 + level 缩放逻辑，但通道复用已有基建。**前置依赖**：需确认传奇升级曲线（每级效果增量百分比）——社区说 1→20 级总消耗约 35,589 鳞片，但每级的效果值增量公式需从数据或社区验证。
+阶段一（评分接入）工程量中等：需要新建传奇效果提取 + level 缩放逻辑，但通道复用已有基建。**前置依赖**：传奇升级曲线已由社区确认（见上方公式），每级 ×2 倍率，可直接建模。
 
 阶段三（锻造建议）是最有产品特色的部分，但依赖阶段一的评分能力才能算「锻造前后的 DPS 差值」。
 
 ## 关联
 
 - 调研：`docs/research/gameplay/legendary-forge.md`（传奇装备与熔铸全貌）
-- 社区来源：[Legendary Forge 101 — Reddit](https://www.reddit.com/r/idlechampions/comments/ppl9mg/legendary_forge_101_an_introduction/)、[Forge — Fandom Wiki](https://idlechampions.fandom.com/wiki/Forge)
+- 社区来源：[Legendary Forge 101 — Reddit](https://www.reddit.com/r/idlechampions/comments/ppl9mg/legendary_forge_101_an_introduction/)、[Forge — Fandom Wiki](https://idlechampions.fandom.com/wiki/Forge)、[Steam 英雄能力公式](https://steamcommunity.com/app/627690/discussions/0/4336482609599058214/)、[Reddit 传奇优先级](https://www.reddit.com/r/idlechampions/comments/1l9nhv4/legendary_priorities/)、[Byteglow 传奇浏览](https://ic.byteglow.com/legendaries)
 - 代码：`src/domain/planner/scoringBonusInputs.ts`、`src/domain/user-profile/types.ts:12`（OwnedHeroLegendarySlot）
 - 关联需求：`planner-capability-extensions.md`（手动参数子项——装备假设配置可扩展到传奇）

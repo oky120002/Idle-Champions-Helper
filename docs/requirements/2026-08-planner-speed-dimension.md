@@ -20,12 +20,19 @@ Idle Champions 的推进速度由三个独立可叠加的维度决定（调研 `
 
 ### 当前缺口：642 个信号浪费
 
-planner 评分链路解析了攻速和冷却信号但不消费：
+planner 评分链路解析了攻速信号但完全不消费：
 
-- `attackSpeedMult`：22 个信号（carry 7 + support 15），对应 `reduce_attack_cooldown,X` 的英雄能力
-- `cooldownReduction`：约 620 个信号（主要是装备的 `reduce_ultimate_cooldown`），对应大招冷却缩减
+- `attackSpeedMult`：28 个信号（`hero-abilities.json` 实测），对应 `reduce_attack_cooldown,X` 的英雄能力
+- `cooldownReduction`：类型存在但 **0 个信号产出**（类型预留，parser 从未生成此 kind）
 
-根因是 BUD 计算使用静态 `baseAttackCooldown`（`budCalculation.ts`），不反映攻速缩减对 BUD 的影响。没有动态 BUD，速度信号就无法翻译成 DPS 变化。
+评分链路 5 处显式排除速度维度：
+1. `evaluatePlacementFit` 只传 `dimension: ['damage', 'crit', 'vulnerability']` 和 `'survival'`——从不传 `'speed'`
+2. `placementFit.ts` 的 dimensionFilterSet 直接过滤掉所有非指定维度的 signal
+3. `OBJECTIVE_DIMENSIONS` 只映射 damage/crit/vulnerability/gold
+4. `equipmentBuffSignals.ts` 的 `SUPPORTED_BUFF_TARGET_KINDS` 显式排除 `attackSpeedMult`
+5. 有专门测试断言"attackSpeed/cooldown 暂不收"
+
+根因：BUD 计算用 carry 英雄自己的 `baseAttackCooldown`（per-hero，已有），但不反映阵型中其他英雄提供的 `attackSpeedMult` 缩减。需要把阵型级攻速缩减纳入 BUD 计算。
 
 ### 冷却缩减上限与机制
 
@@ -42,10 +49,12 @@ ic.byteglow.com 有 Speed 页面（社区速度计算器），但仅展示英雄
 
 ### 阶段一：动态 BUD（前置基建）
 
-将 `budCalculation.ts` 从静态 `baseAttackCooldown` 升级为动态模型：
+社区确认 BUD 公式：`BUD = 最高单次伤害 / 攻击间隔`（[BUD 101](https://www.reddit.com/r/idlechampions/comments/fnoaal/)）。攻速是分母——攻速越快，BUD 越高。
+
+将 `budCalculation.ts` 从仅用 carry 自身冷却升级为纳入阵型级缩减：
 
 - 输入：阵型中所有 `attackSpeedMult` 信号（相邻/全队冷却缩减）+ Widdle 特殊覆盖
-- 处理：`effectiveCooldown = max(baseAttackCooldown × (1 - totalReduction), baseAttackCooldown × 0.25)`
+- 处理：`effectiveCooldown = max(carryBaseAttackCooldown × (1 - totalReduction), carryBaseAttackCooldown × 0.25)`
 - 输出：动态 BUD = `carrySingleHitDamage / effectiveCooldown`（当前是 `/ baseAttackCooldown`）
 
 ### 阶段二：速度评分维度
@@ -65,9 +74,9 @@ ic.byteglow.com 有 Speed 页面（社区速度计算器），但仅展示英雄
 
 | 组件 | 位置 | 状态 |
 |---|---|---|
-| `attackSpeedMult` 信号解析 | `HeroAbilityKind` + 信号池 | ✅ 已解析，22 信号 |
-| `cooldownReduction` 信号解析 | `HeroAbilityKind` + 信号池 | ✅ 已解析，620 信号 |
-| BUD 计算 | `src/domain/simulator/budCalculation.ts` | ⚠️ 静态 `baseAttackCooldown`，待升级 |
+| `attackSpeedMult` 信号解析 | `HeroAbilityKind` + 信号池 | ✅ 已解析，28 信号 |
+| `cooldownReduction` 信号解析 | `HeroAbilityKind` 类型已定义 | ⚠️ 0 信号产出（类型预留，parser 未生成） |
+| BUD 计算 | `src/domain/simulator/budCalculation.ts` | ⚠️ 用 carry 自己的 baseAttackCooldown，不含阵型级缩减 |
 | 面积估算 | `src/domain/simulator/areaEstimation.ts` | ✅ 已接 BUD，升级后自动受益 |
 | ScoringMode 类型 | `src/domain/planner/steadyStateScoring.ts:24` | 扩展点：新增 `'speed'` 或融入 `carry-dps` |
 | 英雄速度标签 | champion-tags | ✅ 已有 `speed` 标签分类 |
@@ -80,7 +89,7 @@ ic.byteglow.com 有 Speed 页面（社区速度计算器），但仅展示英雄
 
 ## 关联
 
-- 调研：`docs/research/gameplay/speed-mechanics.md`（速度机制全貌）
+- 社区来源：[Speed Champions 101](https://www.reddit.com/r/idlechampions/comments/1aleren/speed_champions_101_an_introduction/)、[BUD 101](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)、[Briv 跳层路线计算器](https://emmotes.github.io/ic_scripting_routes/)、[Byteglow Speed](https://ic.byteglow.com/speed)
 - 调研：`docs/research/gameplay/bud-mechanics.md`（BUD 定义与衰减规则）
 - 里程碑：`docs/research/data/planner/damage-mechanic-inventory.md` §8 M1
 - 需求：`planner-capability-extensions.md`（逐步模拟子项）

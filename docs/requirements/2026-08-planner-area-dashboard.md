@@ -82,7 +82,8 @@ health = 10 × growth_rate^(area - 1)
 | 怪物血量公式 | `game-rules.json` → `monster_base_stats` | ✅ 数据完整（分段增长率 + boss 倍率） |
 | 生存计算 | `src/domain/simulator/survivalCalculation.ts` | ✅ effectiveHealth 已实现 |
 | 金币曲线 | `game-rules.json` → `health_gold_ratio` | ✅ 47 段递减已入数据 |
-| BUD 计算 | `src/domain/simulator/budCalculation.ts` | ⚠️ 静态冷却，需 [[2026-08-planner-speed-dimension]] 升级后才能准确估算含速度英雄的阵型 |
+| BUD 计算 | `src/domain/simulator/budCalculation.ts` | ⚠️ 仅用 carry 自身冷却，不含阵型级缩减，需 [[2026-08-planner-speed-dimension]] 升级后才能准确估算含速度英雄的阵型 |
+| 孤儿模块 | `modronInfo.ts` / `ultUptime.ts` / `clickDamage.ts` | ⚠️ 三个 simulator 模块有代码但零生产消费方，可按需接入 |
 | ScoringResult | `src/domain/planner/steadyStateScoring.ts:154` | ✅ areaEstimate 已在结果中 |
 
 ## 为何暂缓
