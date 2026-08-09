@@ -60,16 +60,16 @@
 ### 阶段 E：策略约束 + AoE 爆发（P0/S4）
 
 - [x] E1 永久死亡标记（P0）：scenarioWarnings（`perma_death`/`perma_unavailable` tag）
-- [ ] E2 AoE 爆发生存（S4）：免疫/减伤/临时HP 评估
-- [ ] E3 测试
+- [x] E2 AoE 爆发生存（S4）：burst 伤害等效 healthDrainRate（parseBurstDrainRate: X%/N秒 → X/100/N，23 变体覆盖）；防御机制评估留后续
+- [x] E3 测试：burst 解析 3 用例 + areaEstimation 6 用例 + recommendationEngine 4 用例
 
 ## 验收
 
 - ✅ 护甲变体推荐结果反映碎甲能力（不碎甲的阵型被淘汰）
-- ⬜ AoE 变体推荐结果反映生存能力（扛不住的阵型被淘汰）— 待 E2（S4 AoE burst）
+- ✅ AoE 变体推荐结果反映生存能力（burst 伤害等效持续掉血降低 survivableArea）
 - ✅ 普通变体行为不变（不激活额外约束）
-- ✅ `PlannerResult.viability` 非空且反映实际评估
-- ✅ 所有现有测试不退化（1538 pass + build clean）
+- ✅ `PlannerResult.viability` 非空且反映实际评估（activeConstraints + boundBy）
+- ✅ 所有现有测试不退化（1541 pass + build clean）
 
 ## 验证
 
@@ -85,7 +85,17 @@
 
 ## 剩余工作评估（2026-08-09 调研）
 
-### D2（K4 伤害来源限制）— ⚠️ 不建议全自动化
+### E2（S4 AoE burst）— ✅ 已完成
+
+burst 伤害等效 healthDrainRate（`parseBurstDrainRate`：X%/N秒 → X/100/N）。8→23 变体覆盖（+15 burst）。防御机制评估留后续。
+
+### A6（UI）— ✅ 已完成
+
+- `boundBy = 'armor'` → 护甲受限标签
+- `viability.activeConstraints` 展示（护甲/命中型/伤害削减/敌人强化/持续掉血）
+- `PlannerSurvivableArea` 控件（null=不设=仅报告，输入数字=启用过滤）
+
+### D2（K4 伤害来源限制）— 两层方案：系统解析 + UI 补刀
 
 **数据现状**（`variants.json` 1424 变体全集扫描）：
 
@@ -99,75 +109,53 @@
 | 英雄专属/复杂语义 | 71 | v752 Shaka 天体谜题 |
 | `slot_effects` mechanics tag（总标记） | 94 | 含前置完成条件等非伤害约束 |
 
-**核心难点**：K4 是**位置约束**，不是面积函数。carry 必须在有效位置才能造成伤害（DPS 归零否则）。与 K1/K5/S1/S2（修改面积预估）本质不同。
+**核心判断**：K4 是**位置约束**——carry 在无效位置时 DPS 归零，但加成能力不受影响（"formation abilities are active"）。不是面积函数，无法用 estimateMaxArea 模型覆盖。
 
-两个子问题：
-1. **解析**（build 时）：从自由文本提取结构化约束。模式极多样——英雄特定能力（Asharra 羁绊、Shaka 谜题）、动态空间关系（"Qillek 两格内"）、逆序（"相邻英雄**不**造伤害"）——无法用统一正则覆盖。
-2. **验证**（运行时）：检查 carry 放置是否满足约束。**如果**有结构化约束，这步是简单的——planner 已有 slotTopology（row/column/adjacentSlotIds）+ forcedHeroes + carryHeroId。
+**两层方案**（系统解析 + UI 补刀）：
 
-**建议方案**（分三档）：
+**层 1 — 系统解析（变体必填，用户不可关闭）**：
+- 从 restrictions 文本解析高频位置模式（column / adjacent / front-back）→ 结构化约束
+- 验证在 `scorePlannerFormationWithLegality`：carry 不在可造伤害位置 → SCORE_ZERO
+- 只检查 carry 位置，不过滤支援英雄（支援位加成不受影响）
 
-| 档位 | 范围 | 方法 | 工作量 |
-|------|------|------|--------|
-| 当前（已做） | 全部 | `slot_effects` → scenarioWarnings（已有计时/点击限制 warning） | — |
-| **可做** | ~50 位置型 | 解析高频模式（column / adjacent / front-back）→ `carryPositionConstraint` 字段 → beam search 合法性检查 | 中（~1 天） |
-| 不建议 | 全部 137 | NLP 级语义解析（英雄专属能力、动态关系、逆序） | 高，ROI 低 |
+**层 2 — UI 手动标记（用户补充，默认全部可造伤害）**：
+- UI 展示阵型棋盘，用户可标记哪些槽位「不能造伤害」
+- 默认全部可造伤害——用户只做减法
+- `PlannerRecommendationOptions.userDamageDisabledSlots: string[]`
+- 与层 1 叠加：`disabledSlots = systemParsed ∪ userMarked`
 
-**「可做」档架构设计**：
+**UI 提示**（精简大白话）：
+> 有些变体限制了哪些位置能打伤害。默认都能打，如果变体有特殊限制，你可以手动标记不能打伤害的格子。核心英雄不能放在不能打伤害的格子上。
+
+**数据模型**：
 
 ```typescript
-// plannerModel.ts 新增
-interface CarryPositionConstraint {
-  /** carry 必须在指定英雄的同一列 / 相邻 / 前方 / 后方才能造伤害。null = 无位置约束。 */
-  relativeTo?: { heroId: string; relation: 'column' | 'adjacent' | 'front' | 'back' }
-  /** carry 必须（不）相邻于指定英雄才造伤害。 */
-  blockedByAdjacent?: string[]  // heroId list — 相邻则 DPS=0
+// plannerModel.ts — scenario 级（系统解析，必填）
+interface DamageSourceRestriction {
+  /** 不能造伤害的槽位 ID（黑名单）。空 = 全部可造伤害（无限制）。 */
+  damageDisabledSlots: string[]
+}
+
+// recommendationEngine.ts — 用户级（UI 设置，可选）
+PlannerRecommendationOptions.userDamageDisabledSlots?: string[]
+```
+
+**验证逻辑**（`scorePlannerFormationWithLegality`）：
+```typescript
+const disabledSlots = new Set([
+  ...scenario.damageDisabledSlots,
+  ...(options.userDamageDisabledSlots ?? []),
+])
+if (disabledSlots.size > 0 && scoring.carryHeroId != null) {
+  const carrySlotId = Object.entries(placements).find(([, id]) => id === scoring.carryHeroId)?.[0]
+  if (carrySlotId && disabledSlots.has(carrySlotId)) return SCORE_ZERO
 }
 ```
 
-验证在 `scorePlannerFormationWithLegality`：carry 不满足位置约束 → SCORE_ZERO（与生存/护甲过滤同构）。槽位拓扑（row/column/adjacentSlotIds）已可用。
+**解析优先级**（build 时 restrictions-parser）：
+1. `column` 模式：识别参考英雄（forced hero）+ 同列槽位 → 其他列为 damageDisabledSlots
+2. `adjacent` 模式：参考英雄的 adjacentSlotIds 之外的槽位 → damageDisabledSlots
+3. `front/back` 模式：参考英雄前/后列之外的槽位 → damageDisabledSlots
+4. 无法解析的模式 → 不设结构化约束，依赖 UI 层 + scenarioWarnings
 
-### E2（S4 AoE 爆发）— ✅ 可复用 healthDrainRate 模型
-
-**数据现状**（`random_crusader_damage` 39 变体 + 其他 burst 模式）：
-
-| 模式 | 变体 | 伤害 | 频率 |
-|------|------|------|------|
-| 随机目标 burst | 39 | 1%-100% maxHealth（中位 25%） | every 5-10s |
-| 全队 burst | ~10 | 10%-90% maxHealth | every 3-10s |
-
-**关键洞察**：burst 伤害等效为持续掉血——`等效 drainRate = burstPct / burstInterval`。
-- 25% every 5s → drainRate = 0.05/s（5%/s）
-- 90% every 5s → drainRate = 0.18/s
-
-这**直接复用已有 healthDrainRate 模型**（EHP × (1−drainRate)）。不需新建面积函数，只需解析 burst 模式并换算。
-
-**随机目标修正**：burst 打随机英雄时，carry 被击中概率 = 1/formationSize。保守近似：忽略概率（当全队 burst 处理）。精确化需 formationSize 参数进 estimateMaxArea，留后续。
-
-**防御机制**（免疫/减伤/临时HP/治疗）：`aoe-survival.md` 已盘点四类防御，`hero-abilities.json` 有 `damageReduction`（9 例）+ `heroHealthMultiplier`（3 例）信号。但这些信号进 survival 池的方式需单独设计（当前 survival 池只有 health_mult，不含 damage_reduction）。留后续迭代。
-
-**建议方案**：解析 `random_crusader_damage` 变体的 burstPct + burstInterval → 换算等效 healthDrainRate。~39 变体覆盖，复用现有模型，工作量低（~2h）。
-
-### A6（UI）— ✅ 可直接做
-
-**现状**：
-- `PlannerResultCard.tsx` 已展示 `areaEstimate`（面积 + 约束标签 + 击杀/存活上限）
-- `boundBy = 'armor'` 标签已补（`9717095`）
-- `viability.activeConstraints` 有数据但未展示
-- `minSurvivableArea` 有引擎逻辑但无 UI 控件
-
-**待做**（按优先级）：
-
-| 项 | 工作量 | 说明 |
-|----|--------|------|
-| activeConstraints 展示 | 低 | 结果卡中展示活跃约束标签（护甲/持续掉血/敌人强化等） |
-| minSurvivableArea 控件 | 低 | options 面板加数字输入或滑块（默认不设=不过滤） |
-| scenarioWarnings 突出 | 低 | 已有 warnings 区，特殊机制（永久死亡/不回血/暴击门控）可加图标 |
-
-纯 UI 工作，无新架构。
-
-## 剩余工作优先级排序
-
-1. **E2（S4 burst → healthDrainRate）**：最低工作量、复用现有模型、~39 变体覆盖 → **先做**
-2. **A6（UI）**：低工作量、用户可见价值 → **可并行**
-3. **D2（K4 位置约束）**：中工作量、~50 变体覆盖 → **视 ROI 决定**
+**不在本阶段范围**：标签/羁绊型（20 变体）、英雄专属能力（71 变体）——这些不是纯位置约束，依赖运行时能力状态，留 UI 层处理。
