@@ -5,7 +5,7 @@ import type { LocalizedOption, LocalizedText, Variant } from '../types'
 import {
   findPlannerScenarioForVariant,
   resolvePlannerModel,
-  type OfficialPlannerScenarioModel,
+  type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT,
 } from './plannerModel'
 
 function text(original: string, display = original): LocalizedText {
@@ -152,6 +152,7 @@ describe('findPlannerScenarioForVariant', () => {
         allowedTagExpression: [],
         attributeRequirements: [],
         occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
         scenarioWarnings: [],
       },
     ]

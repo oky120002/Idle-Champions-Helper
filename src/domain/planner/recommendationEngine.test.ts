@@ -4,7 +4,7 @@ import type { Champion, LocalizedOption, LocalizedText, Variant } from '../types
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
 import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
-import type { OfficialPlannerScenarioModel } from './plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './plannerModel'
 import type { PlannerCollections } from './recommendationTypes'
 
 function text(original: string, display = original): LocalizedText {
@@ -110,6 +110,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     allowedTagExpression: [],
         attributeRequirements: [],
       occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
 ]
@@ -244,6 +245,7 @@ describe('planner recommendation engine', () => {
       allowedTagExpression: [],
       attributeRequirements: [],
       occupiedSlotCount: 2,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
       scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
     }
     const occupiedCollections: PlannerCollections = {
@@ -299,6 +301,7 @@ describe('planner recommendation engine', () => {
       allowedTagExpression: [],
         attributeRequirements: [],
       occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
@@ -358,6 +361,7 @@ describe('planner recommendation engine', () => {
       allowedTagExpression: [],
         attributeRequirements: [],
       occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
       scenarioWarnings: [],
     }
     const forcedCollections: PlannerCollections = {
@@ -468,6 +472,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       allowedTagExpression: [],
       attributeRequirements: [],
       occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {

@@ -20,6 +20,32 @@ export interface PlannerScenarioSlot {
   adjacentSlotIds: string[]
 }
 
+/** 护甲/命中型段数配置（可含层数递增）。 */
+export interface SegmentConfig {
+  segments: number
+  scaling?: { additional: number; everyAreas: number }
+}
+
+/** 变体可行性上下文（restrictions 解析；全 null = 普通变体，不施加额外约束）。 */
+export interface ViabilityContext {
+  /** 护甲段数（如 "50 armored HP" → 50）。null = 无护甲。段门槛 = monsterHealthAt(area) / segmentsAt(area)。 */
+  armor: SegmentConfig | null
+  /** 命中型段数（如 "20 hits-based HP" → 20）。null = 无命中型。 */
+  hitsBased: SegmentConfig | null
+  /** 全局伤害修正乘数（0.01 = 减 99%；null = 无修正）。乘进 BUD → 抬高 DPS 墙。 */
+  damageModifier: number | null
+  /** 敌人伤害倍率（3 = 3x；null = 无修正）。乘进 monsterDpsAt → 降低 survivableArea。 */
+  enemyDamageMult: number | null
+}
+
+/** 空 viabilityContext（普通变体）。 */
+export const EMPTY_VIABILITY_CONTEXT: ViabilityContext = {
+  armor: null,
+  hitsBased: null,
+  damageModifier: null,
+  enemyDamageMult: null,
+}
+
 export interface OfficialPlannerScenarioModel {
   variantId: string
   scenarioRef: ScenarioRef
@@ -42,6 +68,8 @@ export interface OfficialPlannerScenarioModel {
    * formation 搜索可用容量 = slotTopology.length − occupiedSlotCount（见 recommendationEngine）。
    */
   occupiedSlotCount: number
+  /** 变体可行性上下文（restrictions 解析；全 null = 普通变体）。 */
+  viabilityContext: ViabilityContext
 }
 
 export type ResolvedPlannerScenarioModel = OfficialPlannerScenarioModel

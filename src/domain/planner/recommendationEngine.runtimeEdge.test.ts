@@ -6,7 +6,7 @@ import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { createOwnedHero, createUserProfileSnapshot } from '../user-profile/fixtures'
 import { resolveHeroAbilityProfiles } from '../abilities/abilityModel'
 import { buildPlannerRecommendation, evaluateFormation } from './recommendationEngine'
-import type { OfficialPlannerScenarioModel } from './plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './plannerModel'
 import type { PlannerCollections } from './recommendationTypes'
 
 /**
@@ -91,6 +91,7 @@ function buildScenario(
     allowedTagExpression: [],
     attributeRequirements: [],
     occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
     ...overrides,
   }
 }

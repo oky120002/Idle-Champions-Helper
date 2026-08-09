@@ -135,6 +135,7 @@ export function buildOfficialScenarioModel(
     enemyTypes: asArray(variant.enemyTypes),
     allowedHeroes: allowedHeroIds,
     occupiedSlotCount: parsedRestrictions.lockedSlotCount,
+    viabilityContext: parsedRestrictions.viabilityContext,
     scenarioWarnings: [
       ...mechanicWarnings,
       ...restrictionWarnings,

@@ -4,22 +4,26 @@
  * 数据源：`variants.json.items[].restrictions: Array<{original, display}>`（双语自由文本）。
  * 评估结论：`docs/specs/modules/planner/data-source-confirmations.md` §12.1。
  *
- * 不用 NLP，纯关键词模板。解析两类高价值模式：
+ * 不用 NLP，纯关键词模板。解析以下高价值模式：
  * 1. slot-occupying（→ lockedSlotCount）
  * 2. 属性门槛（→ attributeRequirements，CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）
+ * 3. 可行性上下文（→ viabilityContext，护甲段数/命中型/伤害修正等）
  * flavor 文本 / 完成前置 / 变量递增版不匹配 → warning（12.3 手工补 semantic-overrides.json）。
  * champion-tag 限制（"Only Evil Champions"）已被 mechanics 结构化捕获，不在此重复解析。
  */
 
 import type { AttributeRequirement } from '../../src/domain/types/formation.ts'
+import type { SegmentConfig, ViabilityContext } from '../../src/domain/planner/plannerModel.ts'
 
-export type { AttributeRequirement }
+export type { AttributeRequirement, SegmentConfig, ViabilityContext }
 
 export interface ParsedRestrictions {
   /** 被占据/诅咒的格数（保守取多条中最严的 max，不累加）。 */
   lockedSlotCount: number
   /** 属性门槛（CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）。 */
   attributeRequirements: AttributeRequirement[]
+  /** 可行性上下文（护甲/伤害修正等）。 */
+  viabilityContext: ViabilityContext
   /** 未匹配的 restriction 文本（低频/变量/特殊机制），待手工补 semantic-overrides。 */
   warnings: string[]
 }
@@ -239,8 +243,67 @@ function parseAttributeRequirements(text: string): AttributeRequirement[] {
   return results
 }
 
+// ─── 可行性上下文解析 ───
+
+const ARMOR_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?armored\s+(?:hit\s+points|HP)/i
+const HITS_BASED_SEGMENTS_RE = /(\d+)\s+(?:additional\s+)?hits-based\s+(?:HP|hit\s+points|health)/i
+const ARMORED_FLAG_RE = /armored\s+hit-based\s+health/i
+const SCALING_ADDITIONAL_RE = /(\d+)\s+additional\s+(?:armored|hits-based)\s+hit\s+points/i
+const SCALING_EVERY_RE = /every\s+(\d+)\s+areas/i
+const DAMAGE_REDUCED_RE = /damage\s+(?:is\s+)?reduced\s+by\s+(\d+(?:\.\d+)?)\s*%/i
+const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
+
+function parseSegmentConfig(text: string, baseRegex: RegExp): SegmentConfig | null {
+  const baseMatch = text.match(baseRegex)
+  if (!baseMatch) {
+    // 检查是否仅有标志（"armored hit-based health"），无具体段数
+    if (ARMORED_FLAG_RE.test(text) && baseRegex === ARMOR_SEGMENTS_RE) {
+      return { segments: 1 } // 标志存在但无段数 → 默认 1（保守最小值）
+    }
+    return null
+  }
+  const segments = parseInt(baseMatch[1], 10)
+  if (!Number.isFinite(segments) || segments <= 0) return null
+
+  const scalingAdditionalMatch = text.match(SCALING_ADDITIONAL_RE)
+  const scalingEveryMatch = text.match(SCALING_EVERY_RE)
+  if (scalingAdditionalMatch && scalingEveryMatch) {
+    const additional = parseInt(scalingAdditionalMatch[1], 10)
+    const everyAreas = parseInt(scalingEveryMatch[1], 10)
+    if (Number.isFinite(additional) && additional > 0 && Number.isFinite(everyAreas) && everyAreas > 0) {
+      return { segments, scaling: { additional, everyAreas } }
+    }
+  }
+  return { segments }
+}
+
+function parseDamageModifier(text: string): number | null {
+  const match = text.match(DAMAGE_REDUCED_RE)
+  if (!match) return null
+  const pct = parseFloat(match[1])
+  if (!Number.isFinite(pct) || pct <= 0 || pct >= 100) return null
+  return (100 - pct) / 100 // "reduced by 99%" → 0.01
+}
+
+function parseEnemyDamageMult(text: string): number | null {
+  const match = text.match(ENEMY_DAMAGE_MULT_RE)
+  if (!match) return null
+  const mult = parseFloat(match[1])
+  return Number.isFinite(mult) && mult > 0 ? mult : null
+}
+
+function parseViabilityContext(original: string): ViabilityContext {
+  if (original === '') return { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null }
+  return {
+    armor: parseSegmentConfig(original, ARMOR_SEGMENTS_RE),
+    hitsBased: parseSegmentConfig(original, HITS_BASED_SEGMENTS_RE),
+    damageModifier: parseDamageModifier(original),
+    enemyDamageMult: parseEnemyDamageMult(original),
+  }
+}
+
 /**
- * 解析 variant restrictions → lockedSlotCount + attributeRequirements + warnings。
+ * 解析 variant restrictions → lockedSlotCount + attributeRequirements + viabilityContext + warnings。
  * 双语（EN original + ZH display）分别尝试；slot count 取保守 max，属性门槛取全量并集。
  */
 export function parseRestrictions(restrictions: readonly RestrictionText[]): ParsedRestrictions {
@@ -248,6 +311,10 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
   const attributeRequirements: AttributeRequirement[] = []
   const warnings: string[] = []
   const seenAttrs = new Set<string>()
+  let armor: SegmentConfig | null = null
+  let hitsBased: SegmentConfig | null = null
+  let damageModifier: number | null = null
+  let enemyDamageMult: number | null = null
 
   for (const { original, display } of restrictions) {
     // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
@@ -258,6 +325,15 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
         seenAttrs.add(key)
         attributeRequirements.push(req)
       }
+    }
+
+    // 可行性上下文从 EN original 提取
+    if (original !== '') {
+      const vc = parseViabilityContext(original)
+      if (vc.armor) armor = vc.armor
+      if (vc.hitsBased) hitsBased = vc.hitsBased
+      if (vc.damageModifier != null) damageModifier = vc.damageModifier
+      if (vc.enemyDamageMult != null) enemyDamageMult = vc.enemyDamageMult
     }
 
     const enCount = original !== '' ? enSlotOccupyCount(original) : null
@@ -275,5 +351,10 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
     }
   }
 
-  return { lockedSlotCount, attributeRequirements, warnings }
+  return {
+    lockedSlotCount,
+    attributeRequirements,
+    viabilityContext: { armor, hitsBased, damageModifier, enemyDamageMult },
+    warnings,
+  }
 }

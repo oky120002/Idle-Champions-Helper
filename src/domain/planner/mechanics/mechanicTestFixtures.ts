@@ -1,5 +1,5 @@
 import type { HeroAbilityProfile, HeroAbilitySignal } from '../../abilities/abilityModel'
-import type { OfficialPlannerScenarioModel } from '../plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from '../plannerModel'
 import type { EvaluatePlacementFitInput } from '../placementFitTypes'
 
 export const testScenario: OfficialPlannerScenarioModel = {
@@ -19,6 +19,7 @@ export const testScenario: OfficialPlannerScenarioModel = {
   allowedTagExpression: [],
   attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
   scenarioWarnings: [],
 }
 

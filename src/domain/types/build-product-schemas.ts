@@ -71,6 +71,18 @@ export const plannerScenarioItemSchema = z
     allowedTagExpression: z.array(tagClauseSchema),
     attributeRequirements: z.array(attributeRequirementSchema),
     occupiedSlotCount: z.number(),
+    viabilityContext: z.object({
+      armor: z.object({
+        segments: z.number(),
+        scaling: z.object({ additional: z.number(), everyAreas: z.number() }).optional(),
+      }).nullable(),
+      hitsBased: z.object({
+        segments: z.number(),
+        scaling: z.object({ additional: z.number(), everyAreas: z.number() }).optional(),
+      }).nullable(),
+      damageModifier: z.number().nullable(),
+      enemyDamageMult: z.number().nullable(),
+    }),
   })
   .loose()
 

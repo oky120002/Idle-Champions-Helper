@@ -18,7 +18,7 @@ import { Decimal } from 'decimal.js'
 
 import { unwrap } from '../../../../tests/utils/dom-assertions'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
-import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
+import { resolvePlannerModel, type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from '../plannerModel'
 import { scoreFormation } from '../steadyStateScoring'
 import { computeEquipmentAdjustmentByHero, type LootCatalogEntry } from '../../buffs/equipmentMult'
 import { evaluatePlacementFit } from '../placementFit'
@@ -63,6 +63,7 @@ function singleSlotScenario(): OfficialPlannerScenarioModel {
     allowedTagExpression: [],
     attributeRequirements: [],
     occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
     scenarioWarnings: [],
   }
 }
@@ -86,6 +87,7 @@ function cursedFarmerScenario(): OfficialPlannerScenarioModel {
     allowedTagExpression: [],
     attributeRequirements: [],
     occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
     scenarioWarnings: [],
   }
 }

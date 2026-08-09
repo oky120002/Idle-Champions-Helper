@@ -34,8 +34,8 @@
 
 - [x] B1 `buildHeroModels` / `abilityModel.ts`：profile + `numTargets` / `damageModifier`（15 多段英雄数据到位）
 - [x] B2 `budCalculation.ts`：`computeSingleHitDamage` 签名扩展 + 公式修正（per-target BUD = dps×cd/numTargets，4 测试 ✅）
-- [ ] B3 `restrictions-parser.ts`：护甲段数 / 命中型 / 段数递增解析（K1/K2）
-- [ ] B4 `plannerModel.ts` / `buildScenarioModels.ts`：scenario + `viabilityContext`
+- [x] B3 `restrictions-parser.ts`：护甲段数 / 命中型 / 段数递增 / 伤害修正 / 敌人倍率解析（6 测试 ✅）
+- [x] B4 `plannerModel.ts` / `buildScenarioModels.ts`：ViabilityContext 类型 + scenario 投影 + 全量 fixture 更新（1523 测试 ✅）
 - [ ] B5 `armorEstimation.ts`（新）：护甲感知击杀预估（段门槛面积函数）
 - [ ] B6 `areaEstimation.ts`：整合护甲感知 `killableArea`
 - [ ] B7 `steadyStateScoring.ts`：护甲约束检查 + `viabilityFlags.armorPass`

@@ -13,7 +13,7 @@ import { describe, expect, it } from 'vitest'
 
 import { unwrap } from '../../../../tests/utils/dom-assertions'
 import type { HeroAbilityProfile } from '../../abilities/abilityModel'
-import { resolvePlannerModel, type OfficialPlannerScenarioModel } from '../plannerModel'
+import { resolvePlannerModel, type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from '../plannerModel'
 import { evaluatePlacementFit } from '../placementFit'
 import { vi95ReferenceData } from './vi95ReferenceData'
 
@@ -64,6 +64,7 @@ const scenario: OfficialPlannerScenarioModel = {
   allowedTagExpression: [],
   attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
   scenarioWarnings: [],
 }
 

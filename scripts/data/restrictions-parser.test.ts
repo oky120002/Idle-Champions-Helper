@@ -294,3 +294,42 @@ describe('parseRestrictions — 属性门槛提取', () => {
     expect(result.warnings).toEqual([])
   })
 })
+
+describe('parseRestrictions — 可行性上下文', () => {
+  it('护甲段数：200 armored HP → armor.segments=200', () => {
+    const result = parseRestrictions([r('After area 10, a giant Intellect Devourer appears. It has 200 armored hit points.')])
+    expect(result.viabilityContext.armor).toEqual({ segments: 200 })
+  })
+
+  it('命中型段数：20 hits-based HP → hitsBased.segments=20', () => {
+    const result = parseRestrictions([r('Each wave spawns 1-3 shadar-kai warriors with 20 hits-based HP.')])
+    expect(result.viabilityContext.hitsBased).toEqual({ segments: 20 })
+  })
+
+  it('段数递增：4 hits-based +4 every 25 areas → scaling', () => {
+    const result = parseRestrictions([r('Additional Frost Giants start with 4 hits-based hit points. Every 25 areas they gain 4 additional hits-based hit points.')])
+    expect(result.viabilityContext.hitsBased).toEqual({
+      segments: 4,
+      scaling: { additional: 4, everyAreas: 25 },
+    })
+  })
+
+  it('伤害削减 99%：damageModifier=0.01', () => {
+    const result = parseRestrictions([r('Champion damage is reduced by 99% in rain areas.')])
+    expect(result.viabilityContext.damageModifier).toBe(0.01)
+  })
+
+  it('敌人伤害倍率：deal 3x damage → enemyDamageMult=3', () => {
+    const result = parseRestrictions([r('Beasts deal 3x damage and have 2 additional armored hit points.')])
+    expect(result.viabilityContext.enemyDamageMult).toBe(3)
+    expect(result.viabilityContext.armor).toEqual({ segments: 2 })
+  })
+
+  it('普通变体：无护甲/命中型/伤害修正', () => {
+    const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher can be used.')])
+    expect(result.viabilityContext.armor).toBeNull()
+    expect(result.viabilityContext.hitsBased).toBeNull()
+    expect(result.viabilityContext.damageModifier).toBeNull()
+    expect(result.viabilityContext.enemyDamageMult).toBeNull()
+  })
+})

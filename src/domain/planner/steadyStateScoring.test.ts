@@ -3,7 +3,7 @@ import { unwrap } from '../../../tests/utils/dom-assertions'
 import { compareGameNumbers, toGameNumber } from '../gameNumber'
 import type { HeroAbilityProfile } from '../abilities/abilityModel'
 import { scoreFormation } from './steadyStateScoring'
-import type { OfficialPlannerScenarioModel } from './plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './plannerModel'
 
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
@@ -46,6 +46,7 @@ const scenario: OfficialPlannerScenarioModel = {
   allowedTagExpression: [],
   attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
   scenarioWarnings: [],
 }
 

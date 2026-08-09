@@ -29,7 +29,7 @@ import { resolveActiveNavigationItem } from '../../app/appNavigation'
 import type { HeroAbilityProfile } from '../../domain/abilities/abilityModel'
 import type { EffectDefinitionEntry } from '../../domain/buffs/effectDefinitionDps'
 import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
-import type { OfficialPlannerScenarioModel } from '../../domain/planner/plannerModel'
+import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from '../../domain/planner/plannerModel'
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../domain/types'
 import { createOwnedHero, createUserProfileSnapshot } from '../../domain/user-profile/fixtures'
 
@@ -149,6 +149,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
       allowedTagExpression: [],
     attributeRequirements: [],
   occupiedSlotCount: 0,
+    viabilityContext: EMPTY_VIABILITY_CONTEXT,
       scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
     },
   ],
