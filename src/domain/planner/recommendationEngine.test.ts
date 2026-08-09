@@ -121,6 +121,44 @@ const collections: PlannerCollections = {
   plannerScenarios,
 }
 
+// 护甲变体：200 段护甲 + 阈值检查
+const armorVariant = createVariant('variant-armor', {
+  campaign,
+  name: text('Armored Assault', '装甲突袭'),
+  adventureId: 'adventure-armor',
+  adventure: text('Armored Catacombs', '装甲墓穴'),
+  objectiveArea: 50,
+  restrictions: [text('It has 200 armored hit points.', '拥有 200 段护甲生命值。')],
+})
+
+const armorCollections: PlannerCollections = {
+  variants: [armorVariant],
+  plannerHeroes,
+  plannerScenarios: [
+    {
+      variantId: armorVariant.id,
+      scenarioRef: { kind: 'variant', id: armorVariant.id },
+      name: armorVariant.name,
+      formationLayoutId: 'layout-armor',
+      objectiveArea: armorVariant.objectiveArea,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      ],
+      forcedHeroes: [],
+      enemyTypes: [],
+      allowedHeroes: [],
+      allowedTagExpression: [],
+      attributeRequirements: [],
+      occupiedSlotCount: 0,
+      viabilityContext: { armor: { segments: 200 }, hitsBased: null, damageModifier: null, enemyDamageMult: null },
+      scenarioWarnings: [],
+    },
+  ],
+}
+
 describe('planner recommendation engine', () => {
   it('无用户快照时返回 missing-profile blocker', () => {
     const recommendation = buildPlannerRecommendation({ collections, variant: selectedVariant, profileSnapshot: null })
@@ -537,6 +575,33 @@ describe('viability: survival constraint', () => {
       options: { candidateMode: 'all-hypothetical' },
     })
     expect(recommendation.blocker).toBeNull()
+    expect(recommendation.results.length).toBeGreaterThan(0)
+  })
+})
+
+describe('viability: armor constraint', () => {
+  it('护甲变体 + minSurvivableArea 过滤击杀能力不足的阵型', () => {
+    // all-hypothetical 模式，level 1 英雄 BUD≈5 < monsterHealthAt(1)=10 → killableArea=1。
+    // 200 段护甲进一步抬高门槛。survivableArea≈49。
+    // 设 minSurvivableArea=10：survival 通过（49≥10），但护甲击杀不通过（killableArea=1<10）。
+    const recommendation = buildPlannerRecommendation({
+      collections: armorCollections,
+      variant: armorVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical', minSurvivableArea: 10 },
+    })
+    expect(recommendation.blocker).toBe('no-legal-recommendation')
+    expect(recommendation.results.length).toBe(0)
+  })
+
+  it('护甲变体未设 minSurvivableArea 时不额外过滤（仅报告）', () => {
+    const recommendation = buildPlannerRecommendation({
+      collections: armorCollections,
+      variant: armorVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    // 无阈值 → 不过滤 → 有结果（areaEstimate 反映护甲约束但不过滤）
     expect(recommendation.results.length).toBeGreaterThan(0)
   })
 })

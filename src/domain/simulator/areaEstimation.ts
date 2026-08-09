@@ -13,6 +13,12 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
  * estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
  * ```
  *
+ * 护甲变体追加吞吐量约束：怪物有 `segmentsAt(area)` 段护甲，需逐段击破后才能伤害正常生命。
+ * 每段碎甲条件是 `perHitBUD ≥ HP / segments`（`armored-enemies.md` 确认），但这个每段门槛始终 ≤ HP，
+ * 永远弱于基础 BUD 约束（BUD ≥ HP），不构成绑定约束。护甲的实际影响是**击杀吞吐量**：
+ * 需 `segments + 1` 次 BUD 命中（N 段护甲 + 1 次正常击杀），等效门槛 = `HP × segments`。
+ * 段数随层数线性递增（scaling），HP 指数增长，故门槛仍单调递增 → 二分查找适用。
+ *
  * 怪物 stats 缩放见 `src/domain/simulator/monsterStats.ts`（数据源 §10.1）。
  *
  * 量纲缺口：`monsterDamageAt` 当前由 `monsterDpsAt` 担任（raw `base_dps` +
@@ -25,7 +31,26 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
  * 依赖 BUD 实测校准才闭环；调用方须向用户标注「未校准」。相对比较（高 BUD → 高层数）保序。
  */
 
-export type AreaBound = 'bud' | 'survival' | 'max-area'
+export type AreaBound = 'bud' | 'survival' | 'armor' | 'max-area'
+
+/** 护甲/命中型段数配置（结构化兼容 plannerModel.SegmentConfig；simulator 不依赖 planner 模块）。 */
+export interface SegmentConfig {
+  segments: number
+  scaling?: { additional: number; everyAreas: number }
+}
+
+/**
+ * 可行性修正参数（结构化兼容 plannerModel.ViabilityContext 的消费子集）。
+ * simulator 不导入 planner 模块——仅声明所需字段的结构。
+ */
+export interface ViabilityModifier {
+  /** 护甲段数配置；null = 无护甲。estimateMaxArea 用吞吐量等效门槛 HP × segments。 */
+  armor: SegmentConfig | null
+  /** 全局伤害修正乘数（0.01 = 减 99%）；null = 无修正。乘进 BUD。 */
+  damageModifier: number | null
+  /** 敌人伤害倍率（3 = 3x）；null = 无修正。乘进 monsterDpsAt。 */
+  enemyDamageMult: number | null
+}
 
 export interface AreaEstimationInput {
   /** 阵型 BUD（或 carryDps 近似）；BUD ≥ 怪物生命才能击杀。 */
@@ -35,6 +60,8 @@ export interface AreaEstimationInput {
    * null = 不施加 survival 约束（仅 BUD 绑定）。
    */
   effectiveHealth: GameNumberValue | null
+  /** 可行性修正（来自 scenario.viabilityContext）；null/省略 = 普通变体，不施加额外约束。 */
+  viability?: ViabilityModifier | null
 }
 
 export interface AreaEstimationResult {
@@ -73,12 +100,40 @@ function binarySearchMaxArea(
   return lo
 }
 
-export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResult {
-  const killableArea = binarySearchMaxArea(input.bud, monsterHealthAt)
+/** 护甲/命中型段数 at area：基础段数 + 层数递增（线性）。 */
+function segmentsAt(area: number, config: SegmentConfig): number {
+  if (config.scaling) {
+    return config.segments + Math.floor((area - 1) / config.scaling.everyAreas) * config.scaling.additional
+  }
+  return config.segments
+}
 
+export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResult {
+  const vc = input.viability
+  const damageModifier = vc?.damageModifier
+  const effectiveBud = typeof damageModifier === 'number' && damageModifier !== 1
+    ? input.bud.mul(damageModifier)
+    : input.bud
+
+  const budKillableArea = binarySearchMaxArea(effectiveBud, monsterHealthAt)
+
+  // 护甲吞吐量约束：等效门槛 = HP × segments（需 segments+1 次命中，非每段门槛 HP/segments）。
+  // 每段门槛 HP/segments 始终 ≤ HP，不构成绑定约束；吞吐量惩罚才是护甲变体更难的根因。
+  const armorConfig = vc?.armor
+  const armorKillableArea = armorConfig != null
+    ? binarySearchMaxArea(effectiveBud, (area) => monsterHealthAt(area).mul(segmentsAt(area, armorConfig)))
+    : null
+
+  const killableArea = armorKillableArea != null
+    ? Math.min(budKillableArea, armorKillableArea)
+    : budKillableArea
+
+  const enemyDamageMult = vc?.enemyDamageMult
   const survivableArea = input.effectiveHealth === null
     ? MAX_AREA
-    : binarySearchMaxArea(input.effectiveHealth, monsterDpsAt)
+    : typeof enemyDamageMult === 'number' && enemyDamageMult !== 1
+      ? binarySearchMaxArea(input.effectiveHealth, (area) => monsterDpsAt(area).mul(enemyDamageMult))
+      : binarySearchMaxArea(input.effectiveHealth, monsterDpsAt)
 
   const area = Math.min(killableArea, survivableArea)
 
@@ -86,7 +141,7 @@ export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResul
   if (area >= MAX_AREA) {
     boundBy = 'max-area'
   } else if (killableArea <= survivableArea) {
-    boundBy = 'bud'
+    boundBy = armorKillableArea != null && armorKillableArea < budKillableArea ? 'armor' : 'bud'
   } else {
     boundBy = 'survival'
   }

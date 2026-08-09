@@ -81,6 +81,12 @@ armorKillableArea = max area where perHitBUD ≥ thresholdAt(area)
 
 `perHitBUD` 是英雄对单一目标的单次命中伤害。多段攻击英雄需除以段数（`attack-multi-hit.md`）。
 
+> **planner 实现 备注**：每段门槛 `HP/segments` 始终 ≤ HP，永远弱于基础 BUD 约束（BUD ≥ HP），
+> 因此作为 per-hit 碎甲能力判定是正确的，但**不构成面积函数的绑定约束**。
+> 护甲变体更难的根因是**击杀吞吐量**下降（需 segments+1 次命中而非 1 次）。
+> planner `estimateMaxArea` 采用吞吐量等效门槛 `HP × segments` 捕获此效应（见 `areaEstimation.ts`）。
+> 多段攻击英雄的吞吐量优势（每次攻击碎多段）暂未建模，留后续阶段。
+
 ## 特殊敌人血量类型对比
 
 | 维度 | hits-based | crit-based | armored |

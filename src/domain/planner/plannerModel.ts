@@ -28,7 +28,7 @@ export interface SegmentConfig {
 
 /** 变体可行性上下文（restrictions 解析；全 null = 普通变体，不施加额外约束）。 */
 export interface ViabilityContext {
-  /** 护甲段数（如 "50 armored HP" → 50）。null = 无护甲。段门槛 = monsterHealthAt(area) / segmentsAt(area)。 */
+  /** 护甲段数（如 "50 armored HP" → 50）。null = 无护甲。吞吐量等效门槛 = monsterHealthAt(area) × segmentsAt(area)。 */
   armor: SegmentConfig | null
   /** 命中型段数（如 "20 hits-based HP" → 20）。null = 无命中型。 */
   hitsBased: SegmentConfig | null

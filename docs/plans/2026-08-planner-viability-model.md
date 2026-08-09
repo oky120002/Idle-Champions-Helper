@@ -36,11 +36,12 @@
 - [x] B2 `budCalculation.ts`：`computeSingleHitDamage` 签名扩展 + 公式修正（per-target BUD = dps×cd/numTargets，4 测试 ✅）
 - [x] B3 `restrictions-parser.ts`：护甲段数 / 命中型 / 段数递增 / 伤害修正 / 敌人倍率解析（6 测试 ✅）
 - [x] B4 `plannerModel.ts` / `buildScenarioModels.ts`：ViabilityContext 类型 + scenario 投影 + 全量 fixture 更新（1523 测试 ✅）
-- [ ] B5 `armorEstimation.ts`（新）：护甲感知击杀预估（段门槛面积函数）
-- [ ] B6 `areaEstimation.ts`：整合护甲感知 `killableArea`
-- [ ] B7 `steadyStateScoring.ts`：护甲约束检查 + `viabilityFlags.armorPass`
-- [ ] B8 signal-coverage baseline 更新
-- [ ] B9 测试：BUD 多段修正、护甲解析、护甲面积函数
+- [x] B5+B6 `areaEstimation.ts`：护甲吞吐量约束（合并 B5 新文件→直接内联，Ponytail）。
+  公式修正：原 `threshold = HP/segments` 是数学空操作（HP/N < HP 永远弱于基础 BUD 约束）；
+  改为吞吐量模型 `threshold = HP × segments`（需 segments+1 次命中）。damageModifier × BUD，enemyDamageMult × monsterDpsAt（8 测试 ✅）
+- [x] B7 `steadyStateScoring.ts` + `recommendationEngine.ts`：viabilityContext 传入 estimateMaxArea + 护甲 killableArea 约束过滤（与生存过滤同构）（2 测试 ✅）
+- [x] B8 signal-coverage baseline 更新：无漂移（exit 0），数据管线未改动无需更新
+- [ ] B9 测试：✅ B5-B7 测试已落地（areaEstimation 6 用例 + recommendationEngine 2 用例）
 
 ### 阶段 C：存活约束精化（S1~S3）
 

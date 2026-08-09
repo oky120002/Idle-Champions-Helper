@@ -706,6 +706,14 @@ function scorePlannerFormationWithLegality(
         warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${scoring.areaEstimate.survivableArea} 层，要求 ≥ ${minSurvivableArea} 层`],
       }
     }
+    // 护甲约束：护甲变体额外检查击杀侧（B6 已把护甲门槛烤进 killableArea）
+    if (scenario.viabilityContext.armor != null && scoring.areaEstimate.killableArea < minSurvivableArea) {
+      return {
+        ...scoring,
+        objectiveValue: SCORE_ZERO,
+        warnings: [...scoring.warnings, `护甲击杀能力不足：预估可击杀 ${scoring.areaEstimate.killableArea} 层，要求 ≥ ${minSurvivableArea} 层`],
+      }
+    }
   }
   return scoring
 }

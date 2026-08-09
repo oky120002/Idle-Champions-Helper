@@ -488,7 +488,7 @@ function computeAreaEstimateForBestCarry(
   // ponytail: BUD 用 carry 单次伤害近似（carryDps × attackCooldown）；carry 通常设 BUD，
   // 绝对值偏差归 7.5 BUD 实测校准。相对比较保序。
   const bud = computeSingleHitDamage(bestCarryDps, bestCarryEntry.hero.baseAttackCooldown, bestCarryEntry.hero.numTargets)
-  return estimateMaxArea({ bud, effectiveHealth })
+  return estimateMaxArea({ bud, effectiveHealth, viability: input.scenario.viabilityContext })
 }
 
 /**
