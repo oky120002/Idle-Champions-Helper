@@ -86,5 +86,5 @@ global_dps effect_def 全部无属性 filter（全局生效）；带属性 filte
 
 ## 关联
 
-- 接入评估（globalBuff add pool 合并、effect_def 解引用两通道、type1 active 过滤、保守丢弃）：`docs/specs/modules/planner/mechanic-isolation.md` BonusProvider + `docs/specs/modules/planner/simulator.md` 加成聚合
+- 已进 scoring（`scoringBonusInputs.ts` 消费 `computeActualBlessingGlobalBuff` 进 global_dps 池，`collectActiveBlessingEffects` 进 per-carry hero_dps 池；effect_def 解引用两通道 + type1 active 过滤 + 保守丢弃）：`docs/specs/modules/planner/mechanic-isolation.md` BonusProvider + `docs/specs/modules/planner/simulator.md` 加成聚合
 - ADR 0015 active 过滤回归守护

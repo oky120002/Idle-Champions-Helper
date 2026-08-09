@@ -1,6 +1,6 @@
 # Idle Champions 辅助站 统一语言
 
-本站是《Idle Champions of the Forgotten Realms》个人成长导向的阵型决策台。游戏术语与代码标识符（英文 key）常不一致——面向用户对话先用游戏术语或中文讲清概念，不直接搬代码 key（详见 `AGENTS.md` 沟通用语）；本表是两者的权威映射。
+本站是《Idle Champions of the Forgotten Realms》最佳阵型自动推算工具。游戏术语与代码标识符（英文 key）常不一致——面向用户对话先用游戏术语或中文讲清概念，不直接搬代码 key（详见 `AGENTS.md` 沟通用语）；本表是两者的权威映射。
 
 > 加粗术语是唯一推荐用词；「别名」行仅登记同义词与口语词用于识别与消解，不是推荐叫法。
 
@@ -22,7 +22,7 @@
 别名：位置、slot（与阵型位是不同概念）
 
 **候选池**：
-推荐引擎在某次推荐中考虑的英雄范围。两种模式：仅拥有（`owned-only`，只算用户存档里已拥有的英雄）与全假设（`all-hypothetical`，含未拥有英雄，未拥有者按默认等级/无装备兜底计算）。假设装备配置（rarity + enchant）是独立控件，与候选模式正交。
+推算引擎在某次推算中考虑的英雄范围。两种模式：仅拥有（`owned-only`，只算用户存档里已拥有的英雄）与全假设（`all-hypothetical`，含未拥有英雄，未拥有者按默认等级/无装备兜底计算）。假设装备配置（rarity + enchant）是独立控件，与候选模式正交。
 代码标识符：`buildCandidatePool`、`CandidateMode`（类型）、`candidateMode`（字段）
 别名：候选英雄、candidate pool
 
@@ -66,7 +66,7 @@
 ## 战斗机制
 
 **BUD（基础大招伤害）**：
-Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作大招（ult）伤害结算基准。推荐引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
+Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作大招（ult）伤害结算基准。推算引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
 代码标识符：`computeSingleHitDamage`、`budCalculation.ts`
 别名：biggest unique damage、大招基准
 
@@ -137,24 +137,24 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 代码标识符：`overwhelm_start_increase`（effect key）
 别名：overwhelm、超额敌人伤害
 
-## 推荐目标
+## 推算目标
 
 **DPS 队 / 主输出（carry）**：
-推荐优化目标之一：最大化单英雄 carryDps（主输出伤害），是默认模式。carry 指承担主要输出的英雄。
+推算优化目标之一：最大化单英雄 carryDps（主输出伤害），是默认模式。carry 指承担主要输出的英雄。
 代码标识符：`ScoringMode: 'carry-dps'`、`carryDps`
 别名：carry dps
 
 **辅助英雄（support）**：
-与主输出 carry 对应的角色：通过 buff / 全队加成 / 易伤 / 减伤等支援主输出的英雄。推荐评分按信号桶（carrySignals / supportSignals）分别归类累加。
+与主输出 carry 对应的角色：通过 buff / 全队加成 / 易伤 / 减伤等支援主输出的英雄。推算评分按信号桶（carrySignals / supportSignals）分别归类累加。
 代码标识符：`supportSignals`、`SignalBucket`（`'carrySignals' | 'supportSignals'`）、`gainProfile.support`
 别名：support、辅助
 
 **金币队**：
-推荐优化目标之一：最大化全队金币发现。
+推算优化目标之一：最大化全队金币发现。
 代码标识符：`ScoringMode: 'team-gold'`、`computeTeamGoldFind`
 别名：金币评分
 
 **速度队**：
-推荐优化目标之一：最快过层。当前仅有速度维度信号，尚未接入 ScoringMode（登记为后续目标）。
+推算优化目标之一：最快过层。当前仅有速度维度信号，尚未接入 ScoringMode（登记为后续目标）。
 代码标识符：`HeroAbilityDimension.speed`
 别名：speed run

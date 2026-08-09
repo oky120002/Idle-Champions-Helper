@@ -1,7 +1,7 @@
 # abilities 领域模块入口
 
-- 作用：统一英雄能力表达（HeroAbilityProfile / HeroAbilitySignal），hero-agnostic，供推荐引擎与数据构建共同消费。
-- 边界：本目录不放推荐算法、页面 JSX、浏览器状态或文案。推荐引擎在 `src/domain/` 下专属目录消费此处类型；数据构建在 `scripts/data/`。
+- 作用：统一英雄能力表达（HeroAbilityProfile / HeroAbilitySignal），hero-agnostic，供推算引擎与数据构建共同消费。
+- 边界：本目录不放推算算法、页面 JSX、浏览器状态或文案。推算引擎在 `src/domain/` 下专属目录消费此处类型；数据构建在 `scripts/data/`。
 
 ## 先读顺序
 
@@ -11,7 +11,7 @@
 
 ## 不变量
 
-- 本目录禁止出现推荐引擎前缀：通用能力符号去前缀，推荐引擎专属符号留在推荐引擎目录。
+- 本目录禁止出现推算引擎前缀：通用能力符号去前缀，推算引擎专属符号留在推算引擎目录。
 - `HeroAbilityProfile` 是算法-英雄唯一握手点；新增英雄能力字段在此声明，下游统一消费。
 - signal 的 `unit` 字段默认按 `percent` 处理；`flat`/`boolean` 由加成聚合层按 dimension 分别处理。
 - `DIMENSION_BY_KIND` 是 kind→dimension 单一映射；新 kind 必须同时登记 dimension。
@@ -27,5 +27,5 @@
 ## 依赖方向
 
 - `abilities/` → `domain/types`（LocalizedText / AbilityScoreKey / DataCollection）。
-- 推荐引擎 → `abilities/`（单向）。
+- 推算引擎 → `abilities/`（单向）。
 - `scripts/data/` → `abilities/`（数据构建读取 resolver 与 signal semantics）。

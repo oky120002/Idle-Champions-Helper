@@ -15,7 +15,7 @@
 
 ## 项目边界
 
-- 产品是 Idle Champions 个人成长导向阵型决策台：资料查询、限制筛选、阵型编辑、候选校验、方案保存；不做黑盒全自动最优解，planner 是本地优先、可解释、可验证的推荐引擎（`docs/specs/modules/planner/`）。
+- 产品是 Idle Champions 最佳阵型自动推算工具：资料查询、限制筛选、阵型编辑、自动推算、方案保存；planner 是本地优先、可解释的最佳阵型推算引擎，目标是自动给出当前条件下的最优配置，过程可追溯、结果可验证（`docs/specs/modules/planner/`）。
 - 默认静态站、local-first、零预算；未经决策不引入重型后端/数据库/付费 SaaS/依赖私有接口的长期方案。
 - GitHub Pages 兼容是硬约束：路由、静态资源、数据加载改动都要复核 `import.meta.env.BASE_URL` 和 `HashRouter`。
 

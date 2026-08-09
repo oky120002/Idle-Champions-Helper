@@ -58,7 +58,7 @@ export function HeaderTopbar({
         <div className="site-header__compact-brand" aria-hidden="true">
           <span className="site-header__compact-mark" />
           <span className="site-header__compact-title">
-            {t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}
+            {t({ zh: '最佳阵型推算', en: 'Formation Optimizer' })}
           </span>
         </div>
       </div>

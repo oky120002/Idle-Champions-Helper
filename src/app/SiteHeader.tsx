@@ -36,7 +36,7 @@ export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, 
         <div className="site-header__content">
           <div className="site-header__copy">
             <div className="site-header__title-line">
-              <h1 className="site-title">{t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}</h1>
+              <h1 className="site-title">{t({ zh: '最佳阵型推算', en: 'Formation Optimizer' })}</h1>
             </div>
           </div>
         </div>
