@@ -40,6 +40,8 @@ export function usePlannerPageModel() {
   const [computationMode, setComputationMode] = useState<ComputationMode>('p50')
   // 动态层数假设（dynamic-stack-multiply，如蔚出言不逊）；默认与引擎 DEFAULT_MANUAL_STACK_COUNT 同源。
   const [manualStackCount, setManualStackCount] = useState(DEFAULT_MANUAL_STACK_COUNT)
+  // 生存阈值：低于此层数的阵型被淘汰。null = 不设（仅报告不过滤）。
+  const [minSurvivableArea, setMinSurvivableArea] = useState<number | null>(null)
   // 金币/等级互斥（none=不启用，用存档等级；gold=金币预算换算等级；level=全局统一等级）
   const [goldLevelMode, setGoldLevelMode] = useState<'none' | 'gold' | 'level'>('none')
   const [goldBudget, setGoldBudget] = useState('')
@@ -117,6 +119,7 @@ export function usePlannerPageModel() {
       candidateMode,
       computationMode,
       manualStackCount,
+      ...(minSurvivableArea != null ? { minSurvivableArea } : {}),
       lockedCarryHeroId,
       lockedSlots,
       equipmentAdjustmentByHero,
@@ -130,7 +133,7 @@ export function usePlannerPageModel() {
       heroLevelOverride,
       goldBudget: effectiveGoldBudget,
     }),
-    [scoringMode, candidateMode, computationMode, manualStackCount, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, heroLevelOverride, effectiveGoldBudget],
+    [scoringMode, candidateMode, computationMode, manualStackCount, minSurvivableArea, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, heroLevelOverride, effectiveGoldBudget],
   )
   // 有效 snapshot = 存档 + 专精 override；engine 按 OwnedHero.specializations 注入 signal（ADR 0017）。
   // 无 override 时同引用返回，避免 usePlannerRecommendation 无谓重算。
@@ -165,6 +168,10 @@ export function usePlannerPageModel() {
   }, [])
   const selectManualStackCount = useCallback((count: number) => {
     setManualStackCount(count)
+    setSelectedResultIndex(0)
+  }, [])
+  const selectMinSurvivableArea = useCallback((area: number | null) => {
+    setMinSurvivableArea(area)
     setSelectedResultIndex(0)
   }, [])
   const selectGoldLevelMode = useCallback((mode: 'none' | 'gold' | 'level') => {
@@ -211,6 +218,7 @@ export function usePlannerPageModel() {
     loadError,
     loadState,
     manualStackCount,
+    minSurvivableArea,
     profileSnapshot,
     recommendLoading,
     recommendError,
@@ -226,6 +234,7 @@ export function usePlannerPageModel() {
     selectEquipmentRarity,
     selectGoldLevelMode,
     selectManualStackCount,
+    selectMinSurvivableArea,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,

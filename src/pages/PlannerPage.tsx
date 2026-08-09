@@ -11,6 +11,7 @@ import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerCandidateMode } from './planner/PlannerCandidateMode'
 import { PlannerComputationMode } from './planner/PlannerComputationMode'
 import { PlannerStackCount } from './planner/PlannerStackCount'
+import { PlannerSurvivableArea } from './planner/PlannerSurvivableArea'
 import { PlannerGoldLevel } from './planner/PlannerGoldLevel'
 import { PlannerHypotheticalEquipment } from './planner/PlannerHypotheticalEquipment'
 import { PlannerSpecializationPanel } from './planner/PlannerSpecializationPanel'
@@ -80,6 +81,7 @@ export function PlannerPage() {
     loadError,
     loadState,
     manualStackCount,
+    minSurvivableArea,
     plannerRecommendation,
     profileSnapshot,
     recommendError,
@@ -96,6 +98,7 @@ export function PlannerPage() {
     selectEquipmentRarity,
     selectGoldLevelMode,
     selectManualStackCount,
+    selectMinSurvivableArea,
     selectLockedCarryHeroId,
     selectResultIndex,
     selectVariantId,
@@ -212,6 +215,7 @@ export function PlannerPage() {
                   <PlannerCandidateMode value={candidateMode} onChange={selectCandidateMode} />
                   <PlannerComputationMode value={computationMode} onChange={selectComputationMode} />
                   <PlannerStackCount value={manualStackCount} onChange={selectManualStackCount} />
+                  <PlannerSurvivableArea value={minSurvivableArea} onChange={selectMinSurvivableArea} />
                   <PlannerGoldLevel
                     mode={goldLevelMode}
                     goldBudget={goldBudget}

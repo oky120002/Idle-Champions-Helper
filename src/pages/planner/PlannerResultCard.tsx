@@ -5,6 +5,14 @@ import { useI18n } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 import { PlannerBreakdown } from './PlannerBreakdown'
 
+const CONSTRAINT_LABELS: Record<string, { zh: string; en: string }> = {
+  armor: { zh: '护甲', en: 'Armor' },
+  'hits-based': { zh: '命中型', en: 'Hits-based' },
+  'damage-reduction': { zh: '伤害削减', en: 'Dmg reduction' },
+  'enemy-buff': { zh: '敌人强化', en: 'Enemy buff' },
+  'health-drain': { zh: '持续掉血', en: 'Health drain' },
+}
+
 export type PlannerResultCardProps = PlannerResult & {
   scoringMode?: ScoringMode
   slots: FormationSlot[]
@@ -19,6 +27,7 @@ export function PlannerResultCard({
   explanations,
   warnings,
   areaEstimate,
+  viability,
   breakdown,
   scoringMode = 'carry-dps',
   slots,
@@ -158,6 +167,17 @@ export function PlannerResultCard({
                     en: `bound: ${boundLabel} (killable ${String(areaEstimate.killableArea)} / survivable ${String(areaEstimate.survivableArea)}, uncalibrated)`,
                   })}
                 </p>
+                {viability != null && viability.activeConstraints.length > 0 ? (
+                  <p className="planner-result-card__viability-constraints" data-testid="planner-viability-constraints">
+                    {t({ zh: '活跃约束：', en: 'Active constraints: ' })}
+                    {viability.activeConstraints.map((key) => {
+                      const label = CONSTRAINT_LABELS[key]
+                      return label
+                        ? t(label)
+                        : key
+                    }).join(t({ zh: '、', en: ', ' }))}
+                  </p>
+                ) : null}
               </section>
             ) : null}
 
