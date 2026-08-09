@@ -45,22 +45,21 @@
 
 ### 阶段 C：存活约束精化（S1~S3）
 
-- [ ] C1 解析敌人伤害倍率（S1）→ 修正 `monsterDpsAt`
-- [ ] C2 解析持续掉血（S2）→ 叠加到 incoming damage
-- [ ] C3 解析不回血（S3）→ 标记 + 评估治疗信号能否维持
-- [ ] C4 精化 survival 检查为复合模型
-- [ ] C5 测试
+- [x] C1 解析敌人伤害倍率（S1）→ 已在 B5-B9 落地（enemyDamageMult × monsterDpsAt）
+- [x] C2 解析持续掉血（S2）→ healthDrainRate 进 ViabilityContext → estimateMaxArea 降低有效生命（8 变体命中）
+- [x] C3 解析不回血（S3）→ 标记为 scenarioWarnings（`only_heal_on_revive`/`skip_area_change_heal` tag）；治疗吞吐量模型留后续
+- [x] C4 精化 survival 检查：healthDrainRate × (1 - rate) EHP 修正 + enemyDamageMult 已在 estimateMaxArea 内消费
+- [x] C5 测试：healthDrainRate 解析 3 用例 + areaEstimation survival 1 用例
 
 ### 阶段 D：高级击杀约束（K3/K4）
 
 - [ ] D1 暴击门控（K3）：crit chance > 0% 检查
 - [ ] D2 伤害来源限制（K4）：解析 + carry 位置验证
-- [ ] D3 命中型频率（K2）：攻击频率 vs 段数
-- [ ] D4 测试
+- [x] D3 命中型频率（K2）：hitsBased 进 estimateMaxArea 吞吐量约束（与护甲同模式，2 变体）
 
 ### 阶段 E：策略约束 + AoE 爆发（P0/S4）
 
-- [ ] E1 永久死亡标记（P0）：warning 级提示
+- [x] E1 永久死亡标记（P0）：scenarioWarnings（`perma_death`/`perma_unavailable` tag）
 - [ ] E2 AoE 爆发生存（S4）：免疫/减伤/临时HP 评估
 - [ ] E3 测试
 
