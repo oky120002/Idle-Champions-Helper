@@ -170,4 +170,27 @@ describe('estimateMaxArea — 命中型 + 持续掉血', () => {
     })
     expect(withDrain.survivableArea).toBeLessThanOrEqual(noDrain.survivableArea)
   })
+
+  test('hits-based 绑定时 boundBy="hits-based"（非 "armor" 误标）', () => {
+    // hitsBased-only 段吞吐量是绑定约束 → boundBy 须区分 'hits-based' 而非笼统 'armor'。
+    const bud = monsterHealthAt(100)
+    const result = estimateMaxArea({
+      bud,
+      effectiveHealth: null,
+      viability: { armor: null, hitsBased: { segments: 200 }, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
+    })
+    expect(result.boundBy).toBe('hits-based')
+  })
+
+  test('healthDrainRate ≥ 1（每秒掉血 ≥100%）= 无法存活 → survivableArea=1', () => {
+    // drainRate=1.0 原被 guard `drainRate < 1` 静默丢弃（视为无掉血）。
+    const bud = new Decimal('1e100')
+    const result = estimateMaxArea({
+      bud,
+      effectiveHealth: new Decimal(1e30),
+      viability: { armor: null, hitsBased: null, damageModifier: null, enemyDamageMult: null, healthDrainRate: 1 },
+    })
+    expect(result.survivableArea).toBe(1)
+    expect(result.boundBy).toBe('survival')
+  })
 })

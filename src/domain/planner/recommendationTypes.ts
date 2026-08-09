@@ -19,10 +19,13 @@ export interface PlannerPlacementEntry {
   seat: number | null
 }
 
+/** 可行性约束标识（与 viabilityContext 非 null 字段一一对应）。 */
+export type ConstraintKind = 'armor' | 'hits-based' | 'damage-reduction' | 'enemy-buff' | 'health-drain'
+
 /** 变体可行性约束评估摘要（UI 展示用；普通变体 activeConstraints 为空）。 */
 export interface ViabilityAssessment {
   /** 活跃约束标识（viabilityContext 中非 null 的字段；空 = 普通变体无额外约束）。 */
-  activeConstraints: readonly string[]
+  activeConstraints: readonly ConstraintKind[]
   /** 绑定约束（最先卡住的那个）；null = 未评估或缺 carry。 */
   boundBy: AreaBound | null
 }

@@ -57,7 +57,7 @@ const tagClauseSchema = z.object({
 const attributeRequirementSchema = z.object({
   stat: z.enum(['str', 'dex', 'con', 'int', 'wis', 'cha']),
   operator: z.enum(['>=', '<=']),
-  value: z.number(),
+  value: z.number().int(),
 })
 
 export const plannerScenarioItemSchema = z
@@ -70,7 +70,7 @@ export const plannerScenarioItemSchema = z
     allowedHeroes: z.array(z.string()),
     allowedTagExpression: z.array(tagClauseSchema),
     attributeRequirements: z.array(attributeRequirementSchema),
-    occupiedSlotCount: z.number(),
+    occupiedSlotCount: z.number().int().min(0),
     viabilityContext: z.object({
       armor: z.object({
         segments: z.number().int().positive(),
@@ -80,14 +80,14 @@ export const plannerScenarioItemSchema = z
         segments: z.number().int().positive(),
         scaling: z.object({ additional: z.number().int().positive(), everyAreas: z.number().int().positive() }).optional(),
       }).nullable(),
-      damageModifier: z.number().nullable(),
-      enemyDamageMult: z.number().nullable(),
-      healthDrainRate: z.number().nullable(),
+      damageModifier: z.number().min(0).nullable(),
+      enemyDamageMult: z.number().positive().nullable(),
+      healthDrainRate: z.number().min(0).nullable(),
     }),
     damageSourcePattern: z.object({
       kind: z.enum(['same-column', 'adjacent', 'not-adjacent', 'front-columns', 'behind-columns']),
       referenceHeroId: z.string(),
-      columnSpan: z.number().optional(),
+      columnSpan: z.number().int().positive().optional(),
     }).nullable(),
   })
   .loose()

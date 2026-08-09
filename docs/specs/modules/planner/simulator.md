@@ -95,15 +95,15 @@ estimatedArea  = min(killableArea, survivableArea, MAX_AREA)
 
 | 约束 | 字段 | 模型 | 命中变体 |
 |------|------|------|----------|
-| 护甲 | `armor: SegmentConfig` | 吞吐量等效门槛 HP × segments（每段门槛 HP/N 始终 ≤ HP，不构成绑定约束；吞吐量惩罚是根因） | 17 |
+| 护甲 | `armor: SegmentConfig` | 吞吐量等效门槛 HP × segments（每段门槛 HP/N 始终 ≤ HP，不构成绑定约束；吞吐量惩罚是根因） | 27 |
 | 命中型 | `hitsBased: SegmentConfig` | 同护甲吞吐量模式（需 N 次命中，可叠加） | 2 |
 | 伤害削减 | `damageModifier: number` | BUD × damageModifier（0.01 = 减 99%） | 19 |
 | 敌人强化 | `enemyDamageMult: number` | monsterDpsAt × mult | 3 |
-| 持续掉血 | `healthDrainRate: number` | effectiveHealth × (1 − rate)（每秒掉血降低有效生命） | 8 |
+| 持续掉血 | `healthDrainRate: number` | effectiveHealth × (1 − rate)（每秒掉血降低有效生命；rate ≥ 1 = 无法存活） | 23 |
 
 机制警告（`projectMechanicsToScenario`，从 mechanics 结构化标记映射，不改面积预估）：永久死亡（`perma_death`/`perma_unavailable`）、不回血（`only_heal_on_revive`/`skip_area_change_heal`）、暴击门控（`debuff_until_crit`，全英雄有基础 2.5% 暴击率故不改变预估）。
 
-beam search 过滤（`scorePlannerFormationWithLegality`）：`minSurvivableArea` 选项检查 survivableArea + 吞吐量约束变体（护甲/命中型）额外检查 killableArea（与生存过滤同构），不达标的阵型返回 SCORE_ZERO。
+beam search 过滤（`scorePlannerFormationWithLegality`）：`minSurvivableArea` 选项检查整体预估 `area = min(killableArea, survivableArea)`——统一覆盖所有约束（护甲/命中型吞吐量、damageModifier 击杀削减、survival 生存），不达标的阵型返回 SCORE_ZERO。`AreaBound` 按绑定约束区分 `bud`/`survival`/`armor`/`hits-based`/`max-area`。
 
 ## 伤害来源位置限制（K4）
 

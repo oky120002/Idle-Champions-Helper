@@ -1,4 +1,4 @@
-import { compareGameNumbers, type GameNumberValue } from '../gameNumber'
+import { compareGameNumbers, toGameNumber, type GameNumberValue } from '../gameNumber'
 import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
 
 /**
@@ -31,7 +31,9 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
  * 依赖 BUD 实测校准才闭环；调用方须向用户标注「未校准」。相对比较（高 BUD → 高层数）保序。
  */
 
-export type AreaBound = 'bud' | 'survival' | 'armor' | 'max-area'
+export type AreaBound = 'bud' | 'survival' | 'armor' | 'hits-based' | 'max-area'
+
+const ZERO_HEALTH = toGameNumber(0)
 
 /** 护甲/命中型段数配置（结构化兼容 plannerModel.SegmentConfig；simulator 不依赖 planner 模块）。 */
 export interface SegmentConfig {
@@ -126,15 +128,19 @@ function computeSegmentKillableArea(
   })
 }
 
-/** 持续掉血降低有效生命：drainRate > 0 时有效生命 = health × (1 - drainRate)。 */
+/** 持续掉血降低有效生命：drainRate > 0 时有效生命 = health × (1 - drainRate)。
+ * drainRate ≥ 1（每秒掉血 ≥ 100%）= 无法存活，返回 0（原 guard `drainRate < 1` 静默丢弃致命掉血）。 */
 function applyHealthDrain(
   health: GameNumberValue,
   drainRate: number | null | undefined,
 ): GameNumberValue {
-  if (typeof drainRate === 'number' && drainRate > 0 && drainRate < 1) {
-    return health.mul(1 - drainRate)
+  if (typeof drainRate !== 'number' || drainRate <= 0) {
+    return health
   }
-  return health
+  if (drainRate >= 1) {
+    return ZERO_HEALTH
+  }
+  return health.mul(1 - drainRate)
 }
 
 /** survival 约束：effectiveHealth ≥ monsterDps × mult。 */
@@ -176,7 +182,13 @@ export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResul
   if (area >= MAX_AREA) {
     boundBy = 'max-area'
   } else if (killableArea <= survivableArea) {
-    boundBy = segmentKillableArea != null && segmentKillableArea < budKillableArea ? 'armor' : 'bud'
+    // 段吞吐量绑定：armor 和 hitsBased 不共存于同一变体（数据已验证），
+    // 按激活类型区分标签；两者均 null 时不会进此分支（segmentKillableArea==null）。
+    if (segmentKillableArea != null && segmentKillableArea < budKillableArea) {
+      boundBy = vc?.armor != null ? 'armor' : 'hits-based'
+    } else {
+      boundBy = 'bud'
+    }
   } else {
     boundBy = 'survival'
   }

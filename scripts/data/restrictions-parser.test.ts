@@ -130,6 +130,23 @@ describe('parseRestrictions — 漏匹配 variant 手工补 override', () => {
   })
 })
 
+// 复合 restriction（占格 + 额外机制）原 if-elseif 链在 count>0 时跳过残余检测，
+// 致额外机制（debuff/buff/swap 等）warning 丢失。修复后残余机制独立于 count 检测。
+describe('parseRestrictions — 复合 restriction 残余机制 warning', () => {
+  it('占格 + debuff/buff 机制 → count 提取 + 残余 warning', () => {
+    const result = parseRestrictions([r('Two useless minions take up slots in your formation. They massively debuff adjacent Champions except for Binwin, whom they massively buff.')])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.warnings.length).toBe(1)
+    expect(result.warnings[0]).toContain('特殊机制')
+  })
+
+  it('占格 + 属性门槛（无残余）→ 无 warning', () => {
+    const result = parseRestrictions([r('A Monodrone and a Duodrone take up slots in the formation. Only Champions with CHA of 14 or lower can be used.')])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.warnings).toEqual([])
+  })
+})
+
 // ZH 变量递增占格（"每经过 N 区域额外一格"）原被 "一格" 直配 regex 误判为固定 1。
 // EN 侧有 VARIABLE_PATTERNS 排除，ZH 侧缺失——补齐对称的变量排除。
 describe('parseRestrictions — ZH 变量递增占格排除', () => {

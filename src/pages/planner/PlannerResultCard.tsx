@@ -1,12 +1,12 @@
 import type { Champion, FormationSlot } from '../../domain/types'
-import type { PlannerResult } from '../../domain/planner/recommendationTypes'
+import type { ConstraintKind, PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import type { AreaBound } from '../../domain/simulator/areaEstimation'
 import { useI18n, type LocaleText } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 import { PlannerBreakdown } from './PlannerBreakdown'
 
-const CONSTRAINT_LABELS: Record<string, LocaleText> = {
+const CONSTRAINT_LABELS: Record<ConstraintKind, LocaleText> = {
   armor: { zh: '护甲', en: 'Armor' },
   'hits-based': { zh: '命中型', en: 'Hits-based' },
   'damage-reduction': { zh: '伤害削减', en: 'Dmg reduction' },
@@ -17,6 +17,7 @@ const CONSTRAINT_LABELS: Record<string, LocaleText> = {
 const BOUND_LABELS: Record<AreaBound, LocaleText> = {
   survival: { zh: '存活受限', en: 'survival-bound' },
   armor: { zh: '护甲受限', en: 'armor-bound' },
+  'hits-based': { zh: '命中型受限', en: 'hits-bound' },
   bud: { zh: '伤害受限', en: 'BUD-bound' },
   'max-area': { zh: '已达上限', en: 'max-area' },
 }
@@ -169,12 +170,7 @@ export function PlannerResultCard({
                 {viability != null && viability.activeConstraints.length > 0 ? (
                   <p className="planner-result-card__viability-constraints" data-testid="planner-viability-constraints">
                     {t({ zh: '活跃约束：', en: 'Active constraints: ' })}
-                    {viability.activeConstraints.map((key) => {
-                      const label = CONSTRAINT_LABELS[key]
-                      return label
-                        ? t(label)
-                        : key
-                    }).join(t({ zh: '、', en: ', ' }))}
+                    {viability.activeConstraints.map((key) => t(CONSTRAINT_LABELS[key])).join(t({ zh: '、', en: ', ' }))}
                   </p>
                 ) : null}
               </section>

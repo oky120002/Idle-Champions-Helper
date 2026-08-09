@@ -1,4 +1,5 @@
 import type { AttributeRequirement, TagExpression } from '../../src/domain/types/formation.ts'
+import type { DamageSourcePattern, ViabilityContext } from '../../src/domain/planner/plannerModel.ts'
 import { asArray, asRecord } from './io-utils.ts'
 import { parseDamageSourcePattern, parseRestrictions } from './restrictions-parser.ts'
 
@@ -27,9 +28,9 @@ interface ScenarioModel {
   /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析）。 */
   occupiedSlotCount: number
   /** 变体可行性上下文（restrictions 解析；护甲/伤害修正等）。 */
-  viabilityContext: unknown
+  viabilityContext: ViabilityContext
   /** 伤害来源位置限制（restrictions 解析；null = 无）。 */
-  damageSourcePattern: unknown
+  damageSourcePattern: DamageSourcePattern | null
 }
 
 function contextMatchesVariant(

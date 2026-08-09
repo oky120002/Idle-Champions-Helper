@@ -17,6 +17,7 @@ import { applyComputationMode, type ComputationMode } from './computationMode'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
 import { buildPlannerExplanations } from './plannerNarrative'
 import {
+  type ConstraintKind,
   type PlannerCollections,
   type PlannerPlacementEntry,
   type PlannerRecommendation,
@@ -767,24 +768,17 @@ function scorePlannerFormationWithLegality(
     }
   }
   const scoring = scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
+  // 可行性过滤：area = min(killableArea, survivableArea) 已综合所有约束
+  //（护甲/命中型吞吐量、damageModifier 击杀削减、survival 生存）。
+  // 统一检查 area 替代原先分离的 survivableArea + armor/hitsBased killableArea 检查——
+  // 后者遗漏 damageModifier 变体（高生存但伤害削减致 killableArea 远低于阈值仍通过过滤）。
   const minSurvivableArea = options.minSurvivableArea
-  if (typeof minSurvivableArea === 'number' && scoring.areaEstimate != null) {
-    if (scoring.areaEstimate.survivableArea < minSurvivableArea) {
-      return {
-        ...scoring,
-        objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${String(scoring.areaEstimate.survivableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
-      }
-    }
-    // 吞吐量约束（护甲/命中型）：吞吐量门槛已烤进 killableArea，额外检查击杀侧。
-    // armor 和 hitsBased 都通过 computeSegmentKillableArea 影响吞吐量，两者均须触发过滤。
-    const vc = scenario.viabilityContext
-    if ((vc.armor != null || vc.hitsBased != null) && scoring.areaEstimate.killableArea < minSurvivableArea) {
-      return {
-        ...scoring,
-        objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, `击杀吞吐量不足：预估可击杀 ${String(scoring.areaEstimate.killableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
-      }
+  if (typeof minSurvivableArea === 'number' && scoring.areaEstimate != null
+    && scoring.areaEstimate.area < minSurvivableArea) {
+    return {
+      ...scoring,
+      objectiveValue: SCORE_ZERO,
+      warnings: [...scoring.warnings, `预估推进层数 ${String(scoring.areaEstimate.area)} 不足，要求 ≥ ${String(minSurvivableArea)} 层`],
     }
   }
   return scoring
@@ -820,7 +814,7 @@ function buildViabilityAssessment(
   areaEstimate: AreaEstimationResult | null,
 ): ViabilityAssessment {
   const vc = scenario.viabilityContext
-  const active: string[] = []
+  const active: ConstraintKind[] = []
   if (vc.armor) active.push('armor')
   if (vc.hitsBased) active.push('hits-based')
   if (vc.damageModifier != null) active.push('damage-reduction')

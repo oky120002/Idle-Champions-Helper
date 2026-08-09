@@ -42,10 +42,17 @@ export function PlannerSurvivableArea({ value, onChange }: PlannerSurvivableArea
             onChange(null)
             return
           }
-          const parsed = Number.parseInt(raw, 10)
-          if (Number.isFinite(parsed) && parsed >= 1) {
-            onChange(parsed)
+          // Number（非 parseInt）避免 "1.5"→1 / "1e5"→1 的静默截断。
+          const parsed = Number(raw)
+          if (!Number.isFinite(parsed)) {
+            return
           }
+          if (parsed < 1) {
+            // 0 或负数 = 关闭过滤（与清空一致），而非静默丢弃。
+            onChange(null)
+            return
+          }
+          onChange(Math.floor(parsed))
         }}
       />
     </fieldset>

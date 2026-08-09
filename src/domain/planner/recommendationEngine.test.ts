@@ -200,6 +200,45 @@ const hitsCollections: PlannerCollections = {
   ],
 }
 
+// 伤害削减变体：99% 减伤 → killableArea 大幅降低（验证 area 统一过滤覆盖 damageModifier）
+const damageModVariant = createVariant('variant-dmgmod', {
+  campaign,
+  name: text('Damage Reduction', '伤害削减'),
+  adventureId: 'adventure-dmgmod',
+  adventure: text('Reduced Catacombs', '削减墓穴'),
+  objectiveArea: 50,
+  restrictions: [text('Champion damage is reduced by 99%.', '英雄伤害削减 99%。')],
+})
+
+const damageModCollections: PlannerCollections = {
+  variants: [damageModVariant],
+  plannerHeroes,
+  plannerScenarios: [
+    {
+      variantId: damageModVariant.id,
+      scenarioRef: { kind: 'variant', id: damageModVariant.id },
+      name: damageModVariant.name,
+      formationLayoutId: 'layout-dmgmod',
+      objectiveArea: damageModVariant.objectiveArea,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      ],
+      forcedHeroes: [],
+      enemyTypes: [],
+      allowedHeroes: [],
+      allowedTagExpression: [],
+      attributeRequirements: [],
+      occupiedSlotCount: 0,
+      viabilityContext: { armor: null, hitsBased: null, damageModifier: 0.01, enemyDamageMult: null, healthDrainRate: null },
+      damageSourcePattern: null,
+      scenarioWarnings: [],
+    },
+  ],
+}
+
 describe('planner recommendation engine', () => {
   it('无用户快照时返回 missing-profile blocker', () => {
     const recommendation = buildPlannerRecommendation({ collections, variant: selectedVariant, profileSnapshot: null })
@@ -678,6 +717,21 @@ describe('viability: armor constraint', () => {
     const top = recommendation.results[0]
     expect(top?.viability).not.toBeNull()
     expect(top?.viability?.activeConstraints).toEqual([])
+  })
+
+  it('伤害削减变体 + minSurvivableArea 过滤击杀能力不足的阵型', () => {
+    // 99% 减伤 → effectiveBUD ≈ 0.05 < monsterHealthAt(1)=10 → killableArea=1。
+    // survivableArea≈49（level 1 英雄不受 damageModifier 影响）。
+    // 原分离检查只查 survivableArea（49≥10 通过），遗漏 killableArea=1<10。
+    // 统一 area 检查后 area=min(1,49)=1<10 → 正确淘汰。
+    const recommendation = buildPlannerRecommendation({
+      collections: damageModCollections,
+      variant: damageModVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical', minSurvivableArea: 10 },
+    })
+    expect(recommendation.blocker).toBe('no-legal-recommendation')
+    expect(recommendation.results.length).toBe(0)
   })
 })
 

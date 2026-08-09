@@ -241,7 +241,7 @@ const USAGE_GATE_RE = /\b(?:can|may)\s+(?:be\s+used|partake)\b|\bonly\s+use\b|\b
  */
 function parseAttributeRequirements(text: string): AttributeRequirement[] {
   const results: AttributeRequirement[] = []
-  for (const sentence of text.split(/\.\s+/)) {
+  for (const sentence of text.replace(/\r?\n/g, ' ').split(/\.\s+/)) {
     if (!USAGE_GATE_RE.test(sentence)) continue
     for (const match of sentence.matchAll(ATTRIBUTE_THRESHOLD_RE)) {
       const statRaw = match[1]?.toLowerCase()
@@ -400,10 +400,17 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
 
     if (count !== null && count > 0) {
       lockedSlotCount = Math.max(lockedSlotCount, count)
-    } else if (extractedAttrs.length > 0 && !hasResidualMechanics(original)) {
-      // 属性门槛提取成功且无残余特殊机制句 → 非未解析，不记 warning。
+    }
+
+    // warning 生成与 count/attr 提取独立——复合 restriction（占格/属性 + 额外机制）
+    // 的残余特殊机制句也须提示人工评估。原 if-elseif 链在 count>0 时跳过残余检测，
+    // 致 variant 176「占格 + debuff/buff」等复合 restriction 的额外机制 warning 丢失。
+    const hasKnownCoverage = (count !== null && count > 0) || extractedAttrs.length > 0
+    if (hasKnownCoverage) {
+      if (original !== '' && hasResidualMechanics(original)) {
+        warnings.push(`含未建模特殊机制（请人工评估）：${original}`)
+      }
     } else if (!isTrivialRestriction(original, display) && (original !== '' || display !== '')) {
-      // 非 slot-occupying 且非已知无约束 → 记 warning 待手工评估。
       warnings.push(`未解析 restriction：${original !== '' ? original : display}`)
     }
   }
