@@ -69,7 +69,7 @@ function createVariant(id: string, overrides: Partial<Variant> & Pick<Variant, '
     mechanics: overrides.mechanics ?? [],
     forcedHeroIds: overrides.forcedHeroIds ?? [],
     allowedHeroIds: overrides.allowedHeroIds ?? [],
-    allowedTags: overrides.allowedTags ?? [],
+    allowedTagExpression: overrides.allowedTagExpression ?? [],
   }
 }
 
@@ -138,7 +138,8 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
       forcedHeroes: [],
       enemyTypes: [],
       allowedHeroes: [],
-      allowedTags: [],
+      allowedTagExpression: [],
+    attributeRequirements: [],
       occupiedSlotCount: 0,
       scenarioWarnings: [],
     },
@@ -155,7 +156,8 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
       forcedHeroes: [],
       enemyTypes: [],
       allowedHeroes: [],
-      allowedTags: [],
+      allowedTagExpression: [],
+    attributeRequirements: [],
       occupiedSlotCount: 0,
       scenarioWarnings: [],
     },

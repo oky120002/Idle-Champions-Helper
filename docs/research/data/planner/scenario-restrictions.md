@@ -24,7 +24,7 @@ restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制�
 | The Farmer's Daughter and Son take up two slots | 农夫之女与子占两格 | 2 |
 | Friendly animals take up slots...one slot...then every... | 友好动物占格（1 + 随层数递增） | 变量（复杂，手工补） |
 
-**② champion-tag 限制（→ allowedTags，已被 mechanics 覆盖）**：「Only Evil Champions」「may only use Ranger, Druid, and/or Barbarian」等。已被结构化 `only_allow_crusaders` mechanics 捕获（scenario.allowedTags/allowedHeroes），restrictions_text 版本冗余，不重复解析。
+**② champion-tag 限制（→ allowedTagExpression，已被 mechanics 覆盖）**：「Only Evil Champions」「may only use Ranger, Druid, and/or Barbarian」等。已被结构化 `only_allow_crusaders` mechanics 捕获（scenario.allowedTagExpression/allowedHeroes），restrictions_text 版本冗余，不重复解析。
 
 ### 模板盲区与 override 扩展
 

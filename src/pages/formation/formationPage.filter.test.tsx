@@ -259,6 +259,6 @@ describe('FormationPage restore preset with filter snapshot', () => {
     const slot2Select = unwrap(selects[1], 'slot-2 select')
     const slot2Options = Array.from(slot2Select.querySelectorAll('option')).map((o) => o.value)
     expect(slot2Options).toContain('celeste')
-    expect(slot2Select.value).toBe('celeste')
+    expect((slot2Select as HTMLSelectElement).value).toBe('celeste')
   })
 })

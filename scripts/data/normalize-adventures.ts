@@ -1,4 +1,5 @@
 import type { LocalizedText } from '../../src/domain/types/common.ts'
+import type { TagClause, TagExpression } from '../../src/domain/types/formation.ts'
 import {
   compareLocalizedText,
   normalizeLocalizedText,
@@ -114,7 +115,7 @@ interface VariantEnemySummary {
 interface HeroRestrictions {
   forcedHeroIds: string[]
   allowedHeroIds: string[]
-  allowedTags: string[]
+  allowedTagExpression: TagExpression
 }
 
 interface VariantMetadata extends VariantEnemySummary, HeroRestrictions {
@@ -177,7 +178,7 @@ export interface NormalizedVariant {
   mechanics: string[]
   forcedHeroIds: string[]
   allowedHeroIds: string[]
-  allowedTags: string[]
+  allowedTagExpression: TagExpression
 }
 
 export interface NormalizedManualFormationSlot {
@@ -524,7 +525,7 @@ export function normalizeVariant(
     mechanics: metadata?.mechanics ?? [],
     forcedHeroIds: metadata?.forcedHeroIds ?? [],
     allowedHeroIds: metadata?.allowedHeroIds ?? [],
-    allowedTags: metadata?.allowedTags ?? [],
+    allowedTagExpression: metadata?.allowedTagExpression ?? [],
     campaign,
     repeatable,
     patronObjectiveTiers,
@@ -725,10 +726,142 @@ function collectEscortNames(gameChanges: readonly unknown[] = []): string[] {
   return uniqueStrings(names)
 }
 
+/**
+ * 解析 only_allow_crusaders.by_tags.tags 字符串 → TagExpression（DNF: OR of ANDs）。
+ *
+ * 文法：Expression = Term ('|' Term)*   (OR)
+ *       Term       = Factor ('^' Factor)* (AND)
+ *       Factor     = '!' Tag | Tag | '(' Expression ')'
+ *
+ * `|` 和 `^` 仅在括号外生效；括号内递归解析后做分配律展开（AND over OR → DNF）。
+ * 例：`((geneutral|evil)^dps)|(good^support)` →
+ *   [{required:['geneutral','dps']}, {required:['evil','dps']}, {required:['good','support']}]
+ */
+export function parseTagExpression(tagsString: string): TagExpression {
+  return parseToDNF(tagsString.trim())
+}
+
+/** 递归解析 → DNF。空串或全 malformed → 空数组（保守丢弃）。 */
+function parseToDNF(input: string): TagClause[] {
+  if (input === '') return []
+
+  // 按括号外 `|` 拆 OR
+  const orParts = splitTopLevel(input, '|')
+  let result: TagClause[] = []
+
+  for (const orPart of orParts) {
+    // 按括号外 `^` 拆 AND
+    const factorDNFs: TagClause[][] = []
+    for (const andPart of splitTopLevel(orPart, '^')) {
+      const trimmed = andPart.trim()
+      if (trimmed === '') continue
+
+      // 括号包裹 → 去匹配外层括号后递归
+      const inner = stripMatchingParens(trimmed)
+      if (inner !== null) {
+        const subDNF = parseToDNF(inner)
+        if (subDNF.length > 0) factorDNFs.push(subDNF)
+        continue
+      }
+      // 残留括号（无法配对）= malformed，保守跳过
+      if (trimmed.includes('(') || trimmed.includes(')')) continue
+
+      const atom = parseAtom(trimmed)
+      if (atom !== null) factorDNFs.push([atom])
+    }
+
+    result = result.concat(distributeAND(factorDNFs))
+  }
+  return result
+}
+
+/** 按分隔符拆分，仅匹配括号深度 0 处。不平衡括号的残片由 parseToDNF 的 includes 检查自然丢弃。 */
+function splitTopLevel(s: string, sep: string): string[] {
+  const parts: string[] = []
+  let depth = 0
+  let start = 0
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i]
+    if (ch === '(') depth++
+    else if (ch === ')') depth--
+    else if (depth === 0 && ch === sep) {
+      parts.push(s.slice(start, i))
+      start = i + 1
+    }
+  }
+  parts.push(s.slice(start))
+  return parts
+}
+
+/** 若字符串被匹配的外层括号包裹，返回去括号后的内容；否则 null。 */
+function stripMatchingParens(s: string): string | null {
+  if (!s.startsWith('(') || !s.endsWith(')')) return null
+  let depth = 0
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i]
+    if (ch === '(') depth++
+    else if (ch === ')') {
+      depth--
+      if (depth === 0) return i === s.length - 1 ? s.slice(1, -1).trim() : null
+    }
+  }
+  return null
+}
+
+/**
+ * 复合对齐标记 → 英雄对齐轴标签展开映射。
+ *
+ * 游戏数据 `by_tags.tags` 用复合标记（如 `lawful_good`）表示「守序善良」，
+ * 但英雄标签是对齐轴独立的（`lawful` + `good`），无复合标记。
+ * 不展开则 `lawful_good` 匹配 0 英雄（v1740 四角阵营限制全候选池为空）。
+ * 映射依据：英雄 alignment 标签体系（LC 轴 lawful/chaotic/lcneutral × GE 轴 good/evil/geneutral）。
+ */
+const COMPOUND_ALIGNMENT_TAGS: Readonly<Record<string, readonly string[]>> = {
+  lawful_good: ['lawful', 'good'],
+  neutral_good: ['lcneutral', 'good'],
+  chaotic_good: ['chaotic', 'good'],
+  lawful_neutral: ['lawful', 'geneutral'],
+  neutral_neutral: ['lcneutral', 'geneutral'],
+  chaotic_neutral: ['chaotic', 'geneutral'],
+  lawful_evil: ['lawful', 'evil'],
+  neutral_evil: ['lcneutral', 'evil'],
+  chaotic_evil: ['chaotic', 'evil'],
+}
+
+/** 解析单个原子 tag → TagClause（`!tag`→forbidden，`tag`→required；复合对齐标记展开为 AND）。 */
+function parseAtom(tag: string): TagClause | null {
+  const t = tag.toLowerCase()
+  if (t === '') return null
+  if (t.startsWith('!')) {
+    const negated = t.slice(1)
+    return negated === '' ? null : { required: [], forbidden: [negated] }
+  }
+  const expanded = COMPOUND_ALIGNMENT_TAGS[t]
+  return { required: expanded !== undefined ? [...expanded] : [t], forbidden: [] }
+}
+
+/** 分配律：AND 多个 DNF 因子 → 笛卡尔积合并。[[A,B],[C]] → [{…A,…C},{…B,…C}] */
+function distributeAND(factors: TagClause[][]): TagClause[] {
+  if (factors.length === 0) return []
+  return factors.reduce((acc, factor) => {
+    if (acc.length === 0) return factor
+    const merged: TagClause[] = []
+    for (const a of acc) {
+      for (const b of factor) {
+        merged.push({
+          required: [...a.required, ...b.required],
+          forbidden: [...a.forbidden, ...b.forbidden],
+        })
+      }
+    }
+    return merged
+  }, [] as TagClause[])
+}
+
 function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRestrictions {
   const forcedHeroIds = new Set<string>()
   const allowedHeroIds = new Set<string>()
-  const allowedTags = new Set<string>()
+  let allowedTagExpression: TagExpression = []
   let hasAllowed = false
 
   for (const change of gameChanges) {
@@ -765,12 +898,7 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
       }
       const tags = asRawRecord(record.by_tags).tags
       if (typeof tags === 'string') {
-        for (const tag of tags.split('|')) {
-          const trimmed = tag.trim()
-          if (trimmed !== '') {
-            allowedTags.add(trimmed)
-          }
-        }
+        allowedTagExpression = parseTagExpression(tags)
       }
     }
   }
@@ -778,7 +906,7 @@ function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRest
   return {
     forcedHeroIds: [...forcedHeroIds],
     allowedHeroIds: hasAllowed ? [...allowedHeroIds] : [],
-    allowedTags: hasAllowed ? [...allowedTags] : [],
+    allowedTagExpression: hasAllowed ? allowedTagExpression : [],
   }
 }
 

@@ -60,9 +60,9 @@
 
 ## 5. 死代码 / 不可达
 
-> ✅ **已收口**（2026-08-01）：`bannedHeroes` 全链路删除——场景类型字段（`OfficialPlannerScenarioModel`）、`bannedChampion` 合法性分支、`banList` 约束类型、`formatLegalityViolation` 的 `case`、build 投影（`buildScenarioModels`）、`scenarios.json` 1413 项数据及 forced∩banned 防御测试。直证：原始 variant 对象仅有 `allowedHeroIds`/`allowedTags`/`forcedHeroIds`/`restrictions`，无英雄黑名单字段；restrictions 文本内的条件性限制（tag/seat/class）由 restrictions-parser 作 warning 处理，与固定英雄黑名单语义无关。下为轮 7 原始发现，保留作删除依据（行号已失效）。
+> ✅ **已收口**（2026-08-01）：`bannedHeroes` 全链路删除——场景类型字段（`OfficialPlannerScenarioModel`）、`bannedChampion` 合法性分支、`banList` 约束类型、`formatLegalityViolation` 的 `case`、build 投影（`buildScenarioModels`）、`scenarios.json` 1413 项数据及 forced∩banned 防御测试。直证：原始 variant 对象仅有 `allowedHeroIds`/`allowedTagExpression`/`forcedHeroIds`/`restrictions`，无英雄黑名单字段；restrictions 文本内的条件性限制（tag/seat/class）由 restrictions-parser 作 warning 处理，与固定英雄黑名单语义无关。下为轮 7 原始发现，保留作删除依据（行号已失效）。
 
-**`bannedHeroes` 全链路不可达**：`buildScenarioModels.ts:150` 硬编码 `bannedHeroes: []`，全部 1413 场景 bannedHeroes 恒空。Variant 类型（`formation.ts:54-86`）只有 `forcedHeroIds`/`allowedHeroIds`/`allowedTags`（whitelist 语义），无 blacklist 字段——游戏用白名单（only_allow_crusaders）限制英雄，无场景级黑名单机制。后果：
+**`bannedHeroes` 全链路不可达**：`buildScenarioModels.ts:150` 硬编码 `bannedHeroes: []`，全部 1413 场景 bannedHeroes 恒空。Variant 类型（`formation.ts:54-86`）只有 `forcedHeroIds`/`allowedHeroIds`/`allowedTagExpression`（whitelist 语义），无 blacklist 字段——游戏用白名单（only_allow_crusaders）限制英雄，无场景级黑名单机制。后果：
 
 - `checkFormationLegality` 的 `bannedChampion` 违规分支（`formationLegality.ts:42-50`）永不触发；
 - `banList` 约束（`recommendationEngine.ts:465` `scenario.bannedHeroes.length > 0` 恒 false）永不构建；

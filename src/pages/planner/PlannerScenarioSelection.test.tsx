@@ -40,7 +40,7 @@ function createVariant(
     mechanics: overrides.mechanics ?? [],
     forcedHeroIds: overrides.forcedHeroIds ?? [],
     allowedHeroIds: overrides.allowedHeroIds ?? [],
-    allowedTags: overrides.allowedTags ?? [],
+    allowedTagExpression: overrides.allowedTagExpression ?? [],
   }
 
   if (overrides.enemyTypeCounts !== undefined) {

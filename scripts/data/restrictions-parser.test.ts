@@ -172,3 +172,125 @@ describe('parseRestrictions — ZH 变量递增占格排除', () => {
     expect(result.warnings.length).toBeGreaterThan(0)
   })
 })
+
+describe('parseRestrictions — 属性门槛提取', () => {
+  it('CON score of 13 or higher → { stat: con, operator: >=, value: 13 }', () => {
+    const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher may be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'con', operator: '>=', value: 13 },
+    ])
+  })
+
+  it('DEX score of 14 or lower → { stat: dex, operator: <=, value: 14 }', () => {
+    const result = parseRestrictions([r('Only Champions with a DEX score of 14 or lower can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'dex', operator: '<=', value: 14 },
+    ])
+  })
+
+  it('CHA score of 12 or higher (variant 171)', () => {
+    const result = parseRestrictions([r('Only Champions with an INT score of 12 or higher can partake in this adventure.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '>=', value: 12 },
+    ])
+  })
+
+  it('v430 复合 restriction：CHA of 14 or lower + slot-occupy → 同时提取两者', () => {
+    const result = parseRestrictions([r('A Monodrone and a Duodrone take up slots in the formation. Only Champions with CHA of 14 or lower can be used.')])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '<=', value: 14 },
+    ])
+  })
+
+  it('无属性门槛的 restriction → attributeRequirements 为空', () => {
+    const result = parseRestrictions([r('Four slots occupied by chickens.')])
+    expect(result.attributeRequirements).toEqual([])
+  })
+
+  it('同一 restriction 不重复提取相同门槛', () => {
+    const result = parseRestrictions([
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+    ])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 13 },
+    ])
+  })
+
+  it('v187 多属性门槛：STR 13+ AND DEX 14+ AND CON 15+ → 全部提取', () => {
+    const result = parseRestrictions([r('Only Champions with STR of 13 or higher, a DEX of 14 or higher, AND a CON of 15 or higher can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 13 },
+      { stat: 'dex', operator: '>=', value: 14 },
+      { stat: 'con', operator: '>=', value: 15 },
+    ])
+  })
+
+  it('v319 伤害修饰句的属性不提取（INT 14+ 是 damage modifier，不含使用门槛标记）', () => {
+    const result = parseRestrictions([r('Only Champions with STR of 14 or lower can be used. Rosie and Champions with INT of 14 or higher deal 400% additional damage.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '<=', value: 14 },
+    ])
+  })
+
+  it('v865 伤害免疫句的属性不提取（INT 15+ 是条件免疫「take no damage」非使用门槛）', () => {
+    const result = parseRestrictions([r('When a Mind Flayer spawns it Mind Blasts a random Champion, dealing 25% of their max health and stunning them for 60 seconds. Champions with an INT score of 15 or higher take no damage and are not stunned.')])
+    expect(result.attributeRequirements).toEqual([])
+  })
+
+  it('v1984 邻接位限制句的属性不提取（INT 12- 是 adjacency 约束「placed adjacent」非全局使用门槛）', () => {
+    const result = parseRestrictions([r('The two Treasure Hunters from the third variant join the formation again. They refuse to travel with anyone smarter than them, so only Champions with an INT score of 12 or lower are allowed to be placed adjacent to them.')])
+    expect(result.attributeRequirements).toEqual([])
+  })
+
+  it('属性门槛 restriction 不产生"未解析"警告', () => {
+    const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher may be used.')])
+    expect(result.attributeRequirements).toHaveLength(1)
+    expect(result.warnings).toEqual([])
+  })
+
+  it('重复属性门槛不产生"未解析"警告（addedAttr 抑制修复）', () => {
+    const result = parseRestrictions([
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+      r('Only Champions with a STR score of 13 or higher may be used.'),
+    ])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '>=', value: 13 },
+    ])
+    expect(result.warnings).toEqual([])
+  })
+
+  it('v319 属性门槛+伤害修饰 → 属性提取成功但仍 warning（残余特殊机制）', () => {
+    const result = parseRestrictions([r('Only Champions with STR of 14 or lower can be used. Rosie and Champions with INT of 14 or higher deal 400% additional damage.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'str', operator: '<=', value: 14 },
+    ])
+    expect(result.warnings.length).toBe(1)
+  })
+
+  it('v391 属性门槛+Boss机制 → 属性提取成功但仍 warning', () => {
+    const result = parseRestrictions([r('In each boss area Strahd on Horseback appears. You must defeat this additional boss to advance. When defeated, he runs off the screen. Only champions with INT of 13 or higher can be used.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'int', operator: '>=', value: 13 },
+    ])
+    expect(result.warnings.length).toBe(1)
+  })
+
+  it('属性门槛+forced hero flavor → 仍 warning（flavor 句未被解析）', () => {
+    const result = parseRestrictions([r('Only Bards or Champions with a CHA score of 15 or higher can be used. Paultin starts the adventure unlocked and in the formation.')])
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '>=', value: 15 },
+    ])
+    expect(result.warnings.length).toBe(1)
+  })
+
+  it('属性门槛+占格 → 两者提取且无 warning（占格已覆盖占格句）', () => {
+    const result = parseRestrictions([r('A Monodrone and a Duodrone take up slots in the formation. Only Champions with CHA of 14 or lower can be used.')])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.attributeRequirements).toEqual([
+      { stat: 'cha', operator: '<=', value: 14 },
+    ])
+    expect(result.warnings).toEqual([])
+  })
+})

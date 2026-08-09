@@ -47,7 +47,7 @@ function buildVariant(id: string): Variant {
     mechanics: [],
     forcedHeroIds: [],
     allowedHeroIds: [],
-    allowedTags: [],
+    allowedTagExpression: [],
   }
 }
 
@@ -88,7 +88,8 @@ function buildScenario(
     scenarioWarnings: [],
     enemyTypes: [],
     allowedHeroes: [],
-    allowedTags: [],
+    allowedTagExpression: [],
+    attributeRequirements: [],
     occupiedSlotCount: 0,
     ...overrides,
   }

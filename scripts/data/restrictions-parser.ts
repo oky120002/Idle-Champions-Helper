@@ -4,14 +4,22 @@
  * 数据源：`variants.json.items[].restrictions: Array<{original, display}>`（双语自由文本）。
  * 评估结论：`docs/specs/modules/planner/data-source-confirmations.md` §12.1。
  *
- * 不用 NLP，纯关键词模板。只解析高价值 slot-occupying 模式（→ lockedSlotCount）；
+ * 不用 NLP，纯关键词模板。解析两类高价值模式：
+ * 1. slot-occupying（→ lockedSlotCount）
+ * 2. 属性门槛（→ attributeRequirements，CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）
  * flavor 文本 / 完成前置 / 变量递增版不匹配 → warning（12.3 手工补 semantic-overrides.json）。
  * champion-tag 限制（"Only Evil Champions"）已被 mechanics 结构化捕获，不在此重复解析。
  */
 
+import type { AttributeRequirement } from '../../src/domain/types/formation.ts'
+
+export type { AttributeRequirement }
+
 export interface ParsedRestrictions {
   /** 被占据/诅咒的格数（保守取多条中最严的 max，不累加）。 */
   lockedSlotCount: number
+  /** 属性门槛（CON/INT/CHA/STR/DEX/WIS score of N or higher/lower）。 */
+  attributeRequirements: AttributeRequirement[]
   /** 未匹配的 restriction 文本（低频/变量/特殊机制），待手工补 semantic-overrides。 */
   warnings: string[]
 }
@@ -166,23 +174,92 @@ function zhSlotOccupyCount(text: string): number | null {
 
 function isTrivialRestriction(original: string, display: string): boolean {
   const text = `${original} ${display}`.toLowerCase()
-  // 完成前置 / 空文本 / 明确无限制 → 非 slot-occupying，不算 warning（已知无约束）。
-  return (
-    text.length === 0
-    || text.includes('must have completed')
-    || text.includes('no restrictions')
-  )
+  // 完成前置 / 明确无限制 → 非 slot-occupying，不算 warning（已知无约束）。
+  return text.includes('must have completed') || text.includes('no restrictions')
 }
 
 /**
- * 解析 variant restrictions → lockedSlotCount + warnings。
- * 双语（EN original + ZH display）分别尝试；取两者中确定的格数（保守 max）。
+ * 检查 restriction 文本是否含有未被属性门槛/占格/trivial 句覆盖的残余句子。
+ * 用于属性门槛提取成功后仍检测敌人刷新/伤害调整等特殊机制句，
+ * 避免条目级抑制吞掉复合 restriction 中的特殊机制 warning（72 变体受影响）。
+ */
+function hasResidualMechanics(original: string): boolean {
+  if (original === '') return false
+  // 规范化换行后按句拆分（与 parseAttributeRequirements 一致）。
+  const normalized = original.replace(/\r?\n/g, ' ')
+  for (const sentence of normalized.split(/\.\s+/)) {
+    const s = sentence.trim()
+    if (s === '') continue
+    const lower = s.toLowerCase()
+    // trivial 句（完成前置 / 无限制）
+    if (lower.includes('must have completed') || lower.includes('no restrictions')) continue
+    // 使用门槛句（属性门槛或标签限制「Only Evil Champions can be used」）
+    if (USAGE_GATE_RE.test(s)) continue
+    // 占格句（含 slot + 占据关键词，slot 计数由 enSlotOccupyCount/override 处理）
+    if (lower.includes('slot') && EN_SLOT_OCCUPY_KEYWORDS.some((kw) => lower.includes(kw))) continue
+    // 残余非平凡句 = 特殊机制
+    return true
+  }
+  return false
+}
+
+// 属性门槛正则（全局）：(STAT) (score )?of (N) or (higher|lower)
+// 匹配 "CON score of 13 or higher" / "CHA of 14 or lower" 等（"score" 可选）。
+// STAT 全大写三字母，N 为数字。忽略大小写。全局标志用于 matchAll 提取多属性门槛。
+const ATTRIBUTE_THRESHOLD_RE = /\b(STR|DEX|CON|INT|WIS|CHA)\s+(?:score\s+)?of\s+(\d+)\s+or\s+(higher|lower)\b/gi
+
+// 使用门槛语句标记（白名单）：仅从显式声明「谁能上场」的句子提取属性门槛。
+// 排除三类条件效果句（属性模式出现但非使用门槛）：
+//   - 伤害修饰（v319: "Champions with INT of 14 or higher deal 400% additional damage"）
+//   - 伤害免疫（v865: "Champions with INT score of 15 or higher take no damage"）
+//   - 邻接位限制（v1984: "only Champions with INT of 12 or lower are allowed to be placed adjacent"）
+const USAGE_GATE_RE = /\b(?:can|may)\s+(?:be\s+used|partake)\b|\bonly\s+use\b|\btake\s+part\b/i
+
+/**
+ * 从 restriction 文本提取全部属性门槛。
+ * 按句拆分，仅从使用门槛语句（含「can/may be used」「only use」「take part」等）提取，
+ * 排除伤害修饰/免疫/邻接位限制等条件效果句。
+ */
+function parseAttributeRequirements(text: string): AttributeRequirement[] {
+  const results: AttributeRequirement[] = []
+  for (const sentence of text.split(/\.\s+/)) {
+    if (!USAGE_GATE_RE.test(sentence)) continue
+    for (const match of sentence.matchAll(ATTRIBUTE_THRESHOLD_RE)) {
+      const stat = match[1]?.toLowerCase()
+      const value = match[2] !== undefined ? parseInt(match[2], 10) : NaN
+      const direction = match[3]?.toLowerCase()
+      if (stat === undefined || Number.isNaN(value) || direction === undefined) continue
+      results.push({
+        stat: stat as AttributeRequirement['stat'],
+        operator: direction === 'higher' ? '>=' : '<=',
+        value,
+      })
+    }
+  }
+  return results
+}
+
+/**
+ * 解析 variant restrictions → lockedSlotCount + attributeRequirements + warnings。
+ * 双语（EN original + ZH display）分别尝试；slot count 取保守 max，属性门槛取全量并集。
  */
 export function parseRestrictions(restrictions: readonly RestrictionText[]): ParsedRestrictions {
   let lockedSlotCount = 0
+  const attributeRequirements: AttributeRequirement[] = []
   const warnings: string[] = []
+  const seenAttrs = new Set<string>()
 
   for (const { original, display } of restrictions) {
+    // 属性门槛从 EN original 提取（中文 display 通常不含 "CON score of" 模式）
+    const extractedAttrs = original !== '' ? parseAttributeRequirements(original) : []
+    for (const req of extractedAttrs) {
+      const key = `${req.stat}${req.operator}${String(req.value)}`
+      if (!seenAttrs.has(key)) {
+        seenAttrs.add(key)
+        attributeRequirements.push(req)
+      }
+    }
+
     const enCount = original !== '' ? enSlotOccupyCount(original) : null
     const zhCount = display !== '' ? zhSlotOccupyCount(display) : null
     const overrideCount = original !== '' ? matchOverride(original) : null
@@ -190,11 +267,13 @@ export function parseRestrictions(restrictions: readonly RestrictionText[]): Par
 
     if (count !== null && count > 0) {
       lockedSlotCount = Math.max(lockedSlotCount, count)
+    } else if (extractedAttrs.length > 0 && !hasResidualMechanics(original)) {
+      // 属性门槛提取成功且无残余特殊机制句 → 非未解析，不记 warning。
     } else if (!isTrivialRestriction(original, display) && (original !== '' || display !== '')) {
       // 非 slot-occupying 且非已知无约束 → 记 warning 待手工评估。
       warnings.push(`未解析 restriction：${original !== '' ? original : display}`)
     }
   }
 
-  return { lockedSlotCount, warnings }
+  return { lockedSlotCount, attributeRequirements, warnings }
 }

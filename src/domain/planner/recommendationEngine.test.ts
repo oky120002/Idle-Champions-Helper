@@ -38,7 +38,7 @@ function createVariant(id: string, overrides: Partial<Variant> & Pick<Variant, '
     mechanics: overrides.mechanics ?? [],
     forcedHeroIds: overrides.forcedHeroIds ?? [],
     allowedHeroIds: overrides.allowedHeroIds ?? [],
-    allowedTags: overrides.allowedTags ?? [],
+    allowedTagExpression: overrides.allowedTagExpression ?? [],
   }
 }
 
@@ -107,8 +107,9 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     forcedHeroes: [],
     enemyTypes: [],
     allowedHeroes: [],
-    allowedTags: [],
-  occupiedSlotCount: 0,
+    allowedTagExpression: [],
+        attributeRequirements: [],
+      occupiedSlotCount: 0,
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
 ]
@@ -240,7 +241,8 @@ describe('planner recommendation engine', () => {
       forcedHeroes: [],
       enemyTypes: [],
       allowedHeroes: [],
-      allowedTags: [],
+      allowedTagExpression: [],
+      attributeRequirements: [],
       occupiedSlotCount: 2,
       scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
     }
@@ -294,8 +296,9 @@ describe('planner recommendation engine', () => {
       forcedHeroes: [],
       enemyTypes: [],
       allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
-      allowedTags: [],
-  occupiedSlotCount: 0,
+      allowedTagExpression: [],
+        attributeRequirements: [],
+      occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
     const allowedCollections: PlannerCollections = {
@@ -352,8 +355,9 @@ describe('planner recommendation engine', () => {
       forcedHeroes: ['nayeli'],
       enemyTypes: [],
       allowedHeroes: [],
-      allowedTags: [],
-  occupiedSlotCount: 0,
+      allowedTagExpression: [],
+        attributeRequirements: [],
+      occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
     const forcedCollections: PlannerCollections = {
@@ -461,7 +465,8 @@ describe('evaluateFormation 指定阵型评估', () => {
       forcedHeroes: [],
       enemyTypes: [],
       allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
-      allowedTags: [],
+      allowedTagExpression: [],
+      attributeRequirements: [],
       occupiedSlotCount: 0,
       scenarioWarnings: [],
     }
