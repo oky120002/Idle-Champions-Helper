@@ -846,3 +846,89 @@ describe('viability: damage source pattern (K4)', () => {
     expect(evaluation.result?.objectiveValue).not.toBe('0')
   })
 })
+
+// damageSourcePattern 其余 4 种几何模式（adjacent/not-adjacent/front-columns/behind-columns）。
+// same-column 已有测试覆盖（上方 columnScenario），此处补齐剩余模式的 valid/invalid 判定。
+describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behind-columns', () => {
+  // 3 列拓扑：s1(col1) / s2(col2) / s3(col3) / s4(col1,row2)
+  const wideTopology = [
+    { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2', 's4'] },
+    { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+    { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2'] },
+    { slotId: 's4', row: 2, column: 1, adjacentSlotIds: ['s1'] },
+  ]
+
+  function makePatternScenario(pattern: OfficialPlannerScenarioModel['damageSourcePattern']): {
+    collections: PlannerCollections
+    variant: Variant
+  } {
+    const variant = createVariant('variant-pattern', { campaign, name: text('Pattern Test', '模式测试') })
+    return {
+      variant,
+      collections: {
+        variants: [variant],
+        plannerHeroes,
+        plannerScenarios: [{
+          variantId: variant.id,
+          scenarioRef: { kind: 'variant', id: variant.id },
+          name: variant.name,
+          formationLayoutId: 'layout-pattern',
+          objectiveArea: variant.objectiveArea,
+          slotTopology: wideTopology,
+          forcedHeroes: [],
+          enemyTypes: [],
+          allowedHeroes: [],
+          allowedTagExpression: [],
+          attributeRequirements: [],
+          occupiedSlotCount: 0,
+          viabilityContext: EMPTY_VIABILITY_CONTEXT,
+          damageSourcePattern: pattern,
+          scenarioWarnings: [],
+        }],
+      },
+    }
+  }
+
+  function evalDps(collections: PlannerCollections, variant: Variant, placements: Record<string, string>): string {
+    return evaluateFormation({
+      collections, variant, profileSnapshot: null, placements,
+      options: { candidateMode: 'all-hypothetical' },
+    }).result?.objectiveValue ?? 'ERR'
+  }
+
+  it('adjacent: carry 邻接参考英雄 → 有效；不邻接 → SCORE_ZERO', () => {
+    // ref=nayeli@s1(adj: s2,s4) → carry@jarlaxle at s2(adj) valid; s3(not adj) invalid
+    const { collections, variant } = makePatternScenario({ kind: 'adjacent', referenceHeroId: 'nayeli' })
+    const valid = evalDps(collections, variant, { s1: 'nayeli', s2: 'jarlaxle', s3: 'celeste', s4: 'bruenor' })
+    const invalid = evalDps(collections, variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
+    expect(valid).not.toBe('0')
+    expect(invalid).toBe('0')
+  })
+
+  it('not-adjacent: carry 不邻接参考英雄 → 有效；邻接 → SCORE_ZERO', () => {
+    // ref=nayeli@s1(adj: s2,s4) → carry@jarlaxle at s3(not adj) valid; s2(adj) invalid
+    const { collections, variant } = makePatternScenario({ kind: 'not-adjacent', referenceHeroId: 'nayeli' })
+    const valid = evalDps(collections, variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
+    const invalid = evalDps(collections, variant, { s1: 'nayeli', s2: 'jarlaxle', s3: 'celeste', s4: 'bruenor' })
+    expect(valid).not.toBe('0')
+    expect(invalid).toBe('0')
+  })
+
+  it('front-columns: carry 在参考英雄前方列 → 有效；后方列 → SCORE_ZERO', () => {
+    // ref=nayeli@s3(col3,span=1) → carry col∈[2,3] valid; col1 invalid
+    const { collections, variant } = makePatternScenario({ kind: 'front-columns', referenceHeroId: 'nayeli', columnSpan: 1 })
+    const valid = evalDps(collections, variant, { s3: 'nayeli', s2: 'jarlaxle', s1: 'celeste', s4: 'bruenor' })
+    const invalid = evalDps(collections, variant, { s3: 'nayeli', s1: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
+    expect(valid).not.toBe('0')
+    expect(invalid).toBe('0')
+  })
+
+  it('behind-columns: carry 在参考英雄后方列 → 有效；前方列 → SCORE_ZERO', () => {
+    // ref=nayeli@s1(col1,span=1) → carry col∈[1,2] valid; col3 invalid
+    const { collections, variant } = makePatternScenario({ kind: 'behind-columns', referenceHeroId: 'nayeli', columnSpan: 1 })
+    const valid = evalDps(collections, variant, { s1: 'nayeli', s2: 'jarlaxle', s3: 'celeste', s4: 'bruenor' })
+    const invalid = evalDps(collections, variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
+    expect(valid).not.toBe('0')
+    expect(invalid).toBe('0')
+  })
+})
