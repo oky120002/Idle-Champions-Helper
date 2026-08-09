@@ -84,7 +84,7 @@ repair: rebuild
   - 类型: issue
   - 位置: `scripts/data 归一化管线（speedResolver 或上游 collect 阶段）`
   - 备注: 1860 条 reduce_ultimate_cooldown 原始效果（154 英雄）产出 0 信号。speedResolver.ts 已接线（resolverDispatch.ts:25 映射 reduce_ultimate_cooldown → cooldownReduction），但 hero-abilities.json 中 cooldownReduction 条目为 0。
-    - 影响：speed 维度 cooldownReduction 信号完全丢失，speed-scoring-dimension 需求前置依赖
+    - 影响：speed 维度 cooldownReduction 信号完全丢失，speed 维度需求（2026-08-planner-speed-dimension）前置依赖
     - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
     - 优先级：中
 

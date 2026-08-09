@@ -12,9 +12,11 @@
 
 Idle Champions 的推进速度由三个独立可叠加的维度决定（调研 `speed-mechanics.md`）：
 
-1. **攻击冷却缩减**：缩短英雄攻击间隔 → 单位时间打出更多次攻击 → BUD 上升
-2. **过层加速**：加快敌人刷新、减少击杀需求、缩短区域转换 → 每层停留时间缩短
-3. **区域跳过**（Briv 独占）：直接跳过整个区域，跳过的 boss 奖励照常发放
+| 维度 | 数据信号 | 归一化状态 | 消费状态 |
+|---|---|---|---|
+| 攻击冷却缩减 | `attackSpeedMult`（引擎硬编码上限 75%） | 22 信号 / 16 英雄 | 消费层不收 |
+| 过层加速 | `time_scale_when_not_attacked`（Shandie）/ `area_transition_time_scale`（Diana） | 已归一化为 `attackSpeedMult` | 消费层不收 |
+| 区域跳过 | `briv_unnatural_haste`（Briv 独占） | champion-details 有数据 | planner 未消费 |
 
 三者乘法叠加。速度队不是用 DPS 换速度，而是速度英雄本身也贡献 BUD——但只有冷却缩减能被静态评估直接量化。
 
@@ -22,14 +24,14 @@ Idle Champions 的推进速度由三个独立可叠加的维度决定（调研 `
 
 planner 评分链路解析了攻速信号但完全不消费：
 
-- `attackSpeedMult`：28 个信号（`hero-abilities.json` 实测），对应 `reduce_attack_cooldown,X` 的英雄能力
-- `cooldownReduction`：类型存在但 **0 个信号产出**（类型预留，parser 从未生成此 kind）
+- `attackSpeedMult`：22 个信号（`hero-abilities.json` 实测，含过层加速信号归一化），对应 `reduce_attack_cooldown,X` 等英雄能力
+- `cooldownReduction`：类型存在但 **0 个信号产出**（类型预留，parser 从未生成此 kind）。`speedResolver.ts` 已映射 `reduce_ultimate_cooldown` → `cooldownReduction`（`resolverDispatch.ts:25`），但原始 1860 条 `reduce_ultimate_cooldown`（154 英雄）归一化产出缺失——`damage-mechanic-inventory.md` 记载"~620 cooldownReduction"与实际不符（2026-08-09 Python 逐值核验，见 TODO `atd_0cb934b094`）。
 
 评分链路 5 处显式排除速度维度：
 1. `evaluatePlacementFit` 只传 `dimension: ['damage', 'crit', 'vulnerability']` 和 `'survival'`——从不传 `'speed'`
 2. `placementFit.ts` 的 dimensionFilterSet 直接过滤掉所有非指定维度的 signal
-3. `OBJECTIVE_DIMENSIONS` 只映射 damage/crit/vulnerability/gold
-4. `equipmentBuffSignals.ts` 的 `SUPPORTED_BUFF_TARGET_KINDS` 显式排除 `attackSpeedMult`
+3. `OBJECTIVE_DIMENSIONS`（`computationMode.ts:27`）只映射 damage/crit/vulnerability/gold
+4. `equipmentBuffSignals.ts:34-35` 的 `SUPPORTED_BUFF_TARGET_KINDS` 显式排除 `attackSpeedMult`；`poolScope.ts:27-28` 有 scope 声明但无消费方
 5. 有专门测试断言"attackSpeed/cooldown 暂不收"
 
 根因：BUD 计算用 carry 英雄自己的 `baseAttackCooldown`（per-hero，已有），但不反映阵型中其他英雄提供的 `attackSpeedMult` 缩减。需要把阵型级攻速缩减纳入 BUD 计算。
@@ -39,7 +41,7 @@ planner 评分链路解析了攻速信号但完全不消费：
 - **75% 上限**（社区 + 数据交叉确认，引擎硬编码）：基础冷却 4 秒 → 最低 1 秒
 - 16 名英雄拥有 `reduce_attack_cooldown` 信号（莱埃泽尔 4.0s、维列瑟琳 3.0s 等）
 - Widdle 特殊：用 `widdle_base_attack_cooldown_override` 直接覆盖相邻英雄冷却，另带 25% 概率重置冷却，不占 75% 名额
-- Briv 跳层数学：`n = LN(50/S) / LN(1-r)`，r=0.04 或 0.032（专精 Metalborn）
+- Briv 跳层数学：`n = LN(50/S) / LN(1-r)`，r=0.04 或 0.032（专精 Metalborn）；`briv_unnatural_haste` 在 champion-details 有数据，planner 未消费
 
 ### 社区工具现状
 
