@@ -1,11 +1,12 @@
 import type { Champion, FormationSlot } from '../../domain/types'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
-import { useI18n } from '../../app/i18n'
+import type { AreaBound } from '../../domain/simulator/areaEstimation'
+import { useI18n, type LocaleText } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 import { PlannerBreakdown } from './PlannerBreakdown'
 
-const CONSTRAINT_LABELS: Record<string, { zh: string; en: string }> = {
+const CONSTRAINT_LABELS: Record<string, LocaleText> = {
   armor: { zh: '护甲', en: 'Armor' },
   'hits-based': { zh: '命中型', en: 'Hits-based' },
   'damage-reduction': { zh: '伤害削减', en: 'Dmg reduction' },
@@ -13,7 +14,7 @@ const CONSTRAINT_LABELS: Record<string, { zh: string; en: string }> = {
   'health-drain': { zh: '持续掉血', en: 'Health drain' },
 }
 
-const BOUND_LABELS: Record<string, { zh: string; en: string }> = {
+const BOUND_LABELS: Record<AreaBound, LocaleText> = {
   survival: { zh: '存活受限', en: 'survival-bound' },
   armor: { zh: '护甲受限', en: 'armor-bound' },
   bud: { zh: '伤害受限', en: 'BUD-bound' },

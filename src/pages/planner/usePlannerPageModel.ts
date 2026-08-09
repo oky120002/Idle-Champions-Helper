@@ -180,7 +180,7 @@ export function usePlannerPageModel() {
   }, [])
   const selectGoldLevelMode = useCallback((mode: 'none' | 'gold' | 'level') => {
     setGoldLevelMode(mode)
-    if (mode === 'none') setGoldLevelConversion(null)
+    setGoldLevelConversion(null)
   }, [])
   const selectEquipmentRarity = useCallback((rarity: number) => {
     setEquipmentRarity(rarity)

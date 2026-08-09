@@ -125,8 +125,8 @@ export function PlannerPage() {
     if (!locked) return
     if (variantId != null && variantId !== '') {
       selectVariantId(variantId)
+      Object.entries(locked).forEach(([slotId, heroId]) => lockSlot(slotId, heroId))
     }
-    Object.entries(locked).forEach(([slotId, heroId]) => lockSlot(slotId, heroId))
   }, [location.key, location.state, selectVariantId, lockSlot])
 
   const safeResultIndex = plannerRecommendation.results.length > 0

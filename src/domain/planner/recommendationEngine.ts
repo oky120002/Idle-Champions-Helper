@@ -776,12 +776,14 @@ function scorePlannerFormationWithLegality(
         warnings: [...scoring.warnings, `生存能力不足：预估可存活 ${String(scoring.areaEstimate.survivableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
       }
     }
-    // 护甲约束：护甲变体额外检查击杀侧（B6 已把护甲门槛烤进 killableArea）
-    if (scenario.viabilityContext.armor != null && scoring.areaEstimate.killableArea < minSurvivableArea) {
+    // 吞吐量约束（护甲/命中型）：吞吐量门槛已烤进 killableArea，额外检查击杀侧。
+    // armor 和 hitsBased 都通过 computeSegmentKillableArea 影响吞吐量，两者均须触发过滤。
+    const vc = scenario.viabilityContext
+    if ((vc.armor != null || vc.hitsBased != null) && scoring.areaEstimate.killableArea < minSurvivableArea) {
       return {
         ...scoring,
         objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, `护甲击杀能力不足：预估可击杀 ${String(scoring.areaEstimate.killableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
+        warnings: [...scoring.warnings, `击杀吞吐量不足：预估可击杀 ${String(scoring.areaEstimate.killableArea)} 层，要求 ≥ ${String(minSurvivableArea)} 层`],
       }
     }
   }

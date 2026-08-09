@@ -161,6 +161,45 @@ const armorCollections: PlannerCollections = {
   ],
 }
 
+// 命中型变体（无护甲）：20 段命中型 + 阈值检查（验证 hitsBased-only 过滤不漏）
+const hitsVariant = createVariant('variant-hits', {
+  campaign,
+  name: text('Hits-Based Horde', '命中型部落'),
+  adventureId: 'adventure-hits',
+  adventure: text('Hits-Based Catacombs', '命中型墓穴'),
+  objectiveArea: 50,
+  restrictions: [text('It has 20 hits-based hit points.', '拥有 20 段命中型生命值。')],
+})
+
+const hitsCollections: PlannerCollections = {
+  variants: [hitsVariant],
+  plannerHeroes,
+  plannerScenarios: [
+    {
+      variantId: hitsVariant.id,
+      scenarioRef: { kind: 'variant', id: hitsVariant.id },
+      name: hitsVariant.name,
+      formationLayoutId: 'layout-hits',
+      objectiveArea: hitsVariant.objectiveArea,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      ],
+      forcedHeroes: [],
+      enemyTypes: [],
+      allowedHeroes: [],
+      allowedTagExpression: [],
+      attributeRequirements: [],
+      occupiedSlotCount: 0,
+      viabilityContext: { armor: null, hitsBased: { segments: 20 }, damageModifier: null, enemyDamageMult: null, healthDrainRate: null },
+      damageSourcePattern: null,
+      scenarioWarnings: [],
+    },
+  ],
+}
+
 describe('planner recommendation engine', () => {
   it('无用户快照时返回 missing-profile blocker', () => {
     const recommendation = buildPlannerRecommendation({ collections, variant: selectedVariant, profileSnapshot: null })
@@ -613,6 +652,20 @@ describe('viability: armor constraint', () => {
     const top = recommendation.results[0]
     expect(top?.viability).not.toBeNull()
     expect(top?.viability?.activeConstraints).toContain('armor')
+  })
+
+  it('命中型变体（无护甲）+ minSurvivableArea 过滤击杀吞吐量不足的阵型', () => {
+    // hitsBased-only：armor=null 但 hitsBased={segments:20}。
+    // all-hypothetical 模式 level 1 BUD≈5，20 段命中型抬高吞吐量门槛。
+    // survival 通过（49≥10），但击杀吞吐量不通过（killableArea=1<10）。
+    const recommendation = buildPlannerRecommendation({
+      collections: hitsCollections,
+      variant: hitsVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical', minSurvivableArea: 10 },
+    })
+    expect(recommendation.blocker).toBe('no-legal-recommendation')
+    expect(recommendation.results.length).toBe(0)
   })
 
   it('普通变体 viability.activeConstraints 为空', () => {
