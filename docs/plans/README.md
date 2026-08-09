@@ -22,7 +22,7 @@ Requirement 是需求意图（可能永远不做），Plan 是执行计划（确
 
 ## 里程碑怎么写
 
-`Type: milestone` 的文件结构（见 [`_template.md`](./_template.md)）：
+`类型: milestone` 的文件结构（见 [`_template.md`](./_template.md)）：
 
 1. **目标**：一句话结论 + 价值
 2. **范围**：涉及哪些模块/文件

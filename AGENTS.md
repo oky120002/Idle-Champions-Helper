@@ -51,7 +51,7 @@
 ## 任务分级与计划
 
 - 大型任务开工前必须先在 `docs/plans/` 落库执行计划，随后按计划推进；偏离时同步更新。
-- 大型任务收尾（非可选）：计划 checklist 全完成且验证通过后，更新 `specs/` 描述新现状 → plan 标 `Landed` 移 `archives/plans/` → 关联需求加终态移 `archives/requirements/`（细节见 `governance.md` §8）。
+- 大型任务收尾（非可选）：计划 checklist 全完成且验证通过后，更新 `specs/` 描述新现状 → plan 标 `已落地` 移 `archives/plans/` → 关联需求加终态移 `archives/requirements/`（细节见 `governance.md` §8）。
 - 小型任务可直接开发，无需计划落库。
 - 大型/小型由执行智能体自行判断（跨多模块、多步骤、影响面广、需审计追溯倾向大型）；拿不准按大型处理。
 
