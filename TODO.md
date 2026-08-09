@@ -14,7 +14,6 @@ repair: rebuild
   - 位置: `src/domain/abilities/heroPredicate.ts:138-238`
   - 备注: 2026-08-08 深度复核修正：TODO 原说 4 个，实际 7 个去重表达式（含 HasEffectByID 漏报） - 评分关键实例：Skylla(169) HasEffectByID(2474) 门控 hero_dps_multiplier_mult,400(+400% DPS)；Knox(82) HasEffect(celeste_heal) 门控 damage_reduction,25(25%减伤) - 其余：Cazrin(166) 复合条件含 HasEffectByID(2416)、Alyndra(77) HasEffect、Kas(153) !HasEffect、Trixie(176) do_nothing(无影响) - 37 unparsed 中其余 ~30 个是数值表达式(floor/min/max/属性引用)和不支持的函数(num_applied_pigments/AverageILevels)，非谓词类型
 
-
 - Modron 管道 buff 数值未进 planner 评分 <!-- auto-todo:id=atd_4ca7841bda -->
   - 记录时间: `2026-08-08T12:56:14+08:00`
   - 类型: optimization
@@ -29,5 +28,16 @@ repair: rebuild
     - 影响：!lawful_good 应排除守序善良英雄，当前不排除任何人（forbidden:lawful_good 无英雄匹配）
     - 证据：parseAtom 取反分支直接 slice(1) 不查 COMPOUND_ALIGNMENT_TAGS；修复需 De Morgan 展开（!lawful_good → forbidden:lawful OR forbidden:good 两子句）
     - 优先级：低（0 实例触发）
+
+- 全站正则表达式深度审查：正确性、业务逻辑契合度、扩散面 <!-- auto-todo:id=atd_regex_audit_001 -->
+  - 记录时间: `2026-08-09T10:30:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/**`
+  - 备注: 对全站所有正则表达式（RegExp 字面量、new RegExp、字符串匹配/替换/拆分中的 pattern）做一次系统性深度审查。
+    - 正确性：ReDoS 风险、贪婪/非贪婪误用、字符类遗漏、锚点缺失、转义错误
+    - 业务契合度：正则是否完美服务使用处的业务意图（游戏数据解析、标签表达式解析、i18n 文本匹配、路由参数提取等），有无过宽或过窄匹配
+    - 扩散面：每个正则的影响范围是否正确隔离，有无一处定义多处复用但语义不同，有无匹配结果扩散到非预期下游
+    - 范围：src/ 全目录 + scripts/data/ 数据管线
+    - 验证：逐正则溯源使用处，确认业务语义一致，补测覆盖边界
 
 <!-- auto-todo:end -->
