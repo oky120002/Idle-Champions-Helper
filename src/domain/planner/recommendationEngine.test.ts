@@ -603,5 +603,21 @@ describe('viability: armor constraint', () => {
     })
     // 无阈值 → 不过滤 → 有结果（areaEstimate 反映护甲约束但不过滤）
     expect(recommendation.results.length).toBeGreaterThan(0)
+    // viability 评估：护甲在活跃约束中
+    const top = recommendation.results[0]
+    expect(top.viability).not.toBeNull()
+    expect(top.viability!.activeConstraints).toContain('armor')
+  })
+
+  it('普通变体 viability.activeConstraints 为空', () => {
+    const recommendation = buildPlannerRecommendation({
+      collections,
+      variant: selectedVariant,
+      profileSnapshot: null,
+      options: { candidateMode: 'all-hypothetical' },
+    })
+    const top = recommendation.results[0]
+    expect(top.viability).not.toBeNull()
+    expect(top.viability!.activeConstraints).toEqual([])
   })
 })

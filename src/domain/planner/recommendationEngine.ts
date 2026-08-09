@@ -21,6 +21,7 @@ import {
   type PlannerRecommendation,
   type PlannerRecommendationBlocker,
   type PlannerResult,
+  type ViabilityAssessment,
 } from './recommendationTypes'
 import { scoreFormation, type AggregateProjection, type ScoringMode, type ScoringResult } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
@@ -456,6 +457,7 @@ function buildEvaluationFormationResult(
     ),
     warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
     areaEstimate: scoring.areaEstimate ?? null,
+    viability: buildViabilityAssessment(scenario, scoring.areaEstimate),
     breakdown: scoring.breakdown,
     placements,
     placementEntries,
@@ -740,6 +742,24 @@ function selectTopKByCarry<T extends { objectiveValue: GameNumberValue; carryHer
 }
 
 /**
+ * 从 scenario.viabilityContext + areaEstimate 构建 ViabilityAssessment。
+ * activeConstraints = 非 null 字段标识；boundBy 来自 areaEstimate。
+ */
+function buildViabilityAssessment(
+  scenario: ResolvedPlannerScenarioModel,
+  areaEstimate: { boundBy: string } | null,
+): ViabilityAssessment {
+  const vc = scenario.viabilityContext
+  const active: string[] = []
+  if (vc.armor) active.push('armor')
+  if (vc.hitsBased) active.push('hits-based')
+  if (vc.damageModifier != null) active.push('damage-reduction')
+  if (vc.enemyDamageMult != null) active.push('enemy-buff')
+  if (vc.healthDrainRate != null) active.push('health-drain')
+  return { activeConstraints: active, boundBy: areaEstimate?.boundBy as ViabilityAssessment['boundBy'] ?? null }
+}
+
+/**
  * buildPlannerRecommendation 尾段：把 Top K 搜索结果组装成 PlannerResult[]（含 placementEntries 排序、
  * warnings 合并、explanations 构建）。提取自 buildPlannerRecommendation；语义零改变。
  */
@@ -783,6 +803,7 @@ function buildRecommendationResults(
       ),
       warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
       areaEstimate: top.areaEstimate ?? null,
+      viability: buildViabilityAssessment(scenario, top.areaEstimate),
       breakdown: top.breakdown,
       placementEntries,
     }

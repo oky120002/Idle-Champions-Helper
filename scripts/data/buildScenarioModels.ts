@@ -83,6 +83,9 @@ function projectMechanicsToScenario(
   if (mechanics.has('only_heal_on_revive') || mechanics.has('skip_area_change_heal')) {
     mechanicWarnings.push('当前场景换区不恢复生命，需要治疗能力或高有效生命。')
   }
+  if (mechanics.has('debuff_until_crit')) {
+    mechanicWarnings.push('当前场景敌人需暴击才能造成有效伤害，暴击率与暴击伤害价值提升。')
+  }
 
   return { mechanicWarnings }
 }
