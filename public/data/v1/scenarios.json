@@ -28668,12 +28668,6 @@
         {
           "required": [],
           "forbidden": [
-            "male"
-          ]
-        },
-        {
-          "required": [],
-          "forbidden": [
             "female"
           ]
         }
@@ -184630,7 +184624,20 @@
           ]
         }
       ],
-      "allowedTagExpression": [],
+      "allowedTagExpression": [
+        {
+          "required": [
+            "chaotic"
+          ],
+          "forbidden": []
+        },
+        {
+          "required": [
+            "lawful"
+          ],
+          "forbidden": []
+        }
+      ],
       "attributeRequirements": [],
       "variantId": "1594",
       "scenarioRef": {
@@ -184667,7 +184674,8 @@
       "allowedHeroes": [],
       "occupiedSlotCount": 0,
       "scenarioWarnings": [
-        "未解析 restriction：You may only use Lawful and/or Chaotic Champions.\r\nThree Modrons appear in each area. They don't drop gold nor count towards quest progress.\r\nEvery 10 areas, an additional Modron spawns, capped at 50 Modrons.（含特殊机制，请人工评估对阵型的影响）"
+        "未解析 restriction：You may only use Lawful and/or Chaotic Champions.\r\nThree Modrons appear in each area. They don't drop gold nor count towards quest progress.\r\nEvery 10 areas, an additional Modron spawns, capped at 50 Modrons.（含特殊机制，请人工评估对阵型的影响）",
+        "当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。"
       ]
     },
     {
@@ -227373,18 +227381,6 @@
       "allowedTagExpression": [
         {
           "required": [
-            "elf"
-          ],
-          "forbidden": []
-        },
-        {
-          "required": [
-            "half-elf"
-          ],
-          "forbidden": []
-        },
-        {
-          "required": [
             "speed"
           ],
           "forbidden": []
@@ -229575,5 +229571,5 @@
       "scenarioWarnings": []
     }
   ],
-  "updatedAt": "2026-08-06"
+  "updatedAt": "2026-08-09"
 }
