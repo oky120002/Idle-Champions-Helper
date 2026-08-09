@@ -90,7 +90,7 @@ describe('applyEquipmentBuffsToProfile', () => {
     expect(drWrapper.bonusScaleOfSignal).toBe(base)
   })
 
-  it('attackSpeed/cooldown base 暂不收（base 不进评分，注入 wrapper 也无效，需先让 speed 进评分）', () => {
+  it('attackSpeed/cooldown base 暂不收（base 不进目标值，注入 wrapper 也无效，需先让 speed 进评估）', () => {
     const speedBase = baseSignal({ rawEffect: 'attack_speed_mult,20', kind: 'attackSpeedMult', upgradeId: '8' })
     const original = makeProfile([speedBase])
     expect(applyEquipmentBuffsToProfile(original, [buff('8', 40)])).toBe(original)

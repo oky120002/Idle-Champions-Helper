@@ -44,7 +44,7 @@
 ## 6. 守护测试
 
 - 跨边界一致性（如 src 侧 scorer 与 scripts 侧脚本的平行白名单）无法合并为单一来源时，必须配 keys 同步守护测试，任一侧变更时强制失败。
-- 数据管线（归一化→评分→展示等多级流水线）除逐级手搓输入单测外，必须配真实产物端到端守护测试（加载 built JSON 喂入完整链路，断言最终输出）。手搓输入会掩盖级间集成回归——级 A 实际产出偏离级 B 假设输入时，手搓单测仍绿。
+- 数据管线（归一化→评估→展示等多级流水线）除逐级手搓输入单测外，必须配真实产物端到端守护测试（加载 built JSON 喂入完整链路，断言最终输出）。手搓输入会掩盖级间集成回归——级 A 实际产出偏离级 B 假设输入时，手搓单测仍绿。
 - 真实产物端到端守护必须覆盖**聚合层**（pool/total/carryDps），不能只断言中间信号值。`championReferenceVerification` 曾只断言 per-signal multiplier（16384/576）而跳过 pool 聚合值（以为「pool 非直接可比」），致 22× buff_upgrade 双重计数漏网数月。聚合整体难对照时，断言其**组成**（addPercent 各来源、各 pool 分量）而非整体跳过——「难对照」不是跳过聚合层覆盖的理由。
 - breakdown/分解因子声称「因子之积 = 目标值」（如 `SimulationBreakdown.factors` 之积 = `carryDps`）时，必须配**组合测试**：多个因子同时非默认值时断言因子之积确实复现目标值。尤其当多个来源**加法合并进同一 add pool**（如装备 + 外部 hero_dps 同为 `hero_dps_multiplier_mult`）时——单来源非默认的测试会漏掉「来源间非各自独立乘、而是同池加法」的口径错误。`heroDpsPool` 曾把 equipment/external 分列为两个独立 × 因子，实际却加法合并，双来源同时生效时因子相乘 ≠ carryDps，违反 `computation-runtime.md` 声明的因子之积契约；根因是新增 #9 外部 hero_dps 通道接入 add pool 时未同步更新 breakdown 外露口径。
 

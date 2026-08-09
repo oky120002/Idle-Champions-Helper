@@ -31,7 +31,7 @@ describe('placement fit — relations', () => {
     expect(inactiveFit.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
   })
 
-  it('non-adjacent hero buff 只在非相邻位计分', () => {
+  it('non-adjacent hero buff 只在非相邻位计入目标值', () => {
     const supportHero = createHero('support', {
       supportSignals: [
         {
@@ -65,7 +65,7 @@ describe('placement fit — relations', () => {
     expect(inactiveFit.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
   })
 
-  it('same-column hero buff 只在同列计分', () => {
+  it('same-column hero buff 只在同列计入目标值', () => {
     const supportHero = createHero('support', {
       supportSignals: [
         {

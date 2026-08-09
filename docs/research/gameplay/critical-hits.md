@@ -79,7 +79,7 @@ Light of Xaryxis 第四层祝福「Great Shot, Kid!」：全战役暴击伤害 +
 
 ### 未解析的暴击信号（8 个，parser 缺失）
 
-以下暴击相关 `rawEffect` 尚无解析器，不参与 planner 评分：
+以下暴击相关 `rawEffect` 尚无解析器，不参与 planner 评估：
 
 | 英雄 | rawEffect | 说明 |
 |---|---|---|
@@ -103,7 +103,7 @@ Light of Xaryxis 第四层祝福「Great Shot, Kid!」：全战役暴击伤害 +
 | `hero-abilities.json` | `globalCritChance`（加性）| rawEffect: `global_buff_base_crit_chance_add,N` |
 | `hero-abilities.json` | `heroCritChance`（乘性）| rawEffect: `buff_base_crit_chance_mult,N` |
 | `hero-abilities.json` | `heroCritDamage`（乘性）| rawEffect: `buff_base_crit_damage_mult,N` |
-| `hero-abilities.json` | 8 个未解析 rawEffect | `global_buff_base_crit_damage`、`add_crit_effect`、`binwin_critical_combo` 等（parser 缺失，不参与评分）|
+| `hero-abilities.json` | 8 个未解析 rawEffect | `global_buff_base_crit_damage`、`add_crit_effect`、`binwin_critical_combo` 等（parser 缺失，不参与评估）|
 
 ## 验证标注
 

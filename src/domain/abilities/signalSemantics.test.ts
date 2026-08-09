@@ -248,7 +248,7 @@ describe('normalizeStatQualifiers', () => {
 })
 
 describe('normalizeExplicitTargeting', () => {
-  it('只接受当前可稳定计分的目标关系', () => {
+  it('只接受当前可稳定计入目标值的目标关系', () => {
     expect(normalizeExplicitTargeting({ targets: ['adj'] })).toEqual({ status: 'supported', relation: 'adjacent' })
     expect(normalizeExplicitTargeting({ targets: ['non_adj'] })).toEqual({ status: 'supported', relation: 'nonAdjacent' })
     expect(normalizeExplicitTargeting({ targets: [{ type: 'attack_type', attack: 'magic' }] })).toEqual({ status: 'supported', relation: 'any' })

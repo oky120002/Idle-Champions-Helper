@@ -560,7 +560,7 @@ it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链�
   expect(perTargetAllSlotsCarry?.formationCountPositionQualifier).toEqual({
     relation: 'any',
   })
-  // ability 源（effect_keys）plain 静态 buff_upgrade 不派生计分信号——其贡献已烘进目标 effect_def
+  // ability 源（effect_keys）plain 静态 buff_upgrade 不派生计入目标值信号——其贡献已烘进目标 effect_def
   // 的 effect_string snapshot value（见 collectEffectEntries buff-upgrade-progression-exclusion）。
   expect(plainBuffSupport).toBeUndefined()
   // base signal（hero_dps_multiplier_mult,80）仍正常派生：
@@ -713,7 +713,7 @@ it('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSigna
     unsupportedRawEffects.filter((rawEffect) => rawEffect === 'buff_upgrade'),
   ).toEqual([])
 
-  // upgrade effectReference 的 plain buff_upgrade 不派生计分信号（ability 源静态，贡献已在 base snapshot）。
+  // upgrade effectReference 的 plain buff_upgrade 不派生计入目标值信号（ability 源静态，贡献已在 base snapshot）。
   const first = heroAbilities.items[0]
   const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')

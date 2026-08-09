@@ -80,11 +80,11 @@ planner 页面是工作台，不是 landing page。
 
 ## 未接入的辅助指标
 
-ult buff（`ultUptime.ts`）、click damage（`clickDamage.ts`）、modron reset（`modronInfo.ts`）的折算函数已实现但**零生产调用**，不进评分 / 排序 / 输出合同。接入后 ult buff 按 modron 自动施放 uptime 折算、click damage 由 BUD 派生、modron reset 给出层数建议。
+ult buff（`ultUptime.ts`）、click damage（`clickDamage.ts`）、modron reset（`modronInfo.ts`）的折算函数已实现但**零生产调用**，不进目标值 / 排序 / 输出合同。接入后 ult buff 按 modron 自动施放 uptime 折算、click damage 由 BUD 派生、modron reset 给出层数建议。
 
 ## 测试覆盖
 
 - 数字：`1.50e92`、`4.08e167`、`1e1000`、加法阈值、排序稳定性。
 - 模拟器：effect parser、unsupported warning、各维度 pool 聚合、baseDps / survival / bud / area 公式。
-- Planner：候选池、合法性、稳态评分、beam search、计算模式裁剪、evaluateFormation。
+- Planner：候选池、合法性、稳态求值、beam search、计算模式裁剪、evaluateFormation。
 - UI：profile 状态、场景选择、结果卡、保存 preset、loading 翻转 / requestId 丢弃 / debounce。

@@ -145,7 +145,7 @@ export function classifyScoringSupport(signal: {
   }
 
   // stacksMultiply 短路：placementFit.resolveSignalMultiplier 对 stacksMultiply===true 且**无 stackFunc**
-  // 的纯 dynamic-stack 信号（如蔚出言不逊 manual_stacking）走 manualStackCount 短路计分——此处对称分类。
+  // 的纯 dynamic-stack 信号（如蔚出言不逊 manual_stacking）走 manualStackCount 短路计入目标值——此处对称分类。
   // 须排除「有 stackFunc」的信号：它们的层数源是 stackFunc（resolveSignalMultiplier 改走 stackFunc 路径），
   // 旧实现误把 stacksMultiply+stackFunc（如 hero32 per_mithral_hall_stacks）判 supported，实际是
   // stacksMultiply 分支用 manualStackCount 灾难高估（(1+value/100)^1000）——现落 stackFunc 白名单判定。

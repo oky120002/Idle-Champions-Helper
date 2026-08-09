@@ -68,8 +68,8 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
     usedSeats: lockedSeats,
   }
   let candidates: BeamCandidate[] = [initialCandidate]
-  // scored 持有最近一轮评分结果；循环结束即最终候选的评分，收口直接复用，
-  // 不再对最后一轮已评分的候选重复跑 scoreFormation（每次全阵型 O(N²×signals)）。
+  // scored 持有最近一轮评估结果；循环结束即最终候选的评估，收口直接复用，
+  // 不再对最后一轮已评估的候选重复跑 scoreFormation（每次全阵型 O(N²×signals)）。
   let scored: Array<{ candidate: BeamCandidate; result: ScoringResult }> = [
     { candidate: initialCandidate, result: scoreFormation(initialCandidate.placements) },
   ]

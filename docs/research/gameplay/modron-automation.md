@@ -64,13 +64,13 @@ Nordom（英雄 100）与 Modron 核心有特殊交互：
 - **Modron 核心工具箱**（Modron Core Toolbox）：核心经验获取 +20%（`nordom_modron_xp_buff,20`）。
 - **伟大的 Modron 之谜**（The Great Modron Puzzle）：根据所有激活核心的已连接输出总数提升「整齐队列」效果（`nordom_great_modron_puzzle_buff`，hero-abilities.json 标注无 parser）。
 
-## 对 planner 评分的影响
+## 对 planner 评估的影响
 
 本项目 planner 中 Modron 相关代码集中在三处：
 
 1. **重置层数建议**（`src/domain/simulator/modronInfo.ts`）：`MODRON_AUTO_RESET_CAP = 2500`（来自 `game-rules.json` → `max_modron_auto_reset_area.area`），`computeModronResetSuggestion` 取 `min(阵型预估最大层数, 2500)` 作为建议重置层。守护测试在 `gameRulesSync.test.ts` 中验证常量与数据源同步。
 
-2. **Ult 覆盖率折算**（`src/domain/simulator/ultUptime.ts`）：`modronActive` 参数控制是否计入大招 buff——满级核心自动施放时 `uptime = duration / base_cooldown`；未激活则 `uptime = 0`（保守不计）。当前生产调用方均传 `false`（无核心满级假设），实际加成暂未接入评分。
+2. **Ult 覆盖率折算**（`src/domain/simulator/ultUptime.ts`）：`modronActive` 参数控制是否计入大招 buff——满级核心自动施放时 `uptime = duration / base_cooldown`；未激活则 `uptime = 0`（保守不计）。当前生产调用方均传 `false`（无核心满级假设），实际加成暂未接入评估。
 
 3. **全局 DPS 池**（`src/domain/buffs/blessingGlobalBuff.ts` 注释）：Modron 管道伤害加成与赞助人天赋、祝福共享同一 `global_dps_multiplier_mult` 加法池 `1 + Σ(value)/100`，但当前 planner 未注入 Modron 来源的 multiplier。
 

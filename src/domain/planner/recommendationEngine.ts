@@ -30,7 +30,7 @@ const PLANNER_TOP_K = 3
  * beam search 默认宽度（每轮保留的候选阵型数）。越大越精确越慢；越小越快越可能漏最优。
  * 实测（benchmark beamWidth 扫描）：width=8 安全；width=4 多数 variant 无损但偶发质量塌方；
  * width≤3 在候选多的 variant 上 objectiveValue 崩溃（log10 比 -4）。故默认保守留 8——
- * 真正可靠的加速走 computationMode 候选裁剪（少评分次数，非降搜索质量）。
+ * 真正可靠的加速走 computationMode 候选裁剪（少求值次数，非降搜索质量）。
  * 调用方可经 PlannerRecommendationOptions.beamWidth 覆盖（CLI/测试/调优）。
  */
 const PLANNER_BEAM_WIDTH = 8
@@ -152,7 +152,7 @@ export interface PlannerRecommendationOptions {
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
   /**
-   * 全局金币预算（游戏记数法字符串，如 `"1.50e92"`）。评分链路暂不消费，预留扩展。
+   * 全局金币预算（游戏记数法字符串，如 `"1.50e92"`）。评估链路暂不消费，预留扩展。
    * 等级模式时由调用方反算（computeMaxGoldForLevel）后传入。
    */
   goldBudget?: string | undefined
@@ -343,7 +343,7 @@ function attachOwnedSaveContext(
 }
 
 /**
- * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评分上下文 + options 对称透传。
+ * evaluate/recommend 两入口共用 scoreFormation 调用：placements + 评估上下文 + options 对称透传。
  * 抽成单一来源，结构性锁定两入口透传一致——否则新增透传字段（如 aggregateProjection）漏改一处，
  * evaluate 与 recommend 会对同一阵型算出不同 DPS 且无诊断。
  */

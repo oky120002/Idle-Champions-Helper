@@ -245,7 +245,7 @@ describe('planner route and navigation', () => {
     )
 
     const result = await screen.findByRole('article', { name: /推荐结果/ })
-    // 默认 carry-dps 模式，评分标签为核心英雄 DPS
+    // 默认 carry-dps 模式，显示标签为核心英雄 DPS
     expect(within(result).getByText(/^核心英雄 DPS$/)).toBeInTheDocument()
 
     const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))

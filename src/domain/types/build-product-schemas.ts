@@ -20,7 +20,7 @@ import { localizedTextSchema } from './common.ts'
 const localizedText = localizedTextSchema
 
 /**
- * hero-abilities.json item：英雄能力 profile（planner 评分核心数据源）。
+ * hero-abilities.json item：英雄能力 profile（planner 评估核心数据源）。
  * 钉 identity + 座位 + DPS/暴击 base + signal 列表存在性；signal 元素结构由 HeroAbilitySignal 类型管。
  */
 export const heroAbilityProfileItemSchema = z

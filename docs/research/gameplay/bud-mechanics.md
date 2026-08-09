@@ -51,7 +51,7 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 | `apply_when_bud_setting` | `hero-abilities.json`（宾温） | 仅在该英雄设 BUD 时生效 |
 | 衰减参数 | `game-rules.json` rule 14（`ultimate_damage_params`）| `falloff_delay: 15`、`falloff_period: 15`、`mode: "exponential"`、`falloff_exponent: 5`/`falloff_exponent2: 10`、`min_highest_hit_multiplier: 0.01` |
 
-> 上述 BUD 相关效果在数据管线中均标记为 `No parser`，即未进入评分模型。BUD 本身是运行时动态值，不在静态数据中直接出现。
+> 上述 BUD 相关效果在数据管线中均标记为 `No parser`，即未进入评估模型。BUD 本身是运行时动态值，不在静态数据中直接出现。
 
 ## 与多段攻击的关系 ✅
 

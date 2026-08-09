@@ -78,7 +78,7 @@ async function loadPlannerCollectionsData(): Promise<PlannerCollectionsData> {
  *
  * 注意：这是数据加载 hook，不是跨路由共享 store——每个页面实例各自维护选中场景与
  * 已加载数据。跨页携带选中场景由调用方经路由 state 传递（自配评估页 initialVariantId
- * 与回填 variantIdFromEvaluate）。不做推荐搜索与评分。
+ * 与回填 variantIdFromEvaluate）。不做推荐搜索与评估。
  */
 export function usePlannerCollections(initialVariantId?: string | null): UsePlannerCollectionsResult {
   const [collections, setCollections] = useState<PlannerCollections>({ variants: [], plannerHeroes: [], plannerScenarios: [], featCatalog: {}, specializationCatalog: {} })

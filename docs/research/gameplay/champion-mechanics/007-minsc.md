@@ -29,7 +29,7 @@
 
 - 明斯克自身 signal 丰富（built hero-abilities.json：44 carry + 13 support + 5 unsupported），含 heroDpsMultiplier / globalDpsMultiplier 类自增益与全队 buff。
 - 「偏好敌人:兽类」是 vulnerability 类（monsterTags: 野兽），仅当场景 enemyTypes 含野兽时计入——`evaluatePlacementFit` 按 monsterTags 条件匹配。
-- 「直吹自擂」是刷怪/速度机制，**不直接进 DPS pool**（非伤害倍率），属速度队组建语义，当前评分不消费（speed 维度未接 ScoringMode，见 architecture.md 未接入能力）。
+- 「直吹自擂」是刷怪/速度机制，**不直接进 DPS pool**（非伤害倍率），属速度队组建语义，当前评估不消费（speed 维度未接 ScoringMode，见 architecture.md 未接入能力）。
 - 即将生效的 5 条外部加成是 blessing/patron 给的，**不在 hero-abilities.json**（那只有英雄自身技能 signal），是绝对伤害偏差的主因。
 
 ## 推导与偏差
@@ -43,7 +43,7 @@
 
 ## 接入事实
 
-- 等级解锁门控：build 烘 requiredLevel，评分按 heroLevels 过滤。
+- 等级解锁门控：build 烘 requiredLevel，评估按 heroLevels 过滤。
 - 外部加成 blessing/patron：global_dps active 过滤 + effect_def filter_targets 接入。
 - vulnerability `monster_with_tag_more_damage`（偏好敌人基础 +300%）经专精外部化按玩家选择注入。
 - feat 专长：active feats 按 scoringMode 维度注入；明斯克 feat 35 hero_dps +30% / 38 global_dps +10% 生效。

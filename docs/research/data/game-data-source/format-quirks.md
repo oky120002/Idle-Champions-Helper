@@ -64,7 +64,7 @@
 `collectEffectEntries` 派生 buff_upgrade signal 时：
 
 - preset 继承 base 的 targetQualifier，并 AND 合并 `normalizeTargetQualifier(wrapper effect)`（经 `mergeHeroQualifiers`），避免 wrapper 层 filter_targets（如 `hero_ids` 白名单）丢失。真实样本：hero 82 的 loot `buff_upgrades` + `hero_ids:[82]`。
-- **ability 源静态 buff_upgrade 排除**：IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自身 upgrade 树的全部静态 buff_upgrade 贡献。故 ability 源（`sourceBucket ∈ {upgrade, upgrade-effect-key}`）+ plain kind（`buff_upgrade`/`buff_upgrades`）+ 非 `stacks_multiply` 的 wrapper **不派生计分信号**——否则每条叠 `base.value×X/100` 进 addPercent 产生 22× 级 pool 高估（蔚证：善良榜样 effect_string=300 含 20 条 ranked + 劝人向善 +200%，游戏显示 per-stack 恰好 +300%=4^7）。
+- **ability 源静态 buff_upgrade 排除**：IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自身 upgrade 树的全部静态 buff_upgrade 贡献。故 ability 源（`sourceBucket ∈ {upgrade, upgrade-effect-key}`）+ plain kind（`buff_upgrade`/`buff_upgrades`）+ 非 `stacks_multiply` 的 wrapper **不派生计入目标值信号**——否则每条叠 `base.value×X/100` 进 addPercent 产生 22× 级 pool 高估（蔚证：善良榜样 effect_string=300 含 20 条 ranked + 劝人向善 +200%，游戏显示 per-stack 恰好 +300%=4^7）。
   - CNE 数据格式特性仍记：`required_level>=9999` 是 CNE 把非可购逻辑 buff 展开成完全相同副本（如 Jaheira 38 条 `buff_upgrades,100,...`）；`required_level<9999` 是各自可购的永久升级（如 Brueno Rally 15 条 magnitude 100~300）。**两者贡献均已在目标 effect_string snapshot value 内**，故按来源排除（不区分 required_level）。
 - 保留三类运行时 wrapper（仍派生）：`stacks_multiply` 动态（area 依赖）、复杂 wrapper（per_tagged/distance 阵型依赖）、外部源 loot/feat/legendary（装备/专长/feat）。派生去重按 `rarityGroupKey@upgradeId`（首条保留）；loot rarity 选择（首条 vs 最高）是已知 follow-up。
 - 消费侧 `evaluatePlacementFit` 的 pool `addPercent` 累加同 pool 的派生信号（仅运行时修饰）。

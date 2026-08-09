@@ -1,5 +1,5 @@
 /**
- * 全英雄评分 smoke：每个英雄作为自 carry 跑一次 scoreFormation，
+ * 全英雄评估 smoke：每个英雄作为自 carry 跑一次 scoreFormation，
  * 验证所有英雄的 signal 组合不崩溃引擎（归一化/机制改动后的兜底）。
  * 不验数值正确性（数值由 championReferenceVerification 对照），只验可用性。
  */
@@ -32,7 +32,7 @@ function loadCollections() {
   return { heroes: resolved.heroes, scenarios: resolved.scenarios }
 }
 
-describe('全英雄评分 smoke', () => {
+describe('全英雄评估 smoke', () => {
   it('每个英雄自 carry 跑 scoreFormation 不崩溃', () => {
     const { heroes, scenarios } = loadCollections()
     expect(heroes.length).toBeGreaterThan(0)
@@ -49,13 +49,13 @@ describe('全英雄评分 smoke', () => {
           scenario,
         })
         // 结果有 objectiveValue 即视为可用；不验数值，但须为正数（非 NaN/0/负）。
-        // toBeDefined 放过退化值（如评分 bug 产生 NaN），加正数检查捕获静默错误。
+        // toBeDefined 放过退化值（如评估 bug 产生 NaN），加正数检查捕获静默错误。
         expect(result.objectiveValue.toNumber()).toBeGreaterThan(0)
       } catch {
         crashed += 1
       }
     }
-    expect(crashed, `${crashed.toString()} 个英雄评分崩溃`).toBe(0)
+    expect(crashed, `${crashed.toString()} 个英雄评估崩溃`).toBe(0)
   })
 
   it('蔚(95) 善良榜样 signal 在 built 数据中 count/target 分离正确（normalize→build 产物守护）', () => {

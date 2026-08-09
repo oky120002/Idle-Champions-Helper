@@ -34,8 +34,8 @@ describe('placement fit — stacking', () => {
     expect(fit.scoreBreakdown[0]?.active).toBe(true)
   })
 
-  it('stacksMultiply 高 value + 大 manualStackCount 溢出时降级 warning 不计分（不崩溃）', () => {
-    // 默认 manualStackCount=1000 + value=200 → 3^1000 = Infinity → 溢出 warning，信号不计分。
+  it('stacksMultiply 高 value + 大 manualStackCount 溢出时降级 warning 不计入目标值（不崩溃）', () => {
+    // 默认 manualStackCount=1000 + value=200 → 3^1000 = Infinity → 溢出 warning，信号不计入目标值。
     // 真实数据 52 个 stacksMultiply signal value>103%（默认 1000 下溢出），须优雅降级非崩溃/非 NaN。
     const supportHero = createHero('support', {
       carrySignals: [
@@ -60,7 +60,7 @@ describe('placement fit — stacking', () => {
     expect(fit.warnings.some((w) => w.includes('溢出'))).toBe(true)
   })
 
-  it('stacksMultiply 信号依赖的基础 0 层（multiplier≤1）时不计分（与 applySignalPercent 对称守护）', () => {
+  it('stacksMultiply 信号依赖的基础 0 层（multiplier≤1）时不计入目标值（与 applySignalPercent 对称守护）', () => {
     // RV-A02-2：stacksMultiply 分支 bonusScaleOfSignal 依赖加 multiplier>1 守护——基础 0 层（如善良榜样
     // 无 good 英雄 → 4^0=1）时出言不逊类 stacksMultiply 信号不应生效（基础无效应不放大）。
     const dwarfBase: HeroAbilitySignal = {

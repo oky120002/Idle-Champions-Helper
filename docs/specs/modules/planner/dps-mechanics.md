@@ -1,6 +1,6 @@
 # DPS 机制注册表
 
-planner 评分层消费的 DPS 机制清单。每个机制一个 `id`，三处一致使用同一 id：
+planner 评估层消费的 DPS 机制清单。每个机制一个 `id`，三处一致使用同一 id：
 
 - **代码**：`src/domain/planner/mechanics/` 的 `resolveSignalMultiplier` / `STACK_COUNT_RESOLVERS` 分支注释标 `// 机制: <id>`；`placementFit.ts` 的 pool 聚合分支亦同
 - **英雄参照**：`src/domain/planner/references/*ReferenceData.ts` 的 ability `mechanicIds`

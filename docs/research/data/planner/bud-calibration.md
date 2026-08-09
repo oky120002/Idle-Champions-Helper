@@ -18,7 +18,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 
 - `budCalculation.ts` 只导出 `computeSingleHitDamage(heroDps, attackCooldown)`——单英雄单次伤害；缺 cooldown 时回退默认 1 秒。
 - 阵型级 BUD（`max` 各英雄单次伤害）**不在此计算**——`steadyStateScoring` 直接用 carry 的单次伤害近似阵型 BUD（carry 通常设 BUD）。formation-max 精确化（考虑非 carry 高 cooldown 英雄）留待 BUD 实测校准后按需立项。
-- ult_damage 派生（`ultimate_damage_params.dps_based:true`）的 uptime 折算模块（`ultUptime.ts`）已实现但**未接入评分**，见 `docs/specs/modules/planner/simulator.md`。
+- ult_damage 派生（`ultimate_damage_params.dps_based:true`）的 uptime 折算模块（`ultUptime.ts`）已实现但**未接入评估**，见 `docs/specs/modules/planner/simulator.md`。
 
 ## 实现近似与局限
 

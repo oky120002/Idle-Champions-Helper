@@ -23,7 +23,7 @@ export interface PlannerResult {
   /**
    * 当前推荐模式主目标量的游戏记数法字符串（可超 Number.MAX_VALUE）。
    * carry-dps 模式 = carryDps；team-gold 模式 = teamGoldFind；UI 按 scoringMode 切换显示标签。
-   * 取代旧"评分（score）"概念——值是真实优化目标量，非启发式角色权重评分。
+   * 取代旧"评估（score）"概念——值是真实优化目标量，非启发式角色权重评估。
    */
   objectiveValue: string
   /**

@@ -1,4 +1,4 @@
-# planner 数字层、加成聚合与评分维度
+# planner 数字层、加成聚合与评估维度
 
 ## GameNumber
 
@@ -45,13 +45,13 @@ hero_final_dps = base_dps × level_curve
 
 `static_dps_mult` fallback：`upgrade.static_dps_mult`（CNE 静态 dps 乘数近似 1.25–5）由 `collectRawEffectEntries` 读取；其 effect 未产出可解析 signal（复杂机制如 `target_attacking_monsters_hero_dps_mult`）的 upgrade，fallback 生成 `heroDpsMultiplier` mult signal（`value=(staticDpsMult−1)×100`，carrySignals self-buff）。upgrade 已有可解析 signal 时不 fallback，防重复。
 
-## 评分维度
+## 评估维度
 
-planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIND`）：
+planner 当前支持的评估维度（`HeroAbilityDimension` + `DIMENSION_BY_KIND`）：
 
 | 维度 | 进 carryDps | 说明 |
 |------|:-----------:|------|
-| damage | 是 | global / hero DPS multiplier、adjacent support、tagged champion multiplier。主评分载体。 |
+| damage | 是 | global / hero DPS multiplier、adjacent support、tagged champion multiplier。主目标量载体。 |
 | gold | 独立模式 | `team_gold_find = BASE_GOLD × global_gold_pool × hero_gold_pool`，全队聚合（非单一 carry），走 `team-gold` scoringMode 分支；装备 `gold_multiplier_mult`（placement-aware per-hero）并入 gold:global 池。 |
 | crit | 是 | `crit_factor = 1 + total_chance × (total_damage_mult − 1)`；默认 chance=2.5% / damage=100% 来自 `default_crit_info`，per-hero 可被 `set_base_crit_chance` 覆盖（归一基线）。装备 `buff_base_crit_*_mult`（hero-scope mult，per-carry）经 computeCritFactor 第三参注入（非池聚合）。 |
 | vulnerability | 是 | 按场景怪物 tag 条件性匹配（`scenario.enemyTypes`）；add / mult 分流聚合，与 damage pool 一致。 |
@@ -60,9 +60,9 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
-`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` **且无 stackFunc** 的纯动态层数 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。`stacksMultiply=true` **带 stackFunc** 的 signal（如 hero32 `per_mithral_hall_stacks`）层数源是 stackFunc 而非 area-based manual——走 stackFunc 计数路径（注册的按阵型计数、未注册的不计分），不进 manualStackCount 短路（误进则 (1+value/100)^1000 灾难高估）。formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
+`manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` **且无 stackFunc** 的纯动态层数 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。`stacksMultiply=true` **带 stackFunc** 的 signal（如 hero32 `per_mithral_hall_stacks`）层数源是 stackFunc 而非 area-based manual——走 stackFunc 计数路径（注册的按阵型计数、未注册的不计入目标值），不进 manualStackCount 短路（误进则 (1+value/100)^1000 灾难高估）。formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。
 
-未进评分、只标记的效果：随机触发、击杀过程、逐区时间线、敌人实时状态、临时 buff、同时期互斥或无法静态判断的效果。未知 effect 必须进入 `warnings` 和 `unsupportedSignals`，不静默忽略。
+未进目标值、只标记的效果：随机触发、击杀过程、逐区时间线、敌人实时状态、临时 buff、同时期互斥或无法静态判断的效果。未知 effect 必须进入 `warnings` 和 `unsupportedSignals`，不静默忽略。
 
 ## 候选池和公平假设
 
@@ -73,9 +73,9 @@ planner 当前支持的评分维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 
 未拥有英雄公平基线：同 seat 已拥有英雄足够时用同 seat 中位装备 / feat / 传奇假设；同 seat 不足时用账号全局中位数；空账号或数据不足时退回 `no-equipment/no-feat`，并强制显示 assumption。
 
-## 搜索和评分
+## 搜索和评估
 
-合法性先于评分：seat 冲突、banned champions、forced champions、locked / occupied slots、formation layout mismatch。
+合法性先于评估：seat 冲突、banned champions、forced champions、locked / occupied slots、formation layout mismatch。
 
 deterministic beam search。默认参数由领域常量集中管理（不写死 UI）：每个 seat 保留 Top N、主 DPS Top N、beam width、result count。结果排序稳定，同分用 deterministic tie-breaker。
 
@@ -83,7 +83,7 @@ deterministic beam search。默认参数由领域常量集中管理（不写死 
 
 ## 计算模式（性能优化）
 
-beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评分，全英雄 worst case 一次推荐约 8s。计算模式通过「预计算收益 + 按席位裁剪候选」减少评分次数。
+beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型求值，全英雄 worst case 一次推荐约 8s。计算模式通过「预计算收益 + 按席位裁剪候选」减少求值次数。
 
 **预计算收益**（build 期 `computeHeroGainProfile`，写进 `hero-abilities.json` 的 `gainProfile`）：
 
@@ -103,4 +103,4 @@ beam search 对「每个槽位 × 每个候选英雄」都跑一次全阵型评�
 
 降搜索宽度不是可靠加速——benchmark 实测 `beamWidth=4` 多数 variant 无损但偶发 objectiveValue 塌方、`≤3` 候选多的 variant 直接崩溃。默认保守留 8，可经 `PlannerRecommendationOptions.beamWidth` 覆盖。
 
-增量评分经深入调研确认**严格等价下不可行**：632 个 count-dependent signal（`per_crusader` / `per_hero_attribute` / `per_tagged_crusader_mult` / `per_target_crusader` / `per_upgrade_targets`，分布在 96% 英雄）的 multiplier 依赖整队计数，加入英雄会改变已有 `(carry,support)` 对结果——严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)，与全量同级。性能优化改走 Web Worker 卸载（见 `computation-runtime.md`）。
+增量求值经深入调研确认**严格等价下不可行**：632 个 count-dependent signal（`per_crusader` / `per_hero_attribute` / `per_tagged_crusader_mult` / `per_target_crusader` / `per_upgrade_targets`，分布在 96% 英雄）的 multiplier 依赖整队计数，加入英雄会改变已有 `(carry,support)` 对结果——严格增量须对已有对反向更新并传播到所有 carry，每步 Ω(N²)，与全量同级。性能优化改走 Web Worker 卸载（见 `computation-runtime.md`）。

@@ -82,7 +82,7 @@ function expectWithinTolerance(actual: number, expected: number, tolerance: numb
   expect(deviation).toBeLessThanOrEqual(tolerance)
 }
 
-// 加载 built hero-abilities.json 的真实蔚 profile（归一化产物）。真实数据端到端验证 归一化→评分 全链路，
+// 加载 built hero-abilities.json 的真实蔚 profile（归一化产物）。真实数据端到端验证 归一化→评估 全链路，
 // 防 amountFunc/stackFunc/targetQualifier/bonusScaleOfSignal 等字段回归（smoke.test.ts 只验形状不验 multiplier）。
 function loadRealVi(): HeroAbilityProfile {
   const dataDir = path.resolve(__dirname, '../../../../public/data/v1')

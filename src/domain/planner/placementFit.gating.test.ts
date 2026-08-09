@@ -32,7 +32,7 @@ describe('placement fit — gating', () => {
     expect(fitUnlocked.scoreBreakdown[0]?.reasonCode).toBe('global-match')
   })
 
-  it('supportLevel 不传时不按等级过滤（向后兼容，未解锁 signal 仍计分）', () => {
+  it('supportLevel 不传时不按等级过滤（向后兼容，未解锁 signal 仍计入目标值）', () => {
     const fit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's2',
@@ -67,7 +67,7 @@ describe('placement fit — gating', () => {
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('carry-self-match')
   })
 
-  it('relation=any 的 signal 标签命中时计分（tag-match）', () => {
+  it('relation=any 的 signal 标签命中时计入目标值（tag-match）', () => {
     const fit = evaluatePlacementFit({
       carryHero: createHero('carry', { tags: ['female', 'elf'] }),
       carrySlotId: 's2',
@@ -91,7 +91,7 @@ describe('placement fit — gating', () => {
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('tag-match')
   })
 
-  it('manual stacking 先降级为 warning，不计分', () => {
+  it('manual stacking 先降级为 warning，不计入目标值', () => {
     const fit = evaluatePlacementFit({
       carryHero: createHero('carry'),
       carrySlotId: 's2',
@@ -114,7 +114,7 @@ describe('placement fit — gating', () => {
     expect(fit.warnings[0]).toContain('手动触发')
   })
 
-  it('stat qualifier 命中时可以作为 carry 目标条件计分（relation=any，stat-match）', () => {
+  it('stat qualifier 命中时可以作为 carry 目标条件计入目标值（relation=any，stat-match）', () => {
     const fit = evaluatePlacementFit({
       carryHero: createHero('carry', {
         abilityScores: { cha: 13 },
@@ -142,11 +142,11 @@ describe('placement fit — gating', () => {
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('stat-match')
   })
 
-  it('formationCountQualifier（count）与 targetQualifier（target）消费层不混用：carry 仅匹配 count 不匹配 target 时不计分', () => {
+  it('formationCountQualifier（count）与 targetQualifier（target）消费层不混用：carry 仅匹配 count 不匹配 target 时不计入目标值', () => {
     // 蔚善良榜样形态：count=good（formationCountQualifier），target=geneutral（targetQualifier）。
     // 反例：carry 是 good 但非 geneutral → 会被数进 count（如作 support），但作 carry 不匹配 target → 不吃 buff。
     // 验证消费层 countQualifiedHeroes 用 formationCountQualifier、carry 匹配用 targetQualifier，二者不混用
-    // （若混用，carry 匹配 count=good 就会误计分）。
+    // （若混用，carry 匹配 count=good 就会误计入目标值）。
     // self-carry 隔离 position：heroDpsMultiplier 无 positionQualifier 默认 relation='self'
     // （须 supportSlot===carrySlot），否则 position-mismatch 抢先致 inactive，测不到 target 门控。
     const vi = createHero('vi', {
@@ -175,7 +175,7 @@ describe('placement fit — gating', () => {
       heroesById: new Map([['vi', vi]]),
     })
 
-    // vi 非 geneutral → targetQualifier 不匹配 → 不计分（即使匹配 formationCountQualifier=good）
+    // vi 非 geneutral → targetQualifier 不匹配 → 不计入目标值（即使匹配 formationCountQualifier=good）
     expect(fit.totalMultiplier).toBe(1)
     const entry = fit.scoreBreakdown.find((r) => r.rawEffect === 'hero_dps_multiplier_mult,100')
     expect(entry?.active).toBe(false)

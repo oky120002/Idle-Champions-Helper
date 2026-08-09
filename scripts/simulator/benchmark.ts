@@ -3,7 +3,7 @@
  * 用法：npm run simulate:benchmark [样本数]    # OWNED=N 控制持有英雄数（跨 seat 均匀采样）
  *
  * 测量三档计算模式（full / p90 / p50）下 buildPlannerRecommendation 单次耗时，
- * 以及单次评分（evaluateFormation）耗时。合成快照默认全英雄已拥有（worst case）。
+ * 以及单次评估（evaluateFormation）耗时。合成快照默认全英雄已拥有（worst case）。
  */
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -115,9 +115,9 @@ async function main() {
     )
   }
 
-  // 单次评分耗时（evaluateFormation ≈ 一次 scoreFormation + 合法性/解释收口）
+  // 单次评估耗时（evaluateFormation ≈ 一次 scoreFormation + 合法性/解释收口）
   const sampleVariant = picked[0]
-  if (sampleVariant === undefined) throw new Error('需要至少一个 variant 进行评分基准')
+  if (sampleVariant === undefined) throw new Error('需要至少一个 variant 进行评估基准')
   const sampleRec = buildPlannerRecommendation({ collections, variant: sampleVariant, profileSnapshot: profile, options: {} })
   const evalTimes: number[] = []
   if (sampleRec.result) {
@@ -127,7 +127,7 @@ async function main() {
       evaluateFormation({ collections, placements, variant: sampleVariant, profileSnapshot: profile, options: {} })
       evalTimes.push(performance.now() - t0)
     }
-    process.stdout.write(`\n=== 单次评分 (evaluateFormation) median=${fmt(median(evalTimes))}（30 次）===\n`)
+    process.stdout.write(`\n=== 单次评估 (evaluateFormation) median=${fmt(median(evalTimes))}（30 次）===\n`)
   }
 }
 

@@ -33,7 +33,7 @@ planner 不做全玩法完整模拟器，而是一个可解释、可验证、本
 
 ### Planner 使用者
 
-玩家进入 planner 页，选择目标变体和阵型布局。系统读取公共 `public/data/v1` 与本地 `UserProfileSnapshot`，生成可上场候选、评分和候选阵型。
+玩家进入 planner 页，选择目标变体和阵型布局。系统读取公共 `public/data/v1` 与本地 `UserProfileSnapshot`，生成可上场候选、评估和候选阵型。
 
 ### 开发者
 

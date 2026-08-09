@@ -47,13 +47,13 @@ carryDps = baseDps × levelCurve × damagePool × crit × vuln × globalBuff × 
 | 外部加成池分裂 | 外部 global_dps/hero_dps 注入对应池 addPercent（加法），同步 spec/test/breakdown | 中高（修 IC 语义偏差 + 排名扭曲，但被欠估掩盖） | scoreFormation 局部 + simulator.md + steadyStateScoring.test + PlannerBreakdown | **已收口** `c62f1970`（A1 Phase A）：外部加成注入 ability 池副本（`steadyStateScoring.ts:384-389` unifiedPools），同 key 全源加法；偏差 l1 -32.7→-33.2（停止负负得正，符合「不接受负负得正」原则） |
 | spec/TODO 漂移修正 | `simulator.md` 公式 + `equipmentMult` 注释 + TODO `atd_3cb8df390e`（仍提已删的 `theoreticalLootMult/ownedEquipMult` 只收 global_dps，实际 3849d295 已改收 hero_dps） | 低（文档准确性） | docs + TODO | **已收口** `ae0e7355`（atd_3cb8df390e：假设装备配置落地，equipmentMult hero_dps 口径对齐） |
 
-## 2.1 P1 — gain profile 预算与实际评分池路由漂移（bonusScaleOfSignal）
+## 2.1 P1 — gain profile 预算与实际评估池路由漂移（bonusScaleOfSignal）
 
-**现象**：`aggregateGainByDimension`（`abilityModel.ts`，供 `computeHeroGainProfile` → `applyComputationMode` 候选裁剪）是实际评分（`placementFit.ts` + `signalMultiplier.ts`）的镜像预算，文档化不变量要求「数学须与 pool 聚合一致」。但 `bonusScaleOfSignal`（buff_upgrade wrapper 联动）的实际评分贡献 = `base.value × wrapper.value / 100`，gain profile 旧实现直接 `+= signal.value`（忽略 base）→ base.value>100 时严重低估。
+**现象**：`aggregateGainByDimension`（`abilityModel.ts`，供 `computeHeroGainProfile` → `applyComputationMode` 候选裁剪）是实际评估（`placementFit.ts` + `signalMultiplier.ts`）的镜像预算，文档化不变量要求「数学须与 pool 聚合一致」。但 `bonusScaleOfSignal`（buff_upgrade wrapper 联动）的实际评估贡献 = `base.value × wrapper.value / 100`，gain profile 旧实现直接 `+= signal.value`（忽略 base）→ base.value>100 时严重低估。
 
 **影响**：默认 p50 模式每席位取前 50% 候选；被低估的强候选（ability-source wrapper base.value>100）被误裁，beam search 永不试到。实测重建后部分英雄 damage gain 46→69、32→56（之前被大幅低估）。base.value=100 时巧合一致（100×v/100=v），掩盖系统性。
 
-**根因**：`applyComputationMode`（`recommendationEngine.ts:528`）在 feat/专精/装备 wrapper 注入（lines 532-535）**之前**执行，用 build-time 烘进 `hero-abilities.json` 的 gainProfile；新增 signal 机制只改实际评分路径、漏改 gain profile 镜像。
+**根因**：`applyComputationMode`（`recommendationEngine.ts:528`）在 feat/专精/装备 wrapper 注入（lines 532-535）**之前**执行，用 build-time 烘进 `hero-abilities.json` 的 gainProfile；新增 signal 机制只改实际评估路径、漏改 gain profile 镜像。
 
 **修复**：`aggregateGainByDimension` 对 `bonusScaleOfSignal` 折算 `effectiveValue = base.value × value / 100`（addPercent / multFactor 两分支对称，`abilityModel.ts`）；补 `abilityModel.test.ts` 逐 signal 用例（base=300/add、base=200/mult）；`FORCE_DATA_REBUILD=1` 重跑 `buildModels` 重建 hero-abilities.json gainProfile（27 处变化）。全 1137 unit + signal-coverage + schema 校验通过。详见 `modeling-pitfalls.md` 陷阱 5。
 

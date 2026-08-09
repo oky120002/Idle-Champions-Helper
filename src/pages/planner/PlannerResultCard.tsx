@@ -130,7 +130,7 @@ export function PlannerResultCard({
             {explanations.length > 0 && (
               <section data-section="explanations" className="planner-result-card__explanations">
                 <h4 className="planner-result-card__section-title">
-                  {t({ zh: '评分依据', en: 'Why this result' })}
+                  {t({ zh: '推荐依据', en: 'Why this result' })}
                 </h4>
                 <ul>
                   {explanations.map((line, index) => (
