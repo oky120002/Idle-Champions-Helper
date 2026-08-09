@@ -83,8 +83,91 @@
 - ✅ `computation-runtime.md` 更新推图预估公式（segmentMultiplier / drainRate / enemyDamageMult）+ ViabilityAssessment 输出合同
 - `architecture.md`「未接入能力」：viability 未列入（无需移除），K4 伤害来源限制 + S4 AoE burst 仍为未接入
 
-## 剩余工作（后续迭代）
+## 剩余工作评估（2026-08-09 调研）
 
-- **D2（K4 伤害来源限制 ~137 变体）**：高复杂度语义解析（"只有特定位置/英雄/tag 能打伤害"），需 restrictions 文本模式扫描 + carry 位置验证
-- **E2（S4 AoE 爆发）**：需 burst 伤害模型（免疫/减伤/临时HP 评估 vs 单次爆发）
-- **A6（UI）**：viability 评估展示（activeConstraints + boundBy）+ minSurvivableArea 控件
+### D2（K4 伤害来源限制）— ⚠️ 不建议全自动化
+
+**数据现状**（`variants.json` 1424 变体全集扫描）：
+
+| 模式 | 变体数 | 示例 |
+|------|--------|------|
+| 列限制（"only Champions in X's column"） | 25 | v708 Ezmerelda 列 |
+| 前后列（"two columns in front/behind"） | 25 | v1663 Volo 前两列 |
+| 标签/羁绊（"only Champions with bond/tag"） | 20 | v132 Asharra 羁绊 |
+| 相邻（"only Champions adjacent to X"） | 10 | v401 Mirt 相邻 |
+| 层数门控（"after area N, only..."） | 12 | v2010 area 150 后 |
+| 英雄专属/复杂语义 | 71 | v752 Shaka 天体谜题 |
+| `slot_effects` mechanics tag（总标记） | 94 | 含前置完成条件等非伤害约束 |
+
+**核心难点**：K4 是**位置约束**，不是面积函数。carry 必须在有效位置才能造成伤害（DPS 归零否则）。与 K1/K5/S1/S2（修改面积预估）本质不同。
+
+两个子问题：
+1. **解析**（build 时）：从自由文本提取结构化约束。模式极多样——英雄特定能力（Asharra 羁绊、Shaka 谜题）、动态空间关系（"Qillek 两格内"）、逆序（"相邻英雄**不**造伤害"）——无法用统一正则覆盖。
+2. **验证**（运行时）：检查 carry 放置是否满足约束。**如果**有结构化约束，这步是简单的——planner 已有 slotTopology（row/column/adjacentSlotIds）+ forcedHeroes + carryHeroId。
+
+**建议方案**（分三档）：
+
+| 档位 | 范围 | 方法 | 工作量 |
+|------|------|------|--------|
+| 当前（已做） | 全部 | `slot_effects` → scenarioWarnings（已有计时/点击限制 warning） | — |
+| **可做** | ~50 位置型 | 解析高频模式（column / adjacent / front-back）→ `carryPositionConstraint` 字段 → beam search 合法性检查 | 中（~1 天） |
+| 不建议 | 全部 137 | NLP 级语义解析（英雄专属能力、动态关系、逆序） | 高，ROI 低 |
+
+**「可做」档架构设计**：
+
+```typescript
+// plannerModel.ts 新增
+interface CarryPositionConstraint {
+  /** carry 必须在指定英雄的同一列 / 相邻 / 前方 / 后方才能造伤害。null = 无位置约束。 */
+  relativeTo?: { heroId: string; relation: 'column' | 'adjacent' | 'front' | 'back' }
+  /** carry 必须（不）相邻于指定英雄才造伤害。 */
+  blockedByAdjacent?: string[]  // heroId list — 相邻则 DPS=0
+}
+```
+
+验证在 `scorePlannerFormationWithLegality`：carry 不满足位置约束 → SCORE_ZERO（与生存/护甲过滤同构）。槽位拓扑（row/column/adjacentSlotIds）已可用。
+
+### E2（S4 AoE 爆发）— ✅ 可复用 healthDrainRate 模型
+
+**数据现状**（`random_crusader_damage` 39 变体 + 其他 burst 模式）：
+
+| 模式 | 变体 | 伤害 | 频率 |
+|------|------|------|------|
+| 随机目标 burst | 39 | 1%-100% maxHealth（中位 25%） | every 5-10s |
+| 全队 burst | ~10 | 10%-90% maxHealth | every 3-10s |
+
+**关键洞察**：burst 伤害等效为持续掉血——`等效 drainRate = burstPct / burstInterval`。
+- 25% every 5s → drainRate = 0.05/s（5%/s）
+- 90% every 5s → drainRate = 0.18/s
+
+这**直接复用已有 healthDrainRate 模型**（EHP × (1−drainRate)）。不需新建面积函数，只需解析 burst 模式并换算。
+
+**随机目标修正**：burst 打随机英雄时，carry 被击中概率 = 1/formationSize。保守近似：忽略概率（当全队 burst 处理）。精确化需 formationSize 参数进 estimateMaxArea，留后续。
+
+**防御机制**（免疫/减伤/临时HP/治疗）：`aoe-survival.md` 已盘点四类防御，`hero-abilities.json` 有 `damageReduction`（9 例）+ `heroHealthMultiplier`（3 例）信号。但这些信号进 survival 池的方式需单独设计（当前 survival 池只有 health_mult，不含 damage_reduction）。留后续迭代。
+
+**建议方案**：解析 `random_crusader_damage` 变体的 burstPct + burstInterval → 换算等效 healthDrainRate。~39 变体覆盖，复用现有模型，工作量低（~2h）。
+
+### A6（UI）— ✅ 可直接做
+
+**现状**：
+- `PlannerResultCard.tsx` 已展示 `areaEstimate`（面积 + 约束标签 + 击杀/存活上限）
+- `boundBy = 'armor'` 标签已补（`9717095`）
+- `viability.activeConstraints` 有数据但未展示
+- `minSurvivableArea` 有引擎逻辑但无 UI 控件
+
+**待做**（按优先级）：
+
+| 项 | 工作量 | 说明 |
+|----|--------|------|
+| activeConstraints 展示 | 低 | 结果卡中展示活跃约束标签（护甲/持续掉血/敌人强化等） |
+| minSurvivableArea 控件 | 低 | options 面板加数字输入或滑块（默认不设=不过滤） |
+| scenarioWarnings 突出 | 低 | 已有 warnings 区，特殊机制（永久死亡/不回血/暴击门控）可加图标 |
+
+纯 UI 工作，无新架构。
+
+## 剩余工作优先级排序
+
+1. **E2（S4 burst → healthDrainRate）**：最低工作量、复用现有模型、~39 变体覆盖 → **先做**
+2. **A6（UI）**：低工作量、用户可见价值 → **可并行**
+3. **D2（K4 位置约束）**：中工作量、~50 变体覆盖 → **视 ROI 决定**
