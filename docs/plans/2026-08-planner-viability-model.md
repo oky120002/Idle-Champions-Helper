@@ -26,8 +26,8 @@
 - [x] A1 `PlannerRecommendationOptions` + `minSurvivableArea` 字段
 - [x] A2 `scorePlannerFormationWithLegality`：beam search 评估回调检查 survival 约束 → SCORE_ZERO
 - [x] A7 测试：survival-filter + survival-no-threshold（2 用例 ✅）
-- [ ] A3 `recommendationTypes.ts`：`PlannerResult` + `viability` 字段（并入阶段 B ViabilityAssessment）
-- [ ] A4-A5 伤害削减（K5）：并入阶段 B ViabilityContext 统一承载变体修正参数
+- [x] A3 `recommendationTypes.ts`：`PlannerResult.viability` 字段（ViabilityAssessment：activeConstraints + boundBy）
+- [x] A4-A5 伤害削减（K5）：已在 B5-B9 落地（damageModifier × BUD）
 - [ ] A6 UI：生存评估展示 + `minSurvivableArea` 控件
 
 ### 阶段 B：多段攻击 BUD 修正 + 护甲感知
@@ -53,7 +53,7 @@
 
 ### 阶段 D：高级击杀约束（K3/K4）
 
-- [ ] D1 暴击门控（K3）：crit chance > 0% 检查
+- [x] D1 暴击门控（K3）：`debuff_until_crit` tag → scenarioWarnings（所有英雄有基础暴击率，不改变面积预估）
 - [ ] D2 伤害来源限制（K4）：解析 + carry 位置验证
 - [x] D3 命中型频率（K2）：hitsBased 进 estimateMaxArea 吞吐量约束（与护甲同模式，2 变体）
 
