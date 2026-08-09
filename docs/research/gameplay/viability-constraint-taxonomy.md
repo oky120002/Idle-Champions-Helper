@@ -23,27 +23,27 @@ wallArea = min(所有约束各自的墙)
 | # | 约束 | 机制 | 变体数 | 数据来源 | planner 现状 |
 |---|---|---|---|---|---|
 | K0 | DPS 墙 | BUD < 怪物生命 | 全部 | `monster_base_stats`（结构化） | ✅ `areaEstimation.killableArea` |
-| K1 | 护甲 | 单发 BUD < 段门槛 | 44 | restrictions 文本 | ❌ |
-| K2 | 命中型血量 | 需命中 N 次（不看伤害） | 8 | restrictions 文本 | ❌ |
-| K3 | 暴击门控 | 只有暴击才能伤害 | 11 | restrictions 文本 + `debuff_until_crit` tag | ❌ |
-| K4 | 伤害来源限制 | 只有特定位置/英雄/tag 能打伤害 | ~137 | restrictions 文本 + `slot_effects` tag | ❌ |
-| K5 | 伤害削减 | DPS 被 90-99.99% 削减 | 14+ | restrictions 文本 + `global_effects` tag | ❌ |
+| K1 | 护甲 | 单发 BUD < 段门槛 | 44 | restrictions 文本 | ✅ 吞吐量等效门槛 HP × segments |
+| K2 | 命中型血量 | 需命中 N 次（不看伤害） | 8 | restrictions 文本 | ✅ 同护甲吞吐量模式 |
+| K3 | 暴击门控 | 只有暴击才能伤害 | 11 | restrictions 文本 + `debuff_until_crit` tag | ⚠️ scenarioWarnings（全英雄有基础 2.5% 暴击率） |
+| K4 | 伤害来源限制 | 只有特定位置/英雄/tag 能打伤害 | ~137 | restrictions 文本 + `slot_effects` tag | ✅ 两层方案（系统解析 25 变体 + UI 手动标记） |
+| K5 | 伤害削减 | DPS 被 90-99.99% 削减 | 14+ | restrictions 文本 + `global_effects` tag | ✅ damageModifier × BUD |
 
 ### 存活约束（能不能活下去）
 
 | # | 约束 | 机制 | 变体数 | 数据来源 | planner 现状 |
 |---|---|---|---|---|---|
-| S0 | 生存墙 | 有效生命 < 怪物伤害 | 全部 | `monster_base_stats`（结构化） | ⚠️ 稳态近似，仅报告不过滤 |
-| S1 | 敌人强化 | 怪物伤害 ×2~100 | 38 | restrictions 文本 | ❌ |
-| S2 | 持续掉血 | 每秒掉 2.5% 最大生命 | 43 | restrictions 文本 | ❌ |
-| S3 | 不回血 | 换区不恢复生命 | 18 | `only_heal_on_revive` tag | ❌ |
-| S4 | AoE 爆发 | 一波 AoE 全队残血（稳态 EHP 不覆盖） | 未知 | restrictions 文本 | ❌ |
+| S0 | 生存墙 | 有效生命 < 怪物伤害 | 全部 | `monster_base_stats`（结构化） | ✅ areaEstimation.survivableArea + minSurvivableArea 过滤 |
+| S1 | 敌人强化 | 怪物伤害 ×2~100 | 38 | restrictions 文本 | ✅ enemyDamageMult × monsterDpsAt |
+| S2 | 持续掉血 | 每秒掉 2.5% 最大生命 | 43 | restrictions 文本 | ✅ healthDrainRate × (1−rate) EHP 修正 |
+| S3 | 不回血 | 换区不恢复生命 | 18 | `only_heal_on_revive` tag | ⚠️ scenarioWarnings（治疗吞吐量模型留后续） |
+| S4 | AoE 爆发 | 一波 AoE 全队残血（稳态 EHP 不覆盖） | 未知 | restrictions 文本 | ✅ burst 等效 healthDrainRate |
 
 ### 策略约束（能不能维持阵型）
 
 | # | 约束 | 机制 | 变体数 | 数据来源 | planner 现状 |
 |---|---|---|---|---|---|
-| P0 | 永久死亡 | 英雄阵亡后永久离队 | 36 | `perma_death`/`perma_unavailable` tag | ❌ |
+| P0 | 永久死亡 | 英雄阵亡后永久离队 | 36 | `perma_death`/`perma_unavailable` tag | ⚠️ scenarioWarnings |
 
 ## 护甲门槛面积函数
 

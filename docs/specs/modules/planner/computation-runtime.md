@@ -75,7 +75,8 @@ planner 页面是工作台，不是 landing page。
 - candidate 区：owned-only / all-hypothetical。
 - 推荐模式：carry-dps / team-gold（`PlannerScoringMode`）；计算模式 full / p90 / p50（`PlannerComputationMode`，默认 p50）。
 - C 位指定 + 锁槽（`PlannerCarryLock` / `PlannerSlotLock`）：所有英雄候选，不限 dps 角色。
-- result 区：Top 3-5（`PlannerTopLineups`），用 `FormationBoardCanvas` 渲染棋盘 + carry 标记 + `objectiveValue`（游戏记数法）+ 推图层数预估 + survival 约束 + `PlannerBreakdown` 加成拆解。
+- 可行性控件：`PlannerSurvivableArea`（生存阈值，null=仅报告，输入数字=启用过滤）、`PlannerDamageSlots`（手动标记不可造伤害槽位，K4 层 2）。
+- result 区：Top 3-5（`PlannerTopLineups`），用 `FormationBoardCanvas` 渲染棋盘 + carry 标记 + `objectiveValue`（游戏记数法）+ 推图层数预估 + survival 约束 + 可行性约束摘要（`ViabilityAssessment`）+ `PlannerBreakdown` 加成拆解。
 - save 区：把有效结果保存到 formation preset，或导入阵型编辑器（写 formationDraft，跳转 /formation）。
 
 **自配评估页（`/planner/evaluate`）**：基于 `evaluateFormation` 的「可编辑阵型棋盘按 exact 阵型评估」工作台——用户摆阵型 → `evaluateFormation` 重算 → breakdown 渲染。支持槽位锁、「算剩余最优」（`buildPlannerRecommendation` 半自动补全未锁槽位）、「回填到自动计划」。切场景清锁与已摆阵型。

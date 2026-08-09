@@ -103,7 +103,14 @@ estimatedArea  = min(killableArea, survivableArea, MAX_AREA)
 
 机制警告（`projectMechanicsToScenario`，从 mechanics 结构化标记映射，不改面积预估）：永久死亡（`perma_death`/`perma_unavailable`）、不回血（`only_heal_on_revive`/`skip_area_change_heal`）、暴击门控（`debuff_until_crit`，全英雄有基础 2.5% 暴击率故不改变预估）。
 
-beam search 过滤（`scorePlannerFormationWithLegality`）：`minSurvivableArea` 选项检查 survivableArea + 护甲变体额外检查 killableArea（与生存过滤同构），不达标的阵型返回 SCORE_ZERO。
+beam search 过滤（`scorePlannerFormationWithLegality`）：`minSurvivableArea` 选项检查 survivableArea + 吞吐量约束变体（护甲/命中型）额外检查 killableArea（与生存过滤同构），不达标的阵型返回 SCORE_ZERO。
+
+## 伤害来源位置限制（K4）
+
+部分变体限制只有特定位置的英雄能造伤害。两层方案：
+
+- **系统解析**（层 1，`scenario.damageSourcePattern`）：从 restrictions 文本解析位置模式（same-column / adjacent / not-adjacent / front-columns / behind-columns），carry 不在有效位置 → DPS 归零（SCORE_ZERO）。模式依赖参考英雄位置，评分时按 placements 动态求值。
+- **UI 手动标记**（层 2，`userDamageDisabledSlots`）：用户标记不可造伤害的槽位，carry 落在这些槽位 → DPS 归零。默认全部可打（用户只做减法）。
 
 ## 计算模式（性能优化）
 
