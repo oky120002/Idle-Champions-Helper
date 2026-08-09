@@ -28,7 +28,7 @@
 - [x] A7 测试：survival-filter + survival-no-threshold（2 用例 ✅）
 - [x] A3 `recommendationTypes.ts`：`PlannerResult.viability` 字段（ViabilityAssessment：activeConstraints + boundBy）
 - [x] A4-A5 伤害削减（K5）：已在 B5-B9 落地（damageModifier × BUD）
-- [ ] A6 UI：生存评估展示 + `minSurvivableArea` 控件
+- [x] A6 UI：生存评估展示 + `minSurvivableArea` 控件
 
 ### 阶段 B：多段攻击 BUD 修正 + 护甲感知
 
@@ -41,7 +41,7 @@
   改为吞吐量模型 `threshold = HP × segments`（需 segments+1 次命中）。damageModifier × BUD，enemyDamageMult × monsterDpsAt（8 测试 ✅）
 - [x] B7 `steadyStateScoring.ts` + `recommendationEngine.ts`：viabilityContext 传入 estimateMaxArea + 护甲 killableArea 约束过滤（与生存过滤同构）（2 测试 ✅）
 - [x] B8 signal-coverage baseline 更新：无漂移（exit 0），数据管线未改动无需更新
-- [ ] B9 测试：✅ B5-B7 测试已落地（areaEstimation 6 用例 + recommendationEngine 2 用例）
+- [x] B9 测试：✅ B5-B7 测试已落地（areaEstimation 6 用例 + recommendationEngine 2 用例）
 
 ### 阶段 C：存活约束精化（S1~S3）
 
@@ -95,7 +95,9 @@ burst 伤害等效 healthDrainRate（`parseBurstDrainRate`：X%/N秒 → X/100/N
 - `viability.activeConstraints` 展示（护甲/命中型/伤害削减/敌人强化/持续掉血）
 - `PlannerSurvivableArea` 控件（null=不设=仅报告，输入数字=启用过滤）
 
-### D2（K4 伤害来源限制）— 两层方案：系统解析 + UI 补刀
+### D2（K4 伤害来源限制）— ✅ 已完成
+
+两层方案落地：系统解析 25 变体（same-column 2 / adjacent 10 / not-adjacent 7 / front-columns 4 / behind-columns 2）+ UI 手动标记。详见 commit `1bb34e40`。
 
 **数据现状**（`variants.json` 1424 变体全集扫描）：
 
