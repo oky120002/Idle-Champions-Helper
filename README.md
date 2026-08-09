@@ -49,4 +49,7 @@ npm run dev
 - 产品定义（价值 / 形态 / 技术模型 / 风险）：`docs/specs/product/README.md`
 - 文档职责与精简策略：`docs/governance.md`
 - 操作与排障手册：`docs/runbooks/README.md`
+- 游戏机制调研（BUD、暴击、速度、金币、敌人特殊血量等）：`docs/research/gameplay/`
+- 架构决策记录（为什么这样选）：`docs/decisions/`
+- 深度审计报告（性能 / 正确性 / 测试 / 可访问性等）：`docs/audits/`
 - 需求提案库：`docs/requirements/`
