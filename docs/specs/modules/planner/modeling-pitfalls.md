@@ -166,17 +166,12 @@ restrictions-parser 的正则模板从自然语言文本提取结构化数据。
 
 ## 陷阱 9：过滤条件分支遗漏新约束类型 + 绑定标签笼统化
 
-`minSurvivableArea` 过滤原分两步：先查 `survivableArea`，再对吞吐量约束变体（`armor || hitsBased`）额外查 `killableArea`。但 `damageModifier`（伤害削减）同样降低 `killableArea`（effectiveBud = bud × damageModifier），却不在额外检查范围内——99% 减伤变体生存通过但击杀远低于阈值仍通过过滤。
+`minSurvivableArea` 过滤原分两步：先查 `survivableArea`，再对吞吐量约束变体（`armor || hitsBased`）额外查 `killableArea`。但 `damageModifier`（伤害削减）同样降低 `killableArea`（effectiveBud = bud × damageModifier），却不在额外检查范围内——99% 减伤变体生存通过但击杀远低于阈值仍通过过滤。根因：过滤按约束来源（armor/hitsBased）而非效果（降低 killableArea）分组。
 
-同时 `boundBy` 标签把所有段吞吐量绑定笼统标为 `'armor'`——hitsBased-only 变体（数据中 armor 与 hitsBased 不共存）显示"护甲受限"而非"命中型受限"。
-
-### 为什么难发现
-
-1. 过滤逻辑按约束来源（armor/hitsBased）而非约束效果（降低 killableArea）分组，新增 damageModifier 时未识别其同类效果。
-2. `AreaBound` 类型设计时只考虑了 armor，后续加 hitsBased 未同步扩展标签。
+同时 `boundBy` 标签把所有段吞吐量绑定笼统标为 `'armor'`——hitsBased-only 变体（数据中 armor 与 hitsBased 不共存）显示"护甲受限"而非"命中型受限"。`AreaBound` 设计时只考虑 armor，后续加 hitsBased 未同步扩展。
 
 ### 防范纪律（可执行）
 
-- **过滤按效果（降低哪个面积）而非来源分组**：统一检查 `area = min(killableArea, survivableArea)` 代替按约束类型分别检查，新增任何影响面积的约束自动覆盖。
-- **标签区分到约束类型**：`AreaBound` 须为每种可区分的绑定约束设独立值（`'armor' | 'hits-based'`），不用笼统标签。
-- **drainRate ≥ 1 不可静默丢弃**：`applyHealthDrain` 的 guard 须显式处理边界值（≥ 1 = 无法存活 → 零生命），不能因数学无效（`1-rate ≤ 0`）而静默跳过。
+- **过滤按效果而非来源分组**：统一检查 `area = min(killableArea, survivableArea)` 代替按约束类型分别检查，新增任何影响面积的约束自动覆盖。
+- **标签区分到约束类型**：`AreaBound` 须为每种绑定约束设独立值（`'armor' | 'hits-based'`），不用笼统标签。
+- **数值边界不可静默丢弃**：`applyHealthDrain` 的 guard 须显式处理 `drainRate ≥ 1`（→ 零生命），不能因数学无效而静默跳过。
