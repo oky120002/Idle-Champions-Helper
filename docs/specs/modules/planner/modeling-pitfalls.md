@@ -175,3 +175,24 @@ restrictions-parser 的正则模板从自然语言文本提取结构化数据。
 - **过滤按效果而非来源分组**：统一检查 `area = min(killableArea, survivableArea)` 代替按约束类型分别检查，新增任何影响面积的约束自动覆盖。
 - **标签区分到约束类型**：`AreaBound` 须为每种绑定约束设独立值（`'armor' | 'hits-based'`），不用笼统标签。
 - **数值边界不可静默丢弃**：`applyHealthDrain` 的 guard 须显式处理 `drainRate ≥ 1`（→ 零生命），不能因数学无效而静默跳过。
+
+## 陷阱 10：理论推测「需迭代求值」未经数据验证
+
+HasEffect/HasEffectByID 谓词最初经理论分析判定为「阵型运行时另案——effect 跨英雄共享，count qualifier 对全 Y 求值致 cross，需 effect 作用图 + 迭代求值直到收敛」。但实际实现前逐条审计 7 个去重实例后发现：**全部是单向依赖，无一需迭代**。
+
+- Knox `HasEffect(celeste_heal)` ← Celeste 在阵型 + Knox 在 next_col（单向位置判定）
+- Skylla `HasEffectByID(2474)` ← 自身 ability targets next_col（自引用但非循环）
+- Alyndra `HasEffect(alyndra_portented_v2)` ← changing_effect_keys 派生，全队（单向）
+- 其余同理——均为「授予英雄在场 + targeting 匹配」的一次性判定
+
+### 为什么会发生
+
+1. 理论推测基于通用模型（effect 作用图可能有循环），但真实数据中 7 个实例碰巧都是无环的。
+2. 「需迭代求值」被当作定论记录到记忆和文档中，后续无人质疑。
+3. 延迟了实现——被归为「最复杂的剩余任务」，实际上只需 build 期提取 + runtime 一次扫描。
+
+### 防范纪律（可执行）
+
+- **复杂架构设计前先枚举所有真实实例**：用 `rg`/`jq` 在数据中穷举目标谓词/模式的全部出现，逐条判定是否真有理论推测的复杂依赖。通用模型的最坏情况 ≠ 真实数据的实际情况。
+- **理论推测标注「未经数据验证」**：记忆和文档中记录推测时须显式标注，避免后人当作事实。实现前须回溯验证。
+- **先建最小可行路径再按需升级**：即使理论上可能需迭代，先按无迭代实现（一次扫描），数据验证后如确有循环再升级。避免预建复杂度。

@@ -102,13 +102,13 @@
     font-weight: 600;
     padding: 0.15rem 0.5rem;
     border-radius: var(--radius-pill, 9999px);
-    background: var(--color-surface-raised, oklch(0.3 0 0));
+    background: color-mix(in oklch, var(--color-gloss-base) 2.5%, transparent);
     color: var(--color-text-muted);
   }
 
   .planner-area-estimate__bound-badge[data-bound="bud"],
   .planner-area-estimate__bound-badge[data-bound="survival"] {
-    color: var(--color-accent, oklch(0.7 0.15 50));
+    color: var(--color-copper);
   }
 
   .planner-area-estimate__metrics {
@@ -146,7 +146,7 @@
     flex: 1;
     height: 0.4rem;
     border-radius: var(--radius-pill, 9999px);
-    background: var(--color-surface-raised, oklch(0.25 0 0));
+    background: color-mix(in oklch, var(--color-gloss-base) 5%, transparent);
     overflow: hidden;
   }
 
@@ -154,7 +154,7 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: var(--color-accent, oklch(0.7 0.15 50));
+    background: var(--color-copper);
   }
 
   .planner-area-estimate__note {
