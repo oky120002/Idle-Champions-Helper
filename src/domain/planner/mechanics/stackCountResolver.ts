@@ -29,7 +29,7 @@ function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: HeroAbil
       return count
     }
 
-    return matchesHeroQualifier(hero, signal.formationCountQualifier) ? count + 1 : count
+    return matchesHeroQualifier(hero, signal.formationCountQualifier, input.activeEffectKeysByHero?.get(heroId)) ? count + 1 : count
   }, 0)
 }
 

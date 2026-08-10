@@ -8,12 +8,6 @@ repair: rebuild
 -->
 ## Auto Todo
 
-- HasEffect/HasEffectByID 布尔谓词未解析：7 个去重表达式(~14 原始实例)，含 2 个评分关键 <!-- auto-todo:id=atd_6f71fd37c3 -->
-  - 记录时间: `2026-08-08T13:27:44+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/heroPredicate.ts:138-238`
-  - 备注: 2026-08-08 深度复核修正：TODO 原说 4 个，实际 7 个去重表达式（含 HasEffectByID 漏报） - 评分关键实例：Skylla(169) HasEffectByID(2474) 门控 hero_dps_multiplier_mult,400(+400% DPS)；Knox(82) HasEffect(celeste_heal) 门控 damage_reduction,25(25%减伤) - 其余：Cazrin(166) 复合条件含 HasEffectByID(2416)、Alyndra(77) HasEffect、Kas(153) !HasEffect、Trixie(176) do_nothing(无影响) - 37 unparsed 中其余 ~30 个是数值表达式(floor/min/max/属性引用)和不支持的函数(num_applied_pigments/AverageILevels)，非谓词类型
-
 - Modron 管道 buff 数值未进 planner 评分 <!-- auto-todo:id=atd_4ca7841bda -->
   - 记录时间: `2026-08-08T12:56:14+08:00`
   - 类型: optimization
@@ -93,5 +87,14 @@ repair: rebuild
   - 类型: follow-up
   - 位置: `public/data/v1/hero-abilities.json`
   - 备注: Hew Maan other_human_bonuses 阵型效果（相邻人类查表）需要 formationBonusTable 字段，当前数据缺此字段导致运行时 value=0 → questProgress=1（阵型效果不生效）。脚本属完整管线（fetch+normalize+build），未自动执行。- 影响：Hew Maan 速度贡献在 team-speed 模式下为 0 直到数据重建- 证据：jq 查询 hero-abilities.json 中 formationBonusTable 计数=0
+
+- architecture.md 195 行超叶子文档阈值 180（governance 测试 FAIL） <!-- auto-todo:id=atd_a6aa4be23c -->
+  - 记录时间: `2026-08-10T11:59:22+08:00`
+  - 类型: optimization
+  - 位置: `docs/specs/modules/planner/architecture.md`
+  - 备注: 预已存在，与 HasEffect 任务无关
+    - 位置：docs/specs/modules/planner/architecture.md
+    - 阈值：叶子文档 <=180 行默认保留，181+ 应拆
+    - 治理测试 docs-governance.test.ts 持续报错
 
 <!-- auto-todo:end -->

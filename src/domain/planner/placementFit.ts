@@ -127,7 +127,7 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       continue
     }
 
-    if (!matchesHeroQualifier(input.carryHero, signal.targetQualifier)) {
+    if (!matchesHeroQualifier(input.carryHero, signal.targetQualifier, input.activeEffectKeysByHero?.get(input.carryHero.heroId))) {
       scoreBreakdown.push(buildInactiveScorePart(signal, inferMismatchReason(signal)))
       continue
     }

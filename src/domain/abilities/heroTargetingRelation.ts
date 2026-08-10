@@ -49,6 +49,7 @@ export function isUnknownArray(value: unknown): value is unknown[] {
 // 字符串 target → 位置关系（IC effect_defines.targets 的字符串简写）
 const STRING_RELATION_MAP: Record<string, HeroPositionRelation> = {
   self: 'self',
+  self_slot: 'self',
   adj: 'adjacent',
   non_adj: 'nonAdjacent',
   col: 'sameColumn',

@@ -1,7 +1,10 @@
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.ts'
+import { normalizeExplicitTargeting } from '../../src/domain/abilities/heroTargetingRelation.ts'
 import type {
+  EffectGrant,
   HeroAbilityProfile,
   HeroAbilitySignal,
+  HeroPositionRelation,
   HeroPredicateAST,
   HeroQualifier,
   HeroUnsupportedSignal,
@@ -14,7 +17,7 @@ import {
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
 } from './effect-helpers.ts'
-import { asRecord } from './io-utils.ts'
+import { asArray, asRecord } from './io-utils.ts'
 import { extractSpeedProfile } from './speed-effects.ts'
 
 // GetUpgradeUnlocked(N) / GetUpgradePurchased(N) 节点 build 期解析：upgrade N 属本英雄（self，布尔引用均
@@ -57,6 +60,59 @@ function enrichQualifier(
       walk(node.child)
     }
   }
+}
+
+// ponytail: extractEffectGrants 扫描所有 upgrade effect_keys，为 HasEffect 谓词提取 effect 授予图。
+// 对每个有 effectKeys（裸名/changing_effect_keys）或有 targets 的 entry，记录 effectDefId + 位置关系。
+// runtime computeEffectActivation 据此计算 activeEffectKeys。
+function extractEffectGrants(detail: Record<string, unknown>): EffectGrant[] {
+  const grants: EffectGrant[] = []
+  const seen = new Set<string>()
+
+  for (const upgradeRaw of asArray(detail.upgrades)) {
+    const upgrade = asRecord(upgradeRaw)
+    if (!upgrade) continue
+
+    const ed = asRecord(upgrade.effectDefinition)
+    const effectDefId = typeof ed?.id === 'string' || typeof ed?.id === 'number' ? String(ed.id) : ''
+    if (effectDefId === '') continue
+
+    const requiredLevel = typeof upgrade.requiredLevel === 'number' && Number.isFinite(upgrade.requiredLevel)
+      ? upgrade.requiredLevel
+      : 0
+
+    const snapshots = asRecord(ed?.snapshots)
+    const original = asRecord(snapshots?.original)
+    for (const ekRaw of asArray(original?.effect_keys)) {
+      const ek = asRecord(ekRaw)
+      if (!ek) continue
+
+      const effectString = typeof ek.effect_string === 'string' ? ek.effect_string : ''
+
+      const effectKeys: string[] = []
+      if (effectString !== '' && !effectString.includes(',')) {
+        effectKeys.push(effectString)
+      }
+      const changingKeys = asArray(ek.changing_effect_keys).filter((ck): ck is string => typeof ck === 'string' && ck !== '')
+      effectKeys.push(...changingKeys)
+      const hasTargets = Array.isArray(ek.targets) && ek.targets.length > 0
+      // 仅提取有位置 targets（HasEffectByID + bare-name HasEffect）或有 changing_effect_keys（derived effect）的 entry。
+      // 裸名无 targets 且无 changing_effect_keys 是内部机制（apply_effects_at_stacks 等），不 target 任何英雄。
+      if (!hasTargets && changingKeys.length === 0) continue
+
+      const targeting = normalizeExplicitTargeting(ek)
+      const relation: HeroPositionRelation = targeting.status === 'supported' ? targeting.relation : 'any'
+      const excludeSelf = hasTargets && (ek.targets as unknown[]).includes('other')
+
+      const dedupKey = `${effectDefId}:${effectString}:${relation}:${String(excludeSelf)}`
+      if (seen.has(dedupKey)) continue
+      seen.add(dedupKey)
+
+      grants.push({ effectDefId, effectKeys, relation, excludeSelf, requiredLevel })
+    }
+  }
+
+  return grants
 }
 
 export function buildOfficialHeroModel(
@@ -187,6 +243,7 @@ export function buildOfficialHeroModel(
     baseHealth,
     healthCurves,
     eligiblePatronIds,
+    effectGrants: extractEffectGrants(detail),
     ...(() => { const sp = extractSpeedProfile(champion.id as string, detail); return sp ? { speedProfile: sp } : {} })(),
     carrySignals,
     supportSignals,

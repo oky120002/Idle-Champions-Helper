@@ -97,6 +97,13 @@ export type HeroPredicateAST =
   // EligibleForPatron(current)：per-hero 账号状态——被评估英雄是否符合当前 patron 资格。
   // runtime 查 hero.eligiblePatronIds 是否含 ownedSaveContext.currentPatronId（0=自由玩，全 eligible）。
   | { op: 'eligibleForPatron' }
+  // HasEffect(`name`)：阵型运行时谓词——被评估英雄是否拥有名为 name 的 effect。
+  // effect 跨英雄共享（如 celeste_heal 由 Celeste 授予 next_col 英雄），
+  // runtime 经 computeEffectActivation 从阵型组成 + effectGrants 计算 activeEffectKeys。
+  | { op: 'hasEffect'; effectName: string }
+  // HasEffectByID(N)：同上但按 effect_def 数字 ID 查询。
+  // activeEffectKeys 中以 '#N' 前缀存储 effectDefId。
+  | { op: 'hasEffectById'; effectId: string }
 
 export interface HeroQualifier {
   predicate: HeroPredicateAST
@@ -217,6 +224,29 @@ export interface HeroAbilityProfile {
    *（GetUpgradeUnlocked 等）求值。缺省 = 未拥有/未导入存档 → 谓词恒 false。
    */
   ownedSaveContext?: HeroOwnedSaveContext
+  /**
+   * 该英雄授予其他英雄的 effect 列表（build 期从 effect_keys 提取）。
+   * runtime computeEffectActivation 据此计算阵型中每个英雄的 activeEffectKeys，
+   * 供 HasEffect(name)/HasEffectByID(N) 谓词求值。
+   */
+  effectGrants?: EffectGrant[]
+}
+
+/**
+ * 英雄通过其 upgrade effect_keys 授予其他英雄的 effect。
+ * build 期从 champion-details 提取；runtime 用于 HasEffect/HasEffectByID 阵型运行时求值。
+ */
+export interface EffectGrant {
+  /** upgrade.effectDefinition.id（HasEffectByID 匹配键，前缀 '#' 存入 activeEffectKeys）。 */
+  effectDefId: string
+  /** 产出的 effect 名集合：裸 effect_string kind（无逗号）+ changing_effect_keys。 */
+  effectKeys: string[]
+  /** 位置关系（targets 解析；null/空 targets → 'any' = 全队）。 */
+  relation: HeroPositionRelation
+  /** targets 含 'other' → true（排除授予英雄自身）。 */
+  excludeSelf: boolean
+  /** upgrade.requiredLevel（授予英雄等级达此值才激活）。 */
+  requiredLevel: number
 }
 
 /**

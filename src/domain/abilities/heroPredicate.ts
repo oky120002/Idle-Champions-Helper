@@ -175,6 +175,19 @@ function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
     return { op: 'featEquipped', featId: requireElement(featEquippedMatch, 1) }
   }
 
+  // HasEffect(`name`)：阵型运行时谓词——被评估英雄是否拥有名为 name 的 effect。
+  // runtime 经 computeEffectActivation 从阵型组成 + effectGrants 计算 activeEffectKeys。
+  const hasEffectMatch = /^HasEffect\(`([^`]+)`\)$/.exec(expr)
+  if (hasEffectMatch !== null) {
+    return { op: 'hasEffect', effectName: requireElement(hasEffectMatch, 1) }
+  }
+
+  // HasEffectByID(N)：同上但按 effect_def 数字 ID 查询。
+  const hasEffectByIdMatch = /^HasEffectByID\((\d+)\)$/.exec(expr)
+  if (hasEffectByIdMatch !== null) {
+    return { op: 'hasEffectById', effectId: requireElement(hasEffectByIdMatch, 1) }
+  }
+
   const asIntMatch = /^as_int\((.+)\)$/.exec(expr)
   if (asIntMatch !== null) {
     return parseHeroPredicate(requireElement(asIntMatch, 1), 'functional')
@@ -308,14 +321,15 @@ function evalNode(
   hero: ResolvedHeroAbilityProfile,
   tags: Set<string>,
   attackTypes: Set<string>,
+  activeEffectKeys?: ReadonlySet<string>,
 ): boolean {
   switch (ast.op) {
     case 'or':
-      return ast.children.some((child) => evalNode(child, hero, tags, attackTypes))
+      return ast.children.some((child) => evalNode(child, hero, tags, attackTypes, activeEffectKeys))
     case 'and':
-      return ast.children.every((child) => evalNode(child, hero, tags, attackTypes))
+      return ast.children.every((child) => evalNode(child, hero, tags, attackTypes, activeEffectKeys))
     case 'not':
-      return !evalNode(ast.child, hero, tags, attackTypes)
+      return !evalNode(ast.child, hero, tags, attackTypes, activeEffectKeys)
     case 'tag':
       return tags.has(ast.tag)
     case 'stat':
@@ -373,12 +387,21 @@ function evalNode(
     }
     case 'true':
       return true
+    case 'hasEffect':
+      // activeEffectKeys 缺省（未传入）→ 保守 false（effect 未计算/不活跃）。
+      return activeEffectKeys?.has(ast.effectName) ?? false
+    case 'hasEffectById':
+      return activeEffectKeys?.has(`#${ast.effectId}`) ?? false
     default:
       return false
   }
 }
 
-export function evalHeroPredicate(ast: HeroPredicateAST, hero: ResolvedHeroAbilityProfile): boolean {
+export function evalHeroPredicate(
+  ast: HeroPredicateAST,
+  hero: ResolvedHeroAbilityProfile,
+  activeEffectKeys?: ReadonlySet<string>,
+): boolean {
   const tags = new Set(
     hero.tags
       .filter((tag) => typeof tag === 'string')
@@ -389,7 +412,7 @@ export function evalHeroPredicate(ast: HeroPredicateAST, hero: ResolvedHeroAbili
       .filter((value) => typeof value === 'string')
       .map((value) => value.toLowerCase()),
   )
-  return evalNode(ast, hero, tags, attackTypes)
+  return evalNode(ast, hero, tags, attackTypes, activeEffectKeys)
 }
 
 // 遍历 AST 判断是否含某类节点。覆盖率统计 / reasonCode 分类用。

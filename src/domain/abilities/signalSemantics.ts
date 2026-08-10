@@ -294,9 +294,10 @@ export function attachSignalSemantics(signal: HeroAbilitySignal, effect: unknown
 export function matchesHeroQualifier(
   hero: ResolvedHeroAbilityProfile,
   qualifier: HeroQualifier | null | undefined,
+  activeEffectKeys?: ReadonlySet<string>,
 ): boolean {
   if (!qualifier) {
     return true
   }
-  return evalHeroPredicate(qualifier.predicate, hero)
+  return evalHeroPredicate(qualifier.predicate, hero, activeEffectKeys)
 }

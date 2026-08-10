@@ -17,6 +17,7 @@ import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vu
 import { computeTeamGoldFind } from './goldObjective'
 import { computeFormationSpeedMultiplier, computeSpeedBreakdown, applyFormationSpeedEffects, DYNAMIC_SPEED_HERO_IDS, DYNAMIC_SPEED_DEFAULTS, type SpeedBreakdown, type FormationSpeedContext, type HeroSpeedProfile, type SpeedEffectEntry } from './speedScoring'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
+import { computeEffectActivation } from './placementSlotRelation'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 /**
@@ -118,6 +119,12 @@ export interface ScoringInput {
    * 取值口径：用户数据仅影响默认值（有用户数据全用，无用户数据用内置默认），覆盖与默认独立。
    */
   dynamicSpeedOverrides?: ReadonlyMap<string, number> | undefined
+  /**
+   * 阵型运行时 effect 激活状态（heroId → 该英雄拥有的 effect key 集合）。
+   * scoreFormation 从 placements + heroesById.effectGrants 一次性计算后注入 enrichedInput，
+   * 透传到 evaluatePlacementFit 供 HasEffect/HasEffectByID 谓词求值。
+   */
+  activeEffectKeysByHero?: ReadonlyMap<string, ReadonlySet<string>> | undefined
 }
 
 export interface SimulationFactor {
@@ -229,6 +236,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
       dimension: 'gold',
       manualStackCount: input.manualStackCount,
       supportLevel: input.heroLevels?.get(entry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+      activeEffectKeysByHero: input.activeEffectKeysByHero,
     })
 
     warnings.push(...fit.warnings)
@@ -469,6 +477,7 @@ function collectSupportSignalsForCarry(
       aggregatePools: true,
       manualStackCount: input.manualStackCount,
       supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+      activeEffectKeysByHero: input.activeEffectKeysByHero,
     })
     warnings.push(...fit.warnings)
     // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
@@ -566,6 +575,7 @@ function computeAreaEstimateForBestCarry(
       dimension: 'survival',
       manualStackCount: input.manualStackCount,
       supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+      activeEffectKeysByHero: input.activeEffectKeysByHero,
     })
     mergePools(survivalPools, fit.pools)
   }
@@ -687,21 +697,27 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     }
   }
 
+  // 阵型运行时 effect 激活：一次计算，透传到所有 evaluatePlacementFit 供 HasEffect/HasEffectByID 求值。
+  const activeEffectKeysByHero = computeEffectActivation(
+    input.placements, input.heroesById, input.scenario, input.heroLevels,
+  )
+  const enrichedInput: ScoringInput = { ...input, activeEffectKeysByHero }
+
   if (input.scoringMode === 'team-gold') {
-    return scoreTeamGold(placedEntries, input)
+    return scoreTeamGold(placedEntries, enrichedInput)
   }
 
   if (input.scoringMode === 'team-speed') {
-    return scoreTeamSpeed(placedEntries, input)
+    return scoreTeamSpeed(placedEntries, enrichedInput)
   }
 
   const aggregateProjection = input.aggregateProjection ?? 'absolute-dps'
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
-  const { carryDps: bestCarryDps, warnings: bestWarnings, carryHeroId: bestCarryHeroId, activeKinds: bestActiveKinds, breakdownData: bestBreakdownData } = findBestCarry(placedEntries, input, aggregateProjection, enemyTypeSet)
+  const { carryDps: bestCarryDps, warnings: bestWarnings, carryHeroId: bestCarryHeroId, activeKinds: bestActiveKinds, breakdownData: bestBreakdownData } = findBestCarry(placedEntries, enrichedInput, aggregateProjection, enemyTypeSet)
 
   // formation-buff 模式 bestCarryDps 是阵型聚合倍率（非真实 DPS），BUD/推图层数估算无意义，跳过。
   const areaEstimate = bestCarryHeroId != null && bestCarryHeroId !== '' && aggregateProjection === 'absolute-dps'
-    ? computeAreaEstimateForBestCarry(bestCarryHeroId, bestCarryDps, placedEntries, input)
+    ? computeAreaEstimateForBestCarry(bestCarryHeroId, bestCarryDps, placedEntries, enrichedInput)
     : null
 
   const breakdown = bestBreakdownData != null ? buildSimulationBreakdown(bestBreakdownData, bestCarryDps) : null

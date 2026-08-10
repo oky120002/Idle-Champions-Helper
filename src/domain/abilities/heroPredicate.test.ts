@@ -249,6 +249,48 @@ describe('parseHeroPredicate · functional dialect（per_hero_expr）', () => {
     expect(parseHeroPredicate('!is_alive || is_undead || HasTag(`undead`)', 'functional')).not.toBeNull()
     expect(parseHeroPredicate('EligibleForPatron(aeon_current_patron_id)', 'functional')).not.toBeNull()
   })
+
+  it('HasEffect(`name`) → hasEffect 节点', () => {
+    expect(parseHeroPredicate('HasEffect(`celeste_heal`)', 'functional')).toEqual({
+      op: 'hasEffect', effectName: 'celeste_heal',
+    })
+    expect(parseHeroPredicate('HasEffect(`vampire_spawn`)', 'functional')).toEqual({
+      op: 'hasEffect', effectName: 'vampire_spawn',
+    })
+  })
+
+  it('HasEffectByID(N) → hasEffectById 节点', () => {
+    expect(parseHeroPredicate('HasEffectByID(2474)', 'functional')).toEqual({
+      op: 'hasEffectById', effectId: '2474',
+    })
+    expect(parseHeroPredicate('HasEffectByID(2416)', 'functional')).toEqual({
+      op: 'hasEffectById', effectId: '2416',
+    })
+  })
+
+  it('!HasEffect(`vampire_spawn`) → NOT hasEffect（Kas 样本）', () => {
+    expect(parseHeroPredicate('!HasEffect(`vampire_spawn`)', 'functional')).toEqual({
+      op: 'not', child: { op: 'hasEffect', effectName: 'vampire_spawn' },
+    })
+  })
+
+  it('HasEffect(`celeste_heal`)&&hero_id==82 → AND（Knox 样本）', () => {
+    expect(parseHeroPredicate('HasEffect(`celeste_heal`)&&hero_id==82', 'functional')).toEqual({
+      op: 'and',
+      children: [
+        { op: 'hasEffect', effectName: 'celeste_heal' },
+        { op: 'heroId', heroId: '82', negate: false },
+      ],
+    })
+  })
+
+  it('HasTag(`tanking`) && HasEffectByID(2416) && GetUpgradeUnlocked(17676) → AND 三子句（Cazrin 样本）', () => {
+    const ast = parseHeroPredicate('HasTag(`tanking`) && HasEffectByID(2416) && GetUpgradeUnlocked(17676)', 'functional')
+    expect(ast).not.toBeNull()
+    expect(predicateHasNode(ast, 'hasEffectById')).toBe(true)
+    expect(predicateHasNode(ast, 'tag')).toBe(true)
+    expect(predicateHasNode(ast, 'upgradeUnlocked')).toBe(true)
+  })
 })
 
 describe('evalHeroPredicate', () => {
@@ -369,6 +411,17 @@ describe('evalHeroPredicate', () => {
     expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(0, ['1', '3']))).toBe(true) // 自由玩全 eligible
     expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(null, ['1', '3']))).toBe(false) // 未导入存档
     expect(evalHeroPredicate({ op: 'eligibleForPatron' }, ctx(3, null))).toBe(false) // 无 eligiblePatronIds 数据
+  })
+
+  it('hasEffect / hasEffectById：activeEffectKeys 命中 → true；缺省 → false（保守）', () => {
+    const activeKeys = new Set(['celeste_heal', '#2474'])
+    expect(evalHeroPredicate({ op: 'hasEffect', effectName: 'celeste_heal' }, hero, activeKeys)).toBe(true)
+    expect(evalHeroPredicate({ op: 'hasEffect', effectName: 'vampire_spawn' }, hero, activeKeys)).toBe(false)
+    expect(evalHeroPredicate({ op: 'hasEffectById', effectId: '2474' }, hero, activeKeys)).toBe(true)
+    expect(evalHeroPredicate({ op: 'hasEffectById', effectId: '2416' }, hero, activeKeys)).toBe(false)
+    // 无 activeEffectKeys（未传入）→ 保守 false
+    expect(evalHeroPredicate({ op: 'hasEffect', effectName: 'celeste_heal' }, hero)).toBe(false)
+    expect(evalHeroPredicate({ op: 'hasEffectById', effectId: '2474' }, hero)).toBe(false)
   })
 })
 
