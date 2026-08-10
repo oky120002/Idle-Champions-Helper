@@ -71,6 +71,12 @@ ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放�
 - **逻辑改动**（开发者改 normalize/build/数据脚本或归一化语义）：`pipelineHash` 变（`scripts/data` + `src/domain/abilities` + `src/domain/effects` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
 - **`FORCE_DATA_REBUILD=1`**：手动强制逃生口，覆盖「调试 / 嫌疑产物脏」等需要无条件重跑的场景。
 
+## 13. 正则交替符插值进复合模式时必须用 `(?:...)` 分组
+
+restrictions-parser 的属性门槛正则将 STAT 名称交替符 `str|strength|con|constitution|...` 插值进复合捕获组 `(STAT_NAMES(?:\s+and\s+STAT_NAMES)*)`。**若交替符未用 `(?:...)` 包裹**，展开后变成 `(str|strength|...|charisma(?:\s+and\s+str|strength|...)*)`——复合续接 `(?:\s+and\s+...)` 只附着在最后一个分支 `charisma` 上，其余分支（str/con 等）无法匹配复合模式。实测：「STR and CON of 14+」只捕获 CON，STR 静默丢弃（7 变体属性门槛缺失）。
+
+**规则**：正则交替符 `A|B|C` 插值进更大模式时，**每次插值都用 `(?:A|B|C)` 包裹**，禁止裸交替符直接拼接——交替符的优先级低于拼接，裸插值会把后续量词/续接错误地绑定到最后一个分支。
+
 `pipelineHash` 粗粒度覆盖 `scripts/data/` + `src/domain/abilities/` + `src/domain/effects/`：后两个 domain 目录的全部源文件都是数据管线 build 依赖（被 effect-helpers / effect-resolvers / feat-catalog / specialization-catalog 导入），任何数据脚本或归一化语义改动都触发重跑，保守不漏优于精确但漏检。fetch 无法下载前跳过（discovery 只返回 play_server，`current_time` 在 getDefinitions 响应里），故 fetch 仍每次下载；normalize/build 的 skip 在 fetch 之后生效——raw 没变时省 normalize/build 的几秒重生成，但不省 fetch 带宽。
 
 **只改 build 产物时单独跑 build-models，避免上游 timestamp 漂移污染 diff**：feature 只动 `build-models.ts`（新增派生字段，如 `gainProfile`）时，跑全量 `data:official` 会顺带 fetch 上游——CNE definitions `current_time` 每日 ticking（即使内容没变）→ normalize 全刷 → ~180 个 champion-details/*.json + 各 collection 纯 `updatedAt` 时间戳 churn 混进 feature commit。此时用 `FORCE_DATA_REBUILD=1 npx tsx scripts/data/build-models.ts` 单独跑，从已提交的 champion-details 只重生成 hero-abilities.json/scenarios.json，diff 干净（仅 feature 真实改动）。

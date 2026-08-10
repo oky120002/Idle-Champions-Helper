@@ -843,7 +843,7 @@ function parseAtom(tag: string): TagClause | null {
 /** 分配律：AND 多个 DNF 因子 → 笛卡尔积合并。[[A,B],[C]] → [{…A,…C},{…B,…C}] */
 function distributeAND(factors: TagClause[][]): TagClause[] {
   if (factors.length === 0) return []
-  return factors.reduce((acc, factor) => {
+  return factors.reduce<TagClause[]>((acc, factor) => {
     if (acc.length === 0) return factor
     const merged: TagClause[] = []
     for (const a of acc) {
@@ -855,7 +855,7 @@ function distributeAND(factors: TagClause[][]): TagClause[] {
       }
     }
     return merged
-  }, [] as TagClause[])
+  }, [])
 }
 
 function collectHeroRestrictions(gameChanges: readonly unknown[] = []): HeroRestrictions {

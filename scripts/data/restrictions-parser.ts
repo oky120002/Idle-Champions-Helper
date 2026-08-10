@@ -219,12 +219,17 @@ const ATTRIBUTE_STAT_MAP: Record<string, AttributeRequirement['stat']> = {
   cha: 'cha', charisma: 'cha',
 }
 
-// 属性门槛正则（全局）：(STAT) (score )?of (N) (direction)
+// STAT 名称 alternation（从 ATTRIBUTE_STAT_MAP 派生，单一数据源）。
+const STAT_NAMES = Object.keys(ATTRIBUTE_STAT_MAP).join('|')
+// 从复合 stat 段（如 "STR and CON"）提取各 STAT 名。
+const STAT_ONLY_RE = new RegExp(String.raw`\b(${STAT_NAMES})\b`, 'gi')
+
+// 属性门槛正则（全局）：(STAT (and|,) STAT)* (score)? of (N) (direction)
 // 覆盖：缩写（CON）和全词（Constitution）、+ 记法（15+）、or higher/lower/more/less。
-// 匹配 "CON score of 13 or higher" / "Constitution of 14 or higher" / "CON of 15+" 等。
-// STAT 缩写或全词从 ATTRIBUTE_STAT_MAP 派生（单一数据源，避免两处重复维护）。
+// 复合共享值模式（"STR and CON of 14+"）：多 STAT 通过 and/, 连接共享单一 of N direction。
+// 独立值模式（"STR of 13+ and CON of 14+"）：各 STAT 各带 of N direction，各自独立匹配。
 const ATTRIBUTE_THRESHOLD_RE = new RegExp(
-  String.raw`\b(${Object.keys(ATTRIBUTE_STAT_MAP).join('|')})\s+(?:score\s+)?of\s+(\d+)\s*(\+|or\s+(?:higher|more|lower|less))`,
+  String.raw`\b((?:${STAT_NAMES})(?:\s+(?:and|,)\s+(?:${STAT_NAMES}))*)\s+(?:score\s+)?of\s+(\d+)\s*(\+|or\s+(?:higher|more|lower|less))`,
   'gi',
 )
 
@@ -245,14 +250,20 @@ function parseAttributeRequirements(text: string): AttributeRequirement[] {
   for (const sentence of text.replace(/\r?\n/g, ' ').split(/\.\s+/)) {
     if (!USAGE_GATE_RE.test(sentence)) continue
     for (const match of sentence.matchAll(ATTRIBUTE_THRESHOLD_RE)) {
-      const statRaw = match[1]?.toLowerCase()
+      const statsPart = match[1] ?? ''
       const value = match[2] !== undefined ? parseInt(match[2], 10) : NaN
       const direction = match[3] // "+", "or higher", "or more", "or lower", "or less"
-      if (statRaw === undefined || Number.isNaN(value) || direction === undefined) continue
-      const stat = ATTRIBUTE_STAT_MAP[statRaw]
-      if (stat === undefined) continue
+      if (Number.isNaN(value) || direction === undefined) continue
       const isLower = direction === 'or lower' || direction === 'or less'
-      results.push({ stat, operator: isLower ? '<=' : '>=', value })
+      // 复合模式 group 1 含多 STAT（"STR and CON"）；独立模式 group 1 仅一个 STAT。
+      for (const statMatch of statsPart.matchAll(STAT_ONLY_RE)) {
+        const statRaw = statMatch[1]
+        if (statRaw === undefined) continue
+        const stat = ATTRIBUTE_STAT_MAP[statRaw.toLowerCase()]
+        if (stat !== undefined) {
+          results.push({ stat, operator: isLower ? '<=' : '>=', value })
+        }
+      }
     }
   }
   return results

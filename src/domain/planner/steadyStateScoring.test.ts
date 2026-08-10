@@ -863,4 +863,57 @@ describe('steady state scoring', () => {
     // baseDps×levelCurve 不变 → objectiveValue 比值 = damagePool 比值 = 2^10 / 2^5 = 32
     expect(high.objectiveValue.toNumber() / low.objectiveValue.toNumber()).toBeCloseTo(32, 0)
   })
+
+  describe('lockedCarryHeroId（用户锁定 C 位）', () => {
+    it('锁定弱 carry → objectiveValue 低于不锁（强 carry 被跳过）', () => {
+      const strong = createHero('strong', {
+        seat: 1,
+        baseDamage: 1000,
+        carrySignals: [
+          { kind: 'heroDpsMultiplier', value: 200, rawEffect: 'hero_dps,200', source: 'official-parsed' },
+        ],
+      })
+      const weak = createHero('weak', {
+        seat: 2,
+        baseDamage: 1,
+      })
+      const heroesById = new Map([['strong', strong], ['weak', weak]])
+      const placements = { s1: 'strong', s2: 'weak' }
+
+      const free = scoreFormation({ placements, heroesById, scenario })
+      const locked = scoreFormation({ placements, heroesById, scenario, lockedCarryHeroId: 'weak' })
+
+      expect(free.carryHeroId).toBe('strong')
+      expect(locked.carryHeroId).toBe('weak')
+      // 锁定弱 carry → objectiveValue 远低于自由选择
+      expect(locked.objectiveValue.toNumber()).toBeLessThan(free.objectiveValue.toNumber())
+    })
+
+    it('锁定的 carry 不在阵型 → carryHeroId=null、objectiveValue=0', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const result = scoreFormation({
+        placements: { s1: 'carry' },
+        heroesById,
+        scenario,
+        lockedCarryHeroId: 'nonexistent',
+      })
+      expect(result.carryHeroId).toBeNull()
+      expect(result.objectiveValue.toNumber()).toBe(0)
+    })
+
+    it('undefined/空 lockedCarryHeroId → 所有英雄可作 carry（向后兼容）', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+      const heroesById = new Map([['carry', carry]])
+      const placements = { s1: 'carry' }
+
+      const withUndefined = scoreFormation({ placements, heroesById, scenario, lockedCarryHeroId: undefined })
+      const withEmpty = scoreFormation({ placements, heroesById, scenario, lockedCarryHeroId: '' })
+      const without = scoreFormation({ placements, heroesById, scenario })
+
+      expect(withUndefined.carryHeroId).toBe('carry')
+      expect(withEmpty.carryHeroId).toBe('carry')
+      expect(without.carryHeroId).toBe('carry')
+    })
+  })
 })
