@@ -94,4 +94,58 @@ repair: rebuild
   - 位置: `src/domain/planner/mechanics/signalMultiplier.ts:44`
   - 备注: signalMultiplier.ts 警告（乘算堆叠溢出/依赖基础增益未生效）和 recommendationEngine.ts 违规信息（seat 冲突/缺少强制英雄）直接返回中文字符串，经 PlannerResultCard 显示在 UI。需改为返回结构化数据（code + params），由 UI 层翻译。
 
+- 位置限定 target type 未映射导致 5 条 DPS 信号丢失 <!-- auto-todo:id=atd_pos_target_001 -->
+  - 记录时间: `2026-08-10T19:50:00+08:00`
+  - 类型: issue
+  - 位置: `src/domain/abilities/heroTargetingRelation.ts:127`（normalizeTargetRelation）
+  - 备注: 5 种 target type 不在 STRING_RELATION_MAP 中，normalizeExplicitTargeting 返回 unsupported：
+    - `"tallest_column"`（Windfall hero 167: hero_dps_multiplier_mult,100）
+    - `"middle_columns"`（Lark hero 170: hero_dps_multiplier_mult,400）
+    - `"snowflake"`（Gazrick hero 98: hero_dps_multiplier_mult,0 — 雪花形位置范围）
+    - `"slot_if_expr"`（Jang Sao hero 140: hero_dps_multiplier_mult,400 — 相邻槽 ≤2 条件表达式）
+    - `"active_campaign"`（Shaka hero 79: hero_dps_multiplier_mult,0 — 按当前战役）
+    - 影响：5 个英雄的位置限定 DPS 加成被静默丢弃，planner 低估这些英雄的 support 评分
+    - 修复方向：扩展 HeroPositionRelation + planner position matching，但这些 target type 需要运行时阵型布局上下文（非 build 期可定）
+    - 来源：wiki 交叉核对第二轮（2026-08-10）
+
+- 8 英雄 vulnerability 加成在数据源中完全缺失 <!-- auto-todo:id=atd_vuln_datasrc_001 -->
+  - 记录时间: `2026-08-10T19:50:00+08:00`
+  - 类型: issue
+  - 位置: `public/data/v1/champion-details/` 数据源（非代码 bug）
+  - 备注: 8 个英雄有 `favored_foe` 标记但数据中无 `monster_with_tag_more_damage` 加成效果，vulnerability 既不在 base signals 也不在 specialization catalog：
+    - Zorbu(22): favored_foe=humanoid/beast/undead/aberration，upgrade 12989 只有标记无加成
+    - Turiel(49): favored_foe=fiend
+    - Lae'zel(128): favored_foe=aberration
+    - Dynaheir(145): favored_foe=humanoid
+    - Jaheira(61): favored_foe=beast
+    - Van Richten(177): favored_foe=undead
+    - Nerys(37): favored_foe=undead
+    - Vin Ursa(127): 无 favored_foe 但有 increase_monster_damage_if_favored_foe_from_hero_id（No parser）
+    - 对比：Minsc(7)/Kalix(158)/Reya(86)/Wyll(142) 正确——专精节点含 monster_with_tag_more_damage
+    - 根因：CNE 数据 API 中这些英雄的 vulnerability 加成不以 effect_string 形式提供（可能引擎内部 favored enemy 机制）
+    - 修复方向：需从其他数据源（游戏内实测/社区数据/raw hero definition 其他字段）补充
+    - 来源：wiki 交叉核对第二轮（2026-08-10）
+
+- change_base_attack 不影响 hero-abilities BUD 参数（30 英雄） <!-- auto-todo:id=atd_change_atk_001 -->
+  - 记录时间: `2026-08-10T19:50:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/buildHeroModels.ts`（attacks.base 提取逻辑）
+  - 备注: 30 个英雄有 `change_base_attack` 效果在 unsupportedSignals 中。hero-abilities.json 的 baseAttackCooldown/damageModifier/numTargets 来自 champion-details 的 attacks.base（原始攻击），不反映 change_base_attack 切换后的攻击参数。
+    - 影响：如果切换后攻击的 cooldown/damageModifier/numTargets 与原始不同，BUD 计算基于错误参数
+    - 关键案例：Hank(163) base atk id=858(cd=3.5) → change_base_attack,859（攻击 859 参数未知）
+    - 待确认：大部分 change_base_attack 可能只改变攻击动画/视觉，cooldown 不变 → 无实质影响
+    - 验证方法：检查 champion-details raw 中切换后攻击的参数（可能在 attacks 字段的其他位置）
+    - 来源：wiki 交叉核对第二轮（2026-08-10）
+
+- 装备 Shiny/Golden Epic 在 loot-catalog 中未表示 <!-- auto-todo:id=atd_shiny_golden_001 -->
+  - 记录时间: `2026-08-10T19:50:00+08:00`
+  - 类型: optimization
+  - 位置: `scripts/data/normalize-champions.ts`（loot-catalog 构建）+ `src/domain/buffs/equipmentMult.ts`
+  - 备注: champion-details loot 中有 140 条 isGoldenEpic=true、2612 条 allowGoldenEpic=true，但 loot-catalog 只提取了 {effectString, heroId, rarity, slotId}（rarity 仅 1-4），Golden Epic/Shiny 版本的增强效果完全丢失。
+    - 影响：有 Golden Epic 装备的玩家评分被低估（Golden Epic 效果值约为普通 Epic 的 2 倍）
+    - 当前设计：假设装备配置（synthesizeHypotheticalLootByHero）使用统一 rarity+enchant，不区分 Shiny/Golden Epic
+    - 修复方向：loot-catalog 增加 goldenEpic effectString 字段；equipmentMult 增加 shiny/goldenEpic 倍率处理
+    - 优先级：中（仅影响有 Golden Epic 装备的玩家，假设装备不受影响）
+    - 来源：wiki 交叉核对第二轮（2026-08-10）
+
 <!-- auto-todo:end -->
