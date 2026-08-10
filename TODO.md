@@ -40,12 +40,6 @@ repair: rebuild
     - 范围：src/ 全目录 + scripts/data/ 数据管线
     - 验证：逐正则溯源使用处，确认业务语义一致，补测覆盖边界
 
-- recommendationEngine warnings 未走 i18n（跨层设计问题） <!-- auto-todo:id=atd_b8b9fcd5b6 -->
-  - 记录时间: `2026-08-09T18:26:05+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/planner/recommendationEngine.ts:776`
-  - 备注: engine 产出的 warning 是中文裸字符串，UI 直接渲染不经 t()；en-US locale 下用户看到中文 warning
-
 - PlannerDamageSlots 不展示系统解析的 damageSourcePattern 位置限制（25 变体） <!-- auto-todo:id=atd_633996a2a3 -->
   - 记录时间: `2026-08-09T19:46:48+08:00`
   - 类型: optimization
