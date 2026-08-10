@@ -76,4 +76,10 @@ repair: rebuild
     - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
     - 优先级：中
 
+- computeCarryDps:33 Number.isFinite guard 静默吞掉 NaN/非正 damageAggregate <!-- auto-todo:id=atd_600a5e8368 -->
+  - 记录时间: `2026-08-10T09:50:08+08:00`
+  - 类型: issue
+  - 位置: `src/domain/simulator/baseDps.ts:33`
+  - 备注: globalBuffMultiplier=NaN 等上游损坏时加成被静默替换为 1，carryDps 有合法值但无 warning 诊断（集成契约审计发现，锁现状）
+
 <!-- auto-todo:end -->
