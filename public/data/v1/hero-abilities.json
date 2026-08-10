@@ -171009,6 +171009,7 @@
           "damage": 118
         },
         "support": {
+          "vulnerability": 2,
           "damage": 28
         }
       },
@@ -171051,10 +171052,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -171440,6 +171441,26 @@
       ],
       "supportSignals": [
         {
+          "kind": "enemyVulnerability",
+          "value": 100,
+          "monsterTags": [
+            "undead"
+          ],
+          "rawEffect": "increase_monster_with_tags_damage,100,undead",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": null,
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 30,
+          "upgradeId": "9736"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -171712,12 +171733,6 @@
           "rawEffect": "nerys_war_healing",
           "rawValue": "70",
           "note": "No parser for effect: nerys_war_healing",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_monster_with_tags_damage",
-          "rawValue": "100",
-          "note": "No parser for effect: increase_monster_with_tags_damage",
           "source": "official-parsed"
         },
         {
@@ -176573,5 +176588,5 @@
       ]
     }
   ],
-  "pipelineHash": "87ce481a0cb8118c"
+  "pipelineHash": "185ade5195f34e34"
 }

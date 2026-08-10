@@ -9,12 +9,14 @@ export function buildResolveContext(overrides: {
   effect?: unknown
   effectPayload?: ParsedEffectPayload | null
   effectValue?: string
+  favoredFoeTags?: string[]
 }): EffectResolveContext {
   const numericValue = overrides.numericValue ?? 100
   const effectValue = overrides.effectValue ?? String(numericValue)
   const effectMetadata: EffectSignalMetadata = {
     effect: overrides.effect ?? {},
     effectPayload: overrides.effectPayload ?? null,
+    favoredFoeTags: overrides.favoredFoeTags,
   }
   return {
     effectName: overrides.effectName,

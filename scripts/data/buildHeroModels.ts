@@ -67,7 +67,15 @@ export function buildOfficialHeroModel(
   const unsupportedSignals: HeroUnsupportedSignal[] = []
   let baseCritChancePercent: number | null = null
 
-  for (const entry of collectEffectEntries(detail).entries) {
+  // 预扫描 favored_foe,tag 效果，收集偏好敌人标签供 vulnerability resolver 跨效果引用
+  //（increase_monster_damage_if_favored_foe 的 tag 来自同英雄另一 upgrade 的 favored_foe 声明）。
+  const effectEntries = collectEffectEntries(detail).entries
+  const favoredFoeTags = effectEntries
+    .map((e) => splitEffectString(e.effectString))
+    .map((s) => (s?.effectName === 'favored_foe' ? s.effectValue : null))
+    .filter((tag): tag is string => tag != null && tag !== '')
+
+  for (const entry of effectEntries) {
     // 外部源（feat/loot/legendary）不进 base scored profile——加成源唯一性不变式
     // （见 simulator.md + modeling-pitfalls.md）：feat 外部化（ADR 0017，feat-catalog + runtime 注入）；
     // loot/legendary 同构——装备只走 owned-aware 通道（equipmentMult.ts），build 管线 bake 装备源
@@ -92,7 +100,7 @@ export function buildOfficialHeroModel(
       continue
     }
 
-    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
+    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', { ...entry, favoredFoeTags })
 
     if (parsed.ok) {
       const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)

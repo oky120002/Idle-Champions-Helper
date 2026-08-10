@@ -28,6 +28,8 @@ export interface EffectSignalMetadata {
   effectPayloads?: Array<ParsedEffectPayload | null | undefined>
   upgradePayloadsById?: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
   effect?: unknown
+  /** 同英雄 favored_foe,tag 效果收集的偏好敌人标签（build 层预扫描注入，供 vulnerability resolver 跨效果引用）。 */
+  favoredFoeTags?: string[] | null
 }
 
 export type EffectSignalResult =

@@ -98,13 +98,20 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   }
 
   // 按 upgradeId 聚合 spec effect → scoring signals（与 buildOfficialHeroModel 同解析路径）
+  // favored_foe 标签预扫描（跨 base+spec upgrade）供 vulnerability resolver 跨效果引用
+  const specEffectEntries = collectSpecializationEffectEntries(detail)
+  const favoredFoeTags = [...collectEffectEntries(detail).entries, ...specEffectEntries]
+    .map((e) => splitEffectString(e.effectString))
+    .map((s) => (s?.effectName === 'favored_foe' ? s.effectValue : null))
+    .filter((tag): tag is string => tag != null && tag !== '')
+
   const signalsByUpgradeId = new Map<string, SpecializationSignalEntry[]>()
-  for (const entry of collectSpecializationEffectEntries(detail)) {
+  for (const entry of specEffectEntries) {
     const upgradeId = entry.upgradeId ?? ''
     if (upgradeId === '') continue
     const split = splitEffectString(entry.effectString)
     if (!split) continue
-    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
+    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', { ...entry, favoredFoeTags })
     if (!parsed.ok) continue
     const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)
     const signal: HeroAbilitySignal = {

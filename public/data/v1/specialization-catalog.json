@@ -4783,6 +4783,44 @@
         }
       }
     ],
+    "119": [
+      {
+        "upgradeId": "19680",
+        "requiredLevel": 120,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 200,
+              "monsterTags": [
+                "undead",
+                "fiend"
+              ],
+              "rawEffect": "increase_monster_with_tags_damage,200,undead|fiend",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "19680",
+              "requiredLevel": 120
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Book of Exalted Deeds",
+          "display": "崇善之书"
+        }
+      }
+    ],
     "120": [
       {
         "upgradeId": "10615",
@@ -6618,6 +6656,43 @@
         "specializationName": {
           "original": "Junior Juggernauts",
           "display": "年轻强者"
+        }
+      }
+    ],
+    "145": [
+      {
+        "upgradeId": "13880",
+        "requiredLevel": 250,
+        "requiredUpgradeId": null,
+        "signals": [
+          {
+            "dimension": "vulnerability",
+            "signal": {
+              "kind": "enemyVulnerability",
+              "value": 1000,
+              "monsterTags": [
+                "humanoid"
+              ],
+              "rawEffect": "increase_monster_damage_if_favored_foe,1000",
+              "source": "official-parsed",
+              "targetQualifier": null,
+              "formationCountQualifier": null,
+              "positionQualifier": null,
+              "formationCountPositionQualifier": null,
+              "amountFunc": null,
+              "stackFunc": null,
+              "applyManually": false,
+              "stacksMultiply": null,
+              "excludeSelf": false,
+              "upgradeId": "13880",
+              "requiredLevel": 250
+            },
+            "bucket": "supportSignals"
+          }
+        ],
+        "specializationName": {
+          "original": "Iron Lord's Justice",
+          "display": "铁领主的正义"
         }
       }
     ],
