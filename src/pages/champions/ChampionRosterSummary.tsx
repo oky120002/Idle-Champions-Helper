@@ -62,7 +62,7 @@ export function ChampionRosterSummary({
               onClick={() => onMetricToggle?.(metric.id)}
             >
               <div className="champion-roster-summary__metric-topline">
-                <span className="champion-roster-summary__metric-label">{metric.label}</span>
+                <span className="champion-roster-summary__metric-label">{t(metric.label)}</span>
                 <span className="champion-roster-summary__metric-value">
                   {metric.value}/{metric.total}
                 </span>
@@ -70,7 +70,7 @@ export function ChampionRosterSummary({
               <div className="champion-roster-summary__meter" aria-hidden="true">
                 <span className="champion-roster-summary__meter-fill" style={{ width: `${String(percent)}%` }} />
               </div>
-              <p className="champion-roster-summary__metric-detail">{metric.description}</p>
+              <p className="champion-roster-summary__metric-detail">{t(metric.description)}</p>
             </button>
           )
         })}
