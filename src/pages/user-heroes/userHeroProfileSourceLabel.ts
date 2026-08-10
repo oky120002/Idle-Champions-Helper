@@ -1,11 +1,19 @@
 import type { UserProfileResolution } from '../../data/user-profile-store'
+import type { AppLocale } from '../../app/i18n'
 
-export function getUserHeroProfileSourceLabel(profileResolution: UserProfileResolution | null): string {
+export function getUserHeroProfileSourceLabel(
+  profileResolution: UserProfileResolution | null,
+  locale: AppLocale,
+): string {
+  const isZh = locale === 'zh-CN'
+
   if (profileResolution?.resolvedSource == null) {
-    return '未同步账号快照'
+    return isZh ? '未同步账号快照' : 'No synced account snapshot'
   }
 
-  return profileResolution.resolvedSource === 'browser-sync'
-    ? '浏览器同步快照'
-    : '本地开发快照'
+  if (profileResolution.resolvedSource === 'browser-sync') {
+    return isZh ? '浏览器同步快照' : 'Browser sync snapshot'
+  }
+
+  return isZh ? '本地开发快照' : 'Local dev snapshot'
 }

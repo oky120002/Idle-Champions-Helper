@@ -196,13 +196,4 @@ export function buildMaskedCredentials(credentials: UserCredentials): MaskedUser
   }
 }
 
-export function getImportMethodLabel(method: UserImportMethod): string {
-  switch (method) {
-    case 'supportUrl':
-      return 'Support URL'
-    case 'manual':
-      return '手动填写'
-    case 'webRequestLog':
-      return '日志文本'
-  }
-}
+

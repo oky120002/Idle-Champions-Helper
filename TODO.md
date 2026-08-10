@@ -88,4 +88,10 @@ repair: rebuild
     - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
     - 优先级：中
 
+- 领域层硬编码中文 UI 文本未国际化（signalMultiplier 警告 + recommendationEngine 违规信息） <!-- auto-todo:id=atd_665afea3d4 -->
+  - 记录时间: `2026-08-10T09:54:41+08:00`
+  - 类型: issue
+  - 位置: `src/domain/planner/mechanics/signalMultiplier.ts:44`
+  - 备注: signalMultiplier.ts 警告（乘算堆叠溢出/依赖基础增益未生效）和 recommendationEngine.ts 违规信息（seat 冲突/缺少强制英雄）直接返回中文字符串，经 PlannerResultCard 显示在 UI。需改为返回结构化数据（code + params），由 UI 层翻译。
+
 <!-- auto-todo:end -->

@@ -18,6 +18,7 @@ interface OpenFlyoutState {
 
 export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProps) {
   const { rosterSeatColumns, state, t } = model
+  const isZh = model.locale === 'zh-CN'
   const [openFlyout, setOpenFlyout] = useState<OpenFlyoutState | null>(null)
   const hasMatches = rosterSeatColumns.some((column) => column.champions.some((tile) => tile.matchesFilters))
 
@@ -63,17 +64,20 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
     >
       <ChampionRosterSummary
         summary={model.rosterSummary}
-        sourceLabel={getUserHeroProfileSourceLabel(model.profileResolution)}
-        eyebrow="账号概览"
-        title="用户英雄矩阵"
-        highlightLabel="高亮已拥有"
+        sourceLabel={getUserHeroProfileSourceLabel(model.profileResolution, model.locale)}
+        eyebrow={t({ zh: '账号概览', en: 'Account overview' })}
+        title={t({ zh: '用户英雄矩阵', en: 'User hero roster' })}
+        highlightLabel={t({ zh: '高亮已拥有', en: 'Highlight owned' })}
         activeMetricId={model.activeRosterMetricFilterId}
         onMetricToggle={(metricId) => model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId)}
       />
 
       {!hasMatches ? (
         <p className="champion-roster__status-note">
-          当前筛选没有命中；矩阵仍保持全量显示，已拥有但未命中的英雄会降为灰态，未拥有英雄持续保持灰态。
+          {t({
+            zh: '当前筛选没有命中；矩阵仍保持全量显示，已拥有但未命中的英雄会降为灰态，未拥有英雄持续保持灰态。',
+            en: 'No matches for the current filters. The roster still shows all champions; owned but unfiltered ones appear dimmed, and unowned ones stay dimmed.',
+          })}
         </p>
       ) : null}
 
@@ -82,11 +86,11 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
           const ownedCount = column.champions.filter((tile) => tile.isOwned).length
 
           return (
-            <section key={column.seat} className="champion-roster__column" role="listitem" aria-label={`Seat ${String(column.seat)}`}>
+            <section key={column.seat} className="champion-roster__column" role="listitem" aria-label={isZh ? `${String(column.seat)} 号位` : `Seat ${String(column.seat)}`}>
               <header className="champion-roster__column-header">
                 <div>
-                  <p className="champion-roster__column-eyebrow">Seat {column.seat}</p>
-                  <h2 className="champion-roster__column-title">{column.seat}号位</h2>
+                  <p className="champion-roster__column-eyebrow">{isZh ? `${String(column.seat)} 号位` : `Seat ${String(column.seat)}`}</p>
+                  <h2 className="champion-roster__column-title">{isZh ? `${String(column.seat)}号位` : `Seat ${String(column.seat)}`}</h2>
                 </div>
                 <span className="champion-roster__column-count">
                   {ownedCount}/{column.champions.length}
@@ -96,13 +100,16 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
               <div className="champion-roster__tile-list">
                 {column.champions.map((tile) => {
                   const primaryName = getPrimaryLocalizedText(tile.champion.name, model.locale)
+                  const ownershipSuffix = tile.isOwned
+                    ? t({ zh: '，已拥有', en: ', owned' })
+                    : t({ zh: '，未拥有', en: ', not owned' })
 
                   return (
                     <button
                       key={tile.champion.id}
                       type="button"
                       className={`champion-roster-tile champion-roster-tile--${tile.emphasis} ${openFlyout?.championId === tile.champion.id ? 'champion-roster-tile--open' : ''}`}
-                      aria-label={`${primaryName}${tile.isOwned ? '，已拥有' : '，未拥有'}`}
+                      aria-label={`${primaryName}${ownershipSuffix}`}
                       onClick={(event) => {
                         setOpenFlyout({
                           championId: tile.champion.id,
@@ -114,10 +121,12 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
                       <span className="champion-roster-tile__name">{primaryName}</span>
                       {tile.ownedHero ? (
                         <span className="champion-roster-tile__meta">
-                          Lv.{tile.ownedHero.level} · {Object.keys(tile.ownedHero.lootBySlot).length}/6 槽
+                          {isZh
+                            ? `Lv.${String(tile.ownedHero.level)} · ${String(Object.keys(tile.ownedHero.lootBySlot).length)}/6 槽`
+                            : `Lv.${String(tile.ownedHero.level)} · ${String(Object.keys(tile.ownedHero.lootBySlot).length)}/6 slots`}
                         </span>
                       ) : (
-                        <span className="champion-roster-tile__meta">未拥有</span>
+                        <span className="champion-roster-tile__meta">{t({ zh: '未拥有', en: 'Not owned' })}</span>
                       )}
                     </button>
                   )

@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { I18nProvider } from '../../app/i18n'
 import { UserSyncPanel } from './UserSyncPanel'
 import { useUserSyncModel } from './useUserSyncModel'
 
@@ -35,7 +36,11 @@ describe('UserSyncPanel 删除确认弹窗', () => {
 
   it('点击删除按钮打开确认弹窗', () => {
     mockModel()
-    render(<UserSyncPanel />)
+    render(
+      <I18nProvider>
+        <UserSyncPanel />
+      </I18nProvider>,
+    )
     expect(screen.queryByRole('dialog')).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: '删除' }))
     expect(screen.getByRole('dialog')).toHaveAttribute('aria-label', '删除个人数据')
@@ -44,7 +49,11 @@ describe('UserSyncPanel 删除确认弹窗', () => {
   it('选择「同时清除覆盖」时调 handleDelete(true) 并关弹窗', () => {
     const handleDelete = vi.fn()
     mockModel({ handleDelete })
-    render(<UserSyncPanel />)
+    render(
+      <I18nProvider>
+        <UserSyncPanel />
+      </I18nProvider>,
+    )
     fireEvent.click(screen.getByRole('button', { name: '删除' }))
     fireEvent.click(screen.getByRole('button', { name: '同时清除覆盖' }))
     expect(handleDelete).toHaveBeenCalledWith(true)
@@ -54,7 +63,11 @@ describe('UserSyncPanel 删除确认弹窗', () => {
   it('选择「保留覆盖」时调 handleDelete(false)', () => {
     const handleDelete = vi.fn()
     mockModel({ handleDelete })
-    render(<UserSyncPanel />)
+    render(
+      <I18nProvider>
+        <UserSyncPanel />
+      </I18nProvider>,
+    )
     fireEvent.click(screen.getByRole('button', { name: '删除' }))
     fireEvent.click(screen.getByRole('button', { name: '保留覆盖' }))
     expect(handleDelete).toHaveBeenCalledWith(false)
@@ -63,7 +76,11 @@ describe('UserSyncPanel 删除确认弹窗', () => {
   it('取消不调 handleDelete 并关闭弹窗', () => {
     const handleDelete = vi.fn()
     mockModel({ handleDelete })
-    render(<UserSyncPanel />)
+    render(
+      <I18nProvider>
+        <UserSyncPanel />
+      </I18nProvider>,
+    )
     fireEvent.click(screen.getByRole('button', { name: '删除' }))
     fireEvent.click(screen.getByRole('button', { name: '取消' }))
     expect(handleDelete).not.toHaveBeenCalled()

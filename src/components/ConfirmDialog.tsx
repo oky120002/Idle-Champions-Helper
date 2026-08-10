@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useI18n } from '../app/i18n'
 
 /**
  * 通用确认弹窗（受控）：遮罩按钮关闭、面板内点击不冒泡。
@@ -13,6 +14,8 @@ interface ConfirmDialogProps {
 }
 
 export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogProps) {
+  const { t } = useI18n()
+
   if (!open) {
     return null
   }
@@ -27,7 +30,7 @@ export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogP
       <button
         type="button"
         className="confirm-dialog__backdrop"
-        aria-label="关闭"
+        aria-label={t({ zh: '关闭', en: 'Close' })}
         onClick={onClose}
       />
       <div className="confirm-dialog__panel">

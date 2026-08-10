@@ -28,7 +28,7 @@ describe('UserHeroesPage avatars', () => {
     renderUserHeroesPage()
 
     const results = await screen.findByLabelText('用户英雄结果')
-    const seatOneColumn = within(results).getByRole('listitem', { name: 'Seat 1' })
+    const seatOneColumn = within(results).getByRole('listitem', { name: '1 号位' })
     const tile = within(seatOneColumn).getByRole('button', { name: '阿尔法，未拥有' })
 
     expect(within(seatOneColumn).getByRole('heading', { name: '1号位' })).toBeInTheDocument()

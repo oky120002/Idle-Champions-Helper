@@ -95,6 +95,6 @@ describe('App', () => {
       'aria-checked',
       'true',
     )
-    expect(screen.getByRole('heading', { level: 1, name: 'Growth-Oriented Formation Desk' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Formation Optimizer' })).toBeInTheDocument()
   })
 })

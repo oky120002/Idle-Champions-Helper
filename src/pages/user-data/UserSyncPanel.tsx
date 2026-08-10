@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { UserCredentials } from '../../domain/types'
+import { useI18n } from '../../app/i18n'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { LocalDevSnapshotSection } from './LocalDevSnapshotSection'
 import { useUserSyncModel } from './useUserSyncModel'
@@ -9,6 +10,7 @@ type UserSyncPanelProps = {
 }
 
 export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
+  const { t } = useI18n()
   const {
     syncState,
     busy,
@@ -32,18 +34,29 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
   }
 
   return (
-    <section aria-label="同步状态">
+    <section aria-label={t({ zh: '同步状态', en: 'Sync status' })}>
       {syncState.status === 'no-snapshot' && (
-        <p>浏览器内尚未保存同步快照。先读取并校验凭证，然后手动同步。</p>
+        <p>
+          {t({
+            zh: '浏览器内尚未保存同步快照。先读取并校验凭证，然后手动同步。',
+            en: 'No sync snapshot saved in the browser yet. Read and validate credentials first, then sync manually.',
+          })}
+        </p>
       )}
 
       {syncState.status === 'loaded' && (
         <div>
           <p>
-            浏览器同步快照已于 {syncState.ageDays} 天前更新。
+            {t({
+              zh: `浏览器同步快照已于 ${String(syncState.ageDays)} 天前更新。`,
+              en: `Browser sync snapshot was updated ${String(syncState.ageDays)} days ago.`,
+            })}
           </p>
           <p>
-            拥有英雄 {syncState.snapshot.ownedHeroes.length} 个；已导入阵型 {syncState.snapshot.importedFormationSaves.length} 个；同步警告 {syncState.snapshot.warnings.length} 条。
+            {t({
+              zh: `拥有英雄 ${String(syncState.snapshot.ownedHeroes.length)} 个；已导入阵型 ${String(syncState.snapshot.importedFormationSaves.length)} 个；同步警告 ${String(syncState.snapshot.warnings.length)} 条。`,
+              en: `Owned heroes: ${String(syncState.snapshot.ownedHeroes.length)}; imported formations: ${String(syncState.snapshot.importedFormationSaves.length)}; sync warnings: ${String(syncState.snapshot.warnings.length)}.`,
+            })}
           </p>
         </div>
       )}
@@ -58,7 +71,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           onClick={() => void handleSync()}
           disabled={!canSync}
         >
-          手动同步
+          {t({ zh: '手动同步', en: 'Sync manually' })}
         </button>
 
         {syncState.status !== 'no-snapshot' && (
@@ -67,18 +80,21 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
             onClick={() => setDeleteConfirmOpen(true)}
             disabled={busy}
           >
-            删除
+            {t({ zh: '删除', en: 'Delete' })}
           </button>
         )}
       </div>
 
       <ConfirmDialog
         open={isDeleteConfirmOpen}
-        title="删除个人数据"
+        title={t({ zh: '删除个人数据', en: 'Delete personal data' })}
         onClose={() => setDeleteConfirmOpen(false)}
       >
         <p className="confirm-dialog__message">
-          将清除浏览器同步快照与凭证。是否同时删除手动配置的英雄能力覆盖（planner 里手调的能力数据）？
+          {t({
+            zh: '将清除浏览器同步快照与凭证。是否同时删除手动配置的英雄能力覆盖（planner 里手调的能力数据）？',
+            en: 'This will clear the browser sync snapshot and credentials. Also delete manually configured hero ability overrides (ability data tuned in the planner)?',
+          })}
         </p>
         <div className="confirm-dialog__actions">
           <button
@@ -87,7 +103,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
             onClick={() => confirmDelete(true)}
             disabled={busy}
           >
-            同时清除覆盖
+            {t({ zh: '同时清除覆盖', en: 'Also clear overrides' })}
           </button>
           <button
             type="button"
@@ -95,7 +111,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
             onClick={() => confirmDelete(false)}
             disabled={busy}
           >
-            保留覆盖
+            {t({ zh: '保留覆盖', en: 'Keep overrides' })}
           </button>
           <button
             type="button"
@@ -103,7 +119,7 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
             onClick={() => setDeleteConfirmOpen(false)}
             disabled={busy}
           >
-            取消
+            {t({ zh: '取消', en: 'Cancel' })}
           </button>
         </div>
       </ConfirmDialog>

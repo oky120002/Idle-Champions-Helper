@@ -6,13 +6,13 @@ import { useUserSyncModel } from '../user-data/useUserSyncModel'
 import { formatPlannerProfileSourceLabel } from './plannerProfileSourceLabel'
 
 export function PlannerProfileState() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const { profileResolution } = useUserSyncModel()
   const [snapshotNow] = useState(() => Date.now())
 
   if (profileResolution.errorMessage != null && profileResolution.errorMessage !== '') {
     return (
-      <section aria-label="个人数据状态">
+      <section aria-label={t({ zh: '个人数据状态', en: 'Profile state' })}>
         <p role="alert">
           {t({
             zh: `读取数据失败：${profileResolution.errorMessage}`,
@@ -28,10 +28,11 @@ export function PlannerProfileState() {
     const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24))
     const sourceLabel = formatPlannerProfileSourceLabel(
       profileResolution.resolvedSource ?? profileResolution.selectedSource,
+      locale,
     )
 
     return (
-      <section aria-label="个人数据状态">
+      <section aria-label={t({ zh: '个人数据状态', en: 'Profile state' })}>
         <p>
           {t({
             zh: `${sourceLabel}已于 ${String(ageDays)} 天前更新。`,
@@ -51,7 +52,7 @@ export function PlannerProfileState() {
   }
 
   return (
-    <section aria-label="个人数据状态">
+    <section aria-label={t({ zh: '个人数据状态', en: 'Profile state' })}>
       <p>
         {t({
           zh: '尚未导入个人数据。',

@@ -1,3 +1,4 @@
+import { useI18n } from '../../app/i18n'
 import type { ChampionRosterSummary as ChampionRosterSummaryModel } from './championRoster'
 
 interface ChampionRosterSummaryProps {
@@ -12,28 +13,37 @@ interface ChampionRosterSummaryProps {
 
 export function ChampionRosterSummary({
   summary,
-  sourceLabel = '未同步账号快照',
-  eyebrow = '账号概览',
-  title = '全英雄矩阵',
-  highlightLabel = '高亮',
+  sourceLabel,
+  eyebrow,
+  title,
+  highlightLabel,
   activeMetricId = null,
   onMetricToggle,
 }: ChampionRosterSummaryProps) {
+  const { t } = useI18n()
+
   if (!summary) {
     return null
   }
 
   return (
-    <section className="champion-roster-summary" aria-label="英雄账号概览">
+    <section className="champion-roster-summary" aria-label={t({ zh: '英雄账号概览', en: 'Champion roster overview' })}>
       <header className="champion-roster-summary__header">
         <div>
-          <p className="champion-roster-summary__eyebrow">{eyebrow}</p>
-          <h2 className="champion-roster-summary__title">{title}</h2>
+          <p className="champion-roster-summary__eyebrow">
+            {eyebrow ?? t({ zh: '账号概览', en: 'Account overview' })}
+          </p>
+          <h2 className="champion-roster-summary__title">
+            {title ?? t({ zh: '全英雄矩阵', en: 'Full champion roster' })}
+          </h2>
         </div>
         <div className="champion-roster-summary__context">
-          <span className="champion-roster-summary__source">{sourceLabel}</span>
+          <span className="champion-roster-summary__source">
+            {sourceLabel ?? t({ zh: '未同步账号快照', en: 'No synced account snapshot' })}
+          </span>
           <span className="champion-roster-summary__highlight">
-            {highlightLabel} {summary.matchedOwnedChampionCount} / {summary.totalChampionCount}
+            {highlightLabel ?? t({ zh: '高亮', en: 'Highlight' })}{' '}
+            {summary.matchedOwnedChampionCount} / {summary.totalChampionCount}
           </span>
         </div>
       </header>

@@ -202,23 +202,28 @@ export function ChampionRosterFlyout({
     opacity: position.ready ? 1 : 0,
   }
 
+  const isZh = locale === 'zh-CN'
   let rosterContent: ReactNode
   if (ownedHero === null) {
     rosterContent = (
       <div className="champion-roster-flyout__empty">
-        当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。
+        {isZh
+          ? '当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。'
+          : 'You don’t own this champion yet, so only the navigation link is shown. Sync your account to see gear, legendary, and slot progress.'}
       </div>
     )
   } else if (status === 'error') {
     rosterContent = (
       <div className="champion-roster-flyout__empty">
-        读取这名英雄的装备定义失败，稍后重试即可。
+        {isZh
+          ? '读取这名英雄的装备定义失败，稍后重试即可。'
+          : 'Failed to load gear definitions for this champion. Please retry later.'}
       </div>
     )
   } else if (status === 'loading') {
     rosterContent = (
       <div className="champion-roster-flyout__empty">
-        正在读取装备槽位定义…
+        {isZh ? '正在读取装备槽位定义…' : 'Loading gear slot definitions…'}
       </div>
     )
   } else {
@@ -226,7 +231,7 @@ export function ChampionRosterFlyout({
       <div className="champion-roster-flyout__slot-grid">
         {slots.map((slot) => {
           const equipmentIcon = slot.graphicId != null && slot.graphicId !== '' ? equipmentIconsById.get(slot.graphicId) ?? null : null
-          return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} />
+          return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} locale={locale} />
         })}
       </div>
     )
@@ -239,7 +244,7 @@ export function ChampionRosterFlyout({
       style={style}
       role="dialog"
       aria-modal="false"
-      aria-label={`${primaryName} 装备浮层`}
+      aria-label={isZh ? `${primaryName} 装备浮层` : `${primaryName} gear flyout`}
     >
       <div className="champion-roster-flyout__header">
         <Link
@@ -257,13 +262,13 @@ export function ChampionRosterFlyout({
         >
           <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot" loading="eager" />
           <div className="champion-roster-flyout__identity-copy">
-            <span className="champion-roster-flyout__eyebrow">Seat {champion.seat}</span>
+            <span className="champion-roster-flyout__eyebrow">{isZh ? `${String(champion.seat)} 号位` : `Seat ${String(champion.seat)}`}</span>
             <strong>{primaryName}</strong>
             <span>{champion.roles.map((role) => getRoleLabel(role, locale)).join(' / ')}</span>
           </div>
         </Link>
-        <button type="button" className="champion-roster-flyout__close" onClick={onClose} aria-label="关闭装备浮层">
-          关闭
+        <button type="button" className="champion-roster-flyout__close" onClick={onClose} aria-label={isZh ? '关闭装备浮层' : 'Close gear flyout'}>
+          {isZh ? '关闭' : 'Close'}
         </button>
       </div>
 
