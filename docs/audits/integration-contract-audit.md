@@ -68,3 +68,32 @@
 - **隐性 guard 是双刃剑**：computeCarryDps:33 的 `Number.isFinite` guard 防 NaN 传播但掩盖上游 bug。变异实验暴露了这条隐藏路径——NaN 不会在结果中体现，只会表现为「加成被吞掉」。
 - **结构契约 ≠ snapshot**：对全量真实数据做字段存在性/类型/枚举校验，比 snapshot 更精准地守护接缝——不因数据增量误报，只报结构漂移。
 - **手搓 fixture 与真实数据的维度差**：前三轮手搓 fixture 的因子之积测试（4 组）验证了计算正确性，但无法发现「真实 hero-abilities.json 中某 signal.kind 非法」或「scenarios.json 中 adjacentSlotIds 自洽性」——真实数据端到端守护补充了这个维度。
+
+## 8. 流程集成续章（第五轮）
+
+度量基准日：2026-08-10（分支 `opencode/dev3`）。本轮与第三轮（§1-7）正交：守护**编排链的动态流转**——分支路径、参数穿透、blocker 状态转换、用户锁往返、Top K 去重，而非静态数据契约。
+
+**测试产物**：`src/domain/planner/recommendationEngine.flow.test.ts`（14 测试），接入 `unit` glob + `test:simulator`。
+
+### 六落点覆盖判定
+
+| # | 落点 | 守护问题 | 判定 |
+|---|------|---------|------|
+| 1 | 编排分支路径 | 5 路径（null / missing-profile / missing-formation / insufficient / no-legal / 正常）互斥、优先级正确 | ✅ 补 6 测试（null scenario / missing-formation 三变体 / blocker 优先级 / 确定性） |
+| 2 | 参数穿透 | 4 参数穿透到评估层产生可观测差异 | ✅ 补 3 测试（scoringMode / computationMode / aggregateProjection 各 1 决策表断言） |
+| 3 | blocker 状态转换 | 模式切换下 blocker 消失 | ✅ 补 1 测试（insufficient → all-hypothetical 正常） |
+| 4 | 用户锁往返 | lockedSlots / lockedCarryHeroId 端到端 | ✅ 补 2 测试（lockedSlots 保持 / lockedCarryHeroId 全 Top K 穿透） |
+| 5 | 可行性过滤 | 合法但 area 不足的阵型被淘汰 | ✅ 已充分覆盖（recommendationEngine.test.ts survival/armor/hits/damageModifier 四变体） |
+| 6 | Top K 去重 | 同 carry 去重 + 截断 + 降序 | ✅ 补 2 测试（≤3 截断 / carryHeroId 互异 + 降序） |
+
+### 关键发现
+
+- **无编排缺陷**：5 条退出路径互斥且优先级正确（missing-profile > missing-formation > insufficient-owned-heroes > no-legal-recommendation）。`resolvePlannerScenario` 先检查 profile 再检查 scenario，保证 missing-profile 优先于 missing-formation。
+- **参数穿透验证**：4 参数均在评估层产生可观测差异——scoringMode（carry-dps vs team-gold 不同 objectiveValue）、computationMode（100+ 英雄 p50 裁剪改变候选池 → 至少 1 项差异）、aggregateProjection（absolute-dps 含 baseDamage/levelCurve 量级远大于 formation-buff，后者 areaEstimate=null）。
+- **blocker 状态可逆**：模式切换（owned-only → all-hypothetical）下，insufficient-owned-heroes blocker 消失，推荐正常生成。
+- **用户锁全局穿透**：lockedCarryHeroId 影响所有 Top K 结果的 carryHeroId（不仅 top1），证明评分层全路径消费该参数。
+
+### 排除（本轮不处理）
+
+- 生产代码修改：未发现编排缺陷或参数未穿透问题。
+- 可行性过滤（落点 5）：第四轮已充分覆盖，不重复。
