@@ -26,7 +26,7 @@ function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {})
       supportSignals: [],
       unsupportedSignals: [],
     },
-    speedProfile: overrides.speedProfile,
+    ...(overrides.speedProfile ? { speedProfile: overrides.speedProfile } : {}),
   }
 }
 
@@ -292,8 +292,8 @@ describe('steady state scoring', () => {
     expect(result.speedBreakdown).toBeNull()
   })
 
-  it('team-speed 模式动态速度英雄产出 warning', () => {
-    // Briv (heroId=58) 是动态速度英雄——效果依赖跨重置状态，未建模
+  it('team-speed 模式动态速度英雄使用默认值参与计算', () => {
+    // Briv (heroId=58) 是动态速度英雄——使用 areaSkip 默认值 25% 参与计算
     const briv = createHero('58', { seat: 1, name: { original: 'Briv', display: '布里夫' } })
     const deekin = createHero('deekin', {
       seat: 2,
@@ -315,11 +315,29 @@ describe('steady state scoring', () => {
       scoringMode: 'team-speed',
     })
 
-    // Briv 不贡献 speedMultiplier（无 speedProfile），但仍计入 warning
-    expect(result.objectiveValue.toNumber()).toBeCloseTo(2, 5)
+    // Briv areaSkip 25% → factor 1.25; Deekin spawnSpeed 100% → factor 2.0
+    // Total: 2.0 × 1.25 = 2.5
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(2.5, 5)
     expect(result.warnings.length).toBe(1)
     expect(result.warnings[0]).toContain('布里夫')
-    expect(result.warnings[0]).toContain('未建模')
+    expect(result.warnings[0]).toContain('25%')
+  })
+
+  it('team-speed 模式动态速度英雄支持入参覆盖', () => {
+    const briv = createHero('58', { seat: 1, name: { original: 'Briv', display: '布里夫' } })
+    const heroesById = new Map([['58', briv]])
+
+    const result = scoreFormation({
+      heroesById,
+      scenario,
+      placements: { s1: '58' },
+      scoringMode: 'team-speed',
+      dynamicSpeedOverrides: new Map([['58', 50]]),
+    })
+
+    // Briv areaSkip overridden to 50% → factor 1.5
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(1.5, 5)
+    expect(result.warnings[0]).toContain('50%')
   })
 
   it('crit signal 进 crit_factor 提升 carryDps（4.3/4.4）', () => {

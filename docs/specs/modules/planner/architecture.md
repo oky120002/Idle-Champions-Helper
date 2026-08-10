@@ -31,7 +31,23 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 
 是否传由调用方决定（UI / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile**——祝福 / favor / patron 已由 `userProfileNormalizer` 保留进 `UserProfileSnapshot`，由适配层 `buildScoringBonusInputs`（`scoringBonusInputs.ts`）聚合成各加成入参传入。
 
-> 非加成数值的特殊默认（近似 / 模式选择，非「跳过」）：`heroLevels ?? 1`（未拥有英雄按 1 级保守估算，levelCurve=rate^1，保留英雄间增长率差异）、`manualStackCount ?? 1000`（动态层数假设，area≈100 上限，UI 可覆盖）、`aggregateProjection ?? 'absolute-dps'`（主模式）。依据见 `simulator.md`。
+> 非加成数值的特殊默认（近似 / 模式选择，非「跳过」）：`heroLevels ?? 1`（未拥有英雄按 1 级保守估算，levelCurve=rate^1，保留英雄间增长率差异）、`manualStackCount ?? 1000`（动态层数假设，area≈100 上限，UI 可覆盖）、`aggregateProjection ?? 'absolute-dps'`（主模式）、`dynamicSpeedOverrides`（动态速度英雄 areaSkip 假设，默认见 `DYNAMIC_SPEED_DEFAULTS`）。依据见 `simulator.md`。
+
+### 取值口径（冻结 2026-08-10）
+
+计算器入参的取值遵循以下口径，所有功能模块（DPS / 金币 / 速度 / 生存）统一适用：
+
+1. **计算器只接收 UI 当前值**——不直接读取用户数据，不自动消费任何外部数据源。
+2. **UI 面板初始值 = 内置默认值**（如 `DYNAMIC_SPEED_DEFAULTS`、`manualStackCount ?? 1000`）。
+3. **用户数据的作用 = 一个「载入我的数据」按钮**：点击后替换 UI 面板值为用户数据中的值，仅此而已。
+   - 全有或全无：载入时，用户数据中**有的字段类型**全部使用用户数据（可能为空值）；用户数据中**没有的字段类型**保持当前 UI 值（内置默认）。
+   - 不合并、不混用——不是「用户数据覆盖默认值然后混合」，而是「按钮一次性替换面板」。
+4. **三个独立维度**：
+   - **默认值来源**：内置默认 vs 用户数据载入（按钮触发）
+   - **UI 可调性**：是否有 UI 控件——由 UI 设计决定，与入参无关
+   - **入参可调性**：所有入参在代码层面都可调整——区别只是是否暴露 UI 控件
+
+示例：Briv 的 areaSkip 假设——内置默认 25%，UI 可手调，用户数据（存档中的冲刺堆叠）未来可通过按钮载入替换面板值。三者独立。
 
 ### 加成建模正确性原则
 

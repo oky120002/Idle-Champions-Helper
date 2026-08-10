@@ -10,6 +10,7 @@ const SPEED_CATEGORY_LABEL: Record<SpeedCategory, LocaleText> = {
   transitionSpeedup: { zh: '转换加速', en: 'Transition speedup' },
   simultaneousSpawn: { zh: '同步刷新', en: 'Simultaneous spawn' },
   preSpawn: { zh: '预刷新', en: 'Pre-spawn' },
+  areaSkip: { zh: '跳层/秒杀', en: 'Area skip' },
 }
 
 /** 格式化单条速度效果为人类可读描述（与类别相关）。 */
@@ -23,6 +24,7 @@ function describeEffect(effect: SpeedEffectEntry, t: (text: LocaleText) => strin
     case 'timeScale':
     case 'transitionSpeedup':
     case 'extraEnemies':
+    case 'areaSkip':
       return `+${String(effect.value)}%`
     case 'simultaneousSpawn':
     case 'preSpawn':

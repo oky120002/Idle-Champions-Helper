@@ -20,6 +20,15 @@
 3. **装备等级 UI 可调**——玩家逐步投资、不可能一次拉满（"刷刷刷"游戏的本质是耗时间逐步提升）
 4. **三层在 UI 上都可调整**——玩家当前实际投入水平与理论最优不同，需要 what-if 调节
 
+## 取值口径（冻结 2026-08-10）
+
+三层缩放和动态英雄假设的取值遵循 planner 统一取值口径（详见 `docs/specs/modules/planner/architecture.md` §取值口径）：
+
+- **计算器只接收 UI 当前值**，不自动消费用户数据
+- **UI 初始值 = 内置默认**（如 `DYNAMIC_SPEED_DEFAULTS`：Briv 25% / Lae'zel 18% / Thellora 15% / Halsin 11%）
+- **用户数据 = 一个「载入」按钮**，点击后替换 UI 面板值；全有或全无，不合并
+- **默认值 / UI 可调性 / 入参可调性**三个维度独立
+
 ## 实现影响
 
 - `computeFormationSpeedMultiplier` 需接收三层缩放入参（不能只用 build 期 base 值）

@@ -14,7 +14,7 @@ import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
 import { computeTeamGoldFind } from './goldObjective'
-import { computeFormationSpeedMultiplier, computeSpeedBreakdown, DYNAMIC_SPEED_HERO_IDS, type SpeedBreakdown } from './speedScoring'
+import { computeFormationSpeedMultiplier, computeSpeedBreakdown, applyFormationSpeedEffects, DYNAMIC_SPEED_HERO_IDS, DYNAMIC_SPEED_DEFAULTS, type SpeedBreakdown, type FormationSpeedContext, type HeroSpeedProfile, type SpeedEffectEntry } from './speedScoring'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
@@ -105,6 +105,12 @@ export interface ScoringInput {
    * 由调用方从 options.goldBudget（游戏记数法字符串）解析后传入。
    */
   goldBudget?: GameNumberValue | undefined
+  /**
+   * 动态速度英雄假设值覆盖：heroId → 等效跳过百分比（areaSkip value）。
+   * 无覆盖的英雄使用 DYNAMIC_SPEED_DEFAULTS 保守默认值。
+   * 取值口径：用户数据仅影响默认值（有用户数据全用，无用户数据用内置默认），覆盖与默认独立。
+   */
+  dynamicSpeedOverrides?: ReadonlyMap<string, number> | undefined
 }
 
 export interface SimulationFactor {
@@ -250,17 +256,32 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
  * 计算阵型级综合速度因子 speedMultiplier。速度效果与 DPS/gold 正交——不做 carry 选择。
  * 无速度英雄的阵型 speedMultiplier=1（无加成）。
  */
-function scoreTeamSpeed(placedEntries: PlacedEntry[]): ScoringResult {
-  const profiles = placedEntries
+function scoreTeamSpeed(placedEntries: PlacedEntry[], input: ScoringInput): ScoringResult {
+  // 收集静态速度画像
+  const staticProfiles = placedEntries
     .map((entry) => entry.hero.speedProfile)
     .filter((profile): profile is NonNullable<typeof profile> => profile != null)
 
-  // 动态速度英雄（Briv/Lae'zel/Thellora/Halsin）效果依赖运行时/用户输入，未建模 → warning
-  const warnings = placedEntries
-    .filter((entry) => DYNAMIC_SPEED_HERO_IDS.has(entry.hero.heroId))
-    .map((entry) => `${entry.hero.name.display}：动态速度效果未建模（需手动评估）`)
+  // 动态速度英雄：用默认值生成 areaSkip 效果（取值口径：无用户数据时用保守默认）
+  const dynamicProfiles: HeroSpeedProfile[] = []
+  const warnings: string[] = []
+  for (const entry of placedEntries) {
+    const heroId = entry.hero.heroId
+    if (!DYNAMIC_SPEED_HERO_IDS.has(heroId)) continue
+    const defaultEffect = DYNAMIC_SPEED_DEFAULTS.get(heroId)
+    if (!defaultEffect) continue
+    // 入参覆盖优先（未来从存档/UI 传入）
+    const override = input.dynamicSpeedOverrides?.get(heroId)
+    const effect: SpeedEffectEntry = override != null
+      ? { ...defaultEffect, value: override, rawEffect: `${defaultEffect.rawEffect} (adjusted: ${String(override)}%)` }
+      : defaultEffect
+    dynamicProfiles.push({ heroId, effects: [effect], speedGain: 1 + effect.value / 100 })
+    warnings.push(`${entry.hero.name.display}：使用默认速度假设 ${String(effect.value)}%（可调整）`)
+  }
 
-  if (profiles.length === 0) {
+  const allRawProfiles = [...staticProfiles, ...dynamicProfiles]
+
+  if (allRawProfiles.length === 0) {
     return {
       objectiveValue: toGameNumber(1),
       warnings,
@@ -270,6 +291,14 @@ function scoreTeamSpeed(placedEntries: PlacedEntry[]): ScoringResult {
       speedBreakdown: null,
     }
   }
+
+  // 阵型效果缩放：按相邻英雄 tag 数量查表替换效果值（如 Hew Maan 相邻人类 → other_human_bonuses）
+  const formationContext: FormationSpeedContext = {
+    slotByHeroId: new Map(placedEntries.map((e) => [e.hero.heroId, e.slotId])),
+    tagsBySlot: new Map(placedEntries.map((e) => [e.slotId, e.hero.tags])),
+    adjacentSlotIds: new Map(input.scenario.slotTopology.map((s) => [s.slotId, s.adjacentSlotIds])),
+  }
+  const profiles = applyFormationSpeedEffects(allRawProfiles, formationContext)
 
   return {
     objectiveValue: toGameNumber(computeFormationSpeedMultiplier(profiles)),
@@ -635,7 +664,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   }
 
   if (input.scoringMode === 'team-speed') {
-    return scoreTeamSpeed(placedEntries)
+    return scoreTeamSpeed(placedEntries, input)
   }
 
   const aggregateProjection = input.aggregateProjection ?? 'absolute-dps'

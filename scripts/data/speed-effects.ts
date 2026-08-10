@@ -5,7 +5,7 @@
  * 速度效果多为 hero-specific handler（不在 hero-abilities 信号管线），需要独立提取。
  * 详见 docs/research/gameplay/speed-mechanics.md。
  */
-import type { HeroSpeedProfile, SpeedEffectEntry } from '../../src/domain/planner/speedScoring'
+import type { HeroSpeedProfile, SpeedEffectEntry, FormationBonusTable } from '../../src/domain/planner/speedScoring'
 import { computeHeroSpeedGain } from '../../src/domain/planner/speedScoring'
 import { collectEffectEntries } from './effect-helpers'
 import { asRecord, asArray } from './io-utils'
@@ -152,14 +152,19 @@ export function parseSpeedEffect(effectString: string): SpeedEffectEntry[] | nul
 }
 
 /**
- * Hew Maan 嵌套效果提取：hewmaan_teamwork upgrade 的 zrang.effects 含
- * chance_multiply_monster_quest_rewards,<chance>,<mult>。
- * 基础 chance=0（需 hewmaan_fellow_humans buff_upgrade 缩放），保守提取。
+ * Hew Maan 嵌套效果提取：
+ * 1. hewmaan_teamwork → zrang.effects → chance_multiply_monster_quest_rewards,<chance>,<mult>
+ * 2. hewmaan_fellow_humans → other_human_bonuses（相邻人类数查表替换 chance）
+ * 基础 chance=0（需阵型效果缩放），两份数据合并到一条 questProgress entry。
  */
 function extractHewMaanNestedQuest(detail: unknown): SpeedEffectEntry | null {
   const detailRecord = asRecord(detail)
   if (!detailRecord) return null
   const upgrades = asArray(detailRecord.upgrades)
+
+  let questEntry: SpeedEffectEntry | null = null
+  let formationBonusTable: FormationBonusTable | null = null
+
   for (const upRaw of upgrades) {
     const up = asRecord(upRaw)
     if (!up) continue
@@ -172,21 +177,44 @@ function extractHewMaanNestedQuest(detail: unknown): SpeedEffectEntry | null {
       const ek = asRecord(ekRaw)
       if (!ek) continue
       const es = typeof ek.effect_string === 'string' ? ek.effect_string : ''
-      if (!es.startsWith('hewmaan_teamwork')) continue
-      // 找到 hewmaan_teamwork effect_key，检查 zrang.effects
-      const zrang = asRecord(ek.zrang)
-      const zrangEffects = asArray(zrang?.effects)
-      for (const zeRaw of zrangEffects) {
-        const ze = asRecord(zeRaw)
-        const zeStr = typeof ze?.effect_string === 'string' ? ze.effect_string : ''
-        if (zeStr.startsWith('chance_multiply_monster_quest_rewards,')) {
-          const parts = zeStr.split(',')
-          const chance = Number(parts[1]) || 0
-          const mult = Number(parts[2]) || 1
-          return { category: 'questProgress', value: chance, multiplier: mult, rawEffect: zeStr }
+
+      // hewmaan_teamwork → zrang.effects → chance_multiply_monster_quest_rewards
+      if (es.startsWith('hewmaan_teamwork') && !questEntry) {
+        const zrang = asRecord(ek.zrang)
+        const zrangEffects = asArray(zrang?.effects)
+        for (const zeRaw of zrangEffects) {
+          const ze = asRecord(zeRaw)
+          const zeStr = typeof ze?.effect_string === 'string' ? ze.effect_string : ''
+          if (zeStr.startsWith('chance_multiply_monster_quest_rewards,')) {
+            const parts = zeStr.split(',')
+            const chance = Number(parts[1]) || 0
+            const mult = Number(parts[2]) || 1
+            questEntry = { category: 'questProgress', value: chance, multiplier: mult, rawEffect: zeStr }
+          }
+        }
+      }
+
+      // hewmaan_fellow_humans → other_human_bonuses（相邻人类数查表）
+      if (es.startsWith('hewmaan_fellow_humans') && !formationBonusTable) {
+        const bonuses = asArray(ek.other_human_bonuses)
+        if (bonuses.length > 0) {
+          const ranges = bonuses.map((b) => {
+            const r = asRecord(b)
+            const range = Array.isArray(r?.range) ? r.range : []
+            return {
+              min: Number(range[0]) || 0,
+              max: Number(range[1]) || 0,
+              amount: Number(r?.amount) || 0,
+            }
+          })
+          formationBonusTable = { tag: 'human', ranges }
         }
       }
     }
   }
-  return null
+
+  if (questEntry && formationBonusTable) {
+    questEntry.formationBonusTable = formationBonusTable
+  }
+  return questEntry
 }

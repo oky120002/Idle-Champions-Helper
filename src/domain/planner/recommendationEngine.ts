@@ -180,6 +180,12 @@ export interface PlannerRecommendationOptions {
    * carry 落在这些槽位 → SCORE_ZERO；与系统解析的 damageSourcePattern 叠加。
    */
   userDamageDisabledSlots?: readonly string[]
+  /**
+   * 动态速度英雄假设值覆盖：heroId → 等效跳过百分比（areaSkip value）。
+   * 无覆盖的英雄使用 DYNAMIC_SPEED_DEFAULTS。透传 scoreFormation → scoreTeamSpeed。
+   * 取值口径：UI 面板值（默认或用户手调），用户数据仅通过 UI 按钮替换面板值。
+   */
+  dynamicSpeedOverrides?: ReadonlyMap<string, number>
 }
 
 /**
@@ -400,6 +406,7 @@ function scorePlannerFormation(
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,
     goldBudget: parseGoldBudget(options.goldBudget),
+    dynamicSpeedOverrides: options.dynamicSpeedOverrides,
   })
   // 伤害来源位置限制：carry 在不可造伤害位置 → DPS 归零（事实约束，非用户过滤）。
   // 在 scorePlannerFormation 而非 scorePlannerFormationWithLegality 生效，使 evaluateFormation 也反映。

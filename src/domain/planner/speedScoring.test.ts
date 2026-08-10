@@ -5,9 +5,12 @@ import {
   computeHeroSpeedGain,
   computeSpeedBreakdown,
   applyEquipmentBuffsToSpeedEffects,
+  applyFormationSpeedEffects,
   DYNAMIC_SPEED_HERO_IDS,
+  DYNAMIC_SPEED_DEFAULTS,
   type HeroSpeedProfile,
   type SpeedEffectEntry,
+  type FormationSpeedContext,
 } from './speedScoring'
 
 function entry(category: SpeedEffectEntry['category'], value: number, extra: Partial<SpeedEffectEntry> = {}): SpeedEffectEntry {
@@ -269,5 +272,132 @@ describe('DYNAMIC_SPEED_HERO_IDS', () => {
 
   it('has exactly 4 entries', () => {
     expect(DYNAMIC_SPEED_HERO_IDS.size).toBe(4)
+  })
+})
+
+describe('DYNAMIC_SPEED_DEFAULTS', () => {
+  it('provides areaSkip defaults for all 4 dynamic heroes', () => {
+    for (const heroId of DYNAMIC_SPEED_HERO_IDS) {
+      const entry = DYNAMIC_SPEED_DEFAULTS.get(heroId)
+      expect(entry, `hero ${heroId} should have a default`).toBeDefined()
+      expect(entry?.category).toBe('areaSkip')
+      expect(entry?.value).toBeGreaterThan(0)
+    }
+  })
+
+  it('areaSkip factor = 1 + value/100 (additive)', () => {
+    const brivDefault = DYNAMIC_SPEED_DEFAULTS.get('58')!
+    // Briv 25% → factor = 1.25
+    const factor = computeFormationSpeedMultiplier([{
+      heroId: '58',
+      effects: [brivDefault],
+      speedGain: 1,
+    }])
+    expect(factor).toBeCloseTo(1.25, 5)
+  })
+})
+
+describe('applyFormationSpeedEffects', () => {
+  /** Hew Maan style formationBonusTable: adjacent humans → amount replaces chance. */
+  const hewMaanTable = {
+    tag: 'human' as const,
+    ranges: [
+      { min: 1, max: 3, amount: 100 },
+      { min: 4, max: 5, amount: 700 },
+      { min: 6, max: 7, amount: 3100 },
+      { min: 8, max: 99, amount: 12700 },
+    ],
+  }
+
+  function ctx(
+    heroAtSlot: Record<string, string>,
+    slotTags: Record<string, string[]>,
+    adjacency: Record<string, string[]>,
+  ): FormationSpeedContext {
+    return {
+      slotByHeroId: new Map(Object.entries(heroAtSlot).map(([slot, heroId]) => [heroId, slot])),
+      tagsBySlot: new Map(Object.entries(slotTags)),
+      adjacentSlotIds: new Map(Object.entries(adjacency)),
+    }
+  }
+
+  it('no formation effects → returns profiles unchanged', () => {
+    const deekin = profile('deekin', [entry('spawnSpeed', 100)])
+    const result = applyFormationSpeedEffects([deekin], ctx({}, {}, {}))
+    expect(result).toEqual([deekin])
+  })
+
+  it('Hew Maan with 2 adjacent humans → amount=100 replaces chance', () => {
+    const hewMaan = profile('hewmaan', [{
+      ...entry('questProgress', 0, { multiplier: 2 }),
+      formationBonusTable: hewMaanTable,
+    }])
+    // hewmaan at s1, adjacent s2+s3, both human
+    const context = ctx(
+      { s1: 'hewmaan', s2: 'hero2', s3: 'hero3' },
+      { s1: ['human'], s2: ['human'], s3: ['human'] },
+      { s1: ['s2', 's3'], s2: ['s1'], s3: ['s1'] },
+    )
+    const result = applyFormationSpeedEffects([hewMaan], context)
+    expect(result[0]?.effects[0]?.value).toBe(100) // 2 adjacent humans → range [1,3] → 100
+  })
+
+  it('Hew Maan with 5 adjacent humans → amount=700', () => {
+    const hewMaan = profile('hewmaan', [{
+      ...entry('questProgress', 0, { multiplier: 2 }),
+      formationBonusTable: hewMaanTable,
+    }])
+    const context = ctx(
+      { s1: 'hewmaan', s2: 'h2', s3: 'h3', s4: 'h4', s5: 'h5', s6: 'h6' },
+      { s1: ['human'], s2: ['human'], s3: ['human'], s4: ['human'], s5: ['human'], s6: ['human'] },
+      { s1: ['s2', 's3', 's4', 's5', 's6'] },
+    )
+    const result = applyFormationSpeedEffects([hewMaan], context)
+    expect(result[0]?.effects[0]?.value).toBe(700) // 5 adjacent humans → range [4,5] → 700
+  })
+
+  it('Hew Maan with 0 adjacent humans → amount=0 (no match in ranges)', () => {
+    const hewMaan = profile('hewmaan', [{
+      ...entry('questProgress', 0, { multiplier: 2 }),
+      formationBonusTable: hewMaanTable,
+    }])
+    // hewmaan at s1, no adjacent slots occupied
+    const context = ctx(
+      { s1: 'hewmaan' },
+      { s1: ['human'] },
+      { s1: ['s2', 's3'] },
+    )
+    const result = applyFormationSpeedEffects([hewMaan], context)
+    expect(result[0]?.effects[0]?.value).toBe(0)
+  })
+
+  it('non-human adjacent heroes do not count', () => {
+    const hewMaan = profile('hewmaan', [{
+      ...entry('questProgress', 0, { multiplier: 2 }),
+      formationBonusTable: hewMaanTable,
+    }])
+    const context = ctx(
+      { s1: 'hewmaan', s2: 'elf1', s3: 'dwarf1' },
+      { s1: ['human'], s2: ['elf'], s3: ['dwarf'] },
+      { s1: ['s2', 's3'], s2: ['s1'], s3: ['s1'] },
+    )
+    const result = applyFormationSpeedEffects([hewMaan], context)
+    expect(result[0]?.effects[0]?.value).toBe(0) // 0 human neighbors
+  })
+
+  it('adjusted value flows into computeFormationSpeedMultiplier', () => {
+    // hewmaan with 2 adjacent humans → chance=100, mult=2 → questProgress=2.0
+    const hewMaan = profile('hewmaan', [{
+      ...entry('questProgress', 0, { multiplier: 2 }),
+      formationBonusTable: hewMaanTable,
+    }])
+    const context = ctx(
+      { s1: 'hewmaan', s2: 'hero2', s3: 'hero3' },
+      { s1: ['human'], s2: ['human'], s3: ['human'] },
+      { s1: ['s2', 's3'], s2: ['s1'], s3: ['s1'] },
+    )
+    const adjusted = applyFormationSpeedEffects([hewMaan], context)
+    // questProgress = 1 + 100/100 × (2-1) = 2.0
+    expect(computeFormationSpeedMultiplier(adjusted)).toBeCloseTo(2.0, 6)
   })
 })

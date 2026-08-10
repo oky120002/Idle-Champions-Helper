@@ -8,7 +8,11 @@
  * category 间乘法。详见 docs/research/gameplay/speed-mechanics.md。
  */
 
-/** 静态可计算的 7 个速度类别（需假设值的 4 类不在此枚举，MVP 进 warnings）。 */
+/**
+ * 速度效果类别。7 类静态可计算 + 1 类动态假设（areaSkip）。
+ * areaSkip = 区域跳过/条件过关/初期冲层，效果依赖跨重置状态或运行时条件，
+ * 默认值由 DYNAMIC_SPEED_DEFAULTS 提供，可通过入参覆盖。
+ */
 export type SpeedCategory =
   | 'questProgress'
   | 'spawnSpeed'
@@ -17,6 +21,7 @@ export type SpeedCategory =
   | 'transitionSpeedup'
   | 'simultaneousSpawn'
   | 'preSpawn'
+  | 'areaSkip'
 
 /** 单条速度效果（build 期从 champion-details effect_keys 提取）。 */
 export interface SpeedEffectEntry {
@@ -25,7 +30,7 @@ export interface SpeedEffectEntry {
    * 效果数值（类别语义不同）：
    * - questProgress（multiply 变体）: trigger chance (0-100)
    * - questProgress（reduce 变体）: { chance, reductionAmount } 拆入 chance + value
-   * - spawnSpeed / timeScale / transitionSpeedup: 加性百分比 (e.g. 100 = +100%)
+   * - spawnSpeed / timeScale / transitionSpeedup / areaSkip: 加性百分比 (e.g. 100 = +100%)
    * - extraEnemies: 额外敌人期望值（chance% × count）
    * - simultaneousSpawn / preSpawn: 1（二值，英雄在场即生效）
    */
@@ -37,6 +42,20 @@ export interface SpeedEffectEntry {
   rawEffect: string
   /** 源 upgrade id（装备 buff_upgrade 反查用）；null = 无 upgrade 源。 */
   upgradeId?: string | null
+  /**
+   * 阵型效果缩放表：基于相邻英雄的 tag 数量查表替换 value。
+   * 如 Hew Maan 的 hewmaan_fellow_humans → other_human_bonuses（相邻人类数 → amount）。
+   * 运行时由 applyFormationSpeedEffects 求值。
+   */
+  formationBonusTable?: FormationBonusTable | null
+}
+
+/** 阵型效果查表结构（build 期从 effect_key 元数据提取）。 */
+export interface FormationBonusTable {
+  /** 要计数的 tag（如 'human'）。 */
+  tag: string
+  /** 按相邻 tag 数量查 amount 替换效果值。 */
+  ranges: ReadonlyArray<{ min: number; max: number; amount: number }>
 }
 
 /** 每英雄速度画像（嵌入 hero-abilities.json hero model）。 */
@@ -70,14 +89,31 @@ export interface SpeedBreakdown {
 }
 
 /**
- * 动态速度英雄 ID——已知速度英雄但效果无法静态提取（依赖跨重置状态/运行时条件/用户输入）。
- * 放入 team-speed 阵型时产出 warning（效果未建模，不计入 speedMultiplier）。
+ * 动态速度英雄：已知速度英雄但效果依赖跨重置状态/运行时条件/用户输入，无法静态提取。
+ * 用 areaSkip 类别建模——value = 平均每层跳过/秒杀的等效百分比，因子 = 1 + Σ(value/100)。
+ *
+ * 默认值取值口径（用户冻结 2026-08-10）：
+ * - 有用户数据 → 用户数据作为默认值（未来从存档提取 Briv 冲刺堆叠等）
+ * - 无用户数据 → 使用此处的保守默认值
+ * - 所有值可通过入参覆盖（planner options），UI 可暴露部分控件
  */
 export const DYNAMIC_SPEED_HERO_IDS: ReadonlySet<string> = new Set([
-  '58', // Briv — 区域跳层：跨重置冲刺堆叠
-  '128', // Lae'zel — 条件过关：触发频率依赖 DPS/刷新
-  '139', // Thellora — 初期冲层：跳层数依赖 Favor
-  '156', // Halsin — 条件过关：大招触发
+  '58', // Briv — 区域跳层
+  '128', // Lae'zel — 条件过关
+  '139', // Thellora — 初期冲层
+  '156', // Halsin — 条件过关
+])
+
+/** 动态速度英雄默认效果（无用户数据时使用，value = 等效跳过百分比）。 */
+export const DYNAMIC_SPEED_DEFAULTS: ReadonlyMap<string, SpeedEffectEntry> = new Map([
+  // Briv: briv_unnatural_haste 基础 25% 跳层概率 → 保守默认 25%
+  ['58', { category: 'areaSkip', value: 25, rawEffect: 'briv_unnatural_haste (default)' }],
+  // Lae'zel: 17 层堆叠完成区域，保守估计 ~18% 等效跳过率
+  ['128', { category: 'areaSkip', value: 18, rawEffect: 'laezel_completion (default)' }],
+  // Thellora: 初期冲层 10 层（一次性），对典型 50 层刷图等效 ~15%
+  ['139', { category: 'areaSkip', value: 15, rawEffect: 'thellora_rush (default)' }],
+  // Halsin: 大招触发区域完成，保守估计 ~11% 等效跳过率
+  ['156', { category: 'areaSkip', value: 11, rawEffect: 'halsin_completion (default)' }],
 ])
 
 /** simultaneousSpawn / preSpawn 的固定加成（无精确数值，社区定性估计）。 */
@@ -123,7 +159,7 @@ function hasCategory(effects: readonly SpeedEffectEntry[], category: SpeedCatego
 
 /** 类别计算顺序（与乘积顺序一致，breakdown 展示用）。 */
 const CATEGORY_ORDER: readonly SpeedCategory[] = [
-  'questProgress', 'spawnSpeed', 'extraEnemies', 'timeScale', 'transitionSpeedup', 'simultaneousSpawn', 'preSpawn',
+  'questProgress', 'spawnSpeed', 'extraEnemies', 'timeScale', 'transitionSpeedup', 'simultaneousSpawn', 'preSpawn', 'areaSkip',
 ]
 
 /** 从扁平效果列表计算各类别因子。computeFormationSpeedMultiplier 和 computeSpeedBreakdown 共用。 */
@@ -136,6 +172,7 @@ function computeCategoryFactors(allEffects: readonly SpeedEffectEntry[]): Map<Sp
   factors.set('transitionSpeedup', additiveMult(allEffects.filter((e) => e.category === 'transitionSpeedup'), TRANSITION_CAP))
   factors.set('simultaneousSpawn', hasCategory(allEffects, 'simultaneousSpawn') ? SIMULTANEOUS_BONUS : 1)
   factors.set('preSpawn', hasCategory(allEffects, 'preSpawn') ? PRESPAWN_BONUS : 1)
+  factors.set('areaSkip', additiveMult(allEffects.filter((e) => e.category === 'areaSkip')))
   return factors
 }
 
@@ -208,5 +245,66 @@ export function applyEquipmentBuffsToSpeedEffects(
     // 二值效果不缩放
     if (effect.category === 'simultaneousSpawn' || effect.category === 'preSpawn') return effect
     return { ...effect, value: effect.value * (1 + buffPercent / 100) }
+  })
+}
+
+/**
+ * 阵型效果运行时上下文：提供槽位邻接关系和英雄标签，供 applyFormationSpeedEffects 查表。
+ * 由 scoreTeamSpeed 从 scenario.slotTopology + placedEntries 构造。
+ */
+export interface FormationSpeedContext {
+  /** heroId → slotId（placed 英雄位置）。 */
+  readonly slotByHeroId: ReadonlyMap<string, string>
+  /** slotId → 该位英雄的 tags（查 formationBonusTable.tag 用）。 */
+  readonly tagsBySlot: ReadonlyMap<string, readonly string[]>
+  /** slotId → 相邻槽位 id 列表（来自 scenario.slotTopology）。 */
+  readonly adjacentSlotIds: ReadonlyMap<string, readonly string[]>
+}
+
+/** 按相邻 tag 数量查表返回 amount（无匹配返回 0）。 */
+function lookupFormationBonus(
+  ranges: ReadonlyArray<{ min: number; max: number; amount: number }>,
+  count: number,
+): number {
+  for (const range of ranges) {
+    if (count >= range.min && count <= range.max) {
+      return range.amount
+    }
+  }
+  return 0
+}
+
+/**
+ * 阵型效果缩放：对带 formationBonusTable 的速度效果，运行时按相邻英雄 tag 数量查表替换 value。
+ * 如 Hew Maan：相邻人类数 → other_human_bonuses → 替换任务倍增概率。
+ * profiles 中无阵型效果时原样返回（无开销）。
+ */
+export function applyFormationSpeedEffects(
+  profiles: readonly HeroSpeedProfile[],
+  context: FormationSpeedContext,
+): HeroSpeedProfile[] {
+  const hasFormationEffect = profiles.some((p) => p.effects.some((e) => e.formationBonusTable))
+  if (!hasFormationEffect) return [...profiles]
+
+  return profiles.map((profile) => {
+    const slotId = context.slotByHeroId.get(profile.heroId)
+    if (!slotId) return profile
+
+    const adjSlots = context.adjacentSlotIds.get(slotId) ?? []
+    const hasBonus = profile.effects.some((e) => e.formationBonusTable)
+    if (!hasBonus) return profile
+
+    return {
+      ...profile,
+      effects: profile.effects.map((effect) => {
+        if (!effect.formationBonusTable) return effect
+        const tag = effect.formationBonusTable.tag
+        const adjacentCount = adjSlots.filter((id) => {
+          const tags = context.tagsBySlot.get(id)
+          return tags?.includes(tag) ?? false
+        }).length
+        return { ...effect, value: lookupFormationBonus(effect.formationBonusTable.ranges, adjacentCount) }
+      }),
+    }
   })
 }

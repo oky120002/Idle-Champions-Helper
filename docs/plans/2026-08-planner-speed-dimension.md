@@ -44,15 +44,16 @@
 
 阵型级总速度因子 = 各类别因子之积。
 
-### 需假设值（4 类，类型 1、8、11）—— MVP 标记 unsupported
+### 动态假设值（4 类，类型 1、8、11）—— areaSkip 类别 + 默认值
 
-| 类别 | 英雄 | 原因 |
-|---|---|---|
-| areaSkip（跳层） | Briv | 依赖跨重置冲刺堆叠（用户输入） |
-| conditionalCompletion（条件过关） | Lae'zel/Halsin | 触发频率依赖 DPS/刷新（运行时） |
-| initialRush（初期冲层） | Thellora | 跳层数依赖 favor（用户输入） |
+| 类别 | 英雄 | 原因 | 默认值 |
+|---|---|---|---|
+| areaSkip（跳层） | Briv | 依赖跨重置冲刺堆叠 | 25%（`briv_unnatural_haste` 基础概率） |
+| conditionalCompletion（条件过关） | Lae'zel | 触发频率依赖 DPS/刷新 | 18%（保守估计） |
+| conditionalCompletion（条件过关） | Halsin | 大招触发 | 11%（保守估计） |
+| initialRush（初期冲层） | Thellora | 跳层数依赖 favor | 15%（保守估计，对 50 层刷图等效） |
 
-MVP 阶段在 `warnings` 中输出「未建模」提示，不计入 speedMultiplier。
+areaSkip 因子 = 1 + Σ(value/100)，与其他类别乘法叠加。默认值可通过 `dynamicSpeedOverrides` 入参覆盖，UI 可调。取值口径详见架构文档 §取值口径。
 
 ## 阶段 Checklist
 
@@ -60,8 +61,8 @@ MVP 阶段在 `warnings` 中输出「未建模」提示，不计入 speedMultipl
 - [x] **阶段 B**: build 期速度效果提取脚本 —— ✅ 18 英雄有 base speedProfile + 4 英雄有 spec 速度效果
 - [x] **阶段 C**: 三层缩放基建（装备 buff_upgrade + 专精注入） —— ✅ 装备缩放复用 `EquipmentBuff[]` 单一出口，专精复用 `applySpecializationsToProfile` 单一出口
 - [x] **阶段 D**: ScoringMode 扩展 + scoreTeamSpeed 分支 + computationMode 适配 —— ✅ scoreFormation('team-speed') 产出 speedMultiplier
-- [x] **阶段 E**: UI 接线 + 结果展示 + 集成测试 —— ✅ speedBreakdown（类别因子+按英雄贡献）+ 动态英雄 warning + PlannerSpeedBreakdown 组件 + team-speed 叙事 + 集成测试
-- [ ] **阶段 F**: 三层缩放机制深度调研（从数据逐效果验证缩放方式，不预设数学运算）+ 阵型效果实现
+- [x] **阶段 E**: UI 接线 + 结果展示 + 集成测试 —— ✅ speedBreakdown（类别因子+按英雄贡献）+ 动态英雄默认值 + PlannerSpeedBreakdown 组件 + team-speed 叙事 + 集成测试
+- [x] **阶段 F**: 阵型效果实现 + 动态英雄默认值 —— ✅ Hew Maan other_human_bonuses 查表（applyFormationSpeedEffects）+ areaSkip 类别 + DYNAMIC_SPEED_DEFAULTS + 取值口径冻结
 
 ## 验收
 
