@@ -187,7 +187,7 @@ export function buildOfficialHeroModel(
     baseHealth,
     healthCurves,
     eligiblePatronIds,
-    speedProfile: extractSpeedProfile(champion.id as string, detail),
+    ...(() => { const sp = extractSpeedProfile(champion.id as string, detail); return sp ? { speedProfile: sp } : {} })(),
     carrySignals,
     supportSignals,
     unsupportedSignals,

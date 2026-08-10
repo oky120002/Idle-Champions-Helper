@@ -114,7 +114,7 @@ export function computeFormationSpeedMultiplier(profiles: readonly HeroSpeedProf
  */
 export function computeHeroSpeedGain(effects: readonly SpeedEffectEntry[]): number {
   if (effects.length === 0) return 1
-  return computeFormationSpeedMultiplier([{ heroId: '_', effects, speedGain: 1 }])
+  return computeFormationSpeedMultiplier([{ heroId: '_', effects: [...effects], speedGain: 1 }])
 }
 
 /**

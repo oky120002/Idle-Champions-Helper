@@ -5,7 +5,7 @@
  * 速度效果多为 hero-specific handler（不在 hero-abilities 信号管线），需要独立提取。
  * 详见 docs/research/gameplay/speed-mechanics.md。
  */
-import type { HeroSpeedProfile, SpeedCategory, SpeedEffectEntry } from '../../src/domain/planner/speedScoring'
+import type { HeroSpeedProfile, SpeedEffectEntry } from '../../src/domain/planner/speedScoring'
 import { computeHeroSpeedGain } from '../../src/domain/planner/speedScoring'
 import { collectEffectEntries } from './effect-helpers'
 import { asRecord, asArray } from './io-utils'

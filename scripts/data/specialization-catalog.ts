@@ -190,7 +190,7 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     if (!keep.has(upgradeId)) continue
     const signals = signalsByUpgradeId.get(upgradeId) ?? []
     const speedEffects = speedEffectsByUpgradeId.get(upgradeId)
-    entries.push({ upgradeId, requiredLevel, requiredUpgradeId, signals, specializationName: name, speedEffects })
+    entries.push({ upgradeId, requiredLevel, requiredUpgradeId, signals, specializationName: name, ...(speedEffects ? { speedEffects } : {}) })
   }
   return entries
 }

@@ -183,21 +183,21 @@ describe('applyEquipmentBuffsToSpeedEffects', () => {
     const buffs = [{ targetUpgradeId: '12345', value: 50 }]
     // 100 × (1 + 50/100) = 150
     const result = applyEquipmentBuffsToSpeedEffects([effect], buffs)
-    expect(result[0].value).toBe(150)
+    expect(result[0]?.value).toBe(150)
   })
 
   it('does not scale when upgradeId is missing', () => {
     const effect = entry('spawnSpeed', 100) // no upgradeId
     const buffs = [{ targetUpgradeId: '12345', value: 50 }]
     const result = applyEquipmentBuffsToSpeedEffects([effect], buffs)
-    expect(result[0].value).toBe(100)
+    expect(result[0]?.value).toBe(100)
   })
 
   it('does not scale binary effects (simultaneousSpawn/preSpawn)', () => {
     const effect = { ...entry('simultaneousSpawn', 1), upgradeId: '12345' }
     const buffs = [{ targetUpgradeId: '12345', value: 500 }]
     const result = applyEquipmentBuffsToSpeedEffects([effect], buffs)
-    expect(result[0].value).toBe(1)
+    expect(result[0]?.value).toBe(1)
   })
 
   it('accumulates multiple buffs on same upgrade', () => {
@@ -208,6 +208,6 @@ describe('applyEquipmentBuffsToSpeedEffects', () => {
     ]
     // 100 × (1 + 50/100) = 150
     const result = applyEquipmentBuffsToSpeedEffects([effect], buffs)
-    expect(result[0].value).toBe(150)
+    expect(result[0]?.value).toBe(150)
   })
 })
