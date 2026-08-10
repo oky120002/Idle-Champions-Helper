@@ -81,10 +81,22 @@ repair: rebuild
   - 类型: issue
   - 位置: `src/domain/simulator/baseDps.ts:33`
   - 备注: globalBuffMultiplier=NaN 等上游损坏时加成被静默替换为 1，carryDps 有合法值但无 warning 诊断（集成契约审计发现，锁现状）
+
 - 领域层硬编码中文 UI 文本未国际化（signalMultiplier 警告 + recommendationEngine 违规信息） <!-- auto-todo:id=atd_665afea3d4 -->
   - 记录时间: `2026-08-10T09:54:41+08:00`
   - 类型: issue
   - 位置: `src/domain/planner/mechanics/signalMultiplier.ts:44`
   - 备注: signalMultiplier.ts 警告（乘算堆叠溢出/依赖基础增益未生效）和 recommendationEngine.ts 违规信息（seat 冲突/缺少强制英雄）直接返回中文字符串，经 PlannerResultCard 显示在 UI。需改为返回结构化数据（code + params），由 UI 层翻译。
+
+- planner 测试弱断言待加固（5 处） <!-- auto-todo:id=atd_test_weak_assertions -->
+  - 记录时间: `2026-08-10T11:25:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/planner/`
+  - 备注: 深度审计 2026-08-10 发现 5 处弱断言无法有效捕获回归
+    - beamSearchRanking.test.ts:60-81 结构透传仅 toHaveProperty 不验证值类型/结构
+    - beamSearchRanking.test.ts:30-47 顶部结果不验证具体英雄（应断言 jarlaxle x3 在最优阵型）
+    - steadyStateScoring.invariants.test.ts:325-335 Infinity baseDamage 仅 toBeDefined 不验证 objectiveValue
+    - steadyStateScoring.test.ts:630-639 goldBudget 仅验证不崩溃（已承认透传暂不消费，低优先）
+    - recommendationEngine.test.ts 多处 damageSourcePattern 用 .not.toBe("0") 二元检查无法发现部分评分 bug
 
 <!-- auto-todo:end -->
