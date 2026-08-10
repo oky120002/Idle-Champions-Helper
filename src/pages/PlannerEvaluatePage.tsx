@@ -615,7 +615,9 @@ export function PlannerEvaluatePage() {
 
   const scoreLabel = scoringMode === 'team-gold'
     ? t({ zh: '金币收益', en: 'Team gold find' })
-    : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
+    : scoringMode === 'team-speed'
+      ? t({ zh: '速度因子', en: 'Speed factor' })
+      : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
   const heroNameById = useMemo(
     () => new Map((evaluation.result?.placementEntries ?? []).map((entry) => [entry.heroId, entry.heroName])),
     [evaluation.result],

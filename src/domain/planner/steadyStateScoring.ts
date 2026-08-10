@@ -14,7 +14,7 @@ import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
 import { computeTeamGoldFind } from './goldObjective'
-import { computeFormationSpeedMultiplier } from './speedScoring'
+import { computeFormationSpeedMultiplier, computeSpeedBreakdown, DYNAMIC_SPEED_HERO_IDS, type SpeedBreakdown } from './speedScoring'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
@@ -166,6 +166,8 @@ export interface ScoringResult {
   areaEstimate?: AreaEstimationResult | null
   /** best carry 的结构化加成拆解；team-gold 模式或空阵型时为 null。 */
   breakdown: SimulationBreakdown | null
+  /** team-speed 模式的速度拆解；其他模式为 null。 */
+  speedBreakdown?: SpeedBreakdown | null
 }
 
 const ZERO: GameNumberValue = toGameNumber(0)
@@ -253,24 +255,29 @@ function scoreTeamSpeed(placedEntries: PlacedEntry[]): ScoringResult {
     .map((entry) => entry.hero.speedProfile)
     .filter((profile): profile is NonNullable<typeof profile> => profile != null)
 
+  // 动态速度英雄（Briv/Lae'zel/Thellora/Halsin）效果依赖运行时/用户输入，未建模 → warning
+  const warnings = placedEntries
+    .filter((entry) => DYNAMIC_SPEED_HERO_IDS.has(entry.hero.heroId))
+    .map((entry) => `${entry.hero.name.display}：动态速度效果未建模（需手动评估）`)
+
   if (profiles.length === 0) {
     return {
       objectiveValue: toGameNumber(1),
-      warnings: [],
+      warnings,
       carryHeroId: null,
       activeSignalKinds: new Set(),
       breakdown: null,
+      speedBreakdown: null,
     }
   }
 
-  const speedMultiplier = computeFormationSpeedMultiplier(profiles)
-
   return {
-    objectiveValue: toGameNumber(speedMultiplier),
-    warnings: [],
+    objectiveValue: toGameNumber(computeFormationSpeedMultiplier(profiles)),
+    warnings,
     carryHeroId: null,
     activeSignalKinds: new Set(),
     breakdown: null,
+    speedBreakdown: computeSpeedBreakdown(profiles),
   }
 }
 

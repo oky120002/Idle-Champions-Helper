@@ -74,4 +74,21 @@ describe('buildPlannerExplanations', () => {
     expect(lines).toHaveLength(2)
     expect(lines.some((line) => line.zh.includes('核心输出位'))).toBe(false)
   })
+
+  it('team-speed 模式短路：返回 2 行含速度因子，不含 carry 名', () => {
+    const heroById = new Map([['h1', makeHero('h1', 'Deekin', 1)]])
+    const lines = buildPlannerExplanations(
+      scenario,
+      [makePlacement('h1')],
+      heroById,
+      null,
+      new Decimal('3.75'),
+      new Set<HeroAbilityKind>(),
+      'team-speed',
+    )
+
+    expect(lines).toHaveLength(2)
+    expect(unwrap(lines[1], 'expected line at index 1').zh).toContain('3.75')
+    expect(lines.some((line) => line.zh.includes('Deekin'))).toBe(false)
+  })
 })

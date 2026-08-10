@@ -60,7 +60,7 @@ MVP 阶段在 `warnings` 中输出「未建模」提示，不计入 speedMultipl
 - [x] **阶段 B**: build 期速度效果提取脚本 —— ✅ 18 英雄有 base speedProfile + 4 英雄有 spec 速度效果
 - [x] **阶段 C**: 三层缩放基建（装备 buff_upgrade + 专精注入） —— ✅ 装备缩放复用 `EquipmentBuff[]` 单一出口，专精复用 `applySpecializationsToProfile` 单一出口
 - [x] **阶段 D**: ScoringMode 扩展 + scoreTeamSpeed 分支 + computationMode 适配 —— ✅ scoreFormation('team-speed') 产出 speedMultiplier
-- [ ] **阶段 E**: UI 接线（模式选择 + 装备/阵型/专长调节控件 + 结果展示） + 集成测试
+- [x] **阶段 E**: UI 接线 + 结果展示 + 集成测试 —— ✅ speedBreakdown（类别因子+按英雄贡献）+ 动态英雄 warning + PlannerSpeedBreakdown 组件 + team-speed 叙事 + 集成测试
 - [ ] **阶段 F**: 三层缩放机制深度调研（从数据逐效果验证缩放方式，不预设数学运算）+ 阵型效果实现
 
 ## 验收

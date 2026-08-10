@@ -5,6 +5,7 @@ import type { AreaBound } from '../../domain/simulator/areaEstimation'
 import { useI18n, type LocaleText } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 import { PlannerBreakdown } from './PlannerBreakdown'
+import { PlannerSpeedBreakdown } from './PlannerSpeedBreakdown'
 
 const CONSTRAINT_LABELS: Record<ConstraintKind, LocaleText> = {
   armor: { zh: '护甲', en: 'Armor' },
@@ -38,6 +39,7 @@ export function PlannerResultCard({
   areaEstimate,
   viability,
   breakdown,
+  speedBreakdown,
   scoringMode = 'carry-dps',
   slots,
   championById,
@@ -154,6 +156,8 @@ export function PlannerResultCard({
             )}
 
             <PlannerBreakdown breakdown={breakdown} heroNameById={heroNameById} />
+
+            <PlannerSpeedBreakdown breakdown={speedBreakdown} heroNameById={heroNameById} />
 
             {areaEstimate ? (
               <section data-section="area-estimate" className="planner-result-card__area-estimate">

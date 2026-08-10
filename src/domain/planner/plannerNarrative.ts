@@ -53,6 +53,14 @@ export function buildPlannerExplanations(
     return explanations
   }
 
+  if (scoringMode === 'team-speed') {
+    explanations.push({
+      zh: `当前结果按区域推进效率（速度因子 ×${formatGameNumber(objectiveValue)}）排序，聚合阵型中所有速度英雄的效果。`,
+      en: `This result ranks by area progression efficiency (speed factor ×${formatGameNumber(objectiveValue)}), aggregating speed effects from all speed champions in the formation.`,
+    })
+    return explanations
+  }
+
   if (leadChampion) {
     const supportSummaryZh = supportChampions.length > 0 ? supportChampions.join('、') : '其余已拥有英雄'
     const supportSummaryEn = supportChampions.length > 0 ? supportChampions.join(', ') : 'the remaining owned champions'

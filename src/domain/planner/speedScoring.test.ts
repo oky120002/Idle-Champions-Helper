@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest'
 import {
   computeFormationSpeedMultiplier,
   computeHeroSpeedGain,
+  computeSpeedBreakdown,
   applyEquipmentBuffsToSpeedEffects,
+  DYNAMIC_SPEED_HERO_IDS,
   type HeroSpeedProfile,
   type SpeedEffectEntry,
 } from './speedScoring'
@@ -209,5 +211,63 @@ describe('applyEquipmentBuffsToSpeedEffects', () => {
     // 100 × (1 + 50/100) = 150
     const result = applyEquipmentBuffsToSpeedEffects([effect], buffs)
     expect(result[0]?.value).toBe(150)
+  })
+})
+
+describe('computeSpeedBreakdown', () => {
+  it('returns total=1 and empty arrays for empty formation', () => {
+    const bd = computeSpeedBreakdown([])
+    expect(bd.total).toBe(1)
+    expect(bd.categoryFactors).toEqual([])
+    expect(bd.heroContributions).toEqual([])
+  })
+
+  it('total matches computeFormationSpeedMultiplier', () => {
+    const deekin = profile('deekin', [entry('spawnSpeed', 100)])
+    const shandie = profile('shandie', [entry('timeScale', 25)])
+    const bd = computeSpeedBreakdown([deekin, shandie])
+    expect(bd.total).toBeCloseTo(computeFormationSpeedMultiplier([deekin, shandie]), 10)
+  })
+
+  it('lists only non-trivial category factors', () => {
+    const deekin = profile('deekin', [entry('spawnSpeed', 100)])
+    const shandie = profile('shandie', [entry('timeScale', 25)])
+    const bd = computeSpeedBreakdown([deekin, shandie])
+    // spawnSpeed=2.0, timeScale=1.25 → both present; other categories absent
+    const cats = bd.categoryFactors.map((f) => f.category)
+    expect(cats).toContain('spawnSpeed')
+    expect(cats).toContain('timeScale')
+    expect(cats).not.toContain('questProgress')
+    expect(cats).not.toContain('extraEnemies')
+    expect(cats).not.toContain('preSpawn')
+  })
+
+  it('lists heroes with speed effects only', () => {
+    const deekin = profile('deekin', [entry('spawnSpeed', 100)])
+    const boring = profile('boring', [])
+    const bd = computeSpeedBreakdown([deekin, boring])
+    expect(bd.heroContributions).toHaveLength(1)
+    expect(bd.heroContributions[0]?.heroId).toBe('deekin')
+    expect(bd.heroContributions[0]?.effects).toHaveLength(1)
+  })
+
+  it('simultaneousSpawn shows as 1.5 factor', () => {
+    const vi = profile('vi', [entry('simultaneousSpawn', 1)])
+    const bd = computeSpeedBreakdown([vi])
+    const sim = bd.categoryFactors.find((f) => f.category === 'simultaneousSpawn')
+    expect(sim?.factor).toBe(1.5)
+  })
+})
+
+describe('DYNAMIC_SPEED_HERO_IDS', () => {
+  it('contains Briv, Lae\'zel, Thellora, Halsin', () => {
+    expect(DYNAMIC_SPEED_HERO_IDS.has('58')).toBe(true)  // Briv
+    expect(DYNAMIC_SPEED_HERO_IDS.has('128')).toBe(true) // Lae'zel
+    expect(DYNAMIC_SPEED_HERO_IDS.has('139')).toBe(true) // Thellora
+    expect(DYNAMIC_SPEED_HERO_IDS.has('156')).toBe(true) // Halsin
+  })
+
+  it('has exactly 4 entries', () => {
+    expect(DYNAMIC_SPEED_HERO_IDS.size).toBe(4)
   })
 })

@@ -1,17 +1,7 @@
 import type { SimulationBreakdown } from '../../domain/planner/steadyStateScoring'
 import type { HeroAbilityKind } from '../../domain/abilities/abilityModel'
 import { useI18n, type LocaleText } from '../../app/i18n'
-
-/** 紧凑格式化因子数值：极大/极小用科学计数，常规保留两位。 */
-function formatFactor(value: number): string {
-  if (!Number.isFinite(value)) {
-    return value > 0 ? '∞' : '0'
-  }
-  if (value >= 1e4 || (value > 0 && value < 0.01)) {
-    return value.toExponential(2)
-  }
-  return value.toFixed(2)
-}
+import { formatFactor } from './factorFormat'
 
 /** 每位英雄最多展示的加成条目数；超出折叠为「+N」，避免几十条 signal 刷屏。 */
 const SIGNAL_SHOW_LIMIT = 3

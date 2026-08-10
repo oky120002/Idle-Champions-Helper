@@ -47,6 +47,39 @@ export interface HeroSpeedProfile {
   speedGain: number
 }
 
+/** 单类别因子（breakdown 展示用）。 */
+export interface SpeedCategoryFactor {
+  category: SpeedCategory
+  factor: number
+}
+
+/** 单英雄速度贡献（breakdown 展示用）。 */
+export interface SpeedHeroContribution {
+  heroId: string
+  effects: readonly SpeedEffectEntry[]
+}
+
+/** 阵型速度结构化拆解（JSON 可序列化，供 UI 渲染速度贡献明细）。 */
+export interface SpeedBreakdown {
+  /** 综合速度因子（所有类别因子之积）。 */
+  total: number
+  /** 非平凡类别因子（factor !== 1）。 */
+  categoryFactors: readonly SpeedCategoryFactor[]
+  /** 有速度效果的英雄列表。 */
+  heroContributions: readonly SpeedHeroContribution[]
+}
+
+/**
+ * 动态速度英雄 ID——已知速度英雄但效果无法静态提取（依赖跨重置状态/运行时条件/用户输入）。
+ * 放入 team-speed 阵型时产出 warning（效果未建模，不计入 speedMultiplier）。
+ */
+export const DYNAMIC_SPEED_HERO_IDS: ReadonlySet<string> = new Set([
+  '58', // Briv — 区域跳层：跨重置冲刺堆叠
+  '128', // Lae'zel — 条件过关：触发频率依赖 DPS/刷新
+  '139', // Thellora — 初期冲层：跳层数依赖 Favor
+  '156', // Halsin — 条件过关：大招触发
+])
+
 /** simultaneousSpawn / preSpawn 的固定加成（无精确数值，社区定性估计）。 */
 const SIMULTANEOUS_BONUS = 1.5
 const PRESPAWN_BONUS = 1.2
@@ -88,6 +121,33 @@ function hasCategory(effects: readonly SpeedEffectEntry[], category: SpeedCatego
   return effects.some((e) => e.category === category)
 }
 
+/** 类别计算顺序（与乘积顺序一致，breakdown 展示用）。 */
+const CATEGORY_ORDER: readonly SpeedCategory[] = [
+  'questProgress', 'spawnSpeed', 'extraEnemies', 'timeScale', 'transitionSpeedup', 'simultaneousSpawn', 'preSpawn',
+]
+
+/** 从扁平效果列表计算各类别因子。computeFormationSpeedMultiplier 和 computeSpeedBreakdown 共用。 */
+function computeCategoryFactors(allEffects: readonly SpeedEffectEntry[]): Map<SpeedCategory, number> {
+  const factors = new Map<SpeedCategory, number>()
+  factors.set('questProgress', computeQuestProgress(allEffects.filter((e) => e.category === 'questProgress')))
+  factors.set('spawnSpeed', additiveMult(allEffects.filter((e) => e.category === 'spawnSpeed')))
+  factors.set('extraEnemies', additiveMult(allEffects.filter((e) => e.category === 'extraEnemies')))
+  factors.set('timeScale', additiveMult(allEffects.filter((e) => e.category === 'timeScale'), TIME_SCALE_CAP))
+  factors.set('transitionSpeedup', additiveMult(allEffects.filter((e) => e.category === 'transitionSpeedup'), TRANSITION_CAP))
+  factors.set('simultaneousSpawn', hasCategory(allEffects, 'simultaneousSpawn') ? SIMULTANEOUS_BONUS : 1)
+  factors.set('preSpawn', hasCategory(allEffects, 'preSpawn') ? PRESPAWN_BONUS : 1)
+  return factors
+}
+
+/** 类别因子之积 = 综合速度因子。 */
+function productOfCategoryFactors(factors: ReadonlyMap<SpeedCategory, number>): number {
+  let product = 1
+  for (const factor of factors.values()) {
+    product *= factor
+  }
+  return product
+}
+
 /**
  * 计算阵型级综合速度因子。
  *
@@ -95,17 +155,24 @@ function hasCategory(effects: readonly SpeedEffectEntry[], category: SpeedCatego
  * @returns 速度因子（≥1，越大越快）
  */
 export function computeFormationSpeedMultiplier(profiles: readonly HeroSpeedProfile[]): number {
-  const allEffects = profiles.flatMap((p) => p.effects)
+  return productOfCategoryFactors(computeCategoryFactors(profiles.flatMap((p) => p.effects)))
+}
 
-  const questProgress = computeQuestProgress(allEffects.filter((e) => e.category === 'questProgress'))
-  const spawnSpeed = additiveMult(allEffects.filter((e) => e.category === 'spawnSpeed'))
-  const extraEnemies = additiveMult(allEffects.filter((e) => e.category === 'extraEnemies'))
-  const timeScale = additiveMult(allEffects.filter((e) => e.category === 'timeScale'), TIME_SCALE_CAP)
-  const transitionSpeedup = additiveMult(allEffects.filter((e) => e.category === 'transitionSpeedup'), TRANSITION_CAP)
-  const simultaneous = hasCategory(allEffects, 'simultaneousSpawn') ? SIMULTANEOUS_BONUS : 1
-  const preSpawn = hasCategory(allEffects, 'preSpawn') ? PRESPAWN_BONUS : 1
+/**
+ * 计算阵型速度结构化拆解（UI 展示用）：各类别因子 + 按英雄贡献。
+ */
+export function computeSpeedBreakdown(profiles: readonly HeroSpeedProfile[]): SpeedBreakdown {
+  const factorsMap = computeCategoryFactors(profiles.flatMap((p) => p.effects))
 
-  return questProgress * spawnSpeed * extraEnemies * timeScale * transitionSpeedup * simultaneous * preSpawn
+  const categoryFactors = CATEGORY_ORDER
+    .map((category) => ({ category, factor: factorsMap.get(category) ?? 1 }))
+    .filter((entry) => entry.factor !== 1)
+
+  const heroContributions = profiles
+    .filter((p) => p.effects.length > 0)
+    .map((p) => ({ heroId: p.heroId, effects: p.effects }))
+
+  return { total: productOfCategoryFactors(factorsMap), categoryFactors, heroContributions }
 }
 
 /**

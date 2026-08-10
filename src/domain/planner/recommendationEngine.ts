@@ -502,6 +502,7 @@ function buildEvaluationFormationResult(
     areaEstimate: scoring.areaEstimate ?? null,
     viability: buildViabilityAssessment(scenario, scoring.areaEstimate ?? null),
     breakdown: scoring.breakdown,
+    speedBreakdown: scoring.speedBreakdown ?? null,
     placements,
     placementEntries,
   }
@@ -882,6 +883,7 @@ function buildRecommendationResults(
       areaEstimate: top.areaEstimate ?? null,
       viability: buildViabilityAssessment(scenario, top.areaEstimate ?? null),
       breakdown: top.breakdown,
+      speedBreakdown: top.speedBreakdown ?? null,
       placementEntries,
     }
   })
