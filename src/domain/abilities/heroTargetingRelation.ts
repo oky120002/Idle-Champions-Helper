@@ -128,6 +128,10 @@ function normalizeTargetRelation(target: unknown): HeroPositionRelation | null {
   if (target === 'all' || target === 'all_slots' || isFilterLikeTarget(target)) {
     return 'any'
   }
+  // "other" = 除自身外的所有阵型成员；映射 any 后消费侧 supportSignals 只对 carry 生效，自然排除自身
+  if (target === 'other') {
+    return 'any'
+  }
   if (typeof target === 'string') {
     return STRING_RELATION_MAP[target] ?? null
   }

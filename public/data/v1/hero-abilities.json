@@ -1153,7 +1153,8 @@
           "damage": 114
         },
         "support": {
-          "damage": 31.5
+          "damage": 31.5,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -1215,10 +1216,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -1983,6 +1984,25 @@
           "upgradeId": "18771"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 400,
+          "upgradeId": "18471"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -2330,12 +2350,6 @@
           "rawEffect": "add_max_combat_trance_stacks",
           "rawValue": "1",
           "note": "No parser for effect: add_max_combat_trance_stacks",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -8349,7 +8363,8 @@
           "damage": 104
         },
         "support": {
-          "damage": 21.849999999999998
+          "damage": 21.849999999999998,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -8415,10 +8430,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -9242,6 +9257,25 @@
           "upgradeId": "13176"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 400,
+          "upgradeId": "12979"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -9523,12 +9557,6 @@
           "rawEffect": "health_add",
           "rawValue": "100",
           "note": "No parser for effect: health_add",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -19846,7 +19874,8 @@
           "damage": 133.2
         },
         "support": {
-          "damage": 20
+          "damage": 20,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -19908,10 +19937,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -20741,6 +20770,25 @@
           "upgradeId": "16983"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 300,
+          "upgradeId": "16738"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -20952,12 +21000,6 @@
           "rawEffect": "grimm_moving_right_along",
           "rawValue": "1",
           "note": "No parser for effect: grimm_moving_right_along",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -23305,7 +23347,9 @@
           "source": "official-parsed",
           "targetQualifier": null,
           "formationCountQualifier": null,
-          "positionQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
           "formationCountPositionQualifier": null,
           "amountFunc": "unknown",
           "stackFunc": "upgrade_stacks",
@@ -38909,7 +38953,8 @@
           "damage": 107
         },
         "support": {
-          "damage": 20
+          "damage": 21,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -38967,11 +39012,11 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -39673,6 +39718,34 @@
       ],
       "supportSignals": [
         {
+          "kind": "heroDpsMultiplier",
+          "value": 100,
+          "rawEffect": "hero_dps_multiplier_mult,100",
+          "source": "official-parsed",
+          "targetQualifier": {
+            "predicate": {
+              "op": "not",
+              "child": {
+                "op": "heroId",
+                "heroId": "146",
+                "negate": false
+              }
+            }
+          },
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 20,
+          "upgradeId": "14874"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -39705,6 +39778,25 @@
           "excludeSelf": false,
           "requiredLevel": 190,
           "upgradeId": "14965"
+        },
+        {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 200,
+          "upgradeId": "14875"
         },
         {
           "kind": "globalDpsMultiplier",
@@ -39896,12 +39988,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "hero_dps_multiplier_mult",
-          "rawValue": "100",
-          "note": "unsupported targets: [\"other\"]",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "buff_incoming_effect_by_expr",
           "rawValue": "1",
           "note": "No parser for effect: buff_incoming_effect_by_expr",
@@ -39923,12 +40009,6 @@
           "rawEffect": "reduce_overwhelm_effect",
           "rawValue": "25",
           "note": "No parser for effect: reduce_overwhelm_effect",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -41118,7 +41198,8 @@
           "survival": 3
         },
         "support": {
-          "damage": 22
+          "damage": 22,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -41183,10 +41264,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -42040,6 +42121,25 @@
           "upgradeId": "15368"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 230,
+          "upgradeId": "15214"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -42306,12 +42406,6 @@
           "rawEffect": "expression_on_trigger",
           "rawValue": "owner_kill",
           "note": "Effect value is not numeric: owner_kill",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -43630,7 +43724,8 @@
           "damage": 99
         },
         "support": {
-          "damage": 44
+          "damage": 44,
+          "survival": 1
         }
       },
       "sourceBreakdown": {
@@ -43686,10 +43781,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -44432,6 +44527,25 @@
           "upgradeId": "15972"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 0,
+          "rawEffect": "increase_health_by_source_percent,0",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 200,
+          "upgradeId": "15943"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -44673,12 +44787,6 @@
           "rawEffect": "do_nothing",
           "rawValue": "20",
           "note": "No parser for effect: do_nothing",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "0",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -45802,7 +45910,8 @@
           "damage": 404
         },
         "support": {
-          "damage": 17
+          "damage": 17,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -45864,10 +45973,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -46734,6 +46843,25 @@
           "upgradeId": "258"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 280,
+          "upgradeId": "782"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -46905,12 +47033,6 @@
           "rawEffect": "health_add",
           "rawValue": "150",
           "note": "No parser for effect: health_add",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -50472,7 +50594,8 @@
         },
         "support": {
           "damage": 17,
-          "gold": 1.2
+          "gold": 1.2,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -50540,10 +50663,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -51366,6 +51489,25 @@
           "upgradeId": "16129"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 190,
+          "upgradeId": "16130"
+        },
+        {
           "kind": "damageReduction",
           "value": 100,
           "rawEffect": "damage_reduction,100",
@@ -51641,12 +51783,6 @@
         }
       ],
       "unsupportedSignals": [
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
-          "source": "official-parsed"
-        },
         {
           "rawEffect": "temp_health_mult",
           "rawValue": "100",
@@ -57009,7 +57145,8 @@
           "damage": 407
         },
         "support": {
-          "damage": 97.5
+          "damage": 97.5,
+          "survival": 1
         }
       },
       "sourceBreakdown": {
@@ -57217,10 +57354,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -59886,6 +60023,25 @@
           "upgradeId": "14294"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 0,
+          "rawEffect": "increase_health_by_source_percent,0",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 40,
+          "upgradeId": "13722"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -60748,12 +60904,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "0",
-          "note": "unsupported targets: [\"other\"]",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "karlach_rage",
           "rawValue": "1",
           "note": "No parser for effect: karlach_rage",
@@ -60981,10 +61131,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -61787,6 +61937,25 @@
           "upgradeId": "12235"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 0.1,
+          "rawEffect": "increase_health_by_source_percent,0.1",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": "unknown",
+          "stackFunc": "get_stat",
+          "applyManually": false,
+          "stacksMultiply": false,
+          "excludeSelf": false,
+          "requiredLevel": 170,
+          "upgradeId": "11655"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -62053,12 +62222,6 @@
           "rawEffect": "health_add",
           "rawValue": "100",
           "note": "No parser for effect: health_add",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "0.1",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -63290,7 +63453,8 @@
           "damage": 101
         },
         "support": {
-          "damage": 22
+          "damage": 22,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -63346,10 +63510,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -64042,6 +64206,25 @@
           "upgradeId": "9112"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 290,
+          "upgradeId": "8865"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -64271,12 +64454,6 @@
           "rawEffect": "buff_amplification_amount",
           "rawValue": "100",
           "note": "No parser for effect: buff_amplification_amount",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -68181,7 +68358,8 @@
           "damage": 103
         },
         "support": {
-          "damage": 17
+          "damage": 17,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -68231,10 +68409,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -68801,6 +68979,25 @@
           "upgradeId": "3597"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 140,
+          "upgradeId": "3454"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -69057,12 +69254,6 @@
           "rawEffect": "briv_healing_phlo",
           "rawValue": "50",
           "note": "No parser for effect: briv_healing_phlo",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -81805,7 +81996,8 @@
         },
         "support": {
           "damage": 25,
-          "gold": 2
+          "gold": 2,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -81859,10 +82051,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -82534,6 +82726,25 @@
           "upgradeId": "11297"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 160,
+          "upgradeId": "11298"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -82761,12 +82972,6 @@
           "rawEffect": "health_add",
           "rawValue": "98",
           "note": "No parser for effect: health_add",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -92755,7 +92960,7 @@
         },
         "support": {
           "damage": 48,
-          "survival": 1.25
+          "survival": 1.5
         }
       },
       "sourceBreakdown": {
@@ -92820,10 +93025,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -93493,6 +93698,25 @@
           "upgradeId": "16076"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 140,
+          "upgradeId": "15956"
+        },
+        {
           "kind": "damageReduction",
           "value": 25,
           "rawEffect": "damage_reduction,25",
@@ -93892,12 +94116,6 @@
           "rawEffect": "set_ultimate_attack",
           "rawValue": "419",
           "note": "No parser for effect: set_ultimate_attack",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -95074,7 +95292,8 @@
           "damage": 84
         },
         "support": {
-          "damage": 23
+          "damage": 23,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -95134,10 +95353,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -95858,6 +96077,25 @@
           "upgradeId": "12786"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 160,
+          "upgradeId": "352"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -96139,12 +96377,6 @@
           "rawEffect": "set_ultimate_attack",
           "rawValue": "1",
           "note": "No parser for effect: set_ultimate_attack",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -103119,7 +103351,8 @@
           "damage": 79
         },
         "support": {
-          "damage": 21
+          "damage": 21,
+          "survival": 1
         }
       },
       "sourceBreakdown": {
@@ -103165,10 +103398,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -103706,6 +103939,25 @@
           "upgradeId": "19605"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 0,
+          "rawEffect": "increase_health_by_source_percent,0",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 140,
+          "upgradeId": "19352"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -103930,12 +104182,6 @@
           "rawEffect": "do_nothing",
           "rawValue": "10",
           "note": "No parser for effect: do_nothing",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "0",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -109349,7 +109595,7 @@
         },
         "support": {
           "damage": 36,
-          "survival": 1.25
+          "survival": 1.5
         }
       },
       "sourceBreakdown": {
@@ -109401,10 +109647,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -110010,6 +110256,25 @@
         {
           "kind": "heroHealthMultiplier",
           "value": 25,
+          "rawEffect": "increase_health_by_source_percent,0",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 120,
+          "upgradeId": "15051"
+        },
+        {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
           "rawEffect": "healing_mult,0",
           "source": "official-parsed",
           "targetQualifier": null,
@@ -110280,12 +110545,6 @@
           "rawEffect": "buff_me",
           "rawValue": "25",
           "note": "No parser for effect: buff_me",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "0",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -118103,6 +118362,7 @@
           "damage": 76
         },
         "support": {
+          "survival": 1.25,
           "damage": 20
         }
       },
@@ -118147,10 +118407,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -118646,6 +118906,25 @@
       ],
       "supportSignals": [
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 30,
+          "upgradeId": "7386"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -118838,12 +119117,6 @@
           "rawEffect": "tatyana_faithful_friends_underlay",
           "rawValue": "100",
           "note": "No parser for effect: tatyana_faithful_friends_underlay",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -120805,7 +121078,8 @@
           "damage": 160
         },
         "support": {
-          "damage": 66
+          "damage": 66,
+          "survival": 1.125
         }
       },
       "sourceBreakdown": {
@@ -120855,10 +121129,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -121440,6 +121714,25 @@
           "upgradeId": "19879"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 12.5,
+          "rawEffect": "increase_health_by_source_percent,12.5",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 120,
+          "upgradeId": "19710"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -121681,12 +121974,6 @@
           "rawEffect": "wolfnut",
           "rawValue": "50",
           "note": "No parser for effect: wolfnut",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "12.5",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -123955,7 +124242,8 @@
           "damage": 134
         },
         "support": {
-          "damage": 21
+          "damage": 21,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -124017,10 +124305,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -124840,6 +125128,25 @@
           "upgradeId": "9870"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 100,
+          "upgradeId": "9616"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -125028,12 +125335,6 @@
         }
       ],
       "unsupportedSignals": [
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
-          "source": "official-parsed"
-        },
         {
           "rawEffect": "set_ultimate_attack",
           "rawValue": "575",
@@ -125290,6 +125591,7 @@
           "damage": 146
         },
         "support": {
+          "survival": 1.25,
           "damage": 33
         }
       },
@@ -125345,10 +125647,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -125904,6 +126206,25 @@
       ],
       "supportSignals": [
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 25,
+          "upgradeId": "8860"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -126235,12 +126556,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "aila_storm_soul",
           "rawValue": "100",
           "note": "No parser for effect: aila_storm_soul",
@@ -126489,10 +126804,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -127065,6 +127380,25 @@
           "upgradeId": "18144"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": true,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 100,
+          "upgradeId": "17759"
+        },
+        {
           "kind": "globalHealthMultiplier",
           "value": 25,
           "rawEffect": "global_healing_mult,25",
@@ -127293,12 +127627,6 @@
           "rawEffect": "apply_effects_at_stacks",
           "rawValue": "1",
           "note": "No parser for effect: apply_effects_at_stacks",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -138382,7 +138710,7 @@
         },
         "support": {
           "damage": 42,
-          "survival": 1.01
+          "survival": 1.26
         }
       },
       "sourceBreakdown": {
@@ -138427,10 +138755,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -139146,6 +139474,25 @@
           "upgradeId": "17480"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 60,
+          "upgradeId": "17483"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -139327,12 +139674,6 @@
           "rawEffect": "lazaapz_power_armour_v2",
           "rawValue": "1",
           "note": "No parser for effect: lazaapz_power_armour_v2",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -141473,7 +141814,8 @@
           "damage": 63
         },
         "support": {
-          "damage": 120
+          "damage": 120,
+          "survival": 1.05
         }
       },
       "sourceBreakdown": {
@@ -141523,10 +141865,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -142059,6 +142401,25 @@
           "upgradeId": "10684"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 5,
+          "rawEffect": "increase_health_by_source_percent,5",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": "unknown",
+          "stackFunc": "per_hero",
+          "applyManually": false,
+          "stacksMultiply": false,
+          "excludeSelf": false,
+          "requiredLevel": 30,
+          "upgradeId": "10685"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -142319,12 +142680,6 @@
           "rawEffect": "barrowin_blessed_hammer",
           "rawValue": "1",
           "note": "No parser for effect: barrowin_blessed_hammer",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "5",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -143306,7 +143661,8 @@
           "damage": 76
         },
         "support": {
-          "damage": 25
+          "damage": 25,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -143350,10 +143706,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -143859,6 +144215,25 @@
           "upgradeId": "18240"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 90,
+          "upgradeId": "18039"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -144087,12 +144462,6 @@
           "rawEffect": "pre_stack",
           "rawValue": "100",
           "note": "No parser for effect: pre_stack",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -146137,7 +146506,8 @@
           "damage": 208.00033333333332
         },
         "support": {
-          "damage": 19.5
+          "damage": 19.5,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -146199,10 +146569,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -146955,6 +147325,25 @@
           "upgradeId": "144"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 70,
+          "upgradeId": "343"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -147206,12 +147595,6 @@
           "rawEffect": "set_ultimate_attack",
           "rawValue": "27",
           "note": "No parser for effect: set_ultimate_attack",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -156183,6 +156566,7 @@
           "damage": 114
         },
         "support": {
+          "survival": 1.25,
           "damage": 25
         }
       },
@@ -156230,10 +156614,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -156765,6 +157149,25 @@
       ],
       "supportSignals": [
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 10,
+          "upgradeId": "3276"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -156971,12 +157374,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "shen_state",
           "rawValue": "100",
           "note": "No parser for effect: shen_state",
@@ -157124,7 +157521,8 @@
           "damage": 57
         },
         "support": {
-          "damage": 12.011999999999999
+          "damage": 12.011999999999999,
+          "survival": 1.25
         }
       },
       "sourceBreakdown": {
@@ -157172,10 +157570,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -157747,6 +158145,25 @@
           "upgradeId": "8748"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 60,
+          "upgradeId": "8751"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 100,
           "rawEffect": "global_dps_multiplier_mult,100",
@@ -157965,12 +158382,6 @@
           "rawEffect": "nova_crew",
           "rawValue": "1",
           "note": "No parser for effect: nova_crew",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -164127,7 +164538,9 @@
         "self": {
           "damage": 424
         },
-        "support": {}
+        "support": {
+          "survival": 1.25
+        }
       },
       "sourceBreakdown": {
         "carrySignals": [
@@ -164168,9 +164581,10 @@
           "official-parsed",
           "official-parsed"
         ],
-        "supportSignals": [],
+        "supportSignals": [
+          "official-parsed"
+        ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -164817,7 +165231,27 @@
           "upgradeId": "368"
         }
       ],
-      "supportSignals": [],
+      "supportSignals": [
+        {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 55,
+          "upgradeId": "241"
+        }
+      ],
       "unsupportedSignals": [
         {
           "rawEffect": "health_add",
@@ -164841,12 +165275,6 @@
           "rawEffect": "change_base_attack_per_num_attacking",
           "rawValue": "145",
           "note": "No parser for effect: change_base_attack_per_num_attacking",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -169598,10 +170026,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -170099,6 +170527,25 @@
           "upgradeId": "10826"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 1,
+          "rawEffect": "increase_health_by_source_percent,1",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": "unknown",
+          "stackFunc": "per_other_stack_count",
+          "applyManually": false,
+          "stacksMultiply": false,
+          "excludeSelf": false,
+          "requiredLevel": 130,
+          "upgradeId": "10669"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -170338,12 +170785,6 @@
           "rawEffect": "miria_clone",
           "rawValue": "1",
           "note": "No parser for effect: miria_clone",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "1",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -172148,8 +172589,8 @@
         },
         "support": {
           "damage": 40,
-          "speed": 1.01,
-          "survival": 1.25
+          "survival": 1.625,
+          "speed": 1.01
         }
       },
       "sourceBreakdown": {
@@ -172200,10 +172641,11 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -172695,6 +173137,25 @@
           "upgradeId": "13743"
         },
         {
+          "kind": "heroHealthMultiplier",
+          "value": 25,
+          "rawEffect": "increase_health_by_source_percent,25",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 40,
+          "upgradeId": "13747"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -172914,6 +173375,48 @@
           "excludeSelf": false,
           "requiredLevel": 1330,
           "upgradeId": "14075"
+        },
+        {
+          "kind": "heroHealthMultiplier",
+          "value": 20,
+          "rawEffect": "buff_upgrade_per_any_tagged_crusader,20,13747,rivalswaterdeep",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": {
+            "predicate": {
+              "op": "tag",
+              "tag": "rivalswaterdeep"
+            }
+          },
+          "positionQualifier": {
+            "relation": "any"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": "add",
+          "stackFunc": "per_tagged_crusader_mult",
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": true,
+          "requiredLevel": 40,
+          "bonusScaleOfSignal": {
+            "kind": "heroHealthMultiplier",
+            "value": 25,
+            "rawEffect": "increase_health_by_source_percent,25",
+            "source": "official-parsed",
+            "targetQualifier": null,
+            "formationCountQualifier": null,
+            "positionQualifier": {
+              "relation": "any"
+            },
+            "formationCountPositionQualifier": null,
+            "amountFunc": null,
+            "stackFunc": null,
+            "applyManually": false,
+            "stacksMultiply": null,
+            "excludeSelf": false,
+            "requiredLevel": 40
+          },
+          "upgradeId": "13747"
         },
         {
           "kind": "heroDpsMultiplier",
@@ -173200,12 +173703,6 @@
           "rawEffect": "change_base_attack",
           "rawValue": "720",
           "note": "No parser for effect: change_base_attack",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "increase_health_by_source_percent",
-          "rawValue": "25",
-          "note": "unsupported targets: [\"other\"]",
           "source": "official-parsed"
         },
         {
@@ -175961,5 +176458,5 @@
       ]
     }
   ],
-  "pipelineHash": "c7e7e47feeda13f0"
+  "pipelineHash": "86d4a37c3c9af45d"
 }
