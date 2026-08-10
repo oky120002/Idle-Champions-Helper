@@ -75,7 +75,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
                   aria-pressed={isActive}
                   onClick={() => setSelectedSkinId(skin.id)}
                 >
-                  <span className="visual-workbench__skin-kicker">{pickLocaleText(locale, { zh: `皮肤 #${String(skin.id)}`, en: `skin #${String(skin.id)}` })}</span>
+                  <span className="visual-workbench__skin-kicker">{pickLocaleText(locale, { zh: `皮肤 #${skin.id}`, en: `skin #${skin.id}` })}</span>
                   <strong className="visual-workbench__skin-name">{skinPrimaryName}</strong>
                   {skinSecondaryName != null && skinSecondaryName !== '' ? <span className="visual-workbench__skin-secondary">{skinSecondaryName}</span> : null}
                   <span className="visual-workbench__skin-meta">

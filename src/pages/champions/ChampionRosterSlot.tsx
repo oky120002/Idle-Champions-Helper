@@ -10,13 +10,28 @@ interface ChampionRosterSlotProps {
   readonly locale: AppLocale
 }
 
+function buildLabels(slot: ChampionEquipmentSlotViewModel, isZh: boolean) {
+  const isGolden = slot.gild === 2
+  const gildZh = isGolden ? '金装' : '闪耀'
+  const gildEn = isGolden ? 'Golden' : 'Shiny'
+  return {
+    slot: isZh ? `槽位 ${slot.slotId}` : `Slot ${slot.slotId}`,
+    rarity: isZh ? `稀有度 ${String(slot.rarity)}/4` : `Rarity ${String(slot.rarity)}/4`,
+    gearPrefix: isZh ? '装备等级' : 'Gear level',
+    gild: isZh ? gildZh : gildEn,
+    legendary: isZh ? '传奇等级' : 'Legendary level',
+  }
+}
+
 export function ChampionRosterSlot({ slot, equipmentIcon, locale }: ChampionRosterSlotProps) {
   const isZh = locale === 'zh-CN'
+  const labels = buildLabels(slot, isZh)
   const gildSuffix = String(slot.gild)
   const raritySuffix = String(slot.rarity)
   const levelPercent = slot.levelCap != null && slot.levelCap > 0 ? Math.min((slot.enchant / slot.levelCap) * 100, 100) : 0
   const legendaryPercent = slot.legendaryCap > 0 ? (slot.legendaryLevel / slot.legendaryCap) * 100 : 0
   const hasLevelCap = slot.levelCap != null && slot.levelCap !== 0
+  const levelCapSuffix = hasLevelCap ? `/${String(slot.levelCap)}` : ''
 
   return (
     <article
@@ -34,26 +49,18 @@ export function ChampionRosterSlot({ slot, equipmentIcon, locale }: ChampionRost
       </div>
       <div className="champion-roster-slot__header">
         <div>
-          <p className="champion-roster-slot__eyebrow">
-            {isZh ? `槽位 ${String(slot.slotId)}` : `Slot ${String(slot.slotId)}`}
-          </p>
+          <p className="champion-roster-slot__eyebrow">{labels.slot}</p>
           <h3 className="champion-roster-slot__title">{slot.name}</h3>
         </div>
         <span className={`champion-roster-slot__rarity champion-roster-slot__rarity--${raritySuffix}`}>
-          {isZh ? `稀有度 ${raritySuffix}/4` : `Rarity ${raritySuffix}/4`}
+          {labels.rarity}
         </span>
       </div>
       <div className="champion-roster-slot__stats">
-        <span>
-          {isZh
-            ? `装备等级 ${String(slot.enchant)}${hasLevelCap ? `/${String(slot.levelCap)}` : ''}`
-            : `Gear level ${String(slot.enchant)}${hasLevelCap ? `/${String(slot.levelCap)}` : ''}`}
-        </span>
+        <span>{`${labels.gearPrefix} ${String(slot.enchant)}${levelCapSuffix}`}</span>
         {slot.gild > 0 ? (
           <span className={`champion-roster-slot__gild champion-roster-slot__gild--${gildSuffix}`}>
-            {slot.gild === 2
-              ? (isZh ? '金装' : 'Golden')
-              : (isZh ? '闪耀' : 'Shiny')}
+            {labels.gild}
           </span>
         ) : null}
       </div>
@@ -65,7 +72,7 @@ export function ChampionRosterSlot({ slot, equipmentIcon, locale }: ChampionRost
       {slot.legendaryCap > 0 ? (
         <>
           <div className="champion-roster-slot__stats champion-roster-slot__stats--legendary">
-            <span>{isZh ? '传奇等级' : 'Legendary level'}</span>
+            <span>{labels.legendary}</span>
             <span>
               {slot.legendaryLevel}/{slot.legendaryCap}
             </span>

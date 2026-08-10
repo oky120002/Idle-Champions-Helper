@@ -40,6 +40,48 @@ interface FlyoutPosition {
   ready: boolean
 }
 
+function buildRosterContent(
+  ownedHero: OwnedHero | null,
+  status: 'loading' | 'ready' | 'error',
+  slots: ReturnType<typeof buildChampionEquipmentSlots>,
+  equipmentIconsById: Map<string, ChampionEquipmentIcon>,
+  isZh: boolean,
+): ReactNode {
+  if (ownedHero === null) {
+    return (
+      <div className="champion-roster-flyout__empty">
+        {isZh
+          ? '当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。'
+          : 'You do not own this champion yet, so only the navigation link is shown. Sync your account to see gear, legendary, and slot progress.'}
+      </div>
+    )
+  }
+  if (status === 'error') {
+    return (
+      <div className="champion-roster-flyout__empty">
+        {isZh
+          ? '读取这名英雄的装备定义失败，稍后重试即可。'
+          : 'Failed to load gear definitions for this champion. Please retry later.'}
+      </div>
+    )
+  }
+  if (status === 'loading') {
+    return (
+      <div className="champion-roster-flyout__empty">
+        {isZh ? '正在读取装备槽位定义…' : 'Loading gear slot definitions…'}
+      </div>
+    )
+  }
+  return (
+    <div className="champion-roster-flyout__slot-grid">
+      {slots.map((slot) => {
+        const equipmentIcon = slot.graphicId != null && slot.graphicId !== '' ? equipmentIconsById.get(slot.graphicId) ?? null : null
+        return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} locale={isZh ? 'zh-CN' : 'en-US'} />
+      })}
+    </div>
+  )
+}
+
 export function ChampionRosterFlyout({
   champion,
   ownedHero,
@@ -203,39 +245,7 @@ export function ChampionRosterFlyout({
   }
 
   const isZh = locale === 'zh-CN'
-  let rosterContent: ReactNode
-  if (ownedHero === null) {
-    rosterContent = (
-      <div className="champion-roster-flyout__empty">
-        {isZh
-          ? '当前账号还没有拥有这名英雄，所以这里只保留跳转入口；同步账号后会显示装备、传奇和槽位进度。'
-          : 'You don’t own this champion yet, so only the navigation link is shown. Sync your account to see gear, legendary, and slot progress.'}
-      </div>
-    )
-  } else if (status === 'error') {
-    rosterContent = (
-      <div className="champion-roster-flyout__empty">
-        {isZh
-          ? '读取这名英雄的装备定义失败，稍后重试即可。'
-          : 'Failed to load gear definitions for this champion. Please retry later.'}
-      </div>
-    )
-  } else if (status === 'loading') {
-    rosterContent = (
-      <div className="champion-roster-flyout__empty">
-        {isZh ? '正在读取装备槽位定义…' : 'Loading gear slot definitions…'}
-      </div>
-    )
-  } else {
-    rosterContent = (
-      <div className="champion-roster-flyout__slot-grid">
-        {slots.map((slot) => {
-          const equipmentIcon = slot.graphicId != null && slot.graphicId !== '' ? equipmentIconsById.get(slot.graphicId) ?? null : null
-          return <ChampionRosterSlot key={slot.slotId} slot={slot} equipmentIcon={equipmentIcon} locale={locale} />
-        })}
-      </div>
-    )
-  }
+  const rosterContent = buildRosterContent(ownedHero, status, slots, equipmentIconsById, isZh)
 
   const flyoutContent = (
     <div

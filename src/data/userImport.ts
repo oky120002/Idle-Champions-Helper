@@ -1,6 +1,5 @@
 import type {
   MaskedUserCredentials,
-  UserImportMethod,
   UserImportParseResult,
   UserCredentials,
 } from '../domain/types'
