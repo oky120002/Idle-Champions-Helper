@@ -12,45 +12,47 @@ repair: rebuild
   - 记录时间: `2026-08-08T13:27:44+08:00`
   - 类型: follow-up
   - 位置: `src/domain/abilities/heroPredicate.ts:138-238`
-  - 备注: 2026-08-08 深度复核修正：TODO 原说 4 个，实际 7 个去重表达式（含 HasEffectByID 漏报） - 评分关键实例：Skylla(169) HasEffectByID(2474) 门控 hero_dps_multiplier_mult,400(+400% DPS)；Knox(82) HasEffect(celeste_heal) 门控 damage_reduction,25(25%减伤) - 其余：Cazrin(166) 复合条件含 HasEffectByID(2416)、Alyndra(77) HasEffect、Kas(153) !HasEffect、Trixie(176) do_nothing(无影响) - 37 unparsed 中其余 ~30 个是数值表达式(floor/min/max/属性引用)和不支持的函数(num_applied_pigments/AverageILevels)，非谓词类型
+  - 备注: 2026-08-08 深度复核修正：TODO 原说 4 个，实际 7 个去重表达式（含 HasEffectByID 漏报）
+    - 评分关键实例：Skylla(169) HasEffectByID(2474) 门控 hero_dps_multiplier_mult,400(+400% DPS)；Knox(82) HasEffect(celeste_heal) 门控 damage_reduction,25(25%减伤)
+    - 其余：Cazrin(166) 复合条件含 HasEffectByID(2416)、Alyndra(77) HasEffect、Kas(153) !HasEffect、Trixie(176) do_nothing(无影响)
+    - 37 unparsed 中其余 ~30 个是数值表达式(floor/min/max/属性引用)和不支持的函数(num_applied_pigments/AverageILevels)，非谓词类型
 
 - Modron 管道 buff 数值未进 planner 评分 <!-- auto-todo:id=atd_4ca7841bda -->
   - 记录时间: `2026-08-08T12:56:14+08:00`
   - 类型: optimization
   - 位置: `src/domain/simulator/modronInfo.ts`
-  - 备注: modronInfo.ts/ultUptime.ts/blessingGlobalBuff.ts 三处消费 modron 数据，但管道(齿轮)的伤害/金币/速度 buff 数值未建模。- 影响：planner 推荐不反映 modron 管道加成- 证据：modron-automation.md 调研，effect-reference.json 中 16 个 modron_* 谓词均 serverOnly
+  - 备注: modronInfo.ts/ultUptime.ts/blessingGlobalBuff.ts 三处消费 modron 数据，但管道(齿轮)的伤害/金币/速度 buff 数值未建模。
+    - 影响：planner 推荐不反映 modron 管道加成
+    - 证据：modron-automation.md 调研，effect-reference.json 中 16 个 modron_* 谓词均 serverOnly
 
 - 取反复合对齐标记（!lawful_good）不展开 De Morgan——forbidden 位置保持字面量 <!-- auto-todo:id=atd_f24a57fc7f -->
   - 记录时间: `2026-08-08T22:05:12+08:00`
   - 类型: issue
   - 位置: `scripts/data/normalize-adventures.ts:816`
-  - 备注: 取反复合对齐标记（如 !lawful_good）不展开 De Morgan（forbidden 位置复合标记保持字面量，因无英雄持有 lawful_good 标记故恒 vacuously true=不排除任何人）。当前全库 0 实例触发，仅理论边界。
-    - 影响：!lawful_good 应排除守序善良英雄，当前不排除任何人（forbidden:lawful_good 无英雄匹配）
-    - 证据：parseAtom 取反分支直接 slice(1) 不查 COMPOUND_ALIGNMENT_TAGS；修复需 De Morgan 展开（!lawful_good → forbidden:lawful OR forbidden:good 两子句）
+  - 备注: 取反复合对齐标记（如 !lawful_good）不展开 De Morgan。当前全库 0 实例触发，仅理论边界。
+    - 影响：!lawful_good 应排除守序善良英雄，当前不排除任何人
     - 优先级：低（0 实例触发）
 
 - 全站正则表达式深度审查：正确性、业务逻辑契合度、扩散面 <!-- auto-todo:id=atd_regex_audit_001 -->
   - 记录时间: `2026-08-09T10:30:00+08:00`
   - 类型: follow-up
   - 位置: `src/**`
-  - 备注: 对全站所有正则表达式（RegExp 字面量、new RegExp、字符串匹配/替换/拆分中的 pattern）做一次系统性深度审查。
+  - 备注: 对全站所有正则表达式做一次系统性深度审查
     - 正确性：ReDoS 风险、贪婪/非贪婪误用、字符类遗漏、锚点缺失、转义错误
-    - 业务契合度：正则是否完美服务使用处的业务意图（游戏数据解析、标签表达式解析、i18n 文本匹配、路由参数提取等），有无过宽或过窄匹配
-    - 扩散面：每个正则的影响范围是否正确隔离，有无一处定义多处复用但语义不同，有无匹配结果扩散到非预期下游
+    - 业务契合度：正则是否完美服务使用处的业务意图
     - 范围：src/ 全目录 + scripts/data/ 数据管线
-    - 验证：逐正则溯源使用处，确认业务语义一致，补测覆盖边界
 
-- restrictions-parser 复合属性门槛「STAT and STAT of N+」只捕获最后一个属性 <!-- auto-todo:id=atd_5010068521 -->
+- restrictions-parser 复合属性门槛 STAT and STAT of N+ 只捕获最后一个属性 <!-- auto-todo:id=atd_5010068521 -->
   - 记录时间: `2026-08-09T18:25:56+08:00`
   - 类型: follow-up
   - 位置: `scripts/data/restrictions-parser.ts:213`
-  - 备注: 8 个变体受影响（如 STR and CON of 14+），需语义级解析增强，正则 matchAll 只能捕最后一个 STAT
+  - 备注: 8 个变体受影响（如 STR and CON of 14+），需语义级解析增强
 
 - applyHealthDrain drainRate>=1 时静默跳过（返回满血而非0） <!-- auto-todo:id=atd_d2d4ed72dc -->
   - 记录时间: `2026-08-09T18:26:02+08:00`
   - 类型: follow-up
   - 位置: `src/domain/simulator/areaEstimation.ts:134`
-  - 备注: drainRate=1.0 时 guard drainRate<1 不通过，返回满血而非0（应立即致死）；实际数据最高 0.2 不触发，属防御性隐患
+  - 备注: drainRate=1.0 时 guard 不通过返回满血而非0；实际数据最高 0.2 不触发，属防御性隐患
 
 - recommendationEngine warnings 未走 i18n（跨层设计问题） <!-- auto-todo:id=atd_b8b9fcd5b6 -->
   - 记录时间: `2026-08-09T18:26:05+08:00`
@@ -62,90 +64,62 @@ repair: rebuild
   - 记录时间: `2026-08-09T19:46:48+08:00`
   - 类型: optimization
   - 位置: `src/pages/planner/PlannerDamageSlots.tsx`
-  - 备注:
-    - 来源：深度审计 2026-08-09 UI 子智能体发现
+  - 备注: 来源：深度审计 2026-08-09 UI 子智能体发现
 
 - EN 递增占格模式检测覆盖不足（variant 116 等） <!-- auto-todo:id=atd_1d344ad97a -->
   - 记录时间: `2026-08-09T19:46:55+08:00`
   - 类型: issue
   - 位置: `scripts/data/restrictions-parser.ts:46`
-  - 备注:
-    - 来源：深度审计 2026-08-09 数据管线子智能体发现
+  - 备注: 来源：深度审计 2026-08-09 数据管线子智能体发现
 
 - schema 未钉 enemyTypes/scenarioRef/objectiveArea/scenarioWarnings 等消费字段 <!-- auto-todo:id=atd_6752294b13 -->
   - 记录时间: `2026-08-09T19:46:59+08:00`
   - 类型: optimization
   - 位置: `src/domain/types/build-product-schemas.ts:63`
-  - 备注:
-    - 来源：深度审计 2026-08-09 数据管线子智能体发现
+  - 备注: 来源：深度审计 2026-08-09 数据管线子智能体发现
 
 - cooldownReduction 归一化管线缺失——1860 条原始效果产出 0 信号 <!-- auto-todo:id=atd_0cb934b094 -->
   - 记录时间: `2026-08-09T21:31:56+08:00`
   - 类型: issue
-  - 位置: `scripts/data 归一化管线（speedResolver 或上游 collect 阶段）`
-  - 备注: 1860 条 reduce_ultimate_cooldown 原始效果（154 英雄）产出 0 信号。speedResolver.ts 已接线（resolverDispatch.ts:25 映射 reduce_ultimate_cooldown → cooldownReduction），但 hero-abilities.json 中 cooldownReduction 条目为 0。
-    - 影响：speed 维度 cooldownReduction 信号完全丢失，speed-scoring-dimension 需求前置依赖
-    - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
+  - 位置: `scripts/data`
+  - 备注: 1860 条 reduce_ultimate_cooldown 原始效果（154 英雄）产出 0 信号
+    - 影响：speed 维度 cooldownReduction 信号完全丢失
     - 优先级：中
 
 - 领域层硬编码中文 UI 文本未国际化（signalMultiplier 警告 + recommendationEngine 违规信息） <!-- auto-todo:id=atd_665afea3d4 -->
   - 记录时间: `2026-08-10T09:54:41+08:00`
   - 类型: issue
   - 位置: `src/domain/planner/mechanics/signalMultiplier.ts:44`
-  - 备注: signalMultiplier.ts 警告（乘算堆叠溢出/依赖基础增益未生效）和 recommendationEngine.ts 违规信息（seat 冲突/缺少强制英雄）直接返回中文字符串，经 PlannerResultCard 显示在 UI。需改为返回结构化数据（code + params），由 UI 层翻译。
+  - 备注: signalMultiplier.ts 警告和 recommendationEngine.ts 违规信息直接返回中文字符串，需改为返回结构化数据由 UI 层翻译
 
-- 位置限定 target type 未映射导致 5 条 DPS 信号丢失 <!-- auto-todo:id=atd_pos_target_001 -->
-  - 记录时间: `2026-08-10T19:50:00+08:00`
-  - 类型: issue
-  - 位置: `src/domain/abilities/heroTargetingRelation.ts:127`（normalizeTargetRelation）
-  - 备注: 5 种 target type 不在 STRING_RELATION_MAP 中，normalizeExplicitTargeting 返回 unsupported：
-    - `"tallest_column"`（Windfall hero 167: hero_dps_multiplier_mult,100）
-    - `"middle_columns"`（Lark hero 170: hero_dps_multiplier_mult,400）
-    - `"snowflake"`（Gazrick hero 98: hero_dps_multiplier_mult,0 — 雪花形位置范围）
-    - `"slot_if_expr"`（Jang Sao hero 140: hero_dps_multiplier_mult,400 — 相邻槽 ≤2 条件表达式）
-    - `"active_campaign"`（Shaka hero 79: hero_dps_multiplier_mult,0 — 按当前战役）
-    - 影响：5 个英雄的位置限定 DPS 加成被静默丢弃，planner 低估这些英雄的 support 评分
-    - 修复方向：扩展 HeroPositionRelation + planner position matching，但这些 target type 需要运行时阵型布局上下文（非 build 期可定）
-    - 来源：wiki 交叉核对第二轮（2026-08-10）
-
-- 8 英雄 vulnerability 加成在数据源中完全缺失 <!-- auto-todo:id=atd_vuln_datasrc_001 -->
-  - 记录时间: `2026-08-10T19:50:00+08:00`
-  - 类型: issue
-  - 位置: `public/data/v1/champion-details/` 数据源（非代码 bug）
-  - 备注: 8 个英雄有 `favored_foe` 标记但数据中无 `monster_with_tag_more_damage` 加成效果，vulnerability 既不在 base signals 也不在 specialization catalog：
-    - Zorbu(22): favored_foe=humanoid/beast/undead/aberration，upgrade 12989 只有标记无加成
-    - Turiel(49): favored_foe=fiend
-    - Lae'zel(128): favored_foe=aberration
-    - Dynaheir(145): favored_foe=humanoid
-    - Jaheira(61): favored_foe=beast
-    - Van Richten(177): favored_foe=undead
-    - Nerys(37): favored_foe=undead
-    - Vin Ursa(127): 无 favored_foe 但有 increase_monster_damage_if_favored_foe_from_hero_id（No parser）
-    - 对比：Minsc(7)/Kalix(158)/Reya(86)/Wyll(142) 正确——专精节点含 monster_with_tag_more_damage
-    - 根因：CNE 数据 API 中这些英雄的 vulnerability 加成不以 effect_string 形式提供（可能引擎内部 favored enemy 机制）
-    - 修复方向：需从其他数据源（游戏内实测/社区数据/raw hero definition 其他字段）补充
-    - 来源：wiki 交叉核对第二轮（2026-08-10）
-
-- change_base_attack 不影响 hero-abilities BUD 参数（30 英雄） <!-- auto-todo:id=atd_change_atk_001 -->
+- change_base_attack 验证完成：70% 无 BUD 影响，6 英雄 spec-dependent 参数差异 <!-- auto-todo:id=atd_change_atk_001 -->
   - 记录时间: `2026-08-10T19:50:00+08:00`
   - 类型: follow-up
-  - 位置: `scripts/data/buildHeroModels.ts`（attacks.base 提取逻辑）
-  - 备注: 30 个英雄有 `change_base_attack` 效果在 unsupportedSignals 中。hero-abilities.json 的 baseAttackCooldown/damageModifier/numTargets 来自 champion-details 的 attacks.base（原始攻击），不反映 change_base_attack 切换后的攻击参数。
-    - 影响：如果切换后攻击的 cooldown/damageModifier/numTargets 与原始不同，BUD 计算基于错误参数
-    - 关键案例：Hank(163) base atk id=858(cd=3.5) → change_base_attack,859（攻击 859 参数未知）
-    - 待确认：大部分 change_base_attack 可能只改变攻击动画/视觉，cooldown 不变 → 无实质影响
-    - 验证方法：检查 champion-details raw 中切换后攻击的参数（可能在 attacks 字段的其他位置）
-    - 来源：wiki 交叉核对第二轮（2026-08-10）
+  - 位置: `scripts/data/buildHeroModels.ts`
+  - 备注: 2026-08-10 验证完成（对照 CNE attack_defines 全量 65 条 unique alt attacks）
+    - 46/65（70%）参数完全相同（纯视觉/动画切换）→ 无 BUD 影响
+    - 16/65 BUD-relevant：6 unique 英雄有实质影响（Tyril/Jim/Knox/Virgil/Dark Urge/Cazrin），8 条 tgt→0 为工具攻击
+    - 2/65 仅 damageModifier 变化（BUD 公式约掉，无影响）
+    - 修复需建模 per-spec 攻击参数（attack_defines 数据已有但 build 管线未消费）
 
-- 装备 Shiny/Golden Epic 在 loot-catalog 中未表示 <!-- auto-todo:id=atd_shiny_golden_001 -->
+- vulnerability 数据源验证完成：3 英雄有静态 effect_string 缺 parser，4 英雄纯引擎内置 <!-- auto-todo:id=atd_vuln_datasrc_001 -->
   - 记录时间: `2026-08-10T19:50:00+08:00`
-  - 类型: optimization
-  - 位置: `scripts/data/normalize-champions.ts`（loot-catalog 构建）+ `src/domain/buffs/equipmentMult.ts`
-  - 备注: champion-details loot 中有 140 条 isGoldenEpic=true、2612 条 allowGoldenEpic=true，但 loot-catalog 只提取了 {effectString, heroId, rarity, slotId}（rarity 仅 1-4），Golden Epic/Shiny 版本的增强效果完全丢失。
-    - 影响：有 Golden Epic 装备的玩家评分被低估（Golden Epic 效果值约为普通 Epic 的 2 倍）
-    - 当前设计：假设装备配置（synthesizeHypotheticalLootByHero）使用统一 rarity+enchant，不区分 Shiny/Golden Epic
-    - 修复方向：loot-catalog 增加 goldenEpic effectString 字段；equipmentMult 增加 shiny/goldenEpic 倍率处理
-    - 优先级：中（仅影响有 Golden Epic 装备的玩家，假设装备不受影响）
-    - 来源：wiki 交叉核对第二轮（2026-08-10）
+  - 类型: follow-up
+  - 位置: `src/domain/abilities`
+  - 备注: 2026-08-10 验证完成（原 TODO 前提「数据源完全缺失」不准确）
+    - 3 英雄有静态易伤 effect_string 缺 parser：Nerys(100% undead)/Vin Ursa(400%)/Dynaheir(1000%)
+    - 4 英雄仅 favored_foe 标签无伤害量：Turiel/Jaheira/Laezel/Van Richten — 引擎内置，API 不暴露
+    - Zorbu(22) 动态 zorbu_lifelong_enemies,0.01 per-kill 堆叠，依赖存档击杀数
+    - 修复方向：3 英雄可加 parser（低复杂度），4 英雄需游戏内实测
+
+- 装备 Shiny/Golden Epic 验证完成：GE 效果已在 catalog，仅 GE 升级版缺数据 <!-- auto-todo:id=atd_shiny_golden_001 -->
+  - 记录时间: `2026-08-10T19:50:00+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/normalize-champions.ts`
+  - 备注: 2026-08-10 验证完成（原 TODO 前提「GE 效果完全丢失」不准确）
+    - 140 条 isGoldenEpic=true 装备已全部进 loot-catalog（rarity=4 的 effectString 即 GE 值）
+    - 每个槽位要么是 GE 要么是普通 Epic，不存在同一槽位两者并存
+    - 真正缺失：2478 条 allowGoldenEpic=true 普通装备可升级为 GE，但升级效果不在 API 数据中
+    - Shiny 是付费 boost（增加装备等级），非独立 loot item
 
 <!-- auto-todo:end -->
