@@ -59,7 +59,17 @@
 
 - 多模式共用字段命名取超集概念，不用单模式量名或遗留泛名：被 carry-dps（carryDps）与 team-gold（teamGoldFind）共用的输出字段叫 `score` 会与已淘汰的启发式评估混淆、叫 `carryDps` 在 team-gold 模式名实不符——改 `objectiveValue`（优化目标量）模式中性、见名知意。内部管道（`ScoringResult`）同理：跨模式字段要么改中性别名，要么注释点明"当前模式目标量，非单模式量"。
 
-## 6. 大数计算（GameNumber / decimal.js）
+## 6. 国际化（i18n）
+
+全站双语（zh-CN / en-US），通过 `useI18n()` 获取 `t({ zh, en })` 翻译函数。以下规则基于全站扫描发现的典型遗漏模式：
+
+- **所有用户可见文本必须走 `t()`**：JSX 文本节点、`aria-label`、`placeholder`、`title` 一律包裹 `t({ zh, en })`，禁止硬编码单语字符串。
+- **工具函数返回用户可见标签时必须接收 `locale`**：`formatXxxLabel(value, locale)` 返回当前语言文本，禁止返回单语硬编码。生产存根同步适配签名。
+- **组件缺少 `useI18n()` 时先补 Hook**：无 `t()` 的组件（如 `ConfirmDialog`）加 `useI18n()`；有 `locale` prop 的组件用 `locale === 'zh-CN' ? '中' : 'EN'` 三元（与同目录其他组件一致）。
+- **`aria-label` 是高频遗漏点**：组件已有 `t()` 但 `aria-label` 仍写死单语字符串是最常见模式，新增或修改 `aria-label` 时务必检查。
+- **两种语言相同的技术标识符无需包裹**：`graphic id`、`Support URL` 等在 zh/en 下一致的术语不强制走 `t()`，避免无价值仪式。
+
+## 7. 大数计算（GameNumber / decimal.js）
 
 游戏数值可达 `1e1000`+，远超 JS number 上限。统一走 `gameNumber.ts`（ADR 0014）。
 
@@ -67,7 +77,7 @@
 - wrapper：`parseGameNumber` / `formatGameNumber` / `multiplyGameNumbers` / `divideGameNumbers` / `powerGameNumber` / `addGameNumbers` / `compareGameNumbers`（排序用）/ `log10GameNumber`（仅离线校准）。
 - 序列化：可超大数边界的字段走游戏记数法字符串，禁止 `.toNumber()` 回退（见 §5）。
 
-## 7. 例外与减债
+## 8. 例外与减债
 
 - 长字符串、大型映射、生成代码、测试夹具可以适度豁免，但必须保持职责单一。
 - 超大文件按”触碰即减债”处理：本次改到它，就至少顺手拆出一层更自然的边界。
