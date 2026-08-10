@@ -140,16 +140,15 @@ describe('beam search 不变量守护', () => {
 
 describe('beam search 对抗性反例', () => {
   describe('空 / 奇异输入', () => {
-    it('0 英雄 → 结果含初始 candidate（空 placements），不 crash', () => {
+    it('0 英雄 → 返回空数组（expandCandidates 无候选），不 crash', () => {
       const results = beamSearch({
         heroes: [],
         slots: ['s1', 's2'],
         beamWidth: 3,
         scoreFormation: () => makeResult(0),
       })
-      // expandCandidates 产出 0 个 next → candidates 空 → scored 空 → 返回 []
-      // 但初始 candidate 已评估 → 实际行为取决于 slot 循环是否至少产出初始
-      expect(results).toBeDefined()
+      // 初始 candidate 在首次 slot 循环中被空 expandCandidates 结果替换 → 返回 []
+      expect(results).toEqual([])
     })
 
     it('0 slot → 返回初始 candidate（无扩展）', () => {

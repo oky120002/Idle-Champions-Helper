@@ -312,14 +312,18 @@ describe('落点2: 参数穿透决策表', () => {
   }, 30000)
 
   it('aggregateProjection: absolute-dps 与 formation-buff 量级不同（可观测差异）', () => {
-    const [absolute, formationBuff] = (['absolute-dps', 'formation-buff'] as const).map((projection) =>
-      buildPlannerRecommendation({
-        collections: realCollections,
-        variant: realBaselineVariant,
-        profileSnapshot: null,
-        options: { ...baseOpts, computationMode: 'full', aggregateProjection: projection },
-      }),
-    )
+    const absolute = buildPlannerRecommendation({
+      collections: realCollections,
+      variant: realBaselineVariant,
+      profileSnapshot: null,
+      options: { ...baseOpts, computationMode: 'full', aggregateProjection: 'absolute-dps' },
+    })
+    const formationBuff = buildPlannerRecommendation({
+      collections: realCollections,
+      variant: realBaselineVariant,
+      profileSnapshot: null,
+      options: { ...baseOpts, computationMode: 'full', aggregateProjection: 'formation-buff' },
+    })
     // absolute-dps 含 baseDamage × levelCurve（真实英雄 baseDamage >> 1）→ 量级远大于 formation-buff
     const absLog10 = Math.log10(Number(absolute.result?.objectiveValue ?? '0'))
     const fbLog10 = Math.log10(Number(formationBuff.result?.objectiveValue ?? '0'))

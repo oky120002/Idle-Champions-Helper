@@ -58,6 +58,10 @@ function globalDps(value: number): HeroAbilitySignal {
   return { kind: 'globalDpsMultiplier', value, rawEffect: `global_dps,${String(value)}`, source: 'official-parsed' }
 }
 
+function globalDpsMult(value: number): HeroAbilitySignal {
+  return { kind: 'globalDpsMultiplier', value, rawEffect: `global_dps_mult,${String(value)}`, source: 'official-parsed', amountFunc: 'mult' }
+}
+
 function heroDps(value: number): HeroAbilitySignal {
   return { kind: 'heroDpsMultiplier', value, rawEffect: `hero_dps,${String(value)}`, source: 'official-parsed' }
 }
@@ -124,17 +128,17 @@ describe('scoreFormation 不变量守护', () => {
     // 核心不变量：pool 聚合按 dimension:scope 加法叠加，与来源顺序无关。
     // 现有 poolAggregation.test 只测 mergePools 层交换律，这里测 scoreFormation 全链路。
     it.each([
-      // [label, supportValues]
-      ['两个 global 支持', [100, 200]],
-      ['三个 global 支持', [50, 150, 300]],
-      ['含 mult 类支持', [100, 200]], // 用 amountFunc:'mult' 构造
-    ] as const)('%s → 不同 slot 排列 carryDps 相同', (_label, values) => {
+      // [label, signalFactory, supportValues]
+      ['两个 global 支持', globalDps, [100, 200]],
+      ['三个 global 支持', globalDps, [50, 150, 300]],
+      ['含 mult 类支持', globalDpsMult, [100, 200]],
+    ] as const)('%s → 不同 slot 排列 carryDps 相同', (_label, signalFactory, values) => {
       const carry = createHero('carry', { seat: 1, baseDamage: 1 })
       const heroesById = new Map<string, HeroAbilityProfile>([['carry', carry]])
       values.forEach((v, i) => {
         heroesById.set(`buf${String(i)}`, createHero(`buf${String(i)}`, {
           seat: i + 2,
-          supportSignals: [globalDps(v)],
+          supportSignals: [signalFactory(v)],
         }))
       })
 

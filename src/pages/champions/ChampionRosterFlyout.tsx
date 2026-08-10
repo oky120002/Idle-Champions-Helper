@@ -2,6 +2,7 @@
 import { type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
+import type { AppLocale } from '../../app/i18n'
 import { loadChampionDetail, loadCollection } from '../../data/client'
 import { getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { Champion, ChampionDetail, ChampionEquipmentIcon } from '../../domain/types'
@@ -15,7 +16,7 @@ interface ChampionRosterFlyoutProps {
   readonly champion: Champion
   readonly ownedHero: OwnedHero | null
   readonly legendaryLevelCap: number
-  readonly locale: 'zh-CN' | 'en-US'
+  readonly locale: AppLocale
   readonly locationSearch: string
   readonly navigationTo?: string
   readonly returnToPath?: string
