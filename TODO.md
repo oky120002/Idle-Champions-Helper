@@ -82,12 +82,6 @@ repair: rebuild
     - 证据：npx tsx 实跑 collectEffectEntries + specialization-catalog.json 验证 + Python 逐源分类（loot 612 / upgrade_ek 12 全专精）
     - 优先级：中（随 speed 维度推进时解决）
 
-- 速度维度数据重建：npm run data:official 需执行以将 formationBonusTable 写入 hero-abilities.json <!-- auto-todo:id=atd_b32e96ad3d -->
-  - 记录时间: `2026-08-10T10:10:28+08:00`
-  - 类型: follow-up
-  - 位置: `public/data/v1/hero-abilities.json`
-  - 备注: Hew Maan other_human_bonuses 阵型效果（相邻人类查表）需要 formationBonusTable 字段，当前数据缺此字段导致运行时 value=0 → questProgress=1（阵型效果不生效）。脚本属完整管线（fetch+normalize+build），未自动执行。- 影响：Hew Maan 速度贡献在 team-speed 模式下为 0 直到数据重建- 证据：jq 查询 hero-abilities.json 中 formationBonusTable 计数=0
-
 - architecture.md 195 行超叶子文档阈值 180（governance 测试 FAIL） <!-- auto-todo:id=atd_a6aa4be23c -->
   - 记录时间: `2026-08-10T11:59:22+08:00`
   - 类型: optimization
