@@ -81012,7 +81012,7 @@
           "damage": 98
         },
         "support": {
-          "damage": 20,
+          "damage": 21,
           "gold": 2
         }
       },
@@ -81067,10 +81067,11 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -81695,6 +81696,25 @@
       ],
       "supportSignals": [
         {
+          "kind": "heroDpsMultiplier",
+          "value": 100,
+          "rawEffect": "hero_dps_multiplier_mult,100",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "tallestColumn"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 30,
+          "upgradeId": "17053"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -81914,15 +81934,46 @@
           "excludeSelf": false,
           "requiredLevel": 1470,
           "upgradeId": "17279"
+        },
+        {
+          "kind": "heroDpsMultiplier",
+          "value": 20,
+          "rawEffect": "buff_upgrade,20,17053",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "tallestColumn"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": "mult",
+          "stackFunc": "get_stat",
+          "applyManually": false,
+          "stacksMultiply": true,
+          "excludeSelf": false,
+          "requiredLevel": 30,
+          "bonusScaleOfSignal": {
+            "kind": "heroDpsMultiplier",
+            "value": 100,
+            "rawEffect": "hero_dps_multiplier_mult,100",
+            "source": "official-parsed",
+            "targetQualifier": null,
+            "formationCountQualifier": null,
+            "positionQualifier": {
+              "relation": "tallestColumn"
+            },
+            "formationCountPositionQualifier": null,
+            "amountFunc": null,
+            "stackFunc": null,
+            "applyManually": false,
+            "stacksMultiply": null,
+            "excludeSelf": false,
+            "requiredLevel": 30
+          },
+          "upgradeId": "17055"
         }
       ],
       "unsupportedSignals": [
-        {
-          "rawEffect": "hero_dps_multiplier_mult",
-          "rawValue": "100",
-          "note": "unsupported targets: [\"tallest_column\"]",
-          "source": "official-parsed"
-        },
         {
           "rawEffect": "do_nothing",
           "rawValue": "400",
@@ -90328,7 +90379,7 @@
           "damage": 91
         },
         "support": {
-          "damage": 63
+          "damage": 67
         }
       },
       "sourceBreakdown": {
@@ -90417,10 +90468,10 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -90996,6 +91047,25 @@
         }
       ],
       "supportSignals": [
+        {
+          "kind": "heroDpsMultiplier",
+          "value": 400,
+          "rawEffect": "hero_dps_multiplier_mult,400",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "middleColumns"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 20,
+          "upgradeId": "18051"
+        },
         {
           "kind": "globalDpsMultiplier",
           "value": 200,
@@ -91881,12 +91951,6 @@
           "rawEffect": "buff_ultimate",
           "rawValue": "100",
           "note": "No parser for effect: buff_ultimate",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "hero_dps_multiplier_mult",
-          "rawValue": "400",
-          "note": "unsupported targets: [\"middle_columns\"]",
           "source": "official-parsed"
         },
         {
@@ -115534,7 +115598,7 @@
           "damage": 79
         },
         "support": {
-          "damage": 20
+          "damage": 33.599999999999994
         }
       },
       "sourceBreakdown": {
@@ -115584,10 +115648,11 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
+          "official-parsed",
+          "official-parsed",
           "official-parsed"
         ],
         "unsupportedSignals": [
-          "official-parsed",
           "official-parsed",
           "official-parsed",
           "official-parsed",
@@ -116143,6 +116208,25 @@
       ],
       "supportSignals": [
         {
+          "kind": "heroDpsMultiplier",
+          "value": 400,
+          "rawEffect": "hero_dps_multiplier_mult,400",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "slotsWithMaxTwoAdjacent"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": null,
+          "stackFunc": null,
+          "applyManually": false,
+          "stacksMultiply": null,
+          "excludeSelf": false,
+          "requiredLevel": 20,
+          "upgradeId": "13257"
+        },
+        {
           "kind": "globalDpsMultiplier",
           "value": 200,
           "rawEffect": "global_dps_multiplier_mult,200",
@@ -116362,15 +116446,46 @@
           "excludeSelf": false,
           "requiredLevel": 2040,
           "upgradeId": "13677"
+        },
+        {
+          "kind": "heroDpsMultiplier",
+          "value": 10,
+          "rawEffect": "buff_upgrade,10,13257",
+          "source": "official-parsed",
+          "targetQualifier": null,
+          "formationCountQualifier": null,
+          "positionQualifier": {
+            "relation": "slotsWithMaxTwoAdjacent"
+          },
+          "formationCountPositionQualifier": null,
+          "amountFunc": "mult",
+          "stackFunc": "per_hero_attribute",
+          "applyManually": false,
+          "stacksMultiply": true,
+          "excludeSelf": false,
+          "requiredLevel": 20,
+          "bonusScaleOfSignal": {
+            "kind": "heroDpsMultiplier",
+            "value": 400,
+            "rawEffect": "hero_dps_multiplier_mult,400",
+            "source": "official-parsed",
+            "targetQualifier": null,
+            "formationCountQualifier": null,
+            "positionQualifier": {
+              "relation": "slotsWithMaxTwoAdjacent"
+            },
+            "formationCountPositionQualifier": null,
+            "amountFunc": null,
+            "stackFunc": null,
+            "applyManually": false,
+            "stacksMultiply": null,
+            "excludeSelf": false,
+            "requiredLevel": 20
+          },
+          "upgradeId": "13260"
         }
       ],
       "unsupportedSignals": [
-        {
-          "rawEffect": "hero_dps_multiplier_mult",
-          "rawValue": "400",
-          "note": "unsupported targets: [{\"type\":\"slot_if_expr\",\"if_expr\":\"num_adj_slots<=max_adj\",\"max_adj\":2}]",
-          "source": "official-parsed"
-        },
         {
           "rawEffect": "jangsao_star_collector",
           "rawValue": "1",
@@ -176458,5 +176573,5 @@
       ]
     }
   ],
-  "pipelineHash": "86d4a37c3c9af45d"
+  "pipelineHash": "87ce481a0cb8118c"
 }

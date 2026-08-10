@@ -32,6 +32,9 @@ const RELATION_REASON_CODE: Partial<Record<HeroPositionRelation, PlacementFitSco
   rearMostColumn: 'rear-most-column-match',
   secondRearMostColumn: 'second-rear-most-column-match',
   thirdRearMostColumn: 'third-rear-most-column-match',
+  tallestColumn: 'tallest-column-match',
+  middleColumns: 'middle-columns-match',
+  slotsWithMaxTwoAdjacent: 'slots-with-max-two-adjacent-match',
 }
 
 function inferTagOrStatMatch(signal: HeroAbilitySignal): 'stat-match' | 'tag-match' {

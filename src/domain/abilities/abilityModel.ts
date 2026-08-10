@@ -59,6 +59,9 @@ export type HeroPositionRelation =
   | 'rearMostColumn'
   | 'secondRearMostColumn'
   | 'thirdRearMostColumn'
+  | 'tallestColumn'
+  | 'middleColumns'
+  | 'slotsWithMaxTwoAdjacent'
 
 export type HeroAbilityAmountFunc = 'add' | 'mult' | 'unknown'
 export type HeroComparisonOperator = '>=' | '<=' | '>' | '<' | '=='

@@ -558,4 +558,103 @@ describe('placement fit — relations', () => {
     expect(activeEntry, 'targets:all 的 hero_dps 信号须跨槽位生效（relation=any 非 self）').toBeDefined()
     expect(activeEntry?.multiplier).toBe(2)
   })
+
+  it('tallestColumn — 只在格子最多的列计入目标值', () => {
+    // graphScenario: col 2 有 s2+s5(2 slots), col 3 有 s3+s6(2 slots), col 1/4 各 1 slot
+    // tallest = col 2 和 col 3 并列
+    const supportHero = createHero('support', {
+      supportSignals: [{
+        kind: 'heroDpsMultiplier',
+        value: 100,
+        rawEffect: 'hero_dps_multiplier_mult,100',
+        source: 'official-parsed',
+        positionQualifier: { relation: 'tallestColumn' },
+      }],
+    })
+
+    // col 2 → tallest → active
+    const fitTallest = evaluatePlacementFit({
+      supportHero,
+      scenario: graphScenario,
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+    })
+    expect(fitTallest.totalMultiplier).toBe(2)
+
+    // col 1 → not tallest → mismatch
+    const fitShort = evaluatePlacementFit({
+      supportHero,
+      scenario: graphScenario,
+      carryHero: createHero('carry'),
+      carrySlotId: 's1',
+      supportSlotId: 's2',
+    })
+    expect(fitShort.totalMultiplier).toBe(1)
+    expect(fitShort.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
+  })
+
+  it('middleColumns — 排除首尾列后命中中间列', () => {
+    // extendedScenario: cols [1,2,3,4] → middle = cols 2,3
+    const supportHero = createHero('support', {
+      supportSignals: [{
+        kind: 'heroDpsMultiplier',
+        value: 100,
+        rawEffect: 'hero_dps_multiplier_mult,100',
+        source: 'official-parsed',
+        positionQualifier: { relation: 'middleColumns' },
+      }],
+    })
+
+    const fitMiddle = evaluatePlacementFit({
+      supportHero,
+      scenario: extendedScenario,
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+    })
+    expect(fitMiddle.totalMultiplier).toBe(2)
+
+    const fitEdge = evaluatePlacementFit({
+      supportHero,
+      scenario: extendedScenario,
+      carryHero: createHero('carry'),
+      carrySlotId: 's1',
+      supportSlotId: 's2',
+    })
+    expect(fitEdge.totalMultiplier).toBe(1)
+    expect(fitEdge.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
+  })
+
+  it('slotsWithMaxTwoAdjacent — 相邻格 ≤2 的槽位命中', () => {
+    // graphScenario: s2 有 3 adj(s1,s3,s5) → 不满足; s1/s3/s4/s5/s6 ≤2 → 满足
+    const supportHero = createHero('support', {
+      supportSignals: [{
+        kind: 'heroDpsMultiplier',
+        value: 100,
+        rawEffect: 'hero_dps_multiplier_mult,100',
+        source: 'official-parsed',
+        positionQualifier: { relation: 'slotsWithMaxTwoAdjacent' },
+      }],
+    })
+
+    const fitOk = evaluatePlacementFit({
+      supportHero,
+      scenario: graphScenario,
+      carryHero: createHero('carry'),
+      carrySlotId: 's1',
+      supportSlotId: 's2',
+    })
+    expect(fitOk.totalMultiplier).toBe(2)
+
+    const fitCrowded = evaluatePlacementFit({
+      supportHero,
+      scenario: graphScenario,
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportSlotId: 's1',
+    })
+    expect(fitCrowded.totalMultiplier).toBe(1)
+    expect(fitCrowded.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
+  })
 })

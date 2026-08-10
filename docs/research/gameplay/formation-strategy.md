@@ -31,7 +31,7 @@
 
 ### 位置关系
 
-位置关系是位置条件效果的核心判据。类型系统定义 30 种位置关系，其中 **20 种实际出现在信号数据中**（排除 `any`），覆盖 169 条含显式位置约束的英雄信号（占全部 8236 条 carry+support 信号的约 2.1%，其余位置约束为 `any` 即全局）。高频关系如下：
+位置关系是位置条件效果的核心判据。类型系统定义 33 种位置关系，其中 **23 种实际出现在信号数据中**（排除 `any`），覆盖 172 条含显式位置约束的英雄信号（占全部 carry+support 信号的约 2.1%，其余位置约束为 `any` 即全局）。高频关系如下：
 
 | 关系 | 信号数 | 含义 |
 |---|---|---|
@@ -44,6 +44,9 @@
 | `sameOrBehindColumn` | 11 | 同列或后方一列 |
 | `behindTwoColumns` | 10 | 后方两列以内的英雄 |
 | `behindColumn` | 7 | 后方一列的英雄 |
+| `tallestColumn` | 1 | 格子最多的列（Windfall：列含最多槽位时全列增益） |
+| `middleColumns` | 1 | 排除首尾列后的中间列（Lark：不在最前或最后列时增益） |
+| `slotsWithMaxTwoAdjacent` | 1 | 相邻格 ≤2 的槽位（Jang Sao：低密度槽位增益） |
 
 其余关系包括 `adjacentOrSelf`、`adjacentColumns`（左右相邻两列）、`aheadTwoColumns`/`backTwoColumns`（前/后两列）、`allAheadColumns`（所有前方列）、`sameOrAheadColumns`/`sameOrBehindColumns`（同列±方向）、`withinTwoSlotsOrSelf` 等边缘变体。
 
