@@ -56,11 +56,12 @@ MVP 阶段在 `warnings` 中输出「未建模」提示，不计入 speedMultipl
 
 ## 阶段 Checklist
 
-- [ ] **阶段 A**: 领域类型 + 速度计算纯函数（TDD） —— ✅ 验证：单测覆盖所有 7 个静态类别 + 组合公式
-- [ ] **阶段 B**: build 期速度效果提取脚本 —— ✅ 验证：hero-abilities.json 中速度英雄有 speedProfile
-- [ ] **阶段 C**: 三层缩放建模（装备 buff_upgrade + 阵型组成 + 专精） —— 验证：速度值随三层参数变化
-- [ ] **阶段 D**: ScoringMode 扩展 + scoreTeamSpeed 分支 + computationMode 适配 —— 验证：scoreFormation team-speed 模式产出 speedMultiplier
-- [ ] **阶段 E**: UI 接线（模式选择 + 装备/阵型/专长调节控件 + 结果展示） + 集成测试 —— 验证：UI 选 team-speed 后推荐速度阵型，三层参数可调
+- [x] **阶段 A**: 领域类型 + 速度计算纯函数（TDD） —— ✅ 28 个单测覆盖 7 类别 + 组合公式 + 装备缩放
+- [x] **阶段 B**: build 期速度效果提取脚本 —— ✅ 18 英雄有 base speedProfile + 4 英雄有 spec 速度效果
+- [x] **阶段 C**: 三层缩放基建（装备 buff_upgrade + 专精注入） —— ✅ 装备缩放复用 `EquipmentBuff[]` 单一出口，专精复用 `applySpecializationsToProfile` 单一出口
+- [x] **阶段 D**: ScoringMode 扩展 + scoreTeamSpeed 分支 + computationMode 适配 —— ✅ scoreFormation('team-speed') 产出 speedMultiplier
+- [ ] **阶段 E**: UI 接线（模式选择 + 装备/阵型/专长调节控件 + 结果展示） + 集成测试
+- [ ] **阶段 F**: 三层缩放机制深度调研（从数据逐效果验证缩放方式，不预设数学运算）+ 阵型效果实现
 
 ## 验收
 
