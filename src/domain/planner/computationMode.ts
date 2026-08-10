@@ -27,6 +27,7 @@ export const MODE_FRACTION: Record<ComputationMode, number> = {
 export const OBJECTIVE_DIMENSIONS: Record<ScoringMode, HeroAbilityDimension[]> = {
   'carry-dps': ['damage', 'crit', 'vulnerability'],
   'team-gold': ['gold'],
+  'team-speed': [], // speed ranking uses speedProfile.speedGain, not gainProfile dimensions
 }
 
 /**
@@ -35,6 +36,10 @@ export const OBJECTIVE_DIMENSIONS: Record<ScoringMode, HeroAbilityDimension[]> =
  * 裁剪要保住「任一角色强」的，故取两侧最大。复合 = 所在层 OBJECTIVE_DIMENSIONS 各维度收益之积（缺省 1.0）。
  */
 export function compositeGain(hero: ResolvedHeroAbilityProfile, scoringMode: ScoringMode): number {
+  if (scoringMode === 'team-speed') {
+    // speed ranking uses pre-computed speedProfile.speedGain (includes base + spec effects)
+    return hero.speedProfile?.speedGain ?? 1
+  }
   const dims = OBJECTIVE_DIMENSIONS[scoringMode]
   return Math.max(productGain(hero.gainProfile?.self, dims), productGain(hero.gainProfile?.support, dims))
 }

@@ -14,6 +14,7 @@ import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
 import { computeTeamGoldFind } from './goldObjective'
+import { computeFormationSpeedMultiplier } from './speedScoring'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
@@ -21,7 +22,7 @@ import type { ResolvedPlannerScenarioModel } from './plannerModel'
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
  * 不强枚举 ObjectiveKind（Ponytail）；新增模式扩展此联合类型。
  */
-export type ScoringMode = 'carry-dps' | 'team-gold'
+export type ScoringMode = 'carry-dps' | 'team-gold' | 'team-speed'
 
 /**
  * 投影模式（约束②，见 architecture.md「投影模式」）——把阵型加成聚合投影成 objectiveValue 的方式。
@@ -238,6 +239,37 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
     warnings: [...new Set(warnings)],
     carryHeroId: null,
     activeSignalKinds: activeKinds,
+    breakdown: null,
+  }
+}
+
+/**
+ * team-speed 模式：聚合阵型中所有英雄的速度画像（含三层缩放：base + spec 注入 + 装备 buff），
+ * 计算阵型级综合速度因子 speedMultiplier。速度效果与 DPS/gold 正交——不做 carry 选择。
+ * 无速度英雄的阵型 speedMultiplier=1（无加成）。
+ */
+function scoreTeamSpeed(placedEntries: PlacedEntry[]): ScoringResult {
+  const profiles = placedEntries
+    .map((entry) => entry.hero.speedProfile)
+    .filter((profile): profile is NonNullable<typeof profile> => profile != null)
+
+  if (profiles.length === 0) {
+    return {
+      objectiveValue: toGameNumber(1),
+      warnings: [],
+      carryHeroId: null,
+      activeSignalKinds: new Set(),
+      breakdown: null,
+    }
+  }
+
+  const speedMultiplier = computeFormationSpeedMultiplier(profiles)
+
+  return {
+    objectiveValue: toGameNumber(speedMultiplier),
+    warnings: [],
+    carryHeroId: null,
+    activeSignalKinds: new Set(),
     breakdown: null,
   }
 }
@@ -593,6 +625,10 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
   if (input.scoringMode === 'team-gold') {
     return scoreTeamGold(placedEntries, input)
+  }
+
+  if (input.scoringMode === 'team-speed') {
+    return scoreTeamSpeed(placedEntries)
   }
 
   const aggregateProjection = input.aggregateProjection ?? 'absolute-dps'

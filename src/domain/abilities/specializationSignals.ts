@@ -5,6 +5,7 @@ import {
   type ResolvedHeroAbilityProfile,
   type SignalBucket,
 } from './abilityModel'
+import type { SpeedEffectEntry } from '../planner/speedScoring'
 
 /**
  * 专精（specialization）运行时信号注入。
@@ -45,6 +46,8 @@ export interface SpecializationEntry {
    */
   requiredUpgradeId?: string | null
   signals: SpecializationSignalEntry[]
+  /** 专精携带的速度效果（team-speed 模式 runtime 按玩家选择注入 speedProfile）。 */
+  speedEffects?: SpeedEffectEntry[]
 }
 
 export type SpecializationCatalog = Record<string, SpecializationEntry[]>
@@ -67,6 +70,7 @@ export function applySpecializationsToProfile(
   const active = new Set(activeUpgradeIds)
   const carry: HeroAbilitySignal[] = []
   const support: HeroAbilitySignal[] = []
+  const specSpeedEffects: SpeedEffectEntry[] = []
   for (const entry of heroSpecializations ?? []) {
     if (!active.has(entry.upgradeId)) {
       continue
@@ -82,9 +86,28 @@ export function applySpecializationsToProfile(
         support.push(signalEntry.signal)
       }
     }
+    // 速度效果注入（专精源速度效果，如 Melf 快速刷新 / Farideh 额外刷怪）
+    if (entry.speedEffects && entry.speedEffects.length > 0) {
+      specSpeedEffects.push(...entry.speedEffects)
+    }
   }
-  if (carry.length === 0 && support.length === 0) {
+  if (carry.length === 0 && support.length === 0 && specSpeedEffects.length === 0) {
     return profile
   }
-  return appendHeroAbilitySignals(profile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
+  const withSignals = (carry.length > 0 || support.length > 0)
+    ? appendHeroAbilitySignals(profile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
+    : profile
+  // 速度效果合并进 speedProfile（base + spec 叠加）
+  if (specSpeedEffects.length > 0) {
+    const baseEffects = withSignals.speedProfile?.effects ?? []
+    return {
+      ...withSignals,
+      speedProfile: {
+        heroId: withSignals.heroId,
+        effects: [...baseEffects, ...specSpeedEffects],
+        speedGain: 1, // spec 注入后 speedGain 不再单英雄独立（需全阵型求值），置 1 不影响裁剪
+      },
+    }
+  }
+  return withSignals
 }

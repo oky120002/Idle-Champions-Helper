@@ -1618,6 +1618,24 @@
           "original": "Fury of Asmodeus",
           "display": "阿斯摩蒂斯之怒"
         }
+      },
+      {
+        "upgradeId": "17841",
+        "requiredLevel": 140,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Pact with Lorcan",
+          "display": "与洛肯的契约"
+        },
+        "speedEffects": [
+          {
+            "category": "extraEnemies",
+            "value": 33,
+            "rawEffect": "spawn_additional_monsters,33",
+            "upgradeId": "17841"
+          }
+        ]
       }
     ],
     "41": [
@@ -1759,6 +1777,45 @@
           "original": "Bosh",
           "display": "波什"
         }
+      }
+    ],
+    "59": [
+      {
+        "upgradeId": "19340",
+        "requiredLevel": 110,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Melf's Speedy Spawns",
+          "display": "马友夫的快速刷新"
+        },
+        "speedEffects": [
+          {
+            "category": "spawnSpeed",
+            "value": 25,
+            "rawEffect": "increase_monster_spawn_time_mult,25",
+            "upgradeId": "19340"
+          }
+        ]
+      },
+      {
+        "upgradeId": "19341",
+        "requiredLevel": 110,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Melf's Doubled Drops",
+          "display": "马友夫的双倍掉宝"
+        },
+        "speedEffects": [
+          {
+            "category": "questProgress",
+            "value": 25,
+            "multiplier": 2,
+            "rawEffect": "chance_multiply_monster_quest_rewards,25,2",
+            "upgradeId": "19341"
+          }
+        ]
       }
     ],
     "60": [
@@ -4469,6 +4526,24 @@
           "original": "Tactical Advantage",
           "display": "战术优势"
         }
+      },
+      {
+        "upgradeId": "17087",
+        "requiredLevel": 230,
+        "requiredUpgradeId": null,
+        "signals": [],
+        "specializationName": {
+          "original": "Dragon Slayer",
+          "display": "屠龙者"
+        },
+        "speedEffects": [
+          {
+            "category": "extraEnemies",
+            "value": 50,
+            "rawEffect": "spawn_additional_monsters,50",
+            "upgradeId": "17087"
+          }
+        ]
       }
     ],
     "165": [

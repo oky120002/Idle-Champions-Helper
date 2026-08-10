@@ -207,6 +207,11 @@ export interface HeroAbilityProfile {
    */
   eligiblePatronIds?: string[] | null
   /**
+   * 速度画像（build 期从 champion-details effect_keys 提取 7 类静态可计算速度效果）。
+   * 仅速度英雄有此字段；team-speed 评分模式消费。详见 speedScoring.ts。
+   */
+  speedProfile?: import('../planner/speedScoring').HeroSpeedProfile
+  /**
    * 运行时注入的存档上下文（OwnedHero 派生）；build 期 undefined（不进 hero-abilities.json）。
    * evaluateFormation/buildPlannerRecommendation 从 profileSnapshot 注入，供存档依赖谓词
    *（GetUpgradeUnlocked 等）求值。缺省 = 未拥有/未导入存档 → 谓词恒 false。
