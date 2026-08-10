@@ -43,7 +43,13 @@ describe('beam search ranking', () => {
     })
 
     expect(results.length).toBeGreaterThan(0)
-    expect(unwrap(results[0], 'expected at least one result').objectiveValue.toNumber()).toBeGreaterThan(0)
+    const top = unwrap(results[0], 'expected at least one result')
+    // 4 英雄唯一 seat × 4 槽 → 全放置；score = 1×2(bruenor)×1×3(jarlaxle) = 6.0
+    expect(top.objectiveValue.toNumber()).toBe(6.0)
+    const placedHeroes = Object.values(top.placements)
+    expect(placedHeroes).toHaveLength(4)
+    expect(placedHeroes).toContain('bruenor')
+    expect(placedHeroes).toContain('jarlaxle')
   })
 
   it('beam width 限制候选扩展', () => {
@@ -73,11 +79,11 @@ describe('beam search ranking', () => {
     })
 
     const top = unwrap(results[0], 'expected at least one result')
-    expect(top).toHaveProperty('objectiveValue')
-    expect(top).toHaveProperty('placements')
-    expect(top).toHaveProperty('breakdown')
-    expect(top).toHaveProperty('warnings')
-    expect(top).toHaveProperty('carryHeroId')
+    expect(top.objectiveValue.toNumber()).toBe(5)
+    expect(top.warnings).toEqual(['test warning'])
+    expect(top.carryHeroId).toBe('jarlaxle')
+    expect(top.breakdown).toBeNull()
+    expect(Object.keys(top.placements)).toHaveLength(slots.length)
   })
 
   it('同一阵型不放置同 seat 英雄（seat 冲突在生成阶段过滤）', () => {

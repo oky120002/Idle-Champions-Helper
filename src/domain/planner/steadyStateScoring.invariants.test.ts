@@ -336,6 +336,8 @@ describe('scoreFormation 对抗性反例', () => {
       })
       expect(result).toBeDefined()
       expect(result.carryHeroId).toBe('carry')
+      // carryDps = Infinity × levelCurve × aggregate = Infinity
+      expect(result.objectiveValue.toNumber()).toBe(Infinity)
     })
   })
 
