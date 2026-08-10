@@ -75,7 +75,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
                   aria-pressed={isActive}
                   onClick={() => setSelectedSkinId(skin.id)}
                 >
-                  <span className="visual-workbench__skin-kicker">skin #{skin.id}</span>
+                  <span className="visual-workbench__skin-kicker">{pickLocaleText(locale, { zh: `皮肤 #${String(skin.id)}`, en: `skin #${String(skin.id)}` })}</span>
                   <strong className="visual-workbench__skin-name">{skinPrimaryName}</strong>
                   {skinSecondaryName != null && skinSecondaryName !== '' ? <span className="visual-workbench__skin-secondary">{skinSecondaryName}</span> : null}
                   <span className="visual-workbench__skin-meta">
@@ -98,7 +98,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
             <strong className="visual-workbench__meta-value">{selectedAsset.graphicId}</strong>
           </div>
           <div className="visual-workbench__meta-item">
-            <span className="visual-workbench__meta-key">delivery</span>
+            <span className="visual-workbench__meta-key">{pickLocaleText(locale, { zh: '交付', en: 'delivery' })}</span>
             <strong className="visual-workbench__meta-value">{getDeliveryLabel(selectedAsset.delivery, locale)}</strong>
           </div>
           <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
@@ -116,7 +116,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
             </strong>
           </div>
           <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
-            <span className="visual-workbench__meta-key">uses</span>
+            <span className="visual-workbench__meta-key">{pickLocaleText(locale, { zh: '用途', en: 'uses' })}</span>
             <strong className="visual-workbench__meta-value">{usesJoined !== '' ? usesJoined : '—'}</strong>
           </div>
         </div>

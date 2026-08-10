@@ -79,7 +79,7 @@ describe('ChampionDetailPage content', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: '装备' }))
     expect(await screen.findByText('简单盾牌')).toBeInTheDocument()
-    expect(screen.getByText('Golden Epic')).toBeInTheDocument()
+    expect(screen.getByText('金装史诗')).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '传奇' }))
     expect(await screen.findByText(/槽位 1/)).toBeInTheDocument()

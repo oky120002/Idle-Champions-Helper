@@ -39,7 +39,7 @@ export function DetailLootSection({ detail, locale, t, effectContext }: DetailLo
                   </div>
                   <div className="detail-badge-row">
                     <span className="detail-badge">{buildRarityLabel(item.rarity, locale)}</span>
-                    {item.isGoldenEpic ? <span className="detail-badge detail-badge--active">Golden Epic</span> : null}
+                    {item.isGoldenEpic ? <span className="detail-badge detail-badge--active">{locale === 'zh-CN' ? '金装史诗' : 'Golden Epic'}</span> : null}
                   </div>
                 </div>
                 {item.description ? (
