@@ -58,6 +58,23 @@ planner 当前支持的评估维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 | survival | 推图约束 | `effectiveHealth = baseHealth × healthLevelCurve × health_pool`；ability health + 装备 `health_mult`（hero-scoped per-carry）+ `damage_reduction_mult` 玩家侧减伤并入 health_pool。不进 carryDps，作为推图预估的存活约束。 |
 | speed | 否 | `attack_speed_mult` / `reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD / cooldown）。 |
 
+### team-speed 评分模式
+
+`team-speed` 是独立评分模式（`ScoringMode = 'team-speed'`），不走 carryDps 路径——`objectiveValue = speedMultiplier`（区域推进效率因子）。7 类静态速度效果 + 1 类动态假设（areaSkip）按 IC 语义聚合：
+
+| 类别 | 因子公式 | 代表英雄 |
+|------|----------|----------|
+| questProgress | `Π(1+chance/100×(mult−1)) / (1−Σ(chance/100×reduction/100))` | Havilar, BBEG, Sentry, Hew Maan |
+| spawnSpeed | `1+Σ(value/100)` | Deekin, Widdle |
+| extraEnemies | `1+Σ(value/100)` | Ezmerelda, Minsc |
+| timeScale | `1+Σ(value/100)`，cap 10 | Shandie |
+| transitionSpeedup | `1+Σ(value/100)`，cap 5 | Diana |
+| simultaneousSpawn | 二值 1.5 | Vi |
+| preSpawn | 二值 1.2 | Lark, Anson |
+| areaSkip | `1+Σ(value/100)` | Briv(25%), Lae'zel(18%), Thellora(15%), Halsin(11%) |
+
+阵型级因子 = 各类别因子之积。三层缩放：装备 buff_upgrade（`applyEquipmentBuffsToSpeedEffects`）+ 阵型效果（`applyFormationSpeedEffects`，如 Hew Maan 相邻人类查表）+ 专精注入（`applySpecializationsToProfile` 合并 speedEffects）。动态英雄 areaSkip 使用 `DYNAMIC_SPEED_DEFAULTS` 默认值，可经 `dynamicSpeedOverrides` 入参覆盖。
+
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 
 `manualStackCount`（dynamic-stack-multiply 机制，如蔚「出言不逊」）：`stacksMultiply=true` **且无 stackFunc** 的纯动态层数 signal 按 `percentToMultiplier(value)^manualStackCount` 乘算，层数由 UI「动态层数假设」输入透传（默认 `DEFAULT_MANUAL_STACK_COUNT=1000`）。`stacksMultiply=true` **带 stackFunc** 的 signal（如 hero32 `per_mithral_hall_stacks`）层数源是 stackFunc 而非 area-based manual——走 stackFunc 计数路径（注册的按阵型计数、未注册的不计入目标值），不进 manualStackCount 短路（误进则 (1+value/100)^1000 灾难高估）。formation-count 等实时数英雄的机制不受影响。机制清单见 `dps-mechanics.md`。

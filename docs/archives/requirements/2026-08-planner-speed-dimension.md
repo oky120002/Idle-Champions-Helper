@@ -1,6 +1,7 @@
 # planner 速度维度建模
 
-**优先级**：待评
+**优先级**：已落地
+**终态**：已实现（2026-08-10）。team-speed 评分模式落地，8 类速度效果（7 静态 + 1 动态 areaSkip）+ 三层缩放（装备/阵型/专精）+ PlannerSpeedBreakdown UI。计划 `2026-08-planner-speed-dimension.md` 已移 archives/plans/。
 
 ## 是什么
 

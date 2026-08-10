@@ -1,6 +1,6 @@
 # planner 速度维度建模
 
-**状态**: 已确认
+**状态**: 已落地
 **类型**: change
 **范围**: planner (speed scoring) + scripts/data (speed extraction) + UI
 **创建日期**: 2026-08-10
