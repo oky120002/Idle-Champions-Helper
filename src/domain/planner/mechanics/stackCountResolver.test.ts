@@ -73,4 +73,31 @@ describe('STACK_COUNT_RESOLVERS', () => {
     const resolver = unwrap(STACK_COUNT_RESOLVERS.per_crusader, 'missing per_crusader resolver')
     expect(resolver.count(input, signal)).toBeNull()
   })
+
+  it('per_upgrade_targets 传入 activeEffectKeys（HasEffect 谓词匹配生效）', () => {
+    const hasEffectPredicate = unwrap(parseHeroPredicate('HasEffect(`buff_xy`)', 'functional'), 'failed to parse HasEffect')
+    const withEffect = createHero('with-effect')
+    const withoutEffect = createHero('no-effect')
+    const input = buildInput({
+      carryHero: createHero('carry'),
+      supportHero: createHero('support'),
+      placements: { s1: 'with-effect', s2: 'no-effect' },
+      heroesById: new Map([
+        ['carry', createHero('carry')],
+        ['support', createHero('support')],
+        ['with-effect', withEffect],
+        ['no-effect', withoutEffect],
+      ]),
+      activeEffectKeysByHero: new Map([
+        ['with-effect', new Set(['buff_xy'])],
+      ]),
+    })
+    const signal = buildSignal({
+      value: 100,
+      stackFunc: 'per_upgrade_targets',
+      targetQualifier: { predicate: hasEffectPredicate },
+    })
+    const resolver = unwrap(STACK_COUNT_RESOLVERS.per_upgrade_targets, 'missing per_upgrade_targets resolver')
+    expect(resolver.count(input, signal)).toBe(1)
+  })
 })

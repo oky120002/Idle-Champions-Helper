@@ -29,8 +29,6 @@ function describeEffect(effect: SpeedEffectEntry, t: (text: LocaleText) => strin
     case 'simultaneousSpawn':
     case 'preSpawn':
       return t({ zh: '在场生效', en: 'active' })
-    default:
-      return ''
   }
 }
 

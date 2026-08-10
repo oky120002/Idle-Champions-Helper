@@ -5,7 +5,7 @@ import {
   type ResolvedHeroAbilityProfile,
   type SignalBucket,
 } from './abilityModel'
-import type { SpeedEffectEntry } from '../planner/speedScoring'
+import { computeHeroSpeedGain, type SpeedEffectEntry } from '../planner/speedScoring'
 
 /**
  * 专精（specialization）运行时信号注入。
@@ -100,12 +100,13 @@ export function applySpecializationsToProfile(
   // 速度效果合并进 speedProfile（base + spec 叠加）
   if (specSpeedEffects.length > 0) {
     const baseEffects = withSignals.speedProfile?.effects ?? []
+    const mergedEffects = [...baseEffects, ...specSpeedEffects]
     return {
       ...withSignals,
       speedProfile: {
         heroId: withSignals.heroId,
-        effects: [...baseEffects, ...specSpeedEffects],
-        speedGain: 1, // spec 注入后 speedGain 不再单英雄独立（需全阵型求值），置 1 不影响裁剪
+        effects: mergedEffects,
+        speedGain: computeHeroSpeedGain(mergedEffects),
       },
     }
   }

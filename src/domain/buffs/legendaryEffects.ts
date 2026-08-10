@@ -117,7 +117,7 @@ export function collectLegendaryContributions(
         // per_crusader global_dps 或 hero_dps → LegendaryContribution
         const isHeroPool = parsed.kind === HERO_DPS_KIND
         const targetQualifier = isHeroPool
-          ? normalizeTargetQualifier({ filter_targets: entry.filterTargets ?? [], target_filters: entry.targetFilters ?? [] })
+          ? normalizeTargetQualifier({ filter_targets: entry.filterTargets ?? [] })
           : null
         const countQualifier = isPerCrusader
           ? normalizeTargetQualifier({ target_filters: entry.targetFilters ?? [] })

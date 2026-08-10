@@ -54,7 +54,7 @@ function countUpgradeTargets(input: EvaluatePlacementFitInput, signal: HeroAbili
       return count
     }
 
-    return matchesHeroQualifier(hero, signal.targetQualifier) ? count + 1 : count
+    return matchesHeroQualifier(hero, signal.targetQualifier, input.activeEffectKeysByHero?.get(heroId)) ? count + 1 : count
   }, 0)
 }
 

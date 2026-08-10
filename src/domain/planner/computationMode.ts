@@ -37,7 +37,7 @@ export const OBJECTIVE_DIMENSIONS: Record<ScoringMode, HeroAbilityDimension[]> =
  */
 export function compositeGain(hero: ResolvedHeroAbilityProfile, scoringMode: ScoringMode): number {
   if (scoringMode === 'team-speed') {
-    // speed ranking uses pre-computed speedProfile.speedGain (includes base + spec effects)
+    // speed ranking uses pre-computed speedProfile.speedGain (base + spec + equipment buff 缩放)
     return hero.speedProfile?.speedGain ?? 1
   }
   const dims = OBJECTIVE_DIMENSIONS[scoringMode]

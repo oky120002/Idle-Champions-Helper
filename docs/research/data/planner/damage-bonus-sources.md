@@ -1,6 +1,6 @@
 # 加成来源盘点与叠加语义
 
-IC 伤害加成 effect key 的来源全盘点 + IC 叠加语义。核心原则见 `docs/specs/modules/planner/architecture.md`「加成建模正确性原则」：精确优先——已建模来源按 IC 真实叠加语义算对（同 effect key 全来源加法），未建模明确标注「没算」；不接受负负得正。
+IC 伤害加成 effect key 的来源全盘点 + IC 叠加语义。核心原则见 `docs/specs/modules/planner/computation-constraints.md`「加成建模正确性原则」：精确优先——已建模来源按 IC 真实叠加语义算对（同 effect key 全来源加法），未建模明确标注「没算」；不接受负负得正。
 
 ## DPS 公式
 
@@ -74,7 +74,7 @@ IC 语义：同 key 全部来源加法叠加（unified damage:hero 池）。
 
 ## 关联
 
-- 叠加正确性原则：`docs/specs/modules/planner/architecture.md`「加成建模正确性原则」
+- 叠加正确性原则：`docs/specs/modules/planner/computation-constraints.md`「加成建模正确性原则」
 - 加成聚合实现：`docs/specs/modules/planner/simulator.md`
 - 机制全貌：`damage-mechanic-inventory.md`
 - 度量口径：`bud-calibration.md`、`damage-reference-calibration.md`

@@ -125,3 +125,36 @@ describe('applySpecializationsToProfile 等级门控', () => {
     expect(profile.supportSignals).toHaveLength(1)
   })
 })
+
+describe('applySpecializationsToProfile 速度效果', () => {
+  const specWithSpeed: SpecializationEntry[] = [
+    {
+      upgradeId: '301',
+      specializationName: { original: 'Speed Spec', display: '速度专精' },
+      signals: [],
+      speedEffects: [{ category: 'spawnSpeed', value: 50, rawEffect: 'spec_spawn_speed' }],
+    },
+  ]
+
+  it('base + spec 速度效果合并后 speedGain 正确重算（非置 1）', () => {
+    const baseProfile = {
+      ...makeProfile('7'),
+      speedProfile: {
+        heroId: '7',
+        effects: [{ category: 'spawnSpeed', value: 100, rawEffect: 'base_spawn_speed' }],
+        speedGain: 2, // build 期：1 + 100/100
+      },
+    } as unknown as ResolvedHeroAbilityProfile
+    const profile = applySpecializationsToProfile(baseProfile, ['301'], specWithSpeed, HIGH_LEVEL)
+    expect(profile.speedProfile).toBeDefined()
+    // spawnSpeed 加性：1 + (100+50)/100 = 2.5
+    expect(profile.speedProfile?.speedGain).toBe(2.5)
+    expect(profile.speedProfile?.effects).toHaveLength(2)
+  })
+
+  it('无 base 速度效果注入 spec 速度效果 → speedGain > 1', () => {
+    const profile = applySpecializationsToProfile(makeProfile('7'), ['301'], specWithSpeed, HIGH_LEVEL)
+    expect(profile.speedProfile).toBeDefined()
+    expect(profile.speedProfile?.speedGain).toBe(1.5) // 1 + 50/100
+  })
+})

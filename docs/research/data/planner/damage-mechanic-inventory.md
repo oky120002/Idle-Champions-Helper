@@ -135,5 +135,5 @@
 ## 关联
 
 - 加成来源盘点与叠加语义：[damage-bonus-sources.md](./damage-bonus-sources.md)
-- planner 加成原则：`docs/specs/modules/planner/architecture.md`「加成建模正确性原则」
+- planner 加成原则：`docs/specs/modules/planner/computation-constraints.md`「加成建模正确性原则」
 - 信号 filter/tag/target/count 语义：memory `hero-signal-target-qualifier-semantics`

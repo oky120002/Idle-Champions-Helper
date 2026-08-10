@@ -18,7 +18,7 @@ const CONSTRAINT_LABELS: Record<ConstraintKind, LocaleText> = {
   'health-drain': { zh: '持续掉血', en: 'Health drain' },
 }
 
-// MAX_AREA 来源 areaEstimation.ts 的 monsterStats，此处仅做进度条归一化用。
+// 进度条归一化基数：UX 选择（多数阵型 100–1500 区间），非 MAX_AREA(2501)——用 2501 会使进度条过短。
 const MAX_AREA_NORMALIZER = 1500
 
 export interface PlannerAreaEstimateProps {

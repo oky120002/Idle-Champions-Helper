@@ -7,7 +7,7 @@ import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
-import { applyEquipmentBuffsToSpeedEffects } from './speedScoring'
+import { applyEquipmentBuffsToSpeedEffects, computeHeroSpeedGain } from './speedScoring'
 import type { AbilityScoreKey, AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
@@ -334,11 +334,13 @@ function applyEquipmentBuffs(
     const withSignals = applyEquipmentBuffsToProfile(profile, buffs)
     // 装备 buff_upgrade 同时缩放速度效果（三层缩放之「装备等级」层）
     if (withSignals.speedProfile) {
+      const scaledEffects = applyEquipmentBuffsToSpeedEffects(withSignals.speedProfile.effects, buffs)
       heroById.set(heroId, {
         ...withSignals,
         speedProfile: {
           ...withSignals.speedProfile,
-          effects: applyEquipmentBuffsToSpeedEffects(withSignals.speedProfile.effects, buffs),
+          effects: scaledEffects,
+          speedGain: computeHeroSpeedGain(scaledEffects),
         },
       })
     } else {
