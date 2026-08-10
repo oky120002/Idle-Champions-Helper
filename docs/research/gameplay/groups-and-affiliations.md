@@ -46,4 +46,10 @@ affiliation 作为 buff 条件标签时，功能上与 race/class/tag 等筛选�
 
 ## 与 planner 的关系
 
-affiliation 在 hero-abilities 中作为 buff 的 filter/target 条件出现（如 Rosie 的 affiliation-based buff）。当前评估模型中 affiliation 作为 per-hero 属性可用于条件匹配，但未作为独立维度建模。如需精确模拟 affiliation-dependent buff，需要将 `champions.json` 的 affiliations 接入英雄属性查询。
+affiliation 已通过 tag 系统接入 planner——`normalize-champions.ts` 将所有 19 个分组 + `unaffiliated` 转换为 hero tag，planner 的 tag 匹配可直接使用。
+
+### `has_affiliation` 谓词 ⚠️
+
+effect-definitions.json 中有 3 个定义（id 949/1059/1380）使用 `has_affiliation`/`!has_affiliation` 作为 target tag 条件，但这些定义未被任何 champion upgrade 引用（死定义）。实际使用 `has_affiliation` 的只有 Miria (121)，在她的 `buff_upgrade_per_any_tagged_crusader_mult,0,10665,!has_affiliation` 的 count qualifier 中。
+
+`parseHeroPredicate`（heroPredicate.ts）不认识 `has_affiliation`/`!has_affiliation` 谓词。但 Miria 的效果丢失的**根因不是谓词不支持**——而是 `buff_upgrade_per_any_tagged_crusader_mult` wrapper 派生的通用覆盖缺口（8/24 成功，16/24 丢失，涉及 14 种不同 tag 条件）。修复 `has_affiliation` 谓词不能解决 Miria 的效果丢失。
