@@ -1,6 +1,6 @@
 # planner 传奇装备效果接入
 
-**状态**: 已确认
+**状态**: 已落地
 **类型**: milestone
 **范围**: planner（scoringBonusInputs + steadyStateScoring + recommendationEngine）、data 管线
 **创建日期**: 2026-08-10
