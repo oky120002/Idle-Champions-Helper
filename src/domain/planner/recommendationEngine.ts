@@ -2,6 +2,7 @@
 import { toGameNumber, parseGameNumber, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
+import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
@@ -153,6 +154,8 @@ export interface PlannerRecommendationOptions {
    * scoreFormation 内按 carry 属性匹配，与 equipment 同 add pool 合并。默认空（无外部 hero_dps 加成）。
    */
   externalHeroDpsContributions?: readonly HeroDpsContribution[]
+  /** 传奇装备贡献（per_crusader global_dps + 条件 hero_dps），placement-aware + count-aware。 */
+  legendaryContributions?: readonly LegendaryContribution[]
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
   /**
@@ -403,6 +406,7 @@ function scorePlannerFormation(
     equipmentGoldByHero: options.equipmentGoldByHero,
     equipmentCritByHero: options.equipmentCritByHero,
     externalHeroDpsContributions: options.externalHeroDpsContributions,
+    legendaryContributions: options.legendaryContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,
     goldBudget: parseGoldBudget(options.goldBudget),

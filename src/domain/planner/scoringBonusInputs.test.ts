@@ -236,4 +236,72 @@ describe('buildScoringBonusInputs', () => {
     })
     expect(r.equipmentBuffsByHero.size).toBe(0)
   })
+
+  // --- 传奇装备效果接入 ---
+
+  it('无 legendaryEffectCatalog → legendaryContributions 空（向后兼容）', () => {
+    const hero = makeOwnedHero('1', {})
+    hero.legendaryBySlot = { '1': { slotId: '1', level: 5, effectId: '42', effectIds: ['42'], resetCurrencyId: null, upgradeCost: 0 } }
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [hero] }),
+      lootCatalog: [],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+    })
+    expect(r.legendaryContributions).toEqual([])
+  })
+
+  it('有存档 + 目录 → 简单 global_dps 合入 equipmentGlobalDpsByHero', () => {
+    const hero = makeOwnedHero('1', {})
+    hero.legendaryBySlot = { '1': { slotId: '1', level: 5, effectId: 'le1', effectIds: ['le1'], resetCurrencyId: null, upgradeCost: 0 } }
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [hero] }),
+      lootCatalog: [],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      legendaryEffectCatalog: [
+        { id: 'le1', effectString: 'global_dps_multiplier_mult,100', stackFunc: null, targetFilters: null, filterTargets: null },
+      ],
+    })
+    // base 100 × level 5 = 500
+    expect(r.equipmentGlobalDpsByHero.get('1')).toBe(500)
+    expect(r.legendaryContributions).toEqual([])
+  })
+
+  it('per_crusader global_dps → legendaryContributions（不进 equipmentGlobalDpsByHero）', () => {
+    const hero = makeOwnedHero('1', {})
+    hero.legendaryBySlot = { '1': { slotId: '1', level: 10, effectId: 'le2', effectIds: ['le2'], resetCurrencyId: null, upgradeCost: 0 } }
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [hero] }),
+      lootCatalog: [],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      legendaryEffectCatalog: [
+        { id: 'le2', effectString: 'global_dps_multiplier_mult,10', stackFunc: 'per_crusader', targetFilters: null, filterTargets: null },
+      ],
+    })
+    expect(r.equipmentGlobalDpsByHero.size).toBe(0)
+    expect(r.legendaryContributions).toHaveLength(1)
+    expect(r.legendaryContributions[0]!.pool).toBe('global')
+    expect(r.legendaryContributions[0]!.baseValue).toBe(100)
+    expect(r.legendaryContributions[0]!.perCrusader).toBe(true)
+  })
+
+  it('hero_dps 带 filter → legendaryContributions pool=hero', () => {
+    const hero = makeOwnedHero('1', {})
+    hero.legendaryBySlot = { '1': { slotId: '1', level: 1, effectId: 'le3', effectIds: ['le3'], resetCurrencyId: null, upgradeCost: 0 } }
+    const r = buildScoringBonusInputs({
+      profileSnapshot: makeSnapshot({ ownedHeroes: [hero] }),
+      lootCatalog: [],
+      effectDefinitions: [],
+      patronPerkCatalog: [],
+      legendaryEffectCatalog: [
+        { id: 'le3', effectString: 'hero_dps_multiplier_mult,125', stackFunc: null, targetFilters: null, filterTargets: [{ type: 'by_tags', tags: 'male' }] },
+      ],
+    })
+    expect(r.legendaryContributions).toHaveLength(1)
+    expect(r.legendaryContributions[0]!.pool).toBe('hero')
+    expect(r.legendaryContributions[0]!.baseValue).toBe(125)
+    expect(r.legendaryContributions[0]!.targetQualifier).not.toBeNull()
+  })
 })

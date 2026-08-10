@@ -4,6 +4,7 @@ import { toGameNumber, multiplyGameNumbers, compareGameNumbers, formatGameNumber
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
+import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
@@ -86,6 +87,12 @@ export interface ScoringInput {
    * 由调用方经 collectHeroDpsContributions 解析后传入。
    */
   externalHeroDpsContributions?: ReadonlyArray<HeroDpsContribution> | undefined
+  /**
+   * 传奇装备贡献（per_crusader global_dps + 条件 hero_dps），placement-aware + count-aware。
+   * scoreFormation 按 placed 英雄检查拥有者是否在阵型，per_crusader 按匹配英雄数 × baseValue。
+   * absolute-dps 下 global 池/hero 池各路合并（与 equipment/patron 同 key 加法，A1）。
+   */
+  legendaryContributions?: ReadonlyArray<LegendaryContribution> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */
   lockedCarryHeroId?: string | undefined
   /**
@@ -360,6 +367,7 @@ function aggregateExternalDamagePools(
   carryHero: ResolvedHeroAbilityProfile,
   abilityDamageAggregate: number,
   aggregateProjection: AggregateProjection,
+  placedEntries: readonly PlacedEntry[],
 ): { damageAggregate: number; breakdownPools: Map<string, AggregatedPool> } {
   if (aggregateProjection === 'formation-buff') {
     return { damageAggregate: abilityDamageAggregate, breakdownPools: sharedPools }
@@ -367,12 +375,31 @@ function aggregateExternalDamagePools(
   const externalPools: AggregatedPool[] = []
   const globalBuffMultiplier = input.globalBuffMultiplier ?? 1
   // 账号级 patron/blessing global_dps（不依赖 placed）+ 装备 global_dps（placement-aware，只计阵型内英雄）。
-  const globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
+  let globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
+  // 传奇装备贡献（placement-aware + count-aware）：拥有者必须在阵型中才生效。
+  const placedHeroIds = new Set(placedEntries.map((entry) => entry.hero.heroId))
+  let legendaryGlobalAddPercent = 0
+  let legendaryHeroDpsAddPercent = 0
+  for (const lc of input.legendaryContributions ?? []) {
+    if (!placedHeroIds.has(lc.ownerHeroId)) {
+      continue
+    }
+    let value = lc.baseValue
+    if (lc.perCrusader) {
+      value *= placedEntries.filter((entry) => matchesHeroQualifier(entry.hero, lc.countQualifier)).length
+    }
+    if (lc.pool === 'global') {
+      legendaryGlobalAddPercent += value
+    } else if (matchesHeroQualifier(carryHero, lc.targetQualifier)) {
+      legendaryHeroDpsAddPercent += value
+    }
+  }
+  globalAddPercent += legendaryGlobalAddPercent
   if (globalAddPercent !== 0) {
     externalPools.push({ dimension: 'damage', scope: 'global', addPercent: globalAddPercent, multFactor: 1, poolMultiplier: 1 })
   }
   const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryHero.heroId) ?? 1
-  let externalHeroDpsAddPercent = 0
+  let externalHeroDpsAddPercent = legendaryHeroDpsAddPercent
   for (const contribution of input.externalHeroDpsContributions ?? []) {
     if (matchesHeroQualifier(carryHero, contribution.qualifier)) {
       externalHeroDpsAddPercent += contribution.value
@@ -491,6 +518,7 @@ function scoreCarryCandidate(
     carryEntry.hero,
     abilityDamageAggregate,
     aggregateProjection,
+    placedEntries,
   )
 
   // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。

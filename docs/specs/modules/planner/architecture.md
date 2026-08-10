@@ -25,7 +25,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 |---|---|---|---|
 | multiplier（1+Σ/100） | `globalBuffMultiplier` / `equipmentAdjustmentByHero` / `equipmentHealthByHero` | **1** | 乘法单位元；`steadyStateScoring.ts` 内 `(mult−1)×100` 折算为 0% addPercent |
 | addPercent（Σ%） | `equipmentGlobalDpsByHero` / `equipmentGoldByHero` | **0** | 加法单位元；`sumPlacedEquipmentAddPercent` 空 map → 返回 0 |
-| 列表 / 对象 | `externalHeroDpsContributions` / `equipmentCritByHero` / `equipmentBuffsByHero` | **空** | 空数组 / undefined → 循环不执行 / 判空跳过 |
+| 列表 / 对象 | `externalHeroDpsContributions` / `equipmentCritByHero` / `equipmentBuffsByHero` / `legendaryContributions` | **空** | 空数组 / undefined → 循环不执行 / 判空跳过 |
 
 multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100` 折算成 addPercent，1 折算为 0%；addPercent 类回退 0；列表类回退空。三者殊途同归：**未传 = 0 贡献 = 不进 pool = 跳过该能力加成**。
 
@@ -86,7 +86,7 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 | `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
 | `featCatalog` / `specializationCatalog` | consumed（`applyActiveFeats` / `applyActiveSpecializations` 按玩家选择注入 profile） |
 | signal 解锁等级 `required_level` | consumed（烘进 `HeroAbilitySignal.requiredLevel`） |
-| loot-catalog / effect-definitions / patron-perks catalog | consumed（`buildScoringBonusInputs` 装配外部加成） |
+| loot-catalog / effect-definitions / patron-perks catalog / legendary-effects-catalog | consumed（`buildScoringBonusInputs` 装配外部加成） |
 | 怪物 / BUD 曲线 | consumed（`monsterStats.ts` 内联全局常量） |
 
 **B. 动态状态（per-call `PlannerEvaluateInput` / `options`）**
