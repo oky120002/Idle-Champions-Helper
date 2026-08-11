@@ -715,6 +715,11 @@ export interface ChampionDetail {
   skins: ChampionSkin[]
   loot: ChampionLoot[]
   legendaryEffects: LegendaryEffect[]
+  /**
+   * change_base_attack 目标攻击参数，keyed by upgradeId。
+   * 非专精 upgrade = build 期直接覆盖 base（总是生效）；专精 upgrade = runtime 注入（玩家选择时生效）。
+   */
+  attackOverrides: Record<string, { cooldown: number | null; numTargets: number | null }>
   /** 英雄 ult/主动技能（ability_defines，id===hero_id 对齐）。 */
   ability: ChampionAbility | null
   raw: {
@@ -820,6 +825,34 @@ export function normalizeChampionDetail(
         )
       : null
 
+  // change_base_attack 目标攻击参数：扫描所有 upgrade 的 effect_keys，解析 change_base_attack,N
+  // 到 attackDefinitionsById 查 N 的 cooldown/numTargets。非专精 = build 期直接覆盖 base；
+  // 专精 = runtime 按玩家选择注入。
+  const attackOverrides: Record<string, { cooldown: number | null; numTargets: number | null }> = {}
+  for (const upgrade of upgrades) {
+    const ed = upgrade.effectDefinition
+    if (!ed) continue
+    const orig = asRawRecord(ed.snapshots.original)
+    if (!orig) continue
+    for (const ekRaw of asRawArray(orig.effect_keys)) {
+      const ek = asRawRecord(ekRaw)
+      const es = toText(ek?.effect_string)
+      if (!es || !es.startsWith('change_base_attack,')) continue
+      const altAttackId = es.split(',')[1]?.trim()
+      if (!altAttackId) continue
+      const altAttack = normalizeAttack(
+        attackDefinitionsById.get(altAttackId),
+        localizedAttackDefinitionsById.get(altAttackId),
+      )
+      if (altAttack) {
+        attackOverrides[upgrade.id] = {
+          cooldown: altAttack.cooldown,
+          numTargets: altAttack.numTargets,
+        }
+      }
+    }
+  }
+
   return {
     updatedAt,
     upgrades,
@@ -827,6 +860,7 @@ export function normalizeChampionDetail(
     skins,
     loot,
     legendaryEffects,
+    attackOverrides,
     summary: champion,
     englishName: toText(originalDefinition.english_name) ?? champion.name.original,
     eventName: normalizeOptionalLocalizedText(

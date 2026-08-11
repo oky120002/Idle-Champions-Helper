@@ -14,7 +14,7 @@ import {
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
 } from './effect-helpers.ts'
-import { asRecord } from './io-utils.ts'
+import { asArray, asRecord } from './io-utils.ts'
 
 // GetUpgradeUnlocked(N) / GetUpgradePurchased(N) 节点 build 期解析：upgrade N 属本英雄（self，布尔引用均
 // self-ref），从 detail.upgrades 取 requiredLevel + isSpecialization(specializationName 非空) + ownerHeroId=self
@@ -160,6 +160,39 @@ export function buildOfficialHeroModel(
   const base = asRecord(attacks.base) ?? {}
   const characterSheet = asRecord(detail.characterSheet) ?? {}
 
+  // change_base_attack 攻击参数覆盖：非专精 = 总是生效（直接覆盖 base）；
+  // 专精 = runtime 按玩家选择注入（存入 profile.attackOverrides）。
+  const rawAttackOverrides = detail.attackOverrides as Record<string, { cooldown: number | null; numTargets: number | null }> | undefined
+  const allOverrides = rawAttackOverrides ?? {}
+  const upgradeList = asArray(detail.upgrades)
+  const specOverrideIds = new Set<string>()
+  for (const up of upgradeList) {
+    const upgrade = asRecord(up)
+    if (!upgrade) continue
+    if (upgrade.specializationName != null) {
+      const uid = typeof upgrade.id === 'string' || typeof upgrade.id === 'number' ? String(upgrade.id) : ''
+      if (uid && uid in allOverrides) specOverrideIds.add(uid)
+    }
+  }
+  // 非专精 override：取最后一个（requiredLevel 最高的）应用到 base 参数
+  let effectiveCooldown = typeof base.cooldown === 'number' ? base.cooldown : null
+  let effectiveNumTargets = typeof base.numTargets === 'number' && base.numTargets > 0 ? base.numTargets : null
+  for (const up of upgradeList) {
+    const upgrade = asRecord(up)
+    if (!upgrade) continue
+    const uid = typeof upgrade.id === 'string' || typeof upgrade.id === 'number' ? String(upgrade.id) : ''
+    if (!uid || specOverrideIds.has(uid)) continue
+    const ov = allOverrides[uid]
+    if (!ov) continue
+    if (typeof ov.cooldown === 'number') effectiveCooldown = ov.cooldown
+    if (typeof ov.numTargets === 'number') effectiveNumTargets = ov.numTargets
+  }
+  // 专精 override：存入 profile，runtime 注入时覆盖
+  const specAttackOverrides: Record<string, { cooldown: number | null; numTargets: number | null }> = {}
+  for (const uid of specOverrideIds) {
+    specAttackOverrides[uid] = allOverrides[uid]
+  }
+
   // patron 资格列表（summary.patronEligibility.eligiblePatronIds），EligibleForPatron 查。
   const summary = asRecord(detail.summary) ?? {}
   const patronEligibility = asRecord(summary.patronEligibility) ?? {}
@@ -175,8 +208,8 @@ export function buildOfficialHeroModel(
     roles: champion.roles as string[],
     tags: champion.tags as string[],
     baseAttackDamageTypes: (base.damageTypes as string[] | undefined) ?? [],
-    baseAttackCooldown: typeof base.cooldown === 'number' ? base.cooldown : null,
-    numTargets: typeof base.numTargets === 'number' && base.numTargets > 0 ? base.numTargets : null,
+    baseAttackCooldown: effectiveCooldown,
+    numTargets: effectiveNumTargets,
     damageModifier: (() => { const dm = Number(base.damageModifier); return Number.isFinite(dm) && dm > 0 ? dm : null })(),
     age: typeof characterSheet.age === 'number' ? characterSheet.age : null,
     abilityScores: (characterSheet.abilityScores as HeroAbilityProfile['abilityScores'] | undefined) ?? {},
@@ -194,6 +227,7 @@ export function buildOfficialHeroModel(
     baseHealth,
     healthCurves,
     eligiblePatronIds,
+    attackOverrides: Object.keys(specAttackOverrides).length > 0 ? specAttackOverrides : null,
     carrySignals,
     supportSignals,
     unsupportedSignals,

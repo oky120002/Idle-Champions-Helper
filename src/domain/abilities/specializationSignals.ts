@@ -83,8 +83,31 @@ export function applySpecializationsToProfile(
       }
     }
   }
-  if (carry.length === 0 && support.length === 0) {
+
+  // change_base_attack 专精覆盖：激活的专精含 attackOverrides 时覆盖 baseAttackCooldown/numTargets，
+  // BUD 计算自动使用覆盖后的参数（computeSingleHitDamage 读 hero.baseAttackCooldown/numTargets）。
+  let overrideProfile = profile
+  const overrides = profile.attackOverrides
+  if (overrides) {
+    for (const uid of activeUpgradeIds) {
+      const ov = overrides[uid]
+      if (!ov) continue
+      // 等级门控：同信号一致，等级不够的专精覆盖也不生效
+      const spec = heroSpecializations?.find((e) => e.upgradeId === uid)
+      if (spec?.requiredLevel != null && heroLevel < spec.requiredLevel) continue
+      overrideProfile = {
+        ...overrideProfile,
+        baseAttackCooldown: ov.cooldown ?? overrideProfile.baseAttackCooldown,
+        numTargets: ov.numTargets ?? overrideProfile.numTargets,
+      }
+    }
+  }
+
+  if (carry.length === 0 && support.length === 0 && overrideProfile === profile) {
     return profile
   }
-  return appendHeroAbilitySignals(profile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
+  const withSignals = carry.length > 0 || support.length > 0
+    ? appendHeroAbilitySignals(overrideProfile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
+    : overrideProfile
+  return withSignals
 }

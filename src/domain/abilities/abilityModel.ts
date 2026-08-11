@@ -194,6 +194,12 @@ export interface HeroAbilityProfile {
    * healthLevelCurve(level) = rate^level 近似生命增长。
    */
   healthCurves?: Record<string, number> | null
+  /**
+   * change_base_attack 专精覆盖：upgradeId → { cooldown, numTargets }。
+   * 玩家选了对应专精时，BUD 计算用覆盖后的攻击参数替代 base。
+   * 非专精 change_base_attack 已在 build 期直接写入 baseAttackCooldown/numTargets（总是生效）。
+   */
+  attackOverrides?: Record<string, { cooldown: number | null; numTargets: number | null }> | null
   carrySignals: HeroAbilitySignal[]
   supportSignals: HeroAbilitySignal[]
   unsupportedSignals: HeroUnsupportedSignal[]
