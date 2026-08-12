@@ -92,14 +92,36 @@ repair: rebuild
   - 位置: `src/domain/planner/mechanics/signalMultiplier.ts:44`
   - 备注: signalMultiplier.ts 警告和 recommendationEngine.ts 违规信息直接返回中文字符串，需改为返回结构化数据由 UI 层翻译
 
-- 装备 Shiny/Golden Epic 验证完成：GE 效果已在 catalog，仅 GE 升级版缺数据 <!-- auto-todo:id=atd_shiny_golden_001 -->
-  - 记录时间: `2026-08-10T19:50:00+08:00`
+- snowflake/active_campaign target type 需 amount_func_set_table/amount_expr 管线支持 <!-- auto-todo:id=atd_60e2347278 -->
+  - 记录时间: `2026-08-12T12:30:17+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/heroTargetingRelation.ts`
+  - 备注: Gazrick(98) snowflake：amount_func=set + amount_func_set_table=[100,300,1100,4700,23900] 按距离索引，effect_string amount=0 非真实值
+    - Shaka(79) active_campaign：amount_expr=upgrade_amount(13416,0) 动态拼图机制，amount=0 非真实值
+    - 影响：2 英雄的位置限定 DPS 信号因 amount 机制不支持而丢弃
+    - 修复方向：管线层支持 amount_func=set（set_table 按距离索引）和 amount_expr（动态求值），非位置关系映射问题
+    - 来源：wiki 交叉核对 P0 验证（2026-08-10）
+
+- Vin Ursa(127) + 4 英雄 vulnerability 数据源缺失——favored_foe 数值 API 不暴露 <!-- auto-todo:id=atd_06da25def9 -->
+  - 记录时间: `2026-08-12T12:30:28+08:00`
+  - 类型: follow-up
+  - 位置: `public/data/v1/champion-details`
+  - 备注: Vin Ursa(127) increase_monster_damage_if_favored_foe_from_hero_id,400,127：hero 127 在 API 中无 favored_foe 标签，无法确定对哪种敌人生效
+    - 4 英雄仅 favored_foe 标签无伤害量：Turiel(49,fiend)/Jaheira(61,beast)/Laezel(128,aberration)/Van Richten(177,undead) — 引擎内置偏好敌人加成，API 不暴露数值
+    - Zorbu(22) zorbu_lifelong_enemies,0.01 per-kill 动态堆叠，依赖存档击杀数（需用户输入）
+    - 影响：5 英雄的偏好敌人易伤加成无法建模
+    - 修复方向：需游戏内实测/社区数据补充，或 Zorbu 接 manualStackCount 同构用户假设入参
+    - 来源：wiki 交叉核对 P2 验证（2026-08-10）
+
+- 普通 Epic 可升 Golden Epic 的升级效果数据 API 不提供 <!-- auto-todo:id=atd_31e017c03e -->
+  - 记录时间: `2026-08-12T12:30:39+08:00`
   - 类型: follow-up
   - 位置: `scripts/data/normalize-champions.ts`
-  - 备注: 2026-08-10 验证完成（原 TODO 前提「GE 效果完全丢失」不准确）
-    - 140 条 isGoldenEpic=true 装备已全部进 loot-catalog（rarity=4 的 effectString 即 GE 值）
-    - 每个槽位要么是 GE 要么是普通 Epic，不存在同一槽位两者并存
-    - 真正缺失：2478 条 allowGoldenEpic=true 普通装备可升级为 GE，但升级效果不在 API 数据中
-    - Shiny 是付费 boost（增加装备等级），非独立 loot item
+  - 备注: 2478 条 allowGoldenEpic=true 的普通装备可升级为 GE，但升级后的效果值不在 CNE API 数据中
+    - 140 条原生 isGoldenEpic=true 已正确进 loot-catalog（rarity=4 的 effectString 即 GE 值）
+    - 每个槽位要么是 GE 要么是普通 Epic（不存在同一槽位两者并存），catalog 正确反映可用装备
+    - 影响：有 GE 升级装备的玩家评分可能被低估（普通 Epic 值 < GE 升级值）
+    - 修复方向：需从游戏内实测/社区数据补充 GE 升级效果值
+    - 来源：wiki 交叉核对 P3 验证（2026-08-10）
 
 <!-- auto-todo:end -->
