@@ -507,6 +507,7 @@ export function PlannerEvaluatePage() {
     collections,
     profileSnapshot,
     lootCatalog,
+    legendaryEffectCatalog,
     patronPerkCatalog,
     effectDefinitions,
     championById,
@@ -565,10 +566,11 @@ export function PlannerEvaluatePage() {
     if (mode === 'none') setGoldLevelConversion(null)
   }, [])
 
-  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
+  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, legendaryContributions } = useMemo(
     () => buildScoringBonusInputs({
       profileSnapshot,
       lootCatalog,
+      legendaryEffectCatalog,
       effectDefinitions,
       patronPerkCatalog,
       hypotheticalEquipment: {
@@ -578,7 +580,7 @@ export function PlannerEvaluatePage() {
       },
       featCatalog: collections.featCatalog ?? null,
     }),
-    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
+    [profileSnapshot, lootCatalog, legendaryEffectCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
   )
   // 金币/等级换算结果 → heroLevelOverride + goldBudget 入参
   const heroLevelOverride = useMemo(() => {
@@ -591,8 +593,8 @@ export function PlannerEvaluatePage() {
     return goldLevelConversion?.maxGold
   }, [goldLevelMode, goldBudget, goldLevelConversion])
   const evaluateOptions = useMemo(
-    () => ({ candidateMode, scoringMode, manualStackCount, heroLevelOverride, goldBudget: effectiveGoldBudget, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions }),
-    [candidateMode, scoringMode, manualStackCount, heroLevelOverride, effectiveGoldBudget, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions],
+    () => ({ candidateMode, scoringMode, manualStackCount, heroLevelOverride, goldBudget: effectiveGoldBudget, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, legendaryContributions }),
+    [candidateMode, scoringMode, manualStackCount, heroLevelOverride, effectiveGoldBudget, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, legendaryContributions],
   )
   const { result: evaluationResult, loading: evaluateLoading, error: evaluateError } = usePlannerEvaluation(
     runner,
@@ -615,7 +617,9 @@ export function PlannerEvaluatePage() {
 
   const scoreLabel = scoringMode === 'team-gold'
     ? t({ zh: '金币收益', en: 'Team gold find' })
-    : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
+    : scoringMode === 'team-speed'
+      ? t({ zh: '速度因子', en: 'Speed factor' })
+      : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
   const heroNameById = useMemo(
     () => new Map((evaluation.result?.placementEntries ?? []).map((entry) => [entry.heroId, entry.heroName])),
     [evaluation.result],
@@ -645,6 +649,7 @@ export function PlannerEvaluatePage() {
           equipmentBuffsByHero,
           globalBuffMultiplier,
           externalHeroDpsContributions,
+          legendaryContributions,
         },
       })
       if (recommendation.result) {

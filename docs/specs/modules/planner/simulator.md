@@ -35,7 +35,9 @@ hero_final_dps = base_dps × level_curve
   × vulnerability_pool        // 按怪物 tag 条件匹配，Σ(add) → Π(mult)
 ```
 
-`global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron / blessing / 装备）同属一个 IC effect key，按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。`scoreFormation` 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
+`global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron / blessing / 装备 / 传奇装备）同属一个 IC effect key，按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。`scoreFormation` 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
+
+**传奇装备效果**（`legendaryEffects.ts`）：存档驱动（`OwnedHero.legendaryBySlot`），owned-aware + placement-aware + count-aware。简单 global_dps（无 per_crusader）合入 `equipmentGlobalDpsByHero`；per_crusader global_dps 和条件 hero_dps 走 `LegendaryContribution` 在 `aggregateExternalDamagePools` 中按拥有者是否在阵型 + 阵型匹配英雄数求值。等级缩放 `base × level`（线性）。
 
 **加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot / legendary）只走 owned-aware 通道：加性 kind（hero_dps / global_dps / gold / health / crit，`equipmentMult.ts`）+ `buff_upgrade` wrapper（`equipmentBuffSignals.ts` `applyEquipmentBuffsToProfile`：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 wrapper 注入 profile，与 feat / 专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals **或 spec catalog**——`buildHeroModels` 过滤 loot / legendary / feat 不进 base，`specialization-catalog` build 同构过滤 `specializationDerived` 的 loot / legendary / feat 源。所有 wrapper 消费路径都必须接 sourceBucket 过滤。违反此不变式 → 双重计数（陷阱与防范纪律见 `modeling-pitfalls.md`）。
 
@@ -57,6 +59,23 @@ planner 当前支持的评估维度（`HeroAbilityDimension` + `DIMENSION_BY_KIN
 | vulnerability | 是 | 按场景怪物 tag 条件性匹配（`scenario.enemyTypes`）；add / mult 分流聚合，与 damage pool 一致。 |
 | survival | 推图约束 | `effectiveHealth = baseHealth × healthLevelCurve × health_pool`；ability health + 装备 `health_mult`（hero-scoped per-carry）+ `damage_reduction_mult` 玩家侧减伤并入 health_pool。不进 carryDps，作为推图预估的存活约束。 |
 | speed | 否 | `attack_speed_mult` / `reduce_attack_cooldown` 等解析进 pool，但不进 carryDps（hero_dps 按秒模型，speed 精确建模依赖 BUD / cooldown）。 |
+
+### team-speed 评分模式
+
+`team-speed` 是独立评分模式（`ScoringMode = 'team-speed'`），不走 carryDps 路径——`objectiveValue = speedMultiplier`（区域推进效率因子）。7 类静态速度效果 + 1 类动态假设（areaSkip）按 IC 语义聚合：
+
+| 类别 | 因子公式 | 代表英雄 |
+|------|----------|----------|
+| questProgress | `Π(1+chance/100×(mult−1)) / (1−Σ(chance/100×reduction/100))` | Havilar, BBEG, Sentry, Hew Maan |
+| spawnSpeed | `1+Σ(value/100)` | Deekin, Widdle |
+| extraEnemies | `1+Σ(value/100)` | Ezmerelda, Minsc |
+| timeScale | `1+Σ(value/100)`，cap 10 | Shandie |
+| transitionSpeedup | `1+Σ(value/100)`，cap 5 | Diana |
+| simultaneousSpawn | 二值 1.5 | Vi |
+| preSpawn | 二值 1.2 | Lark, Anson |
+| areaSkip | `1+Σ(value/100)` | Briv(25%), Lae'zel(18%), Thellora(15%), Halsin(11%) |
+
+阵型级因子 = 各类别因子之积。三层缩放：装备 buff_upgrade（`applyEquipmentBuffsToSpeedEffects`）+ 阵型效果（`applyFormationSpeedEffects`，如 Hew Maan 相邻人类查表）+ 专精注入（`applySpecializationsToProfile` 合并 speedEffects）。动态英雄 areaSkip 使用 `DYNAMIC_SPEED_DEFAULTS` 默认值，可经 `dynamicSpeedOverrides` 入参覆盖。
 
 `evaluatePlacementFit` 按 `dimension` 显式过滤 signal——非伤害 pool 不泄漏进 carryDps，damage signal 不进 team_gold_find。
 

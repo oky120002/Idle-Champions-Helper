@@ -4,60 +4,11 @@
 
 planner 是最佳阵型自动推算工具的核心模块：在用户当前拥有英雄、装备、feat、传奇、专精与场景限制下，自动推算最优上场英雄与站位。按本地优先、可解释、可验证原则，输出可追溯的推算结果与加成拆解。
 
-## 计算原则
+## 计算约束
 
-planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最优配置，最大化输出（carry-dps）/ 金币（team-gold）效益。以下原则是所有 planner 开发的硬约束。
+planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最优配置，最大化输出（carry-dps）/ 金币（team-gold）/ 速度（team-speed）效益。
 
-### 投影模式（约束②）
-
-阵型模拟器本质是「阵型内 signal 聚合器」，外部全局加成（祝福 / 赞助者）不属于阵型。加入参开关 `aggregateProjection`：
-
-- `'absolute-dps'`（默认）：`objectiveValue` = baseDamage × levelCurve × globalBuff × heroDpsPool × damagePool × crit × vuln。globalBuff / heroDpsPool 是 ability 池与外部加成（patron / blessing / 装备）同 key 加法合并后的 unified 池；damagePool 为残余非 global / hero 池。绝对量未校准，作 BUD 校准回归基线。
-- `'formation-buff'`：`objectiveValue` = 阵型内 ability 聚合因子（globalBuff × heroDpsPool × damagePool × crit × vuln，池为 ability-only 不含外部加成），**不含** baseDamage / levelCurve / 外部加成。外部加成注入只发生在 absolute-dps。
-
-命名锁：**禁止复用 `ComputationMode`**——该名已用于 beam-search 候选裁剪（`computationMode.ts`，`full|p90|…|p50`），两者正交。
-
-### 外部加成入参契约（约束③）
-
-计算器不管调用方登没登录，只看入参是否传入。**未传的加成入参按其语义的数学单位元回退，贡献 0 加成（等价跳过该能力）**，绝不臆造数值：
-
-| 语义 | 入参 | 未传时回退 | 为何是此值 |
-|---|---|---|---|
-| multiplier（1+Σ/100） | `globalBuffMultiplier` / `equipmentAdjustmentByHero` / `equipmentHealthByHero` | **1** | 乘法单位元；`steadyStateScoring.ts` 内 `(mult−1)×100` 折算为 0% addPercent |
-| addPercent（Σ%） | `equipmentGlobalDpsByHero` / `equipmentGoldByHero` | **0** | 加法单位元；`sumPlacedEquipmentAddPercent` 空 map → 返回 0 |
-| 列表 / 对象 | `externalHeroDpsContributions` / `equipmentCritByHero` / `equipmentBuffsByHero` | **空** | 空数组 / undefined → 循环不执行 / 判空跳过 |
-
-multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100` 折算成 addPercent，1 折算为 0%；addPercent 类回退 0；列表类回退空。三者殊途同归：**未传 = 0 贡献 = 不进 pool = 跳过该能力加成**。
-
-是否传由调用方决定（UI / 测试 mock）。计算器**永不读取登录态、永不直接读取 user profile**——祝福 / favor / patron 已由 `userProfileNormalizer` 保留进 `UserProfileSnapshot`，由适配层 `buildScoringBonusInputs`（`scoringBonusInputs.ts`）聚合成各加成入参传入。
-
-> 非加成数值的特殊默认（近似 / 模式选择，非「跳过」）：`heroLevels ?? 1`（未拥有英雄按 1 级保守估算，levelCurve=rate^1，保留英雄间增长率差异）、`manualStackCount ?? 1000`（动态层数假设，area≈100 上限，UI 可覆盖）、`aggregateProjection ?? 'absolute-dps'`（主模式）。依据见 `simulator.md`。
-
-### 加成建模正确性原则
-
-1. **精确优先**：每个已建模的加成来源按 IC 真实叠加语义算对——同 effect key（如 `global_dps_multiplier_mult` / `hero_dps_multiplier_mult`）的所有来源（技能 / 装备 / patron / blessing）加法叠加（unified 池），不独立相乘。
-2. **不接受负负得正**：高估 bug 与低估缺口互相抵消不可接受——修 bug 后即使总偏差变大（暴露真实缺口），也优于错误抵消。
-3. **宁可不准，不可错**：未建模来源明确标注「没算」（可接受）；错误建模（如条件加成剥成无条件 = 过度生效）不可接受。带未解析条件的 effect 一律保守丢弃，不臆断。
-4. **劣后分类**：条件性攻击加成（种族 / 年龄 / 性别 / 小队等）属锦上添花，待主体加成正确性收敛后再做。
-
-### Hermetic 边界
-
-`src/domain/planner/` + `src/domain/simulator/` + `src/domain/abilities/` 是 hermetic 模块：
-
-- **永不 import** `src/data` / `src/app` / `src/components` / `src/pages`。
-- **永不主动获取数据**（非测试代码零 `readFileSync` / `fetch` / `indexedDB` / `loadCollection`）。唯一非域依赖是 `decimal.js`。
-- 所有数据经适配层 `usePlannerCollections`（唯一调 `loadCollection` 处）→ 装入 `PlannerCollections` → 经 `runner.updateCollections()` 喂入。
-
-由 `src/domain/planner/hermeticBoundary.test.ts` 守护，违规即 CI fail。
-
-### 数据分类铁律
-
-计算器消费的数据严格分两类：
-
-- **系统基础数据**（不可变游戏规则：技能解锁等级、buff 机制定义、英雄基础属性 / cost 曲线、patron perk 定义、feat / 专精定义、装备目录、怪物 / BUD 曲线）：**不是 per-call 入参**。启动时加载进 `PlannerCollections`（`usePlannerCollections` 负责加载与缓存）。
-- **动态状态**（随游戏开展变动：当前英雄等级、当前阵型、场景 / 层数、patron 选择、祝福量、feat / 专精选择、manualStackCount）：**才是 per-call 入参**。
-
-例如「等级解锁门控」：解锁等级是基础数据（build 把 `required_level` 烘进 `HeroAbilitySignal.requiredLevel`），英雄当前等级是动态入参（`heroLevels`）；计算器按 `requiredLevel <= heroLevel` 过滤 signal。
+投影模式、外部加成入参契约、取值口径、加成建模正确性原则、Hermetic 边界、数据分类铁律等开发硬约束见 `computation-constraints.md`。
 
 ## 入参契约
 
@@ -70,7 +21,7 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 | `plannerHeroes` / `plannerScenarios` | consumed（`updateCollections` 缓存） |
 | `featCatalog` / `specializationCatalog` | consumed（`applyActiveFeats` / `applyActiveSpecializations` 按玩家选择注入 profile） |
 | signal 解锁等级 `required_level` | consumed（烘进 `HeroAbilitySignal.requiredLevel`） |
-| loot-catalog / effect-definitions / patron-perks catalog | consumed（`buildScoringBonusInputs` 装配外部加成） |
+| loot-catalog / effect-definitions / patron-perks catalog / legendary-effects-catalog | consumed（`buildScoringBonusInputs` 装配外部加成） |
 | 怪物 / BUD 曲线 | consumed（`monsterStats.ts` 内联全局常量） |
 
 **B. 动态状态（per-call `PlannerEvaluateInput` / `options`）**
@@ -174,6 +125,7 @@ CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（
 
 ## 深入阅读
 
+- 开发硬约束（投影模式 / 外部加成契约 / 取值口径 / Hermetic 边界 / 数据分类）：`computation-constraints.md`
 - 数据、隐私、目录与存储：`data-and-privacy.md`
 - 推荐英雄、站位、模型字段与条件匹配：`recommendation.md`
 - 数字层、加成聚合与评估维度 / Web Worker、推图预估、输出合同与 UI：`simulator.md` / `computation-runtime.md`

@@ -97,6 +97,46 @@ function buildLootCatalog(lootDefines: RawDefinition[]): Array<{
   return catalog
 }
 
+/**
+ * 构建 legendary-effects-catalog（effectId → effectString/stackFunc/filters）。
+ * 从 raw legendary_effect_defines 提取 94 条唯一定义（跨英雄共享），供 planner 运行时
+ * 按存档 legendaryBySlot[slot].effectId 查表 + 等级缩放注入评分链路。
+ */
+function buildLegendaryEffectCatalog(legendaryEffectDefines: RawDefinition[]): Array<{
+  id: string
+  effectString: string
+  stackFunc: string | null
+  targetFilters: unknown[] | null
+  filterTargets: unknown[] | null
+}> {
+  const catalog: Array<{
+    id: string
+    effectString: string
+    stackFunc: string | null
+    targetFilters: unknown[] | null
+    filterTargets: unknown[] | null
+  }> = []
+  for (const define of legendaryEffectDefines) {
+    const effects = asRawArray(define.effects)
+    for (const effect of effects) {
+      const effectString = typeof effect.effect_string === 'string' ? effect.effect_string : ''
+      if (effectString === '') continue
+      const stackFunc = typeof effect.stack_func === 'string' ? effect.stack_func : null
+      const targetFilters = Array.isArray(effect.target_filters) && effect.target_filters.length > 0 ? effect.target_filters : null
+      const filterTargets = Array.isArray(effect.filter_targets) && effect.filter_targets.length > 0 ? effect.filter_targets : null
+      catalog.push({
+        id: toStr(define.id),
+        effectString,
+        stackFunc,
+        targetFilters,
+        filterTargets,
+      })
+      break // 每条 legendary_effect_define 的 effects 数组只有 1 个元素
+    }
+  }
+  return catalog
+}
+
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
 const DEFAULT_MANUAL_OVERRIDES = 'scripts/data/manual-overrides.json'
@@ -664,6 +704,13 @@ export async function normalizeDefinitionsSnapshot(
   const lootCatalog = buildLootCatalog(asRawArray(rawDefinitions.loot_defines))
   await writeJson(path.join(outputDir, 'loot-catalog.json'), {
     items: lootCatalog,
+    updatedAt,
+  })
+  // legendary-effects-catalog（effectId → effectString/stackFunc/filters），94 条唯一定义。
+  // planner 运行时按存档 legendaryBySlot[slot].effectId 查表 + 等级缩放注入评分链路。
+  const legendaryEffectCatalog = buildLegendaryEffectCatalog(asRawArray(rawDefinitions.legendary_effect_defines))
+  await writeJson(path.join(outputDir, 'legendary-effects-catalog.json'), {
+    items: legendaryEffectCatalog,
     updatedAt,
   })
   // effect-definitions（DPS effect_def template），供 patron_perk/blessing 的 `effect_def,<id>` 引用

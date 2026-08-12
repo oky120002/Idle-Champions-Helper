@@ -21,6 +21,8 @@ export interface BeamSearchResult {
   areaEstimate?: AreaEstimationResult | null
   /** best carry 的结构化加成拆解（透传给 PlannerResult，供 UI/CLI 消费）。 */
   breakdown: SimulationBreakdown | null
+  /** team-speed 模式的速度拆解（透传给 PlannerResult）。 */
+  speedBreakdown?: import('./speedScoring').SpeedBreakdown | null
 }
 
 interface BeamCandidate {
@@ -98,6 +100,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
       activeSignalKinds: s.result.activeSignalKinds,
       areaEstimate: s.result.areaEstimate ?? null,
       breakdown: s.result.breakdown ?? null,
+      speedBreakdown: s.result.speedBreakdown ?? null,
     }))
     .sort((a, b) => compareGameNumbers(b.objectiveValue, a.objectiveValue))
 }

@@ -7,6 +7,8 @@ import {
 import { collectEffectEntries, collectSpecializationEffectEntries, normalizeEffectSignal, splitEffectString } from './effect-helpers'
 import { asArray, asRecord } from './io-utils'
 import type { SignalBucket } from './effect-resolvers/resolverShared'
+import { parseSpeedEffect } from './speed-effects'
+import type { SpeedEffectEntry } from '../../src/domain/planner/speedScoring'
 
 /**
  * 专精（specialization）归一化：champion-details upgrades（specializationName != null）→ SpecializationEntry[]。
@@ -48,6 +50,8 @@ export interface SpecializationEntry {
    */
   requiredUpgradeId: string | null
   signals: SpecializationSignalEntry[]
+  /** 专精携带的速度效果（team-speed 模式 runtime 按玩家选择注入 speedProfile）。 */
+  speedEffects?: import('../../src/domain/planner/speedScoring').SpeedEffectEntry[]
 }
 
 interface SpecializationNameValue {
@@ -97,9 +101,22 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     metaByUpgradeId.set(id, { name, requiredLevel, requiredUpgradeId })
   }
 
-  // 按 upgradeId 聚合 spec effect → scoring signals（与 buildOfficialHeroModel 同解析路径）
+  // 按 upgradeId 聚合 spec effect → scoring signals（与 buildOfficialHeroModel 同解析路径）+ 速度效果
   const signalsByUpgradeId = new Map<string, SpecializationSignalEntry[]>()
+  const speedEffectsByUpgradeId = new Map<string, SpeedEffectEntry[]>()
   for (const entry of collectSpecializationEffectEntries(detail)) {
+    // 速度效果提取（专精源，如 Melf 的快速刷新 / Farideh 的额外刷怪）
+    const speedParsed = parseSpeedEffect(entry.effectString)
+    if (speedParsed) {
+      const upgradeId = entry.upgradeId ?? ''
+      if (upgradeId !== '') {
+        const list = speedEffectsByUpgradeId.get(upgradeId) ?? []
+        for (const e of speedParsed) {
+          list.push({ ...e, upgradeId })
+        }
+        speedEffectsByUpgradeId.set(upgradeId, list)
+      }
+    }
     const upgradeId = entry.upgradeId ?? ''
     if (upgradeId === '') continue
     const split = splitEffectString(entry.effectString)
@@ -149,12 +166,13 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     }
   }
 
-  // 保留集 = 有 scoring signal 的 ∪ 被保留条目沿 requiredUpgradeId 引用的结构 gate 节点（递归向上）。
+  // 保留集 = 有 scoring signal 或速度效果 的 ∪ 被保留条目沿 requiredUpgradeId 引用的结构 gate 节点（递归向上）。
   // 级联型专精树（hero 165/81）的 gate 节点本身往往无 scoring signal（unlock_ability 型），但其作为
   // 依赖层前置必须进 catalog——否则 UI 无法表达上层选择、依赖层选项的 prereq 永远不可满足（跨 gate
   // 不可能组合，DPS 虚高）。结构 gate 节点 signals=[]，engine 遍历空 signals 不注入，对存档数据透明。
   // gate 节点自身的 requiredUpgradeId 若指向非专精 upgrade（不在 metaByUpgradeId），视为恒满足、不展开。
-  const keep = new Set<string>(signalsByUpgradeId.keys())
+  // 速度专精（如 Melf 快速刷新 / Farideh 额外刷怪）可能只有 speedEffects 无 scoring signals，须一并保留。
+  const keep = new Set<string>([...signalsByUpgradeId.keys(), ...speedEffectsByUpgradeId.keys()])
   let expanded = true
   while (expanded) {
     expanded = false
@@ -171,7 +189,8 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
   for (const [upgradeId, { name, requiredLevel, requiredUpgradeId }] of metaByUpgradeId) {
     if (!keep.has(upgradeId)) continue
     const signals = signalsByUpgradeId.get(upgradeId) ?? []
-    entries.push({ upgradeId, requiredLevel, requiredUpgradeId, signals, specializationName: name })
+    const speedEffects = speedEffectsByUpgradeId.get(upgradeId)
+    entries.push({ upgradeId, requiredLevel, requiredUpgradeId, signals, specializationName: name, ...(speedEffects ? { speedEffects } : {}) })
   }
   return entries
 }

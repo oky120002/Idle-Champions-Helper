@@ -231,13 +231,9 @@ describe('signal coverage report', () => {
     ])
 
     expect(report.totals.perHeroExprTotal).toBe(2)
-    expect(report.totals.parsedPerHeroExprTotal).toBe(1)
-    expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
+    expect(report.totals.parsedPerHeroExprTotal).toBe(2)
+    expect(report.totals.unparsedPerHeroExprTotal).toBe(0)
     expect(report.totals.signalsWithTagCountQualifier).toBe(1)
-    expect(report.topUnparsedPerHeroExpr[0]).toEqual({
-      key: '!HasEffect(`vampire_spawn`)',
-      count: 1,
-    })
   })
 
   it('把简单 as_int 标签包装计入已解析，但动态阈值公式仍保持未解析', () => {
@@ -314,7 +310,7 @@ describe('signal coverage report', () => {
     })
   })
 
-  it('把 total_ability_score 比较表达式计入已解析，但含 HasEffect 等运行时谓词的组合仍保持未解析', () => {
+  it('把 total_ability_score 比较表达式和 HasEffect 组合都计入已解析', () => {
     const report = generateSignalCoverageReport([
       {
         upgrades: [
@@ -337,13 +333,9 @@ describe('signal coverage report', () => {
     ])
 
     expect(report.totals.perHeroExprTotal).toBe(2)
-    expect(report.totals.parsedPerHeroExprTotal).toBe(1)
-    expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
+    expect(report.totals.parsedPerHeroExprTotal).toBe(2)
+    expect(report.totals.unparsedPerHeroExprTotal).toBe(0)
     expect(report.totals.signalsWithStatCountQualifier).toBe(1)
-    expect(report.topUnparsedPerHeroExpr[0]).toEqual({
-      key: 'HasTag(`good`) && HasEffect(`celeste_heal`)',
-      count: 1,
-    })
   })
 
   it('对 buff_upgrade wrapper 区分 family unsupported、base resolved 和 base unresolved', () => {

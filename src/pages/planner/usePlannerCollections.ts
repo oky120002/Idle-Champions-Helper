@@ -5,6 +5,7 @@ import { loadResolvedPlannerModel } from '../../data/plannerModel'
 import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
 import type { PlannerCollections } from '../../domain/planner/recommendationTypes'
 import type { LootCatalogEntry } from '../../domain/buffs/equipmentMult'
+import type { LegendaryEffectCatalogEntry } from '../../domain/buffs/legendaryEffects'
 import type { PatronPerkCatalogEntry } from '../../domain/buffs/patronPerkGlobalBuff'
 import type { EffectDefinitionEntry } from '../../domain/buffs/effectDefinitionDps'
 import type { FeatCatalog } from '../../domain/abilities/featSignals'
@@ -18,6 +19,7 @@ export interface UsePlannerCollectionsResult {
   collections: PlannerCollections
   profileSnapshot: UserProfileSnapshot | null
   lootCatalog: LootCatalogEntry[]
+  legendaryEffectCatalog: LegendaryEffectCatalogEntry[]
   patronPerkCatalog: PatronPerkCatalogEntry[]
   /** DPS effect_def template（effect-definitions.json），供 globalBuff 解引用 + externalHeroDps 匹配。 */
   effectDefinitions: EffectDefinitionEntry[]
@@ -33,6 +35,7 @@ interface PlannerCollectionsData {
   collections: PlannerCollections
   profileSnapshot: UserProfileSnapshot | null
   lootCatalog: LootCatalogEntry[]
+  legendaryEffectCatalog: LegendaryEffectCatalogEntry[]
   patronPerkCatalog: PatronPerkCatalogEntry[]
   effectDefinitions: EffectDefinitionEntry[]
   championById: Map<string, Champion>
@@ -41,12 +44,13 @@ interface PlannerCollectionsData {
 
 async function loadPlannerCollectionsData(): Promise<PlannerCollectionsData> {
   const version = await loadVersion()
-  const [variants, plannerModel, resolution, champions, lootCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
+  const [variants, plannerModel, resolution, champions, lootCatalogCollection, legendaryEffectCatalogCollection, patronPerksData, effectDefinitionsData, featCatalogData, specializationCatalogData] = await Promise.all([
     loadCollection<Variant>('variants'),
     loadResolvedPlannerModel(),
     resolveUserProfileSnapshot(),
     loadCollection<Champion>('champions'),
     loadCollection<LootCatalogEntry>('loot-catalog'),
+    loadCollection<LegendaryEffectCatalogEntry>('legendary-effects-catalog'),
     fetchJson<{ perks: PatronPerkCatalogEntry[] }>(`${version.current}/patron-perks.json`),
     loadCollection<EffectDefinitionEntry>('effect-definitions'),
     fetchJson<{ catalog: FeatCatalog }>(`${version.current}/feat-catalog.json`),
@@ -62,6 +66,7 @@ async function loadPlannerCollectionsData(): Promise<PlannerCollectionsData> {
     },
     profileSnapshot: resolution.snapshot,
     lootCatalog: lootCatalogCollection.items,
+    legendaryEffectCatalog: legendaryEffectCatalogCollection.items,
     patronPerkCatalog: patronPerksData.perks,
     effectDefinitions: effectDefinitionsData.items,
     championById: new Map(champions.items.map((champion) => [champion.id, champion])),
@@ -84,6 +89,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
   const [collections, setCollections] = useState<PlannerCollections>({ variants: [], plannerHeroes: [], plannerScenarios: [], featCatalog: {}, specializationCatalog: {} })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [lootCatalog, setLootCatalog] = useState<LootCatalogEntry[]>([])
+  const [legendaryEffectCatalog, setLegendaryEffectCatalog] = useState<LegendaryEffectCatalogEntry[]>([])
   const [patronPerkCatalog, setPatronPerkCatalog] = useState<PatronPerkCatalogEntry[]>([])
   const [effectDefinitions, setEffectDefinitions] = useState<EffectDefinitionEntry[]>([])
   const [championById, setChampionById] = useState<Map<string, Champion>>(() => new Map())
@@ -104,6 +110,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
         setCollections(data.collections)
         setProfileSnapshot(data.profileSnapshot)
         setLootCatalog(data.lootCatalog)
+        setLegendaryEffectCatalog(data.legendaryEffectCatalog)
         setPatronPerkCatalog(data.patronPerkCatalog)
         setEffectDefinitions(data.effectDefinitions)
         setChampionById(data.championById)
@@ -124,7 +131,7 @@ export function usePlannerCollections(initialVariantId?: string | null): UsePlan
   const selectVariantId = useCallback((variantId: string | null) => setSelectedVariantId(variantId), [])
 
   return {
-    collections, profileSnapshot, lootCatalog, patronPerkCatalog,
+    collections, profileSnapshot, lootCatalog, legendaryEffectCatalog, patronPerkCatalog,
     effectDefinitions, championById, selectedVariantId, loadState, loadError, selectVariantId,
   }
 }

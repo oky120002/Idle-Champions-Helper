@@ -149,16 +149,20 @@ describe('normalizeTargetQualifier', () => {
     })
   })
 
-  it('hero_expr 不可解析（运行时变量）→ 保守丢弃该 filter，不影响其他 filter', () => {
-    // HasEffect 等运行时叶子 parseHeroPredicate 返回 null，该 filter 不进 predicate。
-    //（GetUpgradeUnlocked 已可解析，故改用 HasEffect 作「不可解析」样本。）
+  it('hero_expr 含 HasEffect → 正确解析为 hasEffect 节点（不再丢弃）', () => {
     const qualifier = normalizeTargetQualifier({
       filter_targets: [
         { type: 'by_tags', tags: 'female' },
         { type: 'hero_expr', hero_expr: 'HasEffect(`vampire_spawn`)' },
       ],
     })
-    expect(qualifier?.predicate).toEqual({ op: 'tag', tag: 'female' })
+    expect(qualifier?.predicate).toEqual({
+      op: 'and',
+      children: [
+        { op: 'tag', tag: 'female' },
+        { op: 'hasEffect', effectName: 'vampire_spawn' },
+      ],
+    })
   })
 
   it('hero_ids filter → 英雄白名单谓词（真实样本 effect_def 134/163）', () => {

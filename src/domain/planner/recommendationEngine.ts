@@ -2,10 +2,12 @@
 import { toGameNumber, parseGameNumber, compareGameNumbers, formatGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
+import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
+import { applyEquipmentBuffsToSpeedEffects, computeHeroSpeedGain } from './speedScoring'
 import type { AbilityScoreKey, AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
@@ -152,6 +154,8 @@ export interface PlannerRecommendationOptions {
    * scoreFormation 内按 carry 属性匹配，与 equipment 同 add pool 合并。默认空（无外部 hero_dps 加成）。
    */
   externalHeroDpsContributions?: readonly HeroDpsContribution[]
+  /** 传奇装备贡献（per_crusader global_dps + 条件 hero_dps），placement-aware + count-aware。 */
+  legendaryContributions?: readonly LegendaryContribution[]
   /** 动态层数假设（dynamic-stack-multiply 机制，如蔚出言不逊）；透传 scoreFormation→evaluatePlacementFit。 */
   manualStackCount?: number
   /**
@@ -179,6 +183,12 @@ export interface PlannerRecommendationOptions {
    * carry 落在这些槽位 → SCORE_ZERO；与系统解析的 damageSourcePattern 叠加。
    */
   userDamageDisabledSlots?: readonly string[]
+  /**
+   * 动态速度英雄假设值覆盖：heroId → 等效跳过百分比（areaSkip value）。
+   * 无覆盖的英雄使用 DYNAMIC_SPEED_DEFAULTS。透传 scoreFormation → scoreTeamSpeed。
+   * 取值口径：UI 面板值（默认或用户手调），用户数据仅通过 UI 按钮替换面板值。
+   */
+  dynamicSpeedOverrides?: ReadonlyMap<string, number>
 }
 
 /**
@@ -321,7 +331,21 @@ function applyEquipmentBuffs(
     if (!buffs || buffs.length === 0) {
       continue
     }
-    heroById.set(heroId, applyEquipmentBuffsToProfile(profile, buffs))
+    const withSignals = applyEquipmentBuffsToProfile(profile, buffs)
+    // 装备 buff_upgrade 同时缩放速度效果（三层缩放之「装备等级」层）
+    if (withSignals.speedProfile) {
+      const scaledEffects = applyEquipmentBuffsToSpeedEffects(withSignals.speedProfile.effects, buffs)
+      heroById.set(heroId, {
+        ...withSignals,
+        speedProfile: {
+          ...withSignals.speedProfile,
+          effects: scaledEffects,
+          speedGain: computeHeroSpeedGain(scaledEffects),
+        },
+      })
+    } else {
+      heroById.set(heroId, withSignals)
+    }
   }
 }
 
@@ -384,9 +408,11 @@ function scorePlannerFormation(
     equipmentGoldByHero: options.equipmentGoldByHero,
     equipmentCritByHero: options.equipmentCritByHero,
     externalHeroDpsContributions: options.externalHeroDpsContributions,
+    legendaryContributions: options.legendaryContributions,
     manualStackCount: options.manualStackCount,
     aggregateProjection: options.aggregateProjection,
     goldBudget: parseGoldBudget(options.goldBudget),
+    dynamicSpeedOverrides: options.dynamicSpeedOverrides,
   })
   // 伤害来源位置限制：carry 在不可造伤害位置 → DPS 归零（事实约束，非用户过滤）。
   // 在 scorePlannerFormation 而非 scorePlannerFormationWithLegality 生效，使 evaluateFormation 也反映。
@@ -489,6 +515,7 @@ function buildEvaluationFormationResult(
     areaEstimate: scoring.areaEstimate ?? null,
     viability: buildViabilityAssessment(scenario, scoring.areaEstimate ?? null),
     breakdown: scoring.breakdown,
+    speedBreakdown: scoring.speedBreakdown ?? null,
     placements,
     placementEntries,
   }
@@ -869,6 +896,7 @@ function buildRecommendationResults(
       areaEstimate: top.areaEstimate ?? null,
       viability: buildViabilityAssessment(scenario, top.areaEstimate ?? null),
       breakdown: top.breakdown,
+      speedBreakdown: top.speedBreakdown ?? null,
       placementEntries,
     }
   })

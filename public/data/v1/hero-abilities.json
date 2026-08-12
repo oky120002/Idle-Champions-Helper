@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09",
+  "updatedAt": "2026-08-10",
   "items": [
     {
       "heroId": "70",
@@ -119,7 +119,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -140,6 +139,34 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1980",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1980",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
+      ],
+      "speedProfile": {
+        "heroId": "70",
+        "effects": [
+          {
+            "category": "extraEnemies",
+            "value": 100,
+            "rawEffect": "spawn_additional_monsters,100",
+            "upgradeId": "15040"
+          }
+        ],
+        "speedGain": 2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -1094,12 +1121,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "spawn_additional_monsters",
-          "rawValue": "100",
-          "note": "No parser for effect: spawn_additional_monsters",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "ezmerelda_enemies_in_the_mist",
           "rawValue": "1",
           "note": "No parser for effect: ezmerelda_enemies_in_the_mist",
@@ -1243,8 +1264,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -1263,6 +1282,63 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2546",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 0
+        },
+        {
+          "effectDefId": "2547",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2547",
+          "effectKeys": [
+            "do_nothing_unshakable"
+          ],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2550",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 400
+        },
+        {
+          "effectDefId": "2550",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 400
+        }
+      ],
+      "speedProfile": {
+        "heroId": "171",
+        "effects": [
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_handler,100",
+            "upgradeId": "18467"
+          },
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_attack_handler,1",
+            "upgradeId": "18470"
+          }
+        ],
+        "speedGain": 1.2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -2243,12 +2319,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "uggie_handler",
-          "rawValue": "100",
-          "note": "No parser for effect: uggie_handler",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "disallow_roaming_familiar_ult_trigger",
           "rawValue": "1",
           "note": "No parser for effect: disallow_roaming_familiar_ult_trigger",
@@ -2270,12 +2340,6 @@
           "rawEffect": "unleash_uggie_contribution",
           "rawValue": "400",
           "note": "No parser for effect: unleash_uggie_contribution",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "uggie_attack_handler",
-          "rawValue": "1",
-          "note": "No parser for effect: uggie_attack_handler",
           "source": "official-parsed"
         },
         {
@@ -2545,6 +2609,22 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "805",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "805",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
       ],
       "carrySignals": [
         {
@@ -3699,6 +3779,22 @@
       "eligiblePatronIds": [
         "1",
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "2",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
       ],
       "carrySignals": [
         {
@@ -5101,6 +5197,29 @@
         "1": 1
       },
       "eligiblePatronIds": [],
+      "effectGrants": [
+        {
+          "effectDefId": "908",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "910",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "911",
+          "effectKeys": [],
+          "relation": "allAheadColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -6235,6 +6354,7 @@
         "1",
         "2"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -7304,7 +7424,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -7322,6 +7441,27 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2610",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
+      "speedProfile": {
+        "heroId": "28",
+        "effects": [
+          {
+            "category": "spawnSpeed",
+            "value": 100,
+            "rawEffect": "increase_monster_spawn_time_mult,100",
+            "upgradeId": "18856"
+          }
+        ],
+        "speedGain": 2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -8277,12 +8417,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "increase_monster_spawn_time_mult",
-          "rawValue": "100",
-          "note": "No parser for effect: increase_monster_spawn_time_mult",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "deeking_confidence_in_the_boss_handler",
           "rawValue": "1",
           "note": "No parser for effect: deeking_confidence_in_the_boss_handler",
@@ -8453,6 +8587,59 @@
       "eligiblePatronIds": [
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1686",
+          "effectKeys": [],
+          "relation": "behindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1690",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1691",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1692",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1687",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 400
+        },
+        {
+          "effectDefId": "1687",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 400
+        },
+        {
+          "effectDefId": "1689",
+          "effectKeys": [
+            "apply_feats_positionally"
+          ],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 500
+        }
       ],
       "carrySignals": [
         {
@@ -9753,6 +9940,31 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1892",
+          "effectKeys": [],
+          "relation": "aheadTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1896",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "1899",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -10830,6 +11042,22 @@
       "eligiblePatronIds": [
         "1",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2320",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2326",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        }
       ],
       "carrySignals": [
         {
@@ -11966,6 +12194,15 @@
       },
       "eligiblePatronIds": [
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1473",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
       ],
       "carrySignals": [
         {
@@ -13230,6 +13467,29 @@
         "2",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1407",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1415",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 300
+        },
+        {
+          "effectDefId": "1416",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 300
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -14421,6 +14681,15 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2090",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -15528,6 +15797,22 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1744",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1745",
+          "effectKeys": [],
+          "relation": "withinTwoSlotsOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -16434,6 +16719,22 @@
       "eligiblePatronIds": [
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2355",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "2359",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 130
+        }
       ],
       "carrySignals": [
         {
@@ -17777,6 +18078,22 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1577",
+          "effectKeys": [],
+          "relation": "behindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1084",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 200
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -18815,6 +19132,15 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2573",
+          "effectKeys": [],
+          "relation": "sameOrBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
       ],
       "carrySignals": [
         {
@@ -19952,6 +20278,50 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2253",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 1
+        },
+        {
+          "effectDefId": "2776",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2261",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "2263",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "2260",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 300
+        },
+        {
+          "effectDefId": "2260",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 300
+        }
       ],
       "carrySignals": [
         {
@@ -21190,6 +21560,43 @@
         "1",
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1713",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1713",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1719",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1720",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1721",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -22425,6 +22832,36 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1285",
+          "effectKeys": [],
+          "relation": "backTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1289",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 330
+        },
+        {
+          "effectDefId": "1291",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 400
+        },
+        {
+          "effectDefId": "587",
+          "effectKeys": [],
+          "relation": "backTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        }
       ],
       "carrySignals": [
         {
@@ -23777,6 +24214,27 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1598",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1599",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult",
+            "add_ceremorphosis_stacks"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 80
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -24974,6 +25432,7 @@
         "3",
         "5"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -25877,6 +26336,22 @@
       "eligiblePatronIds": [
         "2",
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1119",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1121",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 130
+        }
       ],
       "carrySignals": [
         {
@@ -27039,6 +27514,15 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1836",
+          "effectKeys": [],
+          "relation": "aheadTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -28158,6 +28642,22 @@
       "eligiblePatronIds": [
         "2",
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "75",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "76",
+          "effectKeys": [],
+          "relation": "behindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
       ],
       "carrySignals": [
         {
@@ -29294,6 +29794,29 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1390",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1392",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1393",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
       ],
       "carrySignals": [
         {
@@ -30520,6 +31043,22 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "755",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        },
+        {
+          "effectDefId": "755",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -31684,7 +32223,6 @@
         "unsupportedSignals": [
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -31701,6 +32239,69 @@
       "eligiblePatronIds": [
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "971",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "972",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "973",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 260
+        },
+        {
+          "effectDefId": "975",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 310
+        },
+        {
+          "effectDefId": "976",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 310
+        },
+        {
+          "effectDefId": "977",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 310
+        },
+        {
+          "effectDefId": "974",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 350
+        }
+      ],
+      "speedProfile": {
+        "heroId": "91",
+        "effects": [
+          {
+            "category": "spawnSpeed",
+            "value": 10,
+            "rawEffect": "increase_monster_spawn_time_mult,10",
+            "upgradeId": "6907"
+          }
+        ],
+        "speedGain": 1.1
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -32718,12 +33319,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "increase_monster_spawn_time_mult",
-          "rawValue": "10",
-          "note": "No parser for effect: increase_monster_spawn_time_mult",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "widdle_base_attack_cooldown_override",
           "rawValue": "999",
           "note": "No parser for effect: widdle_base_attack_cooldown_override",
@@ -32867,6 +33462,31 @@
       },
       "eligiblePatronIds": [
         "1"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "3",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "4",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "4",
+          "effectKeys": [
+            "celeste_heal"
+          ],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        }
       ],
       "carrySignals": [
         {
@@ -34033,6 +34653,7 @@
         "3",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -35077,6 +35698,24 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2537",
+          "effectKeys": [
+            "binwin_hit_detect"
+          ],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2542",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -36790,6 +37429,15 @@
         "1",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "962",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -37847,8 +38495,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -37868,6 +38514,48 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1849",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1853",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1854",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
+      "speedProfile": {
+        "heroId": "145",
+        "effects": [
+          {
+            "category": "extraEnemies",
+            "value": 50,
+            "rawEffect": "spawn_additional_monsters,50",
+            "upgradeId": "13875"
+          },
+          {
+            "category": "questProgress",
+            "value": 25,
+            "multiplier": 2,
+            "rawEffect": "chance_multiply_favored_foe_quest_rewards,25,2",
+            "upgradeId": "13876"
+          }
+        ],
+        "speedGain": 1.875
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -38810,21 +39498,9 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "spawn_additional_monsters",
-          "rawValue": "50",
-          "note": "No parser for effect: spawn_additional_monsters",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "expression_on_trigger",
           "rawValue": "offline_monsters_killed_by_owner",
           "note": "Effect value is not numeric: offline_monsters_killed_by_owner",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "chance_multiply_favored_foe_quest_rewards",
-          "rawValue": "25",
-          "note": "No parser for effect: chance_multiply_favored_foe_quest_rewards",
           "source": "official-parsed"
         },
         {
@@ -39005,6 +39681,45 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1949",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1949",
+          "effectKeys": [
+            "buff_incoming_effect_by_expr"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1952",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "1954",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "1950",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -40145,6 +40860,22 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2136",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2138",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -41217,6 +41948,29 @@
         "3",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2013",
+          "effectKeys": [],
+          "relation": "sameOrBehindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2019",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 230
+        },
+        {
+          "effectDefId": "2019",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 230
+        }
       ],
       "carrySignals": [
         {
@@ -42483,6 +43237,45 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2181",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 0
+        },
+        {
+          "effectDefId": "2182",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2185",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "2185",
+          "effectKeys": [
+            "outgoing_description"
+          ],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "2188",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -43731,6 +44524,29 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2115",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2118",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2116",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 200
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -44854,7 +45670,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -44872,6 +45687,20 @@
         "3",
         "5"
       ],
+      "effectGrants": [],
+      "speedProfile": {
+        "heroId": "102",
+        "effects": [
+          {
+            "category": "questProgress",
+            "value": 2,
+            "reductionAmount": 100,
+            "rawEffect": "chance_reduce_quest_requirement,2,100",
+            "upgradeId": "19720"
+          }
+        ],
+        "speedGain": 1.0204081632653061
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -45739,12 +46568,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "chance_reduce_quest_requirement",
-          "rawValue": "2",
-          "note": "No parser for effect: chance_reduce_quest_requirement",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "strong_society_base",
           "rawValue": "400",
           "note": "No parser for effect: strong_society_base",
@@ -45911,6 +46734,29 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "5",
+          "effectKeys": [],
+          "relation": "behindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "6",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "214",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 280
+        }
       ],
       "carrySignals": [
         {
@@ -47177,6 +48023,22 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2826",
+          "effectKeys": [],
+          "relation": "adjacentOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2837",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -48341,6 +49203,15 @@
       "eligiblePatronIds": [
         "1"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1426",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -49365,7 +50236,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -49383,6 +50253,28 @@
         "1",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1539",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
+      "speedProfile": {
+        "heroId": "125",
+        "effects": [
+          {
+            "category": "questProgress",
+            "value": 25,
+            "reductionAmount": 100,
+            "rawEffect": "chance_reduce_quest_requirement,25,100",
+            "upgradeId": "11543"
+          }
+        ],
+        "speedGain": 1.3333333333333333
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -50413,12 +51305,6 @@
           "rawValue": "5",
           "note": "No parser for effect: bbeg_railroad",
           "source": "official-parsed"
-        },
-        {
-          "rawEffect": "chance_reduce_quest_requirement",
-          "rawValue": "25",
-          "note": "No parser for effect: chance_reduce_quest_requirement",
-          "source": "official-parsed"
         }
       ]
     },
@@ -50579,6 +51465,50 @@
         "1",
         "2",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2164",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2165",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2166",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2160",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 190
+        },
+        {
+          "effectDefId": "2160",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 190
+        },
+        {
+          "effectDefId": "2172",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 240
+        }
       ],
       "carrySignals": [
         {
@@ -51894,6 +52824,31 @@
         "1",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1462",
+          "effectKeys": [],
+          "relation": "adjacentOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1462",
+          "effectKeys": [],
+          "relation": "adjacentOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1462",
+          "effectKeys": [
+            "do_nothing"
+          ],
+          "relation": "adjacentOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -53015,6 +53970,22 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "275",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "277",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 245
+        }
       ],
       "carrySignals": [
         {
@@ -54274,6 +55245,24 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "742",
+          "effectKeys": [
+            "baeloth_celebrant"
+          ],
+          "relation": "adjacentColumns",
+          "excludeSelf": false,
+          "requiredLevel": 80
+        },
+        {
+          "effectDefId": "1362",
+          "effectKeys": [],
+          "relation": "adjacentColumns",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -55281,6 +56270,36 @@
       "eligiblePatronIds": [
         "1",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1061",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1062",
+          "effectKeys": [],
+          "relation": "adjacentOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "1064",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        },
+        {
+          "effectDefId": "1065",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 300
+        }
       ],
       "carrySignals": [
         {
@@ -56315,6 +57334,7 @@
         "3",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -57261,6 +58281,38 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1811",
+          "effectKeys": [],
+          "relation": "sameOrBehindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1812",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1812",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1817",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 130
+        }
       ],
       "carrySignals": [
         {
@@ -61016,6 +62068,36 @@
         "1",
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1560",
+          "effectKeys": [],
+          "relation": "sameOrBehindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1562",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 170
+        },
+        {
+          "effectDefId": "1562",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 170
+        },
+        {
+          "effectDefId": "1566",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -62278,6 +63360,22 @@
         "2",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1248",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1250",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -63370,8 +64468,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -63389,6 +64485,29 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1208",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 35
+        },
+        {
+          "effectDefId": "1229",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 290
+        },
+        {
+          "effectDefId": "487",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        }
       ],
       "carrySignals": [
         {
@@ -64256,12 +65375,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "buff_resolution_chance",
-          "rawValue": "10",
-          "note": "No parser for effect: buff_resolution_chance",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "health_add",
           "rawValue": "115",
           "note": "No parser for effect: health_add",
@@ -64385,12 +65498,6 @@
           "rawEffect": "health_add",
           "rawValue": "50940",
           "note": "No parser for effect: health_add",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "buff_resolution_amount",
-          "rawValue": "10",
-          "note": "No parser for effect: buff_resolution_amount",
           "source": "official-parsed"
         }
       ]
@@ -64522,6 +65629,22 @@
         "1",
         "2",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2474",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2488",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 170
+        }
       ],
       "carrySignals": [
         {
@@ -65144,7 +66267,12 @@
           "rawEffect": "hero_dps_multiplier_mult,400",
           "source": "official-parsed",
           "targetQualifier": null,
-          "formationCountQualifier": null,
+          "formationCountQualifier": {
+            "predicate": {
+              "op": "hasEffectById",
+              "effectId": "2474"
+            }
+          },
           "positionQualifier": {
             "relation": "aheadColumn"
           },
@@ -65563,6 +66691,52 @@
         "2",
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2147",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2149",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "2149",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "2153",
+          "effectKeys": [
+            "buff_incoming_effect_by_expr"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "2153",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "2153",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -66708,6 +67882,7 @@
         "4",
         "5"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -68270,6 +69445,22 @@
         "2",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "568",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "571",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 140
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -69269,6 +70460,15 @@
       "eligiblePatronIds": [
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1879",
+          "effectKeys": [],
+          "relation": "withinTwoSlotsOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
       ],
       "carrySignals": [
         {
@@ -70345,6 +71545,22 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2196",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2199",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -71400,6 +72616,22 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "9",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 24
+        },
+        {
+          "effectDefId": "10",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 36
+        }
       ],
       "carrySignals": [
         {
@@ -72543,6 +73775,36 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2593",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2596",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2596",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2599",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 170
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -73523,6 +74785,22 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2832",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "2842",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -74350,6 +75628,22 @@
       "eligiblePatronIds": [
         "1",
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1512",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1514",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -75416,6 +76710,29 @@
         "1",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1211",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 25
+        },
+        {
+          "effectDefId": "1212",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        },
+        {
+          "effectDefId": "361",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        }
       ],
       "carrySignals": [
         {
@@ -76510,6 +77827,43 @@
         "3",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1675",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1678",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1678",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1680",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1681",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -77648,6 +79002,15 @@
         "1",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "171",
+          "effectKeys": [],
+          "relation": "behindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 80
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -78774,6 +80137,15 @@
       "eligiblePatronIds": [
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1148",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -79785,6 +81157,22 @@
         "1",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1016",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1018",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        }
       ],
       "carrySignals": [
         {
@@ -80903,6 +82291,22 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2296",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2297",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -81910,6 +83314,29 @@
       },
       "eligiblePatronIds": [
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1482",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1485",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "1485",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        }
       ],
       "carrySignals": [
         {
@@ -83080,6 +84507,73 @@
         "2",
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2431",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2436",
+          "effectKeys": [
+            "alyndra_portented_v2",
+            "luck_of_yondalla_blessing"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2436",
+          "effectKeys": [
+            "alyndra_portented_v2"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2436",
+          "effectKeys": [
+            "alyndra_portented_v2",
+            "luck_of_yondalla_blessing"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2436",
+          "effectKeys": [
+            "alyndra_portented_v2"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2436",
+          "effectKeys": [
+            "alyndra_portented_v2",
+            "orkira_lesser_restoration"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2436",
+          "effectKeys": [
+            "alyndra_portented_v2",
+            "orkira_lesser_restoration"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
       ],
       "carrySignals": [
         {
@@ -84262,6 +85756,50 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "11",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "12",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "13",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "137",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 325
+        },
+        {
+          "effectDefId": "138",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 325
+        },
+        {
+          "effectDefId": "139",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 325
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -85135,6 +86673,15 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1105",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 25
+        }
       ],
       "carrySignals": [
         {
@@ -86043,6 +87590,22 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1363",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1364",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 80
+        }
       ],
       "carrySignals": [
         {
@@ -87160,6 +88723,29 @@
         "3",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2083",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 70
+        },
+        {
+          "effectDefId": "2085",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        },
+        {
+          "effectDefId": "2087",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        }
       ],
       "carrySignals": [
         {
@@ -88429,6 +90015,15 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2329",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -89337,6 +90932,22 @@
         "1",
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "505",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 230
+        },
+        {
+          "effectDefId": "506",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 260
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -90225,8 +91836,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -90244,6 +91853,49 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2506",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 0
+        },
+        {
+          "effectDefId": "2507",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2507",
+          "effectKeys": [
+            "do_nothing_devil_may_care"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
+      "speedProfile": {
+        "heroId": "170",
+        "effects": [
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_handler,100",
+            "upgradeId": "18050"
+          },
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_attack_handler,1",
+            "upgradeId": "18053"
+          }
+        ],
+        "speedGain": 1.2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -91661,12 +93313,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "uggie_handler",
-          "rawValue": "100",
-          "note": "No parser for effect: uggie_handler",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "disallow_roaming_familiar_ult_trigger",
           "rawValue": "1",
           "note": "No parser for effect: disallow_roaming_familiar_ult_trigger",
@@ -91700,12 +93346,6 @@
           "rawEffect": "lark_bardic_perspiration",
           "rawValue": "1.0",
           "note": "No parser for effect: lark_bardic_perspiration",
-          "source": "official-parsed"
-        },
-        {
-          "rawEffect": "uggie_attack_handler",
-          "rawValue": "1",
-          "note": "No parser for effect: uggie_attack_handler",
           "source": "official-parsed"
         },
         {
@@ -91860,6 +93500,29 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1331",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1332",
+          "effectKeys": [],
+          "relation": "adjacentOrSelf",
+          "excludeSelf": false,
+          "requiredLevel": 45
+        },
+        {
+          "effectDefId": "800",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -92858,6 +94521,80 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2128",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2130",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        },
+        {
+          "effectDefId": "2131",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2131",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2133",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2134",
+          "effectKeys": [
+            "appear_dead"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2134",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2134",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2134",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2134",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -93498,7 +95235,22 @@
           "rawEffect": "damage_reduction,25",
           "source": "official-parsed",
           "targetQualifier": null,
-          "formationCountQualifier": null,
+          "formationCountQualifier": {
+            "predicate": {
+              "op": "and",
+              "children": [
+                {
+                  "op": "hasEffect",
+                  "effectName": "celeste_heal"
+                },
+                {
+                  "op": "heroId",
+                  "heroId": "82",
+                  "negate": false
+                }
+              ]
+            }
+          },
           "positionQualifier": {
             "relation": "self"
           },
@@ -94102,6 +95854,41 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1335",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "433",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        },
+        {
+          "effectDefId": "434",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        }
+      ],
+      "speedProfile": {
+        "heroId": "47",
+        "effects": [
+          {
+            "category": "timeScale",
+            "value": 25,
+            "rawEffect": "time_scale_when_not_attacked,25,30",
+            "upgradeId": "9728"
+          }
+        ],
+        "speedGain": 1.25
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -95171,6 +96958,29 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1616",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "241",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "1621",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 240
+        }
       ],
       "carrySignals": [
         {
@@ -96360,6 +98170,68 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1754",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1756",
+          "effectKeys": [],
+          "relation": "aheadTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "1755",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "1757",
+          "effectKeys": [
+            "shadowheart_invoke_duplicity"
+          ],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1757",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1757",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1758",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        },
+        {
+          "effectDefId": "1758",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -97514,6 +99386,22 @@
         "2",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1231",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1233",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 70
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -98441,6 +100329,29 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2462",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2466",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2468",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -99235,6 +101146,15 @@
       "eligiblePatronIds": [
         "1",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "641",
+          "effectKeys": [],
+          "relation": "withinThreeSlots",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
       ],
       "carrySignals": [
         {
@@ -100260,6 +102180,22 @@
       "eligiblePatronIds": [
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2821",
+          "effectKeys": [],
+          "relation": "selfAndAheadAndBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1612",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        }
       ],
       "carrySignals": [
         {
@@ -101316,6 +103252,15 @@
         "1",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1095",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -102235,6 +104180,22 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1500",
+          "effectKeys": [],
+          "relation": "sameOrAheadColumns",
+          "excludeSelf": false,
+          "requiredLevel": 170
+        },
+        {
+          "effectDefId": "1504",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 220
+        }
       ],
       "carrySignals": [
         {
@@ -103209,6 +105170,64 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2689",
+          "effectKeys": [],
+          "relation": "exactlyBehindOneColumn",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2690",
+          "effectKeys": [],
+          "relation": "exactlyBehindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2691",
+          "effectKeys": [],
+          "relation": "exactlyBehindThreeColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2692",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "2692",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "2694",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "2687",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 140
+        },
+        {
+          "effectDefId": "2695",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -104178,6 +106197,7 @@
         "4",
         "5"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -105487,7 +107507,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -105505,6 +107524,25 @@
         "1",
         "2"
       ],
+      "effectGrants": [],
+      "speedProfile": {
+        "heroId": "7",
+        "effects": [
+          {
+            "category": "extraEnemies",
+            "value": 33,
+            "rawEffect": "minsc_boastful,33,10 (×1)",
+            "upgradeId": "2191"
+          },
+          {
+            "category": "extraEnemies",
+            "value": 20,
+            "rawEffect": "minsc_boastful,33,10 (×2)",
+            "upgradeId": "2191"
+          }
+        ],
+        "speedGain": 1.53
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -106480,12 +108518,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "minsc_boastful",
-          "rawValue": "33",
-          "note": "No parser for effect: minsc_boastful",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "single_target_damage_buff",
           "rawValue": "300",
           "note": "No parser for effect: single_target_damage_buff",
@@ -106621,6 +108653,7 @@
         "2",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -107439,6 +109472,22 @@
         "1": 1
       },
       "eligiblePatronIds": [],
+      "effectGrants": [
+        {
+          "effectDefId": "980",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "981",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -108488,6 +110537,43 @@
         "1",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1588",
+          "effectKeys": [],
+          "relation": "frontTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1589",
+          "effectKeys": [],
+          "relation": "backTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1590",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        },
+        {
+          "effectDefId": "1591",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        },
+        {
+          "effectDefId": "1592",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -109440,6 +111526,29 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1991",
+          "effectKeys": [],
+          "relation": "behindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 80
+        },
+        {
+          "effectDefId": "1994",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "1994",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -110491,6 +112600,15 @@
         "1",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2229",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -111467,6 +113585,29 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2247",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 1
+        },
+        {
+          "effectDefId": "2241",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2241",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -112415,6 +114556,7 @@
         "2",
         "3"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -113394,6 +115536,29 @@
       },
       "eligiblePatronIds": [
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1700",
+          "effectKeys": [],
+          "relation": "adjacentColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1705",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1706",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -114388,6 +116553,7 @@
         "1",
         "3"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -115353,6 +117519,15 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1733",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -116279,6 +118454,22 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "898",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "900",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 170
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -117172,6 +119363,50 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1969",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1971",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        },
+        {
+          "effectDefId": "1983",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "1970",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "1973",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        },
+        {
+          "effectDefId": "1973",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -118183,6 +120418,22 @@
       "eligiblePatronIds": [
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1069",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1073",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 30
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -119043,7 +121294,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -119063,6 +121313,27 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2347",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
+      ],
+      "speedProfile": {
+        "heroId": "164",
+        "effects": [
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_handler,100",
+            "upgradeId": "17315"
+          }
+        ],
+        "speedGain": 1.2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -119802,12 +122073,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "uggie_handler",
-          "rawValue": "100",
-          "note": "No parser for effect: uggie_handler",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "disallow_roaming_familiar_ult_trigger",
           "rawValue": "1",
           "note": "No parser for effect: disallow_roaming_familiar_ult_trigger",
@@ -119967,6 +122232,52 @@
       },
       "eligiblePatronIds": [
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2726",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2732",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2733",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        },
+        {
+          "effectDefId": "2731",
+          "effectKeys": [
+            "trixie_shrinking_dust"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        },
+        {
+          "effectDefId": "2731",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        },
+        {
+          "effectDefId": "2731",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        }
       ],
       "carrySignals": [
         {
@@ -120889,6 +123200,22 @@
       "eligiblePatronIds": [
         "2",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2756",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2759",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -121886,6 +124213,15 @@
         "1",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "35",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        }
       ],
       "carrySignals": [
         {
@@ -122970,7 +125306,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -122989,6 +125324,44 @@
         "2",
         "4"
       ],
+      "effectGrants": [],
+      "speedProfile": {
+        "heroId": "75",
+        "effects": [
+          {
+            "category": "questProgress",
+            "value": 0,
+            "multiplier": 2,
+            "rawEffect": "chance_multiply_monster_quest_rewards,0,2",
+            "formationBonusTable": {
+              "tag": "human",
+              "ranges": [
+                {
+                  "min": 1,
+                  "max": 3,
+                  "amount": 100
+                },
+                {
+                  "min": 4,
+                  "max": 5,
+                  "amount": 700
+                },
+                {
+                  "min": 6,
+                  "max": 7,
+                  "amount": 3100
+                },
+                {
+                  "min": 8,
+                  "max": 99,
+                  "amount": 12700
+                }
+              ]
+            }
+          }
+        ],
+        "speedGain": 1
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -123869,12 +126242,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "hewmaan_fellow_humans",
-          "rawValue": "0",
-          "note": "No parser for effect: hewmaan_fellow_humans",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "hewmaan_carefully_balanced",
           "rawValue": "5",
           "note": "No parser for effect: hewmaan_carefully_balanced",
@@ -124070,6 +126437,15 @@
       "eligiblePatronIds": [
         "1",
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1270",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 100
+        }
       ],
       "carrySignals": [
         {
@@ -125390,6 +127766,22 @@
       "eligiblePatronIds": [
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1228",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 25
+        },
+        {
+          "effectDefId": "1220",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 165
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -126532,6 +128924,31 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2448",
+          "effectKeys": [],
+          "relation": "selfAndBehindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2449",
+          "effectKeys": [
+            "king_of_shadows_shadow_plague"
+          ],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2450",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 100
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -127517,6 +129934,15 @@
       "eligiblePatronIds": [
         "1",
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1529",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        }
       ],
       "carrySignals": [
         {
@@ -128703,7 +131129,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -128721,6 +131146,41 @@
         "1",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1941",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "1942",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "1943",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
+      ],
+      "speedProfile": {
+        "heroId": "148",
+        "effects": [
+          {
+            "category": "transitionSpeedup",
+            "value": 50,
+            "rawEffect": "area_transition_time_scale,50",
+            "upgradeId": "14795"
+          }
+        ],
+        "speedGain": 1.5
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -129402,12 +131862,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "area_transition_time_scale",
-          "rawValue": "50",
-          "note": "No parser for effect: area_transition_time_scale",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "set_ultimate_attack",
           "rawValue": "1",
           "note": "No parser for effect: set_ultimate_attack",
@@ -129555,6 +132009,29 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2797",
+          "effectKeys": [],
+          "relation": "sameOrBehindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2798",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2805",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -130584,6 +133061,57 @@
       "eligiblePatronIds": [
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1308",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1309",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1310",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1311",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "602",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        },
+        {
+          "effectDefId": "603",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        },
+        {
+          "effectDefId": "604",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        }
       ],
       "carrySignals": [
         {
@@ -131772,6 +134300,15 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "23",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 15
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -132655,6 +135192,15 @@
       },
       "eligiblePatronIds": [
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "523",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
       ],
       "carrySignals": [
         {
@@ -133560,6 +136106,36 @@
       },
       "eligiblePatronIds": [
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1452",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1456",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "1457",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "1458",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
       ],
       "carrySignals": [
         {
@@ -134517,6 +137093,15 @@
         "2",
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2515",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
       ],
       "carrySignals": [
         {
@@ -135616,6 +138201,22 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1784",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1785",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -136584,6 +139185,31 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2231",
+          "effectKeys": [],
+          "relation": "aheadTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2238",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "2236",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -137510,6 +140136,29 @@
         "1",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2719",
+          "effectKeys": [],
+          "relation": "sameOrBehindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2720",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2722",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        }
       ],
       "carrySignals": [
         {
@@ -138466,6 +141115,36 @@
         "2",
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2394",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2398",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "2398",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "2397",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 110
+        }
       ],
       "carrySignals": [
         {
@@ -139559,6 +142238,31 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1668",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1669",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1664",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -140522,6 +143226,22 @@
         "3",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2027",
+          "effectKeys": [],
+          "relation": "behindColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2028",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        }
       ],
       "carrySignals": [
         {
@@ -141560,6 +144280,29 @@
         "1",
         "2"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1439",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1440",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1441",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
+      ],
       "carrySignals": [
         {
           "kind": "attackSpeedMult",
@@ -142542,6 +145285,31 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2738",
+          "effectKeys": [],
+          "relation": "aheadColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2746",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 220
+        },
+        {
+          "effectDefId": "2748",
+          "effectKeys": [
+            "reverse_taunt"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 220
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -143376,7 +146144,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -143394,6 +146161,58 @@
         "1",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2495",
+          "effectKeys": [],
+          "relation": "selfAndBehindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2498",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 90
+        },
+        {
+          "effectDefId": "2498",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        },
+        {
+          "effectDefId": "2499",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 130
+        },
+        {
+          "effectDefId": "2502",
+          "effectKeys": [
+            "mehen_grumpy_stack"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
+      ],
+      "speedProfile": {
+        "heroId": "56",
+        "effects": [
+          {
+            "category": "questProgress",
+            "value": 50,
+            "multiplier": 2,
+            "rawEffect": "chance_multiply_tagged_monster_quest_rewards,50,2,fiend",
+            "upgradeId": "18042"
+          }
+        ],
+        "speedGain": 1.5
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -144102,12 +146921,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "chance_multiply_tagged_monster_quest_rewards",
-          "rawValue": "50",
-          "note": "No parser for effect: chance_multiply_tagged_monster_quest_rewards",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "add_hero_tags",
           "rawValue": "0",
           "note": "No parser for effect: add_hero_tags",
@@ -144306,7 +147119,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -144326,6 +147138,41 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2414",
+          "effectKeys": [],
+          "relation": "sameOrAheadColumns",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2416",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 130
+        },
+        {
+          "effectDefId": "2417",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 160
+        }
+      ],
+      "speedProfile": {
+        "heroId": "166",
+        "effects": [
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_handler,100",
+            "upgradeId": "17672"
+          }
+        ],
+        "speedGain": 1.2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -144814,7 +147661,9 @@
           "source": "official-parsed",
           "targetQualifier": null,
           "formationCountQualifier": null,
-          "positionQualifier": null,
+          "positionQualifier": {
+            "relation": "self"
+          },
           "formationCountPositionQualifier": null,
           "amountFunc": null,
           "stackFunc": null,
@@ -145034,12 +147883,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "uggie_handler",
-          "rawValue": "100",
-          "note": "No parser for effect: uggie_handler",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "disallow_roaming_familiar_ult_trigger",
           "rawValue": "1",
           "note": "No parser for effect: disallow_roaming_familiar_ult_trigger",
@@ -145258,6 +148101,15 @@
       "eligiblePatronIds": [
         "1",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2063",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
       ],
       "carrySignals": [
         {
@@ -146236,6 +149088,50 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "24",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 45
+        },
+        {
+          "effectDefId": "216",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 70
+        },
+        {
+          "effectDefId": "215",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "26",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 125
+        },
+        {
+          "effectDefId": "27",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 125
+        },
+        {
+          "effectDefId": "246",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 185
+        }
       ],
       "carrySignals": [
         {
@@ -147421,6 +150317,15 @@
         "2",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "690",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 75
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -148267,7 +151172,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -148286,6 +151190,35 @@
         "2",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1260",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1260",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
+      "speedProfile": {
+        "heroId": "115",
+        "effects": [
+          {
+            "category": "questProgress",
+            "value": 5,
+            "multiplier": 2,
+            "rawEffect": "chance_multiply_monster_quest_rewards_new,5,2,2",
+            "upgradeId": "9605"
+          }
+        ],
+        "speedGain": 1.05
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -148966,12 +151899,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "chance_multiply_monster_quest_rewards_new",
-          "rawValue": "5",
-          "note": "No parser for effect: chance_multiply_monster_quest_rewards_new",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "virgil_rapid_fire_desc_handler",
           "rawValue": "1",
           "note": "No parser for effect: virgil_rapid_fire_desc_handler",
@@ -149120,6 +152047,22 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1524",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1527",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 140
+        }
       ],
       "carrySignals": [
         {
@@ -150040,6 +152983,43 @@
         "1",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "671",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        },
+        {
+          "effectDefId": "673",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 175
+        },
+        {
+          "effectDefId": "672",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 345
+        },
+        {
+          "effectDefId": "672",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 345
+        },
+        {
+          "effectDefId": "672",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 345
+        }
       ],
       "carrySignals": [
         {
@@ -151060,6 +154040,15 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2003",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -151843,6 +154832,29 @@
       "eligiblePatronIds": [
         "2",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2305",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2307",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 80
+        },
+        {
+          "effectDefId": "2309",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -152745,6 +155757,7 @@
         "2",
         "3"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -153589,6 +156602,7 @@
         "3",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -154476,6 +157490,7 @@
         "2",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -155280,6 +158295,22 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2035",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2038",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 200
+        }
       ],
       "carrySignals": [
         {
@@ -156268,6 +159299,15 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "518",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 10
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -157213,6 +160253,29 @@
         "1",
         "2",
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1194",
+          "effectKeys": [],
+          "relation": "withinTwoSlots",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1197",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "1196",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 250
+        }
       ],
       "carrySignals": [
         {
@@ -158202,6 +161265,29 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2752",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "2769",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2770",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -158996,6 +162082,7 @@
         "1",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -159889,6 +162976,22 @@
         "2",
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1628",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1628",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
       ],
       "carrySignals": [
         {
@@ -160809,6 +163912,36 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2646",
+          "effectKeys": [],
+          "relation": "rearMostColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2647",
+          "effectKeys": [],
+          "relation": "secondRearMostColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2648",
+          "effectKeys": [],
+          "relation": "thirdRearMostColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "2681",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -161641,6 +164774,22 @@
         "2",
         "3",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2279",
+          "effectKeys": [],
+          "relation": "allAheadColumns",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "2280",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
       ],
       "carrySignals": [
         {
@@ -162573,6 +165722,15 @@
         "2",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1877",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 180
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -163372,6 +166530,15 @@
         "1",
         "2",
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1295",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        }
       ],
       "carrySignals": [
         {
@@ -164202,6 +167369,22 @@
         "1",
         "2",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "217",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 55
+        },
+        {
+          "effectDefId": "245",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 75
+        }
       ],
       "carrySignals": [
         {
@@ -165039,6 +168222,7 @@
         "2",
         "4"
       ],
+      "effectGrants": [],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -165951,7 +169135,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -165970,6 +169153,99 @@
         "4",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2363",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 0
+        },
+        {
+          "effectDefId": "2379",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "2405",
+          "effectKeys": [
+            "hero_stun_immunity"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "2381",
+          "effectKeys": [],
+          "relation": "allAheadColumns",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        },
+        {
+          "effectDefId": "2382",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 90
+        },
+        {
+          "effectDefId": "2383",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        },
+        {
+          "effectDefId": "2390",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2392",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2392",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2393",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        },
+        {
+          "effectDefId": "2393",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
+      ],
+      "speedProfile": {
+        "heroId": "165",
+        "effects": [
+          {
+            "category": "preSpawn",
+            "value": 1,
+            "rawEffect": "uggie_handler,100",
+            "upgradeId": "17470"
+          }
+        ],
+        "speedGain": 1.2
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -166949,12 +170225,6 @@
       ],
       "unsupportedSignals": [
         {
-          "rawEffect": "uggie_handler",
-          "rawValue": "100",
-          "note": "No parser for effect: uggie_handler",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "disallow_roaming_familiar_ult_trigger",
           "rawValue": "1",
           "note": "No parser for effect: disallow_roaming_familiar_ult_trigger",
@@ -167153,6 +170423,36 @@
       "eligiblePatronIds": [
         "1",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "2053",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2053",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "2056",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        },
+        {
+          "effectDefId": "2057",
+          "effectKeys": [],
+          "relation": "allBehindColumns",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        }
       ],
       "carrySignals": [
         {
@@ -168098,6 +171398,22 @@
         "3",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1179",
+          "effectKeys": [],
+          "relation": "nonAdjacent",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1180",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -168867,6 +172183,15 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "2682",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -169633,6 +172958,29 @@
         "1",
         "2",
         "3"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1418",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1420",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        },
+        {
+          "effectDefId": "1422",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 130
+        }
       ],
       "carrySignals": [
         {
@@ -170523,6 +173871,24 @@
         "2",
         "4"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1350",
+          "effectKeys": [
+            "nerys_spiritual_weapon"
+          ],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "263",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 9999
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -171325,6 +174691,29 @@
         "2",
         "4",
         "5"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1907",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "1907",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 100
+        },
+        {
+          "effectDefId": "1908",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 150
+        }
       ],
       "carrySignals": [
         {
@@ -172242,6 +175631,50 @@
       "eligiblePatronIds": [
         "3",
         "4"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1819",
+          "effectKeys": [],
+          "relation": "behindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1819",
+          "effectKeys": [],
+          "relation": "behindTwoColumns",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1819",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1819",
+          "effectKeys": [],
+          "relation": "sameColumn",
+          "excludeSelf": false,
+          "requiredLevel": 20
+        },
+        {
+          "effectDefId": "1828",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": true,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1829",
+          "effectKeys": [],
+          "relation": "self",
+          "excludeSelf": false,
+          "requiredLevel": 120
+        }
       ],
       "carrySignals": [
         {
@@ -173417,6 +176850,38 @@
         "3",
         "5"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1975",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 10
+        },
+        {
+          "effectDefId": "1793",
+          "effectKeys": [
+            "ceremorphosis_stacks_mult"
+          ],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 40
+        },
+        {
+          "effectDefId": "1794",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 60
+        },
+        {
+          "effectDefId": "1796",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 110
+        }
+      ],
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -174272,7 +177737,6 @@
           "official-parsed",
           "official-parsed",
           "official-parsed",
-          "official-parsed",
           "official-parsed"
         ]
       },
@@ -174291,6 +177755,27 @@
         "2",
         "3"
       ],
+      "effectGrants": [
+        {
+          "effectDefId": "1644",
+          "effectKeys": [],
+          "relation": "any",
+          "excludeSelf": false,
+          "requiredLevel": 30
+        }
+      ],
+      "speedProfile": {
+        "heroId": "95",
+        "effects": [
+          {
+            "category": "simultaneousSpawn",
+            "value": 1,
+            "rawEffect": "simultaneous_monster_spawn_chance_mult,0",
+            "upgradeId": "12314"
+          }
+        ],
+        "speedGain": 1.5
+      },
       "carrySignals": [
         {
           "kind": "heroDpsMultiplier",
@@ -175108,12 +178593,6 @@
           "source": "official-parsed"
         },
         {
-          "rawEffect": "simultaneous_monster_spawn_chance_mult",
-          "rawValue": "0",
-          "note": "No parser for effect: simultaneous_monster_spawn_chance_mult",
-          "source": "official-parsed"
-        },
-        {
           "rawEffect": "stacks_max_stack_expr",
           "rawValue": "0",
           "note": "No parser for effect: stacks_max_stack_expr",
@@ -175256,6 +178735,15 @@
       "eligiblePatronIds": [
         "1",
         "2"
+      ],
+      "effectGrants": [
+        {
+          "effectDefId": "1696",
+          "effectKeys": [],
+          "relation": "adjacent",
+          "excludeSelf": false,
+          "requiredLevel": 50
+        }
       ],
       "carrySignals": [
         {
@@ -175961,5 +179449,5 @@
       ]
     }
   ],
-  "pipelineHash": "da9a7c3f3883a499"
+  "pipelineHash": "6815a59ee7f8fb01"
 }

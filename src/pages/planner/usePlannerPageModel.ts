@@ -27,6 +27,7 @@ export function usePlannerPageModel() {
     collections,
     profileSnapshot,
     lootCatalog,
+    legendaryEffectCatalog,
     patronPerkCatalog,
     effectDefinitions,
     championById,
@@ -88,7 +89,7 @@ export function usePlannerPageModel() {
   )
   // 外部加成装配（装备 + patron perk + blessing → scoring 三项入参）下沉纯函数 buildScoringBonusInputs；hook 只 memoize。
   // 未导入存档（profileSnapshot=null）→ 空 map / globalBuff 1 / hero_dps 空（scoreFormation 缺省，向后兼容）。
-  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions } = useMemo(
+  const { equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, legendaryContributions } = useMemo(
     () => buildScoringBonusInputs({
       profileSnapshot,
       lootCatalog,
@@ -100,8 +101,9 @@ export function usePlannerPageModel() {
         enchant: equipmentEnchant,
       },
       featCatalog: collections.featCatalog ?? null,
+      legendaryEffectCatalog,
     }),
-    [profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
+    [profileSnapshot, lootCatalog, legendaryEffectCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
   )
   // 金币/等级换算结果 → heroLevelOverride + goldBudget 入参
   const heroLevelOverride = useMemo(() => {
@@ -133,10 +135,11 @@ export function usePlannerPageModel() {
       equipmentBuffsByHero,
       globalBuffMultiplier,
       externalHeroDpsContributions,
+      legendaryContributions,
       heroLevelOverride,
       goldBudget: effectiveGoldBudget,
     }),
-    [scoringMode, candidateMode, computationMode, manualStackCount, minSurvivableArea, userDamageDisabledSlots, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, heroLevelOverride, effectiveGoldBudget],
+    [scoringMode, candidateMode, computationMode, manualStackCount, minSurvivableArea, userDamageDisabledSlots, lockedCarryHeroId, lockedSlots, equipmentAdjustmentByHero, equipmentHealthByHero, equipmentGlobalDpsByHero, equipmentGoldByHero, equipmentCritByHero, equipmentBuffsByHero, globalBuffMultiplier, externalHeroDpsContributions, legendaryContributions, heroLevelOverride, effectiveGoldBudget],
   )
   // 有效 snapshot = 存档 + 专精 override；engine 按 OwnedHero.specializations 注入 signal（ADR 0017）。
   // 无 override 时同引用返回，避免 usePlannerRecommendation 无谓重算。

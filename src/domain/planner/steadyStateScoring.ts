@@ -4,6 +4,7 @@ import { toGameNumber, multiplyGameNumbers, compareGameNumbers, formatGameNumber
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
+import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
 import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
@@ -14,14 +15,16 @@ import { mergePools, productOfPoolMultipliers } from './scoring/poolAggregation'
 import { computeCritFactor } from './scoring/critFactor'
 import { computeVulnerabilityFactor, isVulnerabilityMatched } from './scoring/vulnerabilityFactor'
 import { computeTeamGoldFind } from './goldObjective'
+import { computeFormationSpeedMultiplier, computeSpeedBreakdown, applyFormationSpeedEffects, DYNAMIC_SPEED_HERO_IDS, DYNAMIC_SPEED_DEFAULTS, type SpeedBreakdown, type FormationSpeedContext, type HeroSpeedProfile, type SpeedEffectEntry } from './speedScoring'
 import { evaluatePlacementFit, type AggregatedPool, type PlacementFitScorePart } from './placementFit'
+import { computeEffectActivation } from './placementSlotRelation'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 /**
  * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
  * 不强枚举 ObjectiveKind（Ponytail）；新增模式扩展此联合类型。
  */
-export type ScoringMode = 'carry-dps' | 'team-gold'
+export type ScoringMode = 'carry-dps' | 'team-gold' | 'team-speed'
 
 /**
  * 投影模式（约束②，见 architecture.md「投影模式」）——把阵型加成聚合投影成 objectiveValue 的方式。
@@ -85,6 +88,12 @@ export interface ScoringInput {
    * 由调用方经 collectHeroDpsContributions 解析后传入。
    */
   externalHeroDpsContributions?: ReadonlyArray<HeroDpsContribution> | undefined
+  /**
+   * 传奇装备贡献（per_crusader global_dps + 条件 hero_dps），placement-aware + count-aware。
+   * scoreFormation 按 placed 英雄检查拥有者是否在阵型，per_crusader 按匹配英雄数 × baseValue。
+   * absolute-dps 下 global 池/hero 池各路合并（与 equipment/patron 同 key 加法，A1）。
+   */
+  legendaryContributions?: ReadonlyArray<LegendaryContribution> | undefined
   /** 强制指定 carry（只评该英雄作核心输出位）。 */
   lockedCarryHeroId?: string | undefined
   /**
@@ -104,6 +113,18 @@ export interface ScoringInput {
    * 由调用方从 options.goldBudget（游戏记数法字符串）解析后传入。
    */
   goldBudget?: GameNumberValue | undefined
+  /**
+   * 动态速度英雄假设值覆盖：heroId → 等效跳过百分比（areaSkip value）。
+   * 无覆盖的英雄使用 DYNAMIC_SPEED_DEFAULTS 保守默认值。
+   * 取值口径：用户数据仅影响默认值（有用户数据全用，无用户数据用内置默认），覆盖与默认独立。
+   */
+  dynamicSpeedOverrides?: ReadonlyMap<string, number> | undefined
+  /**
+   * 阵型运行时 effect 激活状态（heroId → 该英雄拥有的 effect key 集合）。
+   * scoreFormation 从 placements + heroesById.effectGrants 一次性计算后注入 enrichedInput，
+   * 透传到 evaluatePlacementFit 供 HasEffect/HasEffectByID 谓词求值。
+   */
+  activeEffectKeysByHero?: ReadonlyMap<string, ReadonlySet<string>> | undefined
 }
 
 export interface SimulationFactor {
@@ -165,6 +186,8 @@ export interface ScoringResult {
   areaEstimate?: AreaEstimationResult | null
   /** best carry 的结构化加成拆解；team-gold 模式或空阵型时为 null。 */
   breakdown: SimulationBreakdown | null
+  /** team-speed 模式的速度拆解；其他模式为 null。 */
+  speedBreakdown?: SpeedBreakdown | null
 }
 
 const ZERO: GameNumberValue = toGameNumber(0)
@@ -213,6 +236,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
       dimension: 'gold',
       manualStackCount: input.manualStackCount,
       supportLevel: input.heroLevels?.get(entry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+      activeEffectKeysByHero: input.activeEffectKeysByHero,
     })
 
     warnings.push(...fit.warnings)
@@ -239,6 +263,65 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
     carryHeroId: null,
     activeSignalKinds: activeKinds,
     breakdown: null,
+  }
+}
+
+/**
+ * team-speed 模式：聚合阵型中所有英雄的速度画像（含三层缩放：base + spec 注入 + 装备 buff），
+ * 计算阵型级综合速度因子 speedMultiplier。速度效果与 DPS/gold 正交——不做 carry 选择。
+ * 无速度英雄的阵型 speedMultiplier=1（无加成）。
+ */
+function scoreTeamSpeed(placedEntries: PlacedEntry[], input: ScoringInput): ScoringResult {
+  // 收集静态速度画像
+  const staticProfiles = placedEntries
+    .map((entry) => entry.hero.speedProfile)
+    .filter((profile): profile is NonNullable<typeof profile> => profile != null)
+
+  // 动态速度英雄：用默认值生成 areaSkip 效果（取值口径：无用户数据时用保守默认）
+  const dynamicProfiles: HeroSpeedProfile[] = []
+  const warnings: string[] = []
+  for (const entry of placedEntries) {
+    const heroId = entry.hero.heroId
+    if (!DYNAMIC_SPEED_HERO_IDS.has(heroId)) continue
+    const defaultEffect = DYNAMIC_SPEED_DEFAULTS.get(heroId)
+    if (!defaultEffect) continue
+    // 入参覆盖优先（未来从存档/UI 传入）
+    const override = input.dynamicSpeedOverrides?.get(heroId)
+    const effect: SpeedEffectEntry = override != null
+      ? { ...defaultEffect, value: override, rawEffect: `${defaultEffect.rawEffect} (adjusted: ${String(override)}%)` }
+      : defaultEffect
+    dynamicProfiles.push({ heroId, effects: [effect], speedGain: 1 + effect.value / 100 })
+    warnings.push(`${entry.hero.name.display}：使用默认速度假设 ${String(effect.value)}%（可调整）`)
+  }
+
+  const allRawProfiles = [...staticProfiles, ...dynamicProfiles]
+
+  if (allRawProfiles.length === 0) {
+    return {
+      objectiveValue: toGameNumber(1),
+      warnings,
+      carryHeroId: null,
+      activeSignalKinds: new Set(),
+      breakdown: null,
+      speedBreakdown: null,
+    }
+  }
+
+  // 阵型效果缩放：按相邻英雄 tag 数量查表替换效果值（如 Hew Maan 相邻人类 → other_human_bonuses）
+  const formationContext: FormationSpeedContext = {
+    slotByHeroId: new Map(placedEntries.map((e) => [e.hero.heroId, e.slotId])),
+    tagsBySlot: new Map(placedEntries.map((e) => [e.slotId, e.hero.tags])),
+    adjacentSlotIds: new Map(input.scenario.slotTopology.map((s) => [s.slotId, s.adjacentSlotIds])),
+  }
+  const profiles = applyFormationSpeedEffects(allRawProfiles, formationContext)
+
+  return {
+    objectiveValue: toGameNumber(computeFormationSpeedMultiplier(profiles)),
+    warnings,
+    carryHeroId: null,
+    activeSignalKinds: new Set(),
+    breakdown: null,
+    speedBreakdown: computeSpeedBreakdown(profiles),
   }
 }
 
@@ -292,6 +375,7 @@ function aggregateExternalDamagePools(
   carryHero: ResolvedHeroAbilityProfile,
   abilityDamageAggregate: number,
   aggregateProjection: AggregateProjection,
+  placedEntries: readonly PlacedEntry[],
 ): { damageAggregate: number; breakdownPools: Map<string, AggregatedPool> } {
   if (aggregateProjection === 'formation-buff') {
     return { damageAggregate: abilityDamageAggregate, breakdownPools: sharedPools }
@@ -299,12 +383,31 @@ function aggregateExternalDamagePools(
   const externalPools: AggregatedPool[] = []
   const globalBuffMultiplier = input.globalBuffMultiplier ?? 1
   // 账号级 patron/blessing global_dps（不依赖 placed）+ 装备 global_dps（placement-aware，只计阵型内英雄）。
-  const globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
+  let globalAddPercent = (globalBuffMultiplier - 1) * 100 + sumPlacedEquipmentAddPercent(input.placements, input.equipmentGlobalDpsByHero)
+  // 传奇装备贡献（placement-aware + count-aware）：拥有者必须在阵型中才生效。
+  const placedHeroIds = new Set(placedEntries.map((entry) => entry.hero.heroId))
+  let legendaryGlobalAddPercent = 0
+  let legendaryHeroDpsAddPercent = 0
+  for (const lc of input.legendaryContributions ?? []) {
+    if (!placedHeroIds.has(lc.ownerHeroId)) {
+      continue
+    }
+    let value = lc.baseValue
+    if (lc.perCrusader) {
+      value *= placedEntries.filter((entry) => matchesHeroQualifier(entry.hero, lc.countQualifier)).length
+    }
+    if (lc.pool === 'global') {
+      legendaryGlobalAddPercent += value
+    } else if (matchesHeroQualifier(carryHero, lc.targetQualifier)) {
+      legendaryHeroDpsAddPercent += value
+    }
+  }
+  globalAddPercent += legendaryGlobalAddPercent
   if (globalAddPercent !== 0) {
     externalPools.push({ dimension: 'damage', scope: 'global', addPercent: globalAddPercent, multFactor: 1, poolMultiplier: 1 })
   }
   const equipmentAdjustment = input.equipmentAdjustmentByHero?.get(carryHero.heroId) ?? 1
-  let externalHeroDpsAddPercent = 0
+  let externalHeroDpsAddPercent = legendaryHeroDpsAddPercent
   for (const contribution of input.externalHeroDpsContributions ?? []) {
     if (matchesHeroQualifier(carryHero, contribution.qualifier)) {
       externalHeroDpsAddPercent += contribution.value
@@ -374,6 +477,7 @@ function collectSupportSignalsForCarry(
       aggregatePools: true,
       manualStackCount: input.manualStackCount,
       supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+      activeEffectKeysByHero: input.activeEffectKeysByHero,
     })
     warnings.push(...fit.warnings)
     // 只把 damage 维度 pool 并入 sharedPools；crit/vulnerability 的 pool 不消费（走 scoreBreakdown→factor）。
@@ -423,6 +527,7 @@ function scoreCarryCandidate(
     carryEntry.hero,
     abilityDamageAggregate,
     aggregateProjection,
+    placedEntries,
   )
 
   // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。
@@ -470,6 +575,7 @@ function computeAreaEstimateForBestCarry(
       dimension: 'survival',
       manualStackCount: input.manualStackCount,
       supportLevel: input.heroLevels?.get(supportEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL,
+      activeEffectKeysByHero: input.activeEffectKeysByHero,
     })
     mergePools(survivalPools, fit.pools)
   }
@@ -591,17 +697,27 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     }
   }
 
+  // 阵型运行时 effect 激活：一次计算，透传到所有 evaluatePlacementFit 供 HasEffect/HasEffectByID 求值。
+  const activeEffectKeysByHero = computeEffectActivation(
+    input.placements, input.heroesById, input.scenario, input.heroLevels,
+  )
+  const enrichedInput: ScoringInput = { ...input, activeEffectKeysByHero }
+
   if (input.scoringMode === 'team-gold') {
-    return scoreTeamGold(placedEntries, input)
+    return scoreTeamGold(placedEntries, enrichedInput)
+  }
+
+  if (input.scoringMode === 'team-speed') {
+    return scoreTeamSpeed(placedEntries, enrichedInput)
   }
 
   const aggregateProjection = input.aggregateProjection ?? 'absolute-dps'
   const enemyTypeSet = new Set(input.scenario.enemyTypes)
-  const { carryDps: bestCarryDps, warnings: bestWarnings, carryHeroId: bestCarryHeroId, activeKinds: bestActiveKinds, breakdownData: bestBreakdownData } = findBestCarry(placedEntries, input, aggregateProjection, enemyTypeSet)
+  const { carryDps: bestCarryDps, warnings: bestWarnings, carryHeroId: bestCarryHeroId, activeKinds: bestActiveKinds, breakdownData: bestBreakdownData } = findBestCarry(placedEntries, enrichedInput, aggregateProjection, enemyTypeSet)
 
   // formation-buff 模式 bestCarryDps 是阵型聚合倍率（非真实 DPS），BUD/推图层数估算无意义，跳过。
   const areaEstimate = bestCarryHeroId != null && bestCarryHeroId !== '' && aggregateProjection === 'absolute-dps'
-    ? computeAreaEstimateForBestCarry(bestCarryHeroId, bestCarryDps, placedEntries, input)
+    ? computeAreaEstimateForBestCarry(bestCarryHeroId, bestCarryDps, placedEntries, enrichedInput)
     : null
 
   const breakdown = bestBreakdownData != null ? buildSimulationBreakdown(bestBreakdownData, bestCarryDps) : null

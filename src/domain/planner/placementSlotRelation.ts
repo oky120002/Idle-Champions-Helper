@@ -1,4 +1,4 @@
-import type { HeroAbilitySignal, HeroPositionRelation } from '../abilities/abilityModel'
+import type { HeroAbilitySignal, HeroPositionRelation, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { EvaluatePlacementFitInput } from './placementFitTypes'
 
@@ -177,4 +177,52 @@ export function matchesPositionQualifier(input: EvaluatePlacementFitInput, signa
   }
 
   return matchesSlotRelation(input.scenario, input.supportSlotId, input.carrySlotId, relation)
+}
+
+/**
+ * 从阵型组成一次性计算每个英雄的 active effect key 集合。
+ *
+ * 对每个在阵型中的授予英雄 G，遍历其 effectGrants：
+ * - 等级达 requiredLevel 才激活
+ * - 按 grant.relation 判定目标槽位是否在 G 的作用范围内
+ * - excludeSelf（targets 含 'other'）排除 G 自身
+ * 命中的目标英雄获得 grant.effectKeys + '#effectDefId'。
+ *
+ * 供 HasEffect(name)/HasEffectByID(N) 谓词求值；在 scoreFormation 层算一次，透传到 evaluatePlacementFit。
+ */
+export function computeEffectActivation(
+  placements: Record<string, string>,
+  heroesById: Map<string, ResolvedHeroAbilityProfile>,
+  scenario: ResolvedPlannerScenarioModel,
+  heroLevels?: ReadonlyMap<string, number>,
+): Map<string, Set<string>> {
+  const result = new Map<string, Set<string>>()
+
+  for (const [grantingSlotId, grantingHeroId] of Object.entries(placements)) {
+    const grantingHero = heroesById.get(grantingHeroId)
+    if (!grantingHero?.effectGrants) continue
+
+    const grantingLevel = heroLevels?.get(grantingHeroId) ?? Number.MAX_SAFE_INTEGER
+
+    for (const grant of grantingHero.effectGrants) {
+      if (grant.requiredLevel > grantingLevel) continue
+
+      for (const [targetSlotId, targetHeroId] of Object.entries(placements)) {
+        if (grant.excludeSelf && targetHeroId === grantingHeroId) continue
+        if (!matchesSlotRelation(scenario, grantingSlotId, targetSlotId, grant.relation)) continue
+
+        let effectSet = result.get(targetHeroId)
+        if (!effectSet) {
+          effectSet = new Set<string>()
+          result.set(targetHeroId, effectSet)
+        }
+        for (const key of grant.effectKeys) {
+          effectSet.add(key)
+        }
+        effectSet.add(`#${grant.effectDefId}`)
+      }
+    }
+  }
+
+  return result
 }

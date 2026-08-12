@@ -110,4 +110,10 @@ export interface EvaluatePlacementFitInput {
    * 不传 = 无等级限制（向后兼容，不过滤）；由 scoreFormation 从 heroLevels 透传。
    */
   supportLevel?: number
+  /**
+   * 阵型运行时 effect 激活状态（heroId → 该英雄拥有的 effect key 集合）。
+   * 由 scoreFormation 从 placements + heroesById.effectGrants 一次性计算，
+   * 供 HasEffect(name)/HasEffectByID(N) 谓词求值。缺省 = 无 effect 激活（保守 false）。
+   */
+  activeEffectKeysByHero?: ReadonlyMap<string, ReadonlySet<string>> | undefined
 }

@@ -69,7 +69,7 @@
 
 **A. 已解析进模型但 scoring 不消费**（维度未接入，信号浪费）：
 - `attackSpeedMult`（已归一化 22 信号：carry 7 + support 15，但消费层不收——`equipmentBuffSignals.ts` 明确不收 speed/cooldown base 信号，speed/cooldown dimension 无 `evaluatePlacementFit` 消费；BUD 用静态 `baseAttackCooldown` `budCalculation.ts`）；另有少量变体 No parser（如贾拉索 hero 4 `attack_speed_mult` val=3.33，见 §5E）。
-- `cooldownReduction`（~620 信号）：cooldown 维度 scoring 不请求；大招 uptime 只看 ni 布尔，不消费。
+- `cooldownReduction`（专精源 12 信号在 specialization-catalog，装备源 612 条无 owned-aware 通道）：cooldown 维度 scoring 不请求；大招 uptime 只看 ni 布尔，不消费。
 - 对应根 README「速度队缺口」——speed / cooldown 是已登记的未接入能力。
 
 **B. HeroAbilityKind 曾定义但零产出（死代码，已清理）**：
@@ -127,7 +127,7 @@
 | 里程碑 | 范围 | 价值 | 成本 / 前置 |
 |---|---|---|---|
 | **M0** | DPS 五通道 hero_dps/global_dps/health/gold/crit + `buff_upgrade` owned-aware wrapper | 主目标量载体 | 已完成 |
-| **M1 速度队** | `attackSpeedMult` 22 + `cooldownReduction` 620 已归一化但消费层不收（`equipmentBuffSignals.ts` 明确不收 speed/cooldown base 信号） | 高（速度队核心，根 README 已登记） | 高：需先让 speed 进评估维度才有消费意义（BUD 精确建模 + `evaluatePlacementFit` 消费），cooldown/攻速进入秒级 DPS |
+| **M1 速度队** | `attackSpeedMult` 22 信号在 base profile + `cooldownReduction` 12 在 specialization-catalog（612 装备源无 owned-aware 通道，见 TODO `atd_0cb934b094`），消费层不收 | 高（速度队核心，根 README 已登记） | 高：需先让 speed 进评估维度才有消费意义（BUD 精确建模 + `evaluatePlacementFit` 消费），cooldown/攻速进入秒级 DPS；装备源 speed kind 需扩展五通道 |
 | **M2 私有存档导入** | 药水 790 + modron + favor + 佐布宿敌计数 | 高（`event_buff` 670 等账号级加成，actual 全在 userdetails） | 高：需 userdetails 存档导入通道 + zod schema（favor 字段存了不用，见 §5D） |
 | **M3 survival health 精化** | `increase_health_by_source_percent` target=`other`（31 条） | 低（survival 是推图约束，不进 carryDps） | 低：data-blindspot A4 确认 `excludeSelf + any` 可行，救回 31 条 |
 | **M4 登记不建模** | §5E 五家族 + hero_dps 位置限定符 6 类（tallest/middle_column/snowflake/slot_if_expr/active_campaign/other） | — | 依赖动态触发 / 跨冒险存档 / 运行时阵型实例集，静态评估不可消费；已有 unsupported note 追踪 |
@@ -135,5 +135,5 @@
 ## 关联
 
 - 加成来源盘点与叠加语义：[damage-bonus-sources.md](./damage-bonus-sources.md)
-- planner 加成原则：`docs/specs/modules/planner/architecture.md`「加成建模正确性原则」
+- planner 加成原则：`docs/specs/modules/planner/computation-constraints.md`「加成建模正确性原则」
 - 信号 filter/tag/target/count 语义：memory `hero-signal-target-qualifier-semantics`

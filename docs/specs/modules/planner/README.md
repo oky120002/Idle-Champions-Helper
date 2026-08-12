@@ -9,7 +9,8 @@
 
 - `scope.md`：产品范围、用户目标、非目标、角色场景、用户流程与页面需求。
 - `requirements.md`：数据、计算与隐私需求。
-- `architecture.md`：三层架构、目录设计、命名约定、BUD 与 DPS 取舍、模拟 / UI 分离、**计算原则**（根本目标 / 投影模式约束② / 外部加成契约约束③ / Hermetic 边界 / 数据分类铁律 / 入参契约）。
+- `architecture.md`：三层架构、目录设计、命名约定、BUD 与 DPS 取舍、模拟 / UI 分离、入参契约。
+- `computation-constraints.md`：开发硬约束——投影模式、外部加成入参契约、取值口径、加成建模正确性原则、Hermetic 边界、数据分类铁律。
 - `data-and-privacy.md`：数据流、核心数据契约、官方只读 client、IndexedDB 与隐私。
 
 ### 推荐与评估
@@ -27,6 +28,7 @@
 - `mechanic-isolation.md`：加成机制隔离架构——四种同构隔离模式（EffectResolver / MechanicResolver / DimensionFactor / BonusProvider）。
 - `champion-reference-verification.md`：英雄实测参照数据统一 schema（机制倍率 + 伤害快照）、校准口径与测试两组。
 - `modeling-pitfalls.md`：加成建模陷阱与验证纪律（补建前证伪「未建模」、golden 对叠加错误的盲区、wrapper 派生 signal 来源穿透）。补建任何加成 / 机制前先读。
+- `data-and-runtime-pitfalls.md`：数据解析与运行时模型陷阱（restriction 文本提取、正则覆盖、模型变体消费者审计、过滤条件分支、理论验证）。
 
 ### 验收
 

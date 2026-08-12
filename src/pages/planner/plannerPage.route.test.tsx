@@ -39,6 +39,7 @@ const mockedFetchJson = vi.mocked(fetchJson)
 
 const dataVersionFixture = { current: 'test-version', updatedAt: '2026-05-03T00:00:00.000Z', notes: [] }
 const lootCatalogFixture: DataCollection<LootCatalogEntry> = { updatedAt: '2026-05-03T00:00:00.000Z', items: [] }
+const legendaryEffectCatalogFixture: DataCollection<unknown> = { updatedAt: '2026-05-03T00:00:00.000Z', items: [] }
 const effectDefinitionsFixture: DataCollection<EffectDefinitionEntry> = { updatedAt: '2026-05-03T00:00:00.000Z', items: [] }
 
 function text(original: string, display = original): LocalizedText {
@@ -170,6 +171,7 @@ function mockPlannerCollections() {
     if (name === 'scenarios') return plannerScenariosFixture
     if (name === 'semantic-overrides') return plannerSemanticOverridesFixture
     if (name === 'loot-catalog') return lootCatalogFixture
+    if (name === 'legendary-effects-catalog') return legendaryEffectCatalogFixture
     if (name === 'effect-definitions') return effectDefinitionsFixture
     throw new Error(`unexpected collection: ${name}`)
   })

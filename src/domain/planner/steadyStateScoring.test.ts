@@ -8,7 +8,7 @@ import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './pl
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
     heroId,
-    name: { original: heroId, display: heroId },
+    name: overrides.name ?? { original: heroId, display: heroId },
     seat: overrides.seat ?? 1,
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
@@ -26,6 +26,7 @@ function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {})
       supportSignals: [],
       unsupportedSignals: [],
     },
+    ...(overrides.speedProfile ? { speedProfile: overrides.speedProfile } : {}),
   }
 }
 
@@ -235,6 +236,108 @@ describe('steady state scoring', () => {
     expect(dpsMode.objectiveValue.toNumber()).toBeCloseTo(21.2, 4)
     // team-gold: gold pool=3 → team_gold_find = 3
     expect(goldMode.objectiveValue.toNumber()).toBeCloseTo(3, 5)
+  })
+
+  it('team-speed 模式聚合速度画像产出 speedMultiplier + breakdown', () => {
+    const deekin = createHero('deekin', {
+      seat: 1,
+      speedProfile: {
+        heroId: 'deekin',
+        effects: [{ category: 'spawnSpeed', value: 100, rawEffect: 'increase_monster_spawn_time_mult,100' }],
+        speedGain: 2,
+      },
+    })
+    const shandie = createHero('shandie', {
+      seat: 2,
+      speedProfile: {
+        heroId: 'shandie',
+        effects: [{ category: 'timeScale', value: 25, rawEffect: 'time_scale_when_not_attacked,25,30' }],
+        speedGain: 1.25,
+      },
+    })
+    const heroesById = new Map([
+      ['deekin', deekin],
+      ['shandie', shandie],
+    ])
+
+    const result = scoreFormation({
+      heroesById,
+      scenario,
+      placements: { s1: 'deekin', s2: 'shandie' },
+      scoringMode: 'team-speed',
+    })
+
+    // spawnSpeed(100%) → 2.0 × timeScale(25%) → 1.25 = 2.5
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(2.5, 5)
+    expect(result.carryHeroId).toBeNull()
+    expect(result.breakdown).toBeNull()
+    expect(result.speedBreakdown).not.toBeNull()
+    expect(result.speedBreakdown?.total).toBeCloseTo(2.5, 5)
+    expect(result.speedBreakdown?.categoryFactors.length).toBe(2) // spawnSpeed + timeScale
+    expect(result.speedBreakdown?.heroContributions.length).toBe(2) // deekin + shandie
+  })
+
+  it('team-speed 模式空阵型 speedMultiplier=1', () => {
+    const plain = createHero('plain', { seat: 1 })
+    const heroesById = new Map([['plain', plain]])
+
+    const result = scoreFormation({
+      heroesById,
+      scenario,
+      placements: { s1: 'plain' },
+      scoringMode: 'team-speed',
+    })
+
+    expect(result.objectiveValue.toNumber()).toBe(1)
+    expect(result.speedBreakdown).toBeNull()
+  })
+
+  it('team-speed 模式动态速度英雄使用默认值参与计算', () => {
+    // Briv (heroId=58) 是动态速度英雄——使用 areaSkip 默认值 25% 参与计算
+    const briv = createHero('58', { seat: 1, name: { original: 'Briv', display: '布里夫' } })
+    const deekin = createHero('deekin', {
+      seat: 2,
+      speedProfile: {
+        heroId: 'deekin',
+        effects: [{ category: 'spawnSpeed', value: 100, rawEffect: 'increase_monster_spawn_time_mult,100' }],
+        speedGain: 2,
+      },
+    })
+    const heroesById = new Map([
+      ['58', briv],
+      ['deekin', deekin],
+    ])
+
+    const result = scoreFormation({
+      heroesById,
+      scenario,
+      placements: { s1: '58', s2: 'deekin' },
+      scoringMode: 'team-speed',
+    })
+
+    // Briv areaSkip 25% → factor 1.25; Deekin spawnSpeed 100% → factor 2.0
+    // Total: 2.0 × 1.25 = 2.5
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(2.5, 5)
+    expect(result.warnings.length).toBe(1)
+    expect(result.warnings[0]).toContain('布里夫')
+    expect(result.warnings[0]).toContain('25%')
+  })
+
+  it('team-speed 模式动态速度英雄支持入参覆盖', () => {
+    const briv = createHero('58', { seat: 1, name: { original: 'Briv', display: '布里夫' } })
+    const heroesById = new Map([['58', briv]])
+
+    const result = scoreFormation({
+      heroesById,
+      scenario,
+      placements: { s1: '58' },
+      scoringMode: 'team-speed',
+      dynamicSpeedOverrides: new Map([['58', 50]]),
+    })
+
+    // Briv areaSkip overridden to 50% → factor 1.5
+    expect(result.objectiveValue.toNumber()).toBeCloseTo(1.5, 5)
+    expect(result.warnings[0]).toContain('50%')
   })
 
   it('crit signal 进 crit_factor 提升 carryDps（4.3/4.4）', () => {

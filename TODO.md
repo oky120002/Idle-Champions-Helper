@@ -8,12 +8,6 @@ repair: rebuild
 -->
 ## Auto Todo
 
-- HasEffect/HasEffectByID 布尔谓词未解析：7 个去重表达式(~14 原始实例)，含 2 个评分关键 <!-- auto-todo:id=atd_6f71fd37c3 -->
-  - 记录时间: `2026-08-08T13:27:44+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/heroPredicate.ts:138-238`
-  - 备注: 2026-08-08 深度复核修正：TODO 原说 4 个，实际 7 个去重表达式（含 HasEffectByID 漏报） - 评分关键实例：Skylla(169) HasEffectByID(2474) 门控 hero_dps_multiplier_mult,400(+400% DPS)；Knox(82) HasEffect(celeste_heal) 门控 damage_reduction,25(25%减伤) - 其余：Cazrin(166) 复合条件含 HasEffectByID(2416)、Alyndra(77) HasEffect、Kas(153) !HasEffect、Trixie(176) do_nothing(无影响) - 37 unparsed 中其余 ~30 个是数值表达式(floor/min/max/属性引用)和不支持的函数(num_applied_pigments/AverageILevels)，非谓词类型
-
 - Modron 管道 buff 数值未进 planner 评分 <!-- auto-todo:id=atd_4ca7841bda -->
   - 记录时间: `2026-08-08T12:56:14+08:00`
   - 类型: optimization
@@ -61,14 +55,23 @@ repair: rebuild
   - 备注:
     - 来源：深度审计 2026-08-09 数据管线子智能体发现
 
-- cooldownReduction 归一化管线缺失——1860 条原始效果产出 0 信号 <!-- auto-todo:id=atd_0cb934b094 -->
+- cooldownReduction 装备源无 owned-aware 通道（非管线 bug，已查明设计缺口） <!-- auto-todo:id=atd_0cb934b094 -->
   - 记录时间: `2026-08-09T21:31:56+08:00`
-  - 类型: issue
-  - 位置: `scripts/data 归一化管线（speedResolver 或上游 collect 阶段）`
-  - 备注: 1860 条 reduce_ultimate_cooldown 原始效果（154 英雄）产出 0 信号。speedResolver.ts 已接线（resolverDispatch.ts:25 映射 reduce_ultimate_cooldown → cooldownReduction），但 hero-abilities.json 中 cooldownReduction 条目为 0。
-    - 影响：speed 维度 cooldownReduction 信号完全丢失，speed-scoring-dimension 需求前置依赖
-    - 证据：2026-08-09 Python 逐值核验 hero-abilities.json，damage-mechanic-inventory.md M1 记载 ~620 条与实际不符
-    - 优先级：中
+  - 类型: follow-up
+  - 位置: `src/domain/buffs/equipmentMult.ts（装备五通道缺 speed/cooldown kind）`
+  - 备注: 2026-08-09 深度排查根因：624 条 reduce_ultimate_cooldown effect_string（非原记 1860）分两路——12 条专精源正确进 specialization-catalog.json（cooldownReduction 12 条已验证）；612 条装备源被 buildHeroModels loot 过滤丢弃（防双重计数，正确行为），但装备五通道（SIMPLE_VALUE_KINDS）不含 reduce_ultimate_cooldown/reduce_attack_cooldown，无 owned-aware 通道接手。speedResolver 接线正确，pipeline 无 bug。此缺口随 speed 维度需求（2026-08-planner-speed-dimension）一并解决——在装备通道扩展 speed kind 或在 speed 评分实现时统一处理。
+    - 影响：装备源 cooldown 缩减信号未建模（speed 维度未消费，当前无评分影响）
+    - 证据：npx tsx 实跑 collectEffectEntries + specialization-catalog.json 验证 + Python 逐源分类（loot 612 / upgrade_ek 12 全专精）
+    - 优先级：中（随 speed 维度推进时解决）
+
+- architecture.md 195 行超叶子文档阈值 180（governance 测试 FAIL） <!-- auto-todo:id=atd_a6aa4be23c -->
+  - 记录时间: `2026-08-10T11:59:22+08:00`
+  - 类型: optimization
+  - 位置: `docs/specs/modules/planner/architecture.md`
+  - 备注: 预已存在，与 HasEffect 任务无关
+    - 位置：docs/specs/modules/planner/architecture.md
+    - 阈值：叶子文档 <=180 行默认保留，181+ 应拆
+    - 治理测试 docs-governance.test.ts 持续报错
 
 - computeCarryDps:33 Number.isFinite guard 静默吞掉 NaN/非正 damageAggregate <!-- auto-todo:id=atd_600a5e8368 -->
   - 记录时间: `2026-08-10T09:50:08+08:00`

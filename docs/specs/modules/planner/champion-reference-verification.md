@@ -19,7 +19,7 @@
 
 多英雄阵型：各英雄快照共享 `context.formationId` + 各自 `positions`，测试按 formationId 跨文件聚合。单英雄快照 `formationSize=1`。
 
-## 校准口径（与 architecture.md「投影模式」一致）
+## 校准口径（与 computation-constraints.md「投影模式」一致）
 
 - **formation-buff 模式（自动化，CI 门控）**：`objectiveValue` = 阵型内 signal 聚合（damagePool×crit×vuln）。断言交叉位置 buff 命中、计数、乘算堆叠、signal 齐全——确定性结构正确性，不依赖绝对校准。机制倍率逐项对照（`multiplierChecks`）偏差 < 30% 相对容差（游戏显示取整近似）。
 - **absolute-dps 模式（记录不门控）**：`objectiveValue` = baseDamage×levelCurve×全因子。绝对量未校准（外部加成未建模 + 技能无等级门控 + cost 曲线 ≠ 伤害曲线），当前与实测差几十个数量级；`damageReferenceVerification.test.ts` 度量并打印 log10 偏差作 BUD 校准回归基线，驱动收敛，不阻塞 CI。绝对量对照待 architecture.md「未接入能力」补全后落地为断言。

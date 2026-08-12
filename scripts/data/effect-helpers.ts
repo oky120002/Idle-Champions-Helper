@@ -31,6 +31,8 @@ import { normalizeEffectSignal } from './effect-resolvers/resolverDispatch.ts'
 // effect → signal 的解析层拆分到 ./effect-resolvers/（8 个 resolver + dispatch + shared）；
 // 此处只保留 buff_upgrade 展开与 effect entry 收集（collectEffectEntries），解析入口 re-export。
 export { normalizeEffectSignal }
+import { SPEED_EFFECT_KINDS } from './speed-effects.ts'
+export { SPEED_EFFECT_KINDS }
 
 // === Internal types ===
 
@@ -161,6 +163,9 @@ export function shouldIgnoreUnsupportedEffectEntry(rawEffect: string): boolean {
     return true
   }
   if (rawEffect === 'set_base_crit_chance') {
+    return true
+  }
+  if (SPEED_EFFECT_KINDS.has(rawEffect)) {
     return true
   }
   return isBuffUpgradeKind(rawEffect)

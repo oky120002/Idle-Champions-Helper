@@ -1,26 +1,11 @@
 import type { Champion, FormationSlot } from '../../domain/types'
-import type { ConstraintKind, PlannerResult } from '../../domain/planner/recommendationTypes'
+import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
-import type { AreaBound } from '../../domain/simulator/areaEstimation'
-import { useI18n, type LocaleText } from '../../app/i18n'
+import { useI18n } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
+import { PlannerAreaEstimate } from './PlannerAreaEstimate'
 import { PlannerBreakdown } from './PlannerBreakdown'
-
-const CONSTRAINT_LABELS: Record<ConstraintKind, LocaleText> = {
-  armor: { zh: '护甲', en: 'Armor' },
-  'hits-based': { zh: '命中型', en: 'Hits-based' },
-  'damage-reduction': { zh: '伤害削减', en: 'Dmg reduction' },
-  'enemy-buff': { zh: '敌人强化', en: 'Enemy buff' },
-  'health-drain': { zh: '持续掉血', en: 'Health drain' },
-}
-
-const BOUND_LABELS: Record<AreaBound, LocaleText> = {
-  survival: { zh: '存活受限', en: 'survival-bound' },
-  armor: { zh: '护甲受限', en: 'armor-bound' },
-  'hits-based': { zh: '命中型受限', en: 'hits-bound' },
-  bud: { zh: '伤害受限', en: 'BUD-bound' },
-  'max-area': { zh: '已达上限', en: 'max-area' },
-}
+import { PlannerSpeedBreakdown } from './PlannerSpeedBreakdown'
 
 export type PlannerResultCardProps = PlannerResult & {
   scoringMode?: ScoringMode
@@ -38,6 +23,7 @@ export function PlannerResultCard({
   areaEstimate,
   viability,
   breakdown,
+  speedBreakdown,
   scoringMode = 'carry-dps',
   slots,
   championById,
@@ -45,7 +31,9 @@ export function PlannerResultCard({
   const { t } = useI18n()
   const scoreLabel = scoringMode === 'team-gold'
     ? t({ zh: '金币收益', en: 'Team gold find' })
-    : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
+    : scoringMode === 'team-speed'
+      ? t({ zh: '速度因子', en: 'Speed factor' })
+      : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
   const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
     slotId,
     heroId,
@@ -62,7 +50,6 @@ export function PlannerResultCard({
   const carrySlotId = carryHeroId != null && carryHeroId !== ''
     ? Object.entries(placements).find(([, heroId]) => heroId === carryHeroId)?.[0] ?? null
     : null
-  const boundLabel = t(BOUND_LABELS[areaEstimate?.boundBy ?? 'max-area'])
 
   return (
     <article
@@ -153,27 +140,13 @@ export function PlannerResultCard({
 
             <PlannerBreakdown breakdown={breakdown} heroNameById={heroNameById} />
 
+            <PlannerSpeedBreakdown breakdown={speedBreakdown} heroNameById={heroNameById} />
+
             {areaEstimate ? (
-              <section data-section="area-estimate" className="planner-result-card__area-estimate">
-                <h4 className="planner-result-card__section-title">
-                  {t({ zh: '推图预估', en: 'Area estimate' })}
-                </h4>
-                <p data-testid="planner-area-estimate">
-                  {t({ zh: `约可推进到第 ${String(areaEstimate.area)} 层`, en: `~ area ${String(areaEstimate.area)}` })}
-                </p>
-                <p className="planner-result-card__area-estimate-note">
-                  {t({
-                    zh: `约束：${boundLabel}（击杀上限 ${String(areaEstimate.killableArea)} / 存活上限 ${String(areaEstimate.survivableArea)}，绝对值未校准）`,
-                    en: `bound: ${boundLabel} (killable ${String(areaEstimate.killableArea)} / survivable ${String(areaEstimate.survivableArea)}, uncalibrated)`,
-                  })}
-                </p>
-                {viability != null && viability.activeConstraints.length > 0 ? (
-                  <p className="planner-result-card__viability-constraints" data-testid="planner-viability-constraints">
-                    {t({ zh: '活跃约束：', en: 'Active constraints: ' })}
-                    {viability.activeConstraints.map((key) => t(CONSTRAINT_LABELS[key])).join(t({ zh: '、', en: ', ' }))}
-                  </p>
-                ) : null}
-              </section>
+              <PlannerAreaEstimate
+                areaEstimate={areaEstimate}
+                activeConstraints={viability?.activeConstraints}
+              />
             ) : null}
 
             {warnings.length > 0 && (

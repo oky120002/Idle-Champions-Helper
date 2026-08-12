@@ -5,6 +5,7 @@ import type { FeatCatalog } from '../abilities/featSignals'
 import type { SpecializationCatalog } from '../abilities/specializationSignals'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { SimulationBreakdown } from './steadyStateScoring'
+import type { SpeedBreakdown } from './speedScoring'
 
 export interface PlannerNarrativeLine {
   zh: string
@@ -55,6 +56,8 @@ export interface PlannerResult {
    * UI 据此渲染每位英雄加成，CLI 据此输出 JSON；team-gold 模式或缺 carry 时为 null。
    */
   breakdown: SimulationBreakdown | null
+  /** team-speed 模式的速度拆解（各类别因子 + 按英雄贡献）；其他模式为 null。 */
+  speedBreakdown?: SpeedBreakdown | null
 }
 
 export interface PlannerCollections {
