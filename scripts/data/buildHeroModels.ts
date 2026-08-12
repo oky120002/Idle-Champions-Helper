@@ -190,7 +190,8 @@ export function buildOfficialHeroModel(
   // 专精 override：存入 profile，runtime 注入时覆盖
   const specAttackOverrides: Record<string, { cooldown: number | null; numTargets: number | null }> = {}
   for (const uid of specOverrideIds) {
-    specAttackOverrides[uid] = allOverrides[uid]
+    const ov = allOverrides[uid]
+    if (ov) specAttackOverrides[uid] = ov
   }
 
   // patron 资格列表（summary.patronEligibility.eligiblePatronIds），EligibleForPatron 查。

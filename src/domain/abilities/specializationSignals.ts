@@ -97,8 +97,8 @@ export function applySpecializationsToProfile(
       if (spec?.requiredLevel != null && heroLevel < spec.requiredLevel) continue
       overrideProfile = {
         ...overrideProfile,
-        baseAttackCooldown: ov.cooldown ?? overrideProfile.baseAttackCooldown,
-        numTargets: ov.numTargets ?? overrideProfile.numTargets,
+        baseAttackCooldown: ov.cooldown ?? overrideProfile.baseAttackCooldown ?? null,
+        numTargets: ov.numTargets ?? overrideProfile.numTargets ?? null,
       }
     }
   }

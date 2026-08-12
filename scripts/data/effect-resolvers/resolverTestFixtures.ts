@@ -16,7 +16,7 @@ export function buildResolveContext(overrides: {
   const effectMetadata: EffectSignalMetadata = {
     effect: overrides.effect ?? {},
     effectPayload: overrides.effectPayload ?? null,
-    favoredFoeTags: overrides.favoredFoeTags,
+    favoredFoeTags: overrides.favoredFoeTags ?? null,
   }
   return {
     effectName: overrides.effectName,
