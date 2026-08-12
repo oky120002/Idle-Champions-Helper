@@ -282,9 +282,11 @@ describe('buildScoringBonusInputs', () => {
     })
     expect(r.equipmentGlobalDpsByHero.size).toBe(0)
     expect(r.legendaryContributions).toHaveLength(1)
-    expect(r.legendaryContributions[0]!.pool).toBe('global')
-    expect(r.legendaryContributions[0]!.baseValue).toBe(100)
-    expect(r.legendaryContributions[0]!.perCrusader).toBe(true)
+    const lc = r.legendaryContributions[0]
+    expect(lc).toBeDefined()
+    expect(lc?.pool).toBe('global')
+    expect(lc?.baseValue).toBe(100)
+    expect(lc?.perCrusader).toBe(true)
   })
 
   it('hero_dps 带 filter → legendaryContributions pool=hero', () => {
@@ -300,8 +302,10 @@ describe('buildScoringBonusInputs', () => {
       ],
     })
     expect(r.legendaryContributions).toHaveLength(1)
-    expect(r.legendaryContributions[0]!.pool).toBe('hero')
-    expect(r.legendaryContributions[0]!.baseValue).toBe(125)
-    expect(r.legendaryContributions[0]!.targetQualifier).not.toBeNull()
+    const lc = r.legendaryContributions[0]
+    expect(lc).toBeDefined()
+    expect(lc?.pool).toBe('hero')
+    expect(lc?.baseValue).toBe(125)
+    expect(lc?.targetQualifier).not.toBeNull()
   })
 })

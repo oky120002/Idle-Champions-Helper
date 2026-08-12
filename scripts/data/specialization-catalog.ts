@@ -4,11 +4,11 @@ import {
   type HeroAbilityDimension,
   type HeroAbilitySignal,
 } from '../../src/domain/abilities/abilityModel'
+import type { SpeedEffectEntry } from '../../src/domain/planner/speedScoring'
 import { collectEffectEntries, collectSpecializationEffectEntries, normalizeEffectSignal, splitEffectString } from './effect-helpers'
 import { asArray, asRecord } from './io-utils'
 import type { SignalBucket } from './effect-resolvers/resolverShared'
 import { parseSpeedEffect } from './speed-effects'
-import type { SpeedEffectEntry } from '../../src/domain/planner/speedScoring'
 
 /**
  * 专精（specialization）归一化：champion-details upgrades（specializationName != null）→ SpecializationEntry[]。
@@ -51,7 +51,7 @@ export interface SpecializationEntry {
   requiredUpgradeId: string | null
   signals: SpecializationSignalEntry[]
   /** 专精携带的速度效果（team-speed 模式 runtime 按玩家选择注入 speedProfile）。 */
-  speedEffects?: import('../../src/domain/planner/speedScoring').SpeedEffectEntry[]
+  speedEffects?: SpeedEffectEntry[]
 }
 
 interface SpecializationNameValue {

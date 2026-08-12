@@ -7,6 +7,7 @@
  */
 import type { HeroSpeedProfile, SpeedEffectEntry, FormationBonusTable } from '../../src/domain/planner/speedScoring'
 import { computeHeroSpeedGain } from '../../src/domain/planner/speedScoring'
+// eslint-disable-next-line import-x/no-cycle -- build 期脚本，ESM live binding 安全（函数体内使用，非模块顶层）
 import { collectEffectEntries } from './effect-helpers'
 import { asRecord, asArray } from './io-utils'
 
@@ -66,7 +67,7 @@ export function extractSpeedProfile(heroId: string, detail: unknown): HeroSpeedP
       category: 'questProgress',
       value: sentryChance,
       reductionAmount: sentryAmount,
-      rawEffect: `buff_resolution,${sentryChance},${sentryAmount}`,
+      rawEffect: `buff_resolution,${String(sentryChance)},${String(sentryAmount)}`,
     })
   }
 
@@ -93,7 +94,7 @@ export function extractSpeedProfile(heroId: string, detail: unknown): HeroSpeedP
 export function parseSpeedEffect(effectString: string): SpeedEffectEntry[] | null {
   const parts = effectString.split(',')
   const kind = parts[0]
-  if (!kind || !SPEED_EFFECT_KINDS.has(kind)) return null
+  if (kind === undefined || kind === '' || !SPEED_EFFECT_KINDS.has(kind)) return null
 
   const args = parts.slice(1)
   const num = (i: number): number => {
@@ -127,6 +128,7 @@ export function parseSpeedEffect(effectString: string): SpeedEffectEntry[] | nul
     case 'chance_multiply_monster_quest_rewards_new':
     case 'chance_multiply_favored_foe_quest_rewards':
       // <chance>,<mult>[,<extra>]
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- multiplier 0 无意义，回退 1（无倍增）
       return [{ category: 'questProgress', value: num(0), multiplier: num(1) || 1, rawEffect: effectString }]
 
     case 'chance_reduce_quest_requirement':
@@ -187,7 +189,9 @@ function extractHewMaanNestedQuest(detail: unknown): SpeedEffectEntry | null {
           const zeStr = typeof ze?.effect_string === 'string' ? ze.effect_string : ''
           if (zeStr.startsWith('chance_multiply_monster_quest_rewards,')) {
             const parts = zeStr.split(',')
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- build 期解析，0/NaN 回退合理
             const chance = Number(parts[1]) || 0
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- multiplier 0 无意义，回退 1
             const mult = Number(parts[2]) || 1
             questEntry = { category: 'questProgress', value: chance, multiplier: mult, rawEffect: zeStr }
           }
@@ -202,8 +206,11 @@ function extractHewMaanNestedQuest(detail: unknown): SpeedEffectEntry | null {
             const r = asRecord(b)
             const range = Array.isArray(r?.range) ? r.range : []
             return {
+              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- build 期解析，NaN 回退 0
               min: Number(range[0]) || 0,
+              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- build 期解析，NaN 回退 0
               max: Number(range[1]) || 0,
+              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- build 期解析，NaN 回退 0
               amount: Number(r?.amount) || 0,
             }
           })

@@ -1,6 +1,7 @@
 /* eslint-disable max-lines -- 英雄能力共享模型（kind/dimension/pool/signal 类型+常量集中），拆分损害一跳命中率，与 heroPredicate.ts 同处置 */
 import type { AbilityScoreKey, DataCollection, LocalizedText } from '../types'
 import { REGISTERED_STACK_FUNCS } from '../planner/mechanics/stackCountResolver'
+import type { HeroSpeedProfile } from '../planner/speedScoring'
 
 /**
  * 英雄能力表达层（hero-agnostic）。算法-英雄握手点唯一：HeroAbilityProfile。
@@ -217,7 +218,7 @@ export interface HeroAbilityProfile {
    * 速度画像（build 期从 champion-details effect_keys 提取 7 类静态可计算速度效果）。
    * 仅速度英雄有此字段；team-speed 评分模式消费。详见 speedScoring.ts。
    */
-  speedProfile?: import('../planner/speedScoring').HeroSpeedProfile
+  speedProfile?: HeroSpeedProfile
   /**
    * 运行时注入的存档上下文（OwnedHero 派生）；build 期 undefined（不进 hero-abilities.json）。
    * evaluateFormation/buildPlannerRecommendation 从 profileSnapshot 注入，供存档依赖谓词

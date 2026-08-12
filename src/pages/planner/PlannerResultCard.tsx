@@ -1,7 +1,7 @@
 import type { Champion, FormationSlot } from '../../domain/types'
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
-import { useI18n } from '../../app/i18n'
+import { useI18n, type LocaleText } from '../../app/i18n'
 import { FormationBoardCanvas } from '../formation/FormationBoardCanvas'
 import { PlannerAreaEstimate } from './PlannerAreaEstimate'
 import { PlannerBreakdown } from './PlannerBreakdown'
@@ -29,11 +29,12 @@ export function PlannerResultCard({
   championById,
 }: PlannerResultCardProps) {
   const { t } = useI18n()
-  const scoreLabel = scoringMode === 'team-gold'
-    ? t({ zh: '金币收益', en: 'Team gold find' })
-    : scoringMode === 'team-speed'
-      ? t({ zh: '速度因子', en: 'Speed factor' })
-      : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
+  const SCORE_LABELS: Record<ScoringMode, LocaleText> = {
+    'carry-dps': { zh: '核心英雄 DPS', en: 'Carry DPS' },
+    'team-gold': { zh: '金币收益', en: 'Team gold find' },
+    'team-speed': { zh: '速度因子', en: 'Speed factor' },
+  }
+  const scoreLabel = t(SCORE_LABELS[scoringMode])
   const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
     slotId,
     heroId,

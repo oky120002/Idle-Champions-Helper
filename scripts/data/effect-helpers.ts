@@ -31,7 +31,9 @@ import { normalizeEffectSignal } from './effect-resolvers/resolverDispatch.ts'
 // effect → signal 的解析层拆分到 ./effect-resolvers/（8 个 resolver + dispatch + shared）；
 // 此处只保留 buff_upgrade 展开与 effect entry 收集（collectEffectEntries），解析入口 re-export。
 export { normalizeEffectSignal }
+// eslint-disable-next-line import-x/no-cycle -- build 期脚本，ESM live binding 安全（函数体内使用，非模块顶层）
 import { SPEED_EFFECT_KINDS } from './speed-effects.ts'
+
 export { SPEED_EFFECT_KINDS }
 
 // === Internal types ===

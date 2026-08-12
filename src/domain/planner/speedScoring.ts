@@ -239,7 +239,7 @@ export function applyEquipmentBuffsToSpeedEffects(
     buffByUpgrade.set(buff.targetUpgradeId, (buffByUpgrade.get(buff.targetUpgradeId) ?? 0) + buff.value)
   }
   return effects.map((effect) => {
-    if (!effect.upgradeId) return effect
+    if (effect.upgradeId == null || effect.upgradeId === '') return effect
     const buffPercent = buffByUpgrade.get(effect.upgradeId)
     if (buffPercent == null || buffPercent === 0) return effect
     // 二值效果不缩放
@@ -288,7 +288,7 @@ export function applyFormationSpeedEffects(
 
   return profiles.map((profile) => {
     const slotId = context.slotByHeroId.get(profile.heroId)
-    if (!slotId) return profile
+    if (slotId === undefined) return profile
 
     const adjSlots = context.adjacentSlotIds.get(slotId) ?? []
     const hasBonus = profile.effects.some((e) => e.formationBonusTable)
