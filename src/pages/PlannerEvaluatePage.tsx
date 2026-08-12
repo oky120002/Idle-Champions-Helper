@@ -13,7 +13,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Eraser, Lock, Plus, Send, Sparkles, Unlock } from 'lucide-react'
 import { BackNavigationIcon } from '../app/AppIcons'
-import { useI18n } from '../app/i18n'
+import { useI18n, type LocaleText } from '../app/i18n'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
 import type { WorkbenchToolbarConfig } from '../components/workbench/workbenchToolbarConfig'
@@ -615,11 +615,12 @@ export function PlannerEvaluatePage() {
     [locale],
   )
 
-  const scoreLabel = scoringMode === 'team-gold'
-    ? t({ zh: '金币收益', en: 'Team gold find' })
-    : scoringMode === 'team-speed'
-      ? t({ zh: '速度因子', en: 'Speed factor' })
-      : t({ zh: '核心英雄 DPS', en: 'Carry DPS' })
+  const SCORE_LABELS: Record<ScoringMode, LocaleText> = {
+    'carry-dps': { zh: '核心英雄 DPS', en: 'Carry DPS' },
+    'team-gold': { zh: '金币收益', en: 'Team gold find' },
+    'team-speed': { zh: '速度因子', en: 'Speed factor' },
+  }
+  const scoreLabel = t(SCORE_LABELS[scoringMode])
   const heroNameById = useMemo(
     () => new Map((evaluation.result?.placementEntries ?? []).map((entry) => [entry.heroId, entry.heroName])),
     [evaluation.result],

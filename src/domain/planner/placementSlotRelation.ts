@@ -190,6 +190,7 @@ export function matchesPositionQualifier(input: EvaluatePlacementFitInput, signa
  *
  * 供 HasEffect(name)/HasEffectByID(N) 谓词求值；在 scoreFormation 层算一次，透传到 evaluatePlacementFit。
  */
+/* eslint-disable-next-line sonarjs/cognitive-complexity -- 双重循环+条件分支是 effect grant 图遍历的固有复杂度 */
 export function computeEffectActivation(
   placements: Record<string, string>,
   heroesById: Map<string, ResolvedHeroAbilityProfile>,

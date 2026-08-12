@@ -286,7 +286,7 @@ describe('DYNAMIC_SPEED_DEFAULTS', () => {
   })
 
   it('areaSkip factor = 1 + value/100 (additive)', () => {
-    const brivDefault = DYNAMIC_SPEED_DEFAULTS.get('58')!
+    const brivDefault = DYNAMIC_SPEED_DEFAULTS.get('58') as SpeedEffectEntry
     // Briv 25% → factor = 1.25
     const factor = computeFormationSpeedMultiplier([{
       heroId: '58',

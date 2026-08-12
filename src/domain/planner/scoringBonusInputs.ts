@@ -133,6 +133,7 @@ function mergeFeatBuffsInto(
   }
 }
 
+/* eslint-disable-next-line complexity -- 外部加成装配天然多分支（6 种装备通道+patron+blessing+legendary），拆分损害一跳命中率 */
 export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): ScoringBonusInputs {
   const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment, featCatalog, legendaryEffectCatalog } = input
 

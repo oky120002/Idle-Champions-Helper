@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
-import { collectLegendaryContributions, type LegendaryEffectCatalogEntry } from './legendaryEffects'
 import type { OwnedHero, OwnedHeroLegendarySlot } from '../user-profile/types'
+import { collectLegendaryContributions, type LegendaryEffectCatalogEntry } from './legendaryEffects'
 
 function makeLegendarySlot(effectId: string | null, level: number): OwnedHeroLegendarySlot {
-  return { slotId: '1', level, effectId, effectIds: effectId ? [effectId] : [], resetCurrencyId: null, upgradeCost: 0 }
+  return { slotId: '1', level, effectId, effectIds: effectId !== null ? [effectId] : [], resetCurrencyId: null, upgradeCost: 0 }
 }
 
 function makeOwnedHero(heroId: string, legendaryBySlot: Record<string, OwnedHeroLegendarySlot>): OwnedHero {
@@ -87,21 +87,23 @@ describe('collectLegendaryContributions', () => {
     const result = collectLegendaryContributions([hero], CATALOG)
     expect(result.globalDpsAddPercent.size).toBe(0)
     expect(result.contributions).toHaveLength(1)
-    const c = result.contributions[0]!
-    expect(c.ownerHeroId).toBe('1')
-    expect(c.pool).toBe('global')
-    expect(c.baseValue).toBe(100) // 10 × 10
-    expect(c.perCrusader).toBe(true)
-    expect(c.countQualifier).toBeNull() // no target_filters = count all
+    const c = result.contributions[0]
+    expect(c).toBeDefined()
+    expect(c?.ownerHeroId).toBe('1')
+    expect(c?.pool).toBe('global')
+    expect(c?.baseValue).toBe(100) // 10 × 10
+    expect(c?.perCrusader).toBe(true)
+    expect(c?.countQualifier).toBeNull() // no target_filters = count all
   })
 
   it('parses target_filters for per_crusader count qualifier', () => {
     const hero = makeOwnedHero('1', { '1': makeLegendarySlot('per-crusader-human', 1) })
     const result = collectLegendaryContributions([hero], CATALOG)
     expect(result.contributions).toHaveLength(1)
-    const c = result.contributions[0]!
-    expect(c.perCrusader).toBe(true)
-    expect(c.countQualifier).not.toBeNull()
+    const c = result.contributions[0]
+    expect(c).toBeDefined()
+    expect(c?.perCrusader).toBe(true)
+    expect(c?.countQualifier).not.toBeNull()
     // countQualifier should match "human" tag
   })
 
@@ -110,12 +112,13 @@ describe('collectLegendaryContributions', () => {
     const result = collectLegendaryContributions([hero], CATALOG)
     expect(result.globalDpsAddPercent.size).toBe(0)
     expect(result.contributions).toHaveLength(1)
-    const c = result.contributions[0]!
-    expect(c.ownerHeroId).toBe('1')
-    expect(c.pool).toBe('hero')
-    expect(c.baseValue).toBe(125)
-    expect(c.targetQualifier).not.toBeNull()
-    expect(c.perCrusader).toBe(false)
+    const c = result.contributions[0]
+    expect(c).toBeDefined()
+    expect(c?.ownerHeroId).toBe('1')
+    expect(c?.pool).toBe('hero')
+    expect(c?.baseValue).toBe(125)
+    expect(c?.targetQualifier).not.toBeNull()
+    expect(c?.perCrusader).toBe(false)
   })
 
   it('handles level 0 as level 1 (minimum)', () => {

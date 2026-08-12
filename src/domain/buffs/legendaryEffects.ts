@@ -81,6 +81,7 @@ function indexCatalog(catalog: readonly LegendaryEffectCatalogEntry[]): Map<stri
  * - 无存档 / 无锻造 → 空（向后兼容）
  * - 目录中找不到 effectId → 跳过（宁可不准不可错）
  */
+/* eslint-disable-next-line sonarjs/cognitive-complexity -- 传奇效果路由分支多但每条简单（kind×stackFunc×pool 组合），拆工会丢失一跳命中率 */
 export function collectLegendaryContributions(
   ownedHeroes: readonly OwnedHero[],
   catalog: readonly LegendaryEffectCatalogEntry[],
@@ -91,7 +92,7 @@ export function collectLegendaryContributions(
 
   for (const hero of ownedHeroes) {
     for (const slot of Object.values(hero.legendaryBySlot)) {
-      if (!slot.effectId) {
+      if (slot.effectId == null) {
         continue
       }
       const entry = index.get(slot.effectId)

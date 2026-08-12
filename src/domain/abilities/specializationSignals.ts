@@ -1,3 +1,4 @@
+import { computeHeroSpeedGain, type SpeedEffectEntry } from '../planner/speedScoring'
 import {
   appendHeroAbilitySignals,
   type HeroAbilityDimension,
@@ -5,7 +6,6 @@ import {
   type ResolvedHeroAbilityProfile,
   type SignalBucket,
 } from './abilityModel'
-import { computeHeroSpeedGain, type SpeedEffectEntry } from '../planner/speedScoring'
 
 /**
  * 专精（specialization）运行时信号注入。
@@ -61,6 +61,7 @@ export type SpecializationCatalog = Record<string, SpecializationEntry[]>
  *  - 追加而非替换：误用 applyHeroAbilityPatch 传子集会整体替换、抹掉 base 支援信号（35→2，P0 根因）。
  * 无 active 专精 signal → 原样返回。
  */
+/* eslint-disable-next-line sonarjs/cognitive-complexity -- 信号注入循环含多维分支（carry/support/speed），拆子函数需共享大量局部状态 */
 export function applySpecializationsToProfile(
   profile: ResolvedHeroAbilityProfile,
   activeUpgradeIds: readonly string[],

@@ -1,6 +1,7 @@
 import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
 import { compareGameNumbers, type GameNumberValue } from '../gameNumber'
+import type { SpeedBreakdown } from './speedScoring'
 import type { ScoringResult, SimulationBreakdown } from './steadyStateScoring'
 
 export interface BeamSearchInput {
@@ -22,7 +23,7 @@ export interface BeamSearchResult {
   /** best carry 的结构化加成拆解（透传给 PlannerResult，供 UI/CLI 消费）。 */
   breakdown: SimulationBreakdown | null
   /** team-speed 模式的速度拆解（透传给 PlannerResult）。 */
-  speedBreakdown?: import('./speedScoring').SpeedBreakdown | null
+  speedBreakdown?: SpeedBreakdown | null
 }
 
 interface BeamCandidate {
