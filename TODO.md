@@ -98,4 +98,11 @@ repair: rebuild
     - 修复方向：需从游戏内实测/社区数据补充 GE 升级效果值
     - 来源：wiki 交叉核对 P3 验证（2026-08-10）
 
+- 数据源 warning 未国际化：scenarioWarnings 中文 + snapshot.warnings 英文单语 <!-- auto-todo:id=atd_4adb7cd1ca -->
+  - 记录时间: `2026-08-13T16:54:19+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/buildScenarioModels.ts`
+  - 备注: 影响：英文 locale 下 scenarioWarnings 仍显示中文、中文 locale 下 snapshot.warnings 仍显示英文（经 asLocalizedUiText 包装 zh/en 同值，现状不回归但无双语）
+    - 证据：2026-08-13 warning i18n 改造（atd_665afea3d4）收口时发现，数据管线 scripts/data/buildScenarioModels.ts 的 restrictionWarnings/mechanicWarnings 硬编码中文，src/data/user-sync/userProfileNormalizer.ts 的 warnings 硬编码英文，均未双语化
+
 <!-- auto-todo:end -->
