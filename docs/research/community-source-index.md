@@ -100,4 +100,23 @@ Idle Champions 社区资源目录 + 已抓取 URL 追踪。每个 URL 对应一�
 | formation-strategy.md | https://idlechampions.fandom.com/wiki/Formation_strategy | Wiki | ✅ |
 | formation-strategy.md | https://steamcommunity.com/sharedfiles/filedetails?id=1319319295 | Steam | ✅ |
 
+| clicking-mechanics.md | https://idlechampions.fandom.com/wiki/Clicking | Wiki | ✅（BUD 派生关系，同 bud-mechanics） |
+| clicking-mechanics.md | https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage | Wiki | ✅（同 bud-mechanics） |
+| groups-and-affiliations.md | https://idlechampions.fandom.com/wiki/Groups | Wiki | ✅ |
+| groups-and-affiliations.md | https://idlechampions.fandom.com/wiki/Category:Groups | Wiki | ✅ |
+| groups-and-affiliations.md | https://www.reddit.com/r/idlechampions/comments/1nph60b/affiliations_ranked_an_underexplained_list/ | Reddit | ⚠️ |
+| equipment-system-overview.md | https://idlechampions.fandom.com/wiki/Gear | Wiki | ✅ |
+| equipment-system-overview.md | https://idlechampions.fandom.com/wiki/Chests | Wiki | ✅ |
+| equipment-system-overview.md | https://www.reddit.com/r/idlechampions/comments/wqacoe/understanding_equipment_levels_and_rarities/ | Reddit | ⚠️（倍率说法与数据矛盾） |
+| scavenger-collecting.md | https://idlechampions.fandom.com/wiki/Special_collecting_abilities | Wiki | ⚠️ |
+| scavenger-collecting.md | https://idlechampions.fandom.com/wiki/Category:Scavengers | Wiki | ⚠️ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Game_Modes | Wiki | ✅ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Resets | Wiki | ✅ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Weekends | Wiki | ✅ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Notary | Wiki | ✅ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Tokens | Wiki | ✅ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Large_number_abbreviations | Wiki | ✅ |
+| misc-game-mechanics.md | https://idlechampions.fandom.com/wiki/Adventures | Wiki | ✅ |
+| misc-game-mechanics.md | https://www.reddit.com/r/idlechampions/comments/1l3e6xp/notary_system_and_potion_reagents/ | Reddit | ✅ |
+
 无社区来源（游戏数据直证）：aoe-survival.md、attack-multihit.md、feat-and-specialization.md

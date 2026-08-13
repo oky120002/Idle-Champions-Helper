@@ -101,10 +101,17 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     metaByUpgradeId.set(id, { name, requiredLevel, requiredUpgradeId })
   }
 
-  // 按 upgradeId 聚合 spec effect → scoring signals（与 buildOfficialHeroModel 同解析路径）+ 速度效果
+// 按 upgradeId 聚合 spec effect → scoring signals（与 buildOfficialHeroModel 同解析路径）+ 速度效果
+  // favored_foe 标签预扫描（跨 base+spec upgrade）供 vulnerability resolver 跨效果引用
+  const specEffectEntries = collectSpecializationEffectEntries(detail)
+  const favoredFoeTags = [...collectEffectEntries(detail).entries, ...specEffectEntries]
+    .map((e) => splitEffectString(e.effectString))
+    .map((s) => (s?.effectName === 'favored_foe' ? s.effectValue : null))
+    .filter((tag): tag is string => tag != null && tag !== '')
+
   const signalsByUpgradeId = new Map<string, SpecializationSignalEntry[]>()
   const speedEffectsByUpgradeId = new Map<string, SpeedEffectEntry[]>()
-  for (const entry of collectSpecializationEffectEntries(detail)) {
+  for (const entry of specEffectEntries) {
     // 速度效果提取（专精源，如 Melf 的快速刷新 / Farideh 的额外刷怪）
     const speedParsed = parseSpeedEffect(entry.effectString)
     if (speedParsed) {
@@ -121,7 +128,7 @@ export function buildSpecializationEntries(detail: unknown): SpecializationEntry
     if (upgradeId === '') continue
     const split = splitEffectString(entry.effectString)
     if (!split) continue
-    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
+    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', { ...entry, favoredFoeTags })
     if (!parsed.ok) continue
     const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)
     const signal: HeroAbilitySignal = {

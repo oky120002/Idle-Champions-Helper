@@ -288,6 +288,21 @@ describe('normalizeExplicitTargeting', () => {
     expect(normalizeExplicitTargeting({ targets: ['front'] }).status).toBe('unsupported')
   })
 
+  it('tallest_column / middle_columns → supported（阵型布局静态属性）', () => {
+    // Windfall(167): "column(s) with the most slots" — 静态属性，matchColumnRelation 查 slot 按列计数
+    expect(normalizeExplicitTargeting({ targets: ['tallest_column'] })).toEqual({ status: 'supported', relation: 'tallestColumn' })
+    // Lark(170): "not in the first or last column" — 中间列
+    expect(normalizeExplicitTargeting({ targets: ['middle_columns'] })).toEqual({ status: 'supported', relation: 'middleColumns' })
+  })
+
+  it('slot_if_expr num_adj_slots<=max_adj → supported（槽位相邻数条件）', () => {
+    // Jang Sao(140): slots with max_adj or fewer adjacent slots
+    expect(normalizeExplicitTargeting({ targets: [{ type: 'slot_if_expr', if_expr: 'num_adj_slots<=max_adj', max_adj: 2 }] })).toEqual({
+      status: 'supported',
+      relation: 'slotsWithMaxTwoAdjacent',
+    })
+  })
+
   it('targets type:heroes → supported relation=any（英雄白名单不限定位置）', () => {
     // {type:"heroes",hero_ids:[...]} 是英雄白名单（filter-like），位置关系=any（任意位置的目标英雄）。
     expect(normalizeExplicitTargeting({ targets: [{ type: 'heroes', hero_ids: [1, 2] }] })).toEqual({

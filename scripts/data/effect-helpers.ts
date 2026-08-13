@@ -752,7 +752,11 @@ export function collectEffectEntries(detail: unknown): {
   // spec upgradeId →（dedupKey → 派生 entry）
   const specializationDerivedByKey = new Map<string, Map<string, EffectEntry>>()
 
-  for (const entry of effectEntries) {
+  // 专精节点上的 wrapper（如 buff_upgrade_per_any_tagged_crusader_mult）也需派生——
+  // collectRawEffectEntries 将 specializationName!=null 的 upgrade entries 分流到 specializationEntries，
+  // 若不纳入遍历，专精节点上的 per-tagged-crusader wrapper 会被静默丢弃（11 英雄 16 条信号）。
+  // 派生信号按 source upgradeId 路由到 specializationDerived（随专精选择注入，不泄漏到 base）。
+  for (const entry of [...effectEntries, ...specializationEntries]) {
     if (!isBuffUpgradeKind(entry.effectPayload?.kind)) {
       continue
     }
@@ -841,6 +845,15 @@ export function collectEffectEntries(detail: unknown): {
             inner.set(key, buffedEntry)
           }
           specializationDerivedByKey.set(targetIdStr, inner)
+        } else if (specializationUpgradeIds.has(entry.upgradeId ?? '')) {
+          // wrapper source 是专精节点、target 不是 → 按 source upgradeId 路由到 specializationDerived，
+          // 随玩家专精选择注入（不作为 base signal 永久生效，避免 DPS 高估）。
+          const specSourceId = entry.upgradeId ?? '?'
+          const inner = specializationDerivedByKey.get(specSourceId) ?? new Map<string, EffectEntry>()
+          if (!inner.has(key) || shouldReplaceWithHigherMagnitude(inner.get(key), buffedEntry)) {
+            inner.set(key, buffedEntry)
+          }
+          specializationDerivedByKey.set(specSourceId, inner)
         } else if (!derivedByKey.has(key) || shouldReplaceWithHigherMagnitude(derivedByKey.get(key), buffedEntry)) {
           derivedByKey.set(key, buffedEntry)
         }

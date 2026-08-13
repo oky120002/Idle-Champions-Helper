@@ -93,6 +93,7 @@ function matchColumnRelation(
   return false
 }
 
+/* eslint-disable-next-line sonarjs/cognitive-complexity, complexity -- 位置关系分支众多（distance/column/adjacent/tallest 等）为关系语义的固有复杂度 */
 export function matchesSlotRelation(
   scenario: ResolvedPlannerScenarioModel,
   sourceSlotId: string,
@@ -148,6 +149,28 @@ export function matchesSlotRelation(
     .map((slot) => slot.column)
     .filter((column, index, list) => Number.isFinite(column) && list.indexOf(column) === index)
     .sort((left, right) => left - right)
+
+  if (relation === 'tallestColumn') {
+    // Windfall(167): column(s) with the most slots in the formation layout
+    const slotCountByColumn = new Map<number, number>()
+    for (const slot of scenario.slotTopology) {
+      if (Number.isFinite(slot.column)) {
+        slotCountByColumn.set(slot.column, (slotCountByColumn.get(slot.column) ?? 0) + 1)
+      }
+    }
+    const maxSlots = Math.max(...slotCountByColumn.values())
+    return (slotCountByColumn.get(targetColumn) ?? 0) === maxSlots
+  }
+
+  if (relation === 'middleColumns') {
+    // Lark(170): columns excluding the first (backmost) and last (frontmost)
+    return columns.length >= 3 && targetColumn !== columns[0] && targetColumn !== columns[columns.length - 1]
+  }
+
+  if (relation === 'slotsWithMaxTwoAdjacent') {
+    // Jang Sao(140): slots with ≤2 adjacent slots
+    return (targetSlot?.adjacentSlotIds.length ?? 0) <= 2
+  }
 
   return matchColumnRelation(relation, delta, targetColumn, columns)
 }

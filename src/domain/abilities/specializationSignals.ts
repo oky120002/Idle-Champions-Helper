@@ -61,7 +61,7 @@ export type SpecializationCatalog = Record<string, SpecializationEntry[]>
  *  - 追加而非替换：误用 applyHeroAbilityPatch 传子集会整体替换、抹掉 base 支援信号（35→2，P0 根因）。
  * 无 active 专精 signal → 原样返回。
  */
-/* eslint-disable-next-line sonarjs/cognitive-complexity -- 信号注入循环含多维分支（carry/support/speed），拆子函数需共享大量局部状态 */
+/* eslint-disable-next-line sonarjs/cognitive-complexity, complexity -- 信号注入循环含多维分支（carry/support/speed）+ 攻击参数覆盖，拆子函数需共享大量局部状态 */
 export function applySpecializationsToProfile(
   profile: ResolvedHeroAbilityProfile,
   activeUpgradeIds: readonly string[],
@@ -92,12 +92,31 @@ export function applySpecializationsToProfile(
       specSpeedEffects.push(...entry.speedEffects)
     }
   }
-  if (carry.length === 0 && support.length === 0 && specSpeedEffects.length === 0) {
+// change_base_attack 专精覆盖：激活的专精含 attackOverrides 时覆盖 baseAttackCooldown/numTargets，
+  // BUD 计算自动使用覆盖后的参数（computeSingleHitDamage 读 hero.baseAttackCooldown/numTargets）。
+  let overrideProfile = profile
+  const overrides = profile.attackOverrides
+  if (overrides) {
+    for (const uid of activeUpgradeIds) {
+      const ov = overrides[uid]
+      if (!ov) continue
+      // 等级门控：同信号一致，等级不够的专精覆盖也不生效
+      const spec = heroSpecializations?.find((e) => e.upgradeId === uid)
+      if (spec?.requiredLevel != null && heroLevel < spec.requiredLevel) continue
+      overrideProfile = {
+        ...overrideProfile,
+        baseAttackCooldown: ov.cooldown ?? overrideProfile.baseAttackCooldown ?? null,
+        numTargets: ov.numTargets ?? overrideProfile.numTargets ?? null,
+      }
+    }
+  }
+
+  if (carry.length === 0 && support.length === 0 && specSpeedEffects.length === 0 && overrideProfile === profile) {
     return profile
   }
   const withSignals = (carry.length > 0 || support.length > 0)
-    ? appendHeroAbilitySignals(profile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
-    : profile
+    ? appendHeroAbilitySignals(overrideProfile, { carrySignals: carry, supportSignals: support }, 'official-parsed')
+    : overrideProfile
   // 速度效果合并进 speedProfile（base + spec 叠加）
   if (specSpeedEffects.length > 0) {
     const baseEffects = withSignals.speedProfile?.effects ?? []

@@ -124,7 +124,15 @@ export function buildOfficialHeroModel(
   const unsupportedSignals: HeroUnsupportedSignal[] = []
   let baseCritChancePercent: number | null = null
 
-  for (const entry of collectEffectEntries(detail).entries) {
+  // 预扫描 favored_foe,tag 效果，收集偏好敌人标签供 vulnerability resolver 跨效果引用
+  //（increase_monster_damage_if_favored_foe 的 tag 来自同英雄另一 upgrade 的 favored_foe 声明）。
+  const effectEntries = collectEffectEntries(detail).entries
+  const favoredFoeTags = effectEntries
+    .map((e) => splitEffectString(e.effectString))
+    .map((s) => (s?.effectName === 'favored_foe' ? s.effectValue : null))
+    .filter((tag): tag is string => tag != null && tag !== '')
+
+  for (const entry of effectEntries) {
     // 外部源（feat/loot/legendary）不进 base scored profile——加成源唯一性不变式
     // （见 simulator.md + modeling-pitfalls.md）：feat 外部化（ADR 0017，feat-catalog + runtime 注入）；
     // loot/legendary 同构——装备只走 owned-aware 通道（equipmentMult.ts），build 管线 bake 装备源
@@ -149,7 +157,7 @@ export function buildOfficialHeroModel(
       continue
     }
 
-    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
+    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', { ...entry, favoredFoeTags })
 
     if (parsed.ok) {
       const semanticSignal = attachSignalSemantics(parsed.signal, entry.effect)
@@ -209,6 +217,40 @@ export function buildOfficialHeroModel(
   const base = asRecord(attacks.base) ?? {}
   const characterSheet = asRecord(detail.characterSheet) ?? {}
 
+  // change_base_attack 攻击参数覆盖：非专精 = 总是生效（直接覆盖 base）；
+  // 专精 = runtime 按玩家选择注入（存入 profile.attackOverrides）。
+  const rawAttackOverrides = detail.attackOverrides as Record<string, { cooldown: number | null; numTargets: number | null }> | undefined
+  const allOverrides = rawAttackOverrides ?? {}
+  const upgradeList = asArray(detail.upgrades)
+  const specOverrideIds = new Set<string>()
+  for (const up of upgradeList) {
+    const upgrade = asRecord(up)
+    if (!upgrade) continue
+    if (upgrade.specializationName != null) {
+      const uid = typeof upgrade.id === 'string' || typeof upgrade.id === 'number' ? String(upgrade.id) : ''
+      if (uid !== '' && uid in allOverrides) specOverrideIds.add(uid)
+    }
+  }
+  // 非专精 override：取最后一个（requiredLevel 最高的）应用到 base 参数
+  let effectiveCooldown = typeof base.cooldown === 'number' ? base.cooldown : null
+  let effectiveNumTargets = typeof base.numTargets === 'number' && base.numTargets > 0 ? base.numTargets : null
+  for (const up of upgradeList) {
+    const upgrade = asRecord(up)
+    if (!upgrade) continue
+    const uid = typeof upgrade.id === 'string' || typeof upgrade.id === 'number' ? String(upgrade.id) : ''
+    if (uid === '' || specOverrideIds.has(uid)) continue
+    const ov = allOverrides[uid]
+    if (!ov) continue
+    if (typeof ov.cooldown === 'number') effectiveCooldown = ov.cooldown
+    if (typeof ov.numTargets === 'number') effectiveNumTargets = ov.numTargets
+  }
+  // 专精 override：存入 profile，runtime 注入时覆盖
+  const specAttackOverrides: Record<string, { cooldown: number | null; numTargets: number | null }> = {}
+  for (const uid of specOverrideIds) {
+    const ov = allOverrides[uid]
+    if (ov) specAttackOverrides[uid] = ov
+  }
+
   // patron 资格列表（summary.patronEligibility.eligiblePatronIds），EligibleForPatron 查。
   const summary = asRecord(detail.summary) ?? {}
   const patronEligibility = asRecord(summary.patronEligibility) ?? {}
@@ -224,8 +266,8 @@ export function buildOfficialHeroModel(
     roles: champion.roles as string[],
     tags: champion.tags as string[],
     baseAttackDamageTypes: (base.damageTypes as string[] | undefined) ?? [],
-    baseAttackCooldown: typeof base.cooldown === 'number' ? base.cooldown : null,
-    numTargets: typeof base.numTargets === 'number' && base.numTargets > 0 ? base.numTargets : null,
+    baseAttackCooldown: effectiveCooldown,
+    numTargets: effectiveNumTargets,
     damageModifier: (() => { const dm = Number(base.damageModifier); return Number.isFinite(dm) && dm > 0 ? dm : null })(),
     age: typeof characterSheet.age === 'number' ? characterSheet.age : null,
     abilityScores: (characterSheet.abilityScores as HeroAbilityProfile['abilityScores'] | undefined) ?? {},
@@ -244,6 +286,7 @@ export function buildOfficialHeroModel(
     healthCurves,
     eligiblePatronIds,
     effectGrants: extractEffectGrants(detail),
+    attackOverrides: Object.keys(specAttackOverrides).length > 0 ? specAttackOverrides : null,
     ...(() => { const sp = extractSpeedProfile(champion.id as string, detail); return sp ? { speedProfile: sp } : {} })(),
     carrySignals,
     supportSignals,

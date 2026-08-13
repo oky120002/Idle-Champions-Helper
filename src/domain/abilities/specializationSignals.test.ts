@@ -158,3 +158,50 @@ describe('applySpecializationsToProfile 速度效果', () => {
     expect(profile.speedProfile?.speedGain).toBe(1.5) // 1 + 50/100
   })
 })
+
+describe('applySpecializationsToProfile attackOverrides（change_base_attack 专精覆盖）', () => {
+  // 带 attackOverrides 的 profile：baseAttackCooldown=5、numTargets=1（典型单目标英雄）。
+  // build 期将专精 change_base_attack 覆盖存入 attackOverrides[keyed by upgradeId]，
+  // runtime 激活对应专精时由 applySpecializationsToProfile 应用到 baseAttackCooldown/numTargets。
+  const makeProfileWithOverrides = (): ResolvedHeroAbilityProfile => ({
+    ...makeProfile('7'),
+    baseAttackCooldown: 5,
+    numTargets: 1,
+    attackOverrides: { spec_cba: { cooldown: 3, numTargets: 5 } },
+  })
+
+  // attackOverrides 对应的专精 entry（无 requiredLevel → 无等级门控）
+  const specWithCba: SpecializationEntry[] = [
+    {
+      upgradeId: 'spec_cba',
+      specializationName: { original: 'Change Base Attack', display: '变更基础攻击' },
+      signals: [],
+    },
+  ]
+
+  it('激活的专精 attackOverrides 覆盖 base 攻击参数', () => {
+    const profile = applySpecializationsToProfile(makeProfileWithOverrides(), ['spec_cba'], specWithCba, HIGH_LEVEL)
+    expect(profile.baseAttackCooldown).toBe(3)
+    expect(profile.numTargets).toBe(5)
+  })
+
+  it('未激活的专精 attackOverrides 不覆盖（base 参数不变）', () => {
+    const profile = applySpecializationsToProfile(makeProfileWithOverrides(), [], specWithCba, HIGH_LEVEL)
+    expect(profile.baseAttackCooldown).toBe(5)
+    expect(profile.numTargets).toBe(1)
+  })
+
+  it('等级门控：requiredLevel 高于英雄等级 → 覆盖不生效', () => {
+    const specWithLevel: SpecializationEntry[] = [
+      {
+        upgradeId: 'spec_cba',
+        specializationName: { original: 'Change Base Attack', display: '变更基础攻击' },
+        requiredLevel: 100,
+        signals: [],
+      },
+    ]
+    const profile = applySpecializationsToProfile(makeProfileWithOverrides(), ['spec_cba'], specWithLevel, 50)
+    expect(profile.baseAttackCooldown).toBe(5)
+    expect(profile.numTargets).toBe(1)
+  })
+})

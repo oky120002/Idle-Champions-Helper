@@ -71,6 +71,8 @@ const STRING_RELATION_MAP: Record<string, HeroPositionRelation> = {
   self_and_behind_and_ahead: 'selfAndAheadAndBehindColumns',
   front_2_columns: 'frontTwoColumns',
   back_2_columns: 'backTwoColumns',
+  tallest_column: 'tallestColumn',
+  middle_columns: 'middleColumns',
 }
 
 const EXACTLY_BEHIND_COLUMNS: Record<number, HeroPositionRelation> = {
@@ -120,6 +122,10 @@ function normalizeObjectRelation(target: Record<string, unknown>): HeroPositionR
       return target.cascade_type === 'self_and_adj' ? 'adjacentOrSelf' : null
     case 'col_and_back_x':
       return Number(target.num_back_cols) === 1 ? 'sameOrBehindColumn' : null
+    case 'slot_if_expr':
+      // Jang Sao(140): "slots with max_adj or fewer adjacent slots"
+      // 仅处理 num_adj_slots<=max_adj 且 max_adj=2（全库唯一实例）
+      return Number(target.max_adj) === 2 ? 'slotsWithMaxTwoAdjacent' : null
     default:
       return null
   }
@@ -127,6 +133,10 @@ function normalizeObjectRelation(target: Record<string, unknown>): HeroPositionR
 
 function normalizeTargetRelation(target: unknown): HeroPositionRelation | null {
   if (target === 'all' || target === 'all_slots' || isFilterLikeTarget(target)) {
+    return 'any'
+  }
+  // "other" = 除自身外的所有阵型成员；映射 any 后消费侧 supportSignals 只对 carry 生效，自然排除自身
+  if (target === 'other') {
     return 'any'
   }
   if (typeof target === 'string') {

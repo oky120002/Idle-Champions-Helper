@@ -21,6 +21,11 @@
 - [`progression-systems.md`](./progression-systems.md)：三大进度系统——赛季（已停办）、提亚马特试炼（10 难度异步多人）、时空门（碎片开老英雄）
 - [`pushing-and-wall.md`](./pushing-and-wall.md)：推图与墙——怪物血量/伤害缩放公式、三种墙类型、boss 狂怒与压制机制
 - [`variant-restriction-catalog.md`](./variant-restriction-catalog.md)：变体限制机制目录——128 种 mechanics 分类与 planner 覆盖现状
+- [`clicking-mechanics.md`](./clicking-mechanics.md)：点击伤害——BUD 派生关系、9 个 click 效果族、`click_seconds` 缺口
+- [`groups-and-affiliations.md`](./groups-and-affiliations.md)：英雄分组/归属——19 个分组、99/165 英雄有归属、buff 条件依赖
+- [`equipment-system-overview.md`](./equipment-system-overview.md)：装备系统总览——稀有度缩放实测（社区倍率矛盾）、Chests/Shiny/Golden Epic
+- [`scavenger-collecting.md`](./scavenger-collecting.md)：特殊收集能力——跨冒险持久 buff、3 个 Scavenger 英雄
+- [`misc-game-mechanics.md`](./misc-game-mechanics.md)：次要机制合并——Game Modes/Resets/Weekends/Notary/Tokens/Apothecary/大数字缩写
 
 ## 来源可信度
 
