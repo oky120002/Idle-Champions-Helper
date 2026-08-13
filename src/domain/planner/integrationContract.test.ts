@@ -490,7 +490,7 @@ describe('Seam 5: beamSearch → recommendationEngine 结构透传', () => {
       heroes: testHeroes, slots: ['s1', 's2'], beamWidth: 3,
       scoreFormation: () => ({
         objectiveValue: toGameNumber(42),
-        warnings: ['test-warning'],
+        warnings: [{ zh: 'test-warning', en: 'test-warning' }],
         carryHeroId: 'a',
         activeSignalKinds: new Set<HeroAbilityKind>(['heroDpsMultiplier']),
         breakdown: null, areaEstimate: null,
@@ -498,7 +498,7 @@ describe('Seam 5: beamSearch → recommendationEngine 结构透传', () => {
     })
     expect(results.length).toBeGreaterThan(0)
     for (const r of results) {
-      expect(r.warnings).toContain('test-warning')
+      expect(r.warnings).toContainEqual({ zh: 'test-warning', en: 'test-warning' })
       expect(r.carryHeroId).toBe('a')
       expect(r.activeSignalKinds.has('heroDpsMultiplier')).toBe(true)
     }

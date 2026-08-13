@@ -237,7 +237,7 @@ function EvaluateResults({
               <h3 className="surface-card__title">{t({ zh: '当前警告', en: 'Warnings' })}</h3>
               <ul>
                 {evaluation.result.warnings.map((text, index) => (
-                  <li key={index}>{text}</li>
+                  <li key={index}>{t(text)}</li>
                 ))}
               </ul>
             </div>

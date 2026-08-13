@@ -141,7 +141,7 @@ describe('runtime edge — 损坏个人快照', () => {
     })
 
     expect(evaluation.result).not.toBeNull()
-    expect(unwrap(evaluation.result, 'evaluation.result 已断言非空').warnings.some((w) => w.includes('nonexistent-hero'))).toBe(true)
+    expect(unwrap(evaluation.result, 'evaluation.result 已断言非空').warnings.some((w) => w.zh.includes('nonexistent-hero'))).toBe(true)
   })
 })
 

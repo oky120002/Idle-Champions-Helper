@@ -57,7 +57,7 @@ describe('placement fit — stacking', () => {
       manualStackCount: 1000,
     })
     expect(fit.totalMultiplier).toBe(1)
-    expect(fit.warnings.some((w) => w.includes('溢出'))).toBe(true)
+    expect(fit.warnings.some((w) => w.zh.includes('溢出'))).toBe(true)
   })
 
   it('stacksMultiply 信号依赖的基础 0 层（multiplier≤1）时不计入目标值（与 applySignalPercent 对称守护）', () => {

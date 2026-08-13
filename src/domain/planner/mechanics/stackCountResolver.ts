@@ -1,5 +1,6 @@
 import type { HeroAbilitySignal } from '../../abilities/abilityModel'
 import { matchesHeroQualifier } from '../../abilities/signalSemantics'
+import type { LocalizedUiText } from '../../types'
 import type { EvaluatePlacementFitInput } from '../placementFitTypes'
 import {
   computeSlotDistance,
@@ -83,18 +84,18 @@ function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number |
  */
 export const STACK_COUNT_RESOLVERS: Record<string, {
   count: (input: EvaluatePlacementFitInput, signal: HeroAbilitySignal) => number | null
-  contextLabel: string
+  contextLabel: LocalizedUiText
 }> = {
   // 机制: formation-count-mult-stack / formation-count-add-stack（per_hero 是 per_crusader 同义词）
-  per_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
-  per_hero: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
-  per_tagged_crusader_mult: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
-  per_target_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队目标计数' },
-  per_hero_attribute: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队属性计数' },
-  per_upgrade_targets: { count: (input, signal) => countUpgradeTargets(input, signal), contextLabel: '整队目标' },
+  per_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: { zh: '整队计数', en: 'whole-formation count' } },
+  per_hero: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: { zh: '整队计数', en: 'whole-formation count' } },
+  per_tagged_crusader_mult: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: { zh: '整队计数', en: 'whole-formation count' } },
+  per_target_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: { zh: '整队目标计数', en: 'whole-formation target count' } },
+  per_hero_attribute: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: { zh: '整队属性计数', en: 'whole-formation attribute count' } },
+  per_upgrade_targets: { count: (input, signal) => countUpgradeTargets(input, signal), contextLabel: { zh: '整队目标', en: 'whole-formation targets' } },
   // 机制: topology-count-stack（列/槽位距离拓扑计数）
-  per_col_behind: { count: (input) => countColumnsCarryBehindSupport(input), contextLabel: '阵型列拓扑' },
-  per_slot_distance_from_source: { count: (input) => countSlotDistanceFromSource(input), contextLabel: '阵型槽位距离' },
+  per_col_behind: { count: (input) => countColumnsCarryBehindSupport(input), contextLabel: { zh: '阵型列拓扑', en: 'formation column topology' } },
+  per_slot_distance_from_source: { count: (input) => countSlotDistanceFromSource(input), contextLabel: { zh: '阵型槽位距离', en: 'formation slot distance' } },
 }
 
 /**

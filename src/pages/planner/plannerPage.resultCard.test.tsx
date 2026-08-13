@@ -33,7 +33,7 @@ describe('PlannerResultCard', () => {
       { zh: '布鲁诺负责团队增益。', en: 'Bruenor anchors the team buffs.' },
       { zh: '纳耶里补足前排。', en: 'Nayeli rounds out the frontline.' },
     ],
-    warnings: [] as string[],
+    warnings: [] as { zh: string; en: string }[],
     breakdown: null,
     slots,
     championById,
@@ -78,7 +78,7 @@ describe('PlannerResultCard', () => {
   it('在不支持时显示警告部分', () => {
     const props = {
       ...baseProps,
-      warnings: ['Hitch 不在当前阵容池中'],
+      warnings: [{ zh: 'Hitch 不在当前阵容池中', en: 'Hitch is not in the current roster pool.' }],
     }
 
     render(

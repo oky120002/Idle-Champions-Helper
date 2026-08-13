@@ -319,8 +319,8 @@ describe('steady state scoring', () => {
     // Total: 2.0 × 1.25 = 2.5
     expect(result.objectiveValue.toNumber()).toBeCloseTo(2.5, 5)
     expect(result.warnings.length).toBe(1)
-    expect(result.warnings[0]).toContain('布里夫')
-    expect(result.warnings[0]).toContain('25%')
+    expect(result.warnings[0]?.zh).toContain('布里夫')
+    expect(result.warnings[0]?.zh).toContain('25%')
   })
 
   it('team-speed 模式动态速度英雄支持入参覆盖', () => {
@@ -337,7 +337,7 @@ describe('steady state scoring', () => {
 
     // Briv areaSkip overridden to 50% → factor 1.5
     expect(result.objectiveValue.toNumber()).toBeCloseTo(1.5, 5)
-    expect(result.warnings[0]).toContain('50%')
+    expect(result.warnings[0]?.zh).toContain('50%')
   })
 
   it('crit signal 进 crit_factor 提升 carryDps（4.3/4.4）', () => {

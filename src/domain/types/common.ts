@@ -23,6 +23,12 @@ export const localizedOptionSchema = z
   .loose()
 export type LocalizedOption = z.infer<typeof localizedOptionSchema>
 
+/** UI 展示层的双语文案（zh=中文，en=英文）；领域层诊断 warning 等用，UI 经 `useI18n().t()` 翻译。 */
+export interface LocalizedUiText {
+  zh: string
+  en: string
+}
+
 export type JsonPrimitive = string | number | boolean | null
 
 export interface JsonObject {

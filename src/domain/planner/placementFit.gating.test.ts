@@ -111,7 +111,7 @@ describe('placement fit — gating', () => {
     })
 
     expect(fit.totalMultiplier).toBe(1)
-    expect(fit.warnings[0]).toContain('手动触发')
+    expect(fit.warnings[0]?.zh).toContain('手动触发')
   })
 
   it('stat qualifier 命中时可以作为 carry 目标条件计入目标值（relation=any，stat-match）', () => {

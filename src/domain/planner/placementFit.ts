@@ -1,6 +1,7 @@
 import { DIMENSION_BY_KIND, type HeroAbilityDimension, type HeroAbilitySignal } from '../abilities/abilityModel'
 import { POOL_SCOPE_BY_KIND } from '../abilities/poolScope'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
+import type { LocalizedUiText } from '../types'
 import type {
   AggregatedPool,
   EvaluatePlacementFitInput,
@@ -102,7 +103,7 @@ function computeTotalMultiplier(poolsByKey: Map<string, AggregatedPool>): number
 
 export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggregateResult {
   const scoreBreakdown: PlacementFitScorePart[] = []
-  const warnings: string[] = []
+  const warnings: LocalizedUiText[] = []
   const poolsByKey = new Map<string, AggregatedPool>()
 
   const dimensionFilterSet = input.dimension != null ? toDimensionSet(input.dimension) : null

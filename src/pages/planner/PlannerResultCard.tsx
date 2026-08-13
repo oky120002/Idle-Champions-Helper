@@ -157,7 +157,7 @@ export function PlannerResultCard({
                 </h4>
                 <ul>
                   {warnings.map((text, index) => (
-                    <li key={index}>{text}</li>
+                    <li key={index}>{t(text)}</li>
                   ))}
                 </ul>
               </section>

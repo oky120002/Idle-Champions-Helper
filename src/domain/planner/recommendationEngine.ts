@@ -7,7 +7,8 @@ import { applyFeatsToProfile, type FeatCatalog } from '../abilities/featSignals'
 import { applySpecializationsToProfile, type SpecializationCatalog } from '../abilities/specializationSignals'
 import { applyEquipmentBuffsToProfile } from '../abilities/equipmentBuffSignals'
 import type { EquipmentBuff } from '../buffs/equipmentMult'
-import type { AbilityScoreKey, AttributeRequirement, FormationSlot, ScenarioRef, TagExpression, Variant } from '../types'
+import type { AbilityScoreKey, AttributeRequirement, FormationSlot, LocalizedUiText, ScenarioRef, TagExpression, Variant } from '../types'
+import { asLocalizedUiText, uniqueLocalizedUiText } from '../localizedUiText'
 import type { OwnedHero, UserProfileSnapshot } from '../user-profile/types'
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { AreaEstimationResult } from '../simulator/areaEstimation'
@@ -63,17 +64,20 @@ function toFormationSlots(scenario: ResolvedPlannerScenarioModel): FormationSlot
   }))
 }
 
-function formatLegalityViolation(violation: LegalityViolation): string {
+function formatLegalityViolation(violation: LegalityViolation): LocalizedUiText {
   switch (violation.kind) {
     case 'seatConflict':
-      return `seat ${String(violation.seat)} 冲突：${violation.heroes.join(', ')}`
+      return { zh: `seat ${String(violation.seat)} 冲突：${violation.heroes.join(', ')}`, en: `seat ${String(violation.seat)} conflict: ${violation.heroes.join(', ')}` }
     case 'missingForced':
-      return `缺少强制英雄：${violation.heroIds.join(', ')}`
+      return { zh: `缺少强制英雄：${violation.heroIds.join(', ')}`, en: `missing forced champion: ${violation.heroIds.join(', ')}` }
   }
 }
 
-function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: UserProfileSnapshot | null): string[] {
-  return [...new Set([...(snapshot?.warnings ?? []), ...scenario.scenarioWarnings])]
+function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: UserProfileSnapshot | null): LocalizedUiText[] {
+  return uniqueLocalizedUiText([
+    ...(snapshot?.warnings ?? []).map(asLocalizedUiText),
+    ...scenario.scenarioWarnings.map(asLocalizedUiText),
+  ])
 }
 
 function buildPlacementEntries(
@@ -423,7 +427,7 @@ function scorePlannerFormation(
       return {
         ...scoring,
         objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, '核心英雄在用户标记的不可造伤害位置。'],
+        warnings: [...scoring.warnings, { zh: '核心英雄在用户标记的不可造伤害位置。', en: 'The carry champion is on a slot you marked as damage-disabled.' }],
       }
     }
     // 层 1：系统解析的位置限制模式。
@@ -431,7 +435,7 @@ function scorePlannerFormation(
       return {
         ...scoring,
         objectiveValue: SCORE_ZERO,
-        warnings: [...scoring.warnings, '核心英雄不在可造伤害的位置。'],
+        warnings: [...scoring.warnings, { zh: '核心英雄不在可造伤害的位置。', en: 'The carry champion is not on a slot that can deal damage.' }],
       }
     }
   }
@@ -450,32 +454,32 @@ function collectEvaluationRestrictionWarnings(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   candidateIds: Set<string>,
   scenario: ResolvedPlannerScenarioModel,
-): string[] {
+): LocalizedUiText[] {
   const forcedHeroSet = new Set(scenario.forcedHeroes)
   const allowedHeroSet = new Set(scenario.allowedHeroes)
   const allowedTagExpression = scenario.allowedTagExpression
   const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagExpression.length > 0
   const attributeRequirements = scenario.attributeRequirements
-  const restrictionWarnings: string[] = []
+  const restrictionWarnings: LocalizedUiText[] = []
   for (const heroId of Object.values(placements)) {
     if (forcedHeroSet.has(heroId)) {
       continue
     }
     if (!candidateIds.has(heroId)) {
-      restrictionWarnings.push(`${heroId} 不在账号快照中，按 level 1 估算`)
+      restrictionWarnings.push({ zh: `${heroId} 不在账号快照中，按 level 1 估算`, en: `${heroId} is not in the account snapshot; estimated at level 1.` })
     }
     if (hasAllowedRestriction) {
       const hero = heroById.get(heroId)
       const allowed = allowedHeroSet.has(heroId)
         || (hero != null && matchesTagExpression(hero.tags, allowedTagExpression))
       if (!allowed) {
-        restrictionWarnings.push(`${heroId} 不在当前变体的允许名单（only_allow_crusaders）内`)
+        restrictionWarnings.push({ zh: `${heroId} 不在当前变体的允许名单（only_allow_crusaders）内`, en: `${heroId} is not in the current variant's allowlist (only_allow_crusaders).` })
       }
     }
     if (attributeRequirements.length > 0) {
       const hero = heroById.get(heroId)
       if (hero != null && !meetsAttributeRequirements(hero.abilityScores, attributeRequirements)) {
-        restrictionWarnings.push(`${heroId} 不满足当前变体的属性门槛`)
+        restrictionWarnings.push({ zh: `${heroId} 不满足当前变体的属性门槛`, en: `${heroId} does not meet the current variant's attribute threshold.` })
       }
     }
   }
@@ -494,8 +498,8 @@ function buildEvaluationFormationResult(
   scoringMode: ScoringMode,
   options: PlannerRecommendationOptions,
   scenarioRef: ScenarioRef,
-  legalityWarnings: string[],
-  restrictionWarnings: string[],
+  legalityWarnings: LocalizedUiText[],
+  restrictionWarnings: LocalizedUiText[],
 ): FormationEvaluation {
   const scoring = scorePlannerFormation(placements, heroById, scenario, heroLevels, scoringMode, options)
   const placementEntries = buildPlacementEntries(sortSlots(scenario), placements, heroById)
@@ -511,7 +515,7 @@ function buildEvaluationFormationResult(
       scoring.activeSignalKinds,
       scoringMode,
     ),
-    warnings: [...new Set([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings])],
+    warnings: uniqueLocalizedUiText([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings.map(asLocalizedUiText)]),
     areaEstimate: scoring.areaEstimate ?? null,
     viability: buildViabilityAssessment(scenario, scoring.areaEstimate ?? null),
     breakdown: scoring.breakdown,
@@ -805,7 +809,7 @@ function scorePlannerFormationWithLegality(
     return {
       ...scoring,
       objectiveValue: SCORE_ZERO,
-      warnings: [...scoring.warnings, `预估推进层数 ${String(scoring.areaEstimate.area)} 不足，要求 ≥ ${String(minSurvivableArea)} 层`],
+      warnings: [...scoring.warnings, { zh: `预估推进层数 ${String(scoring.areaEstimate.area)} 不足，要求 ≥ ${String(minSurvivableArea)} 层`, en: `Estimated progression of ${String(scoring.areaEstimate.area)} areas is insufficient; requires ≥ ${String(minSurvivableArea)} areas.` }],
     }
   }
   return scoring
@@ -861,7 +865,7 @@ function buildRecommendationResults(
   scoringMode: ScoringMode,
   slots: string[],
   userLockedSlots: Record<string, string>,
-  scenarioWarnings: string[],
+  scenarioWarnings: LocalizedUiText[],
 ): PlannerResult[] {
   // placementEntries 按场景槽位拓扑顺序（row/column/slotId）排序，让 locked 与搜索结果合并后
   // 仍与棋盘格子在视觉上一一对应，而非 locked 追加末尾。
@@ -892,7 +896,7 @@ function buildRecommendationResults(
         top.activeSignalKinds,
         scoringMode,
       ),
-      warnings: [...new Set([...top.warnings, ...scenarioWarnings])],
+      warnings: uniqueLocalizedUiText([...top.warnings, ...scenarioWarnings]),
       areaEstimate: top.areaEstimate ?? null,
       viability: buildViabilityAssessment(scenario, top.areaEstimate ?? null),
       breakdown: top.breakdown,

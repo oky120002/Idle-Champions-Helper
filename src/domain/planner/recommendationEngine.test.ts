@@ -563,7 +563,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     const evaluation = evaluateFormation({ variant: selectedVariant, profileSnapshot: snapshot, collections, placements })
 
     expect(evaluation.blocker).toBeNull()
-    expect(evaluation.result?.warnings.some((warning) => warning.includes('冲突'))).toBe(true)
+    expect(evaluation.result?.warnings.some((warning) => warning.zh.includes('冲突'))).toBe(true)
     expect(evaluation.result?.breakdown).not.toBeNull()
     expect(evaluation.result?.placements).toEqual(placements)
   })
@@ -605,10 +605,10 @@ describe('evaluateFormation 指定阵型评估', () => {
     // asharra 不在白名单
     const evaluation = evaluateFormation({ variant: allowedVariant, collections: allowedCollections, profileSnapshot: snapshot, placements: { s1: 'asharra' } })
 
-    expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('允许'))).toBe(true)
+    expect(evaluation.result?.warnings.some((warning) => warning.zh.includes('asharra') && warning.zh.includes('允许'))).toBe(true)
     // 白名单内的 bruenor 不触发
     const bruenorEval = evaluateFormation({ variant: allowedVariant, collections: allowedCollections, profileSnapshot: snapshot, placements: { s1: 'bruenor' } })
-    expect(bruenorEval.result?.warnings.some((warning) => warning.includes('bruenor') && warning.includes('允许'))).toBe(false)
+    expect(bruenorEval.result?.warnings.some((warning) => warning.zh.includes('bruenor') && warning.zh.includes('允许'))).toBe(false)
   })
 
   it('owned-only 下放置未拥有英雄附加 level 估算 warning', () => {
@@ -618,7 +618,7 @@ describe('evaluateFormation 指定阵型评估', () => {
     // asharra 未在快照中（snapshot 只拥有 bruenor）→ 按 level 1 估算
     const evaluation = evaluateFormation({ collections, variant: selectedVariant, profileSnapshot: smallSnapshot, placements: { s1: 'asharra' } })
 
-    expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(true)
+    expect(evaluation.result?.warnings.some((warning) => warning.zh.includes('asharra') && warning.zh.includes('level 1'))).toBe(true)
   })
 
   it('all-hypothetical 下未拥有英雄不触发 level 警告（候选覆盖全部）', () => {
@@ -633,7 +633,7 @@ describe('evaluateFormation 指定阵型评估', () => {
       options: { candidateMode: 'all-hypothetical' },
     })
 
-    expect(evaluation.result?.warnings.some((warning) => warning.includes('asharra') && warning.includes('level 1'))).toBe(false)
+    expect(evaluation.result?.warnings.some((warning) => warning.zh.includes('asharra') && warning.zh.includes('level 1'))).toBe(false)
   })
 })
 
@@ -796,7 +796,7 @@ describe('viability: damage source pattern (K4)', () => {
     })
     expect(evaluation.result).not.toBeNull()
     expect(evaluation.result?.objectiveValue).toBe('0')
-    expect(evaluation.result?.warnings.some((w) => w.includes('可造伤害'))).toBe(true)
+    expect(evaluation.result?.warnings.some((w) => w.zh.includes('可造伤害'))).toBe(true)
   })
 
   it('buildPlannerRecommendation 自动避开无效 carry 位置', () => {
