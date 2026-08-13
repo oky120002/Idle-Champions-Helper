@@ -53,7 +53,7 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
 
   return (
     <WorkbenchResultsScaffold
-      ariaLabel={t({ zh: '用户英雄结果', en: 'User heroes results' })}
+      ariaLabel={t("用户英雄结果")}
       sectionClassName="champion-roster"
       shellClassName="results-panel-shell champion-roster__shell"
       panelClassName="results-panel champion-roster__panel"
@@ -65,19 +65,16 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
       <ChampionRosterSummary
         summary={model.rosterSummary}
         sourceLabel={getUserHeroProfileSourceLabel(model.profileResolution, model.locale)}
-        eyebrow={t({ zh: '账号概览', en: 'Account overview' })}
-        title={t({ zh: '用户英雄矩阵', en: 'User hero roster' })}
-        highlightLabel={t({ zh: '高亮已拥有', en: 'Highlight owned' })}
+        eyebrow={t("账号概览")}
+        title={t("用户英雄矩阵")}
+        highlightLabel={t("高亮已拥有")}
         activeMetricId={model.activeRosterMetricFilterId}
         onMetricToggle={(metricId) => model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId)}
       />
 
       {!hasMatches ? (
         <p className="champion-roster__status-note">
-          {t({
-            zh: '当前筛选没有命中；矩阵仍保持全量显示，已拥有但未命中的英雄会降为灰态，未拥有英雄持续保持灰态。',
-            en: 'No matches for the current filters. The roster still shows all champions; owned but unfiltered ones appear dimmed, and unowned ones stay dimmed.',
-          })}
+          {t("当前筛选没有命中；矩阵仍保持全量显示，已拥有但未命中的英雄会降为灰态，未拥有英雄持续保持灰态。")}
         </p>
       ) : null}
 
@@ -101,8 +98,8 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
                 {column.champions.map((tile) => {
                   const primaryName = getPrimaryLocalizedText(tile.champion.name, model.locale)
                   const ownershipSuffix = tile.isOwned
-                    ? t({ zh: '，已拥有', en: ', owned' })
-                    : t({ zh: '，未拥有', en: ', not owned' })
+                    ? t("，已拥有")
+                    : t("，未拥有")
 
                   return (
                     <button
@@ -126,7 +123,7 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
                             : `Lv.${String(tile.ownedHero.level)} · ${String(Object.keys(tile.ownedHero.lootBySlot).length)}/6 slots`}
                         </span>
                       ) : (
-                        <span className="champion-roster-tile__meta">{t({ zh: '未拥有', en: 'Not owned' })}</span>
+                        <span className="champion-roster-tile__meta">{t("未拥有")}</span>
                       )}
                     </button>
                   )

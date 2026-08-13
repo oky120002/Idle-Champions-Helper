@@ -1,4 +1,5 @@
 import { ChevronDown, Clipboard, Eraser } from 'lucide-react'
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import type { AnimationAuditCopyState } from './types'
 
 interface AnimationAuditFeedbackExportPanelProps {
@@ -13,7 +14,7 @@ interface AnimationAuditFeedbackExportPanelProps {
   readonly feedbackPreviewJson: string
   readonly onCopy: () => void
   readonly onClearAll: () => void
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
 }
 
 function buildFeedbackCopyStateLabel(
@@ -22,11 +23,11 @@ function buildFeedbackCopyStateLabel(
 ) {
   switch (state) {
     case 'idle':
-      return t({ zh: '页面会把勾选暂存在本地浏览器里，刷新也还在。', en: 'Selections are stored locally in this browser, even after refresh.' })
+      return t("页面会把勾选暂存在本地浏览器里，刷新也还在。")
     case 'success':
-      return t({ zh: '已复制到剪贴板，直接贴给我就行。', en: 'Copied to clipboard. Paste it back to me.' })
+      return t("已复制到剪贴板，直接贴给我就行。")
     case 'error':
-      return t({ zh: '复制失败，可先展开下面的 JSON 手动复制。', en: 'Copy failed. Expand the JSON preview and copy it manually.' })
+      return t("复制失败，可先展开下面的 JSON 手动复制。")
   }
 }
 
@@ -53,31 +54,28 @@ export function AnimationAuditFeedbackExportPanel({
   return (
     <section className="animation-audit-feedback-export">
       <div className="animation-audit-feedback-export__copy">
-        <p className="animation-audit-feedback-export__eyebrow">{t({ zh: '反馈收集', en: 'Feedback capture' })}</p>
-        <h3 className="animation-audit-feedback-export__title">{t({ zh: '勾完以后，一键复制 JSON 给我', en: 'Select items, then copy the JSON in one click' })}</h3>
+        <p className="animation-audit-feedback-export__eyebrow">{t("反馈收集")}</p>
+        <h3 className="animation-audit-feedback-export__title">{t("勾完以后，一键复制 JSON 给我")}</h3>
         <p className="animation-audit-feedback-export__description">
-          {t({
-            zh: '每行先选一个结论，再勾问题标签；如果有特别怪的地方，再补一句备注。',
-            en: 'Pick one verdict per row, add issue tags, and leave a note only when something looks unusually odd.',
-          })}
+          {t("每行先选一个结论，再勾问题标签；如果有特别怪的地方，再补一句备注。")}
         </p>
       </div>
 
       <div className="animation-audit-feedback-export__stats">
         <div className="animation-audit-feedback-export__stat">
-          <span>{t({ zh: '已勾选条目', en: 'Selected rows' })}</span>
+          <span>{t("已勾选条目")}</span>
           <strong>{feedbackSummary.selected}</strong>
         </div>
         <div className="animation-audit-feedback-export__stat">
-          <span>{t({ zh: '有明确结论', en: 'With verdict' })}</span>
+          <span>{t("有明确结论")}</span>
           <strong>{feedbackSummary.withVerdict}</strong>
         </div>
         <div className="animation-audit-feedback-export__stat">
-          <span>{t({ zh: '有问题标签', en: 'With issue tags' })}</span>
+          <span>{t("有问题标签")}</span>
           <strong>{feedbackSummary.withTags}</strong>
         </div>
         <div className="animation-audit-feedback-export__stat">
-          <span>{t({ zh: '有备注', en: 'With notes' })}</span>
+          <span>{t("有备注")}</span>
           <strong>{feedbackSummary.withNotes}</strong>
         </div>
       </div>
@@ -90,7 +88,7 @@ export function AnimationAuditFeedbackExportPanel({
           disabled={!hasFeedback}
         >
           <Clipboard aria-hidden="true" strokeWidth={1.9} />
-          {t({ zh: '复制已勾选 JSON', en: 'Copy selected JSON' })}
+          {t("复制已勾选 JSON")}
         </button>
         <button
           type="button"
@@ -99,7 +97,7 @@ export function AnimationAuditFeedbackExportPanel({
           disabled={!hasFeedback}
         >
           <Eraser aria-hidden="true" strokeWidth={1.9} />
-          {t({ zh: '清空全部勾选', en: 'Clear all selections' })}
+          {t("清空全部勾选")}
         </button>
       </div>
 
@@ -111,7 +109,7 @@ export function AnimationAuditFeedbackExportPanel({
         <details className="animation-audit-feedback-export__preview">
           <summary>
             <ChevronDown aria-hidden="true" strokeWidth={1.8} />
-            {t({ zh: '展开 JSON 预览（复制失败时可手动复制）', en: 'Expand JSON preview for manual copy' })}
+            {t("展开 JSON 预览（复制失败时可手动复制）")}
           </summary>
           <pre>{feedbackPreviewJson}</pre>
         </details>

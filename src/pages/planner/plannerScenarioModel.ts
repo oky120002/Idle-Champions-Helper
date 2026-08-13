@@ -1,4 +1,4 @@
-import type { AppLocale } from '../../app/i18n'
+import type { LocaleText, TranslateParams, AppLocale  } from '../../app/i18n'
 
 export interface PlannerScenarioRecord {
   id: string
@@ -17,7 +17,7 @@ export interface PlannerScenarioRecord {
 
 export const DEFAULT_VISIBLE_RESULTS = 12
 
-type Translate = (text: { zh: string; en: string }) => string
+type Translate = (text: string | LocaleText, params?: TranslateParams) => string
 
 export function normalizeSearchText(value: string): string {
   return value
@@ -60,7 +60,7 @@ export function buildCampaignOptions(
   }
 
   return [
-    { id: 'all', label: t({ zh: '全部战役', en: 'All campaigns' }), count: records.length },
+    { id: 'all', label: t("全部战役"), count: records.length },
     ...[...counts.values()].sort((left, right) => left.label.localeCompare(right.label, locale)),
   ]
 }

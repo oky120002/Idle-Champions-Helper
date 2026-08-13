@@ -17,16 +17,13 @@ export function PlannerDamageSlots({ slots, disabledSlots, onToggle }: PlannerDa
   const disabledSet = new Set(disabledSlots)
 
   return (
-    <section className="surface-card planner-slot-lock" aria-label={t({ zh: '伤害来源限制', en: 'Damage source restriction' })} data-testid="planner-damage-slots">
+    <section className="surface-card planner-slot-lock" aria-label={t("伤害来源限制")} data-testid="planner-damage-slots">
       <div className="surface-card__header">
         <div className="surface-card__header-copy">
-          <p className="surface-card__eyebrow">{t({ zh: '伤害来源限制', en: 'Damage source restriction' })}</p>
-          <h3 className="surface-card__title">{t({ zh: '标记不能造伤害的格子', en: 'Mark slots that cannot deal damage' })}</h3>
+          <p className="surface-card__eyebrow">{t("伤害来源限制")}</p>
+          <h3 className="surface-card__title">{t("标记不能造伤害的格子")}</h3>
           <p className="surface-card__description">
-            {t({
-              zh: '有些变体限制了哪些位置能打伤害。默认都能打，手动标记不能打伤害的格子后，核心英雄不会放在这些位置。',
-              en: 'Some variants restrict which slots can deal damage. All slots are valid by default. Mark slots that cannot deal damage — the carry will not be placed there.',
-            })}
+            {t("有些变体限制了哪些位置能打伤害。默认都能打，手动标记不能打伤害的格子后，核心英雄不会放在这些位置。")}
           </p>
         </div>
       </div>
@@ -37,7 +34,7 @@ export function PlannerDamageSlots({ slots, disabledSlots, onToggle }: PlannerDa
             return (
               <li key={slot.id} className="planner-slot-lock__item">
                 <span className="planner-slot-lock__copy">
-                  {t({ zh: `槽位 ${slot.id}`, en: `Slot ${slot.id}` })}
+                  {t("槽位 {p0}", { p0: slot.id })}
                 </span>
                 <button
                   type="button"
@@ -47,8 +44,8 @@ export function PlannerDamageSlots({ slots, disabledSlots, onToggle }: PlannerDa
                   onClick={() => onToggle(slot.id)}
                 >
                   {isDisabled
-                    ? t({ zh: '不能造伤害', en: 'No damage' })
-                    : t({ zh: '可造伤害', en: 'Can damage' })}
+                    ? t("不能造伤害")
+                    : t("可造伤害")}
                 </button>
               </li>
             )

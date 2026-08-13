@@ -28,35 +28,23 @@ function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnT
   switch (blocker) {
     case 'missing-profile':
       return {
-        title: t({ zh: '导入个人数据后才会生成推荐。', en: 'Import local profile data before generating recommendations.' }),
-        description: t({
-          zh: '默认仅基于本地已拥有英雄计算，导入个人数据后最准；也可将「候选范围」切到「全部英雄（假设基线）」直接预览 DPS。',
-          en: 'By default the planner uses only your owned heroes; import your profile for best accuracy, or switch Candidate pool to "All hypothetical" to preview DPS without a profile.',
-        }),
+        title: t("导入个人数据后才会生成推荐。"),
+        description: t("默认仅基于本地已拥有英雄计算，导入个人数据后最准；也可将「候选范围」切到「全部英雄（假设基线）」直接预览 DPS。"),
       }
     case 'missing-formation':
       return {
-        title: t({ zh: '当前场景没有匹配的阵型布局。', en: 'No matching formation layout exists for this scenario.' }),
-        description: t({
-          zh: '请先补齐官方阵型布局映射，再继续评估该场景。',
-          en: 'Add the official formation layout mapping before evaluating this scenario.',
-        }),
+        title: t("当前场景没有匹配的阵型布局。"),
+        description: t("请先补齐官方阵型布局映射，再继续评估该场景。"),
       }
     case 'insufficient-owned-heroes':
       return {
-        title: t({ zh: '当前已拥有英雄不足以填满该阵型。', en: 'Owned heroes are insufficient to fill this formation.' }),
-        description: t({
-          zh: '第一条真实纵切当前只允许使用已拥有英雄，不会再拿公共英雄数据补空位。',
-          en: 'The first real vertical slice only uses owned heroes and will not backfill empty slots with public roster data.',
-        }),
+        title: t("当前已拥有英雄不足以填满该阵型。"),
+        description: t("第一条真实纵切当前只允许使用已拥有英雄，不会再拿公共英雄数据补空位。"),
       }
     case 'no-legal-recommendation':
       return {
-        title: t({ zh: '当前没有满足 seat 规则的推荐结果。', en: 'No legal recommendation satisfies the current seat rules.' }),
-        description: t({
-          zh: '请调整场景或导入更多本地英雄数据后重试。',
-          en: 'Try another scenario or import more local hero data, then retry.',
-        }),
+        title: t("当前没有满足 seat 规则的推荐结果。"),
+        description: t("请调整场景或导入更多本地英雄数据后重试。"),
       }
   }
 }
@@ -138,7 +126,7 @@ export function PlannerPage() {
     <ConfiguredWorkbenchPage
       pageClassName="planner-page"
       storageKey="planner"
-      ariaLabel={t({ zh: '自动计划工作台', en: 'Automatic Planner workbench' })}
+      ariaLabel={t("自动计划工作台")}
       shellClassName="workbench-page__shell planner-workbench"
       contentScrollRef={contentScrollRef}
       toolbar={{
@@ -154,12 +142,9 @@ export function PlannerPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              kicker: t({ zh: '自动计划', en: 'Auto Plan' }),
-              title: t({ zh: '自动计划', en: 'Automatic Planner' }),
-              detail: t({
-                zh: '基于本地用户数据推荐最优阵型',
-                en: 'Recommend optimal formations based on local user data',
-              }),
+              kicker: t("自动计划"),
+              title: t("自动计划"),
+              detail: t("基于本地用户数据推荐最优阵型"),
             },
           },
           {
@@ -170,8 +155,8 @@ export function PlannerPage() {
                 {
                   id: 'open-evaluate',
                   kind: 'button',
-                  label: t({ zh: '自配评估', en: 'Evaluate' }),
-                  title: t({ zh: '自摆阵型看核心英雄 DPS', en: 'Place champions and see carry DPS' }),
+                  label: t("自配评估"),
+                  title: t("自摆阵型看核心英雄 DPS"),
                   tone: 'share',
                   onClick: () =>
                     navigate('/planner/evaluate', {
@@ -196,10 +181,7 @@ export function PlannerPage() {
             <div className="surface-card__header">
               <div className="surface-card__header-copy">
                 <p className="surface-card__description">
-                  {t({
-                    zh: `加载自动计划数据失败：${loadError ?? '未知错误'}`,
-                    en: `Failed to load planner data: ${loadError ?? 'unknown error'}`,
-                  })}
+                  {t('加载自动计划数据失败：{p0}', { p0: loadError ?? t('未知错误') })}
                 </p>
               </div>
             </div>
@@ -253,7 +235,7 @@ export function PlannerPage() {
                     <div className="surface-card__header">
                       <div className="surface-card__header-copy">
                         <p className="surface-card__description">
-                          {t({ zh: `计算失败：${recommendError}`, en: `Compute failed: ${recommendError}` })}
+                          {t("计算失败：{p0}", { p0: recommendError })}
                         </p>
                       </div>
                     </div>
@@ -269,7 +251,7 @@ export function PlannerPage() {
                     <div className="surface-card__header">
                       <div className="surface-card__header-copy">
                         <p className="surface-card__description">
-                          {t({ zh: '正在计算推荐阵型…', en: 'Computing recommendation…' })}
+                          {t("正在计算推荐阵型…")}
                         </p>
                       </div>
                     </div>
@@ -280,7 +262,7 @@ export function PlannerPage() {
                     <div className="surface-card__header">
                       <div className="surface-card__header-copy">
                         <p className="surface-card__eyebrow">
-                          {t({ zh: '推荐状态', en: 'Recommendation status' })}
+                          {t("推荐状态")}
                         </p>
                         <h3 className="surface-card__title">
                           {getPlannerBlockerCopy(plannerRecommendation.blocker, t).title}

@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type {
   FormationLayout,
@@ -8,7 +8,7 @@ import type {
   VariantAttackMix,
 } from '../../domain/types'
 
-export type VariantsPageTranslator = (text: LocaleText) => string
+export type VariantsPageTranslator = (text: string | LocaleText, params?: TranslateParams) => string
 
 export type AttackProfileFilterId = '__all__' | 'meleeHeavy' | 'rangedThreat' | 'mixed'
 export type SpecialEnemyFilterId = '__all__' | 'light' | 'standard' | 'dense'

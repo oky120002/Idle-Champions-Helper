@@ -5,11 +5,10 @@ import { championFilterSnapshotToFilters, filterChampions, hasActiveChampionFilt
 import { buildActiveFilterChips } from './champion-filter-model'
 import { shuffleChampions } from './champion-results-order'
 import { MAX_VISIBLE_RESULTS } from './constants'
-import type { ChampionState, ChampionsFilterState, ChampionsPageTranslator } from './types'
+import type { ChampionState, ChampionsFilterState } from './types'
 
 type UseChampionsPageDerivedOptions = {
   locale: AppLocale
-  t: ChampionsPageTranslator
   state: ChampionState
   filters: ChampionsFilterState
   randomOrderSeed: number | null
@@ -17,7 +16,6 @@ type UseChampionsPageDerivedOptions = {
 
 export function useChampionsPageDerived({
   locale,
-  t,
   state,
   filters,
   randomOrderSeed,
@@ -83,7 +81,6 @@ export function useChampionsPageDerived({
 
   const activeFilterChips = buildActiveFilterChips({
     locale,
-    t,
     filters,
     orderedSelectedSeats,
     orderedSelectedRoles,

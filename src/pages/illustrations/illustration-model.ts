@@ -4,7 +4,8 @@ import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { Champion, ChampionIllustration, ChampionIllustrationKind, LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip, IdLocalizedOption } from '../../features/champion-filters/types'
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
-import type { IllustrationsFilterState, IllustrationsPageTranslator, ViewFilter } from './types'
+import { pickText, t } from '../../app/i18n-messages'
+import type { IllustrationsFilterState, ViewFilter } from './types'
 
 export function buildIllustrationEntries(
   illustrations: ChampionIllustration[],
@@ -145,7 +146,6 @@ export function buildSourceSlotLabel(slot: ChampionIllustration['sourceSlot'], l
 
 type BuildActiveFilterChipsOptions = {
   locale: 'zh-CN' | 'en-US'
-  t: IllustrationsPageTranslator
   filters: IllustrationsFilterState
   orderedSelectedSeats: number[]
   orderedSelectedRoles: string[]
@@ -161,7 +161,6 @@ type BuildActiveFilterChipsOptions = {
 
 export function buildActiveIllustrationFilterChips({
   locale,
-  t,
   filters,
   orderedSelectedSeats,
   orderedSelectedRoles,
@@ -180,129 +179,93 @@ export function buildActiveIllustrationFilterChips({
     trimmedSearch !== ''
       ? {
           id: 'search',
-          label: t({ zh: `关键词：${trimmedSearch}`, en: `Keyword: ${trimmedSearch}` }),
-          clearLabel: t({ zh: `清空关键词：${trimmedSearch}`, en: `Clear keyword: ${trimmedSearch}` }),
+          label: t(locale, '关键词：{p0}', { p0: trimmedSearch }),
+          clearLabel: t(locale, '清空关键词：{p0}', { p0: trimmedSearch }),
         }
       : null,
     filters.scope !== 'all'
       ? {
           id: 'view',
-          label: t({
-            zh: `范围：${buildViewFilterLabel(filters.scope, locale)}`,
-            en: `Scope: ${buildViewFilterLabel(filters.scope, locale)}`,
-          }),
-          clearLabel: t({
-            zh: `清空范围筛选：${buildViewFilterLabel(filters.scope, locale)}`,
-            en: `Clear scope filter: ${buildViewFilterLabel(filters.scope, locale)}`,
-          }),
+          label: pickText(locale, `范围：${buildViewFilterLabel(filters.scope, locale)}`, `Scope: ${buildViewFilterLabel(filters.scope, locale)}`),
+          clearLabel: pickText(locale, `清空范围筛选：${buildViewFilterLabel(filters.scope, locale)}`, `Clear scope filter: ${buildViewFilterLabel(filters.scope, locale)}`),
         }
       : null,
     orderedSelectedSeats.length > 0
       ? {
           id: 'seats',
-          label: t({
-            zh: `座位：${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join(' / ')}`,
-            en: `Seat: ${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空座位筛选', en: 'Clear seat filter' }),
+          label: pickText(locale, `座位：${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join(' / ')}`, `Seat: ${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空座位筛选', 'Clear seat filter'),
         }
       : null,
     orderedSelectedRoles.length > 0
       ? {
           id: 'roles',
-          label: t({
-            zh: `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(' / ')}`,
-            en: `Role: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空定位筛选', en: 'Clear role filter' }),
+          label: pickText(locale, `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(' / ')}`, `Role: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空定位筛选', 'Clear role filter'),
         }
       : null,
     orderedSelectedAffiliations.length > 0
       ? {
           id: 'affiliations',
-          label: t({
-            zh: `联动队伍：${orderedSelectedAffiliations
+          label: pickText(locale, `联动队伍：${orderedSelectedAffiliations
               .map((affiliation) => getPrimaryLocalizedText(affiliation, locale))
-              .join(' / ')}`,
-            en: `Affiliation: ${orderedSelectedAffiliations
+              .join(' / ')}`, `Affiliation: ${orderedSelectedAffiliations
               .map((affiliation) => getPrimaryLocalizedText(affiliation, locale))
-              .join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空联动队伍筛选', en: 'Clear affiliation filter' }),
+              .join(' / ')}`),
+          clearLabel: pickText(locale, '清空联动队伍筛选', 'Clear affiliation filter'),
         }
       : null,
     orderedSelectedRaces.length > 0
       ? {
           id: 'races',
-          label: t({
-            zh: `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(' / ')}`,
-            en: `Race: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空种族筛选', en: 'Clear race filter' }),
+          label: pickText(locale, `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(' / ')}`, `Race: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空种族筛选', 'Clear race filter'),
         }
       : null,
     orderedSelectedGenders.length > 0
       ? {
           id: 'genders',
-          label: t({
-            zh: `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(' / ')}`,
-            en: `Gender: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空性别筛选', en: 'Clear gender filter' }),
+          label: pickText(locale, `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(' / ')}`, `Gender: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空性别筛选', 'Clear gender filter'),
         }
       : null,
     orderedSelectedAlignments.length > 0
       ? {
           id: 'alignments',
-          label: t({
-            zh: `阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(' / ')}`,
-            en: `Alignment: ${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空阵营筛选', en: 'Clear alignment filter' }),
+          label: pickText(locale, `阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(' / ')}`, `Alignment: ${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空阵营筛选', 'Clear alignment filter'),
         }
       : null,
     orderedSelectedProfessions.length > 0
       ? {
           id: 'professions',
-          label: t({
-            zh: `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join(' / ')}`,
-            en: `Profession: ${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空职业筛选', en: 'Clear profession filter' }),
+          label: pickText(locale, `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join(' / ')}`, `Profession: ${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空职业筛选', 'Clear profession filter'),
         }
       : null,
     orderedSelectedAcquisitions.length > 0
       ? {
           id: 'acquisitions',
-          label: t({
-            zh: `获取方式：${orderedSelectedAcquisitions
+          label: pickText(locale, `获取方式：${orderedSelectedAcquisitions
               .map((acquisition) => getChampionTagLabel(acquisition, locale))
-              .join(' / ')}`,
-            en: `Availability: ${orderedSelectedAcquisitions
+              .join(' / ')}`, `Availability: ${orderedSelectedAcquisitions
               .map((acquisition) => getChampionTagLabel(acquisition, locale))
-              .join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空获取方式筛选', en: 'Clear availability filter' }),
+              .join(' / ')}`),
+          clearLabel: pickText(locale, '清空获取方式筛选', 'Clear availability filter'),
         }
       : null,
     orderedSelectedMechanics.length > 0
       ? {
           id: 'mechanics',
-          label: t({
-            zh: `机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join(' / ')}`,
-            en: `Mechanics: ${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空机制筛选', en: 'Clear mechanics filter' }),
+          label: pickText(locale, `机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join(' / ')}`, `Mechanics: ${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空机制筛选', 'Clear mechanics filter'),
         }
       : null,
     orderedSelectedPatrons.length > 0
       ? {
           id: 'patrons',
-          label: t({
-            zh: `赞助人：${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`,
-            en: `Patrons: ${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`,
-          }),
-          clearLabel: t({ zh: '清空赞助人筛选', en: 'Clear patron filter' }),
+          label: pickText(locale, `赞助人：${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`, `Patrons: ${orderedSelectedPatrons.map((patron) => getPrimaryLocalizedText(patron, locale)).join(' / ')}`),
+          clearLabel: pickText(locale, '清空赞助人筛选', 'Clear patron filter'),
         }
       : null,
   ].filter((chip): chip is ActiveFilterChip => chip !== null)

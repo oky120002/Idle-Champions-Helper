@@ -29,17 +29,14 @@ export function PrimaryNavigation({
     <nav
       id="site-primary-nav"
       className={isMobileNavOpen ? 'site-nav site-nav--mobile-open' : 'site-nav'}
-      aria-label={t({ zh: '主导航', en: 'Primary navigation' })}
+      aria-label={t("主导航")}
     >
       <div className="site-nav__mobile-head" aria-hidden="true">
-        <span className="site-nav__eyebrow">{t({ zh: '切换工作台', en: 'Switch workspaces' })}</span>
+        <span className="site-nav__eyebrow">{t("切换工作台")}</span>
         <div className="site-nav__summary">
           <strong>{t(activeNavigationItem.label)}</strong>
           <span>
-            {t({
-              zh: '在资料、筛选、阵型与个人数据之间快速跳转，不依赖横向滑动。',
-              en: 'Jump between lookup, filters, formations, and personal data without horizontal scrolling.',
-            })}
+            {t("在资料、筛选、阵型与个人数据之间快速跳转，不依赖横向滑动。")}
           </span>
         </div>
       </div>
@@ -61,15 +58,12 @@ export function PrimaryNavigation({
         )
       })}
       <div className="site-nav__locale-panel">
-        <span className="site-nav__eyebrow">{t({ zh: '低频设置', en: 'Low-frequency setting' })}</span>
+        <span className="site-nav__eyebrow">{t("低频设置")}</span>
         <div className="site-nav__locale-card">
           <div className="site-nav__locale-copy">
-            <strong>{t({ zh: '界面语言', en: 'Interface language' })}</strong>
+            <strong>{t("界面语言")}</strong>
             <span>
-              {t({
-                zh: '这个站点默认按当前语言继续浏览；只有需要时再在菜单里切换。',
-                en: 'The site stays in the current language by default, so switching lives inside the menu.',
-              })}
+              {t("这个站点默认按当前语言继续浏览；只有需要时再在菜单里切换。")}
             </span>
           </div>
           <PanelLocaleSwitcher locale={locale} onSelect={onLocaleSelect} t={t} />

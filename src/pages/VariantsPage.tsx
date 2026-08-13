@@ -14,12 +14,12 @@ export function VariantsPage() {
   const contentStatusItems = createAsyncStatusBannerItems({
     status: state.status,
     loading: {
-      children: t({ zh: '正在读取官方变体数据…', en: 'Loading official variant data…' }),
+      children: t("正在读取官方变体数据…"),
     },
     error: {
-      title: t({ zh: '变体数据读取失败', en: 'Variant data failed to load' }),
+      title: t("变体数据读取失败"),
       ...(state.status === 'error'
-        ? { detail: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
+        ? { detail: state.message !== '' ? state.message : t("未知错误") }
         : {}),
     },
   })
@@ -28,24 +28,18 @@ export function VariantsPage() {
       id: 'campaign-count',
       label:
         state.status === 'ready'
-          ? t({ zh: `${String(model.allCampaignGroups.length)} 地图`, en: `${String(model.allCampaignGroups.length)} campaigns` })
-          : t({ zh: '读取中', en: 'Loading' }),
+          ? t("{p0} 地图", { p0: String(model.allCampaignGroups.length) })
+          : t("读取中"),
       tone: 'muted',
     }),
     createWorkbenchBadgeItem({
       id: 'adventure-count',
-      label: t({
-        zh: `${String(model.selectedCampaignGroup?.adventures.length ?? 0)} 关卡`,
-        en: `${String(model.selectedCampaignGroup?.adventures.length ?? 0)} adventures`,
-      }),
+      label: t("{p0} 关卡", { p0: String(model.selectedCampaignGroup?.adventures.length ?? 0) }),
       hidden: state.status !== 'ready',
     }),
     createWorkbenchBadgeItem({
       id: 'variant-count',
-      label: t({
-        zh: `${String(model.selectedAdventureGroup?.variants.length ?? 0)} 变体`,
-        en: `${String(model.selectedAdventureGroup?.variants.length ?? 0)} variants`,
-      }),
+      label: t("{p0} 变体", { p0: String(model.selectedAdventureGroup?.variants.length ?? 0) }),
       hidden: state.status !== 'ready',
     }),
     createWorkbenchShareItem({
@@ -59,7 +53,7 @@ export function VariantsPage() {
     <FilterWorkbenchPage
       pageClassName="variants-page"
       storageKey="variants"
-      ariaLabel={t({ zh: '变体筛选工作台', en: 'Variant workbench' })}
+      ariaLabel={t("变体筛选工作台")}
       shellClassName="workbench-page__shell variants-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={showResultsQuickNavTop ? { onClick: scrollResultsToTop } : undefined}
@@ -78,8 +72,8 @@ export function VariantsPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              title: t({ zh: '变体筛选', en: 'Variant filters' }),
-              detail: t({ zh: '左侧选地图和关卡，右侧读敌人、区域、阵型与变体', en: 'Choose a campaign and adventure on the left; read enemies, areas, formation, and variants on the right' }),
+              title: t("变体筛选"),
+              detail: t("左侧选地图和关卡，右侧读敌人、区域、阵型与变体"),
             },
           },
           {
@@ -93,10 +87,10 @@ export function VariantsPage() {
         ],
       }}
       sidebarHeader={{
-        kicker: t({ zh: '导航抽屉', en: 'Navigation drawer' }),
-        statusLabel: t({ zh: '变体筛选状态操作', en: 'Variant filter status actions' }),
+        kicker: t("导航抽屉"),
+        statusLabel: t("变体筛选状态操作"),
         activeCount: activeFilters.length,
-        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        clearLabel: t("清空全部"),
         ...(activeFilters.length > 0 ? { onClear: clearAllFilters } : {}),
       }}
       isReady={state.status === 'ready'}

@@ -28,7 +28,7 @@ export function PlannerStackCount({ value, onChange }: PlannerStackCountProps) {
   return (
     <fieldset className="planner-scoring-mode" data-testid="planner-stack-count">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '动态层数假设', en: 'Stack assumption' })}
+        {t("动态层数假设")}
       </legend>
       <input
         type="number"
@@ -36,7 +36,7 @@ export function PlannerStackCount({ value, onChange }: PlannerStackCountProps) {
         inputMode="numeric"
         value={draft}
         className="planner-stack-count__input"
-        aria-label={t({ zh: '动态层数假设', en: 'Stack assumption' })}
+        aria-label={t("动态层数假设")}
         data-testid="planner-stack-count-input"
         onChange={(event) => {
           const raw = event.target.value

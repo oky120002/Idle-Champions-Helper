@@ -28,34 +28,25 @@ export function LocalDevSnapshotSection({
 
   const sourceLabel =
     selectedProfileSource === 'browser-sync'
-      ? t({ zh: '浏览器同步快照', en: 'Browser sync snapshot' })
-      : t({ zh: '本地开发快照', en: 'Local dev snapshot' })
+      ? t("浏览器同步快照")
+      : t("本地开发快照")
 
   return (
     <div>
       <p>
-        {t({
-          zh: '仅本地开发：浏览器同步快照与本地开发快照必须分离。本地开发快照只读使用，不会覆盖浏览器 IndexedDB。',
-          en: 'Dev only: browser sync snapshots and local dev snapshots must stay separate. The local dev snapshot is read-only and never overwrites the browser IndexedDB.',
-        })}
+        {t("仅本地开发：浏览器同步快照与本地开发快照必须分离。本地开发快照只读使用，不会覆盖浏览器 IndexedDB。")}
       </p>
       <p>
-        {t({
-          zh: '刷新动作会使用当前机器的私有环境变量抓取官方只读数据，并只写入被忽略的本地快照目录。',
-          en: 'Refreshing uses this machine’s private environment variables to fetch official read-only data, writing only to the ignored local snapshot directory.',
-        })}
+        {t("刷新动作会使用当前机器的私有环境变量抓取官方只读数据，并只写入被忽略的本地快照目录。")}
       </p>
       <p>
-        {t({ zh: '当前开发数据源：', en: 'Current dev data source: ' })}
+        {t("当前开发数据源：")}
         {sourceLabel}
       </p>
 
       {profileResolution.snapshot && (
         <p>
-          {t({
-            zh: `当前选中源拥有英雄 ${String(profileResolution.snapshot.ownedHeroes.length)} 个；已导入阵型 ${String(profileResolution.snapshot.importedFormationSaves.length)} 个。`,
-            en: `Current source has ${String(profileResolution.snapshot.ownedHeroes.length)} owned heroes; ${String(profileResolution.snapshot.importedFormationSaves.length)} imported formations.`,
-          })}
+          {t("当前选中源拥有英雄 {p0} 个；已导入阵型 {p1} 个。", { p0: String(profileResolution.snapshot.ownedHeroes.length), p1: String(profileResolution.snapshot.importedFormationSaves.length) })}
         </p>
       )}
 
@@ -64,7 +55,7 @@ export function LocalDevSnapshotSection({
       )}
 
       {localDevRefreshState.status === 'loading' && (
-        <p role="status">{t({ zh: '正在刷新本地开发快照…', en: 'Refreshing local dev snapshot…' })}</p>
+        <p role="status">{t("正在刷新本地开发快照…")}</p>
       )}
 
       {localDevRefreshState.status === 'success' && (
@@ -75,13 +66,13 @@ export function LocalDevSnapshotSection({
         <p role="alert">{localDevRefreshState.message}</p>
       )}
 
-      <div aria-label={t({ zh: '开发数据源', en: 'Dev data source' })} role="group">
+      <div aria-label={t("开发数据源")} role="group">
         <button
           type="button"
           onClick={onSelectBrowserSnapshot}
           aria-pressed={selectedProfileSource === 'browser-sync'}
         >
-          {t({ zh: '使用浏览器快照', en: 'Use browser snapshot' })}
+          {t("使用浏览器快照")}
         </button>
 
         <button
@@ -90,7 +81,7 @@ export function LocalDevSnapshotSection({
           disabled={!canLoadLocalDevSnapshot}
           aria-pressed={selectedProfileSource === 'local-dev-snapshot'}
         >
-          {t({ zh: '使用本地开发快照', en: 'Use local dev snapshot' })}
+          {t("使用本地开发快照")}
         </button>
       </div>
 
@@ -99,7 +90,7 @@ export function LocalDevSnapshotSection({
         onClick={onRefreshLocalDevSnapshot}
         disabled={!canLoadLocalDevSnapshot || localDevRefreshState.status === 'loading'}
       >
-        {t({ zh: '刷新本地开发快照', en: 'Refresh local dev snapshot' })}
+        {t("刷新本地开发快照")}
       </button>
     </div>
   )

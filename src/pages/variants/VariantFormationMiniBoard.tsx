@@ -1,20 +1,20 @@
 import type { CSSProperties } from 'react'
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { AppLocale, LocaleText , TranslateParams} from '../../app/i18n'
 import { getFormationBoardMetrics } from '../../domain/formationLayout'
 import type { FormationLayout } from '../../domain/types'
 
 type VariantFormationMiniBoardProps = {
   readonly formation: FormationLayout | null
   readonly locale: AppLocale
-  readonly t: (text: LocaleText) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
 }
 
 export function VariantFormationMiniBoard({ formation, locale, t }: VariantFormationMiniBoardProps) {
   if (!formation) {
     return (
       <div className="variant-mini-board variant-mini-board--missing">
-        <strong>{t({ zh: '阵型图', en: 'Formation' })}</strong>
-        <span>{t({ zh: '当前没有命中官方布局映射', en: 'No official formation mapping yet' })}</span>
+        <strong>{t("阵型图")}</strong>
+        <span>{t("当前没有命中官方布局映射")}</span>
       </div>
     )
   }
@@ -29,7 +29,7 @@ export function VariantFormationMiniBoard({ formation, locale, t }: VariantForma
   return (
     <div className="variant-mini-board-wrap">
       <div className="variant-mini-board__header">
-        <strong>{t({ zh: '阵型图', en: 'Formation' })}</strong>
+        <strong>{t("阵型图")}</strong>
         <span>
           {locale === 'zh-CN'
             ? `${String(formation.slots.length)} 槽`

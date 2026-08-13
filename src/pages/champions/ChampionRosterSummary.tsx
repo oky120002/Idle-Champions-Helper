@@ -27,22 +27,22 @@ export function ChampionRosterSummary({
   }
 
   return (
-    <section className="champion-roster-summary" aria-label={t({ zh: '英雄账号概览', en: 'Champion roster overview' })}>
+    <section className="champion-roster-summary" aria-label={t("英雄账号概览")}>
       <header className="champion-roster-summary__header">
         <div>
           <p className="champion-roster-summary__eyebrow">
-            {eyebrow ?? t({ zh: '账号概览', en: 'Account overview' })}
+            {eyebrow ?? t("账号概览")}
           </p>
           <h2 className="champion-roster-summary__title">
-            {title ?? t({ zh: '全英雄矩阵', en: 'Full champion roster' })}
+            {title ?? t("全英雄矩阵")}
           </h2>
         </div>
         <div className="champion-roster-summary__context">
           <span className="champion-roster-summary__source">
-            {sourceLabel ?? t({ zh: '未同步账号快照', en: 'No synced account snapshot' })}
+            {sourceLabel ?? t("未同步账号快照")}
           </span>
           <span className="champion-roster-summary__highlight">
-            {highlightLabel ?? t({ zh: '高亮', en: 'Highlight' })}{' '}
+            {highlightLabel ?? t("高亮")}{' '}
             {summary.matchedOwnedChampionCount} / {summary.totalChampionCount}
           </span>
         </div>

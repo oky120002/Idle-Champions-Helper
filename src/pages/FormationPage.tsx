@@ -34,22 +34,22 @@ export function FormationPage() {
   const contentStatusItems = createAsyncStatusBannerItems({
     status: model.state.status,
     loading: {
-      children: model.t({ zh: '正在读取阵型布局和英雄数据…', en: 'Loading layouts and champion data…' }),
+      children: model.t("正在读取阵型布局和英雄数据…"),
     },
     error: {
-      title: model.t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' }),
+      title: model.t("阵型数据读取失败"),
       ...(model.state.status === 'error' ? { detail: model.state.message } : {}),
     },
   })
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'selected-layout',
-      label: model.selectedLayoutLabel ?? model.t({ zh: '未选择布局', en: 'No layout selected' }),
+      label: model.selectedLayoutLabel ?? model.t("未选择布局"),
     }),
     createWorkbenchBadgeItem({
       id: 'placed-count',
       tone: 'muted',
-      label: model.t({ zh: `${String(model.selectedChampions.length)} 名已放置`, en: `${String(model.selectedChampions.length)} placed` }),
+      label: model.t("{p0} 名已放置", { p0: String(model.selectedChampions.length) }),
     }),
     createWorkbenchShareItem({
       t: model.t,
@@ -62,14 +62,14 @@ export function FormationPage() {
     <ConfiguredWorkbenchPage
       pageClassName="formation-page"
       storageKey="formation"
-      ariaLabel={model.t({ zh: '阵型编辑工作台', en: 'Formation workbench' })}
+      ariaLabel={model.t("阵型编辑工作台")}
       shellClassName="workbench-page__shell formation-workbench"
       contentScrollRef={contentScrollRef}
       floatingTopButton={
         showScrollTop
           ? {
               onClick: scrollToTop,
-              detailLabel: model.t({ zh: '阵型内容', en: 'Formation pane' }),
+              detailLabel: model.t("阵型内容"),
             }
           : undefined
       }
@@ -86,9 +86,9 @@ export function FormationPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              kicker: model.t({ zh: '战术工作台', en: 'Tactical workbench' }),
-              title: model.t({ zh: '阵型编辑', en: 'Formation editor' }),
-              detail: model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' }),
+              kicker: model.t("战术工作台"),
+              title: model.t("阵型编辑"),
+              detail: model.t("左侧筛选布局，右侧编辑当前阵型与方案摘要"),
             },
           },
           {
@@ -103,13 +103,13 @@ export function FormationPage() {
       sidebarHeader={
         model.state.status === 'ready' ? (
           <WorkbenchSidebarHeader
-            kicker={model.t({ zh: '布局抽屉', en: 'Layout drawer' })}
-            statusLabel={model.t({ zh: '布局筛选状态', en: 'Layout filter status' })}
+            kicker={model.t("布局抽屉")}
+            statusLabel={model.t("布局筛选状态")}
             status={(
               <WorkbenchToolbarBadge>
                 {activeSidebarFilterCount > 0
-                  ? model.t({ zh: `${String(activeSidebarFilterCount)} 项条件`, en: `${String(activeSidebarFilterCount)} active` })
-                  : model.t({ zh: '布局筛选待命', en: 'Filters idle' })}
+                  ? model.t("{p0} 项条件", { p0: String(activeSidebarFilterCount) })
+                  : model.t("布局筛选待命")}
               </WorkbenchToolbarBadge>
             )}
           />

@@ -12,12 +12,9 @@ export function PlannerProfileState() {
 
   if (profileResolution.errorMessage != null && profileResolution.errorMessage !== '') {
     return (
-      <section aria-label={t({ zh: '个人数据状态', en: 'Profile state' })}>
+      <section aria-label={t("个人数据状态")}>
         <p role="alert">
-          {t({
-            zh: `读取数据失败：${profileResolution.errorMessage}`,
-            en: `Failed to read data: ${profileResolution.errorMessage}`,
-          })}
+          {t("读取数据失败：{p0}", { p0: profileResolution.errorMessage })}
         </p>
       </section>
     )
@@ -32,19 +29,13 @@ export function PlannerProfileState() {
     )
 
     return (
-      <section aria-label={t({ zh: '个人数据状态', en: 'Profile state' })}>
+      <section aria-label={t("个人数据状态")}>
         <p>
-          {t({
-            zh: `${sourceLabel}已于 ${String(ageDays)} 天前更新。`,
-            en: `${sourceLabel} was updated ${String(ageDays)} days ago.`,
-          })}
+          {t("{p0}已于 {p1} 天前更新。", { p0: sourceLabel, p1: String(ageDays) })}
         </p>
         {ageDays > 7 && (
           <p>
-            {t({
-              zh: '数据可能过期，建议重新同步或切换数据源。',
-              en: 'Data may be outdated. Consider re-syncing or switching the source.',
-            })}
+            {t("数据可能过期，建议重新同步或切换数据源。")}
           </p>
         )}
       </section>
@@ -52,17 +43,11 @@ export function PlannerProfileState() {
   }
 
   return (
-    <section aria-label={t({ zh: '个人数据状态', en: 'Profile state' })}>
+    <section aria-label={t("个人数据状态")}>
       <p>
-        {t({
-          zh: '尚未导入个人数据。',
-          en: 'No user data imported.',
-        })}
+        {t("尚未导入个人数据。")}
         <Link to="/user-data">
-          {t({
-            zh: '前往个人数据页面',
-            en: 'Go to User Data page',
-          })}
+          {t("前往个人数据页面")}
         </Link>
       </p>
     </section>

@@ -104,16 +104,13 @@ export function App() {
               <div className="surface-card__header">
                 <div className="surface-card__header-copy">
                   <p className="surface-card__eyebrow">
-                    {t({ zh: '按需加载页面', en: 'Loading route bundle' })}
+                    {t("按需加载页面")}
                   </p>
                   <h2 className="surface-card__title">
-                    {t({ zh: '正在加载当前页面', en: 'Loading current page' })}
+                    {t("正在加载当前页面")}
                   </h2>
                   <p className="surface-card__description">
-                    {t({
-                      zh: '已改为按路由分包，当前只拉取命中的页面代码。',
-                      en: 'Routes are code-split, so the app only fetches the page that is currently needed.',
-                    })}
+                    {t("已改为按路由分包，当前只拉取命中的页面代码。")}
                   </p>
                 </div>
               </div>

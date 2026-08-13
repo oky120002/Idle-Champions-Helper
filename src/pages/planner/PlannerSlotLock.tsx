@@ -35,11 +35,11 @@ export function PlannerSlotLock({
   }
 
   return (
-    <section className="surface-card planner-slot-lock" aria-label={t({ zh: '锁槽', en: 'Lock slots' })}>
+    <section className="surface-card planner-slot-lock" aria-label={t("锁槽")}>
       <div className="surface-card__header">
         <div className="surface-card__header-copy">
-          <p className="surface-card__eyebrow">{t({ zh: '锁槽', en: 'Lock slots' })}</p>
-          <h3 className="surface-card__title">{t({ zh: '固定槽位英雄', en: 'Pin champions to slots' })}</h3>
+          <p className="surface-card__eyebrow">{t("锁槽")}</p>
+          <h3 className="surface-card__title">{t("固定槽位英雄")}</h3>
         </div>
       </div>
       <div className="surface-card__body">
@@ -52,7 +52,7 @@ export function PlannerSlotLock({
             return (
               <li key={slot.id} className="planner-slot-lock__item">
                 <span className="planner-slot-lock__copy">
-                  {t({ zh: `槽位 ${slot.id}`, en: `Slot ${slot.id}` })}: {name}
+                  {t("槽位 {p0}", { p0: slot.id })}: {name}
                 </span>
                 <button
                   type="button"
@@ -67,7 +67,7 @@ export function PlannerSlotLock({
                     }
                   }}
                 >
-                  {isLocked ? t({ zh: '解锁', en: 'Unlock' }) : t({ zh: '锁定', en: 'Lock' })}
+                  {isLocked ? t("解锁") : t("锁定")}
                 </button>
               </li>
             )

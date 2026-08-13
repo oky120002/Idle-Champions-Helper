@@ -12,18 +12,15 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
 
   return (
     <WorkbenchResultsScaffold
-      ariaLabel={t({ zh: '立绘筛选结果', en: 'Illustration filter results' })}
+      ariaLabel={t("立绘筛选结果")}
       sectionClassName="results-panel"
       isEmpty={!hasMatches}
       emptyState={{
-        title: t({ zh: '没有匹配结果', en: 'No illustrations match' }),
-        detail: t({
-          zh: '当前筛选条件下没有可展示的立绘，试试清空一两个条件或先切回更宽的范围。',
-          en: 'No illustrations match the current filters. Try clearing one or two filters, or broaden the scope first.',
-        }),
+        title: t("没有匹配结果"),
+        detail: t("当前筛选条件下没有可展示的立绘，试试清空一两个条件或先切回更宽的范围。"),
       }}
     >
-      <div className="illustrations-grid" aria-label={t({ zh: '立绘结果', en: 'Illustration results' })}>
+      <div className="illustrations-grid" aria-label={t("立绘结果")}>
         {results.visibleIllustrationEntries.map((entry) => (
           <IllustrationResultCard
             key={entry.illustration.id}

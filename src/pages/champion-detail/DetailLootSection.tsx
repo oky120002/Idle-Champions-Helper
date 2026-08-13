@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
@@ -8,7 +9,7 @@ import type { EffectContext } from './types'
 type DetailLootSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly effectContext: EffectContext
 }
 
@@ -60,7 +61,7 @@ export function DetailLootSection({ detail, locale, t, effectContext }: DetailLo
         </div>
       ) : (
         <div className="status-banner status-banner--info">
-          {t({ zh: '当前没有结构化装备数据。', en: 'No structured loot data is available.' })}
+          {t("当前没有结构化装备数据。")}
         </div>
       )}
     </SurfaceCard>

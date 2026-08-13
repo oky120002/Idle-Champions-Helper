@@ -128,7 +128,6 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
   const orderedSelectedPatrons = patrons.filter((patron) => filters.selectedPatrons.includes(patron.id))
   const activeFilterChips = buildActiveIllustrationFilterChips({
     locale,
-    t,
     filters,
     orderedSelectedSeats,
     orderedSelectedRoles,

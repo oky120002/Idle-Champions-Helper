@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { AppLocale } from '../../app/i18n'
+import type { AppLocale, LocaleText, TranslateParams } from '../../app/i18n'
 import type { ChampionDetail } from '../../domain/types'
 import { buildEffectContext, buildAttackLabelById, buildUpgradeLabelById, buildUpgradePresentations } from './detail-derived-context'
 import {
@@ -13,7 +13,7 @@ import { buildSpecializationUpgradeColumns } from './specialization-column-model
 import { useLedgerFilterState } from './useLedgerFilterState'
 
 interface Translation {
-  (text: { zh: string; en: string }): string
+  (text: string | LocaleText, params?: TranslateParams): string
 }
 
 function useMemoizedPresentation(detail: ChampionDetail | null, locale: AppLocale) {

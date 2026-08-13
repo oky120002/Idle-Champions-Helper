@@ -49,7 +49,7 @@ export function VariantResultCard({ model, variant }: VariantResultCardProps) {
 
       <div className="variant-entry__grid">
         <section className="variant-entry__block">
-          <span className="variant-entry__label">{t({ zh: '限制条件', en: 'Restrictions' })}</span>
+          <span className="variant-entry__label">{t("限制条件")}</span>
           {variant.restrictions.length > 0 ? (
             <ul className="bullet-list variant-entry__list">
               {variant.restrictions.slice(0, 3).map((restriction) => (
@@ -60,13 +60,13 @@ export function VariantResultCard({ model, variant }: VariantResultCardProps) {
             </ul>
           ) : (
             <p className="supporting-text">
-              {t({ zh: '官方没有返回额外限制文本。', en: 'No extra restriction copy is exposed here.' })}
+              {t("官方没有返回额外限制文本。")}
             </p>
           )}
         </section>
 
         <section className="variant-entry__block">
-          <span className="variant-entry__label">{t({ zh: '场景变化', en: 'Battlefield changes' })}</span>
+          <span className="variant-entry__label">{t("场景变化")}</span>
           {mechanicItems.length > 0 || areaHighlightItems.length > 0 ? (
             <div className="variant-chip-row">
               {mechanicItems.map((mechanic) => (
@@ -82,7 +82,7 @@ export function VariantResultCard({ model, variant }: VariantResultCardProps) {
             </div>
           ) : (
             <p className="supporting-text">
-              {t({ zh: '没有解析到额外的区域事件。', en: 'No extra area events were parsed for this variant.' })}
+              {t("没有解析到额外的区域事件。")}
             </p>
           )}
         </section>
@@ -90,7 +90,7 @@ export function VariantResultCard({ model, variant }: VariantResultCardProps) {
 
       {rewardItems.length > 0 ? (
         <div className="variant-entry__reward-row">
-          <span className="variant-entry__label">{t({ zh: '奖励', en: 'Rewards' })}</span>
+          <span className="variant-entry__label">{t("奖励")}</span>
           <div className="variant-chip-row">
             {rewardItems.map((reward) => (
               <span key={`${variant.id}-${reward.original}-${reward.display}`} className="variant-chip">

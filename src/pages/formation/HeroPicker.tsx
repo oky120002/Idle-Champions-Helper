@@ -93,9 +93,9 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
   if (selected) {
     triggerLabel = getPrimaryLocalizedText(selected.name, locale)
   } else if (hasPicker) {
-    triggerLabel = t({ zh: '选择英雄', en: 'Pick champion' })
+    triggerLabel = t("选择英雄")
   } else {
-    triggerLabel = t({ zh: '拖拽英雄到槽位', en: 'Drag champion to a slot' })
+    triggerLabel = t("拖拽英雄到槽位")
   }
 
   return (
@@ -117,21 +117,21 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
           data-testid="hero-picker-panel"
           id={panelId}
           role="group"
-          aria-label={t({ zh: '英雄选择', en: 'Champion picker' })}
+          aria-label={t("英雄选择")}
         >
           <input
             className="hero-picker__search"
             data-testid="hero-picker-search"
             type="search"
-            aria-label={t({ zh: '搜索英雄', en: 'Search champions' })}
-            placeholder={t({ zh: '搜索英雄', en: 'Search champions' })}
+            aria-label={t("搜索英雄")}
+            placeholder={t("搜索英雄")}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
 
           {filtered.length === 0 ? (
             <p className="hero-picker__empty" data-testid="hero-picker-empty">
-              {t({ zh: '没有匹配的英雄', en: 'No matching champions' })}
+              {t("没有匹配的英雄")}
             </p>
           ) : null}
 
@@ -145,7 +145,7 @@ export function HeroPicker({ champions, value = '', onChange, className }: HeroP
                   className={value === '' ? 'is-selected' : ''}
                   onClick={() => commit('')}
                 >
-                  {t({ zh: '未放置', en: 'Empty' })}
+                  {t("未放置")}
                 </button>
               </li>
             ) : null}

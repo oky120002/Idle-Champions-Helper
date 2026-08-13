@@ -54,7 +54,7 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
         id: 'compatibility-notice',
         when: 'compatibility',
         tone: 'info',
-        title: t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' }),
+        title: t("恢复时会带兼容处理"),
         ...(view.prompt.kind === 'restore' && showCompatibilityNotice
           ? { detail: t(buildRestoreStatusDetail(view.prompt.preview)) }
           : {}),
@@ -72,25 +72,22 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
       <p className="supporting-text">
         {view.preset.description !== ''
           ? view.preset.description
-          : t({
-              zh: '当前还没有备注，可在这里补充这套阵容适合的目标和限制。',
-              en: 'There are no notes yet. Add what this formation is for and what constraints matter.',
-            })}
+          : t("当前还没有备注，可在这里补充这套阵容适合的目标和限制。")}
       </p>
 
       <div className="tag-row">
         <span className="tag-pill tag-pill--muted">{buildLayoutSummary(view, locale)}</span>
         <span className="tag-pill tag-pill--muted">
-          {t({ zh: '保存版本', en: 'Saved version' })}：{view.preset.dataVersion}
+          {t("保存版本")}：{view.preset.dataVersion}
         </span>
         <span className="tag-pill tag-pill--muted">
-          {t({ zh: '更新于', en: 'Updated' })}：{formatDateTime(view.preset.updatedAt, locale)}
+          {t("更新于")}：{formatDateTime(view.preset.updatedAt, locale)}
         </span>
         <span className="tag-pill tag-pill--muted">
           {view.preset.scenarioRef
             ? (getScenarioLabel(view.preset.scenarioRef)
               ?? `${view.preset.scenarioRef.kind}:${view.preset.scenarioRef.id}`)
-            : t({ zh: '未绑定正式场景', en: 'No formal scenario linked' })}
+            : t("未绑定正式场景")}
         </span>
       </div>
 
@@ -119,7 +116,7 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
         items={[
           {
             id: 'restore-preset',
-            label: t({ zh: '恢复到阵型页', en: 'Restore to formation' }),
+            label: t("恢复到阵型页"),
             icon: <ArchiveRestore aria-hidden="true" strokeWidth={1.9} />,
             tone: 'secondary',
             disabled: view.prompt.kind !== 'restore',
@@ -127,21 +124,21 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
           },
           {
             id: 'edit-preset',
-            label: t({ zh: '编辑', en: 'Edit' }),
+            label: t("编辑"),
             icon: <Pencil aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             onClick: () => startEditingPreset(view.preset),
           },
           {
             id: 'confirm-delete',
-            label: t({ zh: '确认删除', en: 'Confirm delete' }),
+            label: t("确认删除"),
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             hidden: !isDeleteConfirming,
             onClick: () => deletePreset(view.preset),
           },
           {
             id: 'cancel-delete',
-            label: t({ zh: '取消', en: 'Cancel' }),
+            label: t("取消"),
             icon: <X aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: !isDeleteConfirming,
@@ -149,7 +146,7 @@ export function PresetCard({ model, view }: Readonly<PresetCardProps>) {
           },
           {
             id: 'open-delete-confirm',
-            label: t({ zh: '删除', en: 'Delete' }),
+            label: t("删除"),
             icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: isDeleteConfirming,

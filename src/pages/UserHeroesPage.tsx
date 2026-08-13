@@ -24,19 +24,19 @@ export function UserHeroesPage() {
   const contentStatusItems = createAsyncStatusBannerItems({
     status: state.status,
     loading: {
-      children: t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' }),
+      children: t("正在读取英雄数据…"),
     },
     error: {
-      title: t({ zh: '用户英雄页读取失败', en: 'User heroes page failed to load' }),
+      title: t("用户英雄页读取失败"),
       ...(state.status === 'error'
-        ? { detail: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
+        ? { detail: state.message !== '' ? state.message : t("未知错误") }
         : {}),
     },
   })
   const toolbarItems = [
     createWorkbenchBadgeItem({
       id: 'user-hero-match-count',
-      label: t({ zh: `${String(filteredChampions.length)} 个命中`, en: `${String(filteredChampions.length)} matches` }),
+      label: t("{p0} 个命中", { p0: String(filteredChampions.length) }),
       tone: 'muted',
       hidden: state.status !== 'ready',
     }),
@@ -51,7 +51,7 @@ export function UserHeroesPage() {
     <FilterWorkbenchPage
       pageClassName="user-heroes-page"
       storageKey="user-heroes"
-      ariaLabel={t({ zh: '用户英雄工作台', en: 'User heroes workbench' })}
+      ariaLabel={t("用户英雄工作台")}
       shellClassName="workbench-page__shell user-heroes-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={model.showResultsQuickNavTop ? { onClick: model.scrollResultsToTop } : undefined}
@@ -69,8 +69,8 @@ export function UserHeroesPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              title: t({ zh: '用户英雄', en: 'User heroes' }),
-              detail: t({ zh: '按账号拥有态、装备进度与筛选条件阅读完整英雄矩阵', en: 'Read the full roster through ownership, equipment progress, and filters' }),
+              title: t("用户英雄"),
+              detail: t("按账号拥有态、装备进度与筛选条件阅读完整英雄矩阵"),
             },
           },
           {
@@ -84,10 +84,10 @@ export function UserHeroesPage() {
         ],
       }}
       sidebarHeader={{
-        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
-        statusLabel: t({ zh: '筛选状态操作', en: 'Filter status actions' }),
+        kicker: t("筛选抽屉"),
+        statusLabel: t("筛选状态操作"),
         activeCount: activeFilterCount,
-        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        clearLabel: t("清空全部"),
         ...(hasActiveFilters ? { onClear: clearAllFilters } : {}),
       }}
       isReady={state.status === 'ready'}

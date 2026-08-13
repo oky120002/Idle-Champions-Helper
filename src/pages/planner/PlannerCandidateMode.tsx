@@ -22,7 +22,7 @@ export function PlannerCandidateMode({ value, onChange }: PlannerCandidateModePr
   return (
     <fieldset className="planner-scoring-mode" role="radiogroup" data-testid="planner-candidate-mode">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '候选范围', en: 'Candidate pool' })}
+        {t("候选范围")}
       </legend>
       <div className="planner-scoring-mode__options">
         {MODES.map((mode) => {
@@ -42,7 +42,7 @@ export function PlannerCandidateMode({ value, onChange }: PlannerCandidateModePr
                 }
               }}
             >
-              {t({ zh: mode.zh, en: mode.en })}
+              {t(mode)}
             </button>
           )
         })}

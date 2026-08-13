@@ -24,16 +24,16 @@ export function PlannerSurvivableArea({ value, onChange }: PlannerSurvivableArea
   return (
     <fieldset className="planner-scoring-mode" data-testid="planner-survivable-area">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '生存阈值（层）', en: 'Survival threshold (area)' })}
+        {t("生存阈值（层）")}
       </legend>
       <input
         type="number"
         min={1}
         inputMode="numeric"
-        placeholder={t({ zh: '不设', en: 'off' })}
+        placeholder={t("不设")}
         value={draft}
         className="planner-stack-count__input"
-        aria-label={t({ zh: '生存阈值', en: 'Survival threshold' })}
+        aria-label={t("生存阈值")}
         data-testid="planner-survivable-area-input"
         onChange={(event) => {
           const raw = event.target.value

@@ -29,13 +29,13 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
   const stats = [
     {
       id: 'matches',
-      label: t({ zh: '当前匹配', en: 'Matches' }),
+      label: t("当前匹配"),
       value: filteredLayouts.length,
     },
     {
       id: 'selected-layout',
-      label: t({ zh: '当前布局', en: 'Current layout' }),
-      value: selectedLayoutLabel ?? t({ zh: '未选择', en: 'Not selected' }),
+      label: t("当前布局"),
+      value: selectedLayoutLabel ?? t("未选择"),
       compact: true,
     },
   ]
@@ -44,30 +44,21 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       kind: 'input',
       id: 'keyword',
       inputId: 'formation-layout-search',
-      label: t({ zh: '关键词', en: 'Keyword' }),
+      label: t("关键词"),
       value: layoutSearch,
       onChange: setLayoutSearch,
-      hint: t({
-        zh: '支持搜索布局名、布局备注和来源场景名称，保留中英混搜。',
-        en: 'Search layout names, notes, and source context names with mixed Chinese and English.',
-      }),
-      placeholder: t({
-        zh: '搜布局名、来源战役、冒险或变体',
-        en: 'Search layouts, campaigns, adventures, or variants',
-      }),
+      hint: t("支持搜索布局名、布局备注和来源场景名称，保留中英混搜。"),
+      placeholder: t("搜布局名、来源战役、冒险或变体"),
       className: 'form-field',
     },
     {
       kind: 'chip-single',
       id: 'scenario-type',
-      label: t({ zh: '场景类型', en: 'Scenario type' }),
+      label: t("场景类型"),
       value: selectedContextKind,
       onChange: (value: string) => setSelectedContextKind(value as LayoutFilterKind),
-      hint: t({
-        zh: '筛选只影响布局库，不会自动清空正在编辑的布局。',
-        en: 'Filters only affect the library and never clear the layout currently being edited.',
-      }),
-      groupLabel: t({ zh: '场景类型', en: 'Scenario type' }),
+      hint: t("筛选只影响布局库，不会自动清空正在编辑的布局。"),
+      groupLabel: t("场景类型"),
       options: LAYOUT_FILTER_OPTIONS.map((kind) => ({
         value: kind,
         label: getLayoutFilterLabel(kind),
@@ -98,7 +89,7 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       ariaLabel: getFormationLayoutLabel(layout, locale),
       title: getFormationLayoutLabel(layout, locale),
       countLabel: locale === 'zh-CN' ? `${String(layout.slots.length)} 槽` : `${String(layout.slots.length)} slots`,
-      sourceLabel: primarySource ?? t({ zh: '当前没有来源场景标记', en: 'No source context label yet' }),
+      sourceLabel: primarySource ?? t("当前没有来源场景标记"),
       metaPills: kinds.map((kind) => ({
         id: `${layout.id}-${kind}`,
         label: getLayoutFilterLabel(kind),
@@ -108,44 +99,29 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
     }
   })
   const resultsDescription = filteredLayouts.length > 0
-    ? t({
-        zh: `按当前条件命中 ${String(filteredLayouts.length)} 个布局，选中后下方画板会立即切换。`,
-        en: `${String(filteredLayouts.length)} layouts match the current filters, and the board below switches immediately once you pick one.`,
-      })
-    : t({
-        zh: '当前没有匹配布局，可以先放宽关键词或场景类型。',
-        en: 'No layouts match right now. Loosen the keyword or scenario type first.',
-      })
+    ? t("按当前条件命中 {p0} 个布局，选中后下方画板会立即切换。", { p0: String(filteredLayouts.length) })
+    : t("当前没有匹配布局，可以先放宽关键词或场景类型。")
 
   return (
     <FormationLayoutLibraryScaffold
-      ariaLabel={t({ zh: '布局选择', en: 'Layout library' })}
-      eyebrow={t({ zh: '布局选择', en: 'Layout library' })}
-      title={t({ zh: '先定场景，再从布局库里选当前画板', en: 'Pick the scenario first, then choose the board from the layout library' })}
-      description={t({
-        zh: '参考外部资料站常见的“筛条件 + 当前选中 + 可滚动布局库”节奏，把海量布局收进一个可控面板里，避免整页被按钮淹没。',
-        en: 'This follows the common “filters + current selection + scrollable library” rhythm from reference data sites so the full layout library stays manageable instead of flooding the page.',
-      })}
-      statsLabel={t({ zh: '布局选择概览', en: 'Layout picker overview' })}
+      ariaLabel={t("布局选择")}
+      eyebrow={t("布局选择")}
+      title={t("先定场景，再从布局库里选当前画板")}
+      description={t("参考外部资料站常见的“筛条件 + 当前选中 + 可滚动布局库”节奏，把海量布局收进一个可控面板里，避免整页被按钮淹没。")}
+      statsLabel={t("布局选择概览")}
       stats={stats}
       fields={fields}
       selection={{
-        kicker: t({ zh: '当前编辑布局', en: 'Editing now' }),
-        title: selectedLayoutLabel ?? t({ zh: '未选择布局', en: 'No layout selected' }),
+        kicker: t("当前编辑布局"),
+        title: selectedLayoutLabel ?? t("未选择布局"),
         description: (selectedLayoutSource != null && selectedLayoutSource !== '')
-          ? t({
-              zh: `默认来源：${selectedLayoutSource}`,
-              en: `Primary source: ${selectedLayoutSource}`,
-            })
-          : t({
-              zh: '当前布局还没有来源场景标记。',
-              en: 'This layout does not expose a source context yet.',
-            }),
+          ? t("默认来源：{p0}", { p0: selectedLayoutSource })
+          : t("当前布局还没有来源场景标记。"),
         pills: selectionPills,
       }}
-      resultsLabel={t({ zh: '布局库', en: 'Layout list' })}
+      resultsLabel={t("布局库")}
       resultsDescription={resultsDescription}
-      cardsAriaLabel={t({ zh: '可选布局列表', en: 'Available layouts' })}
+      cardsAriaLabel={t("可选布局列表")}
       cards={cards}
     />
   )

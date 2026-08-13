@@ -35,12 +35,9 @@ export function PetResultCard({ pet, animation }: PetResultCardProps) {
     if (pet.illustration === null) {
       return (
         <div className="pet-card__stage-empty">
-          <strong>{t({ zh: '暂无立绘', en: 'No illustration yet' })}</strong>
+          <strong>{t("暂无立绘")}</strong>
           <span>
-            {t({
-              zh: '当前 definitions 里没有可用的 XL 图像槽位。',
-              en: 'The current definitions do not expose a usable XL art slot yet.',
-            })}
+            {t("当前 definitions 里没有可用的 XL 图像槽位。")}
           </span>
         </div>
       )
@@ -54,12 +51,12 @@ export function PetResultCard({ pet, animation }: PetResultCardProps) {
           fallbackSrc={fallbackSrc}
           alt={illustrationAlt}
           labels={{
-            play: t({ zh: '播放动画', en: 'Play animation' }),
-            pause: t({ zh: '暂停动画', en: 'Pause animation' }),
-            reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),
-            error: t({ zh: '动态预览加载失败', en: 'Animated preview failed to load' }),
-            animated: t({ zh: '动态预览已启用', en: 'Animated preview enabled' }),
-            fallback: t({ zh: '当前显示静态立绘', en: 'Showing static illustration' }),
+            play: t("播放动画"),
+            pause: t("暂停动画"),
+            reducedMotion: t("已遵循减少动态偏好"),
+            error: t("动态预览加载失败"),
+            animated: t("动态预览已启用"),
+            fallback: t("当前显示静态立绘"),
           }}
           playbackMode="play"
           showControls={false}
@@ -105,9 +102,9 @@ export function PetResultCard({ pet, animation }: PetResultCardProps) {
         ) : null}
 
         <div className="pet-card__acquisition">
-          <span className="pet-card__acquisition-label">{t({ zh: '获取方式', en: 'How to get' })}</span>
+          <span className="pet-card__acquisition-label">{t("获取方式")}</span>
           <strong className="pet-card__acquisition-detail">
-            {acquisitionDetail ?? t({ zh: '当前 definitions 没有给出稳定来源。', en: 'Current definitions do not expose a stable source.' })}
+            {acquisitionDetail ?? t("当前 definitions 没有给出稳定来源。")}
           </strong>
           {acquisitionNotes.map((note) => (
             <span key={`${pet.id}-${note}`} className="pet-card__acquisition-note">

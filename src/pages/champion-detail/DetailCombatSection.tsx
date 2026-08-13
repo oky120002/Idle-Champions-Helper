@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { ActionButton } from '../../components/ActionButton'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
@@ -9,7 +10,7 @@ import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 type DetailCombatSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly ledgerRows: LedgerUpgradeRow[]
   readonly ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
   readonly activeLedgerFilterKeySet: Set<string>
@@ -42,18 +43,18 @@ export function DetailCombatSection({
       <div id="abilities" className="detail-section-anchor" />
 
       <div className="detail-field-grid">
-        <DetailField label={t({ zh: '基础花费', en: 'Base cost' })} value={formatDigitString(detail.baseCost, locale)} />
-        <DetailField label={t({ zh: '基础伤害', en: 'Base damage' })} value={formatDigitString(detail.baseDamage, locale)} />
-        <DetailField label={t({ zh: '基础生命', en: 'Base health' })} value={formatDigitString(detail.baseHealth, locale)} />
+        <DetailField label={t("基础花费")} value={formatDigitString(detail.baseCost, locale)} />
+        <DetailField label={t("基础伤害")} value={formatDigitString(detail.baseDamage, locale)} />
+        <DetailField label={t("基础生命")} value={formatDigitString(detail.baseHealth, locale)} />
         <DetailField
-          label={t({ zh: '事件升级', en: 'Event upgrades' })}
+          label={t("事件升级")}
           value={formatNumber(detail.attacks.eventUpgrades.length, locale)}
         />
       </div>
 
       <div className="detail-card-grid detail-card-grid--two-up">
-        <AttackPanel title={t({ zh: '普攻', en: 'Base attack' })} attack={detail.attacks.base} locale={locale} />
-        <AttackPanel title={t({ zh: '大招', en: 'Ultimate' })} attack={detail.attacks.ultimate} locale={locale} />
+        <AttackPanel title={t("普攻")} attack={detail.attacks.base} locale={locale} />
+        <AttackPanel title={t("大招")} attack={detail.attacks.ultimate} locale={locale} />
       </div>
 
       {detail.attacks.eventUpgrades.length > 0 ? (
@@ -62,7 +63,7 @@ export function DetailCombatSection({
             <article key={upgrade.upgradeId} className="detail-subcard">
               <div className="detail-subcard__header">
                 <div>
-                  <p className="detail-subcard__eyebrow">{t({ zh: '活动升级', en: 'Event upgrade' })}</p>
+                  <p className="detail-subcard__eyebrow">{t("活动升级")}</p>
                   <h3 className="detail-subcard__title">
                     <LocalizedTextStack value={upgrade.name} />
                   </h3>
@@ -80,7 +81,7 @@ export function DetailCombatSection({
         <>
           <div className="upgrade-filter-bar">
             <div className="upgrade-filter-bar__copy">
-              <p className="upgrade-filter-bar__eyebrow">{t({ zh: '等级列表过滤', en: 'Ledger filters' })}</p>
+              <p className="upgrade-filter-bar__eyebrow">{t("等级列表过滤")}</p>
               <p className="upgrade-filter-bar__description">{hiddenLedgerSummary}</p>
             </div>
             <div className="upgrade-filter-bar__controls">
@@ -109,7 +110,7 @@ export function DetailCombatSection({
                   onClick={resetLedgerFilters}
                   disabled={!hasCustomLedgerFilterState}
                 >
-                  {t({ zh: '恢复默认', en: 'Reset default' })}
+                  {t("恢复默认")}
                 </ActionButton>
                 <ActionButton
                   tone="secondary"
@@ -117,7 +118,7 @@ export function DetailCombatSection({
                   onClick={enableAllLedgerFilters}
                   disabled={isShowingAllLedgerTypes}
                 >
-                  {t({ zh: '显示全部', en: 'Show all' })}
+                  {t("显示全部")}
                 </ActionButton>
               </div>
             </div>
@@ -126,11 +127,11 @@ export function DetailCombatSection({
           {visibleLedgerRows.length > 0 ? (
             <div className="upgrade-ledger">
               <div className="upgrade-ledger__head">
-                <span>{t({ zh: '等级', en: 'Level' })}</span>
-                <span>{t({ zh: '类型', en: 'Type' })}</span>
-                <span>{t({ zh: '作用对象', en: 'Target' })}</span>
-                <span>{t({ zh: '效果说明', en: 'Effect summary' })}</span>
-                <span>{t({ zh: '前置', en: 'Prerequisite' })}</span>
+                <span>{t("等级")}</span>
+                <span>{t("类型")}</span>
+                <span>{t("作用对象")}</span>
+                <span>{t("效果说明")}</span>
+                <span>{t("前置")}</span>
               </div>
               {visibleLedgerRows.map((row) => (
                 <NumericUpgradeRow key={row.upgrade.id} upgrade={row.upgrade} presentation={row.presentation} locale={locale} />
@@ -138,10 +139,7 @@ export function DetailCombatSection({
             </div>
           ) : (
             <div className="upgrade-ledger__empty">
-              {t({
-                zh: '当前筛选把所有里程碑都收起了，重新打开上面的类型即可恢复列表。',
-                en: 'The current filter hides every milestone. Re-enable any type above to bring the ledger back.',
-              })}
+              {t("当前筛选把所有里程碑都收起了，重新打开上面的类型即可恢复列表。")}
             </div>
           )}
         </>

@@ -1,9 +1,10 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { DetailField } from './detail-cards'
 import type { DetailFieldProps } from './types'
 
 type DetailOverviewSectionProps = {
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly overviewFields: DetailFieldProps[]
 }
 
@@ -11,12 +12,9 @@ export function DetailOverviewSection({ t, overviewFields }: DetailOverviewSecti
   return (
     <SurfaceCard
       className="detail-section detail-section--overview"
-      eyebrow={t({ zh: '概览', en: 'Overview' })}
-      title={t({ zh: '身份、系统字段与可用性', en: 'Identity, system fields, and availability' })}
-      description={t({
-        zh: '先把最容易影响筛选、判断和排错的基础字段集中展示。',
-        en: 'Start with the fields that most often affect filtering, decisions, and data checks.',
-      })}
+      eyebrow={t("概览")}
+      title={t("身份、系统字段与可用性")}
+      description={t("先把最容易影响筛选、判断和排错的基础字段集中展示。")}
     >
       <div id="overview" className="detail-section-anchor" />
       <div className="detail-field-grid">

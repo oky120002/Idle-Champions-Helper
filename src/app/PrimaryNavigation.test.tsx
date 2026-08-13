@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { PrimaryNavigation } from './PrimaryNavigation'
 import { resolveActiveNavigationItem, type TranslationFn } from './appNavigation'
 
-const t: TranslationFn = (text) => text.zh
+const t: TranslationFn = (text) => (typeof text === 'string' ? text : text.zh)
 
 function renderPrimaryNavigation(pathname: string, state?: unknown) {
   const activeNavigationItem = resolveActiveNavigationItem(pathname, state)

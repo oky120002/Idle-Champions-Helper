@@ -95,7 +95,7 @@ export function GlobalSearchBox() {
           ref={inputRef}
           type="search"
           className="global-search__input"
-          placeholder={t({ zh: '搜索英雄、技能、描述…', en: 'Search heroes, skills, text…' })}
+          placeholder={t("搜索英雄、技能、描述…")}
           value={query}
           role="combobox"
           aria-expanded={open}
@@ -110,10 +110,10 @@ export function GlobalSearchBox() {
       {open && (
         <div className="global-search__dropdown" id="global-search-listbox" role="listbox">
           {showLoadingHint && (
-            <p className="global-search__hint">{t({ zh: '正在加载索引…', en: 'Loading index…' })}</p>
+            <p className="global-search__hint">{t("正在加载索引…")}</p>
           )}
           {showEmpty && (
-            <p className="global-search__hint">{t({ zh: '未找到匹配的英雄。', en: 'No matching heroes.' })}</p>
+            <p className="global-search__hint">{t("未找到匹配的英雄。")}</p>
           )}
           {results.map((hit, index) => (
             <button
@@ -142,7 +142,7 @@ export function GlobalSearchBox() {
             onMouseEnter={() => setActiveIndex(results.length)}
             onClick={goToAll}
           >
-            {t({ zh: '查看全部结果', en: 'View all results' })}
+            {t("查看全部结果")}
           </button>
         </div>
       )}

@@ -21,11 +21,8 @@ export function PlannerScenarioListItem({ record, isSelected, onSelect }: Planne
           <span className="planner-scenario-selection__item-name">{record.name}</span>
           <span className="planner-scenario-selection__item-area">
             {record.objectiveArea !== null
-              ? t({
-                  zh: `${String(record.objectiveArea)} 区`,
-                  en: `Area ${String(record.objectiveArea)}`,
-                })
-              : t({ zh: '自由游戏', en: 'Free play' })}
+              ? t("{p0} 区", { p0: String(record.objectiveArea) })
+              : t("自由游戏")}
           </span>
         </span>
         <span className="planner-scenario-selection__item-meta">
@@ -34,8 +31,8 @@ export function PlannerScenarioListItem({ record, isSelected, onSelect }: Planne
           {record.scene !== '' ? <span>{record.scene}</span> : null}
         </span>
         <span className="planner-scenario-selection__item-tags">
-          <span>{t({ zh: `${String(record.restrictions.length)} 条限制`, en: `${String(record.restrictions.length)} restrictions` })}</span>
-          <span>{t({ zh: `${String(record.enemyCount)} 敌人`, en: `${String(record.enemyCount)} enemies` })}</span>
+          <span>{t("{p0} 条限制", { p0: String(record.restrictions.length) })}</span>
+          <span>{t("{p0} 敌人", { p0: String(record.enemyCount) })}</span>
         </span>
       </button>
     </li>

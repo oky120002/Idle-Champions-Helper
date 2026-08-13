@@ -17,10 +17,10 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
             filteredCount: filteredVariants.length,
             enUnitLabel: 'variants',
           }),
-          { label: t({ zh: '变体总数', en: 'Variants' }), value: model.state.variants.length },
-          { label: t({ zh: '可见冒险分组', en: 'Adventure groups' }), value: model.adventuresWithResults },
+          { label: t("变体总数"), value: model.state.variants.length },
+          { label: t("可见冒险分组"), value: model.adventuresWithResults },
           {
-            label: t({ zh: '覆盖战役 / 场景', en: 'Campaigns / scenes' }),
+            label: t("覆盖战役 / 场景"),
             value: `${String(model.campaignsWithResults)} / ${String(model.scenesWithResults)}`,
           },
         ]

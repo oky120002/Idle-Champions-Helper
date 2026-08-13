@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import type { ChampionDetail } from '../../domain/types'
 import { DETAIL_SECTION_IDS, type DetailSectionId, type DetailSectionLink, type DetailSectionProgressState } from './types'
 import { buildSectionHash, resolveActiveSectionId, resolveSectionIdFromBrowserHash, resolveSectionIdFromHashValue } from './navigation'
 
 interface Translation {
-  (text: { zh: string; en: string }): string
+  (text: string | LocaleText, params?: TranslateParams): string
 }
 
 interface PageLocation {
@@ -22,13 +23,13 @@ type NavigateFn = (to: BackTarget | string, options?: { replace?: boolean; state
 
 function buildSectionLinks(t: Translation): DetailSectionLink[] {
   return [
-    { id: 'specializations', label: t({ zh: '专精', en: 'Specializations' }) },
-    { id: 'abilities', label: t({ zh: '能力', en: 'Abilities' }) },
-    { id: 'loot', label: t({ zh: '装备', en: 'Loot' }) },
-    { id: 'legendary', label: t({ zh: '传奇', en: 'Legendary' }) },
-    { id: 'feats', label: t({ zh: '天赋', en: 'Feats' }) },
-    { id: 'skins', label: t({ zh: '皮肤', en: 'Skins' }) },
-    { id: 'story-misc', label: t({ zh: '故事与杂项', en: 'Story & Misc' }) },
+    { id: 'specializations', label: t("专精") },
+    { id: 'abilities', label: t("能力") },
+    { id: 'loot', label: t("装备") },
+    { id: 'legendary', label: t("传奇") },
+    { id: 'feats', label: t("天赋") },
+    { id: 'skins', label: t("皮肤") },
+    { id: 'story-misc', label: t("故事与杂项") },
   ]
 }
 
@@ -46,14 +47,14 @@ function resolveProgressState(index: number, activeIndex: number): DetailSection
 
 function resolveProgressText(state: DetailSectionProgressState, t: Translation): string {
   if (state === 'completed') {
-    return t({ zh: '已读', en: 'Seen' })
+    return t("已读")
   }
 
   if (state === 'active') {
-    return t({ zh: '当前', en: 'Current' })
+    return t("当前")
   }
 
-  return t({ zh: '未读', en: 'Ahead' })
+  return t("未读")
 }
 
 function trackDetailChange(

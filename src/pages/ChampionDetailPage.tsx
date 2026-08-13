@@ -89,55 +89,43 @@ export function ChampionDetailPage() {
   const statusCardItems: SurfaceCardStatusStackItem[] = [
     {
       id: 'loading',
-      eyebrow: t({ zh: '英雄详情', en: 'Champion detail' }),
-      title: t({ zh: '正在整理英雄卷宗…', en: 'Building the champion dossier…' }),
-      description: t({
-        zh: '当前会加载结构化详情、成长轨道与技能信息。',
-        en: 'This loads the structured profile, progression track, and combat details.',
-      }),
+      eyebrow: t("英雄详情"),
+      title: t("正在整理英雄卷宗…"),
+      description: t("当前会加载结构化详情、成长轨道与技能信息。"),
       statusItems: [
         {
           id: 'loading-banner',
           tone: 'info',
-          children: t({ zh: '正在读取详情数据…', en: 'Loading detail data…' }),
+          children: t("正在读取详情数据…"),
         },
       ],
       hidden: !isLoading,
     },
     {
       id: 'missing-champion',
-      eyebrow: t({ zh: '英雄详情', en: 'Champion detail' }),
-      title: t({ zh: '没有找到这个英雄', en: 'Champion not found' }),
-      description: t({
-        zh: '可能是链接里的英雄 ID 不存在，或当前静态数据版本还没有这份详情文件。',
-        en: 'The champion id may be invalid, or this data version does not have a detail file yet.',
-      }),
+      eyebrow: t("英雄详情"),
+      title: t("没有找到这个英雄"),
+      description: t("可能是链接里的英雄 ID 不存在，或当前静态数据版本还没有这份详情文件。"),
       statusItems: [
         {
           id: 'missing-banner',
           tone: 'info',
-          children: t({
-            zh: '你可以返回筛选页重新进入，或检查当前数据版本是否已重新生成。',
-            en: 'Return to the champions page or regenerate the current data version.',
-          }),
+          children: t("你可以返回筛选页重新进入，或检查当前数据版本是否已重新生成。"),
         },
       ],
       hidden: !(isMissingChampionId || (state.status === 'not-found' && state.championId === championId)),
     },
     {
       id: 'error',
-      eyebrow: t({ zh: '英雄详情', en: 'Champion detail' }),
-      title: t({ zh: '详情数据读取失败', en: 'Detail data failed to load' }),
-      description: t({
-        zh: '可能是静态文件缺失，也可能是当前数据合同和页面实现不一致。',
-        en: 'The static file may be missing, or the data contract may be out of sync with the page.',
-      }),
+      eyebrow: t("英雄详情"),
+      title: t("详情数据读取失败"),
+      description: t("可能是静态文件缺失，也可能是当前数据合同和页面实现不一致。"),
       statusItems: [
         {
           id: 'error-banner',
           tone: 'error',
           ...(state.status === 'error' && state.championId === championId
-            ? { children: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
+            ? { children: state.message !== '' ? state.message : t("未知错误") }
             : {}),
         },
       ],
@@ -149,14 +137,14 @@ export function ChampionDetailPage() {
     <ConfiguredWorkbenchPage
       pageClassName="champion-detail-page"
       storageKey="champion-detail"
-      ariaLabel={t({ zh: '英雄详情工作台', en: 'Champion detail workbench' })}
+      ariaLabel={t("英雄详情工作台")}
       shellClassName="workbench-page__shell champion-detail-workbench"
       contentScrollRef={contentScrollRef}
       floatingTopButton={
         showScrollTop
           ? {
               onClick: scrollToTop,
-              detailLabel: t({ zh: '英雄卷宗', en: 'Champion dossier' }),
+              detailLabel: t("英雄卷宗"),
             }
           : undefined
       }
@@ -176,7 +164,7 @@ export function ChampionDetailPage() {
                 label: section.label,
                 controlsId: section.id,
               })),
-              ariaLabel: t({ zh: '详情页签', en: 'Detail tabs' }),
+              ariaLabel: t("详情页签"),
               onChange: scrollToSection,
             },
           },

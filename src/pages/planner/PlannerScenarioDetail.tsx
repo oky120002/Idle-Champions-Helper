@@ -1,16 +1,16 @@
-import { useI18n, type LocaleText } from '../../app/i18n'
+import { useI18n, type LocaleText, type TranslateParams } from '../../app/i18n'
 import type { PlannerScenarioRecord } from './plannerScenarioModel'
 
 interface PlannerScenarioDetailProps {
   readonly record: PlannerScenarioRecord | null
 }
 
-type Translate = (text: LocaleText) => string
+type Translate = (text: string | LocaleText, params?: TranslateParams) => string
 
 function renderRewardsAndMechanics(record: PlannerScenarioRecord, t: Translate) {
   return (
     <section className="planner-scenario-selection__detail-group">
-      <h5>{t({ zh: '奖励与机制', en: 'Rewards and mechanics' })}</h5>
+      <h5>{t("奖励与机制")}</h5>
       <div className="planner-scenario-selection__detail-stack">
         {record.rewards.length > 0 ? (
           <ul className="planner-scenario-selection__pill-list">
@@ -27,7 +27,7 @@ function renderRewardsAndMechanics(record: PlannerScenarioRecord, t: Translate) 
           </ul>
         ) : null}
         {record.rewards.length === 0 && record.mechanics.length === 0 ? (
-          <p className="supporting-text">{t({ zh: '当前公共数据还没有补齐奖励或机制描述。', en: 'Public data does not yet include reward or mechanic details here.' })}</p>
+          <p className="supporting-text">{t("当前公共数据还没有补齐奖励或机制描述。")}</p>
         ) : null}
       </div>
     </section>
@@ -36,10 +36,10 @@ function renderRewardsAndMechanics(record: PlannerScenarioRecord, t: Translate) 
 
 function renderScenarioDetailBody(record: PlannerScenarioRecord, t: Translate) {
   const objectiveText = record.objectiveArea !== null
-    ? t({ zh: `${String(record.objectiveArea)} 区完成`, en: `Finish at area ${String(record.objectiveArea)}` })
-    : t({ zh: '自由游戏', en: 'Free play' })
-  const adventureText = record.adventure !== '' ? record.adventure : t({ zh: '未绑定具体冒险名', en: 'No mapped adventure name' })
-  const sceneText = record.scene !== '' ? record.scene : t({ zh: '未记录', en: 'Not recorded' })
+    ? t("{p0} 区完成", { p0: String(record.objectiveArea) })
+    : t("自由游戏")
+  const adventureText = record.adventure !== '' ? record.adventure : t("未绑定具体冒险名")
+  const sceneText = record.scene !== '' ? record.scene : t("未记录")
 
   return (
     <>
@@ -51,25 +51,25 @@ function renderScenarioDetailBody(record: PlannerScenarioRecord, t: Translate) {
 
       <dl className="planner-scenario-selection__detail-grid">
         <div>
-          <dt>{t({ zh: '目标区', en: 'Objective' })}</dt>
+          <dt>{t("目标区")}</dt>
           <dd>{objectiveText}</dd>
         </div>
         <div>
-          <dt>{t({ zh: '场景', en: 'Scene' })}</dt>
+          <dt>{t("场景")}</dt>
           <dd>{sceneText}</dd>
         </div>
         <div>
-          <dt>{t({ zh: '限制数', en: 'Restrictions' })}</dt>
+          <dt>{t("限制数")}</dt>
           <dd>{record.restrictions.length}</dd>
         </div>
         <div>
-          <dt>{t({ zh: '敌人数', en: 'Enemies' })}</dt>
+          <dt>{t("敌人数")}</dt>
           <dd>{record.enemyCount}</dd>
         </div>
       </dl>
 
       <section className="planner-scenario-selection__detail-group">
-        <h5>{t({ zh: '限制条件', en: 'Restrictions' })}</h5>
+        <h5>{t("限制条件")}</h5>
         {record.restrictions.length > 0 ? (
           <ul className="planner-scenario-selection__pill-list">
             {record.restrictions.map((restriction) => (
@@ -77,7 +77,7 @@ function renderScenarioDetailBody(record: PlannerScenarioRecord, t: Translate) {
             ))}
           </ul>
         ) : (
-          <p className="supporting-text">{t({ zh: '无额外限制。', en: 'No additional restrictions.' })}</p>
+          <p className="supporting-text">{t("无额外限制。")}</p>
         )}
       </section>
 
@@ -92,14 +92,14 @@ export function PlannerScenarioDetail({ record }: PlannerScenarioDetailProps) {
   return (
     <aside
       className="planner-scenario-selection__detail"
-      aria-label={t({ zh: '选中场景详情', en: 'Selected scenario details' })}
+      aria-label={t("选中场景详情")}
     >
       {record !== null ? (
         renderScenarioDetailBody(record, t)
       ) : (
         <div className="planner-scenario-selection__empty" role="status">
-          <strong>{t({ zh: '还没有选中场景', en: 'No scenario selected' })}</strong>
-          <p>{t({ zh: '先从左侧列表里选一个更接近目标的关卡。', en: 'Choose a scenario from the catalog to inspect its details.' })}</p>
+          <strong>{t("还没有选中场景")}</strong>
+          <p>{t("先从左侧列表里选一个更接近目标的关卡。")}</p>
         </div>
       )}
     </aside>

@@ -15,8 +15,8 @@ export function WorkbenchSidebarFilterStatus({
   return (
     <WorkbenchToolbarBadge variant="filter" {...(className !== undefined ? { className } : {})}>
       {activeCount > 0
-        ? t({ zh: `${String(activeCount)} 项已启用`, en: `${String(activeCount)} active` })
-        : t({ zh: '当前未启用条件', en: 'No active filters' })}
+        ? t("{p0} 项已启用", { p0: String(activeCount) })
+        : t("当前未启用条件")}
     </WorkbenchToolbarBadge>
   )
 }

@@ -15,18 +15,18 @@ function buildNextLocale(locale: AppLocale): AppLocale {
 function LocaleSwitcher({ locale, onSelect, t, surface }: LocaleSwitcherProps) {
   const nextLocale = buildNextLocale(locale)
   const isEnglish = locale === 'en-US'
-  const switchLabel = t({ zh: '界面语言', en: 'Interface language' })
+  const switchLabel = t("界面语言")
   const switchHint =
     locale === 'zh-CN'
-      ? t({ zh: '切换到 English', en: 'Switch to English' })
-      : t({ zh: '切换到 中文', en: 'Switch to Chinese' })
+      ? t("切换到 English")
+      : t("切换到 中文")
 
   return (
     <div className={`locale-switcher locale-switcher--${surface}`}>
       <div
         className="locale-switcher__controls"
         role="group"
-        aria-label={t({ zh: '界面语言切换', en: 'Interface language switcher' })}
+        aria-label={t("界面语言切换")}
       >
         <button
           type="button"

@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { formatNumber } from './detail-value-formatters'
 import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
-type Translation = (text: { zh: string; en: string }) => string
+type Translation = (text: string | LocaleText, params?: TranslateParams) => string
 
 function computeHiddenLedgerSummary(
   ledgerRowCount: number,
@@ -11,11 +12,11 @@ function computeHiddenLedgerSummary(
   t: Translation,
 ): string {
   if (ledgerRowCount === 0) {
-    return t({ zh: '当前没有可读的数值里程碑。', en: 'No numeric milestones are available here.' })
+    return t("当前没有可读的数值里程碑。")
   }
 
   if (hiddenLedgerLabels.length === 0) {
-    return t({ zh: '当前显示全部类型', en: 'Showing every type' })
+    return t("当前显示全部类型")
   }
 
   if (hiddenLedgerLabels.length <= 2) {
@@ -83,7 +84,7 @@ type UseLedgerFilterStateOptions = {
   ledgerRows: LedgerUpgradeRow[]
   ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
   locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
+  t: (text: string | LocaleText, params?: TranslateParams) => string
 }
 
 export function useLedgerFilterState({ ledgerRows, ledgerFilterOptions, locale, t }: UseLedgerFilterStateOptions) {

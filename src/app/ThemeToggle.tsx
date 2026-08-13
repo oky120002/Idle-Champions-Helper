@@ -19,7 +19,7 @@ export function ThemeToggle() {
   const { t } = useI18n()
 
   return (
-    <div className="theme-toggle" role="radiogroup" aria-label={t({ zh: '主题切换', en: 'Theme' })}>
+    <div className="theme-toggle" role="radiogroup" aria-label={t("主题切换")}>
       {OPTIONS.map(({ value, label, Icon }) => {
         const isActive = preference === value
         return (

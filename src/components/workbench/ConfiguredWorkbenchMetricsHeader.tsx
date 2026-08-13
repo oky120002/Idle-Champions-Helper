@@ -19,7 +19,7 @@ export function ConfiguredWorkbenchMetricsHeader({
       {...(activeFilters !== undefined
         ? {
             activeFilters,
-            filterSummaryPrefix: t({ zh: '当前筛选：', en: 'Active filters: ' }),
+            filterSummaryPrefix: t("当前筛选："),
           }
         : {})}
     />

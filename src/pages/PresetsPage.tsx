@@ -1,4 +1,4 @@
-/* eslint-disable max-lines -- 单一内聚页面组件，拆分将降低一跳命中率 */
+ 
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
@@ -36,13 +36,13 @@ export function PresetsPage() {
         id: 'loading',
         when: 'loading',
         tone: 'info',
-        children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }),
+        children: t("正在读取本地方案存档…"),
       },
       {
         id: 'error',
         when: 'error',
         tone: 'error',
-        title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
+        title: t("方案列表读取失败"),
         ...(state.status === 'error' ? { detail: state.message } : {}),
       },
     ],
@@ -50,44 +50,41 @@ export function PresetsPage() {
   const managementScopeSections: SurfaceCardContentSection[] = [
     {
       id: 'what-works-now',
-      title: t({ zh: '当前范围', en: 'What works now' }),
+      title: t("当前范围"),
       items: [
         {
           id: 'browse-presets',
-          content: t({ zh: '查看命名方案列表', en: 'Browse named presets' }),
+          content: t("查看命名方案列表"),
         },
         {
           id: 'edit-presets',
-          content: t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' }),
+          content: t("编辑方案名、备注、标签与优先级"),
         },
         {
           id: 'delete-presets',
-          content: t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' }),
+          content: t("删除不再需要的方案"),
         },
         {
           id: 'restore-presets',
-          content: t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' }),
+          content: t("把方案恢复回阵型页继续编辑"),
         },
       ],
     },
     {
       id: 'current-boundary',
-      title: t({ zh: '当前边界', en: 'Current boundary' }),
-      detail: t({
-        zh: '最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。',
-        en: 'Recent drafts remain on the formation page for auto-save; this page manages only named presets. To add one, go back to the formation page and choose “Save as preset.”',
-      }),
+      title: t("当前边界"),
+      detail: t("最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。"),
     },
   ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'preset-total',
-      label: t({ zh: `${String(metrics.total)} 条命名方案`, en: `${String(metrics.total)} presets` }),
+      label: t("{p0} 条命名方案", { p0: String(metrics.total) }),
     }),
     createWorkbenchBadgeItem({
       id: 'preset-recoverable',
       tone: 'muted',
-      label: t({ zh: `${String(metrics.recoverable)} 条可恢复`, en: `${String(metrics.recoverable)} recoverable` }),
+      label: t("{p0} 条可恢复", { p0: String(metrics.recoverable) }),
     }),
     createWorkbenchShareItem({
       t,
@@ -100,14 +97,14 @@ export function PresetsPage() {
     <ConfiguredWorkbenchPage
       pageClassName="presets-page"
       storageKey="presets"
-      ariaLabel={t({ zh: '方案存档工作台', en: 'Preset library workbench' })}
+      ariaLabel={t("方案存档工作台")}
       shellClassName="workbench-page__shell presets-workbench"
       contentScrollRef={contentScrollRef}
       floatingTopButton={
         showScrollTop
           ? {
               onClick: scrollToTop,
-              detailLabel: t({ zh: '方案内容', en: 'Preset pane' }),
+              detailLabel: t("方案内容"),
             }
           : undefined
       }
@@ -125,9 +122,9 @@ export function PresetsPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              kicker: t({ zh: '归档工作台', en: 'Archive workbench' }),
-              title: t({ zh: '方案存档', en: 'Preset library' }),
-              detail: t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' }),
+              kicker: t("归档工作台"),
+              title: t("方案存档"),
+              detail: t("统一查看、恢复和整理本地命名阵型方案"),
             },
           },
           {
@@ -146,17 +143,17 @@ export function PresetsPage() {
       {state.status === 'ready' ? (
         <WorkbenchContentStack>
           <SurfaceCardContentSections
-            eyebrow={t({ zh: '当前范围', en: 'Current scope' })}
-            title={t({ zh: '先确认当前支持的方案管理闭环', en: 'Confirm the current preset management loop' })}
-            description={t({ zh: '命名方案继续由阵型页产出；这里负责浏览、编辑、删除与恢复。', en: 'Named presets are still produced from the formation page, while this view focuses on browsing, editing, deleting, and restoring.' })}
+            eyebrow={t("当前范围")}
+            title={t("先确认当前支持的方案管理闭环")}
+            description={t("命名方案继续由阵型页产出；这里负责浏览、编辑、删除与恢复。")}
             sections={managementScopeSections}
             layout="split"
           />
 
           <SurfaceCard
-            eyebrow={t({ zh: '已保存方案', en: 'Saved presets' })}
-            title={t({ zh: '按最近编辑排序管理你的本地阵型方案', en: 'Manage local formation presets sorted by latest edit' })}
-            description={t({ zh: '恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。', en: 'Restore first validates against the saved data version, and the page clearly warns when only a compatible restore is possible.' })}
+            eyebrow={t("已保存方案")}
+            title={t("按最近编辑排序管理你的本地阵型方案")}
+            description={t("恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。")}
           >
             {state.items.length === 0 ? (
               <StatusBannerStack
@@ -164,10 +161,7 @@ export function PresetsPage() {
                   {
                     id: 'empty-presets',
                     tone: 'info',
-                    children: t({
-                      zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
-                      en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
-                    }),
+                    children: t("这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。"),
                   },
                 ]}
               />

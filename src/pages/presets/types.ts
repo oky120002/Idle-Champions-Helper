@@ -1,9 +1,9 @@
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
 import type { FormationSnapshotPrompt } from '../../data/formationPersistence'
 import type { FormationPreset, PresetPriority, Champion, FormationLayout } from '../../domain/types'
 import type { StatusMessage as SharedStatusMessage } from '../../components/statusMessage'
 
-export type PresetsPageTranslator = (text: LocaleText) => string
+export type PresetsPageTranslator = (text: string | LocaleText, params?: TranslateParams) => string
 export type StatusMessage = SharedStatusMessage
 
 export type PresetView = {

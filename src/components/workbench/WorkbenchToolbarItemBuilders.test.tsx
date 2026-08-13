@@ -1,11 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import {
   createWorkbenchFilterToolbarItems,
   createWorkbenchResultVisibilityItem,
   createWorkbenchShuffleItem,
 } from './WorkbenchToolbarItemBuilders'
 
-const t = ({ zh }: { zh: string; en: string }) => zh
+const t = (text: string | LocaleText, _params?: TranslateParams) => (typeof text === 'string' ? text : text.zh)
 
 describe('WorkbenchToolbarItemBuilders', () => {
   it('生成结果展开按钮配置', () => {

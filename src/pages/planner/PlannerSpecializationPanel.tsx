@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { useI18n } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
@@ -59,12 +60,12 @@ export function PlannerSpecializationPanel({
     <details className="planner-specialization-panel" data-testid="planner-specialization-panel">
       <summary className="planner-specialization-panel__summary">
         <strong className="planner-specialization-panel__title">
-          {t({ zh: '专精选择', en: 'Specializations' })}
+          {t("专精选择")}
         </strong>
         <span className="planner-specialization-panel__hint">
           {customizedCount > 0
-            ? t({ zh: `${String(customizedCount)} 名已自定义`, en: `${String(customizedCount)} customized` })
-            : t({ zh: '按英雄设定专精偏好', en: 'Set specialization per champion' })}
+            ? t("{p0} 名已自定义", { p0: String(customizedCount) })
+            : t("按英雄设定专精偏好")}
         </span>
       </summary>
       <div className="planner-specialization-panel__body">
@@ -85,7 +86,7 @@ export function PlannerSpecializationPanel({
                     data-reset-hero={hero.heroId}
                     onClick={() => onClearOverride(hero.heroId)}
                   >
-                    {t({ zh: '恢复存档', en: 'Reset' })}
+                    {t("恢复存档")}
                   </button>
                 ) : null}
               </div>
@@ -120,7 +121,7 @@ interface SpecializationTierRadiosProps {
   readonly tier: SpecializationTier
   readonly tierIndex: number
   readonly effective: readonly string[]
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly onSelect: (selected: string | null) => void
 }
 
@@ -137,8 +138,8 @@ function SpecializationTierRadios({
   const groupName = `spec-${heroId}-tier-${String(tier.requiredLevel ?? tierIndex)}`
   const legend =
     tier.requiredLevel !== null
-      ? t({ zh: `解锁等级 ${String(tier.requiredLevel)}`, en: `Unlocks at Lv.${String(tier.requiredLevel)}` })
-      : t({ zh: '专精', en: 'Specialization' })
+      ? t("解锁等级 {p0}", { p0: String(tier.requiredLevel) })
+      : t("专精")
 
   return (
     <fieldset className="planner-specialization-tier">
@@ -152,7 +153,7 @@ function SpecializationTierRadios({
           onChange={() => onSelect(null)}
           data-spec-option="none"
         />
-        <span>{t({ zh: '无', en: 'None' })}</span>
+        <span>{t("无")}</span>
       </label>
       {tier.entries.map((entry: SpecializationEntry) => (
         <label key={entry.upgradeId} className="planner-specialization-tier__option">

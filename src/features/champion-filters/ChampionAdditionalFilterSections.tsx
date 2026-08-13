@@ -1,6 +1,6 @@
 /* eslint-disable max-lines -- 补充筛选 schema 声明式内联（6 个 chip-multi 段 + mechanics 自定义段），结构化数据不宜拆分 */
 import type { ReactNode } from 'react'
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { AppLocale, LocaleText , TranslateParams} from '../../app/i18n'
 import {
   FilterSidebarSchemaRenderer,
   type FilterSidebarGroupSchema,
@@ -64,7 +64,7 @@ interface ChampionAdditionalFilterActions {
 
 interface ChampionAdditionalFilterSectionsProps {
   locale: AppLocale
-  t: (text: LocaleText) => string
+  t: (text: string | LocaleText, params?: TranslateParams) => string
   copy: ChampionAdditionalFilterCopy
   values: ChampionAdditionalFilterValues
   options: ChampionAdditionalFilterOptions
@@ -73,10 +73,10 @@ interface ChampionAdditionalFilterSectionsProps {
   mechanicGroupHint: (groupId: MechanicOptionGroup['id']) => ReactNode
 }
 
-function buildSectionStatus(selectedCount: number, t: (text: LocaleText) => string): string {
+function buildSectionStatus(selectedCount: number, t: (text: string | LocaleText, params?: TranslateParams) => string): string {
   return selectedCount > 0
-    ? t({ zh: `已选 ${String(selectedCount)}`, en: `${String(selectedCount)} selected` })
-    : t({ zh: '默认收起', en: 'Folded' })
+    ? t("已选 {p0}", { p0: String(selectedCount) })
+    : t("默认收起")
 }
 
 export function ChampionAdditionalFilterSections({
@@ -93,12 +93,12 @@ export function ChampionAdditionalFilterSections({
     {
       kind: 'disclosure-group',
       id: 'additional',
-      label: t({ zh: '补充筛选', en: 'Additional filters' }),
+      label: t("补充筛选"),
       sections: [
         {
           id: 'identity',
-          title: t({ zh: '身份画像', en: 'Identity' }),
-          summary: t({ zh: '种族 / 性别 / 阵营', en: 'Race / gender / alignment' }),
+          title: t("身份画像"),
+          summary: t("种族 / 性别 / 阵营"),
           status: buildSectionStatus(ui.identitySelectedCount, t),
           isExpanded: ui.isIdentityExpanded,
           onToggle: actions.toggleIdentityExpanded,
@@ -113,7 +113,7 @@ export function ChampionAdditionalFilterSections({
                 label: getChampionTagLabel(race, locale),
               })),
               selectedValues: values.selectedRaces,
-              allLabel: t({ zh: '全部', en: 'All' }),
+              allLabel: t("全部"),
               onReset: actions.resetRace,
               onToggle: (value) => actions.toggleRace(String(value)),
             },
@@ -127,7 +127,7 @@ export function ChampionAdditionalFilterSections({
                 label: getChampionTagLabel(gender, locale),
               })),
               selectedValues: values.selectedGenders,
-              allLabel: t({ zh: '全部', en: 'All' }),
+              allLabel: t("全部"),
               onReset: actions.resetGender,
               onToggle: (value) => actions.toggleGender(String(value)),
             },
@@ -141,7 +141,7 @@ export function ChampionAdditionalFilterSections({
                 label: getChampionTagLabel(alignment, locale),
               })),
               selectedValues: values.selectedAlignments,
-              allLabel: t({ zh: '全部', en: 'All' }),
+              allLabel: t("全部"),
               onReset: actions.resetAlignment,
               onToggle: (value) => actions.toggleAlignment(String(value)),
             },
@@ -165,7 +165,7 @@ export function ChampionAdditionalFilterSections({
                 label: getChampionTagLabel(profession, locale),
               })),
               selectedValues: values.selectedProfessions,
-              allLabel: t({ zh: '全部', en: 'All' }),
+              allLabel: t("全部"),
               onReset: actions.resetProfession,
               onToggle: (value) => actions.toggleProfession(String(value)),
             },
@@ -179,7 +179,7 @@ export function ChampionAdditionalFilterSections({
                 label: getChampionTagLabel(acquisition, locale),
               })),
               selectedValues: values.selectedAcquisitions,
-              allLabel: t({ zh: '全部', en: 'All' }),
+              allLabel: t("全部"),
               onReset: actions.resetAcquisition,
               onToggle: (value) => actions.toggleAcquisition(String(value)),
             },
@@ -193,7 +193,7 @@ export function ChampionAdditionalFilterSections({
                   hint={t(copy.mechanicHint)}
                   groups={options.mechanicOptionGroups}
                   selectedValues={values.selectedMechanics}
-                  allLabel={t({ zh: '全部', en: 'All' })}
+                  allLabel={t("全部")}
                   onReset={actions.resetMechanic}
                   onToggle={actions.toggleMechanic}
                   groupHint={mechanicGroupHint}

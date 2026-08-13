@@ -1,5 +1,5 @@
+import { useI18n, type LocaleText, type TranslateParams } from '../../app/i18n'
 import type { SpeedBreakdown, SpeedCategory, SpeedEffectEntry } from '../../domain/planner/speedScoring'
-import { useI18n, type LocaleText } from '../../app/i18n'
 import { formatFactor } from './factorFormat'
 
 const SPEED_CATEGORY_LABEL: Record<SpeedCategory, LocaleText> = {
@@ -14,7 +14,7 @@ const SPEED_CATEGORY_LABEL: Record<SpeedCategory, LocaleText> = {
 }
 
 /** 格式化单条速度效果为人类可读描述（与类别相关）。 */
-function describeEffect(effect: SpeedEffectEntry, t: (text: LocaleText) => string): string {
+function describeEffect(effect: SpeedEffectEntry, t: (text: string | LocaleText, params?: TranslateParams) => string): string {
   switch (effect.category) {
     case 'questProgress':
       if (effect.multiplier != null) return `${String(effect.value)}% ×${String(effect.multiplier)}`
@@ -28,7 +28,7 @@ function describeEffect(effect: SpeedEffectEntry, t: (text: LocaleText) => strin
       return `+${String(effect.value)}%`
     case 'simultaneousSpawn':
     case 'preSpawn':
-      return t({ zh: '在场生效', en: 'active' })
+      return t("在场生效")
   }
 }
 
@@ -50,10 +50,10 @@ export function PlannerSpeedBreakdown({ breakdown, heroNameById }: PlannerSpeedB
   return (
     <section data-section="speed-breakdown" className="planner-speed-breakdown">
       <h4 className="planner-result-card__section-title">
-        {t({ zh: '速度拆解', en: 'Speed breakdown' })}
+        {t("速度拆解")}
       </h4>
       <p className="planner-breakdown__formula" data-testid="planner-speed-breakdown-total">
-        {t({ zh: `总速度因子 ×${formatFactor(breakdown.total)}`, en: `Total speed ×${formatFactor(breakdown.total)}` })}
+        {t("总速度因子 ×{p0}", { p0: formatFactor(breakdown.total) })}
       </p>
 
       {breakdown.categoryFactors.length > 0 ? (
@@ -70,7 +70,7 @@ export function PlannerSpeedBreakdown({ breakdown, heroNameById }: PlannerSpeedB
       {breakdown.heroContributions.length > 0 ? (
         <>
           <p className="planner-breakdown__sources-title">
-            {t({ zh: '速度贡献（按英雄）', en: 'Speed sources (by hero)' })}
+            {t("速度贡献（按英雄）")}
           </p>
           <ul className="planner-breakdown__contributions" data-testid="planner-speed-breakdown-contributions">
             {breakdown.heroContributions.map((contribution) => {

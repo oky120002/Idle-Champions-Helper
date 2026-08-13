@@ -55,15 +55,15 @@ export function PlannerResultCard({
   return (
     <article
       className="surface-card planner-result-card"
-      aria-label={t({ zh: '推荐结果', en: 'Recommended Result' })}
+      aria-label={t("推荐结果")}
     >
       <div className="surface-card__header">
         <div className="surface-card__header-copy">
           <p className="surface-card__eyebrow">
-            {t({ zh: '推荐结果', en: 'Recommended result' })}
+            {t("推荐结果")}
           </p>
           <h3 className="surface-card__title">
-            {t({ zh: '当前推荐阵型', en: 'Current recommended formation' })}
+            {t("当前推荐阵型")}
           </h3>
           <div className="planner-result-card__header-meta">
             <p className="planner-result-card__score">
@@ -71,10 +71,7 @@ export function PlannerResultCard({
               <strong>{objectiveValue}</strong>
             </p>
             <p className="planner-result-card__slot-count">
-              {t({
-                zh: `已填充 ${String(displayPlacementEntries.length)} 个槽位`,
-                en: `${String(displayPlacementEntries.length)} slots filled`,
-              })}
+              {t("已填充 {p0} 个槽位", { p0: String(displayPlacementEntries.length) })}
             </p>
           </div>
         </div>
@@ -84,7 +81,7 @@ export function PlannerResultCard({
         {slots.length > 0 ? (
           <section className="planner-result-card__board-panel" data-section="board">
             <h4 className="planner-result-card__section-title">
-              {t({ zh: '阵型棋盘', en: 'Formation board' })}
+              {t("阵型棋盘")}
             </h4>
             <FormationBoardCanvas
               slots={slots}
@@ -99,7 +96,7 @@ export function PlannerResultCard({
         <div className="planner-result-card__body-grid">
           <section className="planner-result-card__placements-panel">
             <h4 className="planner-result-card__section-title">
-              {t({ zh: '阵位分配', en: 'Slot assignments' })}
+              {t("阵位分配")}
             </h4>
             <ol className="planner-result-card__placements">
               {displayPlacementEntries.map((entry) => (
@@ -110,13 +107,13 @@ export function PlannerResultCard({
                   className="planner-result-card__placement"
                 >
                   <span className="planner-result-card__placement-slot">
-                    {t({ zh: `槽位 ${entry.slotLabel}`, en: `Slot ${entry.slotLabel}` })}
+                    {t("槽位 {p0}", { p0: entry.slotLabel })}
                   </span>
                   <span className="planner-result-card__placement-copy">
                     <strong>{entry.heroName}</strong>
                     <span>
                       {entry.seat !== null
-                        ? t({ zh: `Seat ${String(entry.seat)} · ${entry.heroId}`, en: `Seat ${String(entry.seat)} · ${entry.heroId}` })
+                        ? t("Seat {p0} · {p1}", { p0: String(entry.seat), p1: entry.heroId })
                         : entry.heroId}
                     </span>
                   </span>
@@ -129,7 +126,7 @@ export function PlannerResultCard({
             {explanations.length > 0 && (
               <section data-section="explanations" className="planner-result-card__explanations">
                 <h4 className="planner-result-card__section-title">
-                  {t({ zh: '推荐依据', en: 'Why this result' })}
+                  {t("推荐依据")}
                 </h4>
                 <ul>
                   {explanations.map((line, index) => (
@@ -153,7 +150,7 @@ export function PlannerResultCard({
             {warnings.length > 0 && (
               <section data-section="warnings" className="planner-result-card__warnings">
                 <h4 className="planner-result-card__section-title">
-                  {t({ zh: '当前警告', en: 'Warnings' })}
+                  {t("当前警告")}
                 </h4>
                 <ul>
                   {warnings.map((text, index) => (

@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { ChampionDetail } from '../../domain/types'
 import { describeEffectItem } from './summary-model'
@@ -6,7 +7,7 @@ import type { EffectContext } from './types'
 type DetailLegendarySectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly effectContext: EffectContext
 }
 
@@ -41,7 +42,7 @@ export function DetailLegendarySection({ detail, locale, t, effectContext }: Det
                     ))}
                   </div>
                 ) : (
-                  <p className="supporting-text">{t({ zh: '暂无效果说明。', en: 'No effect summary is available.' })}</p>
+                  <p className="supporting-text">{t("暂无效果说明。")}</p>
                 )}
               </article>
             )
@@ -49,7 +50,7 @@ export function DetailLegendarySection({ detail, locale, t, effectContext }: Det
         </div>
       ) : (
         <div className="status-banner status-banner--info">
-          {t({ zh: '当前没有结构化传奇效果数据。', en: 'No structured legendary effect data is available.' })}
+          {t("当前没有结构化传奇效果数据。")}
         </div>
       )}
     </SurfaceCard>

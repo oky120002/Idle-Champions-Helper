@@ -55,16 +55,13 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
   return (
     <section
       className="surface-card planner-import-formation"
-      aria-label={t({ zh: '导入阵型编辑器', en: 'Import to formation editor' })}
+      aria-label={t("导入阵型编辑器")}
     >
       <div className="surface-card__body planner-import-formation__body">
         <div className="planner-import-formation__copy">
-          <strong>{t({ zh: '导入阵型编辑器继续调整', en: 'Open in formation editor' })}</strong>
+          <strong>{t("导入阵型编辑器继续调整")}</strong>
           <p>
-            {t({
-              zh: '把当前推荐写为最近草稿并跳转到阵型编辑器，落地后可继续拖拽调整。',
-              en: 'Write the current recommendation as the recent draft and jump to the formation editor to keep tweaking.',
-            })}
+            {t("把当前推荐写为最近草稿并跳转到阵型编辑器，落地后可继续拖拽调整。")}
           </p>
           {error != null && error !== '' ? <span className="planner-import-formation__status" role="alert">{error}</span> : null}
         </div>
@@ -75,7 +72,7 @@ export function PlannerImportFormation({ result, layoutId, scenarioRef }: Planne
           onClick={() => void handleImport()}
           disabled={importing}
         >
-          {importing ? t({ zh: '导入中', en: 'Importing' }) : t({ zh: '导入阵型编辑器', en: 'Import to formation editor' })}
+          {importing ? t("导入中") : t("导入阵型编辑器")}
         </button>
       </div>
     </section>

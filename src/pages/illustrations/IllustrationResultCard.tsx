@@ -44,10 +44,7 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
         },
         returnLabel: { zh: '返回立绘图鉴', en: 'Back to illustrations' },
       }}
-      aria-label={t({
-        zh: `查看英雄：${championPrimaryName}（${title.primary}）`,
-        en: `Open champion: ${championPrimaryName} (${title.primary})`,
-      })}
+      aria-label={t("查看英雄：{p0}（{p1}）", { p0: championPrimaryName, p1: title.primary })}
       onMouseEnter={activatePreview}
       onMouseLeave={() => setPreviewActive(false)}
       onFocus={activatePreview}
@@ -63,12 +60,12 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
             alt={buildIllustrationAlt(illustration, locale)}
             viewportBounds={illustration.render.bounds}
             labels={{
-              play: t({ zh: '播放动画', en: 'Play animation' }),
-              pause: t({ zh: '暂停动画', en: 'Pause animation' }),
-              reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),
-              error: t({ zh: '动态预览加载失败', en: 'Animated preview failed to load' }),
-              animated: t({ zh: '动态预览已启用', en: 'Animated preview enabled' }),
-              fallback: t({ zh: '当前显示静态立绘', en: 'Showing static illustration' }),
+              play: t("播放动画"),
+              pause: t("暂停动画"),
+              reducedMotion: t("已遵循减少动态偏好"),
+              error: t("动态预览加载失败"),
+              animated: t("动态预览已启用"),
+              fallback: t("当前显示静态立绘"),
             }}
             playbackMode={isPreviewActive ? 'play' : 'pause'}
             sequenceIntent="walk"

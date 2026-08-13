@@ -19,14 +19,14 @@ export function WorkbenchFloatingTopButton({
       type="button"
       className="page-workbench__floating-top-button"
       onClick={onClick}
-      aria-label={ariaLabel ?? t({ zh: '返回顶部', en: 'Back to top' })}
+      aria-label={ariaLabel ?? t("返回顶部")}
     >
       <span className="page-workbench__floating-top-icon" aria-hidden="true">
         <ArrowUpToLine aria-hidden="true" strokeWidth={1.8} />
       </span>
       <span className="page-workbench__floating-top-copy">
-        <strong>{t({ zh: '返回顶部', en: 'Back to top' })}</strong>
-        <span>{detailLabel ?? t({ zh: '当前内容', en: 'Current pane' })}</span>
+        <strong>{t("返回顶部")}</strong>
+        <span>{detailLabel ?? t("当前内容")}</span>
       </span>
     </button>
   )

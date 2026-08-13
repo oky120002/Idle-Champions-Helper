@@ -19,7 +19,7 @@ export function PlannerScoringMode({ value, onChange }: PlannerScoringModeProps)
   return (
     <fieldset className="planner-scoring-mode" role="radiogroup">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '推荐模式', en: 'Recommendation mode' })}
+        {t("推荐模式")}
       </legend>
       <div className="planner-scoring-mode__options">
         {MODES.map((mode) => {
@@ -39,7 +39,7 @@ export function PlannerScoringMode({ value, onChange }: PlannerScoringModeProps)
                 }
               }}
             >
-              {t({ zh: mode.zh, en: mode.en })}
+              {t(mode)}
             </button>
           )
         })}

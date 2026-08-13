@@ -1,4 +1,4 @@
-import { pickLocaleText } from '../../app/i18n'
+import { t } from '../../app/i18n-messages'
 import { getPrimaryLocalizedText, getSecondaryLocalizedText } from '../../domain/localizedText'
 import { getDeliveryLabel } from './asset-model'
 import type { ChampionVisualWorkbenchModel } from './types'
@@ -15,12 +15,9 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
     <div className="visual-workbench__console">
       <div className="visual-workbench__resource-panel">
         <div className="visual-workbench__resource-panel-header">
-          <strong className="visual-workbench__panel-title">{pickLocaleText(locale, { zh: '资源槽位', en: 'Asset slots' })}</strong>
+          <strong className="visual-workbench__panel-title">{t(locale, '资源槽位')}</strong>
           <span className="visual-workbench__panel-hint">
-            {pickLocaleText(locale, {
-              zh: '这里只切换槽位和查看基座记录；静态站不会对这些槽位发起任何官方请求。',
-              en: 'This panel only switches between catalog slots and metadata. The static site never issues official requests for them.',
-            })}
+            {t(locale, '这里只切换槽位和查看基座记录；静态站不会对这些槽位发起任何官方请求。')}
           </span>
         </div>
 
@@ -41,7 +38,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
               >
                 <span className="visual-workbench__resource-label">{option.label}</span>
                 <span className="visual-workbench__resource-meta">
-                  {isAvailable ? option.hint : pickLocaleText(locale, { zh: '当前无此槽位', en: 'This slot is unavailable' })}
+                  {isAvailable ? option.hint : t(locale, '当前无此槽位')}
                 </span>
               </button>
             )
@@ -52,12 +49,9 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
       {visual && visual.skins.length > 0 ? (
         <div className="visual-workbench__skin-panel">
           <div className="visual-workbench__resource-panel-header">
-            <strong className="visual-workbench__panel-title">{pickLocaleText(locale, { zh: '皮肤库', en: 'Skin library' })}</strong>
+            <strong className="visual-workbench__panel-title">{t(locale, '皮肤库')}</strong>
             <span className="visual-workbench__panel-hint">
-              {pickLocaleText(locale, {
-                zh: '切换皮肤后，皮肤立绘 / large / xl / 头像槽位会同步更新。',
-                en: 'Switching skins updates the art, large, xl, and portrait slots together.',
-              })}
+              {t(locale, '切换皮肤后，皮肤立绘 / large / xl / 头像槽位会同步更新。')}
             </span>
           </div>
           <div className="visual-workbench__skin-strip">
@@ -75,14 +69,11 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
                   aria-pressed={isActive}
                   onClick={() => setSelectedSkinId(skin.id)}
                 >
-                  <span className="visual-workbench__skin-kicker">{pickLocaleText(locale, { zh: `皮肤 #${skin.id}`, en: `skin #${skin.id}` })}</span>
+                  <span className="visual-workbench__skin-kicker">{t(locale, '皮肤 #{p0}', { p0: skin.id })}</span>
                   <strong className="visual-workbench__skin-name">{skinPrimaryName}</strong>
                   {skinSecondaryName != null && skinSecondaryName !== '' ? <span className="visual-workbench__skin-secondary">{skinSecondaryName}</span> : null}
                   <span className="visual-workbench__skin-meta">
-                    {pickLocaleText(locale, {
-                      zh: `已登记 ${String(availableCount)} 个资源槽位`,
-                      en: `${String(availableCount)} asset slots registered`,
-                    })}
+                    {t(locale, '已登记 {p0} 个资源槽位', { p0: String(availableCount) })}
                   </span>
                 </button>
               )
@@ -98,7 +89,7 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
             <strong className="visual-workbench__meta-value">{selectedAsset.graphicId}</strong>
           </div>
           <div className="visual-workbench__meta-item">
-            <span className="visual-workbench__meta-key">{pickLocaleText(locale, { zh: '交付', en: 'delivery' })}</span>
+            <span className="visual-workbench__meta-key">{t(locale, '交付')}</span>
             <strong className="visual-workbench__meta-value">{getDeliveryLabel(selectedAsset.delivery, locale)}</strong>
           </div>
           <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
@@ -110,13 +101,13 @@ export function ChampionVisualWorkbenchConsole({ model }: ChampionVisualWorkbenc
             <strong className="visual-workbench__meta-value">{selectedAsset.sourceVersion ?? 'null'}</strong>
           </div>
           <div className="visual-workbench__meta-item">
-            <span className="visual-workbench__meta-key">{pickLocaleText(locale, { zh: '接入方式', en: 'Delivery mode' })}</span>
+            <span className="visual-workbench__meta-key">{t(locale, '接入方式')}</span>
             <strong className="visual-workbench__meta-value">
-              {pickLocaleText(locale, { zh: '构建期同步 / 站内不请求', en: 'Build-time sync / no in-site request' })}
+              {t(locale, '构建期同步 / 站内不请求')}
             </strong>
           </div>
           <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
-            <span className="visual-workbench__meta-key">{pickLocaleText(locale, { zh: '用途', en: 'uses' })}</span>
+            <span className="visual-workbench__meta-key">{t(locale, '用途')}</span>
             <strong className="visual-workbench__meta-value">{usesJoined !== '' ? usesJoined : '—'}</strong>
           </div>
         </div>

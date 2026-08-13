@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import type {
   ChampionAnimation,
   ChampionDetail,
@@ -20,7 +21,7 @@ import type {
 interface ChampionDetailBodyProps {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly activeSectionId: DetailSectionId
   readonly overviewFields: DetailFieldProps[]
   readonly effectContext: EffectContext
@@ -52,7 +53,7 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
     <>
       <section
         className="champion-detail-tab-shell"
-        aria-label={props.t({ zh: '英雄详情内容', en: 'Champion detail content' })}
+        aria-label={props.t("英雄详情内容")}
       >
         <DetailSectionPanels
           detail={props.detail}

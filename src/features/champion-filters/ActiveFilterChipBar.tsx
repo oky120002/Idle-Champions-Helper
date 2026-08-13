@@ -25,14 +25,11 @@ export function ActiveFilterChipBar({
       <div className="active-filter-bar__header">
         <div className="active-filter-bar__copy">
           <strong className="active-filter-bar__title">
-            {title ?? t({ zh: '已选条件', en: 'Selected filters' })}
+            {title ?? t("已选条件")}
           </strong>
           <p className="active-filter-bar__hint">
             {hint ??
-              t({
-                zh: '点击任一条件即可单独回退对应维度。',
-                en: 'Click any filter chip to clear that dimension only.',
-              })}
+              t("点击任一条件即可单独回退对应维度。")}
           </p>
         </div>
       </div>

@@ -30,7 +30,7 @@ export function ConfirmDialog({ open, title, onClose, children }: ConfirmDialogP
       <button
         type="button"
         className="confirm-dialog__backdrop"
-        aria-label={t({ zh: '关闭', en: 'Close' })}
+        aria-label={t("关闭")}
         onClick={onClose}
       />
       <div className="confirm-dialog__panel">

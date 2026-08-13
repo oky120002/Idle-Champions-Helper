@@ -27,11 +27,11 @@ export function UserDataPage() {
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   let parseStatusLabel: string
   if (model.parseState.status === 'success') {
-    parseStatusLabel = model.t({ zh: '解析成功', en: 'Parsed' })
+    parseStatusLabel = model.t("解析成功")
   } else if (model.parseState.status === 'error') {
-    parseStatusLabel = model.t({ zh: '需要修正', en: 'Needs fixes' })
+    parseStatusLabel = model.t("需要修正")
   } else {
-    parseStatusLabel = model.t({ zh: '等待输入', en: 'Waiting for input' })
+    parseStatusLabel = model.t("等待输入")
   }
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
@@ -52,45 +52,45 @@ export function UserDataPage() {
   const importBoundarySections: SurfaceCardContentSection[] = [
     {
       id: 'supported-foundations',
-      title: model.t({ zh: '当前已经支持的骨架', en: 'What already exists' }),
+      title: model.t("当前已经支持的骨架"),
       items: [
         {
           id: 'support-url',
-          content: model.t({ zh: 'Support URL 本地解析', en: 'Local Support URL parsing' }),
+          content: model.t("Support URL 本地解析"),
         },
         {
           id: 'manual-input',
-          content: model.t({ zh: '手动输入 User ID + Hash 校验', en: 'Manual User ID + Hash validation' }),
+          content: model.t("手动输入 User ID + Hash 校验"),
         },
         {
           id: 'log-extract',
-          content: model.t({ zh: '日志文本提取 user_id / hash', en: 'Extracting user_id / hash from log text' }),
+          content: model.t("日志文本提取 user_id / hash"),
         },
         {
           id: 'masked-preview',
-          content: model.t({ zh: '脱敏预览结果展示', en: 'Masked preview output' }),
+          content: model.t("脱敏预览结果展示"),
         },
       ],
     },
     {
       id: 'explicit-boundaries',
-      title: model.t({ zh: '当前明确不做', en: 'What it explicitly does not do' }),
+      title: model.t("当前明确不做"),
       items: [
         {
           id: 'no-live-api',
-          content: model.t({ zh: '只在点击手动同步时调用官方只读接口', en: 'Only call official read-only endpoints after manual sync' }),
+          content: model.t("只在点击手动同步时调用官方只读接口"),
         },
         {
           id: 'no-auto-persist',
-          content: model.t({ zh: '不在页面自动持久化敏感凭证', en: 'No automatic persistence of sensitive credentials' }),
+          content: model.t("不在页面自动持久化敏感凭证"),
         },
         {
           id: 'no-upload',
-          content: model.t({ zh: '不上传到你的服务端', en: 'No upload to your server' }),
+          content: model.t("不上传到你的服务端"),
         },
         {
           id: 'no-background-sync',
-          content: model.t({ zh: '不做隐式后台同步', en: 'No implicit background sync' }),
+          content: model.t("不做隐式后台同步"),
         },
       ],
     },
@@ -102,19 +102,19 @@ export function UserDataPage() {
       items: [
         {
           id: 'parse-browser',
-          content: model.t({ zh: '浏览器里解析 Support URL / 日志文本，拿到 `user_id + hash`', en: 'Parse the Support URL / log text in the browser to get `user_id + hash`' }),
+          content: model.t("浏览器里解析 Support URL / 日志文本，拿到 `user_id + hash`"),
         },
         {
           id: 'expand-inputs',
-          content: model.t({ zh: '用户点击手动同步后，浏览器请求官方只读接口，不经过本项目后端', en: 'After manual sync, the browser requests official read-only endpoints without passing through this project backend' }),
+          content: model.t("用户点击手动同步后，浏览器请求官方只读接口，不经过本项目后端"),
         },
         {
           id: 'persist-indexeddb',
-          content: model.t({ zh: '把已归一化的个人数据写入 `IndexedDB`，而不是上传到后端', en: 'Write normalized personal data to `IndexedDB` instead of uploading it to a backend' }),
+          content: model.t("把已归一化的个人数据写入 `IndexedDB`，而不是上传到后端"),
         },
         {
           id: 'consume-locally',
-          content: model.t({ zh: '页面再消费本地画像做英雄可用性、拥有状态和阵型建议', en: 'Let the UI consume the local profile for availability, ownership state, and formation suggestions' }),
+          content: model.t("页面再消费本地画像做英雄可用性、拥有状态和阵型建议"),
         },
       ],
     },
@@ -125,14 +125,14 @@ export function UserDataPage() {
     <ConfiguredWorkbenchPage
       pageClassName="user-data-page"
       storageKey="user-data"
-      ariaLabel={model.t({ zh: '个人数据工作台', en: 'User data workbench' })}
+      ariaLabel={model.t("个人数据工作台")}
       shellClassName="workbench-page__shell user-data-workbench"
       contentScrollRef={contentScrollRef}
       floatingTopButton={
         showScrollTop
           ? {
               onClick: scrollToTop,
-              detailLabel: model.t({ zh: '个人数据内容', en: 'User data pane' }),
+              detailLabel: model.t("个人数据内容"),
             }
           : undefined
       }
@@ -149,9 +149,9 @@ export function UserDataPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              kicker: model.t({ zh: '本地优先', en: 'Local first' }),
-              title: model.t({ zh: '个人数据', en: 'User data' }),
-              detail: model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' }),
+              kicker: model.t("本地优先"),
+              title: model.t("个人数据"),
+              detail: model.t("统一管理支持 URL、手填凭证和日志片段导入"),
             },
           },
           {
@@ -166,24 +166,18 @@ export function UserDataPage() {
     >
       <WorkbenchContentStack>
         <SurfaceCardContentSections
-          eyebrow={model.t({ zh: '导入边界', en: 'Import boundary' })}
-          title={model.t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
-          description={model.t({ zh: '这一页在浏览器内解析凭证，只在你点击手动同步时请求官方只读接口，并把浏览器同步快照保存到本地 IndexedDB；开发私有快照则通过单独来源显式切换。', en: 'This page parses credentials in the browser, calls official read-only endpoints only after manual sync, stores browser-synced snapshots in IndexedDB, and switches dev private snapshots through a separate source selector.' })}
+          eyebrow={model.t("导入边界")}
+          title={model.t("先把本地优先的数据导入骨架搭稳")}
+          description={model.t("这一页在浏览器内解析凭证，只在你点击手动同步时请求官方只读接口，并把浏览器同步快照保存到本地 IndexedDB；开发私有快照则通过单独来源显式切换。")}
           sections={importBoundarySections}
           layout="split"
         />
         <UserDataWorkbench model={model} />
         <UserSyncPanel credentials={parsedCredentials} />
         <SurfaceCardContentSections
-          eyebrow={model.t({ zh: '本地画像', en: 'Local profile' })}
-          title={model.t({
-            zh: '同步后的数据只留在当前浏览器',
-            en: 'Synced data stays in this browser',
-          })}
-          description={model.t({
-            zh: '自动计划器后续只读取当前选中的本地画像来源和公开游戏基座数据。页面不会自动刷新，也不会把凭证保存到后端。',
-            en: 'The planner will read only the currently selected local profile source plus public game data. The page will not auto-refresh or save credentials to a backend.',
-          })}
+          eyebrow={model.t("本地画像")}
+          title={model.t("同步后的数据只留在当前浏览器")}
+          description={model.t("自动计划器后续只读取当前选中的本地画像来源和公开游戏基座数据。页面不会自动刷新，也不会把凭证保存到后端。")}
           sections={nextStageSections}
         />
       </WorkbenchContentStack>

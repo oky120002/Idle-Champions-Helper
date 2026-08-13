@@ -38,35 +38,29 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
   const previewItems = [
     {
       id: 'selected-layout',
-      label: t({ zh: '当前布局', en: 'Current layout' }),
-      value: selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t({ zh: '未选择', en: 'Not selected' }),
+      label: t("当前布局"),
+      value: selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t("未选择"),
     },
-    { id: 'savable-champions', label: t({ zh: '可保存英雄数', en: 'Savable champions' }), value: selectedChampions.length },
+    { id: 'savable-champions', label: t("可保存英雄数"), value: selectedChampions.length },
     {
       id: 'seat-conflicts',
-      label: t({ zh: 'seat 冲突', en: 'Seat conflicts' }),
-      value: conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' }),
+      label: t("seat 冲突"),
+      value: conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t("无"),
     },
     {
       id: 'scenario-context',
-      label: t({ zh: '场景上下文', en: 'Scenario context' }),
+      label: t("场景上下文"),
       value: scenarioRef
         ? (getScenarioLabel(scenarioRef) ?? `${scenarioRef.kind}:${scenarioRef.id}`)
-        : t({ zh: '当前未绑定', en: 'Not linked yet' }),
+        : t("当前未绑定"),
     },
   ]
 
   return (
     <SurfaceCard
-      eyebrow={t({ zh: '阵型摘要', en: 'Formation summary' })}
-      title={t({
-        zh: '把工作草稿保存成命名方案，再交给方案存档页管理',
-        en: 'Turn the working draft into a named preset',
-      })}
-      description={t({
-        zh: '最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可编辑、删除并恢复回阵型页。',
-        en: 'Recent drafts stay on this page for auto-save, while named presets move into the preset library for later edit, delete, and restore.',
-      })}
+      eyebrow={t("阵型摘要")}
+      title={t("把工作草稿保存成命名方案，再交给方案存档页管理")}
+      description={t("最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可编辑、删除并恢复回阵型页。")}
     >
       <div className="split-grid">
         <div className="form-stack">
@@ -76,26 +70,14 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
             nameInputId="preset-name"
             descriptionInputId="preset-description"
             tagsInputId="preset-tags"
-            namePlaceholder={t({
-              zh: '例如：速刷常用 10 槽波形',
-              en: 'Example: Speed farm core wave 10',
-            })}
-            descriptionPlaceholder={t({
-              zh: '记录这套阵容适合什么目标、还有哪些待补位。',
-              en: 'Describe what this formation is for and what still needs tuning.',
-            })}
-            tagsHint={t({
-              zh: '仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。',
-              en: 'These are reader-friendly tags only, not restore keys. Use commas to separate them.',
-            })}
-            tagsPlaceholder={t({
-              zh: '例如：推图，速刷，Time Gate',
-              en: 'Example: Push, speed, Time Gate',
-            })}
-            nameLabel={t({ zh: '方案名称', en: 'Preset name' })}
-            descriptionLabel={t({ zh: '方案备注', en: 'Preset notes' })}
-            tagsLabel={t({ zh: '场景标签', en: 'Scenario tags' })}
-            priorityLabel={t({ zh: '优先级', en: 'Priority' })}
+            namePlaceholder={t("例如：速刷常用 10 槽波形")}
+            descriptionPlaceholder={t("记录这套阵容适合什么目标、还有哪些待补位。")}
+            tagsHint={t("仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。")}
+            tagsPlaceholder={t("例如：推图，速刷，Time Gate")}
+            nameLabel={t("方案名称")}
+            descriptionLabel={t("方案备注")}
+            tagsLabel={t("场景标签")}
+            priorityLabel={t("优先级")}
             getPriorityOptionLabel={getPresetPriorityLabel}
             onChange={updatePresetForm}
             includeStackClass={false}
@@ -105,7 +87,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
             items={[
               {
                 id: 'save-preset',
-                label: isSavingPreset ? t({ zh: '保存中…', en: 'Saving…' }) : t({ zh: '保存为方案', en: 'Save as preset' }),
+                label: isSavingPreset ? t("保存中…") : t("保存为方案"),
                 icon: <Save aria-hidden="true" strokeWidth={1.9} />,
                 tone: 'secondary',
                 disabled: !canSavePreset,
@@ -114,7 +96,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
               },
               {
                 id: 'open-preset-library',
-                label: t({ zh: '查看方案存档', en: 'Open preset library' }),
+                label: t("查看方案存档"),
                 icon: <Archive aria-hidden="true" strokeWidth={1.9} />,
                 tone: 'ghost',
                 onClick: handleOpenPresetsPage,
@@ -136,10 +118,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
 
       {selectedChampions.length === 0 ? (
         <p className="supporting-text">
-          {t({
-            zh: '当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿；至少放置 1 名英雄后才可保存为命名方案。',
-            en: 'No champions are placed yet. Pick a layout, fill the slots, and the page will auto-save a recent draft. Place at least one champion before saving a named preset.',
-          })}
+          {t("当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿；至少放置 1 名英雄后才可保存为命名方案。")}
         </p>
       ) : (
         <div className="results-grid">
@@ -149,7 +128,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
               <p className="supporting-text">{formatSeatLabel(champion.seat, locale)}</p>
               {champion.affiliations.length > 0 ? (
                 <p className="supporting-text">
-                  {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                  {t("联动队伍")}：
                   {champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')}
                 </p>
               ) : null}
@@ -182,7 +161,7 @@ function computeSaveDisabledReason({
     return
   }
   if (selectedChampions.length === 0) {
-    return t({ zh: '先放置至少 1 名英雄', en: 'Place at least one champion first' })
+    return t("先放置至少 1 名英雄")
   }
-  return t({ zh: '先填写方案名称', en: 'Enter a preset name first' })
+  return t("先填写方案名称")
 }

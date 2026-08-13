@@ -26,7 +26,7 @@ export function SearchPage() {
       ? [
           createWorkbenchBadgeItem({
             id: 'result-count',
-            label: t({ zh: `${String(results.length)} 个结果`, en: `${String(results.length)} results` }),
+            label: t("{p0} 个结果", { p0: String(results.length) }),
           }),
         ]
       : []
@@ -35,14 +35,14 @@ export function SearchPage() {
     <ConfiguredWorkbenchPage
       pageClassName="search-page"
       storageKey="search"
-      ariaLabel={t({ zh: '全文搜索工作台', en: 'Search workbench' })}
+      ariaLabel={t("全文搜索工作台")}
       shellClassName="workbench-page__shell"
       contentScrollRef={contentScrollRef}
       floatingTopButton={
         showScrollTop
           ? {
               onClick: scrollToTop,
-              detailLabel: t({ zh: '搜索结果', en: 'Search results' }),
+              detailLabel: t("搜索结果"),
             }
           : undefined
       }
@@ -54,7 +54,7 @@ export function SearchPage() {
               className="text-input text-input--with-leading-icon"
               type="search"
               value={query}
-              placeholder={t({ zh: '搜索英雄、技能、描述…', en: 'Search heroes, skills, text…' })}
+              placeholder={t("搜索英雄、技能、描述…")}
               onChange={(event) => setQuery(event.target.value)}
             />
           </span>
@@ -67,12 +67,9 @@ export function SearchPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              kicker: t({ zh: '全文检索', en: 'Full-text Search' }),
-              title: t({ zh: '搜索英雄', en: 'Search Heroes' }),
-              detail: t({
-                zh: '输入英雄名、技能、背景、专长、装备等任意文本，命中后点击跳转到英雄详情。',
-                en: 'Type any text — hero name, skill, backstory, feat, gear — and jump to the hero.',
-              }),
+              kicker: t("全文检索"),
+              title: t("搜索英雄"),
+              detail: t("输入英雄名、技能、背景、专长、装备等任意文本，命中后点击跳转到英雄详情。"),
             },
           },
           ...(toolbarItems.length > 0
@@ -83,13 +80,13 @@ export function SearchPage() {
     >
       <div className="search-page__results">
         {loading && (
-          <p className="search-page__hint">{t({ zh: '正在加载索引…', en: 'Loading index…' })}</p>
+          <p className="search-page__hint">{t("正在加载索引…")}</p>
         )}
         {showStartHint && (
-          <p className="search-page__hint">{t({ zh: '输入关键词开始搜索。', en: 'Type to start searching.' })}</p>
+          <p className="search-page__hint">{t("输入关键词开始搜索。")}</p>
         )}
         {showNoMatchesHint && (
-          <p className="search-page__hint">{t({ zh: '未找到匹配的英雄。', en: 'No matching heroes.' })}</p>
+          <p className="search-page__hint">{t("未找到匹配的英雄。")}</p>
         )}
         {results.map((hit) => (
           <button

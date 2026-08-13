@@ -16,25 +16,16 @@ export function IllustrationsPage() {
   const contentStatusItems = createAsyncStatusBannerItems({
     status: state.status,
     loading: {
-      title: t({ zh: '正在加载立绘目录', en: 'Loading illustration catalog' }),
-      detail: t({
-        zh: '正在读取本地版本化立绘清单与英雄筛选元数据。',
-        en: 'Reading the local illustration manifest and champion filter metadata.',
-      }),
+      title: t("正在加载立绘目录"),
+      detail: t("正在读取本地版本化立绘清单与英雄筛选元数据。"),
     },
     error: {
-      title: t({ zh: '立绘目录加载失败', en: 'Failed to load illustration catalog' }),
+      title: t("立绘目录加载失败"),
       ...(state.status === 'error'
         ? {
             detail: state.message !== ''
-              ? t({
-                  zh: `无法读取立绘目录数据：${state.message}`,
-                  en: `Unable to read illustration catalog data: ${state.message}`,
-                })
-              : t({
-                  zh: '无法读取立绘目录数据。',
-                  en: 'Unable to read illustration catalog data.',
-                }),
+              ? t("无法读取立绘目录数据：{p0}", { p0: state.message })
+              : t("无法读取立绘目录数据。"),
           }
         : {}),
     },
@@ -59,7 +50,7 @@ export function IllustrationsPage() {
     <FilterWorkbenchPage
       pageClassName="illustrations-page"
       storageKey="illustrations"
-      ariaLabel={t({ zh: '立绘图鉴工作台', en: 'Illustration workbench' })}
+      ariaLabel={t("立绘图鉴工作台")}
       shellClassName="workbench-page__shell illustrations-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
@@ -77,8 +68,8 @@ export function IllustrationsPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
-              detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
+              title: t("立绘图鉴"),
+              detail: t("立绘筛选与动态资源对照"),
             },
           },
           {
@@ -92,10 +83,10 @@ export function IllustrationsPage() {
         ],
       }}
       sidebarHeader={{
-        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
-        statusLabel: t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' }),
+        kicker: t("筛选抽屉"),
+        statusLabel: t("立绘筛选状态操作"),
         activeCount: activeFilterChips.length,
-        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        clearLabel: t("清空全部"),
         ...(hasActiveFilters ? { onClear: actions.clearAllFilters } : {}),
       }}
       isReady={state.status === 'ready'}

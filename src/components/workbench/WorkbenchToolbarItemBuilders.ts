@@ -1,10 +1,10 @@
 import { Eye, EyeOff, Shuffle, Link2  } from 'lucide-react'
 import { createElement } from 'react'
-import type { LocaleText } from '../../app/i18n'
+import type { TranslateParams, LocaleText  } from '../../app/i18n'
 import type { WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from './useWorkbenchShareLink'
 
-type WorkbenchTranslate = (text: LocaleText) => string
+type WorkbenchTranslate = (text: string | LocaleText, params?: TranslateParams) => string
 
 interface WorkbenchBadgeItemOptions {
   id: string
@@ -80,11 +80,8 @@ export function createWorkbenchResultVisibilityItem({
   onClick,
 }: WorkbenchResultVisibilityItemOptions): WorkbenchToolbarItemConfig {
   const label = showAllResults
-    ? t({ zh: `收起到默认 ${String(defaultVisibleCount)}`, en: `Collapse to default ${String(defaultVisibleCount)}` })
-    : t({
-        zh: `显示全部 ${String(filteredCount)}（默认 ${String(defaultVisibleCount)}）`,
-        en: `Show all ${String(filteredCount)} (default ${String(defaultVisibleCount)})`,
-      })
+    ? t("收起到默认 {p0}", { p0: String(defaultVisibleCount) })
+    : t("显示全部 {p0}（默认 {p1}）", { p0: String(filteredCount), p1: String(defaultVisibleCount) })
 
   return {
     id: 'toggle-visibility',
@@ -108,8 +105,8 @@ export function createWorkbenchShuffleItem({
   return {
     id: 'shuffle-results',
     label: hasRandomOrder
-      ? t({ zh: '重新随机', en: 'Reshuffle' })
-      : t({ zh: '随机排序', en: 'Shuffle order' }),
+      ? t("重新随机")
+      : t("随机排序"),
     icon: createElement(Shuffle, { 'aria-hidden': true, strokeWidth: 1.9 }),
     isActive: hasRandomOrder,
     hidden: !isReady || resultCount <= 1,
@@ -125,14 +122,14 @@ export function createWorkbenchShareItem({
   let label: string
   let title: string
   if (state === 'success') {
-    label = t({ zh: '已复制链接', en: 'Link copied' })
-    title = t({ zh: '链接已复制到剪贴板', en: 'Link copied to clipboard' })
+    label = t("已复制链接")
+    title = t("链接已复制到剪贴板")
   } else if (state === 'error') {
-    label = t({ zh: '复制失败', en: 'Copy failed' })
-    title = t({ zh: '复制失败，点击重试', en: 'Copy failed. Click to retry' })
+    label = t("复制失败")
+    title = t("复制失败，点击重试")
   } else {
     label = ''
-    title = t({ zh: '复制当前页面链接', en: 'Copy current page link' })
+    title = t("复制当前页面链接")
   }
 
   return {

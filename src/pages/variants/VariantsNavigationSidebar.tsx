@@ -36,7 +36,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
 
   const selectedCampaignLabel = selectedCampaignGroup
     ? getLocalizedTextPair(selectedCampaignGroup.campaign, locale)
-    : t({ zh: '选择地图', en: 'Choose campaign' })
+    : t("选择地图")
 
   return (
     <div className="variants-nav-sidebar">
@@ -45,7 +45,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
         onBlur={() => window.setTimeout(() => setIsOpen(false), 120)}
       >
         <label className="variants-campaign-combobox__label" htmlFor="variants-campaign-search">
-          {t({ zh: '地图 / 关卡', en: 'Campaign / adventure' })}
+          {t("地图 / 关卡")}
         </label>
         <input
           id="variants-campaign-search"
@@ -60,7 +60,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
           onFocus={() => setIsOpen(true)}
         />
         <p className="variants-campaign-combobox__current">
-          {t({ zh: `当前地图：${selectedCampaignLabel}`, en: `Current: ${selectedCampaignLabel}` })}
+          {t("当前地图：{p0}", { p0: selectedCampaignLabel })}
         </p>
 
         {isOpen ? (
@@ -113,7 +113,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
               ))
             ) : (
               <p className="variants-campaign-combobox__empty">
-                {t({ zh: '没有匹配的地图或关卡', en: 'No matching campaign or adventure' })}
+                {t("没有匹配的地图或关卡")}
               </p>
             )}
           </div>
@@ -122,7 +122,7 @@ export function VariantsNavigationSidebar({ model }: VariantsNavigationSidebarPr
 
       <div className="variants-adventure-list">
         <div className="variants-adventure-list__header">
-          <span>{t({ zh: '关卡', en: 'Adventures' })}</span>
+          <span>{t("关卡")}</span>
           <strong>{selectedCampaignGroup?.adventures.length ?? 0}</strong>
         </div>
         <div className="variants-adventure-list__items">

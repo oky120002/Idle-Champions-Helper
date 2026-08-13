@@ -15,25 +15,16 @@ export function PetsPage() {
   const contentStatusItems = createAsyncStatusBannerItems({
     status: state.status,
     loading: {
-      title: t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' }),
-      detail: t({
-        zh: '正在读取本地版本化的宠物清单、静态图像与动图索引。',
-        en: 'Reading the local versioned pet manifest, static art, and motion preview manifest.',
-      }),
+      title: t("正在加载宠物目录"),
+      detail: t("正在读取本地版本化的宠物清单、静态图像与动图索引。"),
     },
     error: {
-      title: t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' }),
+      title: t("宠物目录加载失败"),
       ...(state.status === 'error'
         ? {
             detail: state.message !== ''
-              ? t({
-                  zh: `无法读取 pets 数据：${state.message}`,
-                  en: `Unable to read pets data: ${state.message}`,
-                })
-              : t({
-                  zh: '无法读取 pets 数据。',
-                  en: 'Unable to read pets data.',
-                }),
+              ? t("无法读取 pets 数据：{p0}", { p0: state.message })
+              : t("无法读取 pets 数据。"),
           }
         : {}),
     },
@@ -58,7 +49,7 @@ export function PetsPage() {
     <FilterWorkbenchPage
       pageClassName="pets-page"
       storageKey="pets"
-      ariaLabel={t({ zh: '宠物图鉴工作台', en: 'Pet workbench' })}
+      ariaLabel={t("宠物图鉴工作台")}
       shellClassName="workbench-page__shell pets-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
@@ -76,8 +67,8 @@ export function PetsPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
-              detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
+              title: t("宠物图鉴"),
+              detail: t("宠物筛选与资源完整度排查"),
             },
           },
           {
@@ -91,10 +82,10 @@ export function PetsPage() {
         ],
       }}
       sidebarHeader={{
-        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
-        statusLabel: t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' }),
+        kicker: t("筛选抽屉"),
+        statusLabel: t("宠物筛选状态操作"),
         activeCount: activeFilterCount,
-        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        clearLabel: t("清空全部"),
         ...(activeFilterCount > 0 ? { onClear: actions.clearAllFilters } : {}),
       }}
       isReady={state.status === 'ready'}

@@ -1,5 +1,5 @@
 import { useDataVersionState } from '../data/useDataVersionState'
-import type { AppLocale } from './i18n'
+import type { LocaleText, TranslateParams, AppLocale  } from "./i18n"
 import type { AppNavigationItem } from './appNavigation'
 import { HeaderTopbar } from './HeaderTopbar'
 import { PrimaryNavigation } from './PrimaryNavigation'
@@ -10,7 +10,7 @@ interface SiteHeaderProps {
   readonly locale: AppLocale
   readonly setLocale: (locale: AppLocale) => void
   readonly pathname: string
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
 }
 
 export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, t }: SiteHeaderProps) {
@@ -36,7 +36,7 @@ export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, 
         <div className="site-header__content">
           <div className="site-header__copy">
             <div className="site-header__title-line">
-              <h1 className="site-title">{t({ zh: '最佳阵型推算', en: 'Formation Optimizer' })}</h1>
+              <h1 className="site-title">{t("最佳阵型推算")}</h1>
             </div>
           </div>
         </div>

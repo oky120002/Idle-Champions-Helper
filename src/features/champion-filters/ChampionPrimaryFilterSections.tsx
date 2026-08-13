@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { AppLocale, LocaleText , TranslateParams} from '../../app/i18n'
 import {
   FilterSidebarSchemaRenderer,
   type FilterSidebarFieldSchema,
@@ -50,7 +50,7 @@ interface ChampionPrimaryFilterActions {
 
 interface ChampionPrimaryFilterSectionsProps {
   locale: AppLocale
-  t: (text: LocaleText) => string
+  t: (text: string | LocaleText, params?: TranslateParams) => string
   copy: ChampionPrimaryFilterCopy
   values: ChampionPrimaryFilterValues
   options: ChampionPrimaryFilterOptions
@@ -77,12 +77,12 @@ export function ChampionPrimaryFilterSections({
     {
       kind: 'plain',
       id: 'frequent',
-      label: t({ zh: '高频条件', en: 'Frequent filters' }),
+      label: t("高频条件"),
       fields: [
         {
           kind: 'search',
           id: 'keyword',
-          label: t({ zh: '关键词', en: 'Keyword' }),
+          label: t("关键词"),
           value: values.search,
           onChange: actions.updateSearch,
           hint: t(copy.searchHint),
@@ -93,42 +93,42 @@ export function ChampionPrimaryFilterSections({
         {
           kind: 'chip-multi',
           id: 'seats',
-          label: t({ zh: '座位', en: 'Seat' }),
+          label: t("座位"),
           hint: t(copy.seatHint),
           options: seatOptions.map((seat) => ({
             id: seat,
             label: formatSeatLabel(seat, locale),
           })),
           selectedValues: values.selectedSeats,
-          allLabel: t({ zh: '全部', en: 'All' }),
+          allLabel: t("全部"),
           onReset: actions.resetSeats,
           onToggle: (value) => actions.toggleSeat(Number(value)),
         },
         {
           kind: 'chip-multi',
           id: 'roles',
-          label: t({ zh: '定位', en: 'Role' }),
+          label: t("定位"),
           hint: t(copy.roleHint),
           options: options.roleOptions.map((role) => ({
             id: role,
             label: getRoleLabel(role, locale),
           })),
           selectedValues: values.selectedRoles,
-          allLabel: t({ zh: '全部', en: 'All' }),
+          allLabel: t("全部"),
           onReset: actions.resetRole,
           onToggle: (value) => actions.toggleRole(String(value)),
         },
         {
           kind: 'chip-multi',
           id: 'affiliations',
-          label: t({ zh: '联动队伍', en: 'Affiliation' }),
+          label: t("联动队伍"),
           hint: t(copy.affiliationHint),
           options: options.affiliationOptions.map((affiliation) => ({
             id: affiliation.original,
             label: buildLocalizedLabel(affiliation),
           })),
           selectedValues: values.selectedAffiliations,
-          allLabel: t({ zh: '全部', en: 'All' }),
+          allLabel: t("全部"),
           onReset: actions.resetAffiliation,
           onToggle: (value) => actions.toggleAffiliation(String(value)),
         },
@@ -137,14 +137,14 @@ export function ChampionPrimaryFilterSections({
               {
                 kind: 'chip-multi' as const,
                 id: 'patrons',
-                label: t({ zh: '赞助人', en: 'Patron' }),
+                label: t("赞助人"),
                 hint: t(copy.patronHint),
                 options: options.patronOptions.map((patron) => ({
                   id: patron.id,
                   label: buildLocalizedLabel(patron),
                 })),
                 selectedValues: values.selectedPatrons,
-                allLabel: t({ zh: '全部', en: 'All' }),
+                allLabel: t("全部"),
                 onReset: actions.resetPatron,
                 onToggle: (value: string | number) => actions.togglePatron(String(value)),
               },

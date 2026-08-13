@@ -27,7 +27,7 @@ export function PlannerComputationMode({ value, onChange }: PlannerComputationMo
   return (
     <fieldset className="planner-scoring-mode" role="radiogroup" data-testid="planner-computation-mode">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '计算模式', en: 'Computation' })}
+        {t("计算模式")}
       </legend>
       <div className="planner-scoring-mode__options">
         {MODES.map((mode) => {
@@ -47,7 +47,7 @@ export function PlannerComputationMode({ value, onChange }: PlannerComputationMo
                 }
               }}
             >
-              {t({ zh: mode.zh, en: mode.en })}
+              {t(mode)}
             </button>
           )
         })}

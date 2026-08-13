@@ -24,7 +24,7 @@ export function PlannerTopLineups({ results, selectedIndex, championById, onSele
   return (
     <section
       className="surface-card planner-top-lineups"
-      aria-label={t({ zh: '候选阵型切换', en: 'Top lineups' })}
+      aria-label={t("候选阵型切换")}
     >
       <div className="surface-card__body">
         <div className="planner-top-lineups__tabs" role="tablist">

@@ -15,17 +15,14 @@ export function PetResultsGrid({ pets, animationByPetId }: PetResultsGridProps) 
     return (
       <StatusBanner
         tone="info"
-        title={t({ zh: '没有匹配结果', en: 'No pets match' })}
-        detail={t({
-          zh: '当前筛选条件下没有宠物，试试清空搜索词或放宽图像状态。',
-          en: 'No pets match the current filters. Try clearing the query or broadening the asset filter.',
-        })}
+        title={t("没有匹配结果")}
+        detail={t("当前筛选条件下没有宠物，试试清空搜索词或放宽图像状态。")}
       />
     )
   }
 
   return (
-    <div className="pets-grid" aria-label={t({ zh: '宠物结果', en: 'Pet results' })}>
+    <div className="pets-grid" aria-label={t("宠物结果")}>
       {pets.map((pet) => (
         <PetResultCard key={pet.id} pet={pet} animation={animationByPetId.get(pet.id) ?? null} />
       ))}

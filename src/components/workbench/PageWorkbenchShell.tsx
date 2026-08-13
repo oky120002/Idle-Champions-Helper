@@ -278,8 +278,8 @@ export function PageWorkbenchShell({
     className,
   })
   const toggleLabel = isSidebarCollapsed
-    ? t({ zh: '展开左侧面板', en: 'Open left pane' })
-    : t({ zh: '收起左侧面板', en: 'Collapse left pane' })
+    ? t("展开左侧面板")
+    : t("收起左侧面板")
   const leadGroup = renderToolbarLeadGroup({
     hasSidebar,
     isSidebarCollapsed,
@@ -295,7 +295,7 @@ export function PageWorkbenchShell({
       className={shellClassName}
       data-workbench-sidebar={hasSidebar ? 'present' : 'hidden'}
       data-workbench-sidebar-collapsed={isSidebarCollapsed ? 'true' : 'false'}
-      aria-label={ariaLabel ?? t({ zh: '页面工作台', en: 'Page workbench' })}
+      aria-label={ariaLabel ?? t("页面工作台")}
     >
       <div className="page-workbench__body">
         {hasSidebar ? (

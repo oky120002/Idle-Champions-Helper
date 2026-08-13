@@ -5,7 +5,7 @@ describe('workbenchMetricItemBuilders', () => {
   it('构造统一的当前展示 metric', () => {
     expect(
       createWorkbenchShowingMetricItem({
-        t: ({ zh, en }) => (zh !== '' ? zh : en),
+        t: (text) => (typeof text === 'string' ? text : text.zh),
         visibleCount: 18,
         filteredCount: 42,
         enUnitLabel: 'champions',

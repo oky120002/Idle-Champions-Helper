@@ -39,7 +39,7 @@ function DraftPromptBanner({ draftPrompt, model }: DraftPromptBannerProps) {
       tone={isRestore ? 'info' : 'error'}
       title={
         isRestore
-          ? t({ zh: '检测到最近草稿，是否恢复？', en: 'Recent draft detected. Restore it?' })
+          ? t("检测到最近草稿，是否恢复？")
           : t(draftPrompt.title)
       }
       detail={
@@ -53,20 +53,20 @@ function DraftPromptBanner({ draftPrompt, model }: DraftPromptBannerProps) {
           items={[
             {
               id: 'restore-draft',
-              label: t({ zh: '恢复最近草稿', en: 'Restore draft' }),
+              label: t("恢复最近草稿"),
               tone: 'secondary',
               hidden: !isRestore,
               onClick: model.handleRestoreRecentDraft,
             },
             {
               id: 'keep-draft',
-              label: t({ zh: '先保留不恢复', en: 'Keep for now' }),
+              label: t("先保留不恢复"),
               tone: 'ghost',
               onClick: model.handleKeepDraftWithoutRestore,
             },
             {
               id: 'discard-draft',
-              label: t({ zh: '丢弃旧草稿', en: 'Discard draft' }),
+              label: t("丢弃旧草稿"),
               tone: 'ghost',
               onClick: model.handleDiscardRecentDraft,
             },
@@ -79,15 +79,15 @@ function DraftPromptBanner({ draftPrompt, model }: DraftPromptBannerProps) {
           <p className="status-banner__detail">{t(buildRestoreStatusDetail(draftPrompt.preview))}</p>
           <div className="tag-row">
             <span className="tag-pill tag-pill--muted">
-              {t({ zh: '保存版本', en: 'Saved version' })}：{draftPrompt.preview.snapshot.dataVersion}
+              {t("保存版本")}：{draftPrompt.preview.snapshot.dataVersion}
             </span>
             <span className="tag-pill tag-pill--muted">
-              {t({ zh: '恢复版本', en: 'Restore version' })}：{draftPrompt.preview.dataVersion}
+              {t("恢复版本")}：{draftPrompt.preview.dataVersion}
             </span>
             <span className="tag-pill tag-pill--muted">
               {draftPrompt.preview.restoreMode === 'compatible'
-                ? t({ zh: '兼容恢复', en: 'Compatible restore' })
-                : t({ zh: '原样恢复', en: 'Exact restore' })}
+                ? t("兼容恢复")
+                : t("原样恢复")}
             </span>
           </div>
           {draftPromptChampions.length > 0 ? (

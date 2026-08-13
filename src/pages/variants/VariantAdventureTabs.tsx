@@ -31,7 +31,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
 
   return (
     <>
-      <div className="variant-detail-tabs" role="tablist" aria-label={t({ zh: '变体详情分页', en: 'Variant detail tabs' })}>
+      <div className="variant-detail-tabs" role="tablist" aria-label={t("变体详情分页")}>
         {TAB_IDS.map((tabId) => (
           <button
             key={tabId}
@@ -61,7 +61,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
       {filters.detailTab === 'areas' ? (
         <div className="variant-detail__areas">
           <section className="variant-detail__panel">
-            <span className="variant-detail__intel-label">{t({ zh: '区域节点', en: 'Area nodes' })}</span>
+            <span className="variant-detail__intel-label">{t("区域节点")}</span>
             <div className="variant-chip-row">
               {selectedAdventureGroup.areaMilestones.map((area) => (
                 <span key={area} className="variant-chip">
@@ -71,7 +71,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
             </div>
           </section>
           <section className="variant-detail__panel">
-            <span className="variant-detail__intel-label">{t({ zh: '场景变化', en: 'Battlefield changes' })}</span>
+            <span className="variant-detail__intel-label">{t("场景变化")}</span>
             {areaHighlightLabels.length > 0 ? (
               <div className="variant-chip-row">
                 {areaHighlightLabels.map((label) => (
@@ -79,7 +79,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
                 ))}
               </div>
             ) : (
-              <p className="supporting-text">{t({ zh: '当前数据没有解析到额外区域事件。', en: 'No extra area events were parsed.' })}</p>
+              <p className="supporting-text">{t("当前数据没有解析到额外区域事件。")}</p>
             )}
           </section>
         </div>
@@ -88,10 +88,7 @@ export function VariantAdventureTabs({ model }: VariantAdventureTabsProps) {
       {filters.detailTab === 'story' ? (
         <div className="variant-detail__panel">
           <p className="supporting-text">
-            {t({
-              zh: '当前公共数据没有官方剧情文本字段，因此这里先保留分页入口，不展示 kleho 私有内容。',
-              en: 'The current public data has no official story text field, so this tab stays available without mirroring private kleho content.',
-            })}
+            {t("当前公共数据没有官方剧情文本字段，因此这里先保留分页入口，不展示 kleho 私有内容。")}
           </p>
         </div>
       ) : null}

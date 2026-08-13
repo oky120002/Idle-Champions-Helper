@@ -20,10 +20,10 @@ export function PlannerCarryLock({ championById, value, onChange }: PlannerCarry
     })
 
   return (
-    <section className="surface-card planner-carry-lock" aria-label={t({ zh: '指定核心输出位', en: 'Lock carry' })}>
+    <section className="surface-card planner-carry-lock" aria-label={t("指定核心输出位")}>
       <div className="surface-card__body">
         <label className="planner-carry-lock__label" htmlFor="planner-carry-lock-select">
-          {t({ zh: '指定核心输出位（所有英雄）', en: 'Lock carry (all champions)' })}
+          {t("指定核心输出位（所有英雄）")}
         </label>
         <select
           id="planner-carry-lock-select"
@@ -35,7 +35,7 @@ export function PlannerCarryLock({ championById, value, onChange }: PlannerCarry
             onChange(next !== '' ? next : null)
           }}
         >
-          <option value="">{t({ zh: '不指定（自动推荐）', en: 'Auto (no lock)' })}</option>
+          <option value="">{t("不指定（自动推荐）")}</option>
           {champions.map((champion) => (
             <option key={champion.id} value={champion.id}>
               {`${getPrimaryLocalizedText(champion.name, locale)} · Seat ${String(champion.seat)}`}

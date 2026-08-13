@@ -17,16 +17,13 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
 
   return (
     <WorkbenchResultsScaffold
-      ariaLabel={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}
+      ariaLabel={t("英雄筛选结果")}
       sectionClassName="champions-results"
       shellClassName="results-panel-shell"
       panelClassName="results-panel"
       isEmpty={!hasMatches}
       emptyState={{
-        children: t({
-          zh: '暂时没有可展示的英雄结果。先放宽一个过滤维度，再继续缩小范围会更顺手。',
-          en: 'There are no champions to show right now. Loosen one filter group first, then narrow it back down.',
-        }),
+        children: t("暂时没有可展示的英雄结果。先放宽一个过滤维度，再继续缩小范围会更顺手。"),
       }}
     >
       <div ref={gridRef} className="results-grid results-grid--stable champions-results__grid">

@@ -2,11 +2,11 @@ import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domai
 import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { ActiveFilterChip, IdLocalizedOption } from '../../features/champion-filters/types'
 import type { AppLocale } from '../../app/i18n'
-import type { ChampionsPageTranslator, ChampionsFilterState } from './types'
+import { pickText, t } from '../../app/i18n-messages'
+import type { ChampionsFilterState } from './types'
 
 interface ActiveChipOptions {
   locale: AppLocale
-  t: ChampionsPageTranslator
   filters: ChampionsFilterState
   orderedSelectedSeats: number[]
   orderedSelectedRoles: string[]
@@ -26,7 +26,6 @@ export function buildChampionsTransitionKey(filters: ChampionsFilterState): stri
 
 export function buildActiveFilterChips({
   locale,
-  t,
   filters,
   orderedSelectedSeats,
   orderedSelectedRoles,
@@ -46,154 +45,94 @@ export function buildActiveFilterChips({
     trimmedSearch !== ''
       ? {
           id: 'search',
-          label: t({ zh: `关键词：${trimmedSearch}`, en: `Keyword: ${trimmedSearch}` }),
-          clearLabel: t({ zh: `清空关键词：${trimmedSearch}`, en: `Clear keyword: ${trimmedSearch}` }),
+          label: t(locale, '关键词：{p0}', { p0: trimmedSearch }),
+          clearLabel: t(locale, '清空关键词：{p0}', { p0: trimmedSearch }),
         }
       : null,
     orderedSelectedSeats.length > 0
       ? {
           id: 'seats',
-          label: t({
-            zh: `座位：${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join('、')}`,
-            en: `Seats: ${orderedSelectedSeats.join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空座位：${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join('、')}`,
-            en: `Clear seats: ${orderedSelectedSeats.join(', ')}`,
-          }),
+          label: pickText(locale, `座位：${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join('、')}`, `Seats: ${orderedSelectedSeats.join(', ')}`),
+          clearLabel: pickText(locale, `清空座位：${orderedSelectedSeats.map((seat) => formatSeatLabel(seat, locale)).join('、')}`, `Clear seats: ${orderedSelectedSeats.join(', ')}`),
         }
       : null,
     orderedSelectedRoles.length > 0
       ? {
           id: 'roles',
-          label: t({
-            zh: `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`,
-            en: `Roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`,
-            en: `Clear roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`,
-          }),
+          label: pickText(locale, `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`, `Roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`),
+          clearLabel: pickText(locale, `清空定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`, `Clear roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`),
         }
       : null,
     orderedSelectedAffiliations.length > 0
       ? {
           id: 'affiliations',
-          label: t({
-            zh: `联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`,
-            en: `Affiliations: ${orderedSelectedAffiliations
+          label: pickText(locale, `联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`, `Affiliations: ${orderedSelectedAffiliations
               .map((affiliation) => getLocalizedTextPair(affiliation, locale))
-              .join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`,
-            en: `Clear affiliations: ${orderedSelectedAffiliations
+              .join(', ')}`),
+          clearLabel: pickText(locale, `清空联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`, `Clear affiliations: ${orderedSelectedAffiliations
               .map((affiliation) => getLocalizedTextPair(affiliation, locale))
-              .join(', ')}`,
-          }),
+              .join(', ')}`),
         }
       : null,
     orderedSelectedRaces.length > 0
       ? {
           id: 'races',
-          label: t({
-            zh: `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`,
-            en: `Races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`,
-            en: `Clear races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`,
-          }),
+          label: pickText(locale, `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`, `Races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`),
+          clearLabel: pickText(locale, `清空种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`, `Clear races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`),
         }
       : null,
     orderedSelectedGenders.length > 0
       ? {
           id: 'genders',
-          label: t({
-            zh: `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`,
-            en: `Genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`,
-            en: `Clear genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`,
-          }),
+          label: pickText(locale, `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`, `Genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`),
+          clearLabel: pickText(locale, `清空性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`, `Clear genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`),
         }
       : null,
     orderedSelectedAlignments.length > 0
       ? {
           id: 'alignments',
-          label: t({
-            zh: `阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join('、')}`,
-            en: `Alignments: ${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join('、')}`,
-            en: `Clear alignments: ${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(', ')}`,
-          }),
+          label: pickText(locale, `阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join('、')}`, `Alignments: ${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(', ')}`),
+          clearLabel: pickText(locale, `清空阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join('、')}`, `Clear alignments: ${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join(', ')}`),
         }
       : null,
     orderedSelectedProfessions.length > 0
       ? {
           id: 'professions',
-          label: t({
-            zh: `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`,
-            en: `Professions: ${orderedSelectedProfessions
+          label: pickText(locale, `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`, `Professions: ${orderedSelectedProfessions
               .map((profession) => getChampionTagLabel(profession, locale))
-              .join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`,
-            en: `Clear professions: ${orderedSelectedProfessions
+              .join(', ')}`),
+          clearLabel: pickText(locale, `清空职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`, `Clear professions: ${orderedSelectedProfessions
               .map((profession) => getChampionTagLabel(profession, locale))
-              .join(', ')}`,
-          }),
+              .join(', ')}`),
         }
       : null,
     orderedSelectedAcquisitions.length > 0
       ? {
           id: 'acquisitions',
-          label: t({
-            zh: `获取方式：${orderedSelectedAcquisitions.map((acquisition) => getChampionTagLabel(acquisition, locale)).join('、')}`,
-            en: `Availability: ${orderedSelectedAcquisitions
+          label: pickText(locale, `获取方式：${orderedSelectedAcquisitions.map((acquisition) => getChampionTagLabel(acquisition, locale)).join('、')}`, `Availability: ${orderedSelectedAcquisitions
               .map((acquisition) => getChampionTagLabel(acquisition, locale))
-              .join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空获取方式：${orderedSelectedAcquisitions.map((acquisition) => getChampionTagLabel(acquisition, locale)).join('、')}`,
-            en: `Clear availability: ${orderedSelectedAcquisitions
+              .join(', ')}`),
+          clearLabel: pickText(locale, `清空获取方式：${orderedSelectedAcquisitions.map((acquisition) => getChampionTagLabel(acquisition, locale)).join('、')}`, `Clear availability: ${orderedSelectedAcquisitions
               .map((acquisition) => getChampionTagLabel(acquisition, locale))
-              .join(', ')}`,
-          }),
+              .join(', ')}`),
         }
       : null,
     orderedSelectedMechanics.length > 0
       ? {
           id: 'mechanics',
-          label: t({
-            zh: `特殊机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
-            en: `Special mechanics: ${orderedSelectedMechanics
+          label: pickText(locale, `特殊机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`, `Special mechanics: ${orderedSelectedMechanics
               .map((mechanic) => getChampionTagLabel(mechanic, locale))
-              .join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空特殊机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
-            en: `Clear special mechanics: ${orderedSelectedMechanics
+              .join(', ')}`),
+          clearLabel: pickText(locale, `清空特殊机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`, `Clear special mechanics: ${orderedSelectedMechanics
               .map((mechanic) => getChampionTagLabel(mechanic, locale))
-              .join(', ')}`,
-          }),
+              .join(', ')}`),
         }
       : null,
     orderedSelectedPatrons.length > 0
       ? {
           id: 'patrons',
-          label: t({
-            zh: `赞助人：${patronLabels.join('、')}`,
-            en: `Patrons: ${patronLabels.join(', ')}`,
-          }),
-          clearLabel: t({
-            zh: `清空赞助人：${patronLabels.join('、')}`,
-            en: `Clear patrons: ${patronLabels.join(', ')}`,
-          }),
+          label: pickText(locale, `赞助人：${patronLabels.join('、')}`, `Patrons: ${patronLabels.join(', ')}`),
+          clearLabel: pickText(locale, `清空赞助人：${patronLabels.join('、')}`, `Clear patrons: ${patronLabels.join(', ')}`),
         }
       : null,
   ].filter((item): item is ActiveFilterChip => Boolean(item))

@@ -59,18 +59,15 @@ export function IllustrationsPrimaryFilters({ model }: IllustrationsPrimaryFilte
     {
       kind: 'segmented',
       id: 'scope',
-      label: t({ zh: '范围', en: 'Scope' }),
+      label: t("范围"),
       value: filters.scope,
       onChange: (value) => actions.updateScope(value as ViewFilter),
-      groupLabel: t({ zh: '立绘范围', en: 'Illustration scope' }),
+      groupLabel: t("立绘范围"),
       options: SCOPE_OPTIONS.map((option) => ({
         value: option.value,
         label: t(option.label),
       })),
-      hint: t({
-        zh: '本体与皮肤可以直接切开，先缩短图片瀑布流再细筛。',
-        en: 'Split hero art from skins first when you want to shorten the image stream before filtering deeper.',
-      }),
+      hint: t("本体与皮肤可以直接切开，先缩短图片瀑布流再细筛。"),
     },
   ]
 

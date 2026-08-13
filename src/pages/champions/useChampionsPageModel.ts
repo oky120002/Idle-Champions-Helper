@@ -20,7 +20,6 @@ export function useChampionsPageModel(): ChampionsPageModel {
 
   const derived = useChampionsPageDerived({
     locale,
-    t,
     state,
     randomOrderSeed,
     filters: filterState.filters,

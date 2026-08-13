@@ -117,17 +117,11 @@ export function PlannerScenarioSelection({
 
   let summaryText: string
   if (filteredRecords.length === 0) {
-    summaryText = t({ zh: '当前没有匹配场景。换个关键词，或切回其他战役。', en: 'No scenarios match. Change the query or switch campaigns.' })
+    summaryText = t("当前没有匹配场景。换个关键词，或切回其他战役。")
   } else if (hiddenResultCount > 0) {
-    summaryText = t({
-      zh: `当前先显示 ${String(visibleRecords.length)} / ${String(filteredRecords.length)} 项；继续输入关键词或展开全部匹配项。`,
-      en: `Showing ${String(visibleRecords.length)} of ${String(filteredRecords.length)}. Keep typing or expand the full result set.`,
-    })
+    summaryText = t("当前先显示 {p0} / {p1} 项；继续输入关键词或展开全部匹配项。", { p0: String(visibleRecords.length), p1: String(filteredRecords.length) })
   } else {
-    summaryText = t({
-      zh: `当前展示 ${String(visibleRecords.length)} 项，可直接选择并查看右侧详情。`,
-      en: `Showing ${String(visibleRecords.length)} scenarios. Select one to inspect its details.`,
-    })
+    summaryText = t("当前展示 {p0} 项，可直接选择并查看右侧详情。", { p0: String(visibleRecords.length) })
   }
 
   return (
@@ -135,30 +129,27 @@ export function PlannerScenarioSelection({
       <header className="planner-scenario-selection__header">
         <div className="planner-scenario-selection__header-copy">
           <p className="planner-scenario-selection__eyebrow">
-            {t({ zh: '场景池', en: 'Scenario pool' })}
+            {t("场景池")}
           </p>
           <h3 className="planner-scenario-selection__title">
-            {t({ zh: '先缩小范围，再确认目标关卡', en: 'Narrow the pool before locking a target scenario' })}
+            {t("先缩小范围，再确认目标关卡")}
           </h3>
           <p className="planner-scenario-selection__description">
-            {t({
-              zh: '优先用战役和关键词缩小范围，只保留你当前真正在比较的目标。',
-              en: 'Use campaigns and keywords to narrow the pool before comparing the scenarios that matter.',
-            })}
+            {t("优先用战役和关键词缩小范围，只保留你当前真正在比较的目标。")}
           </p>
         </div>
 
-        <div className="planner-scenario-selection__metrics" aria-label={t({ zh: '场景统计', en: 'Scenario statistics' })}>
+        <div className="planner-scenario-selection__metrics" aria-label={t("场景统计")}>
           <div className="planner-scenario-selection__metric">
-            <span className="planner-scenario-selection__metric-label">{t({ zh: '总场景', en: 'Total' })}</span>
+            <span className="planner-scenario-selection__metric-label">{t("总场景")}</span>
             <strong className="planner-scenario-selection__metric-value">{records.length}</strong>
           </div>
           <div className="planner-scenario-selection__metric">
-            <span className="planner-scenario-selection__metric-label">{t({ zh: '当前匹配', en: 'Matched' })}</span>
+            <span className="planner-scenario-selection__metric-label">{t("当前匹配")}</span>
             <strong className="planner-scenario-selection__metric-value">{filteredRecords.length}</strong>
           </div>
           <div className="planner-scenario-selection__metric">
-            <span className="planner-scenario-selection__metric-label">{t({ zh: '当前选中', en: 'Selected' })}</span>
+            <span className="planner-scenario-selection__metric-label">{t("当前选中")}</span>
             <strong className="planner-scenario-selection__metric-value">
               {selectedRecord?.objectiveArea ?? '—'}
             </strong>
@@ -169,7 +160,7 @@ export function PlannerScenarioSelection({
       <div className="planner-scenario-selection__tools">
         <div className="planner-scenario-selection__search">
           <label className="field-label" htmlFor="planner-scenario-search">
-            {t({ zh: '搜索场景', en: 'Search scenarios' })}
+            {t("搜索场景")}
           </label>
           <div className="planner-scenario-selection__search-row">
             <input
@@ -182,10 +173,7 @@ export function PlannerScenarioSelection({
                 setSearch(event.target.value)
                 setShowAllResults(false)
               }}
-              placeholder={t({
-                zh: '支持战役、关卡名、目标区、限制条件组合搜索',
-                en: 'Search by campaign, scenario, objective area, or restrictions',
-              })}
+              placeholder={t("支持战役、关卡名、目标区、限制条件组合搜索")}
             />
             {search !== '' ? (
               <button
@@ -196,13 +184,13 @@ export function PlannerScenarioSelection({
                   setShowAllResults(false)
                 }}
               >
-                {t({ zh: '清除', en: 'Clear' })}
+                {t("清除")}
               </button>
             ) : null}
           </div>
         </div>
 
-        <div className="planner-scenario-selection__campaigns" role="group" aria-label={t({ zh: '战役过滤器', en: 'Campaign filters' })}>
+        <div className="planner-scenario-selection__campaigns" role="group" aria-label={t("战役过滤器")}>
           {campaignOptions.map((campaign) => {
             const isActive = campaign.id === activeCampaignId
 
@@ -234,7 +222,7 @@ export function PlannerScenarioSelection({
           <ul
             className="planner-scenario-selection__list"
             role="listbox"
-            aria-label={t({ zh: '场景列表', en: 'Scenario list' })}
+            aria-label={t("场景列表")}
           >
             {visibleRecords.map((record) => (
               <PlannerScenarioListItem
@@ -248,8 +236,8 @@ export function PlannerScenarioSelection({
 
           {filteredRecords.length === 0 ? (
             <div className="planner-scenario-selection__empty" role="status">
-              <strong>{t({ zh: '没有匹配项', en: 'No matches' })}</strong>
-              <p>{t({ zh: '试试战役名、目标区、限制条件或奖励关键词。', en: 'Try campaign names, objective areas, restrictions, or reward terms.' })}</p>
+              <strong>{t("没有匹配项")}</strong>
+              <p>{t("试试战役名、目标区、限制条件或奖励关键词。")}</p>
             </div>
           ) : null}
 
@@ -259,7 +247,7 @@ export function PlannerScenarioSelection({
               className="action-button action-button--secondary planner-scenario-selection__toggle"
               onClick={() => setShowAllResults(true)}
             >
-              {t({ zh: '展开全部匹配项', en: 'Show all matches' })}
+              {t("展开全部匹配项")}
             </button>
           ) : null}
 
@@ -269,7 +257,7 @@ export function PlannerScenarioSelection({
               className="action-button action-button--ghost planner-scenario-selection__toggle"
               onClick={() => setShowAllResults(false)}
             >
-              {t({ zh: '收起到精简视图', en: 'Collapse to compact view' })}
+              {t("收起到精简视图")}
             </button>
           ) : null}
         </div>

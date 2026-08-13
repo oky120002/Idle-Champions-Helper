@@ -104,7 +104,7 @@ function FormationBoardSlot({
   const champion = championId != null && championId !== '' ? championById.get(championId) ?? null : null
   const isCarry = carrySlotId != null && slot.id === carrySlotId
   const extraClass = slotClassName?.(slot, champion)
-  const slotLabel = t({ zh: `槽位 ${slot.id}`, en: `Slot ${slot.id}` })
+  const slotLabel = t("槽位 {p0}", { p0: slot.id })
   const slotClassNameValue = ['formation-slot', isCarry ? 'formation-slot--carry' : '', extraClass ?? '']
     .filter(Boolean)
     .join(' ')
@@ -181,7 +181,7 @@ function FormationSlotSummary({
       {isCarry ? (
         <span
           className="formation-slot__carry-mark"
-          aria-label={t({ zh: '核心输出位', en: 'Carry slot' })}
+          aria-label={t("核心输出位")}
         >
           <Crown aria-hidden="true" strokeWidth={1.9} />
         </span>

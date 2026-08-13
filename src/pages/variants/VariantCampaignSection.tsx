@@ -15,7 +15,7 @@ export function VariantCampaignSection({ model, group }: VariantCampaignSectionP
       <header className="variant-campaign-group__header">
         <div className="variant-campaign-group__copy">
           <span className="variant-campaign-group__eyebrow">
-            {t({ zh: '战役分组', en: 'Campaign grouping' })}
+            {t("战役分组")}
           </span>
           <LocalizedText
             text={group.campaign}
@@ -28,15 +28,12 @@ export function VariantCampaignSection({ model, group }: VariantCampaignSectionP
             secondaryClassName="variant-campaign-group__secondary"
           />
           <p className="variant-campaign-group__summary">
-            {t({
-              zh: `当前可见 ${String(group.adventures.length)} 个冒险分支，共 ${String(group.variantCount)} 个变体。`,
-              en: `${String(group.adventures.length)} visible adventures with ${String(group.variantCount)} variants in this campaign.`,
-            })}
+            {t("当前可见 {p0} 个冒险分支，共 {p1} 个变体。", { p0: String(group.adventures.length), p1: String(group.variantCount) })}
           </p>
         </div>
         <div className="variant-campaign-group__badge">
           <strong>{group.variantCount}</strong>
-          <span>{t({ zh: '变体', en: 'Variants' })}</span>
+          <span>{t("变体")}</span>
         </div>
       </header>
 

@@ -1,4 +1,4 @@
-import type { AppLocale } from '../../app/i18n'
+import type { LocaleText, TranslateParams, AppLocale  } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
 import { buildUpgradeCategoryMeta, buildUpgradePresentation } from './effect-model'
@@ -95,21 +95,21 @@ export function buildLedgerFilterOptions(
   })
 }
 
-type Translation = (text: { zh: string; en: string }) => string
+type Translation = (text: string | LocaleText, params?: TranslateParams) => string
 
 function buildOptionalDateFields(detail: ChampionDetail, locale: AppLocale, t: Translation): DetailFieldProps[] {
   const fields: DetailFieldProps[] = []
 
   if (detail.lastReworkDate != null && detail.lastReworkDate !== '') {
     fields.push({
-      label: t({ zh: '最后重做', en: 'Last rework' }),
+      label: t("最后重做"),
       value: formatDateText(detail.lastReworkDate, locale),
     })
   }
 
   if (detail.availability.nextEventTimestamp != null && detail.availability.nextEventTimestamp > 0) {
     fields.push({
-      label: t({ zh: '下次活动时间', en: 'Next event time' }),
+      label: t("下次活动时间"),
       value: formatTimestamp(detail.availability.nextEventTimestamp, locale),
     })
   }
@@ -131,28 +131,28 @@ export function buildOverviewFields(options: {
 
   return [
     {
-      label: t({ zh: 'Seat', en: 'Seat' }),
+      label: t("Seat"),
       value: locale === 'zh-CN' ? `${String(detail.summary.seat)} 号位` : `Seat ${String(detail.summary.seat)}`,
     },
     ...(detail.eventName
       ? [
           {
-            label: t({ zh: '活动名', en: 'Event name' }),
+            label: t("活动名"),
             value: getPrimaryLocalizedText(detail.eventName, locale),
           },
         ]
       : []),
     {
-      label: t({ zh: '首次可用', en: 'Date available' }),
+      label: t("首次可用"),
       value: formatDateText(detail.dateAvailable, locale),
     },
     ...buildOptionalDateFields(detail, locale, t),
     {
-      label: t({ zh: '默认天赋槽解锁', en: 'Default feat slots' }),
+      label: t("默认天赋槽解锁"),
       value:
         detail.defaultFeatSlotUnlocks.length > 0
           ? detail.defaultFeatSlotUnlocks.join(' / ')
-          : t({ zh: '暂无', en: 'None yet' }),
+          : t("暂无"),
     },
     ...buildOverviewPropertyFields(detail, locale, effectContext),
   ]

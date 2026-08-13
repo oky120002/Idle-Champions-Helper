@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
@@ -7,7 +8,7 @@ import { formatNumber } from './detail-value-formatters'
 type DetailCharacterSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
 }
 
 export function DetailCharacterSection({ detail, locale, t }: DetailCharacterSectionProps) {
@@ -19,46 +20,46 @@ export function DetailCharacterSection({ detail, locale, t }: DetailCharacterSec
         <>
           <div className="detail-field-grid">
             <DetailField
-              label={t({ zh: '全名', en: 'Full name' })}
+              label={t("全名")}
               value={
                 detail.characterSheet.fullName ? (
                   <LocalizedTextStack value={detail.characterSheet.fullName} />
                 ) : (
-                  t({ zh: '暂无', en: 'Not available' })
+                  t("暂无")
                 )
               }
             />
             <DetailField
-              label={t({ zh: '职业', en: 'Class' })}
+              label={t("职业")}
               value={
                 detail.characterSheet.class ? (
                   <LocalizedTextStack value={detail.characterSheet.class} />
                 ) : (
-                  t({ zh: '暂无', en: 'Not available' })
+                  t("暂无")
                 )
               }
             />
             <DetailField
-              label={t({ zh: '种族', en: 'Race' })}
+              label={t("种族")}
               value={
                 detail.characterSheet.race ? (
                   <LocalizedTextStack value={detail.characterSheet.race} />
                 ) : (
-                  t({ zh: '暂无', en: 'Not available' })
+                  t("暂无")
                 )
               }
             />
             <DetailField
-              label={t({ zh: '阵营', en: 'Alignment' })}
+              label={t("阵营")}
               value={
                 detail.characterSheet.alignment ? (
                   <LocalizedTextStack value={detail.characterSheet.alignment} />
                 ) : (
-                  t({ zh: '暂无', en: 'Not available' })
+                  t("暂无")
                 )
               }
             />
-            <DetailField label={t({ zh: '年龄', en: 'Age' })} value={formatNumber(detail.characterSheet.age, locale)} />
+            <DetailField label={t("年龄")} value={formatNumber(detail.characterSheet.age, locale)} />
           </div>
 
           <div className="ability-score-grid">
@@ -74,14 +75,14 @@ export function DetailCharacterSection({ detail, locale, t }: DetailCharacterSec
 
           {detail.characterSheet.backstory ? (
             <article className="detail-subcard detail-subcard--story">
-              <h3 className="detail-subcard__title">{t({ zh: '背景故事', en: 'Backstory' })}</h3>
+              <h3 className="detail-subcard__title">{t("背景故事")}</h3>
               <p className="detail-subcard__body">{getPrimaryLocalizedText(detail.characterSheet.backstory, locale)}</p>
             </article>
           ) : null}
         </>
       ) : (
         <div className="status-banner status-banner--info">
-          {t({ zh: '当前没有角色卡字段。', en: 'No character sheet fields are available here.' })}
+          {t("当前没有角色卡字段。")}
         </div>
       )}
     </SurfaceCard>

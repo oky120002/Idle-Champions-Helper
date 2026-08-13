@@ -1,4 +1,4 @@
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
 import type { LocalizedOption } from '../../domain/types'
 import { buildActiveVariantFilters } from './variant-model'
 import type {
@@ -9,7 +9,7 @@ import type {
   VariantFilterOption,
 } from './types'
 
-type VariantTranslator = (text: LocaleText) => string
+type VariantTranslator = (text: string | LocaleText, params?: TranslateParams) => string
 
 export function getSelectedCampaignGroup(
   groups: VariantCampaignGroup[],
@@ -98,8 +98,8 @@ export function buildVariantNavigationFilters(options: {
     ...(selectedAdventureGroup
       ? [
           locale === 'zh-CN'
-            ? `${t({ zh: '关卡', en: 'Adventure' })}：${selectedAdventureGroup.adventure.display}`
-            : `${t({ zh: '关卡', en: 'Adventure' })}: ${selectedAdventureGroup.adventure.original}`,
+            ? `${t("关卡")}：${selectedAdventureGroup.adventure.display}`
+            : `${t("关卡")}: ${selectedAdventureGroup.adventure.original}`,
         ]
       : []),
   ]

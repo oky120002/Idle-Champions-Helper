@@ -28,20 +28,14 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
     <div className="formation-mobile-editor" data-testid="formation-mobile-editor">
       <div className="formation-mobile-editor__header">
         <div>
-          <p className="formation-mobile-editor__eyebrow">{t({ zh: '当前编辑槽位', en: 'Editing slot' })}</p>
+          <p className="formation-mobile-editor__eyebrow">{t("当前编辑槽位")}</p>
           <h3 className="formation-mobile-editor__title" data-testid="formation-mobile-editor-slot">
-            {t({ zh: `槽位 ${activeMobileSlot.id}`, en: `Slot ${activeMobileSlot.id}` })}
+            {t("槽位 {p0}", { p0: activeMobileSlot.id })}
           </h3>
           <p className="formation-mobile-editor__description">
             {activeMobileChampion
-              ? t({
-                  zh: `当前为 ${getLocalizedTextPair(activeMobileChampion.name, locale)}，点击下方可更换英雄。`,
-                  en: `Currently ${getLocalizedTextPair(activeMobileChampion.name, locale)}. Use the picker below to swap champions.`,
-                })
-              : t({
-                  zh: '当前未放置英雄，先从下方列表里选择一名候选。',
-                  en: 'This slot is empty. Pick a champion below to place one here.',
-                })}
+              ? t("当前为 {p0}，点击下方可更换英雄。", { p0: getLocalizedTextPair(activeMobileChampion.name, locale) })
+              : t("当前未放置英雄，先从下方列表里选择一名候选。")}
           </p>
         </div>
         {activeMobileChampion ? (
@@ -50,7 +44,7 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
             className="formation-mobile-editor__clear"
             onClick={() => handleAssignChampion(activeMobileSlot.id, '')}
           >
-            {t({ zh: '清空槽位', en: 'Clear slot' })}
+            {t("清空槽位")}
           </ActionButton>
         ) : null}
       </div>
@@ -76,7 +70,7 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
         </div>
       ) : (
         <p className="formation-mobile-editor__empty" data-testid="formation-mobile-current-name">
-          {t({ zh: '当前未放置英雄', en: 'No champion placed yet' })}
+          {t("当前未放置英雄")}
         </p>
       )}
     </div>

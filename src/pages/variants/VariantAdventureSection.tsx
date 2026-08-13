@@ -92,10 +92,7 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
           />
 
           <p className="variant-adventure__summary">
-            {t({
-              zh: `按游戏结构把同一冒险底下的变体并排展开，方便先看阵型、敌人和区域，再决定要不要细看限制。`,
-              en: `Variants from the same adventure stay grouped together so you can scan formation, enemies, and area pacing before diving into restriction text.`,
-            })}
+            {t("按游戏结构把同一冒险底下的变体并排展开，方便先看阵型、敌人和区域，再决定要不要细看限制。")}
           </p>
 
           <div className="variant-meta-row">
@@ -112,7 +109,7 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
 
       <div className="variant-adventure__intel-grid">
         <section className="variant-adventure__intel">
-          <span className="variant-adventure__intel-label">{t({ zh: '敌人类型', en: 'Enemy types' })}</span>
+          <span className="variant-adventure__intel-label">{t("敌人类型")}</span>
           <div className="variant-chip-row">
             {enemyTypes.map((enemyType) => (
               <span key={enemyType} className="variant-chip">
@@ -123,7 +120,7 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
         </section>
 
         <section className="variant-adventure__intel">
-          <span className="variant-adventure__intel-label">{t({ zh: '攻击占比', en: 'Attack mix' })}</span>
+          <span className="variant-adventure__intel-label">{t("攻击占比")}</span>
           <div className="variant-attack-bar" aria-hidden="true">
             <span
               className="variant-attack-bar__segment variant-attack-bar__segment--melee"
@@ -142,7 +139,7 @@ export function VariantAdventureSection({ model, group }: VariantAdventureSectio
         </section>
 
         <section className="variant-adventure__intel">
-          <span className="variant-adventure__intel-label">{t({ zh: '区域（Area）', en: 'Areas' })}</span>
+          <span className="variant-adventure__intel-label">{t("区域（Area）")}</span>
           <div className="variant-chip-row">
             {group.areaMilestones.slice(0, 6).map((area) => (
               <span key={`${group.id}-area-${String(area)}`} className="variant-chip variant-chip--soft">

@@ -1,5 +1,5 @@
 import { ActionButton } from '../ActionButton'
-import { pickLocaleText } from '../../app/i18n'
+import { t } from '../../app/i18n-messages'
 import { formatSeatLabel } from '../../domain/localizedText'
 import type { ChampionVisualWorkbenchModel } from './types'
 
@@ -14,31 +14,31 @@ export function ChampionVisualWorkbenchHeader({ model, onClose }: ChampionVisual
   return (
     <div className="visual-workbench__header">
       <div className="visual-workbench__copy">
-        <p className="visual-workbench__eyebrow">{pickLocaleText(locale, { zh: '英雄视觉档案', en: 'Champion visual dossier' })}</p>
+        <p className="visual-workbench__eyebrow">{t(locale, '英雄视觉档案')}</p>
         <div className="visual-workbench__title-row">
           <h3 className="visual-workbench__title">{primaryName}</h3>
           <span className="visual-workbench__seat-chip">{formatSeatLabel(champion.seat, locale)}</span>
         </div>
         {secondaryName != null && secondaryName !== '' ? <p className="visual-workbench__secondary">{secondaryName}</p> : null}
         <p className="visual-workbench__description">
-          {pickLocaleText(locale, {
-            zh: `已登记 ${String(visualSlotCount)} 个视觉槽位，涵盖本体立绘、头像资源与 ${String(skinCount)} 套皮肤。静态站只展示本地同步头像和基座元数据，不会在浏览器里请求官方资源。`,
-            en: `The catalog currently tracks ${String(visualSlotCount)} visual slots across base art, portraits, and ${String(skinCount)} skin sets. The static site only shows the local synced avatar plus catalog metadata and never requests official assets in the browser.`,
+          {t(locale, '已登记 {p0} 个视觉槽位，涵盖本体立绘、头像资源与 {p1} 套皮肤。静态站只展示本地同步头像和基座元数据，不会在浏览器里请求官方资源。', {
+            p0: String(visualSlotCount),
+            p1: String(skinCount),
           })}
         </p>
       </div>
 
-      <div className="visual-workbench__summary-strip" aria-label={pickLocaleText(locale, { zh: '视觉档案概况', en: 'Visual dossier summary' })}>
+      <div className="visual-workbench__summary-strip" aria-label={t(locale, '视觉档案概况')}>
         <div className="visual-workbench__summary-pill">
-          <span className="visual-workbench__summary-label">{pickLocaleText(locale, { zh: '皮肤数', en: 'Skins' })}</span>
+          <span className="visual-workbench__summary-label">{t(locale, '皮肤数')}</span>
           <strong className="visual-workbench__summary-value">{skinCount}</strong>
         </div>
         <div className="visual-workbench__summary-pill">
-          <span className="visual-workbench__summary-label">{pickLocaleText(locale, { zh: '登记槽位', en: 'Catalog slots' })}</span>
+          <span className="visual-workbench__summary-label">{t(locale, '登记槽位')}</span>
           <strong className="visual-workbench__summary-value">{visualSlotCount}</strong>
         </div>
         <ActionButton tone="ghost" className="visual-workbench__close" onClick={onClose}>
-          {pickLocaleText(locale, { zh: '收起档案', en: 'Hide dossier' })}
+          {t(locale, '收起档案')}
         </ActionButton>
       </div>
     </div>

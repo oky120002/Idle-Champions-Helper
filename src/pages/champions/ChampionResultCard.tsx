@@ -57,7 +57,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
   const roleKey = champion.roles.join('|')
   const attributeKeys = attributePills.map((pill) => pill.key).join('|')
   const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
-  const seatLabel = t({ zh: `${String(champion.seat)}位`, en: `Seat ${String(champion.seat)}` })
+  const seatLabel = t("{p0}位", { p0: String(champion.seat) })
   const affiliationText =
     champion.affiliations.length > 0
       ? champion.affiliations.map((affiliation) => getPrimaryLocalizedText(affiliation, locale)).join(' / ')
@@ -174,10 +174,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           search: locationSearch,
         }}
         state={{ activeNavigationTo: '/champions' }}
-        aria-label={t({
-          zh: `查看详情：${getPrimaryLocalizedText(champion.name, locale)}`,
-          en: `Open details for ${getPrimaryLocalizedText(champion.name, locale)}`,
-        })}
+        aria-label={t("查看详情：{p0}", { p0: getPrimaryLocalizedText(champion.name, locale) })}
         onClick={saveListScroll}
       >
         {heroIllustration ? (
@@ -241,10 +238,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
               </div>
             ) : (
               <p className="supporting-text result-card__attributes-empty">
-                {t({
-                  zh: '当前数据里还没有更多属性标签。',
-                  en: 'No extra attribute tags are exposed in the current dataset yet.',
-                })}
+                {t("当前数据里还没有更多属性标签。")}
               </p>
             )}
           </div>

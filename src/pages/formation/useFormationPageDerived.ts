@@ -229,28 +229,28 @@ function formatChampionOptionLabel(champion: Champion, locale: AppLocale): strin
 
 function formatPresetPriorityLabel(priority: PresetPriority, t: FormationPageTranslator): string {
   if (priority === 'high') {
-    return t({ zh: '高优先', en: 'High' })
+    return t("高优先")
   }
 
   if (priority === 'low') {
-    return t({ zh: '备用', en: 'Fallback' })
+    return t("备用")
   }
 
-  return t({ zh: '常用', en: 'Regular' })
+  return t("常用")
 }
 
 function formatLayoutFilterLabel(kind: LayoutFilterKind, t: FormationPageTranslator): string {
   if (kind === 'campaign') {
-    return t({ zh: '战役', en: 'Campaign' })
+    return t("战役")
   }
 
   if (kind === 'adventure') {
-    return t({ zh: '冒险', en: 'Adventure' })
+    return t("冒险")
   }
 
   if (kind === 'variant') {
-    return t({ zh: '变体', en: 'Variant' })
+    return t("变体")
   }
 
-  return t({ zh: '全部', en: 'All' })
+  return t("全部")
 }

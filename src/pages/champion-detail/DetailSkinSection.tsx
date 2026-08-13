@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
@@ -9,7 +10,7 @@ import type { EffectContext } from './types'
 type DetailSkinSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly effectContext: EffectContext
   readonly openArtworkDialog: (skinId?: string) => void
 }
@@ -38,17 +39,17 @@ export function DetailSkinSection({ detail, locale, t, effectContext, openArtwor
                     className="skin-list-card__preview-button"
                     onClick={() => openArtworkDialog(skin.id)}
                   >
-                    {t({ zh: '预览', en: 'Preview' })}
+                    {t("预览")}
                   </button>
                 </div>
                 {sourceItems.length > 0 ? (
-                  <SummaryTagGroup label={t({ zh: '来源', en: 'Source' })} items={sourceItems} />
+                  <SummaryTagGroup label={t("来源")} items={sourceItems} />
                 ) : null}
                 {costItems.length > 0 ? (
-                  <SummaryTagGroup label={t({ zh: '成本', en: 'Cost' })} items={costItems} />
+                  <SummaryTagGroup label={t("成本")} items={costItems} />
                 ) : null}
                 {availabilityItems.length > 0 ? (
-                  <SummaryTagGroup label={t({ zh: '可得性', en: 'Availability' })} items={availabilityItems} />
+                  <SummaryTagGroup label={t("可得性")} items={availabilityItems} />
                 ) : null}
               </article>
             )
@@ -56,7 +57,7 @@ export function DetailSkinSection({ detail, locale, t, effectContext, openArtwor
         </div>
       ) : (
         <div className="status-banner status-banner--info">
-          {t({ zh: '当前没有皮肤条目。', en: 'No skin entries are available.' })}
+          {t("当前没有皮肤条目。")}
         </div>
       )}
     </SurfaceCard>

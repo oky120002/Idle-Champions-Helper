@@ -10,7 +10,10 @@ import {
   useState,
 } from 'react'
 
-export type AppLocale = 'zh-CN' | 'en-US'
+import { t, translateRef } from './i18n-messages'
+import type { AppLocale, MessageRef, TranslateParams } from './i18n-messages'
+
+export type { AppLocale, Message, MessageRef, TranslateParams } from './i18n-messages'
 
 export interface LocaleText {
   zh: string
@@ -20,11 +23,13 @@ export interface LocaleText {
 const DEFAULT_LOCALE: AppLocale = 'zh-CN'
 const STORAGE_KEY = 'idle-champions-helper.locale'
 
+type TranslateInput = string | LocaleText | MessageRef
+
 interface I18nContextValue {
   locale: AppLocale
   isZh: boolean
   setLocale: (locale: AppLocale) => void
-  t: (text: LocaleText) => string
+  t: (text: TranslateInput, params?: TranslateParams) => string
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null)
@@ -51,6 +56,22 @@ export function pickLocaleText(locale: AppLocale, text: LocaleText): string {
   return locale === 'zh-CN' ? text.zh : text.en
 }
 
+export function translateText(
+  locale: AppLocale,
+  text: TranslateInput,
+  params?: TranslateParams,
+): string {
+  if (typeof text === 'string') {
+    return t(locale, text, params)
+  }
+
+  if ('zh' in text && 'en' in text) {
+    return pickLocaleText(locale, text)
+  }
+
+  return translateRef(locale, text)
+}
+
 export function I18nProvider({ children }: Readonly<PropsWithChildren>) {
   const [locale, setLocale] = useState<AppLocale>(() => {
     return parseStoredLocale(getLocaleStorage()?.getItem(STORAGE_KEY) ?? null)
@@ -65,7 +86,10 @@ export function I18nProvider({ children }: Readonly<PropsWithChildren>) {
     }
   }, [locale])
 
-  const t = useCallback((text: LocaleText) => pickLocaleText(locale, text), [locale])
+  const t = useCallback(
+    (text: TranslateInput, params?: TranslateParams) => translateText(locale, text, params),
+    [locale],
+  )
 
   const value = useMemo(
     () => ({

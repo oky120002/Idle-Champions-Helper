@@ -19,10 +19,10 @@ export function PresetEditorForm({ model, view }: Readonly<PresetEditorFormProps
         nameInputId={`preset-name-${view.preset.id}`}
         descriptionInputId={`preset-description-${view.preset.id}`}
         tagsInputId={`preset-tags-${view.preset.id}`}
-        nameLabel={t({ zh: '方案名称', en: 'Preset name' })}
-        descriptionLabel={t({ zh: '方案备注', en: 'Preset notes' })}
-        tagsLabel={t({ zh: '场景标签', en: 'Scenario tags' })}
-        priorityLabel={t({ zh: '优先级', en: 'Priority' })}
+        nameLabel={t("方案名称")}
+        descriptionLabel={t("方案备注")}
+        tagsLabel={t("场景标签")}
+        priorityLabel={t("优先级")}
         getPriorityOptionLabel={(option) => buildPriorityLabel(option, locale)}
         onChange={updateEditor}
         includeStackClass={false}
@@ -32,14 +32,14 @@ export function PresetEditorForm({ model, view }: Readonly<PresetEditorFormProps
         items={[
           {
             id: 'save-edit',
-            label: t({ zh: '保存修改', en: 'Save changes' }),
+            label: t("保存修改"),
             tone: 'secondary',
             disabled: editor.name.trim().length === 0,
             onClick: () => savePresetEdit(view.preset),
           },
           {
             id: 'cancel-edit',
-            label: t({ zh: '取消编辑', en: 'Cancel edit' }),
+            label: t("取消编辑"),
             tone: 'ghost',
             onClick: cancelEditingPreset,
           },

@@ -30,12 +30,12 @@ export function ChampionsPage() {
   const contentStatusItems = createAsyncStatusBannerItems({
     status: state.status,
     loading: {
-      children: t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' }),
+      children: t("正在读取英雄数据…"),
     },
     error: {
-      title: t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' }),
+      title: t("英雄数据读取失败"),
       ...(state.status === 'error'
-        ? { detail: state.message !== '' ? state.message : t({ zh: '未知错误', en: 'Unknown error' }) }
+        ? { detail: state.message !== '' ? state.message : t("未知错误") }
         : {}),
     },
   })
@@ -59,7 +59,7 @@ export function ChampionsPage() {
     <FilterWorkbenchPage
       pageClassName="champions-page"
       storageKey="champions"
-      ariaLabel={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
+      ariaLabel={t("英雄筛选工作台")}
       shellClassName="workbench-page__shell champions-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={model.showResultsQuickNavTop ? { onClick: model.scrollResultsToTop } : undefined}
@@ -77,8 +77,8 @@ export function ChampionsPage() {
             region: 'primary',
             section: {
               kind: 'copy',
-              title: t({ zh: '英雄筛选', en: 'Champion filters' }),
-              detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
+              title: t("英雄筛选"),
+              detail: t("候选池收缩与资料对比"),
             },
           },
           {
@@ -92,10 +92,10 @@ export function ChampionsPage() {
         ],
       }}
       sidebarHeader={{
-        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
-        statusLabel: t({ zh: '筛选状态操作', en: 'Filter status actions' }),
+        kicker: t("筛选抽屉"),
+        statusLabel: t("筛选状态操作"),
         activeCount: activeFilterCount,
-        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        clearLabel: t("清空全部"),
         ...(hasActiveFilters ? { onClear: clearAllFilters } : {}),
       }}
       isReady={state.status === 'ready'}
@@ -105,7 +105,7 @@ export function ChampionsPage() {
           <ChampionsAdditionalFilters model={model} />
           {model.formationWithFiltersHref !== null ? (
             <Link className="action-button action-button--secondary formation-filter-link" to={model.formationWithFiltersHref}>
-              {t({ zh: '带着当前筛选去摆阵型', en: 'Open formation with these filters' })}
+              {t("带着当前筛选去摆阵型")}
             </Link>
           ) : null}
         </div>

@@ -126,10 +126,10 @@ export function WorkbenchToolbarFilterStatus({
   const { t } = useI18n()
   const countText = String(activeCount)
   const status = activeCount > 0
-    ? t({ zh: `${countText} 项条件`, en: `${countText} active` })
-    : t({ zh: '条件待命', en: 'Filters idle' })
+    ? t("{p0} 项条件", { p0: countText })
+    : t("条件待命")
   const statusTitle = activeCount > 0
-    ? t({ zh: `${countText} 项筛选条件已启用`, en: `${countText} active filters enabled` })
+    ? t("{p0} 项筛选条件已启用", { p0: countText })
     : status
 
   return (

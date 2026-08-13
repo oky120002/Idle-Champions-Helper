@@ -61,15 +61,15 @@ function getRosterMetricChipLabel(
 ): string {
   switch (filterId) {
     case 'owned':
-      return t({ zh: '顶部指标：已拥有英雄', en: 'Top metric: Owned champions' })
+      return t("顶部指标：已拥有英雄")
     case 'epic-slots':
-      return t({ zh: '顶部指标：史诗装备槽位', en: 'Top metric: Epic equipment slots' })
+      return t("顶部指标：史诗装备槽位")
     case 'shiny-slots':
-      return t({ zh: '顶部指标：闪耀槽位', en: 'Top metric: Shiny slots' })
+      return t("顶部指标：闪耀槽位")
     case 'golden-slots':
-      return t({ zh: '顶部指标：金装槽位', en: 'Top metric: Golden slots' })
+      return t("顶部指标：金装槽位")
     case 'legendary-slots':
-      return t({ zh: '顶部指标：传奇装备位', en: 'Top metric: Legendary equipment slots' })
+      return t("顶部指标：传奇装备位")
   }
 }
 
@@ -162,7 +162,6 @@ export function useUserHeroesPageDerived({
 
   const baseActiveFilterChips = buildActiveFilterChips({
     locale,
-    t,
     filters,
     orderedSelectedSeats,
     orderedSelectedRoles,
@@ -179,7 +178,7 @@ export function useUserHeroesPageDerived({
     ? {
         id: 'roster-metric',
         label: getRosterMetricChipLabel(activeRosterMetricFilterId, t),
-        clearLabel: t({ zh: '清空顶部指标筛选', en: 'Clear top metric filter' }),
+        clearLabel: t("清空顶部指标筛选"),
       }
     : null
   const activeFilterChips = [

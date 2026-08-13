@@ -35,15 +35,15 @@ export function PlannerHypotheticalEquipment({ rarity, enchant, onRarityChange, 
   return (
     <fieldset className="planner-scoring-mode planner-hypothetical-equipment" data-testid="planner-hypothetical-equipment">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '假设装备（未导入存档）', en: 'Hypothetical gear (no save)' })}
+        {t("假设装备（未导入存档）")}
       </legend>
       <label className="planner-hypothetical-equipment__field">
-        <span>{t({ zh: '稀有度', en: 'Rarity' })}</span>
+        <span>{t("稀有度")}</span>
         <select
           className="planner-stack-count__input"
           value={rarity}
           data-testid="planner-hypothetical-equipment-rarity"
-          aria-label={t({ zh: '假设装备稀有度', en: 'Hypothetical gear rarity' })}
+          aria-label={t("假设装备稀有度")}
           onChange={(event) => {
             const parsed = Number.parseInt(event.target.value, 10)
             if (Number.isFinite(parsed) && parsed !== rarity) {
@@ -52,19 +52,19 @@ export function PlannerHypotheticalEquipment({ rarity, enchant, onRarityChange, 
           }}
         >
           {RARITY_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>{t({ zh: opt.zh, en: opt.en })}</option>
+            <option key={opt.value} value={opt.value}>{t(opt)}</option>
           ))}
         </select>
       </label>
       <label className="planner-hypothetical-equipment__field">
-        <span>{t({ zh: '附魔等级', en: 'Enchant' })}</span>
+        <span>{t("附魔等级")}</span>
         <input
           type="number"
           min={0}
           inputMode="numeric"
           className="planner-stack-count__input"
           value={draft}
-          aria-label={t({ zh: '假设装备附魔等级', en: 'Hypothetical gear enchant' })}
+          aria-label={t("假设装备附魔等级")}
           data-testid="planner-hypothetical-equipment-enchant"
           onChange={(event) => {
             const raw = event.target.value

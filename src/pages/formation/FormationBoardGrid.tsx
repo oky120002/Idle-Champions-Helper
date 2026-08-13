@@ -72,14 +72,8 @@ function getFormationSlotAriaLabel(
   model: FormationPageModel,
 ): string {
   return champion
-    ? model.t({
-        zh: `编辑槽位 ${slot.id}，当前为 ${getPrimaryLocalizedText(champion.name, model.locale)}`,
-        en: `Edit slot ${slot.id}, current champion ${getPrimaryLocalizedText(champion.name, model.locale)}`,
-      })
-    : model.t({
-        zh: `编辑槽位 ${slot.id}，当前未放置`,
-        en: `Edit slot ${slot.id}, currently empty`,
-      })
+    ? model.t("编辑槽位 {p0}，当前为 {p1}", { p0: slot.id, p1: getPrimaryLocalizedText(champion.name, model.locale) })
+    : model.t("编辑槽位 {p0}，当前未放置", { p0: slot.id })
 }
 
 function renderFormationSlotControls(
@@ -105,11 +99,11 @@ function renderFormationSlotControls(
       <div className="formation-slot__controls">
         <select
           className="slot-select"
-          aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
+          aria-label={t("槽位 {p0} 英雄选择", { p0: slot.id })}
           value={selectedChampionId}
           onChange={(event) => model.handleAssignChampion(slot.id, event.target.value)}
         >
-          <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
+          <option value="">{t("未放置")}</option>
           {model.getAvailableChampionsForSlot(slot.id).map((item) => (
             <option key={item.id} value={item.id}>
               {model.getChampionOptionLabel(item)}
@@ -133,20 +127,14 @@ function renderSlotHint(
       <div className="formation-slot__current">
         <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot" />
         <span className="formation-slot__hint">
-          {t({
-            zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
-            en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
-          })}
+          {t("当前：{p0}", { p0: getLocalizedTextPair(champion.name, locale) })}
         </span>
       </div>
     )
   }
   return (
     <span className="formation-slot__hint">
-      {t({
-        zh: `第 ${String(slot.row)} 排`,
-        en: `Row ${String(slot.row)}`,
-      })}
+      {t("第 {p0} 排", { p0: String(slot.row) })}
     </span>
   )
 }

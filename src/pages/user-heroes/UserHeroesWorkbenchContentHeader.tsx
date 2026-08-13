@@ -17,10 +17,10 @@ export function UserHeroesWorkbenchContentHeader({ model }: UserHeroesWorkbenchC
             filteredCount: filteredChampions.length,
             enUnitLabel: 'champions',
           }),
-          { label: t({ zh: '高亮已拥有', en: 'Highlighted owned' }), value: rosterSummary.matchedOwnedChampionCount },
-          { label: t({ zh: '已拥有', en: 'Owned' }), value: rosterSummary.ownedChampionCount },
-          { label: t({ zh: '全英雄', en: 'Roster' }), value: rosterSummary.totalChampionCount },
-          { label: t({ zh: '覆盖座位', en: 'Seats' }), value: model.matchedSeats },
+          { label: t("高亮已拥有"), value: rosterSummary.matchedOwnedChampionCount },
+          { label: t("已拥有"), value: rosterSummary.ownedChampionCount },
+          { label: t("全英雄"), value: rosterSummary.totalChampionCount },
+          { label: t("覆盖座位"), value: model.matchedSeats },
         ]
       : []
 

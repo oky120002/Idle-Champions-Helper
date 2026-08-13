@@ -15,28 +15,28 @@ export function UserDataWorkbench({ model }: UserDataWorkbenchProps) {
 
   return (
     <SurfaceCard
-      eyebrow={t({ zh: '导入工作台', en: 'Import workbench' })}
-      title={t({ zh: '先在本地浏览器里验证导入方式', en: 'Validate import modes inside the local browser first' })}
+      eyebrow={t("导入工作台")}
+      title={t("先在本地浏览器里验证导入方式")}
       description={selectedMethod.description}
       footer={
         <ActionButtons
           items={[
             {
               id: 'parse',
-              label: t({ zh: '读取并校验', en: 'Parse and validate' }),
+              label: t("读取并校验"),
               icon: <ClipboardCheck aria-hidden="true" strokeWidth={1.9} />,
               onClick: handleParse,
             },
             {
               id: 'fill-sample',
-              label: t({ zh: '填入脱敏示例', en: 'Fill sample input' }),
+              label: t("填入脱敏示例"),
               icon: <FlaskConical aria-hidden="true" strokeWidth={1.9} />,
               tone: 'secondary',
               onClick: handleFillSample,
             },
             {
               id: 'clear',
-              label: t({ zh: '清空当前输入', en: 'Clear current input' }),
+              label: t("清空当前输入"),
               icon: <Eraser aria-hidden="true" strokeWidth={1.9} />,
               tone: 'ghost',
               onClick: handleClear,
@@ -51,7 +51,7 @@ export function UserDataWorkbench({ model }: UserDataWorkbenchProps) {
           value: item.id,
           label: item.label,
         }))}
-        ariaLabel={t({ zh: '个人数据导入方式', en: 'User data import mode' })}
+        ariaLabel={t("个人数据导入方式")}
         onChange={handleSelectMethod}
         mode="tablist"
       />

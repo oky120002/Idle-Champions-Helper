@@ -11,7 +11,7 @@ import {
   User,
   Users,
 } from 'lucide-react'
-import type { LocaleText } from './i18n'
+import type { LocaleText, TranslateParams } from './i18n'
 
 export interface AppNavigationItem {
   to: string
@@ -19,7 +19,10 @@ export interface AppNavigationItem {
   Icon: LucideIcon
 }
 
-export type TranslationFn = (text: LocaleText) => string
+export type TranslationFn = (
+  text: string | LocaleText,
+  params?: TranslateParams,
+) => string
 
 export const navigation: AppNavigationItem[] = [
   { to: '/champions', label: { zh: '英雄筛选', en: 'Champions' }, Icon: Users },

@@ -1,6 +1,7 @@
 /* eslint-disable max-lines -- 内聚的 DossierSection：4 个 dossier 专属助手函数（isJsonRecord/readConsolePortraitGraphicId/resolveDetailDataVersion/formatAbilityModifier）+ portrait IIFE 均为此组件服务，外移会破坏一跳命中率 */
 import { useState } from 'react'
 import { Images } from 'lucide-react'
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { resolveDataUrl } from '../../data/client'
 import { getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
@@ -11,7 +12,7 @@ import { formatNumber } from './detail-value-formatters'
 interface DossierSectionProps {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly heroIllustration: ChampionIllustration | null
   readonly openArtworkDialog: (skinId?: string) => void
 }
@@ -116,13 +117,13 @@ export function DossierSection({
   })()
 
   return (
-    <div className="champion-dossier" role="group" aria-label={t({ zh: '英雄资料栏', en: 'Champion dossier' })}>
-      <section className="champion-dossier__media-panel" aria-label={t({ zh: '英雄立绘', en: 'Champion artwork' })}>
+    <div className="champion-dossier" role="group" aria-label={t("英雄资料栏")}>
+      <section className="champion-dossier__media-panel" aria-label={t("英雄立绘")}>
         {hasSkinPreview ? (
           <button
             type="button"
             className="champion-dossier__portrait-action"
-            aria-label={t({ zh: '打开皮肤立绘预览', en: 'Open skin artwork preview' })}
+            aria-label={t("打开皮肤立绘预览")}
             onClick={() => openArtworkDialog()}
           >
             {portrait}
@@ -150,16 +151,16 @@ export function DossierSection({
 
       <section className="champion-dossier__section">
         <div className="champion-dossier__line">
-          <span className="champion-dossier__line-label">{t({ zh: '定位', en: 'Roles' })}</span>
+          <span className="champion-dossier__line-label">{t("定位")}</span>
           <span className="champion-dossier__line-value">
             {detail.summary.roles.length > 0
               ? detail.summary.roles.map((role) => getRoleLabel(role, locale)).join(' / ')
-              : t({ zh: '暂无', en: 'None' })}
+              : t("暂无")}
           </span>
         </div>
         {detail.eventName ? (
           <DetailField
-            label={t({ zh: '活动', en: 'Event' })}
+            label={t("活动")}
             value={<LocalizedTextStack value={detail.eventName} />}
             variant="compact"
           />
@@ -168,7 +169,7 @@ export function DossierSection({
 
       {characterSheet ? (
         <section className="champion-dossier__section champion-dossier__section--scores">
-          <p className="champion-dossier__section-label">{t({ zh: '属性', en: 'Abilities' })}</p>
+          <p className="champion-dossier__section-label">{t("属性")}</p>
           <div className="champion-dossier__score-grid">
             {ABILITY_SCORE_KEYS.map((key) => {
               const score = characterSheet.abilityScores[key] ?? null
@@ -186,24 +187,24 @@ export function DossierSection({
       ) : null}
 
       <section className="champion-dossier__section champion-dossier__section--facts">
-        <p className="champion-dossier__section-label">{t({ zh: '身份', en: 'Identity' })}</p>
+        <p className="champion-dossier__section-label">{t("身份")}</p>
         <DetailField
-          label={t({ zh: '种族', en: 'Race' })}
-          value={characterSheet?.race ? <LocalizedTextStack value={characterSheet.race} /> : t({ zh: '暂无', en: 'None' })}
+          label={t("种族")}
+          value={characterSheet?.race ? <LocalizedTextStack value={characterSheet.race} /> : t("暂无")}
           variant="compact"
         />
         <DetailField
-          label={t({ zh: '职业', en: 'Class' })}
-          value={characterSheet?.class ? <LocalizedTextStack value={characterSheet.class} /> : t({ zh: '暂无', en: 'None' })}
+          label={t("职业")}
+          value={characterSheet?.class ? <LocalizedTextStack value={characterSheet.class} /> : t("暂无")}
           variant="compact"
         />
         <DetailField
-          label={t({ zh: '阵营', en: 'Alignment' })}
-          value={characterSheet?.alignment ? <LocalizedTextStack value={characterSheet.alignment} /> : t({ zh: '暂无', en: 'None' })}
+          label={t("阵营")}
+          value={characterSheet?.alignment ? <LocalizedTextStack value={characterSheet.alignment} /> : t("暂无")}
           variant="compact"
         />
         <DetailField
-          label={t({ zh: '年龄', en: 'Age' })}
+          label={t("年龄")}
           value={formatNumber(characterSheet?.age ?? null, locale)}
           variant="compact"
         />

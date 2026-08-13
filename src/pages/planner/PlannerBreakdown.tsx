@@ -44,12 +44,12 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
   }
 
   const factors: Array<{ key: string; label: string; value: number }> = [
-    { key: 'damagePool', label: t({ zh: '加成池', en: 'Buffs' }), value: breakdown.factors.damagePool },
-    { key: 'crit', label: t({ zh: '暴击', en: 'Crit' }), value: breakdown.factors.crit },
-    { key: 'vulnerability', label: t({ zh: '易伤', en: 'Vulnerability' }), value: breakdown.factors.vulnerability },
-    { key: 'globalBuff', label: t({ zh: '全局', en: 'Global' }), value: breakdown.factors.globalBuff },
+    { key: 'damagePool', label: t("加成池"), value: breakdown.factors.damagePool },
+    { key: 'crit', label: t("暴击"), value: breakdown.factors.crit },
+    { key: 'vulnerability', label: t("易伤"), value: breakdown.factors.vulnerability },
+    { key: 'globalBuff', label: t("全局"), value: breakdown.factors.globalBuff },
     // 装备 + 外部（patron/blessing）hero_dps 同 key 加法合并为单一池因子，非各自独立乘。
-    { key: 'heroDpsPool', label: t({ zh: '英雄 DPS 加成', en: 'Hero DPS bonus' }), value: breakdown.factors.heroDpsPool },
+    { key: 'heroDpsPool', label: t("英雄 DPS 加成"), value: breakdown.factors.heroDpsPool },
   ]
   // 值显示为 ×1.00 的因子无贡献，渲染纯噪声（典型场景 crit/globalBuff/equipment 常为默认 1）——隐藏。
   const visibleFactors = factors.filter((factor) => formatFactor(factor.value) !== '1.00')
@@ -57,13 +57,10 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
   return (
     <section data-section="breakdown" className="planner-breakdown">
       <h4 className="planner-result-card__section-title">
-        {t({ zh: '加成拆解', en: 'DPS breakdown' })}
+        {t("加成拆解")}
       </h4>
       <p className="planner-breakdown__formula" data-testid="planner-breakdown-formula">
-        {t({
-          zh: `基线 ${breakdown.baseDps} × 加成 = ${breakdown.carryDps}`,
-          en: `${breakdown.baseDps} × buffs = ${breakdown.carryDps}`,
-        })}
+        {t("基线 {p0} × 加成 = {p1}", { p0: breakdown.baseDps, p1: breakdown.carryDps })}
       </p>
       {visibleFactors.length > 0 ? (
         <ul className="planner-breakdown__factors">
@@ -79,7 +76,7 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
       {breakdown.contributions.length > 0 ? (
         <>
           <p className="planner-breakdown__sources-title">
-            {t({ zh: '加成来源（按英雄）', en: 'Buff sources (by hero)' })}
+            {t("加成来源（按英雄）")}
           </p>
           <ul className="planner-breakdown__contributions">
             {breakdown.contributions.map((contribution) => {
@@ -95,10 +92,7 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
                   <p className="planner-breakdown__contribution-head">
                     <strong>{name}</strong>
                     <span>
-                      {t({
-                        zh: `槽位 ${contribution.supportSlotId} · ${String(contribution.signals.length)} 个生效加成`,
-                        en: `slot ${contribution.supportSlotId} · ${String(contribution.signals.length)} active`,
-                      })}
+                      {t("槽位 {p0} · {p1} 个生效加成", { p0: contribution.supportSlotId, p1: String(contribution.signals.length) })}
                     </span>
                   </p>
                   <ul className="planner-breakdown__signals">
@@ -110,7 +104,7 @@ export function PlannerBreakdown({ breakdown, heroNameById }: PlannerBreakdownPr
                     ))}
                     {remaining > 0 ? (
                       <li className="planner-breakdown__more">
-                        {t({ zh: `+${String(remaining)} 个`, en: `+${String(remaining)} more` })}
+                        {t("+{p0} 个", { p0: String(remaining) })}
                       </li>
                     ) : null}
                   </ul>

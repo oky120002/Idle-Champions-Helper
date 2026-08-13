@@ -119,7 +119,7 @@ function EvaluateSlotControls({
     <div className="formation-slot__controls">
       <select
         className="slot-select"
-        aria-label={t({ zh: `槽位 ${slot.id} 英雄选择`, en: `Champion for slot ${slot.id}` })}
+        aria-label={t("槽位 {p0} 英雄选择", { p0: slot.id })}
         value={champion?.id ?? ''}
         disabled={isLocked}
         onChange={(event) => {
@@ -131,7 +131,7 @@ function EvaluateSlotControls({
           }
         }}
       >
-        <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
+        <option value="">{t("未放置")}</option>
         {championOptions.map((option) => (
           <option key={option.id} value={option.id}>
             {getOptionLabel(option)}
@@ -145,8 +145,8 @@ function EvaluateSlotControls({
           aria-pressed={isLocked}
           aria-label={
             isLocked
-              ? t({ zh: `解锁槽位 ${slot.id}`, en: `Unlock slot ${slot.id}` })
-              : t({ zh: `锁定槽位 ${slot.id}`, en: `Lock slot ${slot.id}` })
+              ? t("解锁槽位 {p0}", { p0: slot.id })
+              : t("锁定槽位 {p0}", { p0: slot.id })
           }
           data-testid={`planner-evaluate-lock-${slot.id}`}
           onClick={() => {
@@ -188,7 +188,7 @@ function EvaluateResults({
           <div className="surface-card__header">
             <div className="surface-card__header-copy">
               <p className="surface-card__description">
-                {t({ zh: `计算失败：${evaluateError}`, en: `Compute failed: ${evaluateError}` })}
+                {t("计算失败：{p0}", { p0: evaluateError })}
               </p>
             </div>
           </div>
@@ -199,7 +199,7 @@ function EvaluateResults({
           <div className="surface-card__header">
             <div className="surface-card__header-copy">
               <p className="surface-card__description">
-                {t({ zh: '正在重新计算…', en: 'Recomputing…' })}
+                {t("正在重新计算…")}
               </p>
             </div>
           </div>
@@ -215,10 +215,7 @@ function EvaluateResults({
               </p>
               {evaluation.result.carryHeroId != null && evaluation.result.carryHeroId !== '' ? (
                 <p className="surface-card__description">
-                  {t({
-                    zh: `核心：${heroNameById.get(evaluation.result.carryHeroId) ?? evaluation.result.carryHeroId}`,
-                    en: `Carry: ${heroNameById.get(evaluation.result.carryHeroId) ?? evaluation.result.carryHeroId}`,
-                  })}
+                  {t("核心：{p0}", { p0: heroNameById.get(evaluation.result.carryHeroId) ?? evaluation.result.carryHeroId })}
                 </p>
               ) : null}
             </div>
@@ -234,7 +231,7 @@ function EvaluateResults({
         <section className="surface-card page-shell" data-testid="planner-evaluate-warnings">
           <div className="surface-card__header">
             <div className="surface-card__header-copy">
-              <h3 className="surface-card__title">{t({ zh: '当前警告', en: 'Warnings' })}</h3>
+              <h3 className="surface-card__title">{t("当前警告")}</h3>
               <ul>
                 {evaluation.result.warnings.map((text, index) => (
                   <li key={index}>{t(text)}</li>
@@ -349,7 +346,7 @@ function EvaluateReadyContent({
         <div className="surface-card__header">
           <div className="surface-card__header-copy">
             <p className="surface-card__description">
-              {t({ zh: '当前场景没有可摆放的槽位。', en: 'No placeable slots for this scenario.' })}
+              {t("当前场景没有可摆放的槽位。")}
             </p>
           </div>
         </div>
@@ -435,7 +432,7 @@ function EvaluateReadyContent({
           <div className="surface-card__header">
             <div className="surface-card__header-copy">
               <p className="surface-card__description">
-                {t({ zh: `计算失败：${fillError}`, en: `Compute failed: ${fillError}` })}
+                {t("计算失败：{p0}", { p0: fillError })}
               </p>
             </div>
           </div>
@@ -455,8 +452,8 @@ function EvaluateReadyContent({
           </span>
           <span className="action-button__label">
             {filling
-              ? t({ zh: '计算中…', en: 'Computing…' })
-              : t({ zh: `算剩余最优（已锁 ${lockedCount} 格）`, en: `Fill remaining (${lockedCount} locked)` })}
+              ? t("计算中…")
+              : t("算剩余最优（已锁 {p0} 格）", { p0: lockedCount })}
           </span>
         </button>
         <button
@@ -471,7 +468,7 @@ function EvaluateReadyContent({
             <Send strokeWidth={1.9} />
           </span>
           <span className="action-button__label">
-            {t({ zh: '回填到自动计划', en: 'Send to auto plan' })}
+            {t("回填到自动计划")}
           </span>
         </button>
       </div>
@@ -483,7 +480,7 @@ function EvaluateReadyContent({
         onDrop={(event) => handleEvaluateRemoveDrop(event, placements, lockedSlots)}
       >
         <Eraser aria-hidden="true" strokeWidth={1.9} />
-        {t({ zh: '拖到此处移除', en: 'Drop here to remove' })}
+        {t("拖到此处移除")}
       </div>
         </>
       )}
@@ -665,7 +662,7 @@ export function PlannerEvaluatePage() {
 
   const canFillRemaining = Object.keys(lockedSlots).length > 0 && evaluation.blocker === null && !evaluateLoading
 
-  const ariaLabel = t({ zh: '自配评估工作台', en: 'Formation evaluate workbench' })
+  const ariaLabel = t("自配评估工作台")
   const toolbarConfig: WorkbenchToolbarConfig = {
     sections: [
       { region: 'lead', section: { kind: 'mark', label: 'EVALUATE' } },
@@ -673,9 +670,9 @@ export function PlannerEvaluatePage() {
         region: 'primary',
         section: {
           kind: 'copy',
-          kicker: t({ zh: '自配评估', en: 'Evaluate' }),
-          title: t({ zh: '自配评估', en: 'Formation Evaluate' }),
-          detail: t({ zh: '自摆阵型，查看核心英雄 DPS', en: 'Place champions and see carry DPS' }),
+          kicker: t("自配评估"),
+          title: t("自配评估"),
+          detail: t("自摆阵型，查看核心英雄 DPS"),
         },
       },
       {
@@ -718,7 +715,7 @@ export function PlannerEvaluatePage() {
         <div className="surface-card__header">
           <div className="surface-card__header-copy">
             <p className="surface-card__description">
-              {t({ zh: `加载数据失败：${loadError ?? '未知错误'}`, en: `Failed to load: ${loadError ?? 'unknown error'}` })}
+              {t('加载数据失败：{p0}', { p0: loadError ?? (locale === 'zh-CN' ? '未知错误' : 'unknown error') })}
             </p>
           </div>
         </div>
@@ -731,7 +728,7 @@ export function PlannerEvaluatePage() {
         <div className="surface-card__header">
           <div className="surface-card__header-copy">
             <p className="surface-card__description">
-              {t({ zh: '正在加载场景与英雄数据…', en: 'Loading scenarios and champions…' })}
+              {t("正在加载场景与英雄数据…")}
             </p>
           </div>
         </div>
@@ -741,15 +738,9 @@ export function PlannerEvaluatePage() {
 
   let blockerCopy: string | null = null
   if (evaluation.blocker === 'missing-profile') {
-    blockerCopy = t({
-      zh: '当前候选范围为「仅已拥有」但未导入个人数据。导入后效果最准，或将候选范围切到「全部英雄（假设基线）」继续评估。',
-      en: 'Candidate pool is "owned only" but no profile is imported. Import for best accuracy, or switch to "All hypothetical" to keep evaluating.',
-    })
+    blockerCopy = t("当前候选范围为「仅已拥有」但未导入个人数据。导入后效果最准，或将候选范围切到「全部英雄（假设基线）」继续评估。")
   } else if (evaluation.blocker === 'missing-formation') {
-    blockerCopy = t({
-      zh: '当前场景没有匹配的阵型布局，请换一个场景。',
-      en: 'No matching formation layout for this scenario. Pick another scenario.',
-    })
+    blockerCopy = t("当前场景没有匹配的阵型布局，请换一个场景。")
   }
 
   return renderShell(

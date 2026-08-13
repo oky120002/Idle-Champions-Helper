@@ -12,15 +12,12 @@ export function PetsResultsSection({ model }: PetsResultsSectionProps) {
 
   return (
     <WorkbenchResultsScaffold
-      ariaLabel={t({ zh: '宠物筛选结果', en: 'Pet filter results' })}
+      ariaLabel={t("宠物筛选结果")}
       sectionClassName="results-panel"
       isEmpty={!hasMatches}
       emptyState={{
-        title: t({ zh: '没有匹配宠物', en: 'No pets match' }),
-        detail: t({
-          zh: '当前筛选条件下没有匹配宠物。可以先清空搜索词，或把来源和图像状态放宽一点再继续看。',
-          en: 'No pets match the current filters. Clear the query first, or broaden the source and asset-state filters before narrowing again.',
-        }),
+        title: t("没有匹配宠物"),
+        detail: t("当前筛选条件下没有匹配宠物。可以先清空搜索词，或把来源和图像状态放宽一点再继续看。"),
       }}
     >
       <PetResultsGrid pets={results.visiblePets} animationByPetId={results.animationByPetId} />

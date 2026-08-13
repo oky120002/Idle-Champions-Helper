@@ -36,7 +36,7 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
   return (
     <section data-section="area-estimate" className="planner-area-estimate">
       <h4 className="planner-result-card__section-title">
-        {t({ zh: '推图预估', en: 'Area estimate' })}
+        {t("推图预估")}
       </h4>
 
       <div className="planner-area-estimate__hero">
@@ -44,7 +44,7 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
           className="planner-area-estimate__area-value"
           data-testid="planner-area-estimate"
         >
-          {t({ zh: `第 ${String(area)} 层`, en: `Area ${String(area)}` })}
+          {t("第 {p0} 层", { p0: String(area) })}
         </span>
         <span className="planner-area-estimate__bound-badge" data-bound={boundBy}>
           {boundLabel}
@@ -53,7 +53,7 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
 
       <dl className="planner-area-estimate__metrics">
         <div className="planner-area-estimate__metric">
-          <dt>{t({ zh: '击杀上限', en: 'Killable' })}</dt>
+          <dt>{t("击杀上限")}</dt>
           <dd>
             <span className="planner-area-estimate__metric-value">{String(killableArea)}</span>
             <span className="planner-area-estimate__bar" aria-hidden="true">
@@ -65,7 +65,7 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
           </dd>
         </div>
         <div className="planner-area-estimate__metric">
-          <dt>{t({ zh: '存活上限', en: 'Survivable' })}</dt>
+          <dt>{t("存活上限")}</dt>
           <dd>
             <span className="planner-area-estimate__metric-value">{String(survivableArea)}</span>
             <span className="planner-area-estimate__bar" aria-hidden="true">
@@ -79,7 +79,7 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
       </dl>
 
       <p className="planner-area-estimate__note">
-        {t({ zh: '绝对值未校准，仅供参考相对比较', en: 'Uncalibrated; relative comparison only' })}
+        {t("绝对值未校准，仅供参考相对比较")}
       </p>
 
       {activeConstraints.length > 0 ? (
@@ -87,8 +87,8 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
           className="planner-area-estimate__constraints"
           data-testid="planner-viability-constraints"
         >
-          {t({ zh: '活跃约束：', en: 'Active constraints: ' })}
-          {activeConstraints.map((key) => t(CONSTRAINT_LABELS[key])).join(t({ zh: '、', en: ', ' }))}
+          {t("活跃约束：")}
+          {activeConstraints.map((key) => t(CONSTRAINT_LABELS[key])).join(t("、"))}
         </p>
       ) : null}
     </section>

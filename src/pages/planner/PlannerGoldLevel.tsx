@@ -35,15 +35,15 @@ export function PlannerGoldLevel({ mode, goldBudget, globalLevel, conversion, on
   return (
     <fieldset className="planner-scoring-mode" data-testid="planner-gold-level">
       <legend className="planner-scoring-mode__legend">
-        {t({ zh: '金币 / 等级', en: 'Gold / Level' })}
+        {t("金币 / 等级")}
       </legend>
       <label className="planner-gold-level__option">
         <input type="radio" name="gold-level-mode" checked={mode === 'none'} onChange={() => onModeChange('none')} />
-        {t({ zh: '存档等级', en: 'Save level' })}
+        {t("存档等级")}
       </label>
       <label className="planner-gold-level__option">
         <input type="radio" name="gold-level-mode" checked={mode === 'gold'} onChange={() => onModeChange('gold')} />
-        {t({ zh: '金币预算', en: 'Gold budget' })}
+        {t("金币预算")}
       </label>
       {mode === 'gold' && (
         <input
@@ -51,14 +51,14 @@ export function PlannerGoldLevel({ mode, goldBudget, globalLevel, conversion, on
           value={goldBudget}
           placeholder="1.5e92"
           className="planner-gold-level__input"
-          aria-label={t({ zh: '金币预算', en: 'Gold budget' })}
+          aria-label={t("金币预算")}
           data-testid="planner-gold-budget-input"
           onChange={(e) => onGoldBudgetChange(e.target.value)}
         />
       )}
       <label className="planner-gold-level__option">
         <input type="radio" name="gold-level-mode" checked={mode === 'level'} onChange={() => onModeChange('level')} />
-        {t({ zh: '全局等级', en: 'Global level' })}
+        {t("全局等级")}
       </label>
       {mode === 'level' && (
         <input
@@ -67,7 +67,7 @@ export function PlannerGoldLevel({ mode, goldBudget, globalLevel, conversion, on
           inputMode="numeric"
           value={levelDraft}
           className="planner-gold-level__input"
-          aria-label={t({ zh: '全局等级', en: 'Global level' })}
+          aria-label={t("全局等级")}
           data-testid="planner-global-level-input"
           onChange={(e) => {
             setLevelDraft(e.target.value)
@@ -79,8 +79,8 @@ export function PlannerGoldLevel({ mode, goldBudget, globalLevel, conversion, on
       {conversion && mode !== 'none' && (
         <span className="planner-gold-level__summary" data-testid="planner-gold-level-summary">
           {mode === 'gold' && maxLevel !== null
-            ? t({ zh: `最高可达 ${String(maxLevel)} 级`, en: `Max level ${String(maxLevel)}` })
-            : t({ zh: `最高费用 ${conversion.maxGold}`, en: `Max cost ${conversion.maxGold}` })}
+            ? t("最高可达 {p0} 级", { p0: String(maxLevel) })
+            : t("最高费用 {p0}", { p0: conversion.maxGold })}
         </span>
       )}
     </fieldset>

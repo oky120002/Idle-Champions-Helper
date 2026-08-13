@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { ANIMATION_AUDIT_FEEDBACK_TAGS } from './feedback'
 import type {
   AnimationAuditFeedbackDraft,
@@ -9,7 +10,7 @@ interface AnimationAuditRowFeedbackProps {
   readonly entryId: string
   readonly hasAlternate: boolean
   readonly feedback: AnimationAuditFeedbackDraft
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
   readonly onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
   readonly onNoteChange: (entryId: string, note: string) => void
@@ -22,28 +23,28 @@ function buildVerdictLabel(
 ) {
   switch (verdict) {
     case 'current':
-      return t({ zh: '当前默认就对', en: 'Current default is right' })
+      return t("当前默认就对")
     case 'recommended':
-      return t({ zh: '推荐候选更对', en: 'Recommended looks better' })
+      return t("推荐候选更对")
     case 'alternate':
-      return t({ zh: '备选更对', en: 'Alternate looks better' })
+      return t("备选更对")
     case 'manual':
-      return t({ zh: '都不对，还得另找', en: 'Neither works, needs manual pick' })
+      return t("都不对，还得另找")
   }
 }
 
 function buildFeedbackTagLabel(tag: AnimationAuditFeedbackTag, t: AnimationAuditRowFeedbackProps['t']) {
   switch (tag) {
     case 'joint_dislocation':
-      return t({ zh: '关节脱位 / 骨架怪', en: 'Joint or rig looks broken' })
+      return t("关节脱位 / 骨架怪")
     case 'not_idle_like':
-      return t({ zh: '不像游戏待机', en: 'Does not feel idle-like' })
+      return t("不像游戏待机")
     case 'motion_too_busy':
-      return t({ zh: '动作太躁', en: 'Motion is too busy' })
+      return t("动作太躁")
     case 'sparse_or_cropped':
-      return t({ zh: '轮廓或部件残缺', en: 'Coverage or pieces look sparse' })
+      return t("轮廓或部件残缺")
     case 'samey_template':
-      return t({ zh: '和别的英雄太像', en: 'Feels too samey across heroes' })
+      return t("和别的英雄太像")
   }
 }
 
@@ -66,9 +67,9 @@ export function AnimationAuditRowFeedback({
     <section className="animation-audit-feedback-card">
       <div className="animation-audit-feedback-card__header">
         <div className="animation-audit-feedback-card__copy">
-          <p className="animation-audit-feedback-card__eyebrow">{t({ zh: '你的反馈', en: 'Your feedback' })}</p>
+          <p className="animation-audit-feedback-card__eyebrow">{t("你的反馈")}</p>
           <h3 className="animation-audit-feedback-card__title">
-            {t({ zh: '先选结论，再补几个问题标签', en: 'Pick a verdict, then add a few issue tags' })}
+            {t("先选结论，再补几个问题标签")}
           </h3>
         </div>
         {hasFeedback ? (
@@ -77,13 +78,13 @@ export function AnimationAuditRowFeedback({
             className="animation-audit-feedback-card__clear"
             onClick={() => onClearFeedback(entryId)}
           >
-            {t({ zh: '清空本行', en: 'Clear row' })}
+            {t("清空本行")}
           </button>
         ) : null}
       </div>
 
       <div className="animation-audit-feedback-card__group">
-        <span className="animation-audit-feedback-card__label">{t({ zh: '结论', en: 'Verdict' })}</span>
+        <span className="animation-audit-feedback-card__label">{t("结论")}</span>
         <div className="animation-audit-feedback-card__option-row">
           {verdictOptions.map((verdict) => (
             <button
@@ -103,7 +104,7 @@ export function AnimationAuditRowFeedback({
       </div>
 
       <div className="animation-audit-feedback-card__group">
-        <span className="animation-audit-feedback-card__label">{t({ zh: '问题标签', en: 'Issue tags' })}</span>
+        <span className="animation-audit-feedback-card__label">{t("问题标签")}</span>
         <div className="animation-audit-feedback-card__option-row">
           {ANIMATION_AUDIT_FEEDBACK_TAGS.map((tag) => {
             const checked = feedback.tags.includes(tag)
@@ -130,15 +131,12 @@ export function AnimationAuditRowFeedback({
       </div>
 
       <label className="animation-audit-feedback-card__note">
-        <span className="animation-audit-feedback-card__label">{t({ zh: '备注（可选）', en: 'Note (optional)' })}</span>
+        <span className="animation-audit-feedback-card__label">{t("备注（可选）")}</span>
         <textarea
           rows={2}
           value={feedback.note}
           onChange={(event) => onNoteChange(entryId, event.target.value)}
-          placeholder={t({
-            zh: '例如：武器抖动怪，或者 seq 2 比推荐更接近游戏。',
-            en: 'For example: weapon jitters oddly, or sequence 2 feels closer to the game.',
-          })}
+          placeholder={t("例如：武器抖动怪，或者 seq 2 比推荐更接近游戏。")}
         />
       </label>
     </section>

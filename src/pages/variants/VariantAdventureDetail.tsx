@@ -22,8 +22,8 @@ export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
   if (!selectedAdventureGroup) {
     return (
       <div className="variant-detail-empty">
-        <h3>{t({ zh: '没有可展示的关卡', en: 'No adventure selected' })}</h3>
-        <p>{t({ zh: '先在左侧选择地图和关卡。', en: 'Choose a campaign and adventure on the left.' })}</p>
+        <h3>{t("没有可展示的关卡")}</h3>
+        <p>{t("先在左侧选择地图和关卡。")}</p>
       </div>
     )
   }
@@ -33,7 +33,7 @@ export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
   const mechanicLabels = getMechanicLabels(selectedAdventureGroup, locale)
   const sceneLabel = selectedAdventureGroup.scene
     ? getLocalizedTextPair(selectedAdventureGroup.scene, locale)
-    : t({ zh: '未标记场景', en: 'No scene label' })
+    : t("未标记场景")
 
   return (
     <section className="variant-detail">
@@ -76,7 +76,7 @@ export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
 
       <div className="variant-detail__intel-grid">
         <section className="variant-detail__intel variant-detail__intel--wide">
-          <span className="variant-detail__intel-label">{t({ zh: '敌人分类', en: 'Enemy types' })}</span>
+          <span className="variant-detail__intel-label">{t("敌人分类")}</span>
           <div className="variant-stat-list">
             {enemyStats.map((stat) => (
               <span key={stat.id} className="variant-stat-pill">
@@ -88,7 +88,7 @@ export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
         </section>
 
         <section className="variant-detail__intel">
-          <span className="variant-detail__intel-label">{t({ zh: '攻击类型', en: 'Attack types' })}</span>
+          <span className="variant-detail__intel-label">{t("攻击类型")}</span>
           <div className="variant-stat-list">
             {attackStats.map((stat) => (
               <span key={stat.id} className="variant-stat-pill">
@@ -101,7 +101,7 @@ export function VariantAdventureDetail({ model }: VariantAdventureDetailProps) {
         </section>
 
         <section className="variant-detail__intel">
-          <span className="variant-detail__intel-label">{t({ zh: '特殊敌人', en: 'Special enemies' })}</span>
+          <span className="variant-detail__intel-label">{t("特殊敌人")}</span>
           <strong className="variant-detail__metric">{getSpecialEnemySummary(selectedAdventureGroup, locale)}</strong>
           <div className="variant-chip-row">
             {mechanicLabels.slice(0, 4).map((label) => (

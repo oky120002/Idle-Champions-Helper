@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { AppLocale, LocaleText, TranslateParams } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type { ChampionMechanicCategoryId } from '../../domain/champion-tags/types'
 import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
@@ -37,7 +37,7 @@ export interface ChampionsFilterState {
 }
 
 export interface ChampionsPageTranslator {
-  (text: LocaleText): string
+  (text: string | LocaleText, params?: TranslateParams): string
 }
 
 export interface ChampionsPageModel {

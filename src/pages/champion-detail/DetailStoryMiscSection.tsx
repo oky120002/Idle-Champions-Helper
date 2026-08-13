@@ -1,3 +1,4 @@
+import type { LocaleText, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { ChampionDetail } from '../../domain/types'
 import { DetailField, LocalizedTextStack } from './detail-cards'
@@ -7,7 +8,7 @@ import type { DetailFieldProps } from './types'
 type DetailStoryMiscSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: { zh: string; en: string }) => string
+  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
   readonly overviewFields: DetailFieldProps[]
 }
 
@@ -26,7 +27,7 @@ function dedupeFields(fields: DetailFieldProps[]): DetailFieldProps[] {
 
 export function DetailStoryMiscSection({ detail, locale, t, overviewFields }: DetailStoryMiscSectionProps) {
   const affiliationField: DetailFieldProps = {
-    label: t({ zh: '联动', en: 'Affiliations' }),
+    label: t("联动"),
     value:
       detail.summary.affiliations.length > 0 ? (
         <>
@@ -35,7 +36,7 @@ export function DetailStoryMiscSection({ detail, locale, t, overviewFields }: De
           ))}
         </>
       ) : (
-        t({ zh: '暂无', en: 'None yet' })
+        t("暂无")
       ),
     variant: 'compact',
   }
