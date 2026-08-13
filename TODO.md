@@ -60,26 +60,11 @@ repair: rebuild
     - 证据：npx tsx 实跑 collectEffectEntries + specialization-catalog.json 验证 + Python 逐源分类（loot 612 / upgrade_ek 12 全专精）
     - 优先级：中（随 speed 维度推进时解决）
 
-- architecture.md 195 行超叶子文档阈值 180（governance 测试 FAIL） <!-- auto-todo:id=atd_a6aa4be23c -->
-  - 记录时间: `2026-08-10T11:59:22+08:00`
-  - 类型: optimization
-  - 位置: `docs/specs/modules/planner/architecture.md`
-  - 备注: 预已存在，与 HasEffect 任务无关
-    - 位置：docs/specs/modules/planner/architecture.md
-    - 阈值：叶子文档 <=180 行默认保留，181+ 应拆
-    - 治理测试 docs-governance.test.ts 持续报错
-
 - computeCarryDps:33 Number.isFinite guard 静默吞掉 NaN/非正 damageAggregate <!-- auto-todo:id=atd_600a5e8368 -->
   - 记录时间: `2026-08-10T09:50:08+08:00`
   - 类型: issue
   - 位置: `src/domain/simulator/baseDps.ts:33`
   - 备注: globalBuffMultiplier=NaN 等上游损坏时加成被静默替换为 1，carryDps 有合法值但无 warning 诊断（集成契约审计发现，锁现状）
-
-- 领域层硬编码中文 UI 文本未国际化（signalMultiplier 警告 + recommendationEngine 违规信息） <!-- auto-todo:id=atd_665afea3d4 -->
-  - 记录时间: `2026-08-10T09:54:41+08:00`
-  - 类型: issue
-  - 位置: `src/domain/planner/mechanics/signalMultiplier.ts:44`
-  - 备注: signalMultiplier.ts 警告和 recommendationEngine.ts 违规信息直接返回中文字符串，需改为返回结构化数据由 UI 层翻译
 
 - snowflake/active_campaign target type 需 amount_func_set_table/amount_expr 管线支持 <!-- auto-todo:id=atd_60e2347278 -->
   - 记录时间: `2026-08-12T12:30:17+08:00`
