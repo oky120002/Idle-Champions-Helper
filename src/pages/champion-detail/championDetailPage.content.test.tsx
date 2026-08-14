@@ -150,14 +150,15 @@ describe('ChampionDetailPage content', () => {
           pathname: '/illustrations',
           search: '?scope=skin',
         },
-        returnLabel: {
-          zh: '返回立绘图鉴',
-          en: 'Back to illustrations',
-        },
+        returnLabel: { key: '返回立绘图鉴' },
       },
     })
 
     await screen.findByRole('heading', { level: 2, name: '明斯克' })
-    expect(screen.getByRole('button', { name: '返回立绘图鉴' })).toBeInTheDocument()
+    const backButton = screen.getByRole('button', { name: '返回立绘图鉴' })
+
+    fireEvent.click(backButton)
+
+    expect(await screen.findByText('立绘图鉴占位')).toBeInTheDocument()
   })
 })

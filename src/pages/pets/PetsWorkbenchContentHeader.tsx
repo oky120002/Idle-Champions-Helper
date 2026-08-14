@@ -11,6 +11,7 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
   const metricItems = [
     createWorkbenchShowingMetricItem({
       t,
+      locale: model.locale,
       visibleCount: results.visiblePets.length,
       filteredCount: results.filteredPets.length,
       enUnitLabel: 'pets',

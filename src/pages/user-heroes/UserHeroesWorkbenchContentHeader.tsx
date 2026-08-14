@@ -13,6 +13,7 @@ export function UserHeroesWorkbenchContentHeader({ model }: UserHeroesWorkbenchC
       ? [
           createWorkbenchShowingMetricItem({
             t,
+            locale: model.locale,
             visibleCount: filteredChampions.length,
             filteredCount: filteredChampions.length,
             enUnitLabel: 'champions',

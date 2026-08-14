@@ -106,6 +106,7 @@ function renderAtRoute(
           Routes,
           null,
           includeBackRoute ? createElement(Route, { path: '/champions', element: createElement('div', null, '筛选页占位') }) : null,
+          includeBackRoute ? createElement(Route, { path: '/illustrations', element: createElement('div', null, '立绘图鉴占位') }) : null,
           createElement(Route, { path: '/champions/:championId', element: createElement(ChampionDetailPage) }),
         ),
       ),

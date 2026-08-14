@@ -20,6 +20,7 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
   const metricItems = [
     createWorkbenchShowingMetricItem({
       t,
+      locale: model.locale,
       visibleCount: results.visibleIllustrationEntries.length,
       filteredCount: results.filteredIllustrationEntries.length,
       enUnitLabel: 'illustrations',

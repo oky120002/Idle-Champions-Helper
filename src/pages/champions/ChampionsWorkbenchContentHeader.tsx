@@ -17,6 +17,7 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
           return [
             createWorkbenchShowingMetricItem({
               t,
+              locale: model.locale,
               visibleCount: visibleChampions.length,
               filteredCount: filteredChampions.length,
               enUnitLabel: 'champions',

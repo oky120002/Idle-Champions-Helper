@@ -1,4 +1,4 @@
-import type { MessageRef, TranslateParams } from '../../app/i18n'
+import type { AppLocale, MessageRef, TranslateParams } from '../../app/i18n'
 import type { PageHeaderMetricItem } from '../PageHeaderMetrics'
 
 interface WorkbenchMetricLabelTranslator {
@@ -7,6 +7,7 @@ interface WorkbenchMetricLabelTranslator {
 
 interface CreateWorkbenchShowingMetricItemOptions {
   t: WorkbenchMetricLabelTranslator
+  locale: AppLocale
   visibleCount: number
   filteredCount: number
   enUnitLabel: string
@@ -14,16 +15,19 @@ interface CreateWorkbenchShowingMetricItemOptions {
 
 export function createWorkbenchShowingMetricItem({
   t,
+  locale,
   visibleCount,
   filteredCount,
   enUnitLabel,
 }: CreateWorkbenchShowingMetricItemOptions): PageHeaderMetricItem {
   return {
     label: t("当前展示"),
-    value: t('{p0} / {p1} {p2}', {
-      p0: String(visibleCount),
-      p1: String(filteredCount),
-      p2: enUnitLabel,
-    }),
+    value: locale === 'zh-CN'
+      ? `${String(visibleCount)} / ${String(filteredCount)}`
+      : t('{p0} / {p1} {p2}', {
+          p0: String(visibleCount),
+          p1: String(filteredCount),
+          p2: enUnitLabel,
+        }),
   }
 }

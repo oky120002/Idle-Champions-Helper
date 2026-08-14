@@ -13,6 +13,7 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
       ? [
           createWorkbenchShowingMetricItem({
             t,
+            locale: model.locale,
             visibleCount: visibleVariants.length,
             filteredCount: filteredVariants.length,
             enUnitLabel: 'variants',
