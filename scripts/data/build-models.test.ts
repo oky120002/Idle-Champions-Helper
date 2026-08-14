@@ -44,7 +44,11 @@ interface HeroAbilities {
 }
 
 interface ScenarioItem {
-  formationLayoutId: string
+  variantId: string
+  scenarioRef: { kind: 'variant'; id: string }
+  name: { original: string; display: string }
+  formationLayoutId: string | null
+  objectiveArea: number | null
   slotTopology: Array<{
     slotId: string
     row: number
@@ -53,6 +57,11 @@ interface ScenarioItem {
     y: number
     adjacentSlotIds: string[]
   }>
+  forcedHeroes: string[]
+  enemyTypes: string[]
+  allowedHeroes: string[]
+  allowedTagExpression: unknown[]
+  attributeRequirements: unknown[]
   scenarioWarnings: string[]
 }
 
@@ -638,6 +647,10 @@ it('signal 透传 upgradeId（runtime 装备 buff_upgrade 反查 base 的基建�
 
 it('buildModels 产出 scenarios（阵型布局）', async () => {
   const { scenarioModels } = await setupBuildModelsOutputs()
+  expect(scenarioModels.items[0]?.variantId).toBe('variant-1')
+  expect(scenarioModels.items[0]?.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
+  expect(scenarioModels.items[0]?.objectiveArea).toBe(125)
+  expect(scenarioModels.items[0]?.enemyTypes).toEqual([])
   expect(scenarioModels.items[0]?.formationLayoutId).toBe('layout-a')
   expect(scenarioModels.items[0]?.slotTopology).toEqual([
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },

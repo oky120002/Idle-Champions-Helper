@@ -38,8 +38,9 @@ export const heroAbilityProfileItemSchema = z
   .loose()
 
 /**
- * scenarios.json item：场景阵型拓扑 + 限制。
- * 钉 variantId + 布局 id + 槽位拓扑核心（slotId/row/column）+ forced/locked/allowed 名单 + 占格数。
+ * scenarios.json item：场景引用、名称、目标区、敌人类型、阵型拓扑、限制与可行性上下文。
+ * 钉 variantId + scenarioRef + objectiveArea + enemyTypes + scenarioWarnings + 布局 id + 槽位拓扑核心
+ * （slotId/row/column）+ forced/allowed 名单 + 占格数。
  */
 const plannerScenarioSlotSchema = z
   .object({
@@ -63,10 +64,17 @@ const attributeRequirementSchema = z.object({
 export const plannerScenarioItemSchema = z
   .object({
     variantId: z.string(),
+    scenarioRef: z.object({
+      kind: z.enum(['campaign', 'adventure', 'variant', 'trial', 'timeGate']),
+      id: z.string(),
+    }),
     name: localizedText,
     formationLayoutId: z.string().nullable(),
+    objectiveArea: z.number().nullable(),
     slotTopology: z.array(plannerScenarioSlotSchema),
     forcedHeroes: z.array(z.string()),
+    enemyTypes: z.array(z.string()),
+    scenarioWarnings: z.array(z.string()),
     allowedHeroes: z.array(z.string()),
     allowedTagExpression: z.array(tagClauseSchema),
     attributeRequirements: z.array(attributeRequirementSchema),

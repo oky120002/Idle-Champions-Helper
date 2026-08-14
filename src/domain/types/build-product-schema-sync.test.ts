@@ -11,9 +11,9 @@ import type {
   featCatalogItemSchema,
   heroAbilityProfileItemSchema,
   lootCatalogItemSchema,
-  plannerScenarioItemSchema,
   specializationCatalogItemSchema,
 } from './build-product-schemas'
+import { plannerScenarioItemSchema } from './build-product-schemas'
 
 /**
  * build-product schema 钉死字段 ⊆ 消费 interface（passthrough 双源防漂移）。
@@ -34,6 +34,12 @@ describe('build-product schema 钉死字段 ⊆ 消费 interface（passthrough �
       ? true
       : never = true
     expect(_guard).toBe(true)
+  })
+
+  it('plannerScenarioItemSchema 钉住 builder 输出的场景元数据字段', () => {
+    expect(Object.keys(plannerScenarioItemSchema.shape)).toEqual(
+      expect.arrayContaining(['scenarioRef', 'objectiveArea', 'enemyTypes', 'scenarioWarnings']),
+    )
   })
 
   it('lootCatalogItemSchema 钉死字段 ⊆ LootCatalogEntry', () => {
