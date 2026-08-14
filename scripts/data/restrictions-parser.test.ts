@@ -201,6 +201,58 @@ describe('parseRestrictions — ZH 变量递增占格排除', () => {
   })
 })
 
+describe('parseRestrictions — EN 递增占格检测', () => {
+  it('v70 风格：区域周期后 one more slot 被占据 → 不产固定格数并 warning', () => {
+    const result = parseRestrictions([r(
+      'Starting in area 11, and every 50 areas thereafter up to area 261, one more slot is taken up by a caravan wagon.',
+      '从区域 11 开始，每经过 50 个区域（最多至 261 区域），就会有额外一格被大篷车占据。',
+    )])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings).toHaveLength(1)
+  })
+
+  it('v116 风格：every N areas a slot is taken up → 不产固定格数并 warning', () => {
+    const result = parseRestrictions([r(
+      'Every 50 areas a slot is taken up by a hunter, who attacks with a bow dealing a percentage of your formation\'s DPS.',
+      '每经过 50 个区域，阵型中的一格会被一位猎人占据。猎人用弓箭进行攻击，造成等同于你阵型伤害值一定百分比的伤害。',
+    )])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings).toHaveLength(1)
+  })
+
+  it('v127 风格：固定初始占格后 additional/another slot 递增 → 不产固定格数并 warning', () => {
+    const result = parseRestrictions([r(
+      'A wagon takes up a slot in the formation. Every 100 areas an additional wagon joins your train, taking up another slot.',
+      '一辆马车会占据阵型中的一格。每经过 100 个区域，就有另外一辆马车加入车队并占据一格。',
+    )])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings).toHaveLength(1)
+  })
+
+  it('v461 风格：区域周期后 another fan takes up another slot → 不产固定格数并 warning', () => {
+    const result = parseRestrictions([r(
+      'A really excited costumed fan joins the formation. Every 50 areas, another huge fan takes up another slot in the formation.',
+      '一个奇装异服的粉丝非常兴奋地加入了阵型。每经过 50 个区域，另一个超级粉丝会占据阵型中的另外一格。',
+    )])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings).toHaveLength(1)
+  })
+
+  it('仅有 every N areas 不足以判定递增占格 → 仍 warning', () => {
+    const result = parseRestrictions([r('Every 50 areas, the enemies gain a new ability.')])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings).toHaveLength(1)
+  })
+
+  it('固定占格后换位不被递增检测误伤 → 保留固定格数', () => {
+    const result = parseRestrictions([r(
+      'Two Quasits join your formation taking up two slots. Every 25 areas, they move to different slots.',
+    )])
+    expect(result.lockedSlotCount).toBe(2)
+    expect(result.warnings).toHaveLength(1)
+  })
+})
+
 describe('parseRestrictions — 属性门槛提取', () => {
   it('CON score of 13 or higher → { stat: con, operator: >=, value: 13 }', () => {
     const result = parseRestrictions([r('Only Champions with a CON score of 13 or higher may be used.')])
