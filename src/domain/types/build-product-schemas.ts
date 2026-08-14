@@ -2,6 +2,8 @@ import { z } from 'zod'
 
 import { localizedTextSchema } from './common.ts'
 
+const localizedText = localizedTextSchema
+
 /**
  * build 派生产物输出契约 schema（planner 核心消费的 6 个产物）。
  *
@@ -16,8 +18,6 @@ import { localizedTextSchema } from './common.ts'
  *
  * 同步守护见 build-product-schema-sync.test.ts（schema 钉死字段 ⊆ 消费 interface，typecheck 层防漂移）。
  */
-
-const localizedText = localizedTextSchema
 
 /**
  * hero-abilities.json item：英雄能力 profile（planner 评估核心数据源）。
@@ -61,6 +61,11 @@ const attributeRequirementSchema = z.object({
   value: z.number().int(),
 })
 
+const messageRefSchema = z.union([
+  z.object({ key: z.string(), params: z.record(z.string(), z.unknown()).optional() }).loose(),
+  z.object({ literal: z.string() }).loose(),
+])
+
 export const plannerScenarioItemSchema = z
   .object({
     variantId: z.string(),
@@ -74,7 +79,7 @@ export const plannerScenarioItemSchema = z
     slotTopology: z.array(plannerScenarioSlotSchema),
     forcedHeroes: z.array(z.string()),
     enemyTypes: z.array(z.string()),
-    scenarioWarnings: z.array(z.string()),
+    scenarioWarnings: z.array(messageRefSchema),
     allowedHeroes: z.array(z.string()),
     allowedTagExpression: z.array(tagClauseSchema),
     attributeRequirements: z.array(attributeRequirementSchema),

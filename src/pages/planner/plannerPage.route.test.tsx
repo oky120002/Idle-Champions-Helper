@@ -152,7 +152,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
   occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
     damageSourcePattern: null,
-      scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
+      scenarioWarnings: [{ literal: '当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。' }],
     },
   ],
 }

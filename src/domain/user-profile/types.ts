@@ -1,3 +1,4 @@
+import type { MessageRef } from '../types/common'
 import type { ScenarioRef } from '../types/formation'
 
 export interface OwnedHeroLootSlot {
@@ -97,6 +98,6 @@ export interface UserProfileSnapshot {
     deity: number | null
   }
   updatedAt: string
-  warnings: string[]
+  warnings: MessageRef[]
   legendaryLevelCap: number
 }

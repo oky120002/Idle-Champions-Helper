@@ -40,7 +40,7 @@ describe('user profile fixtures', () => {
   it('可选字段缺失时 builder 仍能生成 snapshot 并带 warning', () => {
     const snapshot: UserProfileSnapshot = createUserProfileSnapshot(
       { ownedHeroes: [createOwnedHero({ heroId: '42' })] },
-      ['importedFormationSaves was empty — user has no saved formations'],
+      [{ literal: 'importedFormationSaves was empty — user has no saved formations' }],
     )
 
     expect(snapshot.schemaVersion).toBe(1)

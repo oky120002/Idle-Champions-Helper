@@ -62,7 +62,7 @@ interface ScenarioItem {
   allowedHeroes: string[]
   allowedTagExpression: unknown[]
   attributeRequirements: unknown[]
-  scenarioWarnings: string[]
+  scenarioWarnings: Array<{ key: string; params?: Record<string, string | number> } | { literal: string }>
 }
 
 interface ScenarioModels {
@@ -659,7 +659,17 @@ it('buildModels 产出 scenarios（阵型布局）', async () => {
   // slot_escort mechanic 不锁槽——护送占位按全槽可用处理（见 docs/requirements/escort-slot-locking.md）。
   // 不产 lockedSlots 字段、不产护送 warning（slot_escort 在 projectMechanicsToScenario 是 no-op）。
   expect(scenarioModels.items[0]).not.toHaveProperty('lockedSlots')
-  expect(scenarioModels.items[0]?.scenarioWarnings.some((w) => w.includes('护送'))).toBe(false)
+  expect(scenarioModels.items[0]?.scenarioWarnings.some((w) => 'key' in w && w.key.includes('未解析 restriction'))).toBe(true)
+})
+
+it('buildModels 将静态场景诊断产出为可翻译引用', async () => {
+  const { scenarioModels } = await setupBuildModelsOutputs()
+  const warning = scenarioModels.items[0]?.scenarioWarnings[0]
+
+  expect(warning).toEqual({
+    key: '未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）',
+    params: { p0: 'Only test heroes' },
+  })
 })
 
 it('buildModels 透传 semantic overrides', async () => {

@@ -39,11 +39,21 @@ export const ownedHeroItemSchema = z
   })
   .loose()
 
+const storedMessageRefSchema = z.union([
+  z.object({ literal: z.string() }).loose(),
+  z.object({ key: z.string(), params: z.record(z.string(), z.unknown()).optional() }).loose(),
+])
+
+const storedWarningSchema = z.union([z.string(), storedMessageRefSchema]).transform((warning) => {
+  return typeof warning === 'string' ? { literal: warning } : warning
+})
+
 export const userProfileSnapshotSchema = z
   .object({
     schemaVersion: z.literal(1),
     ownedHeroes: z.array(ownedHeroItemSchema),
     updatedAt: z.string(),
+    warnings: z.array(storedWarningSchema).default([]),
   })
   .loose()
 

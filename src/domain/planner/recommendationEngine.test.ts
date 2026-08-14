@@ -112,7 +112,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
       occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
     damageSourcePattern: null,
-    scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
+    scenarioWarnings: [{ literal: '当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。' }],
   },
 ]
 
@@ -365,7 +365,7 @@ describe('planner recommendation engine', () => {
       occupiedSlotCount: 2,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
     damageSourcePattern: null,
-      scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
+      scenarioWarnings: [{ literal: '当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。' }],
     }
     const occupiedCollections: PlannerCollections = {
       plannerHeroes,

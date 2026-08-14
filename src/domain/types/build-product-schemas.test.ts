@@ -14,7 +14,7 @@ const validScenario = {
   allowedHeroes: [],
   allowedTagExpression: [],
   attributeRequirements: [],
-  scenarioWarnings: ['当前场景没有匹配的阵型布局。'],
+  scenarioWarnings: [{ literal: '当前场景没有匹配的阵型布局。' }],
   occupiedSlotCount: 0,
   viabilityContext: {
     armor: null,
@@ -36,7 +36,7 @@ describe('planner scenario build-product schema', () => {
     expect(result.data.scenarioRef).toEqual({ kind: 'variant', id: 'variant-1' })
     expect(result.data.objectiveArea).toBe(125)
     expect(result.data.enemyTypes).toEqual(['undead', 'humanoid'])
-    expect(result.data.scenarioWarnings).toEqual(['当前场景没有匹配的阵型布局。'])
+    expect(result.data.scenarioWarnings).toEqual([{ literal: '当前场景没有匹配的阵型布局。' }])
   })
 
   it('要求场景引用、目标区、敌人类型和 warning 保持 builder 契约', () => {

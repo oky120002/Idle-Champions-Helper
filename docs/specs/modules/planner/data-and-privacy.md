@@ -34,7 +34,7 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 
 `UserProfileSnapshot`（`src/domain/user-profile/types.ts`）：
 
-- `schemaVersion`、`updatedAt`、`warnings`
+- `schemaVersion`、`updatedAt`、`warnings`（`MessageRef[]`；旧本地快照中的 `string[]` 读取时包装为 `literal`）
 - `ownedHeroes`：`OwnedHero[]`（每英雄 `heroId` / `level` / `equipment` / `feats` / `legendaryEffects` / `unlockedFeats` / `lootBySlot`）
 - `importedFormationSaves`：`ImportedFormationSave[]`（layout id、slot placements、specializations、feats、familiars、scenario relation）
 - `campaigns?`：各战役 favor / blessings

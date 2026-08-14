@@ -7,6 +7,7 @@ import type {
   OwnedHeroLootSlot,
   UserProfileSnapshot,
 } from '../../domain/user-profile/types'
+import type { MessageRef } from '../../domain/types/common'
 import type { ScenarioRef } from '../../domain/types/formation'
 import {
   asRecord,
@@ -21,8 +22,11 @@ import {
   toStringValue,
 } from './userProfilePayloadHelpers'
 
+function warningRef(key: string, params?: Record<string, string | number>): MessageRef {
+  return params === undefined ? { key } : { key, params }
+}
+
 interface UserDetailsPayload {
-  user_id?: string | number
   heroes?: unknown
   defines?: {
     reset_upgrade_defines?: unknown
@@ -87,7 +91,7 @@ export interface NormalizedUserDetails {
     patronId: number
     deity: number | null
   }
-  warnings: string[]
+  warnings: MessageRef[]
 }
 
 export interface NormalizedCampaignDetails {
@@ -96,12 +100,12 @@ export interface NormalizedCampaignDetails {
     favor: string
     blessings: Record<string, number>
   }>
-  warnings: string[]
+  warnings: MessageRef[]
 }
 
 export interface NormalizedFormationSaves {
   formations: ImportedFormationSave[]
-  warnings: string[]
+  warnings: MessageRef[]
 }
 
 export interface BuildUserProfileSnapshotInput {
@@ -268,7 +272,7 @@ function isScenarioKind(value: unknown): value is ScenarioKind {
   )
 }
 
-function normalizeScenarioRef(save: FormationSavePayload, warnings: string[]): ScenarioRef {
+function normalizeScenarioRef(save: FormationSavePayload, warnings: MessageRef[]): ScenarioRef {
   if (save.scenario && isScenarioKind(save.scenario.kind)) {
     return {
       kind: save.scenario.kind,
@@ -288,12 +292,12 @@ function normalizeScenarioRef(save: FormationSavePayload, warnings: string[]): S
     return { kind: 'campaign', id: String(save.campaign_id) }
   }
 
-  warnings.push(`formation ${toStringValue(save.formation_id ?? save.id)} missing scenario reference`)
+  warnings.push(warningRef('formation {p0} missing scenario reference', { p0: toStringValue(save.formation_id ?? save.id) }))
   return { kind: 'adventure', id: '0' }
 }
 
 export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUserDetails {
-  const warnings: string[] = []
+  const warnings: MessageRef[] = []
   const heroesValue = payload.details?.heroes ?? payload.heroes
   const heroes = normalizeObjectArray(heroesValue)
   const lootByHeroId = normalizeLootByHeroId(payload.details?.loot)
@@ -304,7 +308,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
   const legendaryByHeroId = normalizeLegendaryByHeroId(payload.details?.legendary_details?.legendary_items)
 
   if (!Array.isArray(heroesValue) && !isRecord(heroesValue)) {
-    warnings.push('getuserdetails payload missing heroes array')
+    warnings.push(warningRef('getuserdetails payload missing heroes array'))
   }
 
   const ownedHeroes: OwnedHero[] = heroes
@@ -344,12 +348,12 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
 export function normalizeCampaignDetails(
   payload: CampaignDetailsPayload,
 ): NormalizedCampaignDetails {
-  const warnings: string[] = []
+  const warnings: MessageRef[] = []
   const campaignsValue = payload.campaigns
   const campaigns = normalizeObjectArray(campaignsValue)
 
   if (!Array.isArray(campaignsValue) && !isRecord(campaignsValue)) {
-    warnings.push('getcampaigndetails payload missing campaigns array')
+    warnings.push(warningRef('getcampaigndetails payload missing campaigns array'))
   }
 
   const result = campaigns.map((campaign) => {
@@ -367,12 +371,12 @@ export function normalizeCampaignDetails(
 export function normalizeFormationSaves(
   payload: FormationSavesPayload,
 ): NormalizedFormationSaves {
-  const warnings: string[] = []
+  const warnings: MessageRef[] = []
   const formationsValue = payload.formations ?? payload.all_saves
   const formations = normalizeObjectArray(formationsValue)
 
   if (!Array.isArray(formationsValue) && !isRecord(formationsValue)) {
-    warnings.push('getallformationsaves payload missing formations array')
+    warnings.push(warningRef('getallformationsaves payload missing formations array'))
   }
 
   const result: ImportedFormationSave[] = formations.map((item) => {
@@ -398,7 +402,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
   const campaignDetails = normalizeCampaignDetails(asRecord(input.campaignDetails))
   const formationSaves = normalizeFormationSaves(asRecord(input.formationSaves))
   const campaignWarnings = campaignDetails.campaigns.length > 0
-    ? [`campaign details imported: ${String(campaignDetails.campaigns.length)}`]
+    ? [warningRef('campaign details imported: {p0}', { p0: campaignDetails.campaigns.length })]
     : []
 
   return {

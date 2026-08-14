@@ -44,15 +44,22 @@ const EN_SLOT_OCCUPY_KEYWORDS = ['take up', 'takes up', 'taking up', 'taken up',
 // 区域周期 + 新增占格语义才表示格数会递增；单独出现 every N areas 不能触发排除。
 // 注意：cursed slots「change slots every 15 seconds」是固定 N 格轮换位置（计数不变），不算变量。
 const EN_AREA_CYCLE_RE = /\b(?:every|each)\s+\d+\s+areas?\b/i
-const EN_INCREMENTAL_SLOT_SEMANTICS_RE =
-  /\b(?:one\s+more|an?\s+additional|another|additional)\s+slots?\b[^.\n]{0,60}\b(?:is\s+)?(?:taken\s+up|occupied|cursed)\b|\b(?:is\s+)?(?:taken\s+up|occupied|cursed)\b[^.\n]{0,60}\b(?:one\s+more|an?\s+additional|another|additional)\s+slots?\b|\b(?:takes?|taking)\s+up\s+(?:one\s+more|an?\s+additional|another|a)\s+slots?\b/i
-const EN_INCREMENTAL_ENTITY_SEMANTICS_RE = /\banother\s+friendly\b[^.\n]{0,80}\b(?:appears?|joins?|takes?\s+up)\b/i
+const EN_ADDITIONAL_SLOT_RE = /\b(?:one more|an additional|another|additional) slots?\b/i
+const EN_OCCUPANCY_ACTION_RE = /\b(?:taken up|occupied|cursed)\b/i
+const EN_TAKES_UP_ADDITIONAL_SLOT_RE = /\b(?:takes?|taking) up (?:one more|an additional|another|a) slots?\b/i
+const EN_INCREMENTAL_ENTITY_SEMANTICS_RE = /\banother friendly\b[^.\n]{0,80}\b(?:appears?|joins?|takes? up)\b/i
 
 function isEnIncrementalSlotOccupancy(text: string): boolean {
-  return EN_AREA_CYCLE_RE.test(text) && (
-    EN_INCREMENTAL_SLOT_SEMANTICS_RE.test(text) ||
-    EN_INCREMENTAL_ENTITY_SEMANTICS_RE.test(text)
-  )
+  if (!EN_AREA_CYCLE_RE.test(text)) {
+    return false
+  }
+
+  const clauses = text.split(/[.!?\n]/)
+  return clauses.some((clause) => (
+    (EN_ADDITIONAL_SLOT_RE.test(clause) && EN_OCCUPANCY_ACTION_RE.test(clause)) ||
+    EN_TAKES_UP_ADDITIONAL_SLOT_RE.test(clause) ||
+    EN_INCREMENTAL_ENTITY_SEMANTICS_RE.test(clause)
+  ))
 }
 
 // 匹配「数词/数字 + (random )? slots」（数字必须紧邻 slots，避免长文本里无关数字误匹配）。

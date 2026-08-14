@@ -61,6 +61,27 @@ describe('user profile store', () => {
     expect(loadedSnapshot.schemaVersion).toBe(1)
   })
 
+  it('读取旧 snapshot 的 string[] warnings 时升级为 MessageRef[]', async () => {
+    await writeRawSnapshot({
+      schemaVersion: 1,
+      ownedHeroes: [],
+      updatedAt: '2026-05-03T00:00:00.000Z',
+      warnings: ['legacy warning'],
+    })
+
+    await expect(readUserProfileSnapshot()).resolves.toMatchObject({
+      warnings: [{ literal: 'legacy warning' }],
+    })
+  })
+
+  it('写入 snapshot 使用 MessageRef warnings', async () => {
+    await saveUserProfileSnapshot(createUserProfileSnapshot({ warnings: [{ key: '未知错误' }] }))
+
+    await expect(readUserProfileSnapshot()).resolves.toMatchObject({
+      warnings: [{ key: '未知错误' }],
+    })
+  })
+
   it('删除会清除 snapshot', async () => {
     await saveUserProfileSnapshot(createUserProfileSnapshot())
 

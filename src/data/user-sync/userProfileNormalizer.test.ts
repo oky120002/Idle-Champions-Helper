@@ -347,7 +347,7 @@ describe('user payload normalizer', () => {
       expect(snapshot.importedFormationSaves).toHaveLength(1)
       expect(snapshot.legendaryLevelCap).toBe(20)
       expect(snapshot.warnings).toEqual(expect.arrayContaining([
-        'campaign details imported: 1',
+        { key: 'campaign details imported: {p0}', params: { p0: 1 } },
       ]))
       // blessing 数据通道：reset_upgrade catalog+levels 进 snapshot，供 UI 聚合进 globalBuffMultiplier。
       const campaigns = snapshot.campaigns ?? []

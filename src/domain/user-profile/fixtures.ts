@@ -1,3 +1,4 @@
+import type { MessageRef } from '../types/common'
 import type { OwnedHero, ImportedFormationSave, UserProfileSnapshot } from './types'
 
 export function createOwnedHero(
@@ -39,7 +40,7 @@ export function createImportedFormationSave(
 
 export function createUserProfileSnapshot(
   overrides: Partial<UserProfileSnapshot> = {},
-  warnings: string[] = [],
+  warnings: MessageRef[] = [],
 ): UserProfileSnapshot {
   return {
     schemaVersion: 1,

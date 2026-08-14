@@ -1,5 +1,6 @@
 import type { AttributeRequirement, TagExpression } from '../../src/domain/types/formation.ts'
 import type { DamageSourcePattern, ViabilityContext } from '../../src/domain/planner/plannerModel.ts'
+import type { MessageRef } from '../../src/domain/types/common.ts'
 import { asArray, asRecord } from './io-utils.ts'
 import { parseDamageSourcePattern, parseRestrictions } from './restrictions-parser.ts'
 
@@ -24,7 +25,7 @@ interface ScenarioModel {
   allowedHeroes: unknown[]
   allowedTagExpression: TagExpression
   attributeRequirements: AttributeRequirement[]
-  scenarioWarnings: string[]
+  scenarioWarnings: MessageRef[]
   /** 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 解析）。 */
   occupiedSlotCount: number
   /** 变体可行性上下文（restrictions 解析；护甲/伤害修正等）。 */
@@ -71,6 +72,38 @@ function findFormationForVariant(
     if (matched) return formation
   }
   return null
+}
+
+const STATIC_WARNING_KEYS = new Set([
+  '当前场景含计时或点击限制，攻速与持续输出价值提升。',
+  '当前场景英雄阵亡后永久离队（永久死亡），生存能力至关重要。',
+  '当前场景换区不恢复生命，需要治疗能力或高有效生命。',
+  '当前场景敌人需暴击才能造成有效伤害，暴击率与暴击伤害价值提升。',
+  '当前场景没有匹配的阵型布局。',
+  '当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。',
+])
+
+function warningRef(text: string): MessageRef {
+  const slotCount = /^当前场景有 (\d+) 个槽位被非英雄实体占据，不参与英雄占位。$/.exec(text)
+  if (slotCount) {
+    return { key: '当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。', params: { p0: Number(slotCount[1]) } }
+  }
+
+  const unmodeled = /^含未建模特殊机制（请人工评估）：(.+)（含特殊机制，请人工评估对阵型的影响）$/.exec(text)
+  if (unmodeled) {
+    return { key: '含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）', params: { p0: unmodeled[1] ?? '' } }
+  }
+
+  const unparsed = /^未解析 restriction：(.*)（含特殊机制，请人工评估对阵型的影响）$/.exec(text)
+  if (unparsed) {
+    return { key: '未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）', params: { p0: unparsed[1] ?? '' } }
+  }
+
+  if (STATIC_WARNING_KEYS.has(text)) {
+    return { key: text }
+  }
+
+  return { literal: text }
 }
 
 function projectMechanicsToScenario(
@@ -138,6 +171,15 @@ export function buildOfficialScenarioModel(
   // 未解析的非平凡 restriction → 提示含特殊机制，请人工评估（flavor 文本不映射阵型约束）。
   restrictionWarnings.push(...parsedRestrictions.warnings.map((w) => `${w}（含特殊机制，请人工评估对阵型的影响）`))
 
+  const scenarioWarnings = [
+    ...mechanicWarnings,
+    ...restrictionWarnings,
+    ...(formation ? [] : ['当前场景没有匹配的阵型布局。']),
+    ...(allowedHeroIds.length > 0 || allowedTagExpression.length > 0
+      ? ['当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。']
+      : []),
+  ].map(warningRef)
+
   return {
     slotTopology,
     allowedTagExpression,
@@ -153,13 +195,6 @@ export function buildOfficialScenarioModel(
     occupiedSlotCount: parsedRestrictions.lockedSlotCount,
     viabilityContext: parsedRestrictions.viabilityContext,
     damageSourcePattern,
-    scenarioWarnings: [
-      ...mechanicWarnings,
-      ...restrictionWarnings,
-      ...(formation ? [] : ['当前场景没有匹配的阵型布局。']),
-      ...(allowedHeroIds.length > 0 || allowedTagExpression.length > 0
-        ? ['当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。']
-        : []),
-    ],
+    scenarioWarnings,
   }
 }

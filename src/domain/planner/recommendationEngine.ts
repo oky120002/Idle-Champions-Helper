@@ -75,8 +75,8 @@ function formatLegalityViolation(violation: LegalityViolation): MessageRef {
 
 function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: UserProfileSnapshot | null): MessageRef[] {
   return uniqueMessageRefs([
-    ...(snapshot?.warnings ?? []).map(asMessageRef),
-    ...scenario.scenarioWarnings.map(asMessageRef),
+    ...(snapshot?.warnings ?? []),
+    ...scenario.scenarioWarnings,
   ])
 }
 
@@ -515,7 +515,7 @@ function buildEvaluationFormationResult(
       scoring.activeSignalKinds,
       scoringMode,
     ),
-    warnings: uniqueMessageRefs([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings.map(asMessageRef)]),
+    warnings: uniqueMessageRefs([...scoring.warnings, ...legalityWarnings, ...restrictionWarnings, ...scenario.scenarioWarnings]),
     areaEstimate: scoring.areaEstimate ?? null,
     viability: buildViabilityAssessment(scenario, scoring.areaEstimate ?? null),
     breakdown: scoring.breakdown,

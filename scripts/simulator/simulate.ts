@@ -24,6 +24,7 @@ import {
   type PlannerRecommendationOptions,
 } from '../../src/domain/planner/recommendationEngine.ts'
 import type { PlannerCollections } from '../../src/domain/planner/recommendationTypes.ts'
+import type { MessageRef } from '../../src/domain/types/common.ts'
 import type { Variant } from '../../src/domain/types/formation.ts'
 import { createOwnedHero, createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures.ts'
 import type { UserProfileSnapshot } from '../../src/domain/user-profile/types.ts'
@@ -60,7 +61,7 @@ function synthesizeAllOwnedProfile(collections: PlannerCollections): UserProfile
     ownedHeroes: collections.plannerHeroes.map((hero) =>
       createOwnedHero({ heroId: hero.heroId, level: 1 }),
     ),
-    warnings: ['CLI 合成快照：全英雄 level 1 演示；真实使用请传 --profile 账号快照。'],
+    warnings: [{ literal: 'CLI 合成快照：全英雄 level 1 演示；真实使用请传 --profile 账号快照。' } satisfies MessageRef],
   })
 }
 
