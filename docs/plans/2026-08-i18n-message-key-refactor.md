@@ -75,6 +75,13 @@ function translate(locale: AppLocale, text: string | MessageRef, params?: Transl
 - 游戏数据 `LocalizedText`、tag 名表、数据源单语文本保持各自边界不变
 - 全量测试 + lint + typecheck + build 通过
 
+## 审查结论（2026-08-14）
+
+- 已落地：中央字典、字面量 key 迁移、参数插值、`MessageRef.literal`、基础构建与单测验证。
+- 未落地：`LocaleText` 与 `LocalizedUiText` 仍被生产代码使用，planner warning 仍是双语对象；这不是兼容性要求，而是阶段 4/6 尚未完成。
+- 已补强：`i18n-messages.test.ts` 扫描生产源码中的字面量 `t()` 调用，阻止未登记 key 静默回退中文；规范已落到 `docs/specs/guidelines/i18n-messages.md`。
+- 收口条件：完成 `MessageRef` 全链路迁移并删除旧类型/选择器后，重新运行残留扫描，再将本计划移入 `docs/archives/plans/`。
+
 ## 落地后
 
 - specs/ 更新点：

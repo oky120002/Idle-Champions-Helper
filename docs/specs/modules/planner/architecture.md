@@ -76,6 +76,7 @@ planner 的根本目标是帮用户找到「当前英雄 × 当前阵型」最�
 - 每种模式用真实目标量：carry-dps = `carryDps`；team-gold = `teamGoldFind`。
 - 算法与英雄的握手点唯一：`HeroAbilityProfile`。
 - 任何无法静态计算的变量进入 `warnings`，不静默计入 `objectiveValue`。
+- `PlannerResult.warnings` 当前包含结构化双语 UI 文案与单语数据源 warning；后者必须在 UI 边界按原文展示，不得假装已翻译。静态 UI 文案统一走中央字典，规则见 `docs/specs/guidelines/i18n-messages.md`。
 
 ## 目标架构与目录
 

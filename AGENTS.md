@@ -5,6 +5,7 @@
 - TS/TSX：`docs/specs/guidelines/ai-first-ts-tsx.md`
 - CSS：`docs/specs/guidelines/ai-first-css.md`
 - 文档：`docs/governance.md`
+- 国际化：`docs/specs/guidelines/i18n-messages.md`
 - 统一语言（游戏术语 ↔ 代码标识符）：`CONTEXT.md`
 - 测试：`docs/specs/guidelines/testing.md`
 - 数据归一化管线（资源同步 + normalize/build 增量跳过、数据源格式追溯）：`docs/specs/guidelines/data-normalization.md`
