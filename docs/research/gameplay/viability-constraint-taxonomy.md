@@ -37,7 +37,7 @@ wallArea = min(所有约束各自的墙)
 | S1 | 敌人强化 | 怪物伤害 ×2~100 | 38 | restrictions 文本 | ✅ enemyDamageMult × monsterDpsAt |
 | S2 | 持续掉血 | 每秒掉 2.5% 最大生命 | 43 | restrictions 文本 | ✅ healthDrainRate × (1−rate) EHP 修正 |
 | S3 | 不回血 | 换区不恢复生命 | 18 | `only_heal_on_revive` tag | ⚠️ scenarioWarnings（治疗吞吐量模型留后续） |
-| S4 | AoE 爆发 | 一波 AoE 全队残血（稳态 EHP 不覆盖） | 未知 | restrictions 文本 | ✅ burst 等效 healthDrainRate |
+| S4 | AoE 爆发 | 一波全队爆发伤害（稳态 EHP 不覆盖） | 12 可解析 | restrictions 文本 | ⚠️ 仅全队目标 burst 折算 healthDrainRate；random target 保留 warning |
 
 ### 策略约束（能不能维持阵型）
 
@@ -122,7 +122,7 @@ armorKillableArea = max area where perHitBUD ≥ thresholdAt(area)
 
 ### 纯文本（restrictions 文本，需正则解析）
 
-护甲段数、hits-based 段数、crit-based 标记、伤害来源限制、伤害削减百分比、敌人伤害倍率、持续掉血百分比。解析模式参照 `restrictions-parser.ts` 已有的属性门槛解析。
+护甲段数、hits-based 段数、crit-based 标记、伤害来源限制、伤害削减百分比、敌人伤害倍率、持续掉血百分比。解析模式参照 `restrictions-parser.ts` 已有的属性门槛解析；随机目标 burst 因消费模型无法表达目标概率，保留 warning。
 
 ## 架构关键洞察
 

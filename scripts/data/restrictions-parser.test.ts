@@ -467,13 +467,24 @@ describe('parseRestrictions — 可行性上下文', () => {
     expect(result.viabilityContext.healthDrainRate).toBeNull()
   })
 
-  it('S4 burst：40% damage every 8 seconds → healthDrainRate=0.05', () => {
+  it('随机目标 burst 不折算为全局 healthDrainRate', () => {
     const result = parseRestrictions([r('Bits of crumbling temple fall on your Champions every 8 seconds, dealing 40% damage to a random Champion.')])
+    expect(result.viabilityContext.healthDrainRate).toBeNull()
+    expect(result.warnings).toEqual([
+      '未解析 restriction：Bits of crumbling temple fall on your Champions every 8 seconds, dealing 40% damage to a random Champion.',
+    ])
+  })
+
+  it('全队 burst 区间取最短间隔作为保守 healthDrainRate', () => {
+    const result = parseRestrictions([r('Bits of crumbling temple fall on your Champions every 8-10 seconds, dealing 40% damage to each Champion.')])
     expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.05, 5)
+    expect(result.warnings).toEqual([
+      '未解析 restriction：Bits of crumbling temple fall on your Champions every 8-10 seconds, dealing 40% damage to each Champion.',
+    ])
   })
 
   it('S4 burst：90% of max health every 5 seconds → healthDrainRate=0.18', () => {
-    const result = parseRestrictions([r('In outdoor areas, lightning strikes your formation every 5 seconds, dealing 90% of max health to a random Champion.')])
+    const result = parseRestrictions([r('In outdoor areas, lightning strikes your formation every 5 seconds, dealing 90% of max health to each Champion.')])
     expect(result.viabilityContext.healthDrainRate).toBeCloseTo(0.18, 5)
   })
 

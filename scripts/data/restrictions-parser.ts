@@ -286,7 +286,8 @@ const ENEMY_DAMAGE_MULT_RE = /deal\s+(\d+(?:\.\d+)?)x\s+damage/i
 // eslint-disable-next-line sonarjs/regex-complexity -- 多变体自然语言模式，拆分后更难维护
 const HEALTH_DRAIN_PCT_RE = /(?:take|takes|lose|loses)\s+(?:damage\s+)?(?:equal\s+to\s+)?(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum|total)\s*health|unavoidable\s+damage)/i
 const EVERY_SECOND_RE = /\b(?:every|each|per)\s+second\b/i
-// S4 burst：every N seconds (N≥2) 打 X% 伤害——等效 drainRate = X/100/N
+// S4 burst：every N seconds (N≥2) 对全队打 X% 伤害——等效 drainRate = X/100/N。
+// random target 不在此建模：ViabilityContext 只有全局/携带位生存扣减，无法表达随机受击概率。
 const BURST_INTERVAL_RE = /\b(?:every|each)\s+(\d+)(?:-(\d+))?\s+seconds?\b/i
 // eslint-disable-next-line sonarjs/super-linear-regex, sonarjs/regex-complexity -- 多变体自然语言模式
 const BURST_PCT_RE = /(\d+(?:\.\d+)?)\s*%\s+(?:of\s+(?:their\s+)?(?:max|maximum)\s*health|of\s+(?:the\s+)?champion|damage)/i
@@ -341,9 +342,10 @@ function parseHealthDrainRate(text: string): number | null {
   return pct / 100
 }
 
-/** S4 burst：X% 伤害 every N 秒（N≥2）→ 等效持续掉血 X/100/N。含随机目标 burst。 */
+/** S4 burst：全队 X% 伤害 every N 秒（N≥2）→ 等效持续掉血 X/100/N。随机目标交 warning。 */
 function parseBurstDrainRate(text: string): number | null {
   if (/\breduc/i.test(text)) return null
+  if (/\brandom\b/i.test(text)) return null
   const intervalMatch = BURST_INTERVAL_RE.exec(text)
   if (!intervalMatch) return null
   const interval = parseInt(intervalMatch[1] ?? '', 10)

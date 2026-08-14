@@ -24,15 +24,6 @@ repair: rebuild
     - 影响：!lawful_good 应排除守序善良英雄，当前不排除任何人
     - 优先级：低（0 实例触发）
 
-- 全站正则表达式深度审查：正确性、业务逻辑契合度、扩散面 <!-- auto-todo:id=atd_regex_audit_001 -->
-  - 记录时间: `2026-08-09T10:30:00+08:00`
-  - 类型: follow-up
-  - 位置: `src/**`
-  - 备注: 对全站所有正则表达式做一次系统性深度审查
-    - 正确性：ReDoS 风险、贪婪/非贪婪误用、字符类遗漏、锚点缺失、转义错误
-    - 业务契合度：正则是否完美服务使用处的业务意图
-    - 范围：src/ 全目录 + scripts/data/ 数据管线
-
 - PlannerDamageSlots 不展示系统解析的 damageSourcePattern 位置限制（25 变体） <!-- auto-todo:id=atd_633996a2a3 -->
   - 记录时间: `2026-08-09T19:46:48+08:00`
   - 类型: optimization
@@ -104,5 +95,11 @@ repair: rebuild
   - 位置: `scripts/data/buildScenarioModels.ts`
   - 备注: 影响：英文 locale 下 scenarioWarnings 仍显示中文、中文 locale 下 snapshot.warnings 仍显示英文（经 asLocalizedUiText 包装 zh/en 同值，现状不回归但无双语）
     - 证据：2026-08-13 warning i18n 改造（atd_665afea3d4）收口时发现，数据管线 scripts/data/buildScenarioModels.ts 的 restrictionWarnings/mechanicWarnings 硬编码中文，src/data/user-sync/userProfileNormalizer.ts 的 warnings 硬编码英文，均未双语化
+
+- 修复现有英雄筛选与详情页组件回归测试失败 <!-- auto-todo:id=atd_c6b2993346 -->
+  - 记录时间: `2026-08-14T13:38:19+08:00`
+  - 类型: issue
+  - 位置: `src/pages/champions/championsPage.filterState.test.tsx:46`
+  - 备注: 全量 Vitest 当前有 3 个与正则审计无关的 UI 用例失败：英雄筛选页的展示计数断言失败 2 个，英雄详情页从立绘图鉴返回按钮断言失败 1 个。失败涉及 src/pages/champions/championsPage.filterState.test.tsx 与 src/pages/champion-detail/championDetailPage.content.test.tsx，需要单独核对当前页面实现与测试契约。
 
 <!-- auto-todo:end -->

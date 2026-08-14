@@ -118,7 +118,7 @@ estimatedArea  = min(killableArea, survivableArea, MAX_AREA)
 | 命中型 | `hitsBased: SegmentConfig` | 同护甲吞吐量模式（需 N 次命中，可叠加） | 2 |
 | 伤害削减 | `damageModifier: number` | BUD × damageModifier（0.01 = 减 99%） | 19 |
 | 敌人强化 | `enemyDamageMult: number` | monsterDpsAt × mult | 3 |
-| 持续掉血 | `healthDrainRate: number` | effectiveHealth × (1 − rate)（每秒掉血降低有效生命；rate ≥ 1 = 无法存活） | 23 |
+| 持续掉血 | `healthDrainRate: number` | effectiveHealth × (1 − rate)（每秒掉血降低有效生命；rate ≥ 1 = 无法存活）；随机目标爆发不折算，保留 warning | 12 |
 
 机制警告（`projectMechanicsToScenario`，从 mechanics 结构化标记映射，不改面积预估）：永久死亡（`perma_death`/`perma_unavailable`）、不回血（`only_heal_on_revive`/`skip_area_change_heal`）、暴击门控（`debuff_until_crit`，全英雄有基础 2.5% 暴击率故不改变预估）。
 
