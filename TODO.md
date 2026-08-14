@@ -24,24 +24,6 @@ repair: rebuild
     - 影响：!lawful_good 应排除守序善良英雄，当前不排除任何人
     - 优先级：低（0 实例触发）
 
-- PlannerDamageSlots 不展示系统解析的 damageSourcePattern 位置限制（25 变体） <!-- auto-todo:id=atd_633996a2a3 -->
-  - 记录时间: `2026-08-09T19:46:48+08:00`
-  - 类型: optimization
-  - 位置: `src/pages/planner/PlannerDamageSlots.tsx`
-  - 备注: 来源：深度审计 2026-08-09 UI 子智能体发现
-
-- EN 递增占格模式检测覆盖不足（variant 116 等） <!-- auto-todo:id=atd_1d344ad97a -->
-  - 记录时间: `2026-08-09T19:46:55+08:00`
-  - 类型: issue
-  - 位置: `scripts/data/restrictions-parser.ts:46`
-  - 备注: 来源：深度审计 2026-08-09 数据管线子智能体发现
-
-- schema 未钉 enemyTypes/scenarioRef/objectiveArea/scenarioWarnings 等消费字段 <!-- auto-todo:id=atd_6752294b13 -->
-  - 记录时间: `2026-08-09T19:46:59+08:00`
-  - 类型: optimization
-  - 位置: `src/domain/types/build-product-schemas.ts:63`
-  - 备注: 来源：深度审计 2026-08-09 数据管线子智能体发现
-
 - cooldownReduction 装备源无 owned-aware 通道（非管线 bug，已查明设计缺口） <!-- auto-todo:id=atd_0cb934b094 -->
   - 记录时间: `2026-08-09T21:31:56+08:00`
   - 类型: follow-up
@@ -56,16 +38,6 @@ repair: rebuild
   - 类型: issue
   - 位置: `src/domain/simulator/baseDps.ts:33`
   - 备注: globalBuffMultiplier=NaN 等上游损坏时加成被静默替换为 1，carryDps 有合法值但无 warning 诊断（集成契约审计发现，锁现状）
-
-- snowflake/active_campaign target type 需 amount_func_set_table/amount_expr 管线支持 <!-- auto-todo:id=atd_60e2347278 -->
-  - 记录时间: `2026-08-12T12:30:17+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/heroTargetingRelation.ts`
-  - 备注: Gazrick(98) snowflake：amount_func=set + amount_func_set_table=[100,300,1100,4700,23900] 按距离索引，effect_string amount=0 非真实值
-    - Shaka(79) active_campaign：amount_expr=upgrade_amount(13416,0) 动态拼图机制，amount=0 非真实值
-    - 影响：2 英雄的位置限定 DPS 信号因 amount 机制不支持而丢弃
-    - 修复方向：管线层支持 amount_func=set（set_table 按距离索引）和 amount_expr（动态求值），非位置关系映射问题
-    - 来源：wiki 交叉核对 P0 验证（2026-08-10）
 
 - Vin Ursa(127) + 4 英雄 vulnerability 数据源缺失——favored_foe 数值 API 不暴露 <!-- auto-todo:id=atd_06da25def9 -->
   - 记录时间: `2026-08-12T12:30:28+08:00`
@@ -89,17 +61,20 @@ repair: rebuild
     - 修复方向：需从游戏内实测/社区数据补充 GE 升级效果值
     - 来源：wiki 交叉核对 P3 验证（2026-08-10）
 
-- 数据源 warning 未国际化：scenarioWarnings 中文 + snapshot.warnings 英文单语 <!-- auto-todo:id=atd_4adb7cd1ca -->
-  - 记录时间: `2026-08-13T16:54:19+08:00`
+- Gazrick snowflake 位置形状与 set table 语义待建模 <!-- auto-todo:id=atd_63ac39de96 -->
+  - 记录时间: `2026-08-15T01:04:02+08:00`
   - 类型: follow-up
-  - 位置: `scripts/data/buildScenarioModels.ts`
-  - 备注: 影响：英文 locale 下 scenarioWarnings 仍显示中文、中文 locale 下 snapshot.warnings 仍显示英文（经 asLocalizedUiText 包装 zh/en 同值，现状不回归但无双语）
-    - 证据：2026-08-13 warning i18n 改造（atd_665afea3d4）收口时发现，数据管线 scripts/data/buildScenarioModels.ts 的 restrictionWarnings/mechanicWarnings 硬编码中文，src/data/user-sync/userProfileNormalizer.ts 的 warnings 硬编码英文，均未双语化
+  - 位置: `src/domain/abilities/heroTargetingRelation.ts`
+  - 备注: 当前公开数据有 snowflake target、amount_func=set、amount_func_set_table 和 direct_distance_from_source，但阵型产物没有雪花形状判定器，距离和 table 越界语义也未冻结。
+    - 影响：不能安全把信号映射为全队或普通拓扑距离，否则会高估 DPS。
+    - 后续：先定义雪花形状匹配、direct distance 语义和 set table 下标/越界规则，再贯通 signal、build、planner 与回归测试。
 
-- 修复现有英雄筛选与详情页组件回归测试失败 <!-- auto-todo:id=atd_c6b2993346 -->
-  - 记录时间: `2026-08-14T13:38:19+08:00`
-  - 类型: issue
-  - 位置: `src/pages/champions/championsPage.filterState.test.tsx:46`
-  - 备注: 全量 Vitest 当前有 3 个与正则审计无关的 UI 用例失败：英雄筛选页的展示计数断言失败 2 个，英雄详情页从立绘图鉴返回按钮断言失败 1 个。失败涉及 src/pages/champions/championsPage.filterState.test.tsx 与 src/pages/champion-detail/championDetailPage.content.test.tsx，需要单独核对当前页面实现与测试契约。
+- Shaka active_campaign 动态拼图机制待建模 <!-- auto-todo:id=atd_ef116b9822 -->
+  - 记录时间: `2026-08-15T01:04:02+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/heroTargetingRelation.ts`
+  - 备注: amount_expr=upgrade_amount 的跨升级取值已有通用基础，但 active_campaign、has_effect_key、per_slot 与动态拼图匹配状态仍未进入 planner 求值。
+    - 影响：不能把静态 upgrade amount 当作真实 DPS 加成。
+    - 后续：单独定义拼图状态、slot/tag 匹配与 per_slot 计数，再实现运行时求值和测试。
 
 <!-- auto-todo:end -->
