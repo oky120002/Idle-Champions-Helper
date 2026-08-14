@@ -5,6 +5,7 @@ import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkb
 import type { PlannerRecommendationBlocker } from '../domain/planner/recommendationTypes'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
 import { useI18n } from '../app/i18n'
+import { getPrimaryLocalizedText } from '../domain/localizedText'
 import { PlannerProfileState } from './planner/PlannerProfileState'
 import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerScoringMode } from './planner/PlannerScoringMode'
@@ -50,7 +51,7 @@ function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnT
 }
 
 export function PlannerPage() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const navigate = useNavigate()
   const location = useLocation()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
@@ -121,6 +122,18 @@ export function PlannerPage() {
     ? Math.min(selectedResultIndex, plannerRecommendation.results.length - 1)
     : 0
   const selectedResult = plannerRecommendation.results[safeResultIndex] ?? plannerRecommendation.result
+  const damageSourcePattern = collections.plannerScenarios.find(
+    (scenario) => scenario.variantId === selectedVariantId,
+  )?.damageSourcePattern ?? null
+  const damageSourceReferenceHeroName = damageSourcePattern == null
+    ? null
+    : getPrimaryLocalizedText(
+        championById.get(damageSourcePattern.referenceHeroId)?.name ?? {
+          original: damageSourcePattern.referenceHeroId,
+          display: damageSourcePattern.referenceHeroId,
+        },
+        locale,
+      )
 
   return (
     <ConfiguredWorkbenchPage
@@ -306,6 +319,8 @@ export function PlannerPage() {
                       slots={plannerRecommendation.slots}
                       disabledSlots={userDamageDisabledSlots}
                       onToggle={toggleDamageSlot}
+                      damageSourcePattern={damageSourcePattern}
+                      referenceHeroName={damageSourceReferenceHeroName}
                     />
                     <PlannerSavePreset
                       result={selectedResult}

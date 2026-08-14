@@ -151,7 +151,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
     attributeRequirements: [],
   occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
-    damageSourcePattern: null,
+    damageSourcePattern: { kind: 'same-column', referenceHeroId: 'nayeli' },
       scenarioWarnings: [{ literal: '当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。' }],
     },
   ],
@@ -261,6 +261,7 @@ describe('planner route and navigation', () => {
     expect(placementTexts.some((text) => text.includes('jarlaxle'))).toBe(true)
     expect(placementTexts.some((text) => text.includes('asharra'))).toBe(false)
     expect(screen.getByRole('button', { name: /保存/ })).toBeEnabled()
+    expect(screen.getByTestId('planner-damage-source-pattern')).toHaveTextContent('系统解析：核心英雄须与纳耶里同列。')
   })
 
   it('/planner 在已拥有英雄含重复 seat 时仍避免 seat conflict', async () => {
