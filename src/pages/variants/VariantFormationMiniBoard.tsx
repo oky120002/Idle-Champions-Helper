@@ -1,12 +1,12 @@
 import type { CSSProperties } from 'react'
-import type { AppLocale, LocaleText , TranslateParams} from '../../app/i18n'
+import type { AppLocale, MessageRef , TranslateParams} from '../../app/i18n'
 import { getFormationBoardMetrics } from '../../domain/formationLayout'
 import type { FormationLayout } from '../../domain/types'
 
 type VariantFormationMiniBoardProps = {
   readonly formation: FormationLayout | null
   readonly locale: AppLocale
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
 }
 
 export function VariantFormationMiniBoard({ formation, locale, t }: VariantFormationMiniBoardProps) {

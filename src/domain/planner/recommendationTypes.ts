@@ -1,4 +1,4 @@
-import type { FormationSlot, LocalizedUiText, ScenarioRef, Variant } from '../types'
+import type { FormationSlot, MessageRef, ScenarioRef, Variant } from '../types'
 import type { AreaBound, AreaEstimationResult } from '../simulator/areaEstimation'
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import type { FeatCatalog } from '../abilities/featSignals'
@@ -7,7 +7,7 @@ import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type { SimulationBreakdown } from './steadyStateScoring'
 import type { SpeedBreakdown } from './speedScoring'
 
-export type PlannerNarrativeLine = LocalizedUiText
+export type PlannerNarrativeLine = MessageRef
 
 export interface PlannerPlacementEntry {
   slotId: string
@@ -43,7 +43,7 @@ export interface PlannerResult {
   placements: Record<string, string>
   placementEntries?: PlannerPlacementEntry[]
   explanations: PlannerNarrativeLine[]
-  warnings: LocalizedUiText[]
+  warnings: MessageRef[]
   /** 推图层数预估；team-gold 模式或缺 carry 时为 null。绝对值未校准，仅相对比较参考。 */
   areaEstimate?: AreaEstimationResult | null
   /** 可行性约束评估摘要（活跃约束 + 绑定约束）；普通变体 activeConstraints 为空。 */

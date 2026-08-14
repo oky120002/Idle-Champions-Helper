@@ -3,8 +3,8 @@ import { toGameNumber, multiplyGameNumbers, compareGameNumbers, formatGameNumber
 
 import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
-import type { LocalizedUiText } from '../types'
-import { asLocalizedUiText, uniqueLocalizedUiText } from '../localizedUiText'
+import type { MessageRef } from '../types'
+import { asMessageRef, uniqueMessageRefs } from '../localizedUiText'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
@@ -177,7 +177,7 @@ export interface SimulationBreakdown {
 export interface ScoringResult {
   /** 当前模式优化目标量：carry-dps=carryDps，team-gold=teamGoldFind。取代旧启发式评分（score）概念。 */
   objectiveValue: GameNumberValue
-  warnings: LocalizedUiText[]
+  warnings: MessageRef[]
   carryHeroId: string | null
   /** best carry 的 active signal kind 集合，供叙事层结构化消费（避免字符串匹配）。 */
   activeSignalKinds: Set<HeroAbilityKind>
@@ -220,12 +220,12 @@ function sumPlacedEquipmentAddPercent(
  * global-scope gold 不依赖位置/目标即生效，tagged gold 按 formation 计数。
  */
 function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): ScoringResult {
-  const warnings: LocalizedUiText[] = []
+  const warnings: MessageRef[] = []
   const activeKinds = new Set<HeroAbilityKind>()
   const sharedPools = new Map<string, AggregatedPool>()
 
   for (const entry of placedEntries) {
-    warnings.push(...entry.hero.unsupportedSignals.map((signal) => asLocalizedUiText(`${signal.rawEffect}: ${signal.note}`)))
+    warnings.push(...entry.hero.unsupportedSignals.map((signal) => asMessageRef(`${signal.rawEffect}: ${signal.note}`)))
 
     const fit = evaluatePlacementFit({
       carryHero: entry.hero,
@@ -261,7 +261,7 @@ function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): Scori
 
   return {
     objectiveValue: teamGold,
-    warnings: uniqueLocalizedUiText(warnings),
+    warnings: uniqueMessageRefs(warnings),
     carryHeroId: null,
     activeSignalKinds: activeKinds,
     breakdown: null,
@@ -281,7 +281,7 @@ function scoreTeamSpeed(placedEntries: PlacedEntry[], input: ScoringInput): Scor
 
   // 动态速度英雄：用默认值生成 areaSkip 效果（取值口径：无用户数据时用保守默认）
   const dynamicProfiles: HeroSpeedProfile[] = []
-  const warnings: LocalizedUiText[] = []
+  const warnings: MessageRef[] = []
   for (const entry of placedEntries) {
     const heroId = entry.hero.heroId
     if (!DYNAMIC_SPEED_HERO_IDS.has(heroId)) continue
@@ -293,7 +293,7 @@ function scoreTeamSpeed(placedEntries: PlacedEntry[], input: ScoringInput): Scor
       ? { ...defaultEffect, value: override, rawEffect: `${defaultEffect.rawEffect} (adjusted: ${String(override)}%)` }
       : defaultEffect
     dynamicProfiles.push({ heroId, effects: [effect], speedGain: 1 + effect.value / 100 })
-    warnings.push({ zh: `${entry.hero.name.display}：使用默认速度假设 ${String(effect.value)}%（可调整）`, en: `${entry.hero.name.display}: using the default speed assumption of ${String(effect.value)}% (adjustable).` })
+    warnings.push(asMessageRef(`${entry.hero.name.display}：使用默认速度假设 ${String(effect.value)}%（可调整）`))
   }
 
   const allRawProfiles = [...staticProfiles, ...dynamicProfiles]
@@ -447,14 +447,14 @@ function collectSupportSignalsForCarry(
   input: ScoringInput,
   enemyTypeSet: Set<string>,
 ): {
-  warnings: LocalizedUiText[]
+  warnings: MessageRef[]
   activeKinds: Set<HeroAbilityKind>
   sharedPools: Map<string, AggregatedPool>
   critParts: PlacementFitScorePart[]
   vulnParts: PlacementFitScorePart[]
   contributions: SimulationContribution[]
 } {
-  const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => asLocalizedUiText(`${signal.rawEffect}: ${signal.note}`))]
+  const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => asMessageRef(`${signal.rawEffect}: ${signal.note}`))]
   const activeKinds = new Set<HeroAbilityKind>()
   // pool 在整队层面聚合：同一 dimension:scope 的 pool 跨所有支持位合并
   // （addPercent 相加、multFactor 相乘），pool 间再相乘。
@@ -513,7 +513,7 @@ function scoreCarryCandidate(
   input: ScoringInput,
   aggregateProjection: AggregateProjection,
   enemyTypeSet: Set<string>,
-): { carryDps: GameNumberValue; warnings: LocalizedUiText[]; activeKinds: Set<HeroAbilityKind> } & BreakdownData {
+): { carryDps: GameNumberValue; warnings: MessageRef[]; activeKinds: Set<HeroAbilityKind> } & BreakdownData {
   const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
   const { warnings, activeKinds, sharedPools, critParts, vulnParts, contributions } = collectSupportSignalsForCarry(carryEntry, placedEntries, input, enemyTypeSet)
 
@@ -646,13 +646,13 @@ function findBestCarry(
   enemyTypeSet: Set<string>,
 ): {
   carryDps: GameNumberValue
-  warnings: LocalizedUiText[]
+  warnings: MessageRef[]
   carryHeroId: string | null
   activeKinds: Set<HeroAbilityKind>
   breakdownData: BreakdownData | null
 } {
   let carryDps: GameNumberValue = ZERO
-  let warnings: LocalizedUiText[] = []
+  let warnings: MessageRef[] = []
   let carryHeroId: string | null = null
   let activeKinds: Set<HeroAbilityKind> = new Set()
   let breakdownData: BreakdownData | null = null
@@ -664,7 +664,7 @@ function findBestCarry(
     const candidate = scoreCarryCandidate(carryEntry, placedEntries, input, aggregateProjection, enemyTypeSet)
     if (compareGameNumbers(candidate.carryDps, carryDps) > 0) {
       carryDps = candidate.carryDps
-      warnings = uniqueLocalizedUiText(candidate.warnings)
+      warnings = uniqueMessageRefs(candidate.warnings)
       carryHeroId = carryEntry.hero.heroId
       activeKinds = candidate.activeKinds
       breakdownData = {

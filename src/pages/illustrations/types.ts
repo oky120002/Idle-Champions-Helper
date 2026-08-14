@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
+import type { TranslateParams, AppLocale, MessageRef  } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type {
   Champion,
@@ -47,7 +47,7 @@ export type IllustrationFilterExpansion = {
   meta: boolean
 }
 
-export type IllustrationsPageTranslator = (text: string | LocaleText, params?: TranslateParams) => string
+export type IllustrationsPageTranslator = (text: string | MessageRef, params?: TranslateParams) => string
 
 export type IllustrationsPageUiState = {
   isIdentityFiltersExpanded: boolean

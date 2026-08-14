@@ -61,9 +61,9 @@
 
 ## 6. 国际化（i18n）
 
-全站双语（zh-CN / en-US），通过 `useI18n()` 获取 `t({ zh, en })` 翻译函数。以下规则基于全站扫描发现的典型遗漏模式：
+全站双语（zh-CN / en-US），通过 `useI18n()` 获取中央字典 `t('中文 key', params?)` 翻译函数。领域诊断使用 `MessageRef`，外部单语文本使用 `{ literal }`。
 
-- **所有用户可见文本必须走 `t()`**：JSX 文本节点、`aria-label`、`placeholder`、`title` 一律包裹 `t({ zh, en })`，禁止硬编码单语字符串。
+- **所有用户可见文本必须走 `t()`**：JSX 文本节点、`aria-label`、`placeholder`、`title` 一律使用中央字典 key，禁止新增内联双语对象或硬编码产品文案。
 - **工具函数返回用户可见标签时必须接收 `locale`**：`formatXxxLabel(value, locale)` 返回当前语言文本，禁止返回单语硬编码。
 - **生产存根（`.prod.ts`）签名必须与 dev 版完全一致**：vite alias 在构建时替换 import，TypeScript 只检查 dev 签名，prod 存根签名漂移在类型检查中不可见。位置参数不匹配时第一个参数被绑定到错误的形参（如 dev `(source, locale)` → prod `(locale)` 时 `source` 值 `'browser-sync'` 被当作 `locale`），导致 prod 构建永远返回错误语言。**新增参数时必须同步更新 `.prod.ts` 存根签名**，即使存根不消费该参数也要声明为 `_param` 占位。
 - **组件缺少 `useI18n()` 时先补 Hook**：无 `t()` 的组件（如 `ConfirmDialog`）加 `useI18n()`；有 `locale` prop 的组件用 `locale === 'zh-CN' ? '中' : 'EN'` 三元（与同目录其他组件一致）。

@@ -10,20 +10,20 @@ import {
 
 describe('statusMessage helpers', () => {
   it('构造不同 tone 的双语状态消息', () => {
-    expect(createInfoStatusMessage({ zh: '信息', en: 'Info' }, { zh: '说明', en: 'Note' })).toEqual({
+    expect(createInfoStatusMessage({ key: '信息' }, { key: '说明' })).toEqual({
       tone: 'info',
-      title: { zh: '信息', en: 'Info' },
-      detail: { zh: '说明', en: 'Note' },
+      title: { key: '信息' },
+      detail: { key: '说明' },
     })
-    expect(createSuccessStatusMessage({ zh: '成功', en: 'Done' }, { zh: '已完成', en: 'Completed' })).toEqual({
+    expect(createSuccessStatusMessage({ key: '成功' }, { key: '已完成' })).toEqual({
       tone: 'success',
-      title: { zh: '成功', en: 'Done' },
-      detail: { zh: '已完成', en: 'Completed' },
+      title: { key: '成功' },
+      detail: { key: '已完成' },
     })
-    expect(createErrorStatusMessage({ zh: '失败', en: 'Failed' }, { zh: '原因', en: 'Reason' })).toEqual({
+    expect(createErrorStatusMessage({ key: '失败' }, { key: '原因' })).toEqual({
       tone: 'error',
-      title: { zh: '失败', en: 'Failed' },
-      detail: { zh: '原因', en: 'Reason' },
+      title: { key: '失败' },
+      detail: { key: '原因' },
     })
   })
 
@@ -32,13 +32,37 @@ describe('statusMessage helpers', () => {
       <I18nProvider>
         <StatusMessageBanner
           message={createSuccessStatusMessage(
-            { zh: '保存成功', en: 'Saved' },
-            { zh: '已写入本地浏览器', en: 'Written to local browser' },
+            { key: '保存成功' },
+            { key: '已写入本地浏览器' },
           )}
         />
       </I18nProvider>,
     )
     expect(screen.getByText('保存成功')).toBeInTheDocument()
     expect(screen.getByText('已写入本地浏览器')).toBeInTheDocument()
+  })
+
+  it('StatusMessageBanner 按英文真实渲染嵌套 MessageRef 参数', () => {
+    window.localStorage.setItem('idle-champions-helper.locale', 'en-US')
+    render(
+      <I18nProvider>
+        <StatusMessageBanner
+          message={createErrorStatusMessage(
+            { key: '保存版本 {p0} 已不可读，当前按 {p1} 兼容恢复。{p2}', params: {
+              p0: 'v0',
+              p1: 'v1',
+              p2: { key: '{p0} 个槽位引用已失效', params: { p0: 1 } },
+            } },
+            { key: '当前只识别 schemaVersion={p0} 的{p1}；检测到旧版本为 {p2}。', params: {
+              p0: 1,
+              p1: { key: '草稿' },
+              p2: 0,
+            } },
+          )}
+        />
+      </I18nProvider>,
+    )
+    expect(screen.getByText('Saved version v0 is unavailable; restored compatibly with v1. 1 slot references are invalid')).toBeInTheDocument()
+    expect(screen.getByText('Only 草稿 with schemaVersion=1 can be restored; found old version 0.')).toBeInTheDocument()
   })
 })

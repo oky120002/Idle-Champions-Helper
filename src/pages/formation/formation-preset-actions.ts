@@ -4,7 +4,7 @@ import { createErrorStatusMessage, createSuccessStatusMessage } from '../../comp
 import { saveFormationPreset } from '../../data/formationPresetStore'
 import type { FormationLayout, PresetPriority, ScenarioRef } from '../../domain/types'
 import type { CommonFilterSearchState } from '../../features/champion-filters/query-state'
-import { buildPresetId, errorMessageLocaleText, parseScenarioTags } from './formation-model-helpers'
+import { buildPresetId, errorMessageRef, parseScenarioTags } from './formation-model-helpers'
 import {
   DEFAULT_PRESET_FORM_STATE,
   PRESET_SCHEMA_VERSION,
@@ -82,14 +82,14 @@ export function buildFormationPresetActions({
         setPresetForm({ ...DEFAULT_PRESET_FORM_STATE })
         setPresetStatus(
           createSuccessStatusMessage(
-            { zh: `方案“${preset.name}”已保存`, en: `Preset "${preset.name}" saved` },
-            { zh: '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。', en: 'Open the Preset Library page to edit, delete, or restore it back to the formation page.' },
+            { literal: `方案“${preset.name}”已保存` },
+            { key: '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。' },
           ),
         )
       } catch (error: unknown) {
         setPresetStatus(createErrorStatusMessage(
-          { zh: '保存方案失败', en: 'Failed to save preset' },
-          errorMessageLocaleText(error),
+          { key: '保存方案失败' },
+          errorMessageRef(error),
         ))
       } finally {
         setIsSavingPreset(false)

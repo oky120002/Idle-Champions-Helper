@@ -30,10 +30,10 @@ describe('PlannerResultCard', () => {
     carryHeroId: null as string | null,
     placements: { '1': 'bruenor', '3': 'nayeli', '7': 'jim' } as Record<string, string>,
     explanations: [
-      { zh: '布鲁诺负责团队增益。', en: 'Bruenor anchors the team buffs.' },
-      { zh: '纳耶里补足前排。', en: 'Nayeli rounds out the frontline.' },
+      { literal: '布鲁诺负责团队增益。' },
+      { literal: '纳耶里补足前排。' },
     ],
-    warnings: [] as { zh: string; en: string }[],
+    warnings: [],
     breakdown: null,
     slots,
     championById,
@@ -78,7 +78,7 @@ describe('PlannerResultCard', () => {
   it('在不支持时显示警告部分', () => {
     const props = {
       ...baseProps,
-      warnings: [{ zh: 'Hitch 不在当前阵容池中', en: 'Hitch is not in the current roster pool.' }],
+       warnings: [{ literal: 'Hitch 不在当前阵容池中' }],
     }
 
     render(

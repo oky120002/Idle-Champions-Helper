@@ -11,30 +11,30 @@ import {
   User,
   Users,
 } from 'lucide-react'
-import type { LocaleText, TranslateParams } from './i18n'
+import type { MessageRef, TranslateParams } from './i18n'
 
 export interface AppNavigationItem {
   to: string
-  label: LocaleText
+  label: MessageRef
   Icon: LucideIcon
 }
 
 export type TranslationFn = (
-  text: string | LocaleText,
+  text: string | MessageRef,
   params?: TranslateParams,
 ) => string
 
 export const navigation: AppNavigationItem[] = [
-  { to: '/champions', label: { zh: '英雄筛选', en: 'Champions' }, Icon: Users },
-  { to: '/search', label: { zh: '全文搜索', en: 'Search' }, Icon: Search },
-  { to: '/user-heroes', label: { zh: '用户英雄', en: 'User Heroes' }, Icon: User },
-  { to: '/illustrations', label: { zh: '立绘图鉴', en: 'Illustrations' }, Icon: Image },
-  { to: '/pets', label: { zh: '宠物图鉴', en: 'Pets' }, Icon: PawPrint },
-  { to: '/variants', label: { zh: '变体筛选', en: 'Variant filters' }, Icon: GitBranch },
-  { to: '/formation', label: { zh: '阵型编辑', en: 'Formation' }, Icon: LayoutGrid },
-  { to: '/presets', label: { zh: '方案存档', en: 'Presets' }, Icon: Archive },
-  { to: '/planner', label: { zh: '自动计划', en: 'Automatic Planner' }, Icon: BrainCircuit },
-  { to: '/user-data', label: { zh: '个人数据', en: 'User Data' }, Icon: Database },
+  { to: '/champions', label: { key: '英雄筛选' }, Icon: Users },
+  { to: '/search', label: { key: '全文搜索' }, Icon: Search },
+  { to: '/user-heroes', label: { key: '用户英雄' }, Icon: User },
+  { to: '/illustrations', label: { key: '立绘图鉴' }, Icon: Image },
+  { to: '/pets', label: { key: '宠物图鉴' }, Icon: PawPrint },
+  { to: '/variants', label: { key: '变体筛选' }, Icon: GitBranch },
+  { to: '/formation', label: { key: '阵型编辑' }, Icon: LayoutGrid },
+  { to: '/presets', label: { key: '方案存档' }, Icon: Archive },
+  { to: '/planner', label: { key: '自动计划' }, Icon: BrainCircuit },
+  { to: '/user-data', label: { key: '个人数据' }, Icon: Database },
 ]
 
 export function getNavClassName(isActive: boolean): string {

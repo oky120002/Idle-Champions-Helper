@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { ANIMATION_AUDIT_FEEDBACK_TAGS } from './feedback'
 import type {
   AnimationAuditFeedbackDraft,
@@ -10,7 +10,7 @@ interface AnimationAuditRowFeedbackProps {
   readonly entryId: string
   readonly hasAlternate: boolean
   readonly feedback: AnimationAuditFeedbackDraft
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
   readonly onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void
   readonly onNoteChange: (entryId: string, note: string) => void

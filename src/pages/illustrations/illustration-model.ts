@@ -4,7 +4,7 @@ import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { Champion, ChampionIllustration, ChampionIllustrationKind, LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip, IdLocalizedOption } from '../../features/champion-filters/types'
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
-import { pickText, t } from '../../app/i18n-messages'
+import { selectLocaleText as pickText, t } from '../../app/i18n-messages'
 import type { IllustrationsFilterState, ViewFilter } from './types'
 
 export function buildIllustrationEntries(

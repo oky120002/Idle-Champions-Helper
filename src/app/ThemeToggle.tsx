@@ -1,17 +1,17 @@
 import { Monitor, Moon, Sun, type LucideIcon } from 'lucide-react'
 import { useTheme, type ThemePreference } from './theme'
-import { useI18n, type LocaleText } from './i18n'
+import { useI18n, type MessageRef } from './i18n'
 
 interface ThemeOption {
   value: ThemePreference
-  label: LocaleText
+  label: MessageRef
   Icon: LucideIcon
 }
 
 const OPTIONS: ThemeOption[] = [
-  { value: 'system', label: { zh: '跟随系统', en: 'System' }, Icon: Monitor },
-  { value: 'dark', label: { zh: '深色', en: 'Dark' }, Icon: Moon },
-  { value: 'light', label: { zh: '浅色', en: 'Light' }, Icon: Sun },
+  { value: 'system', label: { key: '跟随系统' }, Icon: Monitor },
+  { value: 'dark', label: { key: '深色' }, Icon: Moon },
+  { value: 'light', label: { key: '浅色' }, Icon: Sun },
 ]
 
 export function ThemeToggle() {

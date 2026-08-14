@@ -158,3 +158,13 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 推算优化目标之一：最快过层。当前仅有速度维度信号，尚未接入 ScoringMode（登记为后续目标）。
 代码标识符：`HeroAbilityDimension.speed`
 别名：speed run
+
+## 国际化
+
+**中央字典**：静态 UI 文案的唯一翻译来源，以中文稳定 key 登记英文译文；组件通过 `t(key, params?)` 查询。
+代码标识符：`MESSAGES`、`MessageRef`、`translateRef`
+别名：message catalog、i18n dictionary
+
+**消息引用**：领域或状态层传递给 UI 的可翻译消息。`{ key, params }` 查中央字典，`{ literal }` 原样展示外部单语文本；不再使用内联 `{zh, en}` 对。
+代码标识符：`MessageRef`
+别名：message ref

@@ -1,7 +1,7 @@
-import type { LocaleText, TranslateParams  } from '../../app/i18n'
+import type { MessageRef, TranslateParams  } from '../../app/i18n'
 import type { AnimationAuditKindFilter, AnimationAuditLevelFilter } from './types'
 
-type Translate = (text: string | LocaleText, params?: TranslateParams) => string
+type Translate = (text: string | MessageRef, params?: TranslateParams) => string
 
 export const LEVEL_FILTERS: AnimationAuditLevelFilter[] = ['flagged', 'high', 'medium', 'low', 'none', 'all']
 export const KIND_FILTERS: AnimationAuditKindFilter[] = ['all', 'hero-base', 'skin']

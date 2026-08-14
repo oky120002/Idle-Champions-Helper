@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { ActionButton } from '../../components/ActionButton'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
@@ -10,7 +10,7 @@ import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 type DetailCombatSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly ledgerRows: LedgerUpgradeRow[]
   readonly ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
   readonly activeLedgerFilterKeySet: Set<string>

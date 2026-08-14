@@ -1,12 +1,16 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
+import { t as translateText, translateRef } from '../../app/i18n-messages'
 import {
   createWorkbenchFilterToolbarItems,
   createWorkbenchResultVisibilityItem,
   createWorkbenchShuffleItem,
 } from './WorkbenchToolbarItemBuilders'
 
-const t = (text: string | LocaleText, _params?: TranslateParams) => (typeof text === 'string' ? text : text.zh)
+const t = (text: string | MessageRef, params?: TranslateParams) => {
+  if (typeof text === 'string') return translateText('zh-CN', text, params)
+  return translateRef('zh-CN', text)
+}
 
 describe('WorkbenchToolbarItemBuilders', () => {
   it('生成结果展开按钮配置', () => {

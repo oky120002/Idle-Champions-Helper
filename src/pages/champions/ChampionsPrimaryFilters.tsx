@@ -10,34 +10,13 @@ interface ChampionsPrimaryFiltersProps {
 }
 
 const championsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {
-  searchHint: {
-    zh: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。',
-    en: 'Chinese and English queries both work here, and switching UI language keeps the current filters.',
-  },
-  searchPlaceholder: {
-    zh: '搜英雄名、标签、联动队伍',
-    en: 'Search names, tags, or affiliations',
-  },
-  seatHint: {
-    zh: '支持多选；同一维度按“或”命中。',
-    en: 'Multi-select is supported, and matches within this group use OR.',
-  },
-  roleHint: {
-    zh: '支持多选；会匹配任一已选定位。',
-    en: 'Multi-select is supported, and champions can match any selected role.',
-  },
-  affiliationHint: {
-    zh: '支持多选；适合同时看多个联动队伍候选。',
-    en: 'Multi-select is supported for comparing multiple affiliations at once.',
-  },
-  patronHint: {
-    zh: '按赞助人合约筛选——只显示该赞助人允许上场的英雄。',
-    en: 'Filter by patron — only champions eligible under the selected patron(s) are shown.',
-  },
-  activeChipHint: {
-    zh: '点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。',
-    en: 'Click any filter chip to clear that dimension only, then use the reset button above when you want a full reset.',
-  },
+  searchHint: { key: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。' },
+  searchPlaceholder: { key: '搜英雄名、标签、联动队伍' },
+  seatHint: { key: '支持多选；同一维度按“或”命中。' },
+  roleHint: { key: '支持多选；会匹配任一已选定位。' },
+  affiliationHint: { key: '支持多选；适合同时看多个联动队伍候选。' },
+  patronHint: { key: '按赞助人合约筛选——只显示该赞助人允许上场的英雄。' },
+  activeChipHint: { key: '点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。' },
 }
 
 export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps) {

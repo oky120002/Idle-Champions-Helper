@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
+import type { TranslateParams, AppLocale, MessageRef  } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type { Pet, PetAcquisitionKind, PetAnimation } from '../../domain/types'
 
@@ -18,7 +18,7 @@ export type PetsFilterState = {
   showAllResults: boolean
 }
 
-export type PetsPageTranslator = (text: string | LocaleText, params?: TranslateParams) => string
+export type PetsPageTranslator = (text: string | MessageRef, params?: TranslateParams) => string
 
 export type PetsSummary = {
   total: number

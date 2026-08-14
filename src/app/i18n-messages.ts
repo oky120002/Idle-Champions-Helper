@@ -1,7 +1,7 @@
 /* eslint-disable max-lines -- 中央字典单文件内聚，拆分会降低一跳命中率 */
 export type AppLocale = 'zh-CN' | 'en-US'
 
-export type TranslateParams = Record<string, string | number>
+export type TranslateParams = Record<string, string | number | MessageRef>
 
 export interface Message {
   en: string
@@ -13,6 +13,165 @@ export type MessageRef =
   | { literal: string }
 
 export const MESSAGES: Record<string, Message> = {
+  "跟随系统": { en: "System" },
+  "深色": { en: "Dark" },
+  "浅色": { en: "Light" },
+  "全文搜索": { en: "Full-text search" },
+  "保存时的数据版本 {p0} 已不可读，且当前版本 {p1} 中也找不到布局 {p2}。": { en: "Saved data version {p0} is unreadable, and layout {p2} is also missing from current version {p1}." },
+  "保存版本 {p0} 中已找不到布局 {p1}。": { en: "Layout {p1} was not found in saved version {p0}." },
+  "{p0}没有可恢复的有效放置结果": { en: "{p0} has no valid placement to restore." },
+  "{p0}中没有任何可用的槽位与英雄映射。": { en: "{p0} has no usable slot and champion mappings." },
+  "返回自动计划": { en: "Back to planner" },
+  "核心英雄 DPS": { en: "Carry DPS" },
+  "金币收益": { en: "Gold find" },
+  "速度因子": { en: "Speed factor" },
+  "来源与特殊机制": { en: "Source and special mechanics" },
+  "职业 / 获取方式 / 特殊机制": { en: "Class / availability / special mechanics" },
+  "玩法标签": { en: "Mechanic tags" },
+  "搜英雄名、标签、联动队伍": { en: "Search hero name, tags, or affiliations" },
+  "支持多选；同一维度按“或”命中。": { en: "Multiple selections are supported; values within a dimension use OR matching." },
+  "支持多选；同一维度内仍按“或”命中。": { en: "Multiple selections are supported; values within a dimension still use OR matching." },
+  "支持多选；会匹配任一已选定位。": { en: "Multiple selections are supported; any selected role can match." },
+  "支持多选；适合同时看多个联动队伍候选。": { en: "Multiple selections are supported for comparing several affiliations." },
+  "按赞助人合约筛选——只显示该赞助人允许上场的英雄。": { en: "Filter by patron contract; show only champions allowed by that patron." },
+  "点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。": { en: "Click a condition to clear that dimension; use Clear all above to reset everything." },
+  "支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。": { en: "Searches Chinese and English; changing the interface language keeps the query and filters." },
+  "已拥有英雄": { en: "Owned champions" },
+  "当前快照里已经解锁并可投入阵型的英雄数量。": { en: "Champions unlocked and available for formations in the current snapshot." },
+  "史诗装备槽位": { en: "Epic gear slots" },
+  "已拥有英雄的装备槽里，达到史诗稀有度的总槽位。": { en: "Owned champion gear slots at epic rarity." },
+  "闪耀槽位": { en: "Shiny slots" },
+  "当前已拥有的闪耀装备槽位数量。": { en: "Current number of owned shiny gear slots." },
+  "金装槽位": { en: "Golden slots" },
+  "当前已拥有的 Golden 装备槽位数量。": { en: "Current number of owned golden gear slots." },
+  "传奇装备位": { en: "Legendary gear slots" },
+  "已经激活传奇等级的装备槽位数量。": { en: "Gear slots with an active legendary level." },
+  "已切换布局": { en: "Layout switched" },
+  "当前阵型已清空": { en: "Formation cleared" },
+  "最近草稿会自动保存在当前浏览器": { en: "The recent draft is saved automatically in this browser" },
+  "介质为 IndexedDB；只保存在本地，不上传到外部服务。": { en: "It uses IndexedDB and stays local; nothing is uploaded to an external service." },
+  "方案": { en: "Preset" },
+  "方案已恢复，但最近草稿回写失败": { en: "Preset restored, but writing the recent draft failed" },
+  "最近草稿": { en: "Recent draft" },
+  "最近草稿读取失败": { en: "Failed to read recent draft" },
+  "{p0} 当前仍可继续编辑，但不会自动恢复旧草稿。": { en: "{p0} can still be edited, but the old draft will not be restored automatically." },
+  "最近草稿已恢复": { en: "Recent draft restored" },
+  "本次不恢复旧草稿；你后续开始编辑后，新内容会覆盖这条最近草稿。": { en: "Do not restore the old draft this time; new edits will replace it." },
+  "本次先保留旧草稿；等你开始编辑当前阵型后，新内容才会覆盖它。": { en: "Keep the old draft for now; new edits will replace it once you edit this formation." },
+  "已保留最近草稿，但本次不恢复": { en: "Recent draft kept, but not restored this time" },
+  "最近草稿已丢弃": { en: "Recent draft discarded" },
+  "当前页面不会再提示恢复这条旧草稿。": { en: "This page will not prompt you to restore the old draft again." },
+  "最近草稿删除失败": { en: "Failed to delete recent draft" },
+  "保存方案失败": { en: "Failed to save preset" },
+  "最近草稿已清理": { en: "Recent draft cleared" },
+  "最近草稿保存失败": { en: "Failed to save recent draft" },
+  "支持多选；适合快速收窄到特定种族组合。": { en: "Select multiple values to narrow to a specific race combination." },
+  "支持多选；适合先看善恶 / 秩序倾向的英雄池。": { en: "Select multiple values to browse heroes by alignment." },
+  "支持多选；便于按职业组合快速找候选英雄。": { en: "Select multiple values to find candidates by class combination." },
+  "支持多选；可以区分起始、常驻、活动或 Tales 等来源。": { en: "Select multiple values to distinguish starting, evergreen, event, or Tales sources." },
+  "支持多选；这里只收会直接影响阵型取舍的特殊玩法标签，不等于完整技能说明。": { en: "Select multiple formation-relevant mechanics; this is not a full ability description." },
+  "当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。": { en: "Changing the layout creates a new recent draft; the old scenario context is not carried over." },
+  "如果保持为空，最近草稿会从浏览器本地一起清理。": { en: "If left empty, the recent draft is also cleared from this browser." },
+  "现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。": { en: "You can now edit, delete, or restore it from the Preset Library page." },
+  "当前阵型为空，浏览器本地不会继续保留最近草稿。": { en: "The empty formation will no longer keep a recent draft in this browser." },
+  "最近草稿已自动保存": { en: "Recent draft saved automatically" },
+  "返回立绘图鉴": { en: "Back to illustration catalog" },
+  "支持多选；适合快速收窄到特定种族英雄的全部立绘。": { en: "Select multiple values to narrow to all art for a specific race." },
+  "支持多选；用英雄元数据交叉过滤皮肤池。": { en: "Select multiple values to cross-filter the skin pool by hero metadata." },
+  "支持多选；适合快速抽出守序、混乱或善恶阵营相关的立绘集合。": { en: "Select multiple values to find art by alignment." },
+  "支持多选；适合快速看同职业英雄在立绘上的风格分布。": { en: "Select multiple values to compare art styles across a class." },
+  "支持多选；区分核心、常驻、活动或 Tales 等来源时会更顺手。": { en: "Select multiple values to distinguish core, evergreen, event, or Tales sources." },
+  "这里保留会直接影响阵型取舍的玩法标签，方便看某类特化英雄的全部形象资源。": { en: "These formation-relevant mechanic tags help find all art for specialized heroes." },
+  "支持中英混搜，也会匹配皮肤名、联动队伍、角色标签和资源 graphic id。": { en: "Searches Chinese and English, including skin names, affiliations, tags, and graphic IDs." },
+  "搜英雄名、皮肤名、标签或联动队伍": { en: "Search hero names, skins, tags, or affiliations" },
+  "支持多选；同一维度内按或匹配。": { en: "Select multiple values; values in one dimension use OR matching." },
+  "按所属英雄的定位过滤，适合先把立绘缩到输出、辅助或坦克线。": { en: "Filter by the hero's role to focus on damage, support, or tank art." },
+  "仍然按英雄元数据多选过滤，方便快速切到固定队伍的皮肤资产。": { en: "Use hero metadata and multiple selections to find skins for an affiliation." },
+  "按赞助人合约筛选。": { en: "Filter by patron contract." },
+  "点击任一条件即可单独回退对应维度；全量回退统一使用右上角的清空全部。": { en: "Click a condition to clear that dimension; use Clear all in the upper right to reset everything." },
+  "存活受限": { en: "Survival-limited" },
+  "护甲受限": { en: "Armor-limited" },
+  "命中型受限": { en: "Hit-based limited" },
+  "伤害受限": { en: "Damage-limited" },
+  "已达上限": { en: "Cap reached" },
+  "护甲": { en: "Armor" },
+  "命中型": { en: "Hit-based" },
+  "伤害削减": { en: "Damage reduction" },
+  "敌人强化": { en: "Enemy buff" },
+  "持续掉血": { en: "Damage over time" },
+  "全局 DPS": { en: "Global DPS" },
+  "英雄 DPS": { en: "Hero DPS" },
+  "全局金币": { en: "Global gold" },
+  "全局暴击率": { en: "Global crit chance" },
+  "英雄暴击率": { en: "Hero crit chance" },
+  "全局暴击伤": { en: "Global crit damage" },
+  "英雄暴击伤": { en: "Hero crit damage" },
+  "全局生命": { en: "Global health" },
+  "英雄生命": { en: "Hero health" },
+  "伤害减免": { en: "Damage reduction" },
+  "攻速": { en: "Attack speed" },
+  "冷却缩减": { en: "Cooldown reduction" },
+  "仅已拥有": { en: "Owned only" },
+  "全部英雄（假设基线）": { en: "All champions (hypothetical baseline)" },
+  "全量": { en: "Full" },
+  "普通": { en: "Common" },
+  "精良": { en: "Rare" },
+  "史诗": { en: "Epic" },
+  "传说": { en: "Legendary" },
+  "输出（DPS）": { en: "Damage (DPS)" },
+  "速度推层": { en: "Speed progression" },
+  "任务倍增": { en: "Quest multiplier" },
+  "刷新加速": { en: "Spawn speed" },
+  "额外敌人": { en: "Extra enemies" },
+  "时间加速": { en: "Time speed" },
+  "转换加速": { en: "Transition speed" },
+  "同步刷新": { en: "Simultaneous spawn" },
+  "预刷新": { en: "Pre-spawn" },
+  "跳层/秒杀": { en: "Area skip / instant kill" },
+  "基础页面与主导航": { en: "Base pages and primary navigation" },
+  "基于 `import.meta.env.BASE_URL` 的数据读取约定": { en: "Data loading convention based on `import.meta.env.BASE_URL`" },
+  "`public/data/version.json + public/data/v1/` 版本化公共数据目录": { en: "Versioned public data in `public/data/version.json + public/data/v1/`" },
+  "官方原文 + `language_id=7` 中文展示双字段数据": { en: "Official text plus `language_id=7` Chinese display fields" },
+  "官方 definitions 自动提取的阵型布局库": { en: "Formation layout library extracted from official definitions" },
+  "`IndexedDB` 最近草稿与命名方案保存 / 恢复": { en: "`IndexedDB` save and restore for recent drafts and named presets" },
+  "`Vitest + Playwright` 本地回归基线": { en: "Local regression baseline with `Vitest + Playwright`" },
+  "给阵型页补场景筛选、搜索与来源定位": { en: "Add scenario filters, search, and source context to the formation page" },
+  "完善 seat 冲突校验与候选英雄约束提示": { en: "Improve seat conflict validation and candidate constraints" },
+  "把个人数据导入结果安全写入 `IndexedDB` 并接到页面状态": { en: "Safely write imported profile data to `IndexedDB` and connect it to page state" },
+  "扩展方案管理：删除、覆盖保存与更细标签": { en: "Expand preset management with deletion, overwrite save, and richer tags" },
+  "不做全自动最优阵容求解器": { en: "No fully automatic optimal formation solver" },
+  "不做服务端数据库": { en: "No server-side database" },
+  "不做账号系统与云同步": { en: "No accounts or cloud sync" },
+  "不做为了干净 URL 而额外增加的 SPA 回退复杂度": { en: "No extra SPA fallback complexity for clean URLs" },
+  "刷新方案列表失败": { en: "Failed to refresh preset list" },
+  "名称、备注、标签和优先级已写回本地方案库。": { en: "Name, notes, tags, and priority were saved to the local preset library." },
+  "更新方案失败": { en: "Failed to update preset" },
+  "这条命名方案已从当前浏览器的 IndexedDB 移除。": { en: "This named preset was removed from this browser's IndexedDB." },
+  "删除方案失败": { en: "Failed to delete preset" },
+  "座位 {p0} 冲突：{p1}": { en: "seat {p0} conflict: {p1}" },
+  "missing forced champion: {p0}": { zh: "缺少强制英雄：{p0}", en: "missing forced champion: {p0}" },
+  "核心英雄在用户标记的不可造伤害位置。": { en: "The carry champion is on a slot you marked as damage-disabled." },
+  "核心英雄不在可造伤害的位置。": { en: "The carry champion is not on a slot that can deal damage." },
+  "预估推进层数 {p0} 不足，要求 >= {p1} 层": { zh: "预估推进层数 {p0} 不足，要求 >= {p1} 层", en: "Estimated progression of {p0} areas is insufficient; requires >= {p1} areas." },
+  "{p0} 乘算堆叠溢出，当前不计入目标值。": { en: "{p0} multiplicative stacking overflows; currently excluded from the target value." },
+  "{p0} 依赖的基础增益当前未生效，当前不计入目标值。": { en: "{p0} depends on a base buff that is not currently active; excluded from the target value." },
+  "{p0} 的乘算堆叠结果非法，当前不计入目标值。": { en: "{p0} produced an invalid multiplicative stacking result; excluded from the target value." },
+  "{p0} 依赖手动触发或专精选择，当前不计入目标值。": { en: "{p0} depends on manual activation or a specialization choice; excluded from the target value." },
+  "{p0} 的叠层方式({p1} / {p2}) 尚未稳定解析，当前不计入目标值。": { en: "{p0}'s stacking method ({p1} / {p2}) is not yet stably resolved; excluded from the target value." },
+  "{p0} 需要{p1}上下文，当前不计入目标值。": { en: "{p0} requires {p1} context; excluded from the target value." },
+  "当前结果先填满 {p0} 个槽位，并确保每个 seat 只使用一名已拥有英雄。": { en: "This result fills {p0} slots first and keeps each seat assigned to only one owned champion." },
+  "当前结果按全队金币收益排序，由 gold pool 聚合每位英雄的金币加成。": { en: "This result ranks by team gold find, aggregating each champion's gold bonuses into the gold pool." },
+  "当前结果按区域推进效率排序（{p0}），聚合阵型中所有速度英雄的效果。": { en: "This result ranks by area progression efficiency ({p0}), aggregating speed effects from all speed champions in the formation." },
+  "这条推荐已经计入英雄自带倍率，carryDps 由 baseDamage × levelCurve × 加成聚合得出。": { en: "This recommendation accounts for hero-specific multipliers; carryDps = baseDamage × levelCurve × aggregated buffs." },
+  "核心输出位 {p0}（Seat {p1}）的 carryDps 约 {p2}，再用 {p3} 提供加成。": { en: "Carry {p0} (Seat {p1}) reaches ~{p2} carryDps, with {p3} providing buffs." },
+  "当前版本按 carryDps 排序候选；场景限制仍需你手动复核。": { en: "This version ranks candidates by carryDps; scenario restrictions still need manual review." },
+  "当前版本按 carryDps 排序候选；后续再逐步补进技能联动和场景机制。": { en: "This version ranks candidates by carryDps; skill synergies and scenario mechanics will be layered in later." },
+  "整队计数": { en: "whole-formation count" },
+  "整队目标计数": { en: "whole-formation target count" },
+  "整队属性计数": { en: "whole-formation attribute count" },
+  "整队目标": { en: "whole-formation targets" },
+  "阵型列拓扑": { en: "formation column topology" },
+  "阵型槽位距离": { en: "formation slot distance" },
   "按需加载页面": { en: "Loading route bundle" },
   "正在加载当前页面": { en: "Loading current page" },
   "Idle Champions 辅助站": { en: "Idle Champions Helper" },
@@ -849,9 +1008,20 @@ export const MESSAGES: Record<string, Message> = {
   "已登记 {p0} 个视觉槽位，涵盖本体立绘、头像资源与 {p1} 套皮肤。静态站只展示本地同步头像和基座元数据，不会在浏览器里请求官方资源。": { en: "The catalog currently tracks {p0} visual slots across base art, portraits, and {p1} skin sets. The static site only shows the local synced avatar plus catalog metadata and never requests official assets in the browser." },
   "当前阵型里出现 seat 冲突：{p0}。同一 seat 只能放一名英雄。": { en: "Seat conflicts found in this formation: {p0}. Only one champion may occupy each seat." },
   "加载自动计划数据失败：{p0}": { en: "Failed to load planner data: {p0}" },
-  "{p0} / {p1} {p2}": { zh: "{p0} / {p1}", en: "{p0} / {p1} {p2}" },
+  "{p0} / {p1} {p2}": { zh: "{p0} / {p1} {p2}", en: "{p0} / {p1} {p2}" },
+  "{p0} 个槽位引用已失效": { en: "{p0} slot references are invalid" },
+  "{p0} 个英雄引用已失效": { en: "{p0} champion references are invalid" },
+  "{p0} 个槽位引用已失效；{p1} 个英雄引用已失效": { en: "{p0} slot references and {p1} champion references are invalid" },
+  "保存版本 {p0} 已不可读，当前按 {p1} 兼容恢复。{p2}": { en: "Saved version {p0} is unavailable; restored compatibly with {p1}. {p2}" },
+  "已按数据版本 {p0} 恢复。{p1}": { en: "Restored using data version {p0}. {p1}" },
+  "已按数据版本 {p0} 恢复。": { en: "Restored using data version {p0}." },
+  "保存版本 {p0} 已不可读，当前按 {p1} 兼容恢复。": { en: "Saved version {p0} is unavailable; restored compatibly with {p1}." },
+  "{p0}版本过旧，当前不能直接恢复": { en: "{p0} is too old to restore directly" },
+  "当前只识别 schemaVersion={p0} 的{p1}；检测到旧版本为 {p2}。": { en: "Only {p1} with schemaVersion={p0} can be restored; found old version {p2}." },
+  "{p0}引用的布局已不存在，当前不能安全恢复": { en: "The layout referenced by {p0} no longer exists and cannot be safely restored" },
+  "最近草稿已自动保存：{p0} · 保存在当前浏览器的 IndexedDB。": { en: "Recent draft saved automatically: {p0} · Stored in this browser's IndexedDB." },
 }
-export function interpolate(template: string, params?: TranslateParams): string {
+export function interpolate(locale: AppLocale, template: string, params?: TranslateParams): string {
   if (!params) {
     return template
   }
@@ -859,7 +1029,9 @@ export function interpolate(template: string, params?: TranslateParams): string 
   return template.replace(/\{(\w+)\}/g, (match, name) => {
     const key = name as string
 
-    return key in params ? String(params[key]) : match
+    if (!(key in params)) return match
+    const value = params[key]
+    return typeof value === 'object' ? translateRef(locale, value) : String(value)
   })
 }
 
@@ -867,7 +1039,8 @@ export function t(locale: AppLocale, text: string, params?: TranslateParams): st
   return pickMessage(locale, text, params)
 }
 
-export function pickText(locale: AppLocale, zh: string, en: string): string {
+// Runtime filter labels contain user-selected data and must not enter MESSAGES.
+export function selectLocaleText(locale: AppLocale, zh: string, en: string): string {
   return locale === 'zh-CN' ? zh : en
 }
 
@@ -883,10 +1056,10 @@ function pickMessage(locale: AppLocale, key: string, params?: TranslateParams): 
   const message = MESSAGES[key]
 
   if (!message) {
-    return interpolate(key, params)
+  return interpolate(locale, key, params)
   }
 
   const base = locale === 'zh-CN' ? (message.zh ?? key) : message.en
 
-  return interpolate(base, params)
+  return interpolate(locale, base, params)
 }

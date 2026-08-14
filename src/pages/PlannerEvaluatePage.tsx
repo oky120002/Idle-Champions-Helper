@@ -13,7 +13,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Eraser, Lock, Plus, Send, Sparkles, Unlock } from 'lucide-react'
 import { BackNavigationIcon } from '../app/AppIcons'
-import { useI18n, type LocaleText } from '../app/i18n'
+import { useI18n, type MessageRef } from '../app/i18n'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
 import type { WorkbenchToolbarConfig } from '../components/workbench/workbenchToolbarConfig'
@@ -496,7 +496,7 @@ export function PlannerEvaluatePage() {
   const locationState = location.state as
     | {
         returnTo?: { pathname: string; search: string }
-        returnLabel?: { zh: string; en: string }
+        returnLabel?: MessageRef
         initialVariantId?: string | null
       }
     | null
@@ -532,7 +532,7 @@ export function PlannerEvaluatePage() {
   }, [selectVariantIdBase, setEvaluatePlacements])
 
   const backTarget = locationState?.returnTo ?? { pathname: '/planner', search: '' }
-  const backLabel = locationState?.returnLabel ?? { zh: '返回自动计划', en: 'Back to auto plan' }
+  const backLabel = locationState?.returnLabel ?? { key: '返回自动计划' }
 
   const selectedVariant = useMemo(
     () => collections.variants.find((variant) => variant.id === selectedVariantId) ?? null,
@@ -612,10 +612,10 @@ export function PlannerEvaluatePage() {
     [locale],
   )
 
-  const SCORE_LABELS: Record<ScoringMode, LocaleText> = {
-    'carry-dps': { zh: '核心英雄 DPS', en: 'Carry DPS' },
-    'team-gold': { zh: '金币收益', en: 'Team gold find' },
-    'team-speed': { zh: '速度因子', en: 'Speed factor' },
+  const SCORE_LABELS: Record<ScoringMode, MessageRef> = {
+    'carry-dps': { key: '核心英雄 DPS' },
+    'team-gold': { key: '金币收益' },
+    'team-speed': { key: '速度因子' },
   }
   const scoreLabel = t(SCORE_LABELS[scoringMode])
   const heroNameById = useMemo(

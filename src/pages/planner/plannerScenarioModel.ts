@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams, AppLocale  } from '../../app/i18n'
+import type { MessageRef, TranslateParams, AppLocale  } from '../../app/i18n'
 
 export interface PlannerScenarioRecord {
   id: string
@@ -17,7 +17,7 @@ export interface PlannerScenarioRecord {
 
 export const DEFAULT_VISIBLE_RESULTS = 12
 
-type Translate = (text: string | LocaleText, params?: TranslateParams) => string
+type Translate = (text: string | MessageRef, params?: TranslateParams) => string
 
 export function normalizeSearchText(value: string): string {
   return value

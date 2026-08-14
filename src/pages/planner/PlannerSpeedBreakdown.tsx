@@ -1,20 +1,20 @@
-import { useI18n, type LocaleText, type TranslateParams } from '../../app/i18n'
+import { useI18n, type MessageRef, type TranslateParams } from '../../app/i18n'
 import type { SpeedBreakdown, SpeedCategory, SpeedEffectEntry } from '../../domain/planner/speedScoring'
 import { formatFactor } from './factorFormat'
 
-const SPEED_CATEGORY_LABEL: Record<SpeedCategory, LocaleText> = {
-  questProgress: { zh: '任务倍增', en: 'Quest progress' },
-  spawnSpeed: { zh: '刷新加速', en: 'Spawn speed' },
-  extraEnemies: { zh: '额外敌人', en: 'Extra enemies' },
-  timeScale: { zh: '时间加速', en: 'Time scale' },
-  transitionSpeedup: { zh: '转换加速', en: 'Transition speedup' },
-  simultaneousSpawn: { zh: '同步刷新', en: 'Simultaneous spawn' },
-  preSpawn: { zh: '预刷新', en: 'Pre-spawn' },
-  areaSkip: { zh: '跳层/秒杀', en: 'Area skip' },
+const SPEED_CATEGORY_LABEL: Record<SpeedCategory, MessageRef> = {
+  questProgress: { key: '任务倍增' },
+  spawnSpeed: { key: '刷新加速' },
+  extraEnemies: { key: '额外敌人' },
+  timeScale: { key: '时间加速' },
+  transitionSpeedup: { key: '转换加速' },
+  simultaneousSpawn: { key: '同步刷新' },
+  preSpawn: { key: '预刷新' },
+  areaSkip: { key: '跳层/秒杀' },
 }
 
 /** 格式化单条速度效果为人类可读描述（与类别相关）。 */
-function describeEffect(effect: SpeedEffectEntry, t: (text: string | LocaleText, params?: TranslateParams) => string): string {
+function describeEffect(effect: SpeedEffectEntry, t: (text: string | MessageRef, params?: TranslateParams) => string): string {
   switch (effect.category) {
     case 'questProgress':
       if (effect.multiplier != null) return `${String(effect.value)}% ×${String(effect.multiplier)}`

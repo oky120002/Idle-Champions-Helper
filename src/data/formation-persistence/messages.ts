@@ -1,50 +1,38 @@
-import type { LocaleText } from '../../app/i18n'
+import type { MessageRef } from '../../app/i18n'
 import type { FormationSnapshotLike, FormationSnapshotPreview } from './types'
 
 export function buildDroppedReferenceDetail(
   invalidSlotIds: string[],
   invalidChampionIds: string[],
-): LocaleText | null {
-  const zhParts: string[] = []
-  const enParts: string[] = []
-
-  if (invalidSlotIds.length > 0) {
-    zhParts.push(`${String(invalidSlotIds.length)} 个槽位引用已失效`)
-    enParts.push(`${String(invalidSlotIds.length)} slot reference(s) invalid`)
-  }
-
-  if (invalidChampionIds.length > 0) {
-    zhParts.push(`${String(invalidChampionIds.length)} 个英雄引用已失效`)
-    enParts.push(`${String(invalidChampionIds.length)} champion reference(s) invalid`)
-  }
-
-  if (zhParts.length === 0) {
+): MessageRef | null {
+  if (invalidSlotIds.length === 0 && invalidChampionIds.length === 0) {
     return null
   }
 
-  return { zh: zhParts.join('；'), en: enParts.join('; ') }
+  if (invalidSlotIds.length > 0 && invalidChampionIds.length > 0) {
+    return {
+      key: '{p0} 个槽位引用已失效；{p1} 个英雄引用已失效',
+      params: { p0: invalidSlotIds.length, p1: invalidChampionIds.length },
+    }
+  }
+
+  return invalidSlotIds.length > 0
+    ? { key: '{p0} 个槽位引用已失效', params: { p0: invalidSlotIds.length } }
+    : { key: '{p0} 个英雄引用已失效', params: { p0: invalidChampionIds.length } }
 }
 
 export function buildRestoreStatusDetail<T extends FormationSnapshotLike>(
   preview: FormationSnapshotPreview<T>,
-): LocaleText {
-  const zhParts = [
-    preview.restoreMode === 'compatible'
-      ? `保存版本 ${preview.snapshot.dataVersion} 已不可读，当前按 ${preview.dataVersion} 兼容恢复。`
-      : `已按数据版本 ${preview.dataVersion} 恢复。`,
-  ]
-  const enParts = [
-    preview.restoreMode === 'compatible'
-      ? `Saved version ${preview.snapshot.dataVersion} is unreadable; restored compatibly with ${preview.dataVersion}.`
-      : `Restored with data version ${preview.dataVersion}.`,
-  ]
-
+): MessageRef {
   const droppedDetail = buildDroppedReferenceDetail(preview.invalidSlotIds, preview.invalidChampionIds)
 
-  if (droppedDetail) {
-    zhParts.push(droppedDetail.zh)
-    enParts.push(droppedDetail.en)
+  if (preview.restoreMode === 'compatible') {
+    return droppedDetail
+      ? { key: '保存版本 {p0} 已不可读，当前按 {p1} 兼容恢复。{p2}', params: { p0: preview.snapshot.dataVersion, p1: preview.dataVersion, p2: droppedDetail } }
+      : { key: '保存版本 {p0} 已不可读，当前按 {p1} 兼容恢复。', params: { p0: preview.snapshot.dataVersion, p1: preview.dataVersion } }
   }
 
-  return { zh: zhParts.join(' '), en: enParts.join(' ') }
+  return droppedDetail
+    ? { key: '已按数据版本 {p0} 恢复。{p1}', params: { p0: preview.dataVersion, p1: droppedDetail } }
+    : { key: '已按数据版本 {p0} 恢复。', params: { p0: preview.dataVersion } }
 }

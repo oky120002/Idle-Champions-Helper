@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
@@ -9,7 +9,7 @@ import type { EffectContext } from './types'
 type DetailLootSectionProps = {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly effectContext: EffectContext
 }
 

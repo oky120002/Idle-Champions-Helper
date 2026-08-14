@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import type {
   ChampionAnimation,
   ChampionDetail,
@@ -21,7 +21,7 @@ import type {
 interface ChampionDetailBodyProps {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly activeSectionId: DetailSectionId
   readonly overviewFields: DetailFieldProps[]
   readonly effectContext: EffectContext

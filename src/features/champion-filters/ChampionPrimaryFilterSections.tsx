@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { AppLocale, LocaleText , TranslateParams} from '../../app/i18n'
+import type { AppLocale, MessageRef , TranslateParams} from '../../app/i18n'
 import {
   FilterSidebarSchemaRenderer,
   type FilterSidebarFieldSchema,
@@ -12,13 +12,13 @@ import { seatOptions } from './options'
 import type { ActiveFilterChip, IdLocalizedOption } from './types'
 
 export interface ChampionPrimaryFilterCopy {
-  searchHint: LocaleText
-  searchPlaceholder: LocaleText
-  seatHint: LocaleText
-  roleHint: LocaleText
-  affiliationHint: LocaleText
-  patronHint: LocaleText
-  activeChipHint: LocaleText
+  searchHint: MessageRef
+  searchPlaceholder: MessageRef
+  seatHint: MessageRef
+  roleHint: MessageRef
+  affiliationHint: MessageRef
+  patronHint: MessageRef
+  activeChipHint: MessageRef
 }
 
 interface ChampionPrimaryFilterValues {
@@ -50,7 +50,7 @@ interface ChampionPrimaryFilterActions {
 
 interface ChampionPrimaryFilterSectionsProps {
   locale: AppLocale
-  t: (text: string | LocaleText, params?: TranslateParams) => string
+  t: (text: string | MessageRef, params?: TranslateParams) => string
   copy: ChampionPrimaryFilterCopy
   values: ChampionPrimaryFilterValues
   options: ChampionPrimaryFilterOptions

@@ -1,4 +1,4 @@
-import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
+import type { TranslateParams, AppLocale, MessageRef  } from '../../app/i18n'
 import type { LocalizedOption } from '../../domain/types'
 import { buildActiveVariantFilters } from './variant-model'
 import type {
@@ -9,7 +9,7 @@ import type {
   VariantFilterOption,
 } from './types'
 
-type VariantTranslator = (text: string | LocaleText, params?: TranslateParams) => string
+type VariantTranslator = (text: string | MessageRef, params?: TranslateParams) => string
 
 export function getSelectedCampaignGroup(
   groups: VariantCampaignGroup[],

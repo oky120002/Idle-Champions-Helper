@@ -1,6 +1,6 @@
 /* eslint-disable max-lines -- 阵型英雄列表构建模块：tile/summary/equipment-slot 视图模型紧耦合，拆文件增加跨文件跳转 */
 import type { Champion, ChampionDetail, ChampionLootDetail, LocalizedText } from '../../domain/types'
-import type { LocaleText } from '../../app/i18n'
+import type { MessageRef } from '../../app/i18n'
 import type { OwnedHero } from '../../domain/user-profile/types'
 
 export interface ChampionRosterTile {
@@ -18,10 +18,10 @@ export interface ChampionRosterSeatColumn {
 
 export interface ChampionRosterSummaryMetric {
   id: string
-  label: LocaleText
+  label: MessageRef
   value: number
   total: number
-  description: LocaleText
+  description: MessageRef
 }
 
 export interface ChampionRosterSummary {
@@ -235,38 +235,38 @@ function buildRosterSummaryMetrics(
   return [
     {
       id: 'owned',
-      label: { zh: '已拥有英雄', en: 'Owned champions' },
+      label: { key: '已拥有英雄' },
       value: ownedChampionCount,
       total: totalChampionCount,
-      description: { zh: '当前快照里已经解锁并可投入阵型的英雄数量。', en: 'Champions unlocked and available for formation in the current snapshot.' },
+      description: { key: '当前快照里已经解锁并可投入阵型的英雄数量。' },
     },
     {
       id: 'epic-slots',
-      label: { zh: '史诗装备槽位', en: 'Epic gear slots' },
+      label: { key: '史诗装备槽位' },
       value: slotCounts.epicSlots,
       total: totalOwnedSlots,
-      description: { zh: '已拥有英雄的装备槽里，达到史诗稀有度的总槽位。', en: 'Gear slots at epic rarity across all owned champions.' },
+      description: { key: '已拥有英雄的装备槽里，达到史诗稀有度的总槽位。' },
     },
     {
       id: 'shiny-slots',
-      label: { zh: '闪耀槽位', en: 'Shiny slots' },
+      label: { key: '闪耀槽位' },
       value: slotCounts.shinySlots,
       total: totalOwnedSlots,
-      description: { zh: '当前已拥有的闪耀装备槽位数量。', en: 'Shiny gear slots currently owned.' },
+      description: { key: '当前已拥有的闪耀装备槽位数量。' },
     },
     {
       id: 'golden-slots',
-      label: { zh: '金装槽位', en: 'Golden slots' },
+      label: { key: '金装槽位' },
       value: slotCounts.goldenSlots,
       total: totalOwnedSlots,
-      description: { zh: '当前已拥有的 Golden 装备槽位数量。', en: 'Golden gear slots currently owned.' },
+      description: { key: '当前已拥有的 Golden 装备槽位数量。' },
     },
     {
       id: 'legendary-slots',
-      label: { zh: '传奇装备位', en: 'Legendary slots' },
+      label: { key: '传奇装备位' },
       value: slotCounts.legendarySlots,
       total: totalOwnedSlots,
-      description: { zh: '已经激活传奇等级的装备槽位数量。', en: 'Gear slots with active legendary levels.' },
+      description: { key: '已经激活传奇等级的装备槽位数量。' },
     },
   ]
 }

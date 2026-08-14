@@ -1,4 +1,4 @@
-import { useI18n } from '../../app/i18n'
+import { useI18n, type MessageRef } from '../../app/i18n'
 import type { ComputationMode } from '../../domain/planner/computationMode'
 
 export interface PlannerComputationModeProps {
@@ -6,13 +6,13 @@ export interface PlannerComputationModeProps {
   readonly onChange: (mode: ComputationMode) => void
 }
 
-const MODES: Array<{ id: ComputationMode; zh: string; en: string }> = [
-  { id: 'full', zh: '全量', en: 'Full' },
-  { id: 'p90', zh: 'P90', en: 'P90' },
-  { id: 'p80', zh: 'P80', en: 'P80' },
-  { id: 'p70', zh: 'P70', en: 'P70' },
-  { id: 'p60', zh: 'P60', en: 'P60' },
-  { id: 'p50', zh: 'P50', en: 'P50' },
+const MODES: Array<{ id: ComputationMode; label: MessageRef }> = [
+  { id: 'full', label: { key: '全量' } },
+  { id: 'p90', label: { key: 'P90' } },
+  { id: 'p80', label: { key: 'P80' } },
+  { id: 'p70', label: { key: 'P70' } },
+  { id: 'p60', label: { key: 'P60' } },
+  { id: 'p50', label: { key: 'P50' } },
 ]
 
 /**
@@ -47,7 +47,7 @@ export function PlannerComputationMode({ value, onChange }: PlannerComputationMo
                 }
               }}
             >
-              {t(mode)}
+              {t(mode.label)}
             </button>
           )
         })}

@@ -34,8 +34,8 @@ export function buildFormationBoardActions({
     setPlacements({})
     setScenarioRef(null)
     setDraftStatus(createInfoStatusMessage(
-      { zh: '已切换布局', en: 'Layout switched' },
-      { zh: '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。', en: 'Switching the layout regenerates the recent draft; the previous scenario context is not carried over.' },
+      { key: '已切换布局' },
+      { key: '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。' },
     ))
     setPresetStatus(null)
     bumpEditRevision()
@@ -56,8 +56,8 @@ export function buildFormationBoardActions({
   function handleClear() {
     setPlacements({})
     setDraftStatus(createInfoStatusMessage(
-      { zh: '当前阵型已清空', en: 'Formation cleared' },
-      { zh: '如果保持为空，最近草稿会从浏览器本地一起清理。', en: 'If left empty, the recent draft will also be removed from browser storage.' },
+      { key: '当前阵型已清空' },
+      { key: '如果保持为空，最近草稿会从浏览器本地一起清理。' },
     ))
     setPresetStatus(null)
     bumpEditRevision()

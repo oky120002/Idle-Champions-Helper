@@ -1,5 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
-import { pickText } from '../../app/i18n-messages'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { SkelAnimCanvas } from '../../features/skelanim-player/SkelAnimCanvas'
 import type { ChampionAnimation, ChampionDetail, ChampionIllustration, ChampionSkinDetail } from '../../domain/types'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
@@ -11,7 +10,7 @@ import type { SkinArtworkIds } from './types'
 interface SkinArtworkDialogProps {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly isArtworkDialogOpen: boolean
   readonly selectedSkin: ChampionSkinDetail | null
   readonly selectedSkinAnimation: ChampionAnimation | null
@@ -39,6 +38,17 @@ export function SkinArtworkDialog({
     return null
   }
 
+  let previewHint: string
+  if (locale === 'zh-CN') {
+    previewHint = selectedSkinIllustration
+      ? '当前预览来自站内版本化立绘静态资源；下方继续保留原始 graphic id 与来源槽位，方便核对基座。'
+      : '当前这套皮肤还没有站内立绘资源。为保证全站静态立绘统一来自动画导出，这里不再回退英雄头像。'
+  } else {
+    previewHint = selectedSkinIllustration
+      ? 'This preview is now served from the versioned local illustration asset while the original graphic ids stay visible below for verification.'
+      : 'This skin does not have a local illustration yet. To keep every static illustration sourced from animation exports, the dialog no longer falls back to the champion portrait.'
+  }
+
   return (
     <div
       className="skin-artwork-dialog"
@@ -57,17 +67,7 @@ export function SkinArtworkDialog({
           <div className="skin-artwork-dialog__copy">
             <p className="champion-detail-sidebar__eyebrow">{t("皮肤立绘预览")}</p>
             <h3 className="skin-artwork-dialog__title"><LocalizedTextStack value={selectedSkin.name} /></h3>
-            <p className="skin-artwork-dialog__hint">
-              {pickText(
-                locale,
-                selectedSkinIllustration
-                  ? '当前预览来自站内版本化立绘静态资源；下方继续保留原始 graphic id 与来源槽位，方便核对基座。'
-                  : '当前这套皮肤还没有站内立绘资源。为保证全站静态立绘统一来自动画导出，这里不再回退英雄头像。',
-                selectedSkinIllustration
-                  ? 'This preview is now served from the versioned local illustration asset while the original graphic ids stay visible below for verification.'
-                  : 'This skin does not have a local illustration yet. To keep every static illustration sourced from animation exports, the dialog no longer falls back to the champion portrait.',
-              )}
-            </p>
+            <p className="skin-artwork-dialog__hint">{previewHint}</p>
           </div>
           <button
             type="button"

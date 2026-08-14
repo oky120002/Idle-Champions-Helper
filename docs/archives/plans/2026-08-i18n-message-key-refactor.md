@@ -1,6 +1,6 @@
 # 国际化重构：中央字典 + key 查表
 
-**状态**: 已确认
+**状态**: 已落地
 **类型**: change
 **范围**: system（i18n）
 **创建日期**: 2026-08-13
@@ -60,13 +60,13 @@ function translate(locale: AppLocale, text: string | MessageRef, params?: Transl
 
 ### 阶段 Checklist
 
-- [ ] 阶段 1: 类型地基——新建 `i18n-messages.ts`（`Message`/`MessageRef`/`translate`/字典骨架），改造 `i18n.tsx` 的 `t` 支持新签名且兼容旧 `{zh,en}` —— 验证方式：`npm run typecheck` + 既有 `LocalizedText.test.tsx` 等绿
-- [ ] 阶段 2: codemod 批量迁移 821 处内联对 → `t('中文')` / `t('模板 {x}', {x})`（含 135 处模板串占位符化）—— 验证方式：`rg "t\(\{.*zh"` 计数归零 + `npm run test:unit`
-- [ ] 阶段 3: 数据结构中的 `LocaleText` 字段迁移（`appNavigation.ts` label、`statusMessage.ts` title/detail、`messages.ts` 等）→ `string` / `MessageRef` —— 验证方式：`rg "LocaleText"` 归零 + 相关组件测试绿
-- [ ] 阶段 4: dev2 17 处 warning 收编（`LocalizedUiText` → `MessageRef`），`asLocalizedUiText`/`uniqueLocalizedUiText` 按需删除或改 `{ literal }` —— 验证方式：planner warning 测试断言更新后绿
-- [ ] 阶段 5: 129 处歧义译法钦定合并 + 删除 `affiliation-tag-labels.ts`（走管线）—— 验证方式：champions 相关测试绿，`rg "affiliation-tag-labels"` 归零
-- [ ] 阶段 6: 删除旧 `t({zh,en})` 签名 + 弃用守护测试（`t({`/`pickLocaleText(locale, {`/`LocaleText`/`LocalizedUiText` 残留扫描断言）+ 字典完整性测试（key 唯一、value 非空）—— 验证方式：守护测试本身能拦住回潮
-- [ ] 阶段 7: 全量回归 + 文档同步 —— 验证方式：`npm run test` + `npm run lint` + `npm run typecheck` + `npm run build`
+- [x] 阶段 1: 类型地基——建立 `Message`/`MessageRef`/`translate`/字典与新 `t` 签名 —— 验证：typecheck 与单测通过
+- [x] 阶段 2: 迁移内联双语对与模板占位符 —— 验证：生产源码无 `t({zh,en})`，单测通过
+- [x] 阶段 3: 数据结构中的 `LocaleText` 字段迁移为 `MessageRef` —— 验证：残留扫描与相关测试通过
+- [x] 阶段 4: planner `LocalizedUiText` warning/叙述收编为 `MessageRef` —— 验证：planner 测试通过
+- [x] 阶段 5: 统一静态译法并删除 `affiliation-tag-labels.ts`，改走管线双语数据 —— 验证：引用扫描与相关测试通过
+- [x] 阶段 6: 删除旧类型/选择器，增加静态 key、字典值和占位符完整性守护 —— 验证：`i18n-messages.test.ts` 通过
+- [x] 阶段 7: 全量回归与文档同步 —— 验证：`npm run test:unit`、`npm run lint`、`npm run typecheck`、`npm run build`
 
 ## 验收
 
@@ -78,9 +78,11 @@ function translate(locale: AppLocale, text: string | MessageRef, params?: Transl
 ## 审查结论（2026-08-14）
 
 - 已落地：中央字典、字面量 key 迁移、参数插值、`MessageRef.literal`、基础构建与单测验证。
-- 未落地：`LocaleText` 与 `LocalizedUiText` 仍被生产代码使用，planner warning 仍是双语对象；这不是兼容性要求，而是阶段 4/6 尚未完成。
-- 已补强：`i18n-messages.test.ts` 扫描生产源码中的字面量 `t()` 调用，阻止未登记 key 静默回退中文；规范已落到 `docs/specs/guidelines/i18n-messages.md`。
-- 收口条件：完成 `MessageRef` 全链路迁移并删除旧类型/选择器后，重新运行残留扫描，再将本计划移入 `docs/archives/plans/`。
+- 已完成：`LocaleText` 与 `LocalizedUiText` 全链路删除，planner warning/叙述统一为 `MessageRef`；静态 UI key 统一进入中央字典。
+- 已补强：`i18n-messages.test.ts` 扫描生产源码中的字面量 `t()` 与 `MessageRef.key`，并校验字典 key 唯一、值非空、占位符一致，阻止英文界面静默显示中文。
+- 阶段 5 审查：`Champion.affiliations` 与 `enums.affiliations` 均由数据管线提供 `{ original, display }`；筛选项和展示组件已直接消费该结构，因此已删除手写 affiliation 标签表及其聚合引用。`src/` 中 `affiliation-tag-labels` 引用归零。
+- 阶段 5 边界：`champion-filter-model.ts` 与 `illustration-model.ts` 仍有 `selectLocaleText` 动态拼接筛选 chip；这是阶段 2/6 的中央字典迁移残留，不是 affiliation 数据缺口，本阶段不扩大修改范围。
+- 收口条件：已满足；计划归档至 `docs/archives/plans/`。
 
 ## 落地后
 

@@ -1,5 +1,5 @@
 import type { HeroAbilitySignal } from '../../abilities/abilityModel'
-import type { LocalizedUiText } from '../../types'
+import type { MessageRef } from '../../types'
 import type { EvaluatePlacementFitInput } from '../placementFitTypes'
 import { STACK_COUNT_RESOLVERS } from './stackCountResolver'
 
@@ -35,14 +35,14 @@ export const DEFAULT_MANUAL_STACK_COUNT = 1000
 function resolveStacksMultiplySignal(
   input: EvaluatePlacementFitInput,
   signal: HeroAbilitySignal,
-): { ok: true; multiplier: number } | { ok: false; warning: LocalizedUiText } | null {
+): { ok: true; multiplier: number } | { ok: false; warning: MessageRef } | null {
   if (signal.stacksMultiply !== true || (signal.stackFunc != null && signal.stackFunc !== '')) {
     return null
   }
   const stackCount = input.manualStackCount ?? DEFAULT_MANUAL_STACK_COUNT
   const mult = percentToMultiplier(signal.value) ** stackCount
   if (!Number.isFinite(mult)) {
-    return { ok: false, warning: { zh: `${signal.rawEffect} 乘算堆叠溢出，当前不计入目标值。`, en: `${signal.rawEffect} multiplicative stacking overflows; currently excluded from the target value.` } }
+    return { ok: false, warning: { key: '{p0} 乘算堆叠溢出，当前不计入目标值。', params: { p0: signal.rawEffect } } }
   }
   // bonus-scale-linkage：联动 signal 只在基础 signal 可计入目标值时生效（依赖检查，不卷入数值）。
   // multiplier>1 守护与 applySignalPercent 对称——基础 0 层（value^0=1，如善良榜样无 good 英雄）
@@ -50,7 +50,7 @@ function resolveStacksMultiplySignal(
   if (signal.bonusScaleOfSignal) {
     const dep = resolveSignalMultiplier(input, signal.bonusScaleOfSignal)
     if (!dep.ok || dep.multiplier <= 1) {
-      return { ok: false, warning: { zh: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计入目标值。`, en: `${signal.rawEffect} depends on a base buff that is not currently active; excluded from the target value.` } }
+      return { ok: false, warning: { key: '{p0} 依赖的基础增益当前未生效，当前不计入目标值。', params: { p0: signal.rawEffect } } }
     }
   }
   return { ok: true, multiplier: mult }
@@ -61,7 +61,7 @@ function applySignalPercentToMultiplier(
   input: EvaluatePlacementFitInput,
   signal: HeroAbilitySignal,
   resolvedPercent: number,
-): { ok: true; multiplier: number } | { ok: false; warning: LocalizedUiText } {
+): { ok: true; multiplier: number } | { ok: false; warning: MessageRef } {
   if (!signal.bonusScaleOfSignal) {
     return { ok: true, multiplier: percentToMultiplier(resolvedPercent) }
   }
@@ -72,7 +72,7 @@ function applySignalPercentToMultiplier(
   if (!baseMultiplierResult.ok || baseMultiplierResult.multiplier <= 1) {
     return {
       ok: false,
-      warning: { zh: `${signal.rawEffect} 依赖的基础增益当前未生效，当前不计入目标值。`, en: `${signal.rawEffect} depends on a base buff that is not currently active; excluded from the target value.` },
+      warning: { key: '{p0} 依赖的基础增益当前未生效，当前不计入目标值。', params: { p0: signal.rawEffect } },
     }
   }
 
@@ -94,13 +94,13 @@ function resolveMultStackSignal(
   input: EvaluatePlacementFitInput,
   signal: HeroAbilitySignal,
   count: number,
-): { ok: true; multiplier: number } | { ok: false; warning: LocalizedUiText } {
+): { ok: true; multiplier: number } | { ok: false; warning: MessageRef } {
   const multiplier = percentToMultiplier(signal.value) ** count
   const percent = invertEffectMultiplier(multiplier)
   if (percent === null) {
     return {
       ok: false,
-      warning: { zh: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计入目标值。`, en: `${signal.rawEffect} produced an invalid multiplicative stacking result; excluded from the target value.` },
+      warning: { key: '{p0} 的乘算堆叠结果非法，当前不计入目标值。', params: { p0: signal.rawEffect } },
     }
   }
   return applySignalPercentToMultiplier(input, signal, percent)
@@ -109,11 +109,11 @@ function resolveMultStackSignal(
 export function resolveSignalMultiplier(
   input: EvaluatePlacementFitInput,
   signal: HeroAbilitySignal,
-): { ok: true; multiplier: number } | { ok: false; warning: LocalizedUiText } {
+): { ok: true; multiplier: number } | { ok: false; warning: MessageRef } {
   if (signal.applyManually === true) {
     return {
       ok: false,
-      warning: { zh: `${signal.rawEffect} 依赖手动触发或专精选择，当前不计入目标值。`, en: `${signal.rawEffect} depends on manual activation or a specialization choice; excluded from the target value.` },
+      warning: { key: '{p0} 依赖手动触发或专精选择，当前不计入目标值。', params: { p0: signal.rawEffect } },
     }
   }
 
@@ -132,7 +132,7 @@ export function resolveSignalMultiplier(
   if (!resolver) {
     return {
       ok: false,
-      warning: { zh: `${signal.rawEffect} 的叠层方式(${signal.amountFunc ?? 'null'} / ${stackFunc}) 尚未稳定解析，当前不计入目标值。`, en: `${signal.rawEffect}'s stacking method (${signal.amountFunc ?? 'null'} / ${stackFunc}) is not yet stably resolved; excluded from the target value.` },
+      warning: { key: '{p0} 的叠层方式({p1} / {p2}) 尚未稳定解析，当前不计入目标值。', params: { p0: signal.rawEffect, p1: signal.amountFunc ?? 'null', p2: stackFunc } },
     }
   }
 
@@ -140,7 +140,7 @@ export function resolveSignalMultiplier(
   if (count === null) {
     return {
       ok: false,
-      warning: { zh: `${signal.rawEffect} 需要${resolver.contextLabel.zh}上下文，当前不计入目标值。`, en: `${signal.rawEffect} requires ${resolver.contextLabel.en} context; excluded from the target value.` },
+      warning: { key: '{p0} 需要{p1}上下文，当前不计入目标值。', params: { p0: signal.rawEffect, p1: 'key' in resolver.contextLabel ? resolver.contextLabel.key : resolver.contextLabel.literal } },
     }
   }
 
@@ -155,6 +155,6 @@ export function resolveSignalMultiplier(
 
   return {
     ok: false,
-    warning: { zh: `${signal.rawEffect} 的叠层方式(${String(amountFunc)} / ${stackFunc}) 尚未稳定解析，当前不计入目标值。`, en: `${signal.rawEffect}'s stacking method (${String(amountFunc)} / ${stackFunc}) is not yet stably resolved; excluded from the target value.` },
+    warning: { key: '{p0} 的叠层方式({p1} / {p2}) 尚未稳定解析，当前不计入目标值。', params: { p0: signal.rawEffect, p1: String(amountFunc), p2: stackFunc } },
   }
 }

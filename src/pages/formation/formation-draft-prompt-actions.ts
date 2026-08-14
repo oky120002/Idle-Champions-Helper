@@ -7,7 +7,7 @@ import {
   createSuccessStatusMessage,
 } from '../../components/statusMessage'
 import type { ScenarioRef } from '../../domain/types'
-import { buildRestoredDraftFromPreview, errorMessageLocaleText, pickPreferredSlotId } from './formation-model-helpers'
+import { buildRestoredDraftFromPreview, errorMessageRef, pickPreferredSlotId } from './formation-model-helpers'
 import type { DraftPrompt, FormationState, StatusMessage } from './types'
 
 type BuildFormationDraftPromptActionsOptions = {
@@ -84,7 +84,7 @@ function applyDraftPromptRestore({
   setDraftPrompt(null)
   setIsDraftPersistenceArmed(true)
   setDraftStatus(createSuccessStatusMessage(
-    { zh: '最近草稿已恢复', en: 'Recent draft restored' },
+    { key: '最近草稿已恢复' },
     buildRestoreStatusDetail(draftPrompt.preview),
   ))
   void saveRecentFormationDraft(restoredDraft)
@@ -103,21 +103,15 @@ function applyKeepDraftDecision({
   setIsDraftPersistenceArmed,
   setDraftStatus,
 }: KeepDraftDecisionContext): void {
-  const detail: { zh: string; en: string } =
+  const detail =
     draftPrompt?.kind === 'restore'
-      ? {
-          zh: '本次不恢复旧草稿；你后续开始编辑后，新内容会覆盖这条最近草稿。',
-          en: "The old draft isn't restored this time; once you start editing, new content will overwrite it.",
-        }
-      : {
-          zh: '本次先保留旧草稿；等你开始编辑当前阵型后，新内容才会覆盖它。',
-          en: 'The old draft is kept for now; new content overwrites it only after you start editing.',
-        }
+      ? { key: '本次不恢复旧草稿；你后续开始编辑后，新内容会覆盖这条最近草稿。' }
+      : { key: '本次先保留旧草稿；等你开始编辑当前阵型后，新内容才会覆盖它。' }
 
   setDraftPrompt(null)
   setIsDraftPersistenceArmed(true)
   setDraftStatus(createInfoStatusMessage(
-    { zh: '已保留最近草稿，但本次不恢复', en: 'Recent draft kept, not restored this time' },
+    { key: '已保留最近草稿，但本次不恢复' },
     detail,
   ))
 }
@@ -138,13 +132,13 @@ async function discardRecentDraft({
     setDraftPrompt(null)
     setIsDraftPersistenceArmed(true)
     setDraftStatus(createInfoStatusMessage(
-      { zh: '最近草稿已丢弃', en: 'Recent draft discarded' },
-      { zh: '当前页面不会再提示恢复这条旧草稿。', en: 'This page will not prompt to restore this old draft again.' },
+      { key: '最近草稿已丢弃' },
+      { key: '当前页面不会再提示恢复这条旧草稿。' },
     ))
   } catch (error: unknown) {
     setDraftStatus(createErrorStatusMessage(
-      { zh: '最近草稿删除失败', en: 'Failed to delete recent draft' },
-      errorMessageLocaleText(error),
+      { key: '最近草稿删除失败' },
+      errorMessageRef(error),
     ))
   }
 }

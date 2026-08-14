@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
-import type { LocaleText , TranslateParams} from '../../app/i18n'
+import type { MessageRef , TranslateParams} from '../../app/i18n'
 import { createWorkbenchShareItem } from '../../components/workbench/WorkbenchToolbarItemBuilders'
 import type { WorkbenchToolbarItemConfig } from '../../components/workbench/WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 
 interface ChampionDetailToolbarItemOptions {
-  t: (text: string | LocaleText, params?: TranslateParams) => string
+  t: (text: string | MessageRef, params?: TranslateParams) => string
   backLabel?: string
   backIcon?: ReactNode
   onBack?: (() => void | Promise<void>) | undefined

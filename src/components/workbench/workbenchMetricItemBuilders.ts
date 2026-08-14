@@ -1,8 +1,8 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import type { PageHeaderMetricItem } from '../PageHeaderMetrics'
 
 interface WorkbenchMetricLabelTranslator {
-  (text: string | LocaleText, params?: TranslateParams): string
+  (text: string | MessageRef, params?: TranslateParams): string
 }
 
 interface CreateWorkbenchShowingMetricItemOptions {

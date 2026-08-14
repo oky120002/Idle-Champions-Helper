@@ -85,8 +85,8 @@ describe('formationPersistence helpers', () => {
 
   it('生成失效引用摘要时会合并槽位和英雄信息（双语）', () => {
     expect(buildDroppedReferenceDetail(['slot-9'], ['champion-a', 'champion-b'])).toEqual({
-      zh: '1 个槽位引用已失效；2 个英雄引用已失效',
-      en: '1 slot reference(s) invalid; 2 champion reference(s) invalid',
+      key: '{p0} 个槽位引用已失效；{p1} 个英雄引用已失效',
+      params: { p0: 1, p1: 2 },
     })
   })
 
@@ -107,15 +107,15 @@ describe('formationPersistence helpers', () => {
       'v1',
       [createLayout('layout-a', ['slot-1'])],
       [createChampion('bruenor', 1)],
-      { zh: '草稿', en: 'draft' },
+      { key: '草稿' },
       1,
     )
 
     expect(prompt).toEqual({
       kind: 'invalid',
       snapshot,
-      title: { zh: '草稿版本过旧，当前不能直接恢复', en: 'draft version is too old to restore directly' },
-      detail: { zh: '当前只识别 schemaVersion=1 的草稿；检测到旧版本为 0。', en: 'Only schemaVersion=1 draft is supported; detected old version 0.' },
+      title: { key: '{p0}版本过旧，当前不能直接恢复', params: { p0: { key: '草稿' } } },
+      detail: { key: '当前只识别 schemaVersion={p0} 的{p1}；检测到旧版本为 {p2}。', params: { p0: 1, p1: { key: '草稿' }, p2: 0 } },
     })
     expect(mockedLoadCollectionAtVersion).not.toHaveBeenCalled()
   })
@@ -158,7 +158,7 @@ describe('formationPersistence helpers', () => {
       'v1',
       [],
       [],
-      { zh: '方案', en: 'preset' },
+      { key: '方案' },
       1,
     )
 
@@ -199,7 +199,7 @@ describe('formationPersistence helpers', () => {
       'v1',
       [createLayout('layout-a', ['slot-1'])],
       [createChampion('bruenor', 1), createChampion('celeste', 2)],
-      { zh: '草稿', en: 'draft' },
+      { key: '草稿' },
       1,
     )
 
@@ -213,8 +213,12 @@ describe('formationPersistence helpers', () => {
     expect(prompt.preview.restoreMode).toBe('compatible')
     expect(prompt.preview.invalidSlotIds).toEqual(['slot-x'])
     expect(buildRestoreStatusDetail(prompt.preview)).toEqual({
-      zh: '保存版本 v0 已不可读，当前按 v1 兼容恢复。 1 个槽位引用已失效',
-      en: 'Saved version v0 is unreadable; restored compatibly with v1. 1 slot reference(s) invalid',
+      key: '保存版本 {p0} 已不可读，当前按 {p1} 兼容恢复。{p2}',
+      params: {
+        p0: 'v0',
+        p1: 'v1',
+        p2: { key: '{p0} 个槽位引用已失效', params: { p0: 1 } },
+      },
     })
   })
 
@@ -235,15 +239,15 @@ describe('formationPersistence helpers', () => {
       'v1',
       [createLayout('layout-a', ['slot-1'])],
       [createChampion('bruenor', 1)],
-      { zh: '草稿', en: 'draft' },
+      { key: '草稿' },
       1,
     )
 
     expect(prompt).toEqual({
       kind: 'invalid',
       snapshot,
-      title: { zh: '草稿没有可恢复的有效放置结果', en: 'draft has no valid placements to restore' },
-      detail: { zh: '1 个英雄引用已失效', en: '1 champion reference(s) invalid' },
+      title: { key: '{p0}没有可恢复的有效放置结果', params: { p0: { key: '草稿' } } },
+      detail: { key: '{p0} 个英雄引用已失效', params: { p0: 1 } },
     })
   })
 })

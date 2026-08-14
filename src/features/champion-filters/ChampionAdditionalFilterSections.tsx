@@ -1,6 +1,6 @@
 /* eslint-disable max-lines -- 补充筛选 schema 声明式内联（6 个 chip-multi 段 + mechanics 自定义段），结构化数据不宜拆分 */
 import type { ReactNode } from 'react'
-import type { AppLocale, LocaleText , TranslateParams} from '../../app/i18n'
+import type { AppLocale, MessageRef , TranslateParams} from '../../app/i18n'
 import {
   FilterSidebarSchemaRenderer,
   type FilterSidebarGroupSchema,
@@ -10,14 +10,14 @@ import { MechanicFilterFieldGroup } from './MechanicFilterFieldGroup'
 import type { MechanicOptionGroup } from './types'
 
 export interface ChampionAdditionalFilterCopy {
-  metaTitle: LocaleText
-  metaSummary: LocaleText
-  raceHint: LocaleText
-  genderHint: LocaleText
-  alignmentHint: LocaleText
-  professionHint: LocaleText
-  acquisitionHint: LocaleText
-  mechanicHint: LocaleText
+  metaTitle: MessageRef
+  metaSummary: MessageRef
+  raceHint: MessageRef
+  genderHint: MessageRef
+  alignmentHint: MessageRef
+  professionHint: MessageRef
+  acquisitionHint: MessageRef
+  mechanicHint: MessageRef
 }
 
 interface ChampionAdditionalFilterValues {
@@ -64,7 +64,7 @@ interface ChampionAdditionalFilterActions {
 
 interface ChampionAdditionalFilterSectionsProps {
   locale: AppLocale
-  t: (text: string | LocaleText, params?: TranslateParams) => string
+  t: (text: string | MessageRef, params?: TranslateParams) => string
   copy: ChampionAdditionalFilterCopy
   values: ChampionAdditionalFilterValues
   options: ChampionAdditionalFilterOptions
@@ -73,7 +73,7 @@ interface ChampionAdditionalFilterSectionsProps {
   mechanicGroupHint: (groupId: MechanicOptionGroup['id']) => ReactNode
 }
 
-function buildSectionStatus(selectedCount: number, t: (text: string | LocaleText, params?: TranslateParams) => string): string {
+function buildSectionStatus(selectedCount: number, t: (text: string | MessageRef, params?: TranslateParams) => string): string {
   return selectedCount > 0
     ? t("已选 {p0}", { p0: String(selectedCount) })
     : t("默认收起")

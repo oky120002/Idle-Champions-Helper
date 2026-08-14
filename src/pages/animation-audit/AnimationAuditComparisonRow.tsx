@@ -1,7 +1,7 @@
 /* eslint-disable max-lines -- 动画审计对比行：变体网格 + 反馈面板紧耦合，拆分会增加常见修改的打开文件数 */
 import { useState } from 'react'
 import { Pause, Play } from 'lucide-react'
-import type { AppLocale , LocaleText, TranslateParams} from '../../app/i18n'
+import type { AppLocale , MessageRef, TranslateParams} from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionAnimation } from '../../domain/types'
 import { SkelAnimCanvas } from '../../features/skelanim-player/SkelAnimCanvas'
@@ -21,7 +21,7 @@ interface AnimationAuditComparisonRowProps {
   readonly animation: ChampionAnimation
   readonly fallbackSrc: string | null
   readonly locale: AppLocale
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly feedback: AnimationAuditFeedbackDraft
   readonly onVerdictChange: (entryId: string, verdict: AnimationAuditFeedbackVerdict | null) => void
   readonly onTagToggle: (entryId: string, tag: AnimationAuditFeedbackTag) => void

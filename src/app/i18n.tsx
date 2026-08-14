@@ -15,15 +15,10 @@ import type { AppLocale, MessageRef, TranslateParams } from './i18n-messages'
 
 export type { AppLocale, Message, MessageRef, TranslateParams } from './i18n-messages'
 
-export interface LocaleText {
-  zh: string
-  en: string
-}
-
 const DEFAULT_LOCALE: AppLocale = 'zh-CN'
 const STORAGE_KEY = 'idle-champions-helper.locale'
 
-type TranslateInput = string | LocaleText | MessageRef
+type TranslateInput = string | MessageRef
 
 interface I18nContextValue {
   locale: AppLocale
@@ -52,10 +47,6 @@ function getLocaleStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
   return storage
 }
 
-export function pickLocaleText(locale: AppLocale, text: LocaleText): string {
-  return locale === 'zh-CN' ? text.zh : text.en
-}
-
 export function translateText(
   locale: AppLocale,
   text: TranslateInput,
@@ -63,10 +54,6 @@ export function translateText(
 ): string {
   if (typeof text === 'string') {
     return t(locale, text, params)
-  }
-
-  if ('zh' in text && 'en' in text) {
-    return pickLocaleText(locale, text)
   }
 
   return translateRef(locale, text)

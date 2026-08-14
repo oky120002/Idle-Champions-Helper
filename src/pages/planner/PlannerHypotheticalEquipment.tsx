@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useI18n } from '../../app/i18n'
+import { useI18n, type MessageRef } from '../../app/i18n'
 
 export interface PlannerHypotheticalEquipmentProps {
   readonly rarity: number
@@ -9,11 +9,11 @@ export interface PlannerHypotheticalEquipmentProps {
   readonly onEnchantChange: (enchant: number) => void
 }
 
-const RARITY_OPTIONS: ReadonlyArray<{ value: number; zh: string; en: string }> = [
-  { value: 1, zh: '普通', en: 'Common' },
-  { value: 2, zh: '精良', en: 'Uncommon' },
-  { value: 3, zh: '史诗', en: 'Epic' },
-  { value: 4, zh: '传说', en: 'Legendary' },
+const RARITY_OPTIONS: ReadonlyArray<{ value: number; label: MessageRef }> = [
+  { value: 1, label: { key: '普通' } },
+  { value: 2, label: { key: '精良' } },
+  { value: 3, label: { key: '史诗' } },
+  { value: 4, label: { key: '传说' } },
 ]
 
 /**
@@ -52,7 +52,7 @@ export function PlannerHypotheticalEquipment({ rarity, enchant, onRarityChange, 
           }}
         >
           {RARITY_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>{t(opt)}</option>
+            <option key={opt.value} value={opt.value}>{t(opt.label)}</option>
           ))}
         </select>
       </label>

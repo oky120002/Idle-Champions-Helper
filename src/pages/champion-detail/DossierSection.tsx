@@ -1,7 +1,7 @@
 /* eslint-disable max-lines -- 内聚的 DossierSection：4 个 dossier 专属助手函数（isJsonRecord/readConsolePortraitGraphicId/resolveDetailDataVersion/formatAbilityModifier）+ portrait IIFE 均为此组件服务，外移会破坏一跳命中率 */
 import { useState } from 'react'
 import { Images } from 'lucide-react'
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { resolveDataUrl } from '../../data/client'
 import { getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
@@ -12,7 +12,7 @@ import { formatNumber } from './detail-value-formatters'
 interface DossierSectionProps {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly heroIllustration: ChampionIllustration | null
   readonly openArtworkDialog: (skinId?: string) => void
 }

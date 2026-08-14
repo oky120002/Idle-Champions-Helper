@@ -1,10 +1,10 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { DetailField } from './detail-cards'
 import type { DetailFieldProps } from './types'
 
 type DetailOverviewSectionProps = {
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly overviewFields: DetailFieldProps[]
 }
 

@@ -1,7 +1,7 @@
-import type { TranslateParams, AppLocale, LocaleText  } from '../../app/i18n'
+import type { TranslateParams, AppLocale, MessageRef  } from '../../app/i18n'
 import type { UserImportMethod, UserCredentials } from '../../domain/types'
 
-export type UserDataPageTranslator = (text: string | LocaleText, params?: TranslateParams) => string
+export type UserDataPageTranslator = (text: string | MessageRef, params?: TranslateParams) => string
 
 export type ParseState =
   | { status: 'idle' }

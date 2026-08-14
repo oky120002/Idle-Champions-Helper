@@ -32,8 +32,8 @@ describe('buildPlannerExplanations', () => {
     )
 
     expect(lines).toHaveLength(2)
-    expect(unwrap(lines[1], 'expected line at index 1').zh).toContain('team_gold_find')
-    expect(lines.some((line) => line.zh.includes('Minsc'))).toBe(false)
+    expect(unwrap(lines[1], 'expected line at index 1')).toEqual({ key: '当前结果按全队金币收益排序，由 gold pool 聚合每位英雄的金币加成。' })
+    expect(lines.some((line) => 'params' in line && Object.values(line.params ?? {}).includes('Minsc'))).toBe(false)
   })
 
   it('carry-dps + carry + hero 信号：3 行，carry 行含英雄名、objectiveValue 与支援名', () => {
@@ -52,12 +52,10 @@ describe('buildPlannerExplanations', () => {
     )
 
     expect(lines).toHaveLength(3)
-    const carryLine = lines.find((line) => line.zh.includes('核心输出位'))
+    const carryLine = lines.find((line) => 'key' in line && line.key.startsWith('核心输出位'))
     expect(carryLine).toBeDefined()
     const carry = unwrap(carryLine, 'expected carry line')
-    expect(carry.zh).toContain('Minsc')
-    expect(carry.zh).toContain('1.50e92') // formatGameNumber(objectiveValue)
-    expect(carry.zh).toContain('Birdsong') // 支援总结
+    expect(carry).toMatchObject({ params: { p0: 'Minsc', p2: '1.50e92', p3: 'Birdsong' } })
   })
 
   it('carry-dps + 无 carry + 无信号：2 行（槽位 + 通用），无 carry 行', () => {
@@ -72,7 +70,7 @@ describe('buildPlannerExplanations', () => {
     )
 
     expect(lines).toHaveLength(2)
-    expect(lines.some((line) => line.zh.includes('核心输出位'))).toBe(false)
+    expect(lines.some((line) => 'key' in line && line.key.startsWith('核心输出位'))).toBe(false)
   })
 
   it('team-speed 模式短路：返回 2 行含速度因子，不含 carry 名', () => {
@@ -88,7 +86,7 @@ describe('buildPlannerExplanations', () => {
     )
 
     expect(lines).toHaveLength(2)
-    expect(unwrap(lines[1], 'expected line at index 1').zh).toContain('3.75')
-    expect(lines.some((line) => line.zh.includes('Deekin'))).toBe(false)
+    expect(unwrap(lines[1], 'expected line at index 1')).toMatchObject({ params: { p0: '3.75e0' } })
+    expect(lines.some((line) => 'params' in line && Object.values(line.params ?? {}).includes('Deekin'))).toBe(false)
   })
 })

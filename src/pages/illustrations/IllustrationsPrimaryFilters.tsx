@@ -4,18 +4,16 @@ import {
   ChampionPrimaryFilterSections,
   type ChampionPrimaryFilterCopy,
 } from '../../features/champion-filters/ChampionPrimaryFilterSections'
+import type { MessageRef } from '../../app/i18n'
 import type { IllustrationsPageModel, ViewFilter } from './types'
 
 const SCOPE_OPTIONS: ReadonlyArray<{
   value: ViewFilter
-  label: {
-    zh: string
-    en: string
-  }
+  label: MessageRef
 }> = [
-  { value: 'all', label: { zh: '全部', en: 'All' } },
-  { value: 'hero-base', label: { zh: '本体', en: 'Heroes' } },
-  { value: 'skin', label: { zh: '皮肤', en: 'Skins' } },
+  { value: 'all', label: { key: '全部' } },
+  { value: 'hero-base', label: { key: '本体' } },
+  { value: 'skin', label: { key: '皮肤' } },
 ]
 
 type IllustrationsPrimaryFiltersProps = {
@@ -23,34 +21,13 @@ type IllustrationsPrimaryFiltersProps = {
 }
 
 const illustrationsPrimaryFilterCopy: ChampionPrimaryFilterCopy = {
-  searchHint: {
-    zh: '支持中英混搜，也会匹配皮肤名、联动队伍、角色标签和资源 graphic id。',
-    en: 'Chinese and English queries both work here, and the search also covers skin names, affiliations, tags, and graphic ids.',
-  },
-  searchPlaceholder: {
-    zh: '搜英雄名、皮肤名、标签或联动队伍',
-    en: 'Search names, skins, tags, or affiliations',
-  },
-  seatHint: {
-    zh: '支持多选；同一维度内按或匹配。',
-    en: 'Multi-select is supported, and matches within this group use OR.',
-  },
-  roleHint: {
-    zh: '按所属英雄的定位过滤，适合先把立绘缩到输出、辅助或坦克线。',
-    en: 'Filter by the owning champion roles when you want to stay inside DPS, support, or tank lines first.',
-  },
-  affiliationHint: {
-    zh: '仍然按英雄元数据多选过滤，方便快速切到固定队伍的皮肤资产。',
-    en: 'The affiliation filter still works off champion metadata, handy for browsing one team at a time.',
-  },
-  patronHint: {
-    zh: '按赞助人合约筛选。',
-    en: 'Filter by patron eligibility.',
-  },
-  activeChipHint: {
-    zh: '点击任一条件即可单独回退对应维度；全量回退统一使用右上角的清空全部。',
-    en: 'Click any chip to clear that dimension only, then use the reset action for a full rollback.',
-  },
+  searchHint: { key: '支持中英混搜，也会匹配皮肤名、联动队伍、角色标签和资源 graphic id。' },
+  searchPlaceholder: { key: '搜英雄名、皮肤名、标签或联动队伍' },
+  seatHint: { key: '支持多选；同一维度内按或匹配。' },
+  roleHint: { key: '按所属英雄的定位过滤，适合先把立绘缩到输出、辅助或坦克线。' },
+  affiliationHint: { key: '仍然按英雄元数据多选过滤，方便快速切到固定队伍的皮肤资产。' },
+  patronHint: { key: '按赞助人合约筛选。' },
+  activeChipHint: { key: '点击任一条件即可单独回退对应维度；全量回退统一使用右上角的清空全部。' },
 }
 
 export function IllustrationsPrimaryFilters({ model }: IllustrationsPrimaryFiltersProps) {

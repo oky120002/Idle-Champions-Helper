@@ -39,48 +39,30 @@ export function buildPlannerExplanations(
   const hasHeroSignal = activeSignalKinds.has('heroDpsMultiplier')
 
   const explanations: PlannerNarrativeLine[] = [
-    {
-      zh: `当前结果先填满 ${String(placementEntries.length)} 个槽位，并确保每个 seat 只使用一名已拥有英雄。`,
-      en: `This result fills ${String(placementEntries.length)} slots first and keeps each seat assigned to only one owned champion.`,
-    },
+    { key: '当前结果先填满 {p0} 个槽位，并确保每个 seat 只使用一名已拥有英雄。', params: { p0: placementEntries.length } },
   ]
 
   if (scoringMode === 'team-gold') {
-    explanations.push({
-      zh: '当前结果按全队金币收益（team_gold_find）排序，由 gold pool 聚合每位英雄的金币加成。',
-      en: `This result ranks by team gold find, aggregating each champion's gold bonuses into the gold pool.`,
-    })
+    explanations.push({ key: '当前结果按全队金币收益排序，由 gold pool 聚合每位英雄的金币加成。' })
     return explanations
   }
 
   if (scoringMode === 'team-speed') {
-    explanations.push({
-      zh: `当前结果按区域推进效率（速度因子 ×${formatGameNumber(objectiveValue)}）排序，聚合阵型中所有速度英雄的效果。`,
-      en: `This result ranks by area progression efficiency (speed factor ×${formatGameNumber(objectiveValue)}), aggregating speed effects from all speed champions in the formation.`,
-    })
+    explanations.push({ key: '当前结果按区域推进效率排序（{p0}），聚合阵型中所有速度英雄的效果。', params: { p0: formatGameNumber(objectiveValue) } })
     return explanations
   }
 
   if (leadChampion) {
     const supportSummaryZh = supportChampions.length > 0 ? supportChampions.join('、') : '其余已拥有英雄'
-    const supportSummaryEn = supportChampions.length > 0 ? supportChampions.join(', ') : 'the remaining owned champions'
-
-    explanations.push({
-      zh: `核心输出位 ${leadChampion.name.display}（Seat ${String(leadChampion.seat)}）的 carryDps 约 ${formatGameNumber(objectiveValue)}，再用 ${supportSummaryZh} 提供加成。`,
-      en: `Carry ${leadChampion.name.display} (Seat ${String(leadChampion.seat)}) reaches ~${formatGameNumber(objectiveValue)} carryDps, with ${supportSummaryEn} providing buffs.`,
-    })
+    explanations.push({ key: '核心输出位 {p0}（Seat {p1}）的 carryDps 约 {p2}，再用 {p3} 提供加成。', params: { p0: leadChampion.name.display, p1: leadChampion.seat, p2: formatGameNumber(objectiveValue), p3: supportSummaryZh } })
   }
 
   if (hasHeroSignal) {
-    explanations.push({
-      zh: '这条推荐已经计入英雄自带倍率，carryDps 由 baseDamage × levelCurve × 加成聚合得出。',
-      en: 'This recommendation accounts for hero-specific multipliers; carryDps = baseDamage × levelCurve × aggregated buffs.',
-    })
+    explanations.push({ key: '这条推荐已经计入英雄自带倍率，carryDps 由 baseDamage × levelCurve × 加成聚合得出。' })
   } else {
-    explanations.push({
-      zh: `当前版本按 carryDps 排序候选；${scenario.scenarioWarnings.length > 0 ? '场景限制仍需你手动复核。' : '后续再逐步补进技能联动和场景机制。'}`,
-      en: `This version ranks candidates by carryDps; ${scenario.scenarioWarnings.length > 0 ? 'scenario restrictions still need manual review.' : 'skill synergies and scenario mechanics will be layered in later.'}`,
-    })
+    explanations.push({ key: scenario.scenarioWarnings.length > 0
+      ? '当前版本按 carryDps 排序候选；场景限制仍需你手动复核。'
+      : '当前版本按 carryDps 排序候选；后续再逐步补进技能联动和场景机制。' })
   }
 
   return explanations

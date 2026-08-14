@@ -1,9 +1,9 @@
-import type { LocaleText , TranslateParams} from '../../app/i18n'
+import type { MessageRef , TranslateParams} from '../../app/i18n'
 import type { MechanicOptionGroup } from './types'
 
 export function getMechanicCategoryHint(
   groupId: MechanicOptionGroup['id'],
-  t: (text: string | LocaleText, params?: TranslateParams) => string,
+  t: (text: string | MessageRef, params?: TranslateParams) => string,
 ): string {
   if (groupId === 'positional') {
     return t("前后排、相邻位或固定站位会直接影响这类英雄的发挥。")

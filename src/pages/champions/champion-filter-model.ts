@@ -2,7 +2,7 @@ import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domai
 import { getChampionTagLabel } from '../../domain/champion-tags/selectors'
 import type { ActiveFilterChip, IdLocalizedOption } from '../../features/champion-filters/types'
 import type { AppLocale } from '../../app/i18n'
-import { pickText, t } from '../../app/i18n-messages'
+import { selectLocaleText as pickText, t } from '../../app/i18n-messages'
 import type { ChampionsFilterState } from './types'
 
 interface ActiveChipOptions {

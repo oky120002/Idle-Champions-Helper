@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { useI18n } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
@@ -121,7 +121,7 @@ interface SpecializationTierRadiosProps {
   readonly tier: SpecializationTier
   readonly tierIndex: number
   readonly effective: readonly string[]
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly onSelect: (selected: string | null) => void
 }
 

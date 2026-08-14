@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import { formatNumber } from './detail-value-formatters'
 import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
-type Translation = (text: string | LocaleText, params?: TranslateParams) => string
+type Translation = (text: string | MessageRef, params?: TranslateParams) => string
 
 function computeHiddenLedgerSummary(
   ledgerRowCount: number,
@@ -84,7 +84,7 @@ type UseLedgerFilterStateOptions = {
   ledgerRows: LedgerUpgradeRow[]
   ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
   locale: 'zh-CN' | 'en-US'
-  t: (text: string | LocaleText, params?: TranslateParams) => string
+  t: (text: string | MessageRef, params?: TranslateParams) => string
 }
 
 export function useLedgerFilterState({ ledgerRows, ledgerFilterOptions, locale, t }: UseLedgerFilterStateOptions) {

@@ -335,7 +335,7 @@ describe('planner route and navigation', () => {
   it('导航包含自动计划', () => {
     const item = resolveActiveNavigationItem('/planner', null)
     expect(item.to).toBe('/planner')
-    expect(item.label.zh).toBe('自动计划')
+    expect(item.label).toEqual({ key: '自动计划' })
   })
 
   it('保持 HashRouter 兼容性', () => {

@@ -1,4 +1,4 @@
-import { useI18n } from '../../app/i18n'
+import { useI18n, type MessageRef } from '../../app/i18n'
 import type { CandidateMode } from '../../domain/planner/candidatePool'
 
 export interface PlannerCandidateModeProps {
@@ -6,9 +6,9 @@ export interface PlannerCandidateModeProps {
   readonly onChange: (mode: CandidateMode) => void
 }
 
-const MODES: Array<{ id: CandidateMode; zh: string; en: string }> = [
-  { id: 'owned-only', zh: '仅已拥有', en: 'Owned only' },
-  { id: 'all-hypothetical', zh: '全部英雄（假设基线）', en: 'All hypothetical' },
+const MODES: Array<{ id: CandidateMode; label: MessageRef }> = [
+  { id: 'owned-only', label: { key: '仅已拥有' } },
+  { id: 'all-hypothetical', label: { key: '全部英雄（假设基线）' } },
 ]
 
 /**
@@ -42,7 +42,7 @@ export function PlannerCandidateMode({ value, onChange }: PlannerCandidateModePr
                 }
               }}
             >
-              {t(mode)}
+              {t(mode.label)}
             </button>
           )
         })}

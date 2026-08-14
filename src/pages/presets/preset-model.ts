@@ -1,4 +1,4 @@
-import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { AppLocale } from '../../app/i18n'
 import { buildFormationSnapshotPrompt } from '../../data/formationPersistence'
 import { listFormationPresets } from '../../data/formationPresetStore'
 import { buildOrderedChampionsFromPlacements } from '../../domain/championPlacement'
@@ -7,16 +7,12 @@ import type { Champion, FormationLayout, FormationPreset, PresetPriority } from 
 import { PRESET_SCHEMA_VERSION } from '../formation/types'
 import type { PresetEditorState, PresetsMetrics, PresetView } from './types'
 
-export function getErrorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : '未知错误'
+export function errorMessageRef(error: unknown) {
+  return error instanceof Error && error.message !== '' ? { literal: error.message } : { key: '未知错误' }
 }
 
-// 错误信息 LocaleText：原始 error.message 不可本地化，zh/en 同串；仅兜底文案双语。
-export function errorMessageLocaleText(error: unknown): LocaleText {
-  if (error instanceof Error && error.message !== '') {
-    return { zh: error.message, en: error.message }
-  }
-  return { zh: '未知错误', en: 'Unknown error' }
+export function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : '未知错误'
 }
 
 export function formatDateTime(value: string, locale: AppLocale): string {
@@ -86,7 +82,7 @@ export async function buildPresetViews(
         dataVersion,
         formations,
         champions,
-        { zh: '方案', en: 'preset' },
+        { key: '方案' },
         PRESET_SCHEMA_VERSION,
       ),
     })),

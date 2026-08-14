@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BackNavigationIcon } from '../app/AppIcons'
-import { useI18n } from '../app/i18n'
+import { useI18n, type MessageRef } from '../app/i18n'
 import { SurfaceCardStatusStack, type SurfaceCardStatusStackItem } from '../components/SurfaceCardStatusStack'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
@@ -30,14 +30,11 @@ export function ChampionDetailPage() {
           pathname: string
           search: string
         }
-        returnLabel?: {
-          zh: string
-          en: string
-        }
+        returnLabel?: MessageRef
       }
     | null
   const backTarget = locationState?.returnTo ?? { pathname: '/champions', search: location.search }
-  const backLabel = locationState?.returnLabel ?? { zh: '返回英雄筛选', en: 'Back to champions' }
+  const backLabel = locationState?.returnLabel ?? { key: '返回英雄筛选' }
   const {
     state,
     detail,

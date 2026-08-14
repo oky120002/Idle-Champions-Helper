@@ -6,7 +6,7 @@ import type {
   ResolvedHeroAbilityProfile,
 } from '../abilities/abilityModel'
 import type { HeroAbilityPoolScope } from '../abilities/poolScope'
-import type { LocalizedUiText } from '../types'
+import type { MessageRef } from '../types'
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 
 export interface PlacementFitScorePart {
@@ -82,7 +82,7 @@ export interface PoolAggregateResult {
   /** Π(pools.poolMultiplier)；pool 间乘法。 */
   totalMultiplier: number
   scoreBreakdown: PlacementFitScorePart[]
-  warnings: LocalizedUiText[]
+  warnings: MessageRef[]
 }
 
 export interface EvaluatePlacementFitInput {

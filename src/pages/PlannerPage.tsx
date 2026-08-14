@@ -162,7 +162,7 @@ export function PlannerPage() {
                     navigate('/planner/evaluate', {
                       state: {
                         returnTo: { pathname: '/planner', search: location.search },
-                        returnLabel: { zh: '返回自动计划', en: 'Back to auto plan' },
+                        returnLabel: { key: '返回自动计划' },
                         initialVariantId: selectedVariantId,
                       },
                     }),

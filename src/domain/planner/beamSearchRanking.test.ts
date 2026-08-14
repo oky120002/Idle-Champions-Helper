@@ -71,7 +71,7 @@ describe('beam search ranking', () => {
       beamWidth: 2,
       scoreFormation: () => ({
         objectiveValue: value,
-        warnings: [{ zh: 'test warning', en: 'test warning' }],
+        warnings: [{ literal: 'test warning' }],
         carryHeroId: 'jarlaxle',
         activeSignalKinds: new Set<HeroAbilityKind>(),
         breakdown: null,
@@ -80,7 +80,7 @@ describe('beam search ranking', () => {
 
     const top = unwrap(results[0], 'expected at least one result')
     expect(top.objectiveValue.toNumber()).toBe(5)
-    expect(top.warnings).toEqual([{ zh: 'test warning', en: 'test warning' }])
+    expect(top.warnings).toEqual([{ literal: 'test warning' }])
     expect(top.carryHeroId).toBe('jarlaxle')
     expect(top.breakdown).toBeNull()
     expect(Object.keys(top.placements)).toHaveLength(slots.length)

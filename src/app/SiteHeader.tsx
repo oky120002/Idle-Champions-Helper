@@ -1,5 +1,5 @@
 import { useDataVersionState } from '../data/useDataVersionState'
-import type { LocaleText, TranslateParams, AppLocale  } from "./i18n"
+import type { MessageRef, TranslateParams, AppLocale  } from "./i18n"
 import type { AppNavigationItem } from './appNavigation'
 import { HeaderTopbar } from './HeaderTopbar'
 import { PrimaryNavigation } from './PrimaryNavigation'
@@ -10,7 +10,7 @@ interface SiteHeaderProps {
   readonly locale: AppLocale
   readonly setLocale: (locale: AppLocale) => void
   readonly pathname: string
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
 }
 
 export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, t }: SiteHeaderProps) {

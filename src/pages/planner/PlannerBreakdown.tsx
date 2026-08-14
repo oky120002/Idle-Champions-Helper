@@ -1,6 +1,6 @@
 import type { SimulationBreakdown } from '../../domain/planner/steadyStateScoring'
 import type { HeroAbilityKind } from '../../domain/abilities/abilityModel'
-import { useI18n, type LocaleText } from '../../app/i18n'
+import { useI18n, type MessageRef } from '../../app/i18n'
 import { formatFactor } from './factorFormat'
 
 /** 每位英雄最多展示的加成条目数；超出折叠为「+N」，避免几十条 signal 刷屏。 */
@@ -10,20 +10,20 @@ const SIGNAL_SHOW_LIMIT = 3
  * HeroAbilityKind → 友好标签（双语）。Record 强制全覆盖，
  * 新增 kind 时 TS 报错提醒补标签，避免技术名直出。
  */
-const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, LocaleText> = {
-  globalDpsMultiplier: { zh: '全局 DPS', en: 'Global DPS' },
-  heroDpsMultiplier: { zh: '英雄 DPS', en: 'Hero DPS' },
-  globalGoldMultiplier: { zh: '全局金币', en: 'Global gold' },
-  globalCritChance: { zh: '全局暴击率', en: 'Global crit chance' },
-  heroCritChance: { zh: '英雄暴击率', en: 'Hero crit chance' },
-  globalCritDamage: { zh: '全局暴击伤', en: 'Global crit dmg' },
-  heroCritDamage: { zh: '英雄暴击伤', en: 'Hero crit dmg' },
-  globalHealthMultiplier: { zh: '全局生命', en: 'Global health' },
-  heroHealthMultiplier: { zh: '英雄生命', en: 'Hero health' },
-  damageReduction: { zh: '伤害减免', en: 'Damage reduction' },
-  enemyVulnerability: { zh: '易伤', en: 'Vulnerability' },
-  attackSpeedMult: { zh: '攻速', en: 'Attack speed' },
-  cooldownReduction: { zh: '冷却缩减', en: 'Cooldown' },
+const SIGNAL_KIND_LABEL: Record<HeroAbilityKind, MessageRef> = {
+  globalDpsMultiplier: { key: '全局 DPS' },
+  heroDpsMultiplier: { key: '英雄 DPS' },
+  globalGoldMultiplier: { key: '全局金币' },
+  globalCritChance: { key: '全局暴击率' },
+  heroCritChance: { key: '英雄暴击率' },
+  globalCritDamage: { key: '全局暴击伤' },
+  heroCritDamage: { key: '英雄暴击伤' },
+  globalHealthMultiplier: { key: '全局生命' },
+  heroHealthMultiplier: { key: '英雄生命' },
+  damageReduction: { key: '伤害减免' },
+  enemyVulnerability: { key: '易伤' },
+  attackSpeedMult: { key: '攻速' },
+  cooldownReduction: { key: '冷却缩减' },
 }
 
 interface PlannerBreakdownProps {

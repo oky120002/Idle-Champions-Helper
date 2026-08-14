@@ -1,5 +1,5 @@
 import { ChevronDown, Clipboard, Eraser } from 'lucide-react'
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import type { AnimationAuditCopyState } from './types'
 
 interface AnimationAuditFeedbackExportPanelProps {
@@ -14,7 +14,7 @@ interface AnimationAuditFeedbackExportPanelProps {
   readonly feedbackPreviewJson: string
   readonly onCopy: () => void
   readonly onClearAll: () => void
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
 }
 
 function buildFeedbackCopyStateLabel(

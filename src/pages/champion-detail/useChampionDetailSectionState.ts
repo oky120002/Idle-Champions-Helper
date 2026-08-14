@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import type { ChampionDetail } from '../../domain/types'
 import { DETAIL_SECTION_IDS, type DetailSectionId, type DetailSectionLink, type DetailSectionProgressState } from './types'
 import { buildSectionHash, resolveActiveSectionId, resolveSectionIdFromBrowserHash, resolveSectionIdFromHashValue } from './navigation'
 
 interface Translation {
-  (text: string | LocaleText, params?: TranslateParams): string
+  (text: string | MessageRef, params?: TranslateParams): string
 }
 
 interface PageLocation {

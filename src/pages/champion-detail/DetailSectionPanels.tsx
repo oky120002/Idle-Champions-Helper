@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams } from '../../app/i18n'
+import type { MessageRef, TranslateParams } from '../../app/i18n'
 import type { ChampionDetail, ChampionSpecializationGraphic } from '../../domain/types'
 import { DetailCombatSection } from './DetailCombatSection'
 import { DetailFeatSection } from './DetailFeatSection'
@@ -19,7 +19,7 @@ import type {
 interface DetailSectionPanelsProps {
   readonly detail: ChampionDetail
   readonly locale: 'zh-CN' | 'en-US'
-  readonly t: (text: string | LocaleText, params?: TranslateParams) => string
+  readonly t: (text: string | MessageRef, params?: TranslateParams) => string
   readonly activeSectionId: DetailSectionLink['id']
   readonly effectContext: EffectContext
   readonly overviewFields: DetailFieldProps[]

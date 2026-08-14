@@ -15,7 +15,7 @@ import {
   buildPresetViews,
   buildPresetsMetrics,
   getErrorMessage,
-  errorMessageLocaleText,
+  errorMessageRef,
   parseScenarioTags,
 } from './preset-model'
 import type { PresetEditorState, PresetView, PresetsPageModel, PresetsState, StatusMessage } from './types'
@@ -89,8 +89,8 @@ export function usePresetsPageModel(): PresetsPageModel {
       }
     } catch (error: unknown) {
       setPageStatus(createErrorStatusMessage(
-        { zh: '刷新方案列表失败', en: 'Failed to refresh preset list' },
-        errorMessageLocaleText(error),
+        { key: '刷新方案列表失败' },
+        errorMessageRef(error),
       ))
     }
   }
@@ -142,14 +142,14 @@ export function usePresetsPageModel(): PresetsPageModel {
         setEditingPresetId(null)
         await refreshPresetList(
           createSuccessStatusMessage(
-            { zh: `方案“${nextPreset.name}”已更新`, en: `Preset "${nextPreset.name}" updated` },
-            { zh: '名称、备注、标签和优先级已写回本地方案库。', en: 'Name, notes, tags, and priority have been written back to the local preset library.' },
+            { literal: `方案“${nextPreset.name}”已更新` },
+            { key: '名称、备注、标签和优先级已写回本地方案库。' },
           ),
         )
       } catch (error: unknown) {
         setPageStatus(createErrorStatusMessage(
-          { zh: '更新方案失败', en: 'Failed to update preset' },
-          errorMessageLocaleText(error),
+          { key: '更新方案失败' },
+          errorMessageRef(error),
         ))
       }
     }
@@ -165,14 +165,14 @@ export function usePresetsPageModel(): PresetsPageModel {
         setEditingPresetId((current) => (current === preset.id ? null : current))
         await refreshPresetList(
           createInfoStatusMessage(
-            { zh: `方案“${preset.name}”已删除`, en: `Preset "${preset.name}" deleted` },
-            { zh: '这条命名方案已从当前浏览器的 IndexedDB 移除。', en: 'This named preset has been removed from this browser\'s IndexedDB.' },
+            { literal: `方案“${preset.name}”已删除` },
+            { key: '这条命名方案已从当前浏览器的 IndexedDB 移除。' },
           ),
         )
       } catch (error: unknown) {
         setPageStatus(createErrorStatusMessage(
-          { zh: '删除方案失败', en: 'Failed to delete preset' },
-          errorMessageLocaleText(error),
+          { key: '删除方案失败' },
+          errorMessageRef(error),
         ))
       }
     }

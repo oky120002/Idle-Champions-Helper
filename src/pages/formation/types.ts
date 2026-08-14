@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { AppLocale, LocaleText, TranslateParams } from '../../app/i18n'
+import type { AppLocale, MessageRef, TranslateParams } from '../../app/i18n'
 import type { StatusMessage as SharedStatusMessage } from '../../components/statusMessage'
 import type { FormationSnapshotPrompt } from '../../data/formationPersistence'
 import type {
@@ -61,7 +61,7 @@ export interface SelectedChampionPlacement {
 }
 
 export interface FormationPageTranslator {
-  (text: string | LocaleText, params?: TranslateParams): string
+  (text: string | MessageRef, params?: TranslateParams): string
 }
 
 export type DraftPrompt = FormationSnapshotPrompt<FormationDraft>

@@ -1,4 +1,4 @@
-import type { LocaleText, TranslateParams, AppLocale  } from '../../app/i18n'
+import type { MessageRef, TranslateParams, AppLocale  } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
 import { buildUpgradeCategoryMeta, buildUpgradePresentation } from './effect-model'
@@ -95,7 +95,7 @@ export function buildLedgerFilterOptions(
   })
 }
 
-type Translation = (text: string | LocaleText, params?: TranslateParams) => string
+type Translation = (text: string | MessageRef, params?: TranslateParams) => string
 
 function buildOptionalDateFields(detail: ChampionDetail, locale: AppLocale, t: Translation): DetailFieldProps[] {
   const fields: DetailFieldProps[] = []

@@ -1,6 +1,6 @@
 import type { AreaEstimationResult } from '../simulator/areaEstimation'
 import type { HeroAbilityKind } from '../abilities/abilityModel'
-import type { LocalizedUiText } from '../types'
+import type { MessageRef } from '../types'
 import { compareGameNumbers, type GameNumberValue } from '../gameNumber'
 import type { SpeedBreakdown } from './speedScoring'
 import type { ScoringResult, SimulationBreakdown } from './steadyStateScoring'
@@ -17,7 +17,7 @@ export interface BeamSearchInput {
 export interface BeamSearchResult {
   objectiveValue: GameNumberValue
   placements: Record<string, string>
-  warnings: LocalizedUiText[]
+  warnings: MessageRef[]
   carryHeroId: string | null
   activeSignalKinds: Set<HeroAbilityKind>
   areaEstimate?: AreaEstimationResult | null

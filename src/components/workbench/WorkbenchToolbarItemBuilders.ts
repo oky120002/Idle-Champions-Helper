@@ -1,10 +1,10 @@
 import { Eye, EyeOff, Shuffle, Link2  } from 'lucide-react'
 import { createElement } from 'react'
-import type { TranslateParams, LocaleText  } from '../../app/i18n'
+import type { TranslateParams, MessageRef  } from '../../app/i18n'
 import type { WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from './useWorkbenchShareLink'
 
-type WorkbenchTranslate = (text: string | LocaleText, params?: TranslateParams) => string
+type WorkbenchTranslate = (text: string | MessageRef, params?: TranslateParams) => string
 
 interface WorkbenchBadgeItemOptions {
   id: string

@@ -1,11 +1,11 @@
-import { useI18n, type LocaleText, type TranslateParams } from '../../app/i18n'
+import { useI18n, type MessageRef, type TranslateParams } from '../../app/i18n'
 import type { PlannerScenarioRecord } from './plannerScenarioModel'
 
 interface PlannerScenarioDetailProps {
   readonly record: PlannerScenarioRecord | null
 }
 
-type Translate = (text: string | LocaleText, params?: TranslateParams) => string
+type Translate = (text: string | MessageRef, params?: TranslateParams) => string
 
 function renderRewardsAndMechanics(record: PlannerScenarioRecord, t: Translate) {
   return (

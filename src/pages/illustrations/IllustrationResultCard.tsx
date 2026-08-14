@@ -42,7 +42,7 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
           pathname: '/illustrations',
           search: location.search,
         },
-        returnLabel: { zh: '返回立绘图鉴', en: 'Back to illustrations' },
+        returnLabel: { key: '返回立绘图鉴' },
       }}
       aria-label={t("查看英雄：{p0}（{p1}）", { p0: championPrimaryName, p1: title.primary })}
       onMouseEnter={activatePreview}

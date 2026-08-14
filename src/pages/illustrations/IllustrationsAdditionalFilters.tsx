@@ -10,32 +10,14 @@ type IllustrationsAdditionalFiltersProps = {
 }
 
 const illustrationsAdditionalFilterCopy: ChampionAdditionalFilterCopy = {
-  metaTitle: { zh: '玩法标签', en: 'Gameplay tags' },
-  metaSummary: { zh: '职业 / 获取方式 / 特殊机制', en: 'Profession / availability / mechanics' },
-  raceHint: {
-    zh: '支持多选；适合快速收窄到特定种族英雄的全部立绘。',
-    en: 'Multi-select is supported for quickly narrowing down to a specific race’s artwork.',
-  },
-  genderHint: {
-    zh: '支持多选；用英雄元数据交叉过滤皮肤池。',
-    en: 'Multi-select is supported for intersecting the skin pool with champion metadata.',
-  },
-  alignmentHint: {
-    zh: '支持多选；适合快速抽出守序、混乱或善恶阵营相关的立绘集合。',
-    en: 'Multi-select is supported for gathering lawful, chaotic, or moral alignment slices.',
-  },
-  professionHint: {
-    zh: '支持多选；适合快速看同职业英雄在立绘上的风格分布。',
-    en: 'Multi-select is supported for browsing how one class spreads across the art catalog.',
-  },
-  acquisitionHint: {
-    zh: '支持多选；区分核心、常驻、活动或 Tales 等来源时会更顺手。',
-    en: 'Multi-select is supported when you want to separate core, evergreen, event, or Tales sources.',
-  },
-  mechanicHint: {
-    zh: '这里保留会直接影响阵型取舍的玩法标签，方便看某类特化英雄的全部形象资源。',
-    en: 'These are the mechanics that most directly affect formation choices, which makes them useful for slicing the art catalog too.',
-  },
+  metaTitle: { key: '玩法标签' },
+  metaSummary: { key: '职业 / 获取方式 / 特殊机制' },
+  raceHint: { key: '支持多选；适合快速收窄到特定种族英雄的全部立绘。' },
+  genderHint: { key: '支持多选；用英雄元数据交叉过滤皮肤池。' },
+  alignmentHint: { key: '支持多选；适合快速抽出守序、混乱或善恶阵营相关的立绘集合。' },
+  professionHint: { key: '支持多选；适合快速看同职业英雄在立绘上的风格分布。' },
+  acquisitionHint: { key: '支持多选；区分核心、常驻、活动或 Tales 等来源时会更顺手。' },
+  mechanicHint: { key: '这里保留会直接影响阵型取舍的玩法标签，方便看某类特化英雄的全部形象资源。' },
 }
 
 export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditionalFiltersProps) {
