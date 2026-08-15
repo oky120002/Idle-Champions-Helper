@@ -529,7 +529,11 @@ function parseColumnSpan(token: string | undefined, fallback: number): number {
 }
 
 function includesReferenceHero(sentence: string): boolean {
-  return /\bonly\s+[^.\r\n]+?\s+and\s+(?:the\s+)?champions\b/i.test(sentence)
+  const lower = sentence.toLowerCase()
+  const onlyIndex = lower.indexOf('only ')
+  if (onlyIndex < 0) return false
+  return lower.indexOf(' and champions', onlyIndex) >= 0
+    || lower.indexOf(' and the champions', onlyIndex) >= 0
 }
 
 /** 按优先级尝试匹配模式；返回模式 + 名字提取正则。 */

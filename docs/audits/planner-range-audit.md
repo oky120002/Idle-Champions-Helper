@@ -22,6 +22,7 @@
 | 高 | 伤害来源模式默认把参考英雄自身和所在列整体放入有效集合，和原文“adjacent / columns in front”不一致 | 增加 `includeReference`；前后列改为严格前/后列；新增 parser、推荐引擎和 UI 回归；重建 1424 个场景产物 |
 | 中 | 已有拓扑 BFS 未接入 restriction 的 `within 2 slots`，Qillek、Beadle、Shadowheart 退化为 warning | 新增 `within-slots` + `slotSpan`，复用 `computeSlotDistance`；真实产物解析出 3 条 |
 | 中 | `take up three spots` 与“join formation in slots 5 and 6”漏掉确定占格 | 扩展 `spots` 与指定 slots 解析；真实产物 v1088=2、v1219=3、v1337=3 |
+| 低 | 发布前 lint 门禁发现新增引用识别正则存在超线性回溯风险，位置校验函数复杂度超过阈值 | 改用有界字符串定位识别“Only … and Champions”，拆分位置模式判定；定向 parser/planner 测试 129/129 通过 |
 
 ## 产物核验
 

@@ -736,6 +736,58 @@ function applyAugmentsAndBuildRules(
   return { heroById, heroSeats, heroLevels, scenarioVariantRules }
 }
 
+function matchesWithinSlotsPattern(
+  pattern: NonNullable<ResolvedPlannerScenarioModel['damageSourcePattern']>,
+  scenario: ResolvedPlannerScenarioModel,
+  carrySlotId: string,
+  refSlotId: string,
+): boolean {
+  const distance = computeSlotDistance(scenario, refSlotId, carrySlotId)
+  return distance !== null
+    && distance <= (pattern.slotSpan ?? 2)
+    && (pattern.includeReference || distance > 0)
+}
+
+function matchesColumnPattern(
+  pattern: NonNullable<ResolvedPlannerScenarioModel['damageSourcePattern']>,
+  carrySlotId: string,
+  refSlotId: string,
+  carrySlot: ResolvedPlannerScenarioModel['slotTopology'][number],
+  refSlot: ResolvedPlannerScenarioModel['slotTopology'][number],
+): boolean {
+  const span = pattern.columnSpan ?? (pattern.kind === 'front-columns' ? 2 : 1)
+  return (pattern.includeReference && carrySlotId === refSlotId)
+    || (pattern.kind === 'front-columns'
+      ? carrySlot.column >= Math.max(1, refSlot.column - span) && carrySlot.column < refSlot.column
+      : carrySlot.column > refSlot.column && carrySlot.column <= refSlot.column + span)
+}
+
+function matchesDamageSourcePattern(
+  pattern: NonNullable<ResolvedPlannerScenarioModel['damageSourcePattern']>,
+  scenario: ResolvedPlannerScenarioModel,
+  carrySlotId: string,
+  refSlotId: string,
+  carrySlot: ResolvedPlannerScenarioModel['slotTopology'][number],
+  refSlot: ResolvedPlannerScenarioModel['slotTopology'][number],
+): boolean {
+  switch (pattern.kind) {
+    case 'same-column':
+      return carrySlot.column === refSlot.column
+    case 'adjacent':
+      return refSlot.adjacentSlotIds.includes(carrySlotId)
+        || (pattern.includeReference && carrySlotId === refSlotId)
+    case 'not-adjacent':
+      return carrySlotId === refSlotId
+        ? pattern.includeReference
+        : !refSlot.adjacentSlotIds.includes(carrySlotId)
+    case 'within-slots':
+      return matchesWithinSlotsPattern(pattern, scenario, carrySlotId, refSlotId)
+    case 'front-columns':
+    case 'behind-columns':
+      return matchesColumnPattern(pattern, carrySlotId, refSlotId, carrySlot, refSlot)
+  }
+}
+
 /**
  * 检查 carry 是否在可造伤害位置（系统解析的位置限制模式）。
  * 模式依赖参考英雄的 placement，动态求值。参考英雄/carry 未放置时返回 true（跳过检查）。
@@ -757,33 +809,7 @@ function isCarryInDamageValidSlot(
   const refSlot = topology.find((s) => s.slotId === refSlotId)
   if (!carrySlot || !refSlot) return true
 
-  switch (pattern.kind) {
-    case 'same-column':
-      return carrySlot.column === refSlot.column
-    case 'adjacent':
-      return pattern.includeReference
-        ? carrySlotId === refSlotId || refSlot.adjacentSlotIds.includes(carrySlotId)
-        : refSlot.adjacentSlotIds.includes(carrySlotId)
-    case 'not-adjacent':
-      return carrySlotId === refSlotId
-        ? pattern.includeReference
-        : !refSlot.adjacentSlotIds.includes(carrySlotId)
-    case 'within-slots': {
-      const distance = computeSlotDistance(scenario, refSlotId, carrySlotId)
-      if (distance === null || distance > (pattern.slotSpan ?? 2)) return false
-      return pattern.includeReference || distance > 0
-    }
-    case 'front-columns': {
-      const span = pattern.columnSpan ?? 2
-      return (pattern.includeReference && carrySlotId === refSlotId)
-        || (carrySlot.column >= Math.max(1, refSlot.column - span) && carrySlot.column < refSlot.column)
-    }
-    case 'behind-columns': {
-      const span = pattern.columnSpan ?? 1
-      return (pattern.includeReference && carrySlotId === refSlotId)
-        || (carrySlot.column > refSlot.column && carrySlot.column <= refSlot.column + span)
-    }
-  }
+  return matchesDamageSourcePattern(pattern, scenario, carrySlotId, refSlotId, carrySlot, refSlot)
 }
 
 /**
