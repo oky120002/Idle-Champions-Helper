@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { localizedTextSchema } from './common.ts'
+import { localizedTextSchema, messageRefSchema } from './common.ts'
 
 const localizedText = localizedTextSchema
 
@@ -60,11 +60,6 @@ const attributeRequirementSchema = z.object({
   operator: z.enum(['>=', '<=']),
   value: z.number().int(),
 })
-
-const messageRefSchema = z.union([
-  z.object({ key: z.string(), params: z.record(z.string(), z.unknown()).optional() }).loose(),
-  z.object({ literal: z.string() }).loose(),
-])
 
 export const plannerScenarioItemSchema = z
   .object({

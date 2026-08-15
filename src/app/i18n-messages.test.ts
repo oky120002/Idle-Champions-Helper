@@ -25,6 +25,8 @@ describe('central i18n dictionary', () => {
   it('translates dictionary entries and interpolates parameters', () => {
     expect(t('en-US', '槽位 {p0}', { p0: 's1' })).toBe('Slot s1')
     expect(t('zh-CN', '槽位 {p0}', { p0: 's1' })).toBe('槽位 s1')
+    expect(translateRef('en-US', { key: '当前场景含计时或点击限制，攻速与持续输出价值提升。' }))
+      .toBe('This scenario has a timer or click-damage limit; attack speed and sustained damage are more valuable.')
     expect(translateRef('en-US', { literal: 'raw warning' })).toBe('raw warning')
     expect(
       translateRef('en-US', {

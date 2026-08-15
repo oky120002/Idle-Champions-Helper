@@ -38,6 +38,21 @@
   }
 }
 
+@media (min-width: 961px) {
+  .site-header--subpage.site-header--condensed .site-nav {
+    min-width: 0;
+  }
+
+  .site-header--subpage.site-header--condensed .nav-link {
+    min-width: 0;
+    padding-inline: 0.3rem;
+  }
+
+  html[data-ui-locale='en-US'] .site-header--subpage.site-header--condensed .nav-link {
+    min-width: 0;
+  }
+}
+
 @media (max-width: 1120px) {
   .site-nav {
     gap: 0.28rem;

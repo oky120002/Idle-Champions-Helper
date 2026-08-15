@@ -48,6 +48,7 @@ const EN_ADDITIONAL_SLOT_RE = /\b(?:one more|an additional|another|additional) s
 const EN_OCCUPANCY_ACTION_RE = /\b(?:taken up|occupied|cursed)\b/i
 const EN_TAKES_UP_ADDITIONAL_SLOT_RE = /\b(?:takes?|taking) up (?:one more|an additional|another|a) slots?\b/i
 const EN_INCREMENTAL_ENTITY_SEMANTICS_RE = /\banother friendly\b[^.\n]{0,80}\b(?:appears?|joins?|takes? up)\b/i
+const EN_INCREMENTAL_ENTITY_JOIN_RE = /\b(?:another|a new|an additional|one more)\s+[^.\n]{1,80}\bjoins?\s+(?:your|the)\s+(?:team|formation|party|train)\b/i
 
 function isEnIncrementalSlotOccupancy(text: string): boolean {
   if (!EN_AREA_CYCLE_RE.test(text)) {
@@ -58,7 +59,8 @@ function isEnIncrementalSlotOccupancy(text: string): boolean {
   return clauses.some((clause) => (
     (EN_ADDITIONAL_SLOT_RE.test(clause) && EN_OCCUPANCY_ACTION_RE.test(clause)) ||
     EN_TAKES_UP_ADDITIONAL_SLOT_RE.test(clause) ||
-    EN_INCREMENTAL_ENTITY_SEMANTICS_RE.test(clause)
+    EN_INCREMENTAL_ENTITY_SEMANTICS_RE.test(clause) ||
+    EN_INCREMENTAL_ENTITY_JOIN_RE.test(clause)
   ))
 }
 

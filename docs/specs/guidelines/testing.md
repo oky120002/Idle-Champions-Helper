@@ -60,3 +60,8 @@
 - 外部游戏数据（CNE definitions 归一化产物：`champions`/`adventures`/`patrons`/`variants`/`champion-details` 等）→ 对象 `.passthrough()`，只钉消费方依赖的核心字段，透传其余字段，不耦合上游字段增减。
 - 项目自著内部数据（`semantic-overrides`/`manual-overrides`/`champion-animation-idle-overrides`/`resource-sync-state`/`version` 等）→ `.strict()`，白名单校验，未知字段即报错，防内部契约漂移。
 - schema 放 `scripts/data/*-schema.ts`，co-located 测试 `*-schema.test.ts`（合法样本 + 类型/枚举/必填/nullable 变异拦截）；CI 经 `npm run data:validate-schema`（`validate-data-schemas.ts`）在真实产物上校验，坏数据非零退出。
+
+## 9. E2E 本地数据夹具
+
+- IndexedDB 夹具必须先导航到同源静态数据页，再用 `page.evaluate` 完成删除/写入，最后才进入应用路由；异步 `addInitScript` 不提供应用读取前的完成屏障。
+- 夹具对象必须与运行时消费的领域 fixture 保持完整，不能只填 schema 当前抽查字段；planner 的 `OwnedHero` 至少包含 `legendaryBySlot` 等运行时会遍历的集合。

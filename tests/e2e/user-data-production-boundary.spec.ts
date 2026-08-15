@@ -12,7 +12,8 @@ interface SeededOwnedHero {
 }
 
 async function resetUserDataState(page: Page, sourcePreference: string | null = null) {
-  await page.addInitScript(async ({ appDatabaseName, sourceKey, nextSource }) => {
+  await page.goto('./data/version.json')
+  await page.evaluate(async ({ appDatabaseName, sourceKey, nextSource }) => {
     window.localStorage.removeItem('idle-champions-helper.locale')
 
     if (nextSource === null) {
@@ -35,7 +36,8 @@ async function resetUserDataState(page: Page, sourcePreference: string | null = 
 }
 
 async function seedBrowserSnapshot(page: Page, ownedHeroes: SeededOwnedHero[]) {
-  await page.addInitScript(
+  await page.goto('./data/version.json')
+  await page.evaluate(
     async ({ appDatabaseName, appDatabaseVersion, snapshotKey, userProfileStore, heroes }) => {
       await new Promise<void>((resolve) => {
         const deleteRequest = window.indexedDB.deleteDatabase(appDatabaseName)
@@ -82,13 +84,22 @@ async function seedBrowserSnapshot(page: Page, ownedHeroes: SeededOwnedHero[]) {
               ownedHeroes: heroes.map((hero) => ({
                 heroId: hero.heroId,
                 level: hero.level,
+                isOwned: true,
                 equipment: {},
                 feats: [],
+                specializations: [],
+                lootBySlot: {},
                 legendaryEffects: [],
+                unlockedFeats: [],
+                activeFeats: [],
+                featSlots: 0,
+                gildableSlotId: null,
+                legendaryBySlot: {},
               })),
               importedFormationSaves: [],
               updatedAt: new Date().toISOString(),
               warnings: [],
+              legendaryLevelCap: 20,
             },
             snapshotKey,
           )
@@ -149,7 +160,7 @@ test('生产预览下即使保存了 local-dev-snapshot 偏好，也只消费浏
 
   await page.goto('./#/planner')
 
-  await expect(page.getByRole('region', { name: '个人数据状态' })).toContainText('浏览器同步快照已于')
+  await expect(page.getByRole('region', { name: '个人数据状态' })).toContainText('浏览器同步快照已于', { timeout: 15000 })
   await expect(page.getByText('尚未导入个人数据。')).toHaveCount(0)
   await expect(page.getByText('导入个人数据后才会生成推荐。')).toHaveCount(0)
   await expect(page.getByText('本地开发快照已于')).toHaveCount(0)

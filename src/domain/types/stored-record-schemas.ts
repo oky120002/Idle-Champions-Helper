@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { messageRefSchema } from './common'
+
 /**
  * IndexedDB 存储记录读出契约 schema（4 store：userProfileSnapshot / formationPreset /
  * formationDraft / heroAbilityOverride）。
@@ -39,12 +41,7 @@ export const ownedHeroItemSchema = z
   })
   .loose()
 
-const storedMessageRefSchema = z.union([
-  z.object({ literal: z.string() }).loose(),
-  z.object({ key: z.string(), params: z.record(z.string(), z.unknown()).optional() }).loose(),
-])
-
-const storedWarningSchema = z.union([z.string(), storedMessageRefSchema]).transform((warning) => {
+const storedWarningSchema = z.union([z.string(), messageRefSchema]).transform((warning) => {
   return typeof warning === 'string' ? { literal: warning } : warning
 })
 

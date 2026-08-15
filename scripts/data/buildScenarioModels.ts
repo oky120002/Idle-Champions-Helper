@@ -89,12 +89,12 @@ function warningRef(text: string): MessageRef {
     return { key: '当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。', params: { p0: Number(slotCount[1]) } }
   }
 
-  const unmodeled = /^含未建模特殊机制（请人工评估）：(.+)（含特殊机制，请人工评估对阵型的影响）$/.exec(text)
+  const unmodeled = /^含未建模特殊机制（请人工评估）：([\s\S]+)（含特殊机制，请人工评估对阵型的影响）$/.exec(text)
   if (unmodeled) {
     return { key: '含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）', params: { p0: unmodeled[1] ?? '' } }
   }
 
-  const unparsed = /^未解析 restriction：(.*)（含特殊机制，请人工评估对阵型的影响）$/.exec(text)
+  const unparsed = /^未解析 restriction：([\s\S]*)（含特殊机制，请人工评估对阵型的影响）$/.exec(text)
   if (unparsed) {
     return { key: '未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）', params: { p0: unparsed[1] ?? '' } }
   }

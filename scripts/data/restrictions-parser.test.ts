@@ -238,6 +238,14 @@ describe('parseRestrictions — EN 递增占格检测', () => {
     expect(result.warnings).toHaveLength(1)
   })
 
+  it('v18 风格：区域周期后 a new animal joins your team → 不产固定格数并 warning', () => {
+    const result = parseRestrictions([r(
+      'Friendly animals take up slots in your formation. You start out with one slot taken up by a friendly animal, then every 50 areas a new animal joins your team, until there are 6 animals.',
+    )])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings).toHaveLength(1)
+  })
+
   it('仅有 every N areas 不足以判定递增占格 → 仍 warning', () => {
     const result = parseRestrictions([r('Every 50 areas, the enemies gain a new ability.')])
     expect(result.lockedSlotCount).toBe(0)

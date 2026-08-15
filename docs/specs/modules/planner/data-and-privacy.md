@@ -56,8 +56,9 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 `ResolvedPlannerScenarioModel`（`src/domain/planner/plannerModel.ts`）：
 
 - `variantId`、`scenarioRef`、`name`、`formationLayoutId`、`objectiveArea`
-- `slotTopology`（槽位 id / row / column / adjacentSlotIds）、`forcedHeroes`、`lockedSlots`、`occupiedSlotCount`
-- `allowedHeroes` / `allowedTagExpression`（白名单）、`enemyTypes`（vulnerability 条件匹配）、`scenarioWarnings`
+- `slotTopology`（槽位 id / row / column / adjacentSlotIds）、`forcedHeroes`、`occupiedSlotCount`
+- `allowedHeroes` / `allowedTagExpression`（白名单）、`enemyTypes`（vulnerability 条件匹配）、`damageSourcePattern`
+- `scenarioWarnings`（`MessageRef[]`；稳定诊断使用中央字典 key，外部 restriction 原文使用 `literal`）
 
 `PlannerResult`（`src/domain/planner/recommendationTypes.ts`）：
 

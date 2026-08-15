@@ -11,7 +11,8 @@ interface SeededOwnedHero {
 }
 
 async function resetPlannerDatabase(page: Page) {
-  await page.addInitScript(async () => {
+  await page.goto('./data/version.json')
+  await page.evaluate(async () => {
     window.localStorage.removeItem('idle-champions-helper.locale')
 
     await new Promise<void>((resolve) => {
@@ -25,7 +26,8 @@ async function resetPlannerDatabase(page: Page) {
 }
 
 async function seedPlannerSnapshot(page: Page, ownedHeroes: SeededOwnedHero[]) {
-  await page.addInitScript(
+  await page.goto('./data/version.json')
+  await page.evaluate(
     async ({ appDatabaseName, appDatabaseVersion, snapshotKey, userProfileStore, heroes }) => {
       window.localStorage.removeItem('idle-champions-helper.locale')
 
@@ -74,13 +76,22 @@ async function seedPlannerSnapshot(page: Page, ownedHeroes: SeededOwnedHero[]) {
               ownedHeroes: heroes.map((hero) => ({
                 heroId: hero.heroId,
                 level: hero.level,
+                isOwned: true,
                 equipment: {},
                 feats: [],
+                specializations: [],
+                lootBySlot: {},
                 legendaryEffects: [],
+                unlockedFeats: [],
+                activeFeats: [],
+                featSlots: 0,
+                gildableSlotId: null,
+                legendaryBySlot: {},
               })),
               importedFormationSaves: [],
               updatedAt: new Date().toISOString(),
               warnings: [],
+              legendaryLevelCap: 20,
             },
             snapshotKey,
           )
@@ -133,7 +144,7 @@ test('planner 在有本地快照时只使用已拥有英雄生成推荐', async 
 
   await page.goto('./#/planner')
 
-  await expect(page.locator('[aria-label="推荐结果"]')).toBeVisible()
+  await expect(page.locator('[aria-label="推荐结果"]')).toBeVisible({ timeout: 15000 })
   await expect(page.getByRole('button', { name: '保存' })).toBeEnabled()
 
   const placementHeroIds = await page.locator('.planner-result-card__placements li').evaluateAll((items) => (

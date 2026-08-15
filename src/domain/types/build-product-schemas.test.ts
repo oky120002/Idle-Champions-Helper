@@ -51,6 +51,17 @@ describe('planner scenario build-product schema', () => {
     expect(plannerScenarioItemSchema.safeParse(invalid).success).toBe(false)
   })
 
+  it('允许嵌套消息引用，但拒绝不可渲染的参数值', () => {
+    expect(plannerScenarioItemSchema.safeParse({
+      ...validScenario,
+      scenarioWarnings: [{ key: '外层 {p0}', params: { p0: { key: '内层' } } }],
+    }).success).toBe(true)
+    expect(plannerScenarioItemSchema.safeParse({
+      ...validScenario,
+      scenarioWarnings: [{ key: '异常 {p0}', params: { p0: [] } }],
+    }).success).toBe(false)
+  })
+
   it('允许没有目标区的场景使用 null', () => {
     const result = plannerScenarioItemSchema.safeParse({ ...validScenario, objectiveArea: null })
 

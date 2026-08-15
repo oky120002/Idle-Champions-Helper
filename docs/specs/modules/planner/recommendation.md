@@ -14,7 +14,7 @@
 - 推算引擎不直接读取零散的 `champion-details`、`variants`、`formations` 和原始 effect string 做现场聚合，而是统一消费 merge 后的 planner model。
 - 官方归一化 hero ability model：由官方数据获取流水线新增一步「阵型推荐归一化」，产出到 `public/data/v1/hero-abilities.json` 与 `public/data/v1/scenarios.json`。
 - `hero-abilities.json`：每个英雄的推荐专用画像，包含 `baseDamage` / `costCurves`、support 语义、位置条件、标签条件、增伤方向、unsupported 缺口、`gainProfile`（build 期预算的各维度收益，供计算模式排序裁剪候选）。
-- `scenarios.json`：每个 scenario 的布局、锁槽、强制 / 禁用英雄、拓扑关系、目标区域等推荐输入。
+- `scenarios.json`：每个 scenario 的布局、非英雄占格、强制 / 白名单英雄、拓扑关系、目标区域、敌人类型和位置限制等推荐输入。
 - 仓库语义补丁：`scripts/data/semantic-overrides.json`，补官方自动解析拿不到或不稳定的语义，例如顶部 / 底部、前后、同列、身后、职业 / 性别 / 阵营 / 角色条件、特殊激活条件。
 - 浏览器本地 override：IndexedDB store `heroAbilityOverrides`，按英雄全局存储，只允许覆盖语义字段；不改原始官方英雄详情，不改公共静态产物，不进生产构建。
 - 固定优先级：`官方 planner model < 仓库语义补丁 < 浏览器本地 override`。
@@ -26,7 +26,7 @@
 - `carrySignals`：英雄自身提高自己输出的规则（仅 supportHero===carryHero 时计入）。
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。
 - `sourceBreakdown`：记录每条语义来自官方解析、仓库补丁还是本地 override。
-- `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`lockedSlots`、`scenarioWarnings`。
+- `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`occupiedSlotCount`、`damageSourcePattern`、`scenarioWarnings`。
 - 不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
 - `PoolAggregateResult` 表示「某 support 站在某槽位时，对当前 C 位的加成贡献」，至少包含：`heroId`、`slotId`、`carryHeroId`、`carrySlotId`、`pools`（按 `dimension:scope` 分池）、`totalMultiplier`、`scoreBreakdown`、`warnings`。
 

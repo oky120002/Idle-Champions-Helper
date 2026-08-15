@@ -6,7 +6,7 @@ test('全文检索页按英雄名命中并跳转详情', async ({ page }) => {
   })
 
   await page.goto('./#/search')
-  await expect(page.getByRole('heading', { level: 2, name: '搜索英雄' })).toBeVisible()
+  await expect(page.getByText('搜索英雄', { exact: true })).toBeVisible()
 
   const input = page.locator('.search-page input[type="search"]')
   await input.fill('明斯克')

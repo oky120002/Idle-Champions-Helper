@@ -1,6 +1,9 @@
 /* eslint-disable max-lines -- 中央字典单文件内聚，拆分会降低一跳命中率 */
+import type { MessageRef as DomainMessageRef } from '../domain/types/common'
+
 export type AppLocale = 'zh-CN' | 'en-US'
 
+export type MessageRef = DomainMessageRef
 export type TranslateParams = Record<string, string | number | MessageRef>
 
 export interface Message {
@@ -8,11 +11,23 @@ export interface Message {
   zh?: string
 }
 
-export type MessageRef =
-  | { key: string; params?: TranslateParams }
-  | { literal: string }
+const DEV_MESSAGES: Record<string, Message> = import.meta.env.DEV
+  ? {
+      "本地开发快照": { en: "Local dev snapshot" },
+      "当前开发数据源：": { en: "Current dev data source: " },
+      "正在刷新本地开发快照…": { en: "Refreshing local dev snapshot…" },
+      "开发数据源": { en: "Dev data source" },
+      "使用浏览器快照": { en: "Use browser snapshot" },
+      "使用本地开发快照": { en: "Use local dev snapshot" },
+      "刷新本地开发快照": { en: "Refresh local dev snapshot" },
+      "仅本地开发：浏览器同步快照与本地开发快照必须分离。本地开发快照只读使用，不会覆盖浏览器 IndexedDB。": { en: "Dev only: browser sync snapshots and local dev snapshots must stay separate. The local dev snapshot is read-only and never overwrites the browser IndexedDB." },
+      "刷新动作会使用当前机器的私有环境变量抓取官方只读数据，并只写入被忽略的本地快照目录。": { en: "Refreshing uses this machine’s private environment variables to fetch official read-only data, writing only to the ignored local snapshot directory." },
+      "当前选中源拥有英雄 {p0} 个；已导入阵型 {p1} 个。": { en: "Current source has {p0} owned heroes; {p1} imported formations." },
+    }
+  : {}
 
 export const MESSAGES: Record<string, Message> = {
+  ...DEV_MESSAGES,
   "跟随系统": { en: "System" },
   "深色": { en: "Dark" },
   "浅色": { en: "Light" },
@@ -315,6 +330,7 @@ export const MESSAGES: Record<string, Message> = {
   "正在加载场景与英雄数据…": { en: "Loading scenarios and champions…" },
   "导入个人数据后才会生成推荐。": { en: "Import local profile data before generating recommendations." },
   "当前场景没有匹配的阵型布局。": { en: "No matching formation layout exists for this scenario." },
+  "当前场景含计时或点击限制，攻速与持续输出价值提升。": { en: "This scenario has a timer or click-damage limit; attack speed and sustained damage are more valuable." },
   "formation {p0} missing scenario reference": { en: "formation {p0} is missing a scenario reference" },
   "getuserdetails payload missing heroes array": { en: "getuserdetails payload is missing the heroes array" },
   "getcampaigndetails payload missing campaigns array": { en: "getcampaigndetails payload is missing the campaigns array" },
@@ -779,13 +795,6 @@ export const MESSAGES: Record<string, Message> = {
   "保存修改": { en: "Save changes" },
   "取消编辑": { en: "Cancel edit" },
   "浏览器同步快照": { en: "Browser sync snapshot" },
-  "本地开发快照": { en: "Local dev snapshot" },
-  "当前开发数据源：": { en: "Current dev data source: " },
-  "正在刷新本地开发快照…": { en: "Refreshing local dev snapshot…" },
-  "开发数据源": { en: "Dev data source" },
-  "使用浏览器快照": { en: "Use browser snapshot" },
-  "使用本地开发快照": { en: "Use local dev snapshot" },
-  "刷新本地开发快照": { en: "Refresh local dev snapshot" },
   "导入工作台": { en: "Import workbench" },
   "先在本地浏览器里验证导入方式": { en: "Validate import modes inside the local browser first" },
   "读取并校验": { en: "Parse and validate" },
@@ -951,9 +960,6 @@ export const MESSAGES: Record<string, Message> = {
   "优先用战役和关键词缩小范围，只保留你当前真正在比较的目标。": { en: "Use campaigns and keywords to narrow the pool before comparing the scenarios that matter." },
   "支持战役、关卡名、目标区、限制条件组合搜索": { en: "Search by campaign, scenario, objective area, or restrictions" },
   "当前还没有备注，可在这里补充这套阵容适合的目标和限制。": { en: "There are no notes yet. Add what this formation is for and what constraints matter." },
-  "仅本地开发：浏览器同步快照与本地开发快照必须分离。本地开发快照只读使用，不会覆盖浏览器 IndexedDB。": { en: "Dev only: browser sync snapshots and local dev snapshots must stay separate. The local dev snapshot is read-only and never overwrites the browser IndexedDB." },
-  "刷新动作会使用当前机器的私有环境变量抓取官方只读数据，并只写入被忽略的本地快照目录。": { en: "Refreshing uses this machine’s private environment variables to fetch official read-only data, writing only to the ignored local snapshot directory." },
-  "当前选中源拥有英雄 {p0} 个；已导入阵型 {p1} 个。": { en: "Current source has {p0} owned heroes; {p1} imported formations." },
   "当前只在浏览器本地解析 `user_id` 和 `device_hash/hash`，不会出站。": { en: "This only extracts `user_id` and `device_hash/hash` locally in the browser. Nothing is sent out." },
   "粘贴游戏内 Support 按钮打开后的完整链接。": { en: "Paste the full link opened from the in-game Support button." },
   "例如 abcdef1234567890abcdef1234567890": { en: "Example abcdef1234567890abcdef1234567890" },

@@ -23,13 +23,13 @@ test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭�
   await page.getByRole('tab', { name: '能力' }).click()
 
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-abilities$/)
-  await expect(page.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-pressed', 'false')
-  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-selected', 'false')
+  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-selected', 'true')
 
   await page.reload()
 
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-abilities$/)
-  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-selected', 'true')
 
   await page.getByRole('button', { name: '返回英雄筛选' }).click()
 

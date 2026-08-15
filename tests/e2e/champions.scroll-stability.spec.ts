@@ -62,8 +62,10 @@ test('英雄筛选页在右侧面板深处改筛选时，应把右面板带回�
     window.localStorage.removeItem('idle-champions-helper.locale')
   })
 
+  await page.setViewportSize({ width: 1440, height: 960 })
   await page.goto('./#/champions')
   await expect(page.locator('.workbench-page__toolbar-title')).toHaveText('英雄筛选')
+  await expect(page.locator('.results-grid .result-card--link').nth(9)).toBeVisible()
   await setPaneScrollTop(page, 720)
 
   // 并行负载下 setPaneScrollTop 后浏览器主线程未必立即稳定，用 poll 轮询确认滚到深处
