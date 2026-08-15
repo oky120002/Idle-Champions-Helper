@@ -64,20 +64,22 @@ function isEnIncrementalSlotOccupancy(text: string): boolean {
   ))
 }
 
-// 匹配「数词/数字 + (random )? slots」（数字必须紧邻 slots，避免长文本里无关数字误匹配）。
-const EN_NUMBER_SLOTS_RE = /\b(\d+|one|two|three|four|five|six|seven|eight)\s+(?:random\s+)?slots?\b/gi
+// 匹配「数词/数字 + (random )? slots/spots」（数字必须紧邻位置单位，避免长文本里无关数字误匹配）。
+const EN_NUMBER_SLOTS_RE = /\b(\d+|one|two|three|four|five|six|seven|eight)\s+(?:random\s+)?(?:slots?|spots?)\b/gi
 // 回退：含 "take up slots" / "took up slots"（复数 occupy，无数词邻接 slots）时，
 // 取文本首个数词（通常 = 占位实体数，如 "Two shipwrights take up slots"）。
 const EN_FIRST_NUMBER_RE = /\b(\d+|one|two|three|four|five|six|seven|eight)\b/i
-const EN_TAKE_UP_SLOTS_RE = /\b(?:take|takes|taking|took)\s+up\s+slots\b/i
+const EN_TAKE_UP_SLOTS_RE = /\b(?:take|takes|taking|took)\s+up\s+(?:slots?|spots?)\b/i
+const EN_JOIN_IN_SLOTS_RE = /\b(\d+|one|two|three|four|five|six|seven|eight)\s+[^.\n]{1,80}\bjoins?\s+the\s+formation\s+in\s+slots?\b/i
 
 function enSlotOccupyCount(text: string): number | null {
   const lower = text.toLowerCase()
-  if (!lower.includes('slot')) {
+  if (!lower.includes('slot') && !lower.includes('spot')) {
     return null
   }
   const hasOccupy = EN_SLOT_OCCUPY_KEYWORDS.some((kw) => lower.includes(kw))
-  if (!hasOccupy) {
+  const joinedInSlots = EN_JOIN_IN_SLOTS_RE.exec(text)
+  if (!hasOccupy && joinedInSlots == null) {
     return null
   }
   // 仅当区域周期与新增占格语义同时出现时，无法确定固定格数。
@@ -91,6 +93,10 @@ function enSlotOccupyCount(text: string): number | null {
     const token = adjMatch[1]
     if (token === undefined) return null
     return tokenToNumber(token)
+  }
+  if (joinedInSlots != null) {
+    const token = joinedInSlots[1]
+    if (token !== undefined) return tokenToNumber(token)
   }
   // 回退：「take up slots」（复数 occupy）取首个数词（实体数 = 格数）。
   // 搜索范围限定到「take up slots」之前——占格实体数词总在动词前（"Three imps take up slots"）；
@@ -510,6 +516,8 @@ function resolveReferenceHero(
 interface PatternMatch {
   kind: DamageSourcePattern['kind']
   columnSpan?: number
+  slotSpan?: number
+  includeReference: boolean
   /** 参考英雄名提取正则（捕获组 1 = 名字 token）。 */
   nameRegex: RegExp
 }
@@ -518,6 +526,10 @@ function parseColumnSpan(token: string | undefined, fallback: number): number {
   if (token == null) return fallback
   const num = /^\d+$/.test(token) ? parseInt(token, 10) : EN_COLUMN_NUMBERS[token.toLowerCase()]
   return typeof num === 'number' && num > 0 ? num : fallback
+}
+
+function includesReferenceHero(sentence: string): boolean {
+  return /\bonly\s+[^.\r\n]+?\s+and\s+(?:the\s+)?champions\b/i.test(sentence)
 }
 
 /** 按优先级尝试匹配模式；返回模式 + 名字提取正则。 */
@@ -529,7 +541,23 @@ function matchPattern(sentence: string): PatternMatch | null {
   // eslint-disable-next-line sonarjs/super-linear-regex -- \w+.* 回溯在短句上可忽略
   const adjacentNoDamage = /\b(?:next\s+to|adjacent\s+to)\s+\w+.*deal\s+no\s+damage/i.test(sentence)
   if (notAdjacent || adjacentNoDamage) {
-    return { kind: 'not-adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
+    return {
+      kind: 'not-adjacent',
+      includeReference: includesReferenceHero(sentence),
+      nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i,
+    }
+  }
+
+  // within N slots: 距离按 formation 拓扑最短路径计算（不是 slot id 数字差）。
+  const withinMatch = /\bwithin\s+(\d+|one|two|three|four)\s+slots?\s+of\b/i.exec(sentence)
+  if (withinMatch) {
+    const slotSpan = parseColumnSpan(withinMatch[1], 2)
+    return {
+      kind: 'within-slots',
+      slotSpan,
+      includeReference: includesReferenceHero(sentence),
+      nameRegex: /\bwithin\s+(?:\d+|one|two|three|four)\s+slots?\s+of\s+([\w'-]+)/i,
+    }
   }
 
   // front-columns: "(N) columns in front of X"
@@ -537,7 +565,10 @@ function matchPattern(sentence: string): PatternMatch | null {
   const frontMatch = /(\d+|one|two|three|four)?\s*columns?\s+in\s+front\b/.exec(lower)
   if (frontMatch) {
     const span = frontMatch[1] !== undefined ? parseColumnSpan(frontMatch[1], 2) : 100
-    return { kind: 'front-columns', columnSpan: span, nameRegex: /in\s+front\s+of\s+([\w'-]+)/i }
+    return {
+      kind: 'front-columns', columnSpan: span, includeReference: includesReferenceHero(sentence),
+      nameRegex: /in\s+front\s+of\s+([\w'-]+)/i,
+    }
   }
 
   // behind-columns: "(N) column(s) behind X"
@@ -545,18 +576,24 @@ function matchPattern(sentence: string): PatternMatch | null {
   const behindMatch = /(\d+|one|two|three|four)?\s*columns?\s+behind\b/.exec(lower)
   if (behindMatch) {
     const span = behindMatch[1] !== undefined ? parseColumnSpan(behindMatch[1], 1) : 1
-    return { kind: 'behind-columns', columnSpan: span, nameRegex: /behind\s+([\w'-]+)/i }
+    return {
+      kind: 'behind-columns', columnSpan: span, includeReference: includesReferenceHero(sentence),
+      nameRegex: /behind\s+([\w'-]+)/i,
+    }
   }
 
   // same-column: "in X's column" / "X's column"（排除 front/behind/back）
   if (/\bcolumn\b/i.test(sentence) && !/\b(?:front|behind|back)\b/i.test(sentence)) {
     // eslint-disable-next-line sonarjs/super-linear-regex -- [\w'-]* 回溯在短名字 token 上可忽略
-    return { kind: 'same-column', nameRegex: /(\w[\w'-]*)'?s?\s+column/i }
+    return { kind: 'same-column', includeReference: true, nameRegex: /(\w[\w'-]*)'?s?\s+column/i }
   }
 
   // adjacent (positive): "next to/adjacent to X can deal damage"
   if (/\b(?:next\s+to|adjacent\s+to)\b/i.test(sentence)) {
-    return { kind: 'adjacent', nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i }
+    return {
+      kind: 'adjacent', includeReference: includesReferenceHero(sentence),
+      nameRegex: /(?:next\s+to|adjacent\s+to)\s+([\w'-]+)/i,
+    }
   }
 
   return null
@@ -581,9 +618,7 @@ export function parseDamageSourcePattern(
     for (const rawSentence of normalized.split(/\.\s+/)) {
       const sentence = rawSentence.trim()
       if (sentence === '') continue
-      const lower = sentence.toLowerCase()
-
-      const hasDamageConstraint = lower.includes('deal damage') || lower.includes('deal no damage')
+      const hasDamageConstraint = /\b(?:deal(?:\s+no)?|do)\s+damage\b/i.test(sentence)
       if (!hasDamageConstraint) continue
 
       const patternMatch = matchPattern(sentence)
@@ -595,7 +630,9 @@ export function parseDamageSourcePattern(
       return {
         kind: patternMatch.kind,
         referenceHeroId,
+        includeReference: patternMatch.includeReference,
         ...(patternMatch.columnSpan != null ? { columnSpan: patternMatch.columnSpan } : {}),
+        ...(patternMatch.slotSpan != null ? { slotSpan: patternMatch.slotSpan } : {}),
       }
     }
   }

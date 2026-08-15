@@ -563,6 +563,9 @@ describe('parseDamageSourcePattern — 伤害来源位置限制', () => {
     ['volo', '159'],
     ['vlithryn', '162'],
     ['thellora', '139'],
+    ['qillek', '44'],
+    ['beadle', '64'],
+    ['shadowheart', '141'],
     ['umberto', '151'],
     ['virgil', '115'],
     ['dob', '105'],
@@ -575,53 +578,53 @@ describe('parseDamageSourcePattern — 伤害来源位置限制', () => {
 
   it('same-column："Only Champions in Ezmerelda\'s column can deal damage"', () => {
     const result = parseDamageSourcePattern([r('Only Champions in Ezmerelda\'s column can deal damage.')], names)
-    expect(result).toEqual({ kind: 'same-column', referenceHeroId: '70' })
+    expect(result).toEqual({ kind: 'same-column', referenceHeroId: '70', includeReference: true })
   })
 
   it('same-column：Lae\'zel 名含撇号', () => {
     const result = parseDamageSourcePattern([r('Only Champions in Lae\'zel\'s column can deal damage.')], names)
-    expect(result).toEqual({ kind: 'same-column', referenceHeroId: '128' })
+    expect(result).toEqual({ kind: 'same-column', referenceHeroId: '128', includeReference: true })
   })
 
   it('adjacent："Only Champions next to Virgil can deal damage"', () => {
     const result = parseDamageSourcePattern([r('Only Champions next to Virgil can deal damage.')], names)
-    expect(result).toEqual({ kind: 'adjacent', referenceHeroId: '115' })
+    expect(result).toEqual({ kind: 'adjacent', referenceHeroId: '115', includeReference: false })
   })
 
   it('adjacent + 代词："Only Imoen and Champions next to her can deal damage"', () => {
     const namesWithImoen = new Map(names).set('imoen', '117')
     const result = parseDamageSourcePattern([r('Only Imoen and Champions next to her can deal damage.')], namesWithImoen)
-    expect(result).toEqual({ kind: 'adjacent', referenceHeroId: '117' })
+    expect(result).toEqual({ kind: 'adjacent', referenceHeroId: '117', includeReference: true })
   })
 
   it('not-adjacent："Champions next to Dob deal no damage"', () => {
     const result = parseDamageSourcePattern([r('Champions next to Dob deal no damage.')], names)
-    expect(result).toEqual({ kind: 'not-adjacent', referenceHeroId: '105' })
+    expect(result).toEqual({ kind: 'not-adjacent', referenceHeroId: '105', includeReference: false })
   })
 
   it('not-adjacent + 代词："Only Kalix and Champions not adjacent to him can deal damage"', () => {
     const result = parseDamageSourcePattern([r('Only Kalix and Champions not adjacent to him can deal damage.')], names)
-    expect(result).toEqual({ kind: 'not-adjacent', referenceHeroId: '158' })
+    expect(result).toEqual({ kind: 'not-adjacent', referenceHeroId: '158', includeReference: true })
   })
 
   it('front-columns："two columns in front of Presto"', () => {
     const result = parseDamageSourcePattern([r('Only Champions in the two columns in front of Presto can deal damage.')], names)
-    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '144', columnSpan: 2 })
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '144', columnSpan: 2, includeReference: false })
   })
 
   it('front-columns + 代词 + "and the Champions"', () => {
     const result = parseDamageSourcePattern([r('Only Volo and the Champions in the two columns in front of him can deal damage.')], names)
-    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '159', columnSpan: 2 })
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '159', columnSpan: 2, includeReference: true })
   })
 
   it('front-columns 无数词 = 全部前方列（span=100）', () => {
     const result = parseDamageSourcePattern([r('Only Vlithryn and Champions in the columns in front of her can deal damage.')], names)
-    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '162', columnSpan: 100 })
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '162', columnSpan: 100, includeReference: true })
   })
 
   it('behind-columns："column behind her"', () => {
     const result = parseDamageSourcePattern([r('Only Thellora and Champions in the column behind her can deal damage.')], names)
-    expect(result).toEqual({ kind: 'behind-columns', referenceHeroId: '139', columnSpan: 1 })
+    expect(result).toEqual({ kind: 'behind-columns', referenceHeroId: '139', columnSpan: 1, includeReference: true })
   })
 
   it('NPC 引用（Mirt 不在名表）→ null', () => {
@@ -646,11 +649,34 @@ describe('parseDamageSourcePattern — 伤害来源位置限制', () => {
 
   it('多句 restriction 只取 damage-dealing 句', () => {
     const result = parseDamageSourcePattern([r('Presto joins the formation. He can\'t be moved or removed. Only Champions in the two columns in front of Presto can deal damage. Getting to know Presto.')], names)
-    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '144', columnSpan: 2 })
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '144', columnSpan: 2, includeReference: false })
   })
 
   it('后缀匹配："Van Richten" → "rudolph van richten"', () => {
     const result = parseDamageSourcePattern([r('Only Van Richten and the Champions in the column in front of him can deal damage.')], names)
-    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '177', columnSpan: 100 })
+    expect(result).toEqual({ kind: 'front-columns', referenceHeroId: '177', columnSpan: 100, includeReference: true })
+  })
+
+  it('within slots：使用拓扑最短路径，并保留是否包含参考英雄', () => {
+    expect(parseDamageSourcePattern([
+      r('Only Champions within 2 slots of Qillek can do damage.'),
+    ], names)).toEqual({
+      kind: 'within-slots', referenceHeroId: '44', slotSpan: 2, includeReference: false,
+    })
+    expect(parseDamageSourcePattern([
+      r('Only Shadowheart and Champions within two slots of her can deal damage (following the shortest path).'),
+    ], names)).toEqual({
+      kind: 'within-slots', referenceHeroId: '141', slotSpan: 2, includeReference: true,
+    })
+  })
+})
+
+describe('parseRestrictions — 确定占格措辞', () => {
+  it('把 spots 作为 formation slots 解析', () => {
+    expect(parseRestrictions([r("An Adolescent Kindori joins the formation. They're so big they take up three spots in your formation.")]).lockedSlotCount).toBe(3)
+  })
+
+  it('把明确加入指定 slots 的非英雄实体计入占格', () => {
+    expect(parseRestrictions([r('Two Giant Frogs join the formation in slots 5 and 6.')]).lockedSlotCount).toBe(2)
   })
 })

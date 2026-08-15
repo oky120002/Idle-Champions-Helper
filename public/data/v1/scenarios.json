@@ -38223,7 +38223,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "38"
+        "referenceHeroId": "38",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -42648,7 +42649,12 @@
         "enemyDamageMult": null,
         "healthDrainRate": null
       },
-      "damageSourcePattern": null,
+      "damageSourcePattern": {
+        "kind": "within-slots",
+        "referenceHeroId": "44",
+        "includeReference": false,
+        "slotSpan": 2
+      },
       "scenarioWarnings": [
         {
           "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
@@ -53561,7 +53567,7 @@
         "xanathar"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 3,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -53571,6 +53577,12 @@
       },
       "damageSourcePattern": null,
       "scenarioWarnings": [
+        {
+          "key": "当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。",
+          "params": {
+            "p0": 3
+          }
+        },
         {
           "key": "含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）",
           "params": {
@@ -64057,7 +64069,12 @@
         "enemyDamageMult": null,
         "healthDrainRate": null
       },
-      "damageSourcePattern": null,
+      "damageSourcePattern": {
+        "kind": "within-slots",
+        "referenceHeroId": "64",
+        "includeReference": false,
+        "slotSpan": 2
+      },
       "scenarioWarnings": [
         {
           "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
@@ -69340,7 +69357,7 @@
         "winter"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 3,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -69351,7 +69368,13 @@
       "damageSourcePattern": null,
       "scenarioWarnings": [
         {
-          "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
+          "key": "当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。",
+          "params": {
+            "p0": 3
+          }
+        },
+        {
+          "key": "含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）",
           "params": {
             "p0": "Only Evergreen Champions can be used on this adventure. An Evergreen Treant joins the formation. They're so big they take up three spots in your formation and throw giant rocks at the enemies dealing 1 second of BUD damage per hit."
           }
@@ -88718,7 +88741,8 @@
       },
       "damageSourcePattern": {
         "kind": "same-column",
-        "referenceHeroId": "70"
+        "referenceHeroId": "70",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -92621,7 +92645,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "159"
+        "referenceHeroId": "159",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -126901,7 +126926,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "105"
+        "referenceHeroId": "105",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -129481,7 +129507,7 @@
         "undead"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 3,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -129492,7 +129518,13 @@
       "damageSourcePattern": null,
       "scenarioWarnings": [
         {
-          "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
+          "key": "当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。",
+          "params": {
+            "p0": 3
+          }
+        },
+        {
+          "key": "含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）",
           "params": {
             "p0": "A Shambling Mound joins the formation. They're so big they take up three spots in your formation, but don't do much else.\r\nOnly Elves, Half-Elves, and Gnomes (of any class) and Druids, Barbarians, and Rangers (of any race) can be used."
           }
@@ -134433,7 +134465,7 @@
         "winter"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 2,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -134444,7 +134476,13 @@
       "damageSourcePattern": null,
       "scenarioWarnings": [
         {
-          "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
+          "key": "当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。",
+          "params": {
+            "p0": 2
+          }
+        },
+        {
+          "key": "含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）",
           "params": {
             "p0": "Only bench seats 2, 3, 5, 6, 8, 9, 11, and 12 may be used.\r\nTwo Giant Frogs join the formation in slots 5 and 6."
           }
@@ -148013,7 +148051,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "153"
+        "referenceHeroId": "153",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -151441,7 +151480,7 @@
         "yugoloth"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 3,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -151451,6 +151490,12 @@
       },
       "damageSourcePattern": null,
       "scenarioWarnings": [
+        {
+          "key": "当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。",
+          "params": {
+            "p0": 3
+          }
+        },
         {
           "key": "含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）",
           "params": {
@@ -153652,7 +153697,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "115"
+        "referenceHeroId": "115",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -155021,7 +155067,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "117"
+        "referenceHeroId": "117",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -157748,7 +157795,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "121"
+        "referenceHeroId": "121",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -161130,7 +161178,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "126"
+        "referenceHeroId": "126",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -162509,7 +162558,8 @@
       },
       "damageSourcePattern": {
         "kind": "same-column",
-        "referenceHeroId": "128"
+        "referenceHeroId": "128",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -165548,7 +165598,7 @@
         "monstrosity"
       ],
       "allowedHeroes": [],
-      "occupiedSlotCount": 0,
+      "occupiedSlotCount": 3,
       "viabilityContext": {
         "armor": null,
         "hitsBased": null,
@@ -165559,7 +165609,13 @@
       "damageSourcePattern": null,
       "scenarioWarnings": [
         {
-          "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
+          "key": "当前场景有 {p0} 个槽位被非英雄实体占据，不参与英雄占位。",
+          "params": {
+            "p0": 3
+          }
+        },
+        {
+          "key": "含未建模特殊机制（请人工评估）：{p0}（含特殊机制，请人工评估对阵型的影响）",
           "params": {
             "p0": "You may only use Champions that don't have Wisdom as one of their lowest two stats.\r\nAn ancient and wise Willow Treant joins the formation. They're so big they take up three spots in your formation, but don't do much else."
           }
@@ -182598,6 +182654,7 @@
       "damageSourcePattern": {
         "kind": "behind-columns",
         "referenceHeroId": "139",
+        "includeReference": true,
         "columnSpan": 1
       },
       "scenarioWarnings": [
@@ -184006,7 +184063,12 @@
         "enemyDamageMult": null,
         "healthDrainRate": null
       },
-      "damageSourcePattern": null,
+      "damageSourcePattern": {
+        "kind": "within-slots",
+        "referenceHeroId": "141",
+        "includeReference": true,
+        "slotSpan": 2
+      },
       "scenarioWarnings": [
         {
           "key": "未解析 restriction：{p0}（含特殊机制，请人工评估对阵型的影响）",
@@ -186023,6 +186085,7 @@
       "damageSourcePattern": {
         "kind": "front-columns",
         "referenceHeroId": "144",
+        "includeReference": false,
         "columnSpan": 2
       },
       "scenarioWarnings": [
@@ -190889,6 +190952,7 @@
       "damageSourcePattern": {
         "kind": "behind-columns",
         "referenceHeroId": "151",
+        "includeReference": true,
         "columnSpan": 2
       },
       "scenarioWarnings": [
@@ -191578,7 +191642,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "150"
+        "referenceHeroId": "150",
+        "includeReference": false
       },
       "scenarioWarnings": [
         {
@@ -205933,7 +205998,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "158"
+        "referenceHeroId": "158",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -206613,6 +206679,7 @@
       "damageSourcePattern": {
         "kind": "front-columns",
         "referenceHeroId": "159",
+        "includeReference": true,
         "columnSpan": 2
       },
       "scenarioWarnings": [
@@ -208722,6 +208789,7 @@
       "damageSourcePattern": {
         "kind": "front-columns",
         "referenceHeroId": "162",
+        "includeReference": true,
         "columnSpan": 100
       },
       "scenarioWarnings": [
@@ -209400,7 +209468,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "163"
+        "referenceHeroId": "163",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -232659,7 +232728,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "158"
+        "referenceHeroId": "158",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -239829,7 +239899,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "172"
+        "referenceHeroId": "172",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -240512,7 +240583,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "173"
+        "referenceHeroId": "173",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -241393,7 +241465,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "174"
+        "referenceHeroId": "174",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -241570,7 +241643,8 @@
       },
       "damageSourcePattern": {
         "kind": "not-adjacent",
-        "referenceHeroId": "174"
+        "referenceHeroId": "174",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -242595,7 +242669,8 @@
       },
       "damageSourcePattern": {
         "kind": "adjacent",
-        "referenceHeroId": "176"
+        "referenceHeroId": "176",
+        "includeReference": true
       },
       "scenarioWarnings": [
         {
@@ -243271,6 +243346,7 @@
       "damageSourcePattern": {
         "kind": "front-columns",
         "referenceHeroId": "177",
+        "includeReference": true,
         "columnSpan": 100
       },
       "scenarioWarnings": [

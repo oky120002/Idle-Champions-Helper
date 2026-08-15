@@ -128,7 +128,7 @@ beam search 过滤（`scorePlannerFormationWithLegality`）：`minSurvivableArea
 
 部分变体限制只有特定位置的英雄能造伤害。两层方案：
 
-- **系统解析**（层 1，`scenario.damageSourcePattern`）：从 restrictions 文本解析位置模式（same-column / adjacent / not-adjacent / front-columns / behind-columns），carry 不在有效位置 → DPS 归零（SCORE_ZERO）。模式依赖参考英雄位置，评分时按 placements 动态求值。
+- **系统解析**（层 1，`scenario.damageSourcePattern`）：从 restrictions 文本解析位置模式（same-column / adjacent / not-adjacent / within-slots / front-columns / behind-columns），carry 不在有效位置 → DPS 归零（SCORE_ZERO）。模式依赖参考英雄位置，评分时按 placements 动态求值；`includeReference` 严格遵循原文是否明确包含参考英雄自身，前后列模式只包含严格前方/后方列，不把参考英雄所在列整体放宽。
 - **UI 手动标记**（层 2，`userDamageDisabledSlots`）：用户标记不可造伤害的槽位，carry 落在这些槽位 → DPS 归零。默认全部可打（用户只做减法）。
 
 ## 计算模式（性能优化）

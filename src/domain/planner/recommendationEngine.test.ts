@@ -763,7 +763,7 @@ describe('viability: damage source pattern (K4)', () => {
     attributeRequirements: [],
     occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
-    damageSourcePattern: { kind: 'same-column', referenceHeroId: 'nayeli' },
+    damageSourcePattern: { kind: 'same-column', referenceHeroId: 'nayeli', includeReference: true },
     scenarioWarnings: [],
   }
   const columnCollections: PlannerCollections = {
@@ -898,7 +898,7 @@ describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behi
 
   it('adjacent: carry 邻接参考英雄 → 有效；不邻接 → SCORE_ZERO', () => {
     // ref=nayeli@s1(adj: s2,s4) → carry@jarlaxle at s2(adj) valid; s3(not adj) invalid
-    const { collections, variant } = makePatternScenario({ kind: 'adjacent', referenceHeroId: 'nayeli' })
+    const { collections, variant } = makePatternScenario({ kind: 'adjacent', referenceHeroId: 'nayeli', includeReference: false })
     const valid = evalDps(collections, variant, { s1: 'nayeli', s2: 'jarlaxle', s3: 'celeste', s4: 'bruenor' })
     const invalid = evalDps(collections, variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
     expect(valid).not.toBe('0')
@@ -907,7 +907,7 @@ describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behi
 
   it('not-adjacent: carry 不邻接参考英雄 → 有效；邻接 → SCORE_ZERO', () => {
     // ref=nayeli@s1(adj: s2,s4) → carry@jarlaxle at s3(not adj) valid; s2(adj) invalid
-    const { collections, variant } = makePatternScenario({ kind: 'not-adjacent', referenceHeroId: 'nayeli' })
+    const { collections, variant } = makePatternScenario({ kind: 'not-adjacent', referenceHeroId: 'nayeli', includeReference: false })
     const valid = evalDps(collections, variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
     const invalid = evalDps(collections, variant, { s1: 'nayeli', s2: 'jarlaxle', s3: 'celeste', s4: 'bruenor' })
     expect(valid).not.toBe('0')
@@ -915,8 +915,8 @@ describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behi
   })
 
   it('front-columns: carry 在参考英雄前方列 → 有效；后方列 → SCORE_ZERO', () => {
-    // ref=nayeli@s3(col3,span=1) → carry col∈[2,3] valid; col1 invalid
-    const { collections, variant } = makePatternScenario({ kind: 'front-columns', referenceHeroId: 'nayeli', columnSpan: 1 })
+    // ref=nayeli@s3(col3,span=1) → carry col2 valid; col1 invalid
+    const { collections, variant } = makePatternScenario({ kind: 'front-columns', referenceHeroId: 'nayeli', columnSpan: 1, includeReference: false })
     const valid = evalDps(collections, variant, { s3: 'nayeli', s2: 'jarlaxle', s1: 'celeste', s4: 'bruenor' })
     const invalid = evalDps(collections, variant, { s3: 'nayeli', s1: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
     expect(valid).not.toBe('0')
@@ -924,12 +924,27 @@ describe('damageSourcePattern — adjacent / not-adjacent / front-columns / behi
   })
 
   it('behind-columns: carry 在参考英雄后方列 → 有效；前方列 → SCORE_ZERO', () => {
-    // ref=nayeli@s1(col1,span=1) → carry col∈[1,2] valid; col3 invalid
-    const { collections, variant } = makePatternScenario({ kind: 'behind-columns', referenceHeroId: 'nayeli', columnSpan: 1 })
+    // ref=nayeli@s1(col1,span=1) → carry col2 valid; col3 invalid
+    const { collections, variant } = makePatternScenario({ kind: 'behind-columns', referenceHeroId: 'nayeli', columnSpan: 1, includeReference: false })
     const valid = evalDps(collections, variant, { s1: 'nayeli', s2: 'jarlaxle', s3: 'celeste', s4: 'bruenor' })
     const invalid = evalDps(collections, variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })
     expect(valid).not.toBe('0')
     expect(invalid).toBe('0')
+  })
+
+  it('前后列模式不把参考英雄所在列的其他槽位误算为有效', () => {
+    const { collections, variant } = makePatternScenario({ kind: 'front-columns', referenceHeroId: 'nayeli', columnSpan: 1, includeReference: false })
+    expect(evalDps(collections, variant, { s1: 'nayeli', s4: 'jarlaxle', s2: 'celeste', s3: 'bruenor' })).toBe('0')
+  })
+
+  it('within-slots：按拓扑最短路径判断，并区分是否包含参考英雄', () => {
+    const excluded = makePatternScenario({ kind: 'within-slots', referenceHeroId: 'nayeli', slotSpan: 2, includeReference: false })
+    expect(evalDps(excluded.collections, excluded.variant, { s1: 'nayeli', s3: 'jarlaxle', s2: 'celeste', s4: 'bruenor' })).not.toBe('0')
+    const selfExcluded = makePatternScenario({ kind: 'within-slots', referenceHeroId: 'jarlaxle', slotSpan: 2, includeReference: false })
+    const selfIncluded = makePatternScenario({ kind: 'within-slots', referenceHeroId: 'jarlaxle', slotSpan: 2, includeReference: true })
+    const selfPlacement = { s1: 'jarlaxle', s2: 'celeste', s3: 'bruenor', s4: 'nayeli' }
+    expect(evalDps(selfExcluded.collections, selfExcluded.variant, selfPlacement)).toBe('0')
+    expect(evalDps(selfIncluded.collections, selfIncluded.variant, selfPlacement)).not.toBe('0')
   })
 })
 

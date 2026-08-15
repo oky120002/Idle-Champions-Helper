@@ -18,6 +18,7 @@ import { buildCandidatePool, type CandidateMode } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
 import { applyComputationMode, type ComputationMode } from './computationMode'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
+import { computeSlotDistance } from './placementSlotRelation'
 import { buildPlannerExplanations } from './plannerNarrative'
 import {
   type ConstraintKind,
@@ -760,16 +761,27 @@ function isCarryInDamageValidSlot(
     case 'same-column':
       return carrySlot.column === refSlot.column
     case 'adjacent':
-      return carrySlotId === refSlotId || refSlot.adjacentSlotIds.includes(carrySlotId)
+      return pattern.includeReference
+        ? carrySlotId === refSlotId || refSlot.adjacentSlotIds.includes(carrySlotId)
+        : refSlot.adjacentSlotIds.includes(carrySlotId)
     case 'not-adjacent':
-      return carrySlotId === refSlotId || !refSlot.adjacentSlotIds.includes(carrySlotId)
+      return carrySlotId === refSlotId
+        ? pattern.includeReference
+        : !refSlot.adjacentSlotIds.includes(carrySlotId)
+    case 'within-slots': {
+      const distance = computeSlotDistance(scenario, refSlotId, carrySlotId)
+      if (distance === null || distance > (pattern.slotSpan ?? 2)) return false
+      return pattern.includeReference || distance > 0
+    }
     case 'front-columns': {
       const span = pattern.columnSpan ?? 2
-      return carrySlot.column >= Math.max(1, refSlot.column - span) && carrySlot.column <= refSlot.column
+      return (pattern.includeReference && carrySlotId === refSlotId)
+        || (carrySlot.column >= Math.max(1, refSlot.column - span) && carrySlot.column < refSlot.column)
     }
     case 'behind-columns': {
       const span = pattern.columnSpan ?? 1
-      return carrySlot.column >= refSlot.column && carrySlot.column <= refSlot.column + span
+      return (pattern.includeReference && carrySlotId === refSlotId)
+        || (carrySlot.column > refSlot.column && carrySlot.column <= refSlot.column + span)
     }
   }
 }

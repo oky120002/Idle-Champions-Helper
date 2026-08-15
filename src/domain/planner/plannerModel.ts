@@ -57,16 +57,21 @@ export const EMPTY_VIABILITY_CONTEXT: ViabilityContext = {
 export interface DamageSourcePattern {
   /**
    * 'same-column'：carry 须与参考英雄同列。
-   * 'adjacent'：carry 须在参考英雄的相邻槽位（含参考英雄自身槽位）。
-   * 'not-adjacent'：carry 须不在相邻槽位（含参考英雄自身槽位）。
-   * 'front-columns'：carry 须在参考英雄及其前方 N 列（column ≤ refCol，下界 refCol−span）。
-   * 'behind-columns'：carry 须在参考英雄及其后方 N 列（column ≥ refCol，上界 refCol+span）。
+   * 'adjacent'：carry 须在参考英雄的相邻槽位；是否包含参考英雄自身由 includeReference 决定。
+   * 'not-adjacent'：carry 须不在相邻槽位；是否包含参考英雄自身由 includeReference 决定。
+   * 'within-slots'：carry 与参考英雄的拓扑最短路径不超过 slotSpan；是否包含自身由 includeReference 决定。
+   * 'front-columns'：carry 须在参考英雄前方 N 列；includeReference 仅额外允许参考英雄自身槽位。
+   * 'behind-columns'：carry 须在参考英雄后方 N 列；includeReference 仅额外允许参考英雄自身槽位。
    */
-  kind: 'same-column' | 'adjacent' | 'not-adjacent' | 'front-columns' | 'behind-columns'
+  kind: 'same-column' | 'adjacent' | 'not-adjacent' | 'within-slots' | 'front-columns' | 'behind-columns'
   /** 参考英雄 ID（restrictions 中具名、在 champion 名表中解析到的 forced hero）。 */
   referenceHeroId: string
+  /** restriction 是否明确把参考英雄自身列入可造伤害集合。same-column 固定包含自身。 */
+  includeReference: boolean
   /** front/behind-columns 的列跨度（默认 2 / 1）；大值（如 100）表示不限列数。 */
   columnSpan?: number
+  /** within-slots 的最大拓扑距离。 */
+  slotSpan?: number
 }
 
 export interface OfficialPlannerScenarioModel {

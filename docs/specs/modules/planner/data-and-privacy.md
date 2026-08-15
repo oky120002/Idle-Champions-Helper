@@ -35,7 +35,7 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 `UserProfileSnapshot`（`src/domain/user-profile/types.ts`）：
 
 - `schemaVersion`、`updatedAt`、`warnings`（`MessageRef[]`；旧本地快照中的 `string[]` 读取时包装为 `literal`）
-- `ownedHeroes`：`OwnedHero[]`（每英雄 `heroId` / `level` / `equipment` / `feats` / `legendaryEffects` / `unlockedFeats` / `lootBySlot`）
+- `ownedHeroes`：`OwnedHero[]`（每英雄 `heroId` / `level` / `isOwned` / `equipment` / `feats` / `legendaryEffects` / `unlockedFeats` / `activeFeats` / `featSlots` / `gildableSlotId` / `lootBySlot` / `legendaryBySlot` / `specializations`）
 - `importedFormationSaves`：`ImportedFormationSave[]`（layout id、slot placements、specializations、feats、familiars、scenario relation）
 - `campaigns?`：各战役 favor / blessings
 - `patronPerks?`：patron perk 已购等级（perk_id → level）
@@ -57,8 +57,10 @@ IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供
 
 - `variantId`、`scenarioRef`、`name`、`formationLayoutId`、`objectiveArea`
 - `slotTopology`（槽位 id / row / column / adjacentSlotIds）、`forcedHeroes`、`occupiedSlotCount`
-- `allowedHeroes` / `allowedTagExpression`（白名单）、`enemyTypes`（vulnerability 条件匹配）、`damageSourcePattern`
-- `scenarioWarnings`（`MessageRef[]`；稳定诊断使用中央字典 key，外部 restriction 原文使用 `literal`）
+- `allowedHeroes` / `allowedTagExpression`（白名单）、`enemyTypes`（vulnerability 条件匹配）
+- `attributeRequirements`（属性门槛）、`viabilityContext`（护甲/命中型/伤害与生存约束）
+- `damageSourcePattern`（`same-column` / `adjacent` / `not-adjacent` / `within-slots` / 前后列；包含 `referenceHeroId` 与 `includeReference`，拓扑距离模式另含 `slotSpan`）
+- `scenarioWarnings`（`MessageRef[]`；稳定诊断与 restriction 参数优先使用中央字典 key + params，无法匹配模板时才使用 `literal`）
 
 `PlannerResult`（`src/domain/planner/recommendationTypes.ts`）：
 

@@ -93,9 +93,11 @@ export const plannerScenarioItemSchema = z
       healthDrainRate: z.number().min(0).nullable(),
     }),
     damageSourcePattern: z.object({
-      kind: z.enum(['same-column', 'adjacent', 'not-adjacent', 'front-columns', 'behind-columns']),
+      kind: z.enum(['same-column', 'adjacent', 'not-adjacent', 'within-slots', 'front-columns', 'behind-columns']),
       referenceHeroId: z.string(),
+      includeReference: z.boolean(),
       columnSpan: z.number().int().positive().optional(),
+      slotSpan: z.number().int().positive().optional(),
     }).nullable(),
   })
   .loose()

@@ -151,7 +151,7 @@ const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
     attributeRequirements: [],
   occupiedSlotCount: 0,
     viabilityContext: EMPTY_VIABILITY_CONTEXT,
-    damageSourcePattern: { kind: 'same-column', referenceHeroId: 'nayeli' },
+    damageSourcePattern: { kind: 'same-column', referenceHeroId: 'nayeli', includeReference: true },
       scenarioWarnings: [{ literal: '当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。' }],
     },
   ],

@@ -51,6 +51,19 @@ describe('planner scenario build-product schema', () => {
     expect(plannerScenarioItemSchema.safeParse(invalid).success).toBe(false)
   })
 
+  it('校验位置限制的自包含语义与拓扑距离字段', () => {
+    const result = plannerScenarioItemSchema.safeParse({
+      ...validScenario,
+      damageSourcePattern: {
+        kind: 'within-slots',
+        referenceHeroId: 'hero-1',
+        includeReference: false,
+        slotSpan: 2,
+      },
+    })
+    expect(result.success).toBe(true)
+  })
+
   it('允许嵌套消息引用，但拒绝不可渲染的参数值', () => {
     expect(plannerScenarioItemSchema.safeParse({
       ...validScenario,

@@ -26,7 +26,7 @@
 - `carrySignals`：英雄自身提高自己输出的规则（仅 supportHero===carryHero 时计入）。
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。
 - `sourceBreakdown`：记录每条语义来自官方解析、仓库补丁还是本地 override。
-- `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`occupiedSlotCount`、`damageSourcePattern`、`scenarioWarnings`。
+- `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`occupiedSlotCount`、`attributeRequirements`、`viabilityContext`、`damageSourcePattern`、`scenarioWarnings`。`damageSourcePattern` 的 `includeReference` 来自原文是否明确列出参考英雄自身，不能由几何关系擅自推断；`within-slots` 按 `slotTopology` 的最短路径求值。
 - 不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
 - `PoolAggregateResult` 表示「某 support 站在某槽位时，对当前 C 位的加成贡献」，至少包含：`heroId`、`slotId`、`carryHeroId`、`carrySlotId`、`pools`（按 `dimension:scope` 分池）、`totalMultiplier`、`scoreBreakdown`、`warnings`。
 

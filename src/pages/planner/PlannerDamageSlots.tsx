@@ -14,6 +14,13 @@ function getColumnSpan(value: number | undefined, fallback: number): number {
   return value != null && Number.isInteger(value) && value > 0 ? value : fallback
 }
 
+function selfSuffix(
+  pattern: DamageSourcePattern,
+  t: ReturnType<typeof useI18n>['t'],
+): string {
+  return t(pattern.includeReference ? '（含参考英雄自身）' : '（不含参考英雄自身）')
+}
+
 function getDamageSourcePatternCopy(
   pattern: DamageSourcePattern,
   referenceHeroName: string,
@@ -23,18 +30,20 @@ function getDamageSourcePatternCopy(
     case 'same-column':
       return t('系统解析：核心英雄须与{p0}同列。', { p0: referenceHeroName })
     case 'adjacent':
-      return t('系统解析：核心英雄须位于{p0}相邻槽位（含其自身）。', { p0: referenceHeroName })
+      return t('系统解析：核心英雄须位于{p0}相邻槽位{p1}。', { p0: referenceHeroName, p1: selfSuffix(pattern, t) })
     case 'not-adjacent':
-      return t('系统解析：核心英雄不能位于{p0}相邻槽位（含其自身）。', { p0: referenceHeroName })
+      return t('系统解析：核心英雄不能位于{p0}相邻槽位{p1}。', { p0: referenceHeroName, p1: selfSuffix(pattern, t) })
+    case 'within-slots':
+      return t('系统解析：核心英雄须位于{p0}{p1}格以内{p2}。', {
+        p0: referenceHeroName, p1: String(pattern.slotSpan ?? 2), p2: selfSuffix(pattern, t),
+      })
     case 'front-columns':
-      return t('系统解析：核心英雄须位于{p0}所在列及前方{p1}列（含所在列）。', {
-        p0: referenceHeroName,
-        p1: String(getColumnSpan(pattern.columnSpan, 2)),
+      return t('系统解析：核心英雄须位于{p0}前方{p1}列{p2}。', {
+        p0: referenceHeroName, p1: String(getColumnSpan(pattern.columnSpan, 2)), p2: selfSuffix(pattern, t),
       })
     case 'behind-columns':
-      return t('系统解析：核心英雄须位于{p0}所在列及后方{p1}列（含所在列）。', {
-        p0: referenceHeroName,
-        p1: String(getColumnSpan(pattern.columnSpan, 1)),
+      return t('系统解析：核心英雄须位于{p0}后方{p1}列{p2}。', {
+        p0: referenceHeroName, p1: String(getColumnSpan(pattern.columnSpan, 1)), p2: selfSuffix(pattern, t),
       })
   }
 }

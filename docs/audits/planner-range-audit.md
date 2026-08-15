@@ -19,6 +19,9 @@
 | 中 | 中央 i18n 字典把开发态私有快照文案编进生产 `app-i18n` bundle，生产边界扫描失败 | 开发态条目收进 `import.meta.env.DEV` 分支；开发翻译保留，生产构建与 `privacy:scan-build` 通过 |
 | 中 | E2E IndexedDB 夹具使用异步 init script，且遗漏运行时 OwnedHero 字段，导致 planner 在 `Object.values(undefined)` 崩溃或数据校验失败 | 改为同源静态数据页完成确定性写库，补齐与领域 fixture 一致的字段；同时修正过时的选择器和视口就绪断言 |
 | 低 | planner 规范仍把用户手动锁槽误写成场景模型字段 | 更新 `data-and-privacy.md` 与 `recommendation.md` 的当前字段合同 |
+| 高 | 伤害来源模式默认把参考英雄自身和所在列整体放入有效集合，和原文“adjacent / columns in front”不一致 | 增加 `includeReference`；前后列改为严格前/后列；新增 parser、推荐引擎和 UI 回归；重建 1424 个场景产物 |
+| 中 | 已有拓扑 BFS 未接入 restriction 的 `within 2 slots`，Qillek、Beadle、Shadowheart 退化为 warning | 新增 `within-slots` + `slotSpan`，复用 `computeSlotDistance`；真实产物解析出 3 条 |
+| 中 | `take up three spots` 与“join formation in slots 5 and 6”漏掉确定占格 | 扩展 `spots` 与指定 slots 解析；真实产物 v1088=2、v1219=3、v1337=3 |
 
 ## 产物核验
 
@@ -34,7 +37,7 @@
 - `npm run build`
 - `npm run privacy:scan-build`
 - `npm run test:e2e`：30 个用例通过（含构建和生产隐私边界门禁）。
-- restriction parser 全量变体边界扫描：仅固定占格加位置轮换样本保留固定计数，动态占格不再产固定计数。
+- restriction parser 全量变体边界扫描：动态占格不再产固定计数；当前稳定位置模式统计为 adjacent 10、not-adjacent 7、within-slots 3、front-columns 4、behind-columns 2、same-column 2。
 
 ## 边界
 

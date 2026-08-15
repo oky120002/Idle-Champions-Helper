@@ -285,13 +285,14 @@ describe('Seam 6: scenarios.json → plannerScenarios 结构契约', () => {
   })
 
   it('damageSourcePattern 非 null 时 kind 合法 + referenceHeroId 非空', () => {
-    const validKinds = new Set(['same-column', 'adjacent', 'not-adjacent', 'front-columns', 'behind-columns'])
+    const validKinds = new Set(['same-column', 'adjacent', 'not-adjacent', 'within-slots', 'front-columns', 'behind-columns'])
     const errors: string[] = []
     for (const scenario of realScenarios) {
       const pattern = scenario.damageSourcePattern
       if (pattern == null) continue
       if (!validKinds.has(pattern.kind)) errors.push(scenario.variantId + ' kind=' + pattern.kind)
       if (typeof pattern.referenceHeroId !== 'string' || pattern.referenceHeroId.length === 0) errors.push(scenario.variantId + ' referenceHeroId')
+      if (typeof pattern.includeReference !== 'boolean') errors.push(scenario.variantId + ' includeReference')
     }
     expect(errors, 'damageSourcePattern 不合规').toHaveLength(0)
   })
