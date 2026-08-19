@@ -7,7 +7,7 @@ import path from 'node:path'
  */
 
 // 读出的 JSON 是不可信外来数据，返回 unknown；由调用方在边界处 zod 校验或显式收窄（见
-// docs/specs/guidelines/testing.md §8）。
+// docs/specs/guidelines/testing-methodology.md §3）。
 export async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
@@ -25,7 +25,7 @@ export async function readJsonIfExists(filePath: string): Promise<unknown> {
 }
 
 // raw JSON 收窄辅助：readJson 返回 unknown，这些 helper 在消费边界安全收窄（见
-// docs/specs/guidelines/testing.md §8）。build 管线各 builder 共用，故下沉到此。
+// docs/specs/guidelines/testing-methodology.md §3）。build 管线各 builder 共用，故下沉到此。
 /** 把 unknown 安全收窄为 Record<string, unknown>（null 安全）；非对象返回 null。 */
 export function asRecord(value: unknown): Record<string, unknown> | null {
   return value !== null && typeof value === 'object' ? (value as Record<string, unknown>) : null

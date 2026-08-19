@@ -28,7 +28,7 @@
 
 - 当前同类问题不是“所有 fallback 都错误”，而是**内部契约损坏被伪装成业务缺省**。
 - 已发现并收口的必须 fail-fast 路径集中在 planner 计算链和 build 内部 override 读取；缓存、镜像、外部 payload、旧草稿属于有明确业务理由的恢复路径。
-- 以后新增集成测试必须按 `docs/specs/guidelines/testing.md` §10-12 和 `testing-methodology.md` 先写异常分类、测试层级和不变量，再写断言；不能用“没有崩溃”替代契约验证。
+- 以后新增集成测试必须按 `docs/specs/guidelines/testing-methodology.md` §1-8 先写异常分类、测试层级和不变量，再按 `testing.md` 接入运行器和门禁；不能用“没有崩溃”替代契约验证。
 
 ## 4. 复核入口
 

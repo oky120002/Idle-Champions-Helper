@@ -6,8 +6,8 @@
 
 - [`ai-first-ts-tsx.md`](./ai-first-ts-tsx.md)：TS/TSX 编码规范
 - [`ai-first-css.md`](./ai-first-css.md)：CSS 编码规范
-- [`testing.md`](./testing.md)：测试组织、层级、异常契约、glob 与类型门控
-- [`testing-methodology.md`](./testing-methodology.md)：测试金字塔、行为契约、不变量、隔离与变异证伪
+- [`testing.md`](./testing.md)：测试组织、运行器、fixture、glob 与类型门控
+- [`testing-methodology.md`](./testing-methodology.md)：测试金字塔、行为契约、真实产物、schema、异常分类、不变量、隔离与变异证伪
 - [`data-normalization.md`](./data-normalization.md)：数据归一化管线
 - [`mobile-compatibility.md`](./mobile-compatibility.md)：移动端兼容
 - [`design/`](./design/)：视觉设计规范（导航、页头指标）

@@ -1,6 +1,6 @@
 # 测试与发布门禁
 
-测试组织、运行器 glob 和类型门控规则见 `docs/specs/guidelines/testing.md`；本页只说明怎样执行。
+测试组织、运行器 glob 和类型门控规则见 `docs/specs/guidelines/testing.md`；测试层级、契约、不变量和异常判定见 `docs/specs/guidelines/testing-methodology.md`；本页只说明怎样执行。
 
 ## 常用范围
 

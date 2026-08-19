@@ -41,49 +41,17 @@
 - 公共夹具放主被测模块同目录；跨模块多处复用时，提取到被复用模块邻近的独立单元并显式导出。
 - 夹具命名：`*TestHarness`（渲染壳）、`*TestData`（数据）、`*Fixture`（固定输入）、`*TestUtils`（工具函数）。
 
-## 6. 守护测试
-
-- 跨边界一致性（如 src 侧 scorer 与 scripts 侧脚本的平行白名单）无法合并为单一来源时，必须配 keys 同步守护测试，任一侧变更时强制失败。
-- 数据管线（归一化→评估→展示等多级流水线）除逐级手搓输入单测外，必须配真实产物端到端守护测试（加载 built JSON 喂入完整链路，断言最终输出）。手搓输入会掩盖级间集成回归——级 A 实际产出偏离级 B 假设输入时，手搓单测仍绿。
-- 真实产物端到端守护必须覆盖**聚合层**（pool/total/carryDps），不能只断言中间信号值。`championReferenceVerification` 曾只断言 per-signal multiplier（16384/576）而跳过 pool 聚合值（以为「pool 非直接可比」），致 22× buff_upgrade 双重计数漏网数月。聚合整体难对照时，断言其**组成**（addPercent 各来源、各 pool 分量）而非整体跳过——「难对照」不是跳过聚合层覆盖的理由。
-- breakdown/分解因子声称「因子之积 = 目标值」（如 `SimulationBreakdown.factors` 之积 = `carryDps`）时，必须配**组合测试**：多个因子同时非默认值时断言因子之积确实复现目标值。尤其当多个来源**加法合并进同一 add pool**（如装备 + 外部 hero_dps 同为 `hero_dps_multiplier_mult`）时——单来源非默认的测试会漏掉「来源间非各自独立乘、而是同池加法」的口径错误。`heroDpsPool` 曾把 equipment/external 分列为两个独立 × 因子，实际却加法合并，双来源同时生效时因子相乘 ≠ carryDps，违反 `computation-runtime.md` 声明的因子之积契约；根因是新增 #9 外部 hero_dps 通道接入 add pool 时未同步更新 breakdown 外露口径。
-
-## 7. 类型检查门控
+## 6. 类型检查门控
 
 - 所有测试入口（`test` / `test:run` / `test:unit` / `test:component` / `test:data`）必须先过 `npm run typecheck`（`test:regression` 经 `test:run` 间接覆盖，不重复显式调用）。
 - vitest 用 esbuild 转译、**不做类型检查**；测试绿不等于类型正确。曾因 `.d.ts` 漏声明（mergeHeroQualifiers）导致 `tsc` 长期红、却被 vitest 绿色掩盖。typecheck 增量 ~5s，相对测试本体（~20-50s）非瓶颈，任何入口都不得绕过。
 - 新增测试入口同样必须链 `npm run typecheck &&`。
 
-## 8. 数据 schema 门控（zod）
-
-- 职责分工：zod 守**外来数据**（运行时形状校验 + CI 拦截），TS 守**内部代码逻辑**（编译期类型）；外来 JSON 经 `JSON.parse` 为 `any`，形状漂移只能由 zod 运行时守门，TS 不替代 zod（`scripts/**/*.ts` 运行时类型注解被剥除，类型正确性仅靠 `tsc` 编译期把关）。
-- 外部游戏数据（CNE definitions 归一化产物：`champions`/`adventures`/`patrons`/`variants`/`champion-details` 等）→ 对象 `.passthrough()`，只钉消费方依赖的核心字段，透传其余字段，不耦合上游字段增减。
-- 项目自著内部数据（`semantic-overrides`/`manual-overrides`/`champion-animation-idle-overrides`/`resource-sync-state`/`version` 等）→ `.strict()`，白名单校验，未知字段即报错，防内部契约漂移。
-- schema 放 `scripts/data/*-schema.ts`，co-located 测试 `*-schema.test.ts`（合法样本 + 类型/枚举/必填/nullable 变异拦截）；CI 经 `npm run data:validate-schema`（`validate-data-schemas.ts`）在真实产物上校验，坏数据非零退出。
-
-## 9. E2E 本地数据夹具
+## 7. E2E 本地数据夹具
 
 - IndexedDB 夹具必须先导航到同源静态数据页，再用 `page.evaluate` 完成删除/写入，最后才进入应用路由；异步 `addInitScript` 不提供应用读取前的完成屏障。
 - 夹具对象必须与运行时消费的领域 fixture 保持完整，不能只填 schema 当前抽查字段；planner 的 `OwnedHero` 至少包含 `legendaryBySlot` 等运行时会遍历的集合。
 
-## 10. 集成边界与异常输入
+## 8. 方法论入口
 
-- 每条模块接缝先判定输入属于哪一类：
-  - **契约损坏**：必填字段缺失、类型错误、非法枚举、悬空引用、`NaN` / `Infinity`、违反值域的负数或非正数。内部契约和计算核心必须 `throw` / `reject`，禁止改成 `0`、`1`、空集合、跳过或只写 warning。
-  - **业务缺省**：明确允许缺失且有业务定义的默认值（如乘法单位元、官方哨兵值、未拥有英雄的估算等级）。只对“未传入”回退；显式非法值不能伪装成缺省。
-  - **可恢复外部故障**：缓存损坏、可选资源缺失、官方镜像失败等，只有在产品定义允许继续时才能回退；必须校验替代数据，并在结果、状态或 warning 中保留可观察证据。
-  - **未建模业务**：若产品明确选择保守不计入目标值，测试必须断言 warning / blocker 和“不计入”，不能只断言不崩溃。
-- 集成测试的异常用例至少覆盖：缺失、错误类型、`NaN`、`Infinity`、负数 / 非正数、非法枚举、悬空引用；预期 fail-fast 时使用 `toThrow` / `rejects.toThrow`，并断言错误指向具体字段或接缝。
-- 不以“最终没有抛错”作为集成测试的唯一成功标准。必须同时断言最终输出、状态、warning 或核心不变量；真实产物链路至少断言聚合结果，不只断言中间信号存在。
-- 禁止用空 `catch` 或默认值吞掉未分类异常。批量 smoke 若必须继续收集其他样本，需保留样本 id、原始错误和失败数量，最终以非零断言失败。
-- 每个回退都必须在测试名称、断言和对应 spec 中说明触发条件、业务理由及“不会发生什么”；未能说明理由的回退按契约损坏处理。
-
-## 11. 集成契约回归
-
-- 跨模块测试优先消费生产形状的真实产物或与生产 schema 一致的 fixture；手搓 fixture 只能补充局部组合，不得替代级间接线守护。
-- 对计算链使用对抗性变异验证断言强度：篡改一个上游字段后，测试应明确证明抛错、可观察降级或不变量破坏被捕获。
-- 变更异常处理、默认值或回退语义时，必须同步更新调用方、负例测试、模块 spec 和审计记录；不能只改测试让旧的静默行为继续存在。
-
-## 12. 测试方法论
-
-- 测试层级、行为契约、隔离确定性、决策表、不变量、变异证伪和跨边界契约测试的统一方法见 [`testing-methodology.md`](./testing-methodology.md)；新增测试必须同时遵守本文件与该文档。
+- 测试层级、真实产物守护、schema 契约、异常分类、不变量、变异证伪和跨边界契约测试见 [`testing-methodology.md`](./testing-methodology.md)；新增测试必须同时遵守本文件与该文档。

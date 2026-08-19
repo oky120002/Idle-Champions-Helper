@@ -1,6 +1,6 @@
 # 测试深度审计（行为覆盖 + 断言强度）
 
-度量基准日：2026-08-01（分支 `opencode/dev1`，基线 `c377707d` 之后、本轮 commit 之前）。本文件是轮 5 测试深度审计的 canonical 来源；体例沿用 `test-suite-audit.md`。透镜：**行为覆盖与断言强度**——不重做 `test-suite-audit.md` 的组织整改（§3-§8）。判据对照 `testing.md` §6-§7「无测试覆盖的行为不视为已验收 / 断言可证伪」。方法：codegraph 查 handoff 点名的 4 个「无直接测试」线索 → 扫 planner/simulator/buffs 全部 `it` 块断言密度 → 核查 references 金标钉值强度 → 全仓弱断言模式（snapshot/toBeTruthy/not.toThrow）普查。
+度量基准日：2026-08-01（分支 `opencode/dev1`，基线 `c377707d` 之后、本轮 commit 之前）。本文件是轮 5 测试深度审计的 canonical 来源；体例沿用 `test-suite-audit.md`。透镜：**行为覆盖与断言强度**——不重做 `test-suite-audit.md` 的组织整改（§3-§8）。判据对照 `testing-methodology.md` §2、§8 与 `testing.md` §6「无测试覆盖的行为不视为已验收 / 断言可证伪」。方法：codegraph 查 handoff 点名的 4 个「无直接测试」线索 → 扫 planner/simulator/buffs 全部 `it` 块断言密度 → 核查 references 金标钉值强度 → 全仓弱断言模式（snapshot/toBeTruthy/not.toThrow）普查。
 
 ## 1. 收口结论
 

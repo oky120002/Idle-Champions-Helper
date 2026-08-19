@@ -7,7 +7,7 @@
 - 文档：`docs/governance.md`
 - 国际化：`docs/specs/guidelines/i18n-messages.md`
 - 统一语言（游戏术语 ↔ 代码标识符）：`CONTEXT.md`
-- 测试：`docs/specs/guidelines/testing.md`
+- 测试组织与运行门禁：`docs/specs/guidelines/testing.md`；测试方法论与跨边界契约：`docs/specs/guidelines/testing-methodology.md`
 - 数据归一化管线（资源同步 + normalize/build 增量跳过、数据源格式追溯）：`docs/specs/guidelines/data-normalization.md`
 - 私有用户数据：`docs/specs/modules/user-data/`
 - 当前操作手册：`docs/runbooks/README.md`
@@ -58,7 +58,7 @@
 
 ## 测试与构建
 
-- 测试 co-located（单测/组件/夹具就近被测模块同目录，E2E 与全局 setup 集中 `tests/`），必须接入运行器并同步扩展对应 glob，禁止游离。派生统计（覆盖率/支持度）优先合并单一来源；跨边界（src 侧 scorer 与 scripts 侧脚本）无法合并时必须配 keys 同步守护测试强制一致。glob、集中例外、类型门控见 `testing.md`。
+- 测试 co-located（单测/组件/夹具就近被测模块同目录，E2E 与全局 setup 集中 `tests/`），必须接入运行器并同步扩展对应 glob，禁止游离。派生统计（覆盖率/支持度）优先合并单一来源；跨边界（src 侧 scorer 与 scripts 侧脚本）无法合并时必须配 keys 同步守护测试强制一致。glob、集中例外、类型门控见 `testing.md`；真实产物、schema、异常分类与契约见 `testing-methodology.md`。
 - `npm run preview:pages` 只读当前 `dist/`，不反映源码最新改动：截图、验收、Playwright 视觉检查前必须先 `npm run build`；拿不准 preview 进程是否对应最新 build 时直接重启，不得把旧 `dist` 当「当前基线」或「修改后效果」。
 
 ## 协作方式
