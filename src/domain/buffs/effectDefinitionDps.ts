@@ -77,7 +77,8 @@ export function resolveEffectKeyValue(
   }
   const arg = payload.args[0]
   if (arg === '$replace') {
-    return perLevel * actualLevel
+    const resolved = perLevel * actualLevel
+    return Number.isFinite(resolved) ? resolved : 0
   }
   const fixed = Number(arg)
   return Number.isFinite(fixed) ? fixed : 0

@@ -60,7 +60,7 @@ estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
 
 `PlannerResult.viability`（`ViabilityAssessment`）：活跃约束标识（`activeConstraints`，如 `['armor', 'health-drain']`）+ 绑定约束（`boundBy`，来自 areaEstimate）。普通变体 activeConstraints 为空。
 
-外部加成未传入时按乘法单位元 `1` 处理；显式伤害聚合值为 `0` 时保留零结果。若聚合值为 NaN、Infinity 或负数，当前 carry 跳过且目标值为 `0`，同时在 `warnings` 中保留“伤害加成聚合值非法”诊断；不把损坏的上游数值伪装成正常结果，也不因单个候选数据损坏阻断整次阵型搜索。
+外部加成未传入时按乘法单位元 `1` 处理；显式伤害聚合值为 `0` 时保留零结果。外部 `effect_def` 的 `$replace` 数值若乘积溢出，解析层按非法值丢弃。若最终聚合值为 NaN、Infinity 或负数，当前 carry 跳过且目标值为 `0`，同时在 `warnings` 中保留“伤害加成聚合值非法”诊断；不把损坏的上游数值伪装成正常结果，也不因单个候选数据损坏阻断整次阵型搜索。
 
 `evaluateFormation` 合法性违规（seat 冲突 / locked / `only_allow_crusaders` 白名单外）与未拥有英雄的 level 1 回退作为 warning 附加，仍出拆解（强制英雄豁免未拥有 / 白名单检查）。
 
