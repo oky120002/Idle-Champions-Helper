@@ -46,6 +46,8 @@ describe('resolveEffectKeyValue', () => {
   it('固定值 → effect_string 内的数值', () => expect(resolveEffectKeyValue('hero_dps_multiplier_mult,400', 0, 1)).toBe(400))
 
   it('非法 effect_string → 0', () => expect(resolveEffectKeyValue('hero_dps_multiplier_mult', 100, 1)).toBe(0))
+
+  it('$replace 乘积溢出 → 0', () => expect(resolveEffectKeyValue('hero_dps_multiplier_mult,$replace', Number.MAX_VALUE, 2)).toBe(0))
 })
 
 describe('parseEffectKind', () => {
