@@ -66,12 +66,12 @@ areaSkip 因子 = 1 + Σ(value/100)，与其他类别乘法叠加。默认值可
 
 ## 验收
 
-- [ ] 23 名速度英雄全部有 speedProfile（含 effect 列表 + speedGain）
-- [ ] 非速度英雄 speedProfile 为 undefined
-- [ ] scoreFormation('team-speed') 产出 objectiveValue = speedMultiplier（number）
-- [ ] Briv/Lae'zel/Halsin/Thellora 动态效果进 warnings 不进计算
-- [ ] UI 新增「速度」推荐模式按钮，选中后推荐结果按速度排序
-- [ ] 全量测试通过 + build clean
+- [x] 18 名静态速度英雄生成 `speedProfile`；其余动态速度英雄使用 `DYNAMIC_SPEED_DEFAULTS`，并支持入参覆盖
+- [x] 非静态速度英雄不伪造 `speedProfile`
+- [x] `scoreFormation('team-speed')` 产出 `objectiveValue = speedMultiplier`（number）
+- [x] Briv / Lae'zel / Halsin / Thellora 等动态效果使用默认值或覆盖值参与速度评估，不混入 carry-DPS
+- [x] UI 提供「速度」推荐模式和速度拆解结果
+- [x] 全量测试与构建通过
 
 ## 落地后
 

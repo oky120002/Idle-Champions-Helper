@@ -12,7 +12,7 @@
 
 Reddit/Steam 社区反复出现一个问题：「我的阵型能推到多少层？」（如 [Formation Calculator?](https://www.reddit.com/r/idlechampions/comments/ld8my9/formation_calculator/) — *「有没有一个网站，输入阵型数据后算出能推多远？」*）。社区没有好的回答——ic.byteglow.com 有 Formation 页面但不做区域估算。
 
-本站的产品定位是「个人成长导向阵型决策台」，但当前 planner 的输出是 `carryDps: "1.2e35"` 这样的数字——玩家不理解它意味着什么。即使 planner 推荐了最优阵型，玩家也无法判断「换这个阵型后能多推 50 层还是只多 5 层」。
+本站的产品定位是「最佳阵型自动推算工具」，但当前 planner 的输出是 `carryDps: "1.2e35"` 这样的数字——玩家不理解它意味着什么。即使 planner 推荐了最优阵型，玩家也无法判断「换这个阵型后能多推 50 层还是只多 5 层」。
 
 ### 已有基建但未暴露
 
@@ -82,18 +82,18 @@ health = 10 × growth_rate^(area - 1)
 | 怪物血量公式 | `game-rules.json` → `monster_base_stats` | ✅ 数据完整（分段增长率 + boss 倍率） |
 | 生存计算 | `src/domain/simulator/survivalCalculation.ts` | ✅ effectiveHealth 已实现 |
 | 金币曲线 | `game-rules.json` → `health_gold_ratio` | ✅ 47 段递减已入数据 |
-| BUD 计算 | `src/domain/simulator/budCalculation.ts` | ⚠️ 仅用 carry 自身冷却，不含阵型级缩减，需 [[2026-08-planner-speed-dimension]] 升级后才能准确估算含速度英雄的阵型 |
+| BUD 计算 | `src/domain/simulator/budCalculation.ts` | ⚠️ 以 carry 的单次伤害近似阵型 BUD，绝对值仍待游戏内校准；速度效果由独立 team-speed 模式评估，不并入 BUD |
 | 孤儿模块 | `modronInfo.ts` / `ultUptime.ts` / `clickDamage.ts` | ⚠️ 三个 simulator 模块有代码但零生产消费方，可按需接入 |
 | ScoringResult | `src/domain/planner/steadyStateScoring.ts:154` | ✅ areaEstimate 已在结果中 |
 
 ## 为何暂缓
 
-子项一（推图层数面板）可以基于现有 `areaEstimate` 直接做，工程量小。子项二（瓶颈分析）和子项三（改进建议）需要更深的分析逻辑和 UI 设计。准确度上依赖 [[2026-08-planner-speed-dimension]]（动态 BUD）——如果 BUD 不含速度贡献，含速度英雄的阵型推图估算会偏低。
+子项一（推图层数面板）可以基于现有 `areaEstimate` 直接做，工程量小。子项二（瓶颈分析）和子项三（改进建议）需要更深的分析逻辑和 UI 设计。绝对层数准确度依赖游戏内 BUD 实测校准，当前展示必须标注「未校准」；速度推荐是独立的 team-speed 维度，不是 `areaEstimate` 的前置条件。
 
 ## 关联
 
 - 调研：`docs/research/gameplay/pushing-and-wall.md`（推图与墙机制全貌）
 - 调研：`docs/research/gameplay/bud-mechanics.md`（BUD 定义）
-- 关联需求：`2026-08-planner-speed-dimension.md`（动态 BUD 是准确推图估算的前置）
+- 调研：`docs/research/data/planner/bud-calibration.md`（BUD 公式与实测校准边界）
 - 关联需求：`2026-08-planner-viability-warning-upgrades.md`（可行性模型中的生存/暴击门控升级）
 - 代码：`src/domain/simulator/areaEstimation.ts`、`survivalCalculation.ts`

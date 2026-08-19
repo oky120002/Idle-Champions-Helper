@@ -1,7 +1,7 @@
 # 速度效果三层缩放需求
 
 **来源**：用户明确要求（2026-08-10）
-**关联**：[[speed-mechanics-11-categories]]、`docs/plans/2026-08-planner-speed-dimension.md`
+**关联**：[[speed-mechanics-11-categories]]、`docs/archives/plans/2026-08-planner-speed-dimension.md`
 
 ## 核心约束
 

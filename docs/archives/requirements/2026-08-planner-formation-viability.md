@@ -1,7 +1,7 @@
 # planner 阵型通关可行性模型
 
-**状态**: 已落地（2026-08-09，证据：commit `1bb34e40` + 执行计划 `archives/plans/2026-08-planner-viability-model.md`）
-**优先级**：已接受（2026-08-09，执行计划 `docs/plans/2026-08-planner-viability-model.md`）
+**状态**: 已落地（2026-08-09，证据：commit `1bb34e40` + 执行计划 `docs/archives/plans/2026-08-planner-viability-model.md`）
+**优先级**：已接受（2026-08-09，执行计划 `docs/archives/plans/2026-08-planner-viability-model.md`）
 
 ## 背景：为什么需要这个
 
@@ -145,7 +145,7 @@ planner 当前有三个优化目标：DPS、金币、速度，每次选一个最
 
 ## 关联
 
-- **执行计划**：`docs/plans/2026-08-planner-viability-model.md`
+- **执行计划**：`docs/archives/plans/2026-08-planner-viability-model.md`
 - **约束图谱**：`docs/research/gameplay/viability-constraint-taxonomy.md`（完整 10 维）
 - 机制文档：`docs/research/gameplay/attack-multi-hit.md`、`armored-enemies.md`、`aoe-survival.md`、`enemy-special-health.md`、`bud-mechanics.md`
 - 统一语言：`CONTEXT.md`（多段攻击、伤害系数、护甲敌人、减伤）
