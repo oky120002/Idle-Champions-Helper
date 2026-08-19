@@ -126,4 +126,23 @@ describe('placement fit — stacking', () => {
     expect(fitDefault.totalMultiplier).toBeCloseTo(1.001 ** 1000, 6)
     expect(fitDefault.totalMultiplier).toBe(fitExplicit.totalMultiplier)
   })
+
+  it('显式非法 manualStackCount 直接抛异常', () => {
+    const supportHero = createHero('support', {
+      carrySignals: [{
+        kind: 'heroDpsMultiplier', value: 0.1, rawEffect: 'buff_upgrade,0.1,12312',
+        source: 'official-parsed', stacksMultiply: true,
+      }],
+    })
+    const input = {
+      supportHero,
+      scenario,
+      carryHero: supportHero,
+      carrySlotId: 's2' as const,
+      supportSlotId: 's2' as const,
+    }
+    for (const manualStackCount of [-1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => evaluatePlacementFit({ ...input, manualStackCount })).toThrow()
+    }
+  })
 })

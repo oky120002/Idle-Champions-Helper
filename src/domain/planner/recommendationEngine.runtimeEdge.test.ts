@@ -106,26 +106,19 @@ function buildCollections(scenarios: OfficialPlannerScenarioModel[]): PlannerCol
 }
 
 describe('runtime edge — 损坏个人快照', () => {
-  it('level=NaN 的拥有英雄不崩溃，DPS 比较仍可排序（NaN 兜底为 DEFAULT_CARRY_LEVEL）', () => {
+  it('level=NaN 的拥有英雄直接抛异常', () => {
     const scenario = buildScenario('v-nan')
     const collections = buildCollections([scenario])
     const profile = createUserProfileSnapshot({
       ownedHeroes: heroIds.map((id) => createOwnedHero({ heroId: id, level: Number.NaN })),
     })
 
-    const evaluation = evaluateFormation({
+    expect(() => evaluateFormation({
       collections,
       variant: buildVariant('v-nan'),
       profileSnapshot: profile,
       placements: { s1: 'h1' },
-    })
-
-    // 不抛异常；NaN dps 与 ZERO 比较恒 false → bestCarryHeroId=null、objectiveValue 静默归零。
-    // normalizer 的 toNumberValue 防 NaN（finite 守卫），此场景仅腐蚀的 IndexedDB 快照可触发。
-    expect(evaluation.result).not.toBeNull()
-    const nanResult = unwrap(evaluation.result, 'evaluation.result 已断言非空')
-    expect(nanResult.objectiveValue).toBe('0')
-    expect(nanResult.carryHeroId).toBeNull()
+    })).toThrow()
   })
 
   it('放置了 plannerHeroes 之外的英雄 id → 不崩溃，附 restriction warning（按 level 1 估算）', () => {
@@ -184,11 +177,10 @@ describe('runtime edge — 空/极端阵型', () => {
 })
 
 describe('runtime edge — malformed override', () => {
-  it('override 条目缺 heroId（损坏/旧 shape）→ 被静默忽略，不污染 profile', () => {
+  it('override 条目缺 heroId（损坏 shape）→ 直接抛异常', () => {
     // 模拟 IndexedDB/集合里读到缺 heroId 的条目：map 建键为 undefined，永不匹配真实英雄
     const malformed = [{ carrySignals: [{ kind: 'heroDpsMultiplier', value: 999, rawEffect: 'x' }] }] as never[]
 
-    const resolved = resolveHeroAbilityProfiles(plannerHeroes, [], malformed)
-    expect(resolved.every((hero) => hero.carrySignals.length === 0)).toBe(true)
+    expect(() => resolveHeroAbilityProfiles(plannerHeroes, [], malformed)).toThrow()
   })
 })

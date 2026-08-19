@@ -9,9 +9,14 @@ describe('budCalculation', () => {
     expect(computeSingleHitDamage(new Decimal(2.5), 4).toNumber()).toBeCloseTo(10, 6)
   })
 
-  it('cooldown 缺失/非正回退默认 1', () => {
+  it('cooldown 缺失回退默认 1', () => {
     expect(computeSingleHitDamage(new Decimal(50), null).toNumber()).toBe(50)
-    expect(computeSingleHitDamage(new Decimal(50), 0).toNumber()).toBe(50)
+  })
+
+  it('显式非法 cooldown 直接抛异常', () => {
+    for (const cooldown of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => computeSingleHitDamage(new Decimal(50), cooldown)).toThrow()
+    }
   })
 
   it('多段攻击：per-target BUD = heroDps × cooldown / numTargets', () => {
@@ -21,9 +26,15 @@ describe('budCalculation', () => {
     expect(computeSingleHitDamage(new Decimal(500), 1, 5).toNumber()).toBe(100)
   })
 
-  it('numTargets 缺失/非正回退默认 1（向后兼容）', () => {
+  it('numTargets 缺失或为 0 回退默认 1', () => {
     expect(computeSingleHitDamage(new Decimal(100), 5, null).toNumber()).toBe(500)
     expect(computeSingleHitDamage(new Decimal(100), 5, 0).toNumber()).toBe(500)
     expect(computeSingleHitDamage(new Decimal(100), 5).toNumber()).toBe(500)
+  })
+
+  it('显式非法 numTargets 直接抛异常', () => {
+    for (const numTargets of [-1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => computeSingleHitDamage(new Decimal(100), 5, numTargets)).toThrow()
+    }
   })
 })

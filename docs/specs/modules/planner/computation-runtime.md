@@ -60,7 +60,9 @@ estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
 
 `PlannerResult.viability`（`ViabilityAssessment`）：活跃约束标识（`activeConstraints`，如 `['armor', 'health-drain']`）+ 绑定约束（`boundBy`，来自 areaEstimate）。普通变体 activeConstraints 为空。
 
-外部加成未传入时按乘法单位元 `1` 处理；显式伤害聚合值为 `0` 时保留零结果。外部 `effect_def` 的 `$replace` 数值若乘积溢出，解析层按非法值丢弃。若最终聚合值为 NaN、Infinity 或负数，当前 carry 跳过且目标值为 `0`，同时在 `warnings` 中保留“伤害加成聚合值非法”诊断；不把损坏的上游数值伪装成正常结果，也不因单个候选数据损坏阻断整次阵型搜索。
+外部加成未传入时按乘法单位元 `1` 处理；显式伤害聚合值为 `0` 时保留零结果。外部 `effect_def` 的 `$replace` 数值若乘积溢出，解析层按非法值丢弃——这是未建模/不可表达规则的业务降级。进入评分器的必填基础伤害、等级、伤害/生命聚合值、信号类型、池乘数和已提供的运行时假设若为 NaN、Infinity 或违反取值边界，统一直接抛异常，经 worker 返回 `ok:false`；不再跳过 carry、置零或附 warning 掩盖上游契约损坏。
+
+兼容边界必须有业务语义：未传入的可选加成使用数学单位元；未提供攻击目标数（`null`/`undefined`，以及官方数据使用的 `0` 哨兵）按单目标近似；未建模或手动触发机制继续 warning + 不计入目标值。显式损坏的 override、等级和数值字段不属于这些兼容路径。
 
 `evaluateFormation` 合法性违规（seat 冲突 / locked / `only_allow_crusaders` 白名单外）与未拥有英雄的 level 1 回退作为 warning 附加，仍出拆解（强制英雄豁免未拥有 / 白名单检查）。
 

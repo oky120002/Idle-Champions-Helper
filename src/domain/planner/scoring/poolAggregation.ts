@@ -24,8 +24,17 @@ export function mergePools(sharedPools: Map<string, AggregatedPool>, pools: Aggr
 /** Π(poolMultiplier)：pool 间乘法。 */
 export function productOfPoolMultipliers(pools: Map<string, AggregatedPool>): number {
   let aggregate = 1
-  for (const pool of pools.values()) {
+  for (const [key, pool] of pools) {
+    if (!Number.isFinite(pool.addPercent) || !Number.isFinite(pool.multFactor) || !Number.isFinite(pool.poolMultiplier)) {
+      throw new Error(`pool ${key} contains a non-finite value`)
+    }
+    if (pool.poolMultiplier < 0) {
+      throw new Error(`pool ${key} contains a negative multiplier`)
+    }
     aggregate *= pool.poolMultiplier
+  }
+  if (!Number.isFinite(aggregate)) {
+    throw new Error('pool multiplier product is non-finite')
   }
   return aggregate
 }

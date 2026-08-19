@@ -201,18 +201,14 @@ describe('Seam 1 契约变异：上游 profile 损坏 → 下游行为分类', (
   const sampleScenario = findScenario(2)
   const slotId = unwrap(sampleScenario.slotTopology[0], 'scenario 缺 slot').slotId
 
-  it('baseDamage≤0 → 静默校正为 1（computeCarryDps guard，锁现状）', () => {
+  it('baseDamage≤0 → fail-fast', () => {
     const corrupted = { ...sampleHero, baseDamage: -5 }
     const heroesMap = new Map([[corrupted.heroId, corrupted]])
-    const result = scoreFormation({
+    expect(() => scoreFormation({
       placements: { [slotId]: corrupted.heroId },
       heroesById: heroesMap,
       scenario: sampleScenario,
-    })
-    const num = result.objectiveValue.toNumber()
-    expect(Number.isFinite(num)).toBe(true)
-    expect(num).toBeGreaterThan(0)
-    expect(num).toBeLessThan(100)
+    })).toThrow()
   })
 
   it('carrySignals=undefined → fail-fast（collectSignals spread TypeError）', () => {
@@ -225,20 +221,17 @@ describe('Seam 1 契约变异：上游 profile 损坏 → 下游行为分类', (
     })).toThrow(TypeError)
   })
 
-  it('signal.kind 非法 → 静默跳过（dimensionFilter 过滤，无 warning）', () => {
+  it('signal.kind 非法 → fail-fast', () => {
     const badKind = 'totally-bogus-kind' as HeroAbilityKind
     const corrupted = makeTestHero('bad-kind-hero', 99, [
       { kind: badKind, value: 100, rawEffect: 'bogus,100', source: 'official-parsed' },
     ])
     const heroesMap = new Map([[corrupted.heroId, corrupted]])
-    const result = scoreFormation({
+    expect(() => scoreFormation({
       placements: { [slotId]: corrupted.heroId },
       heroesById: heroesMap,
       scenario: sampleScenario,
-    })
-    // 非法 kind 的 signal 被 DIMENSION_BY_KIND 查不到 → 静默过滤，无 warning
-    expect(result.warnings).toHaveLength(0)
-    expect(result.objectiveValue.toNumber()).toBeGreaterThan(0)
+    })).toThrow()
   })
 })
 
@@ -338,12 +331,11 @@ describe('Seam 2: evaluatePlacementFit → pools 不变量（真实数据）', (
     expect(result.totalMultiplier).toBeCloseTo(product, 10)
   })
 
-  it('契约变异：pool.addPercent=NaN → productOfPoolMultipliers 返回 NaN（静默错误）', () => {
+  it('契约变异：pool.addPercent=NaN → fail-fast', () => {
     const corrupted = new Map<string, AggregatedPool>([
       ['damage:global', { dimension: 'damage', scope: 'global', addPercent: NaN, multFactor: 1, poolMultiplier: NaN }],
     ])
-    const result = productOfPoolMultipliers(corrupted)
-    expect(Number.isNaN(result)).toBe(true)
+    expect(() => productOfPoolMultipliers(corrupted)).toThrow()
   })
 })
 
@@ -459,23 +451,14 @@ describe('Seam 4: 同 key 外部加成加法合并（A1 契约）', () => {
     expect(b.factors.heroDpsPool).toBeCloseTo(1.8, 10)
   })
 
-  it('契约变异：globalBuffMultiplier=NaN → 跳过 carry 并附加 warning', () => {
+  it('契约变异：globalBuffMultiplier=NaN → fail-fast', () => {
     const carry = makeTestHero('nan-carry', 1)
     const heroesMap = new Map([['nan-carry', carry]])
-    const result = scoreFormation({
+    expect(() => scoreFormation({
       placements: { s1: 'nan-carry' },
       heroesById: heroesMap, scenario: makeMinimalScenario(),
       globalBuffMultiplier: NaN,
-    })
-    expect(result.carryHeroId).toBeNull()
-    const num = result.objectiveValue.toNumber()
-    expect(Number.isFinite(num)).toBe(true)
-    // globalBuff 异常时不伪造单位元，carry 不计入目标值。
-    expect(num).toBe(0)
-    expect(result.warnings).toContainEqual({
-      key: '{p0} 的伤害加成聚合值非法，当前不计入目标值。',
-      params: { p0: 'nan-carry' },
-    })
+    })).toThrow()
   })
 })
 

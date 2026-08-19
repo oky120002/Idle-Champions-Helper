@@ -2,6 +2,7 @@
 import type { AbilityScoreKey, DataCollection, LocalizedText } from '../types'
 import { REGISTERED_STACK_FUNCS } from '../planner/mechanics/stackCountResolver'
 import type { HeroSpeedProfile } from '../planner/speedScoring'
+import { POOL_SCOPE_BY_KIND } from './poolScope'
 
 /**
  * 英雄能力表达层（hero-agnostic）。算法-英雄握手点唯一：HeroAbilityProfile。
@@ -359,7 +360,9 @@ function aggregateGainByDimension(
   const byDim = new Map<HeroAbilityDimension, { addPercent: number; multFactor: number }>()
   for (const signal of signals) {
     const dimension = DIMENSION_BY_KIND[signal.kind] as HeroAbilityDimension | undefined
-    if (dimension === undefined) continue
+    if (dimension === undefined || !Object.prototype.hasOwnProperty.call(POOL_SCOPE_BY_KIND, signal.kind)) {
+      throw new Error(`unsupported HeroAbilitySignal.kind: ${signal.kind}`)
+    }
     // applyManually 信号实际评估恒丢弃（resolveSignalMultiplier 首分支 ok:false）——不计入 gain，
     // 否则幻影增益可能在同席位挤掉真实候选（p50 裁剪误留 phantom 强、误裁真强）。
     if (signal.applyManually === true) continue
@@ -461,6 +464,11 @@ export function resolveHeroAbilityProfiles(
   repoOverrideItems: HeroAbilityOverridePatch[],
   localOverrideItems: HeroAbilityOverridePatch[],
 ): ResolvedHeroAbilityProfile[] {
+  for (const patch of [...repoOverrideItems, ...localOverrideItems]) {
+    if (typeof patch.heroId !== 'string' || patch.heroId.length === 0) {
+      throw new Error('hero ability override must contain a non-empty heroId')
+    }
+  }
   const repoOverridesByHeroId = new Map(repoOverrideItems.map((item) => [item.heroId, item]))
   const localOverridesByHeroId = new Map(localOverrideItems.map((item) => [item.heroId, item]))
 

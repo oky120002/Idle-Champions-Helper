@@ -278,66 +278,40 @@ describe('scoreFormation 不变量守护', () => {
 
 describe('scoreFormation 对抗性反例', () => {
   describe('极端数值注入', () => {
-    it('baseDamage=0 → 静默校正为 1（computeCarryDps guard: baseDamage>0?baseDamage:1）→ carryDps≠0', () => {
-      // 反例发现：computeCarryDps（baseDps.ts:31）把 baseDamage≤0 静默替换为 1。
-      // 结果：zero-damage 英雄被当作 baseDamage=1 评分，carryDps=1×levelCurve×aggregate。
-      // 行为 = 静默错误（非 fail-fast，非零分）——数据损坏不可见。
+    it('baseDamage=0 → 直接抛异常', () => {
       const carry = createHero('carry', { seat: 1, baseDamage: 0 })
-      const result = scoreFormation({
+      expect(() => scoreFormation({
         placements: { s1: 'carry' },
         heroesById: new Map([['carry', carry]]),
         scenario,
-      })
-      const num = result.objectiveValue.toNumber()
-      expect(Number.isFinite(num)).toBe(true)
-      expect(Number.isNaN(num)).toBe(false)
-      // baseDamage 0→1, levelCurve≈1.06, aggregate=1 → carryDps≈1.06
-      expect(num).toBeCloseTo(1.06, 4)
-      expect(result.carryHeroId).toBe('carry')
+      })).toThrow()
     })
 
-    it('baseDamage=NaN → 静默校正为 1（NaN>0=false→fallback 1）→ carry 被选中', () => {
-      // 反例发现：NaN>0=false → computeCarryDps guard 走 fallback → baseDamage=1。
-      // NaN 数据损坏完全不可见，hero 被 scoreFormation 正常评分。
+    it('baseDamage=NaN → 直接抛异常', () => {
       const carry = createHero('carry', { seat: 1, baseDamage: Number.NaN })
-      const result = scoreFormation({
+      expect(() => scoreFormation({
         placements: { s1: 'carry' },
         heroesById: new Map([['carry', carry]]),
         scenario,
-      })
-      const num = result.objectiveValue.toNumber()
-      expect(Number.isNaN(num)).toBe(false)
-      expect(result.carryHeroId).toBe('carry')
-      expect(num).toBeCloseTo(1.06, 4)
+      })).toThrow()
     })
 
-    it('负 baseDamage → 静默校正为 1（-10>0=false→fallback 1）→ carry 被选中', () => {
-      // 反例发现：负值 baseDamage 被 guard 替换为 1，负伤害英雄被正常评分。
+    it('负 baseDamage → 直接抛异常', () => {
       const carry = createHero('carry', { seat: 1, baseDamage: -10 })
-      const result = scoreFormation({
+      expect(() => scoreFormation({
         placements: { s1: 'carry' },
         heroesById: new Map([['carry', carry]]),
         scenario,
-      })
-      const num = result.objectiveValue.toNumber()
-      expect(Number.isFinite(num)).toBe(true)
-      expect(result.carryHeroId).toBe('carry')
-      // baseDamage -10→1, levelCurve≈1.06 → carryDps≈1.06（非 -10.6）
-      expect(num).toBeCloseTo(1.06, 4)
+      })).toThrow()
     })
 
-    it('Infinity baseDamage → guard 通过（Infinity>0=true）→ carry 被选中', () => {
-      // Infinity>0=true → 不走 fallback → toGameNumber(Infinity) = Decimal(Infinity)
+    it('Infinity baseDamage → 直接抛异常', () => {
       const carry = createHero('carry', { seat: 1, baseDamage: Number.POSITIVE_INFINITY })
-      const result = scoreFormation({
+      expect(() => scoreFormation({
         placements: { s1: 'carry' },
         heroesById: new Map([['carry', carry]]),
         scenario,
-      })
-      expect(result).toBeDefined()
-      expect(result.carryHeroId).toBe('carry')
-      // carryDps = Infinity × levelCurve × aggregate = Infinity
-      expect(result.objectiveValue.toNumber()).toBe(Infinity)
+      })).toThrow()
     })
   })
 

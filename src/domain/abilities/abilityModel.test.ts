@@ -111,6 +111,12 @@ describe('computeHeroGainProfile', () => {
     expect(gain.support).toEqual({})
   })
 
+  it('非法 signal.kind 直接抛异常，不从收益画像静默丢失', () => {
+    const invalid = signal('heroDpsMultiplier', 100)
+    invalid.kind = 'totally-bogus-kind' as HeroAbilityKind
+    expect(() => computeHeroGainProfile([invalid], [])).toThrow()
+  })
+
   it('applyManually 信号不计入 gain（实际评估恒丢弃，幻影增益会挤掉同席位真实候选）', () => {
     // applyManually（手动触发/专精门控）在 resolveSignalMultiplier 首分支返回 ok:false 永不计入目标值；
     // gain 须对称跳过，否则 p50 裁剪可能误留 phantom 强、误裁真强。

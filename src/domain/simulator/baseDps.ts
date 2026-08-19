@@ -16,11 +16,30 @@ const DEFAULT_COST_CURVE_RATE = 1.06
 function resolveLevelCurveRate(hero: ResolvedHeroAbilityProfile): number {
   const curves = hero.costCurves
   const rate = curves?.['1'] ?? (curves ? Object.values(curves)[0] : undefined)
-  return typeof rate === 'number' && rate > 0 ? rate : DEFAULT_COST_CURVE_RATE
+  return typeof rate === 'number' && Number.isFinite(rate) && rate > 0 ? rate : DEFAULT_COST_CURVE_RATE
+}
+
+export function assertValidLevel(level: number): void {
+  if (!Number.isFinite(level) || level < 0) {
+    throw new Error(`level must be a finite non-negative number, got ${String(level)}`)
+  }
+}
+
+export function assertValidDamageAggregate(damageAggregate: number): void {
+  if (!Number.isFinite(damageAggregate) || damageAggregate < 0) {
+    throw new Error(`damageAggregate must be a finite non-negative number, got ${String(damageAggregate)}`)
+  }
+}
+
+export function assertValidBaseDamage(baseDamage: number): void {
+  if (!Number.isFinite(baseDamage) || baseDamage <= 0) {
+    throw new Error(`baseDamage must be a finite positive number, got ${String(baseDamage)}`)
+  }
 }
 
 export function computeLevelCurve(hero: ResolvedHeroAbilityProfile, level: number): GameNumberValue {
-  return toGameNumber(resolveLevelCurveRate(hero)).pow(Math.max(0, level))
+  assertValidLevel(level)
+  return toGameNumber(resolveLevelCurveRate(hero)).pow(level)
 }
 
 export function computeCarryDps(
@@ -28,9 +47,8 @@ export function computeCarryDps(
   level: number,
   damageAggregate: number,
 ): GameNumberValue {
-  const baseDamage = hero.baseDamage > 0 ? hero.baseDamage : 1
+  assertValidBaseDamage(hero.baseDamage)
+  assertValidDamageAggregate(damageAggregate)
   const levelCurve = computeLevelCurve(hero, level)
-  // 1 只表示“未传入加成”的乘法单位元；显式的 0 必须保留，损坏值不能伪装成正常加成。
-  const aggregate = Number.isFinite(damageAggregate) && damageAggregate >= 0 ? damageAggregate : 0
-  return toGameNumber(baseDamage).mul(levelCurve).mul(aggregate)
+  return toGameNumber(hero.baseDamage).mul(levelCurve).mul(damageAggregate)
 }

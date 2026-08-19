@@ -21,9 +21,17 @@ export function computeSingleHitDamage(
   attackCooldown: number | null,
   numTargets?: number | null,
 ): GameNumberValue {
-  const cooldown = typeof attackCooldown === 'number' && attackCooldown > 0
-    ? attackCooldown
-    : DEFAULT_ATTACK_COOLDOWN
-  const targets = typeof numTargets === 'number' && numTargets > 0 ? numTargets : 1
+  const cooldown = attackCooldown ?? DEFAULT_ATTACK_COOLDOWN
+  if (!Number.isFinite(cooldown) || cooldown <= 0) {
+    throw new Error(`attackCooldown must be a finite positive number, got ${String(cooldown)}`)
+  }
+  // 官方数据用 0 表示未提供目标数；按单目标近似是既有业务兼容约定。
+  const targets = numTargets == null || numTargets === 0 ? 1 : numTargets
+  if (!Number.isFinite(targets) || targets < 0) {
+    throw new Error(`numTargets must be a finite positive number, got ${String(targets)}`)
+  }
+  if (!heroDps.isFinite() || heroDps.isNegative()) {
+    throw new Error('heroDps must be a finite non-negative number')
+  }
   return heroDps.mul(cooldown).div(targets)
 }
