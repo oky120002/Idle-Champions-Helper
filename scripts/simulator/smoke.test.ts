@@ -39,7 +39,7 @@ describe('全英雄评估 smoke', () => {
     const scenario = unwrap(scenarios[0], '期望至少一个 scenario')
     const slotId = unwrap(scenario.slotTopology[0], '期望 scenario 至少一个 slot').slotId
 
-    let crashed = 0
+    const failures: string[] = []
     for (const hero of heroes) {
       const heroesById = new Map([[hero.heroId, hero]])
       try {
@@ -51,11 +51,11 @@ describe('全英雄评估 smoke', () => {
         // 结果有 objectiveValue 即视为可用；不验数值，但须为正数（非 NaN/0/负）。
         // toBeDefined 放过退化值（如评估 bug 产生 NaN），加正数检查捕获静默错误。
         expect(result.objectiveValue.toNumber()).toBeGreaterThan(0)
-      } catch {
-        crashed += 1
+      } catch (error) {
+        failures.push(`${hero.heroId}: ${error instanceof Error ? error.message : String(error)}`)
       }
     }
-    expect(crashed, `${crashed.toString()} 个英雄评估崩溃`).toBe(0)
+    expect(failures).toEqual([])
   })
 
   it('蔚(95) 善良榜样 signal 在 built 数据中 count/target 分离正确（normalize→build 产物守护）', () => {

@@ -36,7 +36,8 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   const champions = await readJson(path.join(versionDir, 'champions.json'))
   const variants = await readJson(path.join(versionDir, 'variants.json'))
   const formations = await readJson(path.join(versionDir, 'formations.json'))
-  const semanticOverrides = await readJson(semanticOverridesFile).catch(() => ({ heroOverrides: {} }))
+  // 仓库语义补丁是可选输入：仅缺文件时按空补丁处理；JSON 损坏、权限错误等异常必须上抛。
+  const semanticOverrides = await readJsonIfExists(semanticOverridesFile)
   const championsRecord = asRecord(champions) ?? {}
   const variantsRecord = asRecord(variants) ?? {}
   const formationsRecord = asRecord(formations) ?? {}

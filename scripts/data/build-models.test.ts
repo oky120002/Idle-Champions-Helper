@@ -101,6 +101,8 @@ async function setupBuildModelsOutputs(): Promise<{
   heroAbilities: HeroAbilities
   scenarioModels: ScenarioModels
   semanticOverrides: SemanticOverrides
+  versionDir: string
+  semanticOverridesFile: string
 }> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-hero-ability-models-'))
   const versionDir = path.join(tempDir, 'data')
@@ -473,7 +475,7 @@ async function setupBuildModelsOutputs(): Promise<{
   const scenarioModels = (await readJson(path.join(versionDir, 'scenarios.json'))) as ScenarioModels
   const semanticOverrides = (await readJson(path.join(versionDir, 'semantic-overrides.json'))) as SemanticOverrides
 
-  return { result, heroAbilities, scenarioModels, semanticOverrides }
+  return { result, heroAbilities, scenarioModels, semanticOverrides, versionDir, semanticOverridesFile }
 }
 
 it('buildModels 产出 hero abilities 信号（carry/support/unsupported 全链路）', async () => {
@@ -682,6 +684,13 @@ it('buildModels 透传 semantic overrides', async () => {
       ],
     },
   ])
+})
+
+it('buildModels 读取损坏 semantic overrides 时抛错，不静默丢失仓库补丁', async () => {
+  const { versionDir, semanticOverridesFile } = await setupBuildModelsOutputs()
+  await writeFile(semanticOverridesFile, '{ invalid json', 'utf8')
+
+  await expect(buildModels({ versionDir, semanticOverridesFile })).rejects.toThrow()
 })
 
 it('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSignals 噪声', async () => {
