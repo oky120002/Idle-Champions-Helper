@@ -14,7 +14,7 @@ import {
   uniqueNumbers,
   uniqueStrings,
 } from './normalize-text-utils.ts'
-import { looksLikeVariant } from './formation-layout-helpers.ts'
+import { buildFormationLaneHints, looksLikeVariant } from './formation-layout-helpers.ts'
 import {
   buildScenarioModeTags,
   buildScenarioRuleContextId,
@@ -205,6 +205,7 @@ export interface NormalizedManualFormation {
         variantAdventureId: string | undefined
       }[]
     | undefined
+  laneHints: ReturnType<typeof buildFormationLaneHints>
 }
 
 // 从 enemyTypes 排除的"非类型"通用 tag：melee/ranged 由 attackMix 单独承载，
@@ -580,19 +581,20 @@ export function normalizeManualFormations(
         typeof rawNotes === 'object' && rawNotes !== null
           ? normalizeLocalizedText(asRawRecord(rawNotes).original, asRawRecord(rawNotes).display)
           : normalizeLocalizedText(rawNotes, rawNotes)
+      const slots = asRawArray(formation.slots).map((slot) => ({
+        id: toStr(slot.id),
+        row: Number(slot.row),
+        column: Number(slot.column),
+        x: Number.isFinite(Number(slot.x)) ? Number(slot.x) : undefined,
+        y: Number.isFinite(Number(slot.y)) ? Number(slot.y) : undefined,
+        adjacentSlotIds: Array.isArray(slot.adjacentSlotIds)
+          ? (slot.adjacentSlotIds as unknown[]).map((value) => toStr(value))
+          : undefined,
+      }))
 
       return {
         id: toStr(formation.id),
-        slots: asRawArray(formation.slots).map((slot) => ({
-          id: toStr(slot.id),
-          row: Number(slot.row),
-          column: Number(slot.column),
-          x: Number.isFinite(Number(slot.x)) ? Number(slot.x) : undefined,
-          y: Number.isFinite(Number(slot.y)) ? Number(slot.y) : undefined,
-          adjacentSlotIds: Array.isArray(slot.adjacentSlotIds)
-            ? (slot.adjacentSlotIds as unknown[]).map((value) => toStr(value))
-            : undefined,
-        })),
+        slots,
         applicableContexts: Array.isArray(formation.applicableContexts)
           ? (formation.applicableContexts as RawDefinition[])
               .filter(
@@ -640,6 +642,7 @@ export function normalizeManualFormations(
           : undefined,
         name,
         notes,
+        laneHints: buildFormationLaneHints(slots),
       }
     })
     .filter((formation): formation is NormalizedManualFormation & { name: LocalizedText } =>

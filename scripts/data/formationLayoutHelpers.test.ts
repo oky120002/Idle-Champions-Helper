@@ -1,10 +1,40 @@
 import { describe, expect, it } from 'vitest'
 import {
+  buildFormationLaneHints,
   extractOfficialFormations,
   normalizeOfficialFormationSlots,
 } from './formation-layout-helpers.ts'
 
 describe('formation layout helpers', () => {
+  it('按官方列号生成前中后排槽位集合', () => {
+    expect(
+      buildFormationLaneHints([
+        { id: 's1', column: 1 },
+        { id: 's2', column: 2 },
+        { id: 's3', column: 3 },
+        { id: 's4', column: 3 },
+      ]),
+    ).toEqual({
+      front: ['s3', 's4'],
+      middle: ['s2'],
+      back: ['s1'],
+    })
+  })
+
+  it('一列布局归入中排，两列布局不虚构中排', () => {
+    expect(buildFormationLaneHints([{ id: 's1', column: 1 }])).toEqual({
+      front: [],
+      middle: ['s1'],
+      back: [],
+    })
+    expect(
+      buildFormationLaneHints([
+        { id: 's1', column: 1 },
+        { id: 's2', column: 2 },
+      ]),
+    ).toEqual({ front: ['s2'], middle: [], back: ['s1'] })
+  })
+
   it('按官方坐标归一化槽位，并把邻接关系改写成稳定 slot id', () => {
     const slots = normalizeOfficialFormationSlots([
       { x: 60, y: 40, col: 0, adj: [1, 2] },
@@ -177,6 +207,11 @@ describe('formation layout helpers', () => {
           column: 2,
         },
       ],
+      laneHints: {
+        front: ['s2', 's3'],
+        middle: [],
+        back: ['s1'],
+      },
     })
   })
 })

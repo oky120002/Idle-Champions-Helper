@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto'
 import type { LocalizedText } from '../../src/domain/types/common.ts'
+import type { FormationLaneHints } from '../../src/domain/types/formation.ts'
 import {
   compareLocalizedText,
   normalizeLocalizedText,
@@ -46,6 +47,7 @@ interface OfficialFormationLayout {
   slots: NormalizedOfficialSlot[]
   applicableContexts: ApplicableContextRef[]
   sourceContexts: FormationContext[]
+  laneHints: FormationLaneHints
 }
 
 type RawDefinition = Record<string, unknown>
@@ -149,6 +151,30 @@ export function normalizeOfficialFormationSlots(rawSlots: readonly RawDefinition
       .filter((value): value is string => typeof value === 'string')
       .sort(compareSlotIds),
   }))
+}
+
+export function buildFormationLaneHints(
+  slots: readonly Pick<NormalizedOfficialSlot, 'id' | 'column'>[],
+): FormationLaneHints {
+  const columns = [...new Set(slots.map((slot) => slot.column))].sort((left, right) => left - right)
+  const backColumn = columns[0]
+  const frontColumn = columns.at(-1)
+
+  if (backColumn === undefined || frontColumn === undefined || backColumn === frontColumn) {
+    return {
+      front: [],
+      middle: slots.map((slot) => slot.id),
+      back: [],
+    }
+  }
+
+  return {
+    front: slots.filter((slot) => slot.column === frontColumn).map((slot) => slot.id),
+    middle: slots
+      .filter((slot) => slot.column > backColumn && slot.column < frontColumn)
+      .map((slot) => slot.id),
+    back: slots.filter((slot) => slot.column === backColumn).map((slot) => slot.id),
+  }
 }
 
 export function buildOfficialFormationSignature(rawSlots: readonly RawDefinition[] = []): string {
@@ -310,6 +336,7 @@ export function extractOfficialFormations(
         applicableContexts: [{ kind: context.kind, id: context.id }],
         sourceContexts: [context],
         slots,
+        laneHints: buildFormationLaneHints(slots),
       })
       return
     }

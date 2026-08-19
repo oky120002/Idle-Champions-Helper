@@ -12,6 +12,23 @@ export interface FormationBoardMetrics {
   widthPx: number
 }
 
+export type FormationLane = 'front' | 'middle' | 'back'
+
+export function getFormationSlotLane(layout: FormationLayout, slotId: string): FormationLane | null {
+  const laneHints = layout.laneHints
+  if (!laneHints) {
+    return null
+  }
+
+  for (const lane of ['front', 'middle', 'back'] as const) {
+    if (laneHints[lane].includes(slotId)) {
+      return lane
+    }
+  }
+
+  return null
+}
+
 function buildCountLabel(count: number, singular: string, plural: string): string {
   return count === 1 ? singular : plural
 }

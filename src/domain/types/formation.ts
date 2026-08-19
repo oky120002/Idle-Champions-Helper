@@ -122,6 +122,12 @@ export interface FormationSlot {
   adjacentSlotIds?: string[]
 }
 
+export interface FormationLaneHints {
+  front: string[]
+  middle: string[]
+  back: string[]
+}
+
 export interface FormationLayout {
   id: string
   name: LocalizedText
@@ -129,11 +135,7 @@ export interface FormationLayout {
   slots: FormationSlot[]
   applicableContexts?: ScenarioRef[]
   sourceContexts?: FormationContext[]
-  laneHints?: {
-    front?: string[]
-    middle?: string[]
-    back?: string[]
-  }
+  laneHints?: FormationLaneHints
 }
 
 export interface FormationDraft {

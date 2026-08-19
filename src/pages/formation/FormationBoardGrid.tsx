@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Plus } from 'lucide-react'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { getLocalizedTextPair, getPrimaryLocalizedText } from '../../domain/localizedText'
+import { getFormationSlotLane, type FormationLane } from '../../domain/formationLayout'
 import type { Champion, FormationSlot } from '../../domain/types'
 import { FormationBoardCanvas } from './FormationBoardCanvas'
 import type { FormationPageModel } from './types'
@@ -132,9 +133,21 @@ function renderSlotHint(
       </div>
     )
   }
+  const lane = model.selectedLayout ? getFormationSlotLane(model.selectedLayout, slot.id) : null
+  if (lane) {
+    return <span className="formation-slot__hint">{t(getFormationLaneLabel(lane))}</span>
+  }
   return (
     <span className="formation-slot__hint">
       {t("第 {p0} 排", { p0: String(slot.row) })}
     </span>
   )
+}
+
+function getFormationLaneLabel(lane: FormationLane): string {
+  return {
+    front: '前排',
+    middle: '中排',
+    back: '后排',
+  }[lane]
 }
