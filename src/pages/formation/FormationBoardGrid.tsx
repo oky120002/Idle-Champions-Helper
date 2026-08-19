@@ -134,7 +134,7 @@ function renderSlotHint(
     )
   }
   const lane = model.selectedLayout ? getFormationSlotLane(model.selectedLayout, slot.id) : null
-  if (lane) {
+  if (lane !== null) {
     return <span className="formation-slot__hint">{t(getFormationLaneLabel(lane))}</span>
   }
   return (
