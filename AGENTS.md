@@ -7,7 +7,7 @@
 - 文档：`docs/governance.md`
 - 国际化：`docs/specs/guidelines/i18n-messages.md`
 - 统一语言（游戏术语 ↔ 代码标识符）：`CONTEXT.md`
-- 测试组织与运行门禁：`docs/specs/guidelines/testing.md`；测试方法论与跨边界契约：`docs/specs/guidelines/testing-methodology.md`
+- 测试规范（编写或修改任何测试用例前必须同时加载）：组织与运行门禁 `docs/specs/guidelines/testing.md`；方法论与跨边界契约 `docs/specs/guidelines/testing-methodology.md`
 - 数据归一化管线（资源同步 + normalize/build 增量跳过、数据源格式追溯）：`docs/specs/guidelines/data-normalization.md`
 - 私有用户数据：`docs/specs/modules/user-data/`
 - 当前操作手册：`docs/runbooks/README.md`
