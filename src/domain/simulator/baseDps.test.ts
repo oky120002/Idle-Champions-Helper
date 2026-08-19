@@ -57,8 +57,8 @@ describe('computeCarryDps', () => {
     expect(dps.toNumber()).toBeCloseTo(12000 * 1.13 * 3, 3)
   })
 
-  it('baseDamage<=0 回退 1、aggregate<=0 回退 1', () => {
+  it('baseDamage<=0 仍回退 1，但零 aggregate 保留为零', () => {
     const dps = computeCarryDps(hero({ baseDamage: 0, costCurves: { '1': 1.1 } }), 1, 0)
-    expect(dps.toNumber()).toBeCloseTo(1.1, 5)
+    expect(dps.toNumber()).toBe(0)
   })
 })

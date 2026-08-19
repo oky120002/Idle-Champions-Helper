@@ -459,7 +459,7 @@ describe('Seam 4: 同 key 外部加成加法合并（A1 契约）', () => {
     expect(b.factors.heroDpsPool).toBeCloseTo(1.8, 10)
   })
 
-  it('契约变异：globalBuffMultiplier=NaN → carryDps 静默丢失加成（computeCarryDps guard）', () => {
+  it('契约变异：globalBuffMultiplier=NaN → 跳过 carry 并附加 warning', () => {
     const carry = makeTestHero('nan-carry', 1)
     const heroesMap = new Map([['nan-carry', carry]])
     const result = scoreFormation({
@@ -467,12 +467,15 @@ describe('Seam 4: 同 key 外部加成加法合并（A1 契约）', () => {
       heroesById: heroesMap, scenario: makeMinimalScenario(),
       globalBuffMultiplier: NaN,
     })
-    expect(result.carryHeroId).toBe('nan-carry')
+    expect(result.carryHeroId).toBeNull()
     const num = result.objectiveValue.toNumber()
     expect(Number.isFinite(num)).toBe(true)
-    // carryDps = 10 × 1.06 × 1 = 10.6（globalBuff 被 computeCarryDps:33 Number.isFinite guard 吞掉）
-    expect(num).toBeCloseTo(10.6, 1)
-    expect(result.warnings).toHaveLength(0)
+    // globalBuff 异常时不伪造单位元，carry 不计入目标值。
+    expect(num).toBe(0)
+    expect(result.warnings).toContainEqual({
+      key: '{p0} 的伤害加成聚合值非法，当前不计入目标值。',
+      params: { p0: 'nan-carry' },
+    })
   })
 })
 
