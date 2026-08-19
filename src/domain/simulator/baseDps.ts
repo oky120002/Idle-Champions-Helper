@@ -30,6 +30,7 @@ export function computeCarryDps(
 ): GameNumberValue {
   const baseDamage = hero.baseDamage > 0 ? hero.baseDamage : 1
   const levelCurve = computeLevelCurve(hero, level)
-  const aggregate = Number.isFinite(damageAggregate) && damageAggregate > 0 ? damageAggregate : 1
+  // 1 只表示“未传入加成”的乘法单位元；显式的 0 必须保留，损坏值不能伪装成正常加成。
+  const aggregate = Number.isFinite(damageAggregate) && damageAggregate >= 0 ? damageAggregate : 0
   return toGameNumber(baseDamage).mul(levelCurve).mul(aggregate)
 }

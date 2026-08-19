@@ -171,6 +171,7 @@ export const MESSAGES: Record<string, Message> = {
   "{p0} 乘算堆叠溢出，当前不计入目标值。": { en: "{p0} multiplicative stacking overflows; currently excluded from the target value." },
   "{p0} 依赖的基础增益当前未生效，当前不计入目标值。": { en: "{p0} depends on a base buff that is not currently active; excluded from the target value." },
   "{p0} 的乘算堆叠结果非法，当前不计入目标值。": { en: "{p0} produced an invalid multiplicative stacking result; excluded from the target value." },
+  "{p0} 的伤害加成聚合值非法，当前不计入目标值。": { en: "{p0} produced an invalid damage-buff aggregate; excluded from the target value." },
   "{p0} 依赖手动触发或专精选择，当前不计入目标值。": { en: "{p0} depends on manual activation or a specialization choice; excluded from the target value." },
   "{p0} 的叠层方式({p1} / {p2}) 尚未稳定解析，当前不计入目标值。": { en: "{p0}'s stacking method ({p1} / {p2}) is not yet stably resolved; excluded from the target value." },
   "{p0} 需要{p1}上下文，当前不计入目标值。": { en: "{p0} requires {p1} context; excluded from the target value." },
