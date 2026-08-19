@@ -16,4 +16,4 @@
 ## 关联
 
 - [git-lfs-pages-support.md](../../research/deployment/git-lfs-pages-support.md)
-- [visual-asset-full-audit.md](../../requirements/visual-asset-full-audit.md)（全量资源审计，待评）
+- [2026-08-visual-asset-full-audit.md](../../requirements/2026-08-visual-asset-full-audit.md)（全量资源审计，待评）

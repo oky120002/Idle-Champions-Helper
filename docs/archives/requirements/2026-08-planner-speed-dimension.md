@@ -104,6 +104,6 @@ ic.byteglow.com 有 Speed 页面（社区速度计算器），但仅展示英雄
 - 调研：`docs/research/gameplay/speed-mechanics.md`（11 类机制全貌 + 社区 Speed 101）
 - 社区来源：[Speed Champions 101 — Gaarawarr](https://www.reddit.com/r/idlechampions/comments/1aleren/speed_champions_101_an_introduction/)、[Steam — Briv+Hew Maan 自动化攻略](https://steamcommunity.com/sharedfiles/filedetails/?id=2615977602)、[Steam — Briv 跳层数学](https://steamcommunity.com/app/627690/discussions/0/1872875054775725577/)、[Byteglow Speed](https://ic.byteglow.com/speed)
 - 里程碑：`docs/research/data/planner/damage-mechanic-inventory.md` §8 M1
-- 需求：`planner-capability-extensions.md`（逐步模拟子项）
+- 需求：`2026-08-planner-capability-extensions.md`（逐步模拟子项）
 - 关联需求：`2026-08-planner-area-dashboard.md`（推图仪表盘，依赖动态 BUD）
 - 代码：`src/domain/simulator/budCalculation.ts`、`areaEstimation.ts`

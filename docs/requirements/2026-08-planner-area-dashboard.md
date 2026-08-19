@@ -72,7 +72,7 @@ health = 10 × growth_rate^(area - 1)
 
 - **精确到秒的过层模拟**（逐区击杀时间线）：依赖运行时敌人刷新逻辑，超出静态评估范围
 - **Modron 自动重置建议**：需要 modron 配置数据（当前不导入）
-- **药水/契约 buff 预估**：需要私有存档深度导入（见 `planner-capability-extensions.md` M2）
+- **药水/契约 buff 预估**：需要私有存档深度导入（见 `2026-08-planner-capability-extensions.md` M2）
 
 ## 已有基建
 

@@ -4,7 +4,7 @@
 **类型**: change
 **范围**: planner
 **创建日期**: 2026-08-08
-**需求**：`docs/requirements/formation-rule-expansion.md`（子项 4 标签资格限制 + TODO `atd_77cdaabdd1` / `atd_83446e06cd`）
+**需求**：`docs/requirements/2026-08-formation-rule-expansion.md`（子项 4 标签资格限制 + TODO `atd_77cdaabdd1` / `atd_83446e06cd`）
 
 ## 问题
 
@@ -78,7 +78,7 @@ export interface AttributeRequirement {
 
 ### Phase 5：文档同步
 
-- 更新 `docs/requirements/formation-rule-expansion.md`（标记完成项）
+- 更新 `docs/requirements/2026-08-formation-rule-expansion.md`（标记完成项）
 - 更新 `docs/research/gameplay/variant-restriction-catalog.md`（覆盖现状）
 - 更新 `docs/specs/modules/formation/rules.md`（当前规则）
 - 归档已完成 TODO 条目

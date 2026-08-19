@@ -106,4 +106,4 @@ elif 宝石农场: 5 场上 + 1 点击 + 速度英雄优先 + 其余英雄
 - 调研：`docs/research/gameplay/familiars.md`（熟悉机制全貌）
 - 社区来源：[Steam Modron Gem Farm 指南](https://steamcommunity.com/sharedfiles/filedetails/?id=2184815975)、[Fandom Wiki Familiars](https://idlechampions.fandom.com/wiki/Familiars)
 - 代码：`src/pages/pets/`、`src/domain/user-profile/types.ts`
-- 关联需求：`planner-capability-extensions.md`（私有存档深度导入 M2 可包含熟悉库存）
+- 关联需求：`2026-08-planner-capability-extensions.md`（私有存档深度导入 M2 可包含熟悉库存）

@@ -27,7 +27,7 @@
 - [x] 阶段 2: 数据加载 —— types/enumGroups 加 `IdLocalizedEnumGroup` 校验器，`useChampionCollectionState` 加载 patrons，`ChampionState` 加 patrons —— 验证：patrons 正确加载
 - [x] 阶段 3: URL 状态 —— `query-state.ts` 加 patron param key + `selectedPatrons` 序列化/反序列化 + 测试 —— 验证：`query-state.test.ts` 通过
 - [x] 阶段 4: UI —— 筛选项加 patron 多选组（同构 affiliations 渲染，id 匹配）+ active chip + 接线 —— 验证：`npm run build` + 浏览器交互
-- [x] 阶段 5: 文档收口 —— `filter/rules.md` / `scope-and-data.md` 更新，`requirements/champion-filter-extensions.md` 子项 1 打钩 —— 验证：文档与代码一致
+- [x] 阶段 5: 文档收口 —— `filter/rules.md` / `scope-and-data.md` 更新，`requirements/2026-08-champion-filter-extensions.md` 子项 1 打钩 —— 验证：文档与代码一致
 
 ## 验收
 
@@ -42,6 +42,6 @@
 - specs/ 更新点：
   - `docs/specs/modules/champions/filter/rules.md`：当前筛选规则加 Patron 维度
   - `docs/specs/modules/champions/filter/scope-and-data.md`：数据合同加 patrons enum 消费
-- `requirements/champion-filter-extensions.md` 子项 1 打钩
+- `requirements/2026-08-champion-filter-extensions.md` 子项 1 打钩
 - 本 change 状态 → 已落地 → 移 `archives/plans/`
 - **specs/ 永不引用本 plan**（规范描述最终态，不描述交付过程）

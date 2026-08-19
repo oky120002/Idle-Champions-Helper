@@ -149,6 +149,6 @@ planner 当前有三个优化目标：DPS、金币、速度，每次选一个最
 - **约束图谱**：`docs/research/gameplay/viability-constraint-taxonomy.md`（完整 10 维）
 - 机制文档：`docs/research/gameplay/attack-multi-hit.md`、`armored-enemies.md`、`aoe-survival.md`、`enemy-special-health.md`、`bud-mechanics.md`
 - 统一语言：`CONTEXT.md`（多段攻击、伤害系数、护甲敌人、减伤）
-- 现有能力：`docs/requirements/planner-capability-extensions.md`（综合目标、逐步模拟子项）
+- 现有能力：`docs/requirements/2026-08-planner-capability-extensions.md`（综合目标、逐步模拟子项）
 - planner 架构：`docs/specs/modules/planner/architecture.md`（投影模式、外部加成入参契约）
 - 社区来源：[Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/5118863332768135681/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/tw8xxp/)、[Fandom Wiki - Favored Foes](https://idlechampions.fandom.com/wiki/Favored_Foes)

@@ -111,4 +111,4 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 - 调研：`docs/research/gameplay/legendary-forge.md`（传奇装备与熔铸全貌）
 - 社区来源：[Legendary Forge 101 — Reddit](https://www.reddit.com/r/idlechampions/comments/ppl9mg/legendary_forge_101_an_introduction/)、[Forge — Fandom Wiki](https://idlechampions.fandom.com/wiki/Forge)、[Steam 英雄能力公式](https://steamcommunity.com/app/627690/discussions/0/4336482609599058214/)、[Reddit 传奇优先级](https://www.reddit.com/r/idlechampions/comments/1l9nhv4/legendary_priorities/)、[Byteglow 传奇浏览](https://ic.byteglow.com/legendaries)
 - 代码：`src/domain/planner/scoringBonusInputs.ts`、`src/domain/user-profile/types.ts:12`（OwnedHeroLegendarySlot）
-- 关联需求：`planner-capability-extensions.md`（手动参数子项——装备假设配置可扩展到传奇）
+- 关联需求：`2026-08-planner-capability-extensions.md`（手动参数子项——装备假设配置可扩展到传奇）

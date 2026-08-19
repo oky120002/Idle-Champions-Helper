@@ -74,7 +74,7 @@
 ### 阶段 6：文档同步 ✅
 
 - [x] specs 更新：`simulator.md`（金币预算换算 + 专精等级门控最终态）、`requirements.md`（等级来源扩展为金币/等级二选一）
-- [x] requirements 状态更新：`planner-capability-extensions.md` 金币预算子项打钩
+- [x] requirements 状态更新：`2026-08-planner-capability-extensions.md` 金币预算子项打钩
 - [x] 数据重建后 plan 状态 → 已落地 → 移 `archives/plans/`
 
 ## 验收

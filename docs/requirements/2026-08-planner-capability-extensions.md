@@ -39,4 +39,4 @@
 - [damage-bonus-sources.md](../research/data/planner/damage-bonus-sources.md)（未建模来源与补建方向）
 - [damage-mechanic-inventory.md](../research/data/planner/damage-mechanic-inventory.md)（机制全貌与里程碑）
 - `docs/specs/modules/planner/expression-evaluator.md`（表达式求值器当前态）
-- [conditional-damage-bonus.md](./conditional-damage-bonus.md)（条件性攻击加成，本提案子项）
+- [2026-08-conditional-damage-bonus.md](./2026-08-conditional-damage-bonus.md)（条件性攻击加成，本提案子项）

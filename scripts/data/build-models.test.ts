@@ -658,7 +658,7 @@ it('buildModels 产出 scenarios（阵型布局）', async () => {
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },
     { slotId: 's2', row: 1, column: 2, x: 20, y: 10, adjacentSlotIds: ['s1'] },
   ])
-  // slot_escort mechanic 不锁槽——护送占位按全槽可用处理（见 docs/requirements/escort-slot-locking.md）。
+  // slot_escort mechanic 不锁槽——护送占位按全槽可用处理（见 docs/requirements/2026-08-escort-slot-locking.md）。
   // 不产 lockedSlots 字段、不产护送 warning（slot_escort 在 projectMechanicsToScenario 是 no-op）。
   expect(scenarioModels.items[0]).not.toHaveProperty('lockedSlots')
   expect(scenarioModels.items[0]?.scenarioWarnings.some((w) => 'key' in w && w.key.includes('未解析 restriction'))).toBe(true)

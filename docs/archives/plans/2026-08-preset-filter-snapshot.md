@@ -11,7 +11,7 @@
 
 ## 背景
 
-- 需求 `preset-integration-extensions.md §1` 指出当前方案只存阵容，不存筛选上下文，恢复时候选池回到全量。
+- 需求 `2026-08-preset-integration-extensions.md §1` 指出当前方案只存阵容，不存筛选上下文，恢复时候选池回到全量。
 - 现状摸查发现**衔接断裂**：丰富筛选在英雄列表页（`ChampionsFilterState` 11 维），但方案保存入口在阵型编辑页 / planner 页，两者状态完全隔离——阵型页 HeroPicker 只有一个搜索框，planner 只有候选模式二选一。
 - 可复用基建已就绪：
   - `features/champion-filters/query-state.ts` — 跨页面筛选 query 编解码（`appendCommonFilterSearchParams` / `readCommonFilterState`，接受自定义 param keys）
@@ -67,7 +67,7 @@
 ### 阶段 6：文档同步
 
 - [x] specs 更新：`presets/scope-and-model.md`（filterSnapshot 字段）、`presets/ui.md`（筛选快照恢复交互）、`formation/` 相关 specs（阵型页消费筛选）
-- [x] requirements 状态更新：`preset-integration-extensions.md §1` 打钩
+- [x] requirements 状态更新：`2026-08-preset-integration-extensions.md §1` 打钩
 - [x] plan 状态 → 已落地 → 移 `archives/plans/`
 
 ## 验收
@@ -84,5 +84,5 @@
   - `specs/modules/presets/scope-and-model.md`：数据模型加 filterSnapshot 字段
   - `specs/modules/presets/ui.md`：筛选快照保存与恢复交互
   - `specs/modules/champions/` 或 `specs/modules/formation/`：阵型页消费英雄列表筛选的跨页衔接
-- requirements/ 更新：`preset-integration-extensions.md §1` 打钩（若全部子项落地则整体归档）
+- requirements/ 更新：`2026-08-preset-integration-extensions.md §1` 打钩（若全部子项落地则整体归档）
 - 本 change 状态 → 已落地 → 移 `archives/plans/`
