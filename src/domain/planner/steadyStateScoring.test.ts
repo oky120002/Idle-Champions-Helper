@@ -53,22 +53,14 @@ const scenario: OfficialPlannerScenarioModel = {
 }
 
 describe('steady state scoring', () => {
-  it('无效伤害聚合值跳过 carry 并附加 warning', () => {
+  it('无效伤害聚合值直接抛异常', () => {
     const carry = createHero('carry', { baseDamage: 1 })
-    const result = scoreFormation({
+    expect(() => scoreFormation({
       placements: { s1: 'carry' },
       heroesById: new Map([['carry', carry]]),
       scenario,
       globalBuffMultiplier: Number.NaN,
-    })
-
-    expect(result.objectiveValue.toNumber()).toBe(0)
-    expect(result.carryHeroId).toBeNull()
-    expect(result.breakdown).toBeNull()
-    expect(result.warnings).toContainEqual({
-      key: '{p0} 的伤害加成聚合值非法，当前不计入目标值。',
-      params: { p0: 'carry' },
-    })
+    })).toThrow()
   })
 
   it('零伤害聚合值保留为零，不伪装成单位元 1', () => {
@@ -84,21 +76,14 @@ describe('steady state scoring', () => {
     expect(result.warnings).toHaveLength(0)
   })
 
-  it('负伤害聚合值跳过 carry 并附加 warning', () => {
+  it('负伤害聚合值直接抛异常', () => {
     const carry = createHero('carry', { baseDamage: 1 })
-    const result = scoreFormation({
+    expect(() => scoreFormation({
       placements: { s1: 'carry' },
       heroesById: new Map([['carry', carry]]),
       scenario,
       globalBuffMultiplier: -1,
-    })
-
-    expect(result.objectiveValue.toNumber()).toBe(0)
-    expect(result.carryHeroId).toBeNull()
-    expect(result.warnings).toContainEqual({
-      key: '{p0} 的伤害加成聚合值非法，当前不计入目标值。',
-      params: { p0: 'carry' },
-    })
+    })).toThrow()
   })
 
   it('relation=adjacent 支持位靠近 carry 时目标量更高', () => {

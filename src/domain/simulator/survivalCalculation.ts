@@ -1,6 +1,7 @@
 import { toGameNumber, type GameNumberValue } from '../gameNumber'
 
 import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import { assertValidLevel } from './baseDps'
 
 /**
  * 生存（survival）计算。
@@ -19,11 +20,12 @@ const DEFAULT_HEALTH_CURVE_RATE = 1.06
 function resolveHealthCurveRate(hero: ResolvedHeroAbilityProfile): number {
   const curves = hero.healthCurves
   const rate = curves?.['1'] ?? (curves ? Object.values(curves)[0] : undefined)
-  return typeof rate === 'number' && rate > 0 ? rate : DEFAULT_HEALTH_CURVE_RATE
+  return typeof rate === 'number' && Number.isFinite(rate) && rate > 0 ? rate : DEFAULT_HEALTH_CURVE_RATE
 }
 
 export function computeHealthLevelCurve(hero: ResolvedHeroAbilityProfile, level: number): GameNumberValue {
-  return toGameNumber(resolveHealthCurveRate(hero)).pow(Math.max(0, level))
+  assertValidLevel(level)
+  return toGameNumber(resolveHealthCurveRate(hero)).pow(level)
 }
 
 export function computeEffectiveHealth(
@@ -31,8 +33,12 @@ export function computeEffectiveHealth(
   level: number,
   healthPoolMultiplier: number,
 ): GameNumberValue {
-  const baseHealth = hero.baseHealth > 0 ? hero.baseHealth : 1
+  if (!Number.isFinite(hero.baseHealth) || hero.baseHealth <= 0) {
+    throw new Error(`baseHealth must be a finite positive number, got ${String(hero.baseHealth)}`)
+  }
+  if (!Number.isFinite(healthPoolMultiplier) || healthPoolMultiplier < 0) {
+    throw new Error(`healthPoolMultiplier must be a finite non-negative number, got ${String(healthPoolMultiplier)}`)
+  }
   const levelCurve = computeHealthLevelCurve(hero, level)
-  const mult = Number.isFinite(healthPoolMultiplier) && healthPoolMultiplier > 0 ? healthPoolMultiplier : 1
-  return toGameNumber(baseHealth).mul(levelCurve).mul(mult)
+  return toGameNumber(hero.baseHealth).mul(levelCurve).mul(healthPoolMultiplier)
 }

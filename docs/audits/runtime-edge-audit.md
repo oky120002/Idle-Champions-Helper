@@ -24,9 +24,9 @@
 | 1 | 某 collection 404/网络中断 | `Promise.all` reject → `loadState='error'` → `role="alert"` 可见文案（`PlannerEvaluatePage.tsx:239`） | route 测间接 | 可见报错，无重试按钮（需手动刷新） | 健康（P2：可加重试） |
 | 2 | version.json 加载失败 | `loadVersion` reject（在 Promise.all 前）→ error 态同上 | 同上 | 同上 | 健康 |
 | 3 | profile 快照 IndexedDB 读失败 | `resolveUserProfileSnapshot` 内部 catch → `snapshot:null`+`errorMessage`；`errorMessage` 被 `usePlannerCollections:89` 丢弃 | ✗ | planner 继续运行（owned-only→missing-profile blocker；all-hypothetical→正常） | **P2：错误信息静默丢弃** |
-| 4 | profile 快照腐蚀（NaN level / wrong shape） | ~~IndexedDB 裸 cast 无校验~~→ 读出处 zod 校验失败即 throw（消费方 catch→null）；scoreFormation 不崩溃，NaN dps 与 ZERO 比较恒 false→`bestCarryHeroId=null`、`objectiveValue='0'`（静默零分） | ✗（本轮补测）+ C1 腐蚀测试 | DPS 显示 0 无诊断 | **✅ 已收口（C1，2026-08-01）**：stored-record-schemas 读出校验，level=NaN 直击拒绝 |
+| 4 | profile 快照腐蚀（NaN level / wrong shape） | 读出处 zod 校验失败即 throw（消费方 catch→null）；若腐蚀值绕过存储层进入评分器，`scoreFormation` 仍对 NaN/负等级直接 throw | ✅ runtime edge + C1 腐蚀测试 | 不再静默零分 | **✅ 已收口**：stored-record-schemas 读出校验 + 评分边界 fail-fast |
 | 5 | semantic-overrides fetch reject | `.catch(()=>EMPTY_OVERRIDE_COLLECTION)`（`plannerModel.ts:23`）静默降级 | ✗ | 无 repo override，评估照常 | 健康（静默但安全） |
-| 6 | semantic-overrides valid-JSON-wrong-shape | `.catch` 不触发（非 reject）；`resolveHeroAbilityProfiles` 消费——缺 heroId 条目在 map 建键时不匹配任何英雄，静默忽略 | ✗（本轮补测） | 无影响 | 健康 |
+| 6 | semantic-overrides valid-JSON-wrong-shape | `resolveHeroAbilityProfiles` 对缺 heroId 条目直接抛异常 | ✅ runtime edge | worker 返回错误，避免静默丢 override | **✅ 已收口** |
 | 7 | effect_def 引用缺失 template | `resolveEffectDefinitionKeys` 返回 null；globalBuff 路径因 `parseEffectKind('effect_def,X')≠global_dps` 跳过，externalHeroDps 路径 `if(!keys) continue` 丢弃——均低估不误用 | ✗ | 当前数据 0 悬空，不可触发 | 健康 |
 | 8 | forced∩banned 同英雄冲突 | forced 让英雄进候选，`checkFormationLegality` 判 `bannedChampion`→全部 beam 结果非法→`no-legal-recommendation`（banned 胜出，不放非法阵型） | ✗（本轮补测） | 当前 bannedHeroes 恒空→不可达（§5） | 健康；防御测试随死代码删除（§5 已收口） |
 | 9 | 空 placements | scoreFormation 早返回 `objectiveValue='0'`、`breakdown=null` | ✗（本轮补测） | DPS 显示 0 | 健康 |

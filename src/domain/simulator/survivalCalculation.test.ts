@@ -38,10 +38,17 @@ describe('survivalCalculation', () => {
     expect(computeEffectiveHealth(hero, 1, 2).toNumber()).toBeCloseTo(210, 5)
   })
 
-  it('healthPool 缺失/非正回退 1', () => {
+  it('healthPool=0 保留零结果', () => {
     const hero = createHero({ baseHealth: 50, healthCurves: { '1': 1 } })
-    expect(computeEffectiveHealth(hero, 1, 0).toNumber()).toBeCloseTo(50, 5)
-    expect(computeEffectiveHealth(hero, 1, NaN).toNumber()).toBeCloseTo(50, 5)
+    expect(computeEffectiveHealth(hero, 1, 0).toNumber()).toBe(0)
+  })
+
+  it('基础生命、等级或生命池为非法值时直接抛异常', () => {
+    expect(() => computeEffectiveHealth(createHero({ baseHealth: 0 }), 1, 1)).toThrow()
+    expect(() => computeEffectiveHealth(createHero(), -1, 1)).toThrow()
+    expect(() => computeEffectiveHealth(createHero(), 1, Number.NaN)).toThrow()
+    expect(() => computeEffectiveHealth(createHero(), 1, -1)).toThrow()
+    expect(() => computeEffectiveHealth(createHero(), 1, Number.POSITIVE_INFINITY)).toThrow()
   })
 
   it('healthCurves 缺失回退默认率 1.06', () => {

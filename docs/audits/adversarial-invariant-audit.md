@@ -34,7 +34,7 @@
 
 以下反例通过主动构造**合法或边界输入**验证被测函数的实际行为——是 fail-fast、静默错误、还是产出错误结果。
 
-### 3.1 baseDamage 非正值静默校正（反例发现）
+### 3.1 baseDamage 非正值静默校正（历史发现，已修复）
 
 **发现**：`computeCarryDps`（`baseDps.ts:31`）含 guard `const baseDamage = hero.baseDamage > 0 ? hero.baseDamage : 1`。非正值（0 / 负 / NaN）被**静默替换为 1**，数据损坏完全不可见：
 
@@ -49,7 +49,11 @@
 
 **风险评估**：低。生产数据中 `baseDamage` 来自 `hero-abilities.json`（build 期从游戏数据解析），数据腐蚀概率极低；runtime-edge §4 已覆盖 IndexedDB 腐蚀的 zod 校验门控。但若未来引入用户自定义英雄或数据管线变更，此 guard 会掩盖问题。
 
-**处置**：锁现状（已补测试守护实际行为）。不在本轮修生产代码——guard 有向后兼容意义（旧数据可能含 baseDamage=0 的英雄占位符）。
+**处置**：已改为 fail-fast。`computeCarryDps` 与 `SimulationBreakdown` 共享基础伤害校验；0、负数和非有限值都直接抛异常，回归断言位于 `baseDps.test.ts` 与 `steadyStateScoring.invariants.test.ts`。旧数据占位符不属于合法评分输入。
+
+### 3.5 第六轮异常输入收口
+
+对抗性集成测试中的 NaN、Infinity、负聚合值、非法 signal kind、腐蚀等级和损坏 override 已统一改为 `toThrow`。合法的单位元、缺省曲线、官方 `numTargets=0` 哨兵、未建模机制 warning 和用户数据兼容路径保留，判定依据与当前运行时合同见 `docs/specs/modules/planner/computation-runtime.md`。
 
 ### 3.2 lockedCarryHeroId 边界
 

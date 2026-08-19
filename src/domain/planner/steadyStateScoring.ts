@@ -8,7 +8,7 @@ import { asMessageRef, uniqueMessageRefs } from '../localizedUiText'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { matchesHeroQualifier } from '../abilities/signalSemantics'
-import { computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
+import { assertValidBaseDamage, assertValidDamageAggregate, assertValidLevel, computeCarryDps, computeLevelCurve } from '../simulator/baseDps'
 import { computeEffectiveHealth } from '../simulator/survivalCalculation'
 import { computeSingleHitDamage } from '../simulator/budCalculation'
 import { estimateMaxArea, type AreaEstimationResult } from '../simulator/areaEstimation'
@@ -513,7 +513,7 @@ function scoreCarryCandidate(
   input: ScoringInput,
   aggregateProjection: AggregateProjection,
   enemyTypeSet: Set<string>,
-): { carryDps: GameNumberValue; warnings: MessageRef[]; activeKinds: Set<HeroAbilityKind>; invalidDamageAggregate: boolean } & BreakdownData {
+): { carryDps: GameNumberValue; warnings: MessageRef[]; activeKinds: Set<HeroAbilityKind> } & BreakdownData {
   const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
   const { warnings, activeKinds, sharedPools, critParts, vulnParts, contributions } = collectSupportSignalsForCarry(carryEntry, placedEntries, input, enemyTypeSet)
 
@@ -532,19 +532,12 @@ function scoreCarryCandidate(
     placedEntries,
   )
   const effectiveDamageAggregate = damageAggregate * critVuln
-  const invalidDamageAggregate = !Number.isFinite(effectiveDamageAggregate) || effectiveDamageAggregate < 0
-  if (invalidDamageAggregate) {
-    warnings.push({
-      key: '{p0} 的伤害加成聚合值非法，当前不计入目标值。',
-      params: { p0: carryEntry.hero.name.display },
-    })
-  }
-  const scoringDamageAggregate = invalidDamageAggregate ? 0 : effectiveDamageAggregate
+  assertValidDamageAggregate(effectiveDamageAggregate)
 
   // 投影模式（约束②）：formation-buff 只取阵型内 ability 聚合，不乘 baseDamage/levelCurve/外部加成。
   const carryDps = aggregateProjection === 'formation-buff'
-    ? toGameNumber(scoringDamageAggregate)
-    : computeCarryDps(carryEntry.hero, carryLevel, scoringDamageAggregate)
+    ? toGameNumber(effectiveDamageAggregate)
+    : computeCarryDps(carryEntry.hero, carryLevel, effectiveDamageAggregate)
 
   return {
     pools: breakdownPools,
@@ -556,7 +549,6 @@ function scoreCarryCandidate(
     critFactor,
     vulnFactor,
     contributions,
-    invalidDamageAggregate,
   }
 }
 
@@ -616,8 +608,8 @@ function computeAreaEstimateForBestCarry(
 function buildSimulationBreakdown(data: BreakdownData, bestCarryDps: GameNumberValue): SimulationBreakdown {
   const { carryEntry, carryLevel, pools, critFactor, vulnFactor, contributions } = data
   const levelCurve = computeLevelCurve(carryEntry.hero, carryLevel)
-  const baseDamage = carryEntry.hero.baseDamage > 0 ? carryEntry.hero.baseDamage : 1
-  const baseDps = multiplyGameNumbers(toGameNumber(baseDamage), levelCurve)
+  assertValidBaseDamage(carryEntry.hero.baseDamage)
+  const baseDps = multiplyGameNumbers(toGameNumber(carryEntry.hero.baseDamage), levelCurve)
   // factors 从 pools 提取：damage:global/hero 池各外露为 globalBuff/heroDpsPool（unified = ability + 外部同 key 加法）；
   // damagePool 为残余（非 global/hero 的 damage 池，当前结构性 =1）。
   const globalBuff = pools.get('damage:global')?.poolMultiplier ?? 1
@@ -666,16 +658,12 @@ function findBestCarry(
   let carryHeroId: string | null = null
   let activeKinds: Set<HeroAbilityKind> = new Set()
   let breakdownData: BreakdownData | null = null
-  let invalidDamageWarnings: MessageRef[] = []
 
   for (const carryEntry of placedEntries) {
     if (input.lockedCarryHeroId != null && input.lockedCarryHeroId !== '' && carryEntry.hero.heroId !== input.lockedCarryHeroId) {
       continue
     }
     const candidate = scoreCarryCandidate(carryEntry, placedEntries, input, aggregateProjection, enemyTypeSet)
-    if (candidate.invalidDamageAggregate) {
-      invalidDamageWarnings = uniqueMessageRefs([...invalidDamageWarnings, ...candidate.warnings])
-    }
     if (compareGameNumbers(candidate.carryDps, carryDps) > 0) {
       carryDps = candidate.carryDps
       warnings = uniqueMessageRefs(candidate.warnings)
@@ -694,7 +682,7 @@ function findBestCarry(
 
   return {
     carryDps,
-    warnings: carryHeroId == null ? invalidDamageWarnings : warnings,
+    warnings,
     carryHeroId,
     activeKinds,
     breakdownData,
@@ -702,6 +690,12 @@ function findBestCarry(
 }
 
 export function scoreFormation(input: ScoringInput): ScoringResult {
+  for (const [heroId, level] of input.heroLevels ?? []) {
+    assertValidLevel(level)
+    if (heroId.length === 0) {
+      throw new Error('heroLevels contains an empty heroId')
+    }
+  }
   const placedEntries = Object.entries(input.placements)
     .map(([slotId, heroId]) => {
       const hero = input.heroesById.get(heroId)

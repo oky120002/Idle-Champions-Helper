@@ -27,6 +27,8 @@ multiplier 类回退 1 **不是「加 1」**——代码统一 `(mult−1)×100`
 
 > 非加成数值的特殊默认（近似 / 模式选择，非「跳过」）：`heroLevels ?? 1`（未拥有英雄按 1 级保守估算，levelCurve=rate^1，保留英雄间增长率差异）、`manualStackCount ?? 1000`（动态层数假设，area≈100 上限，UI 可覆盖）、`aggregateProjection ?? 'absolute-dps'`（主模式）、`dynamicSpeedOverrides`（动态速度英雄 areaSkip 假设，默认见 `DYNAMIC_SPEED_DEFAULTS`）。依据见 `simulator.md`。
 
+显式传入但不满足取值合同的等级、基础伤害、聚合倍率、信号类型、池乘数和动态层数不走上述默认；它们代表上游数据或调用方契约损坏，计算器必须直接抛异常。只有字段未传入，或数据源明确定义了缺省哨兵（如 `numTargets=0` 表示未知，按单目标近似）时，才进入兼容回退。
+
 ## 取值口径（冻结 2026-08-10）
 
 计算器入参的取值遵循以下口径，所有功能模块（DPS / 金币 / 速度 / 生存）统一适用：

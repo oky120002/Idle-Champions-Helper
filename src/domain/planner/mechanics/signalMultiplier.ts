@@ -40,6 +40,9 @@ function resolveStacksMultiplySignal(
     return null
   }
   const stackCount = input.manualStackCount ?? DEFAULT_MANUAL_STACK_COUNT
+  if (!Number.isFinite(stackCount) || stackCount < 0) {
+    throw new Error(`manualStackCount must be a finite non-negative number, got ${String(stackCount)}`)
+  }
   const mult = percentToMultiplier(signal.value) ** stackCount
   if (!Number.isFinite(mult)) {
     return { ok: false, warning: { key: '{p0} 乘算堆叠溢出，当前不计入目标值。', params: { p0: signal.rawEffect } } }

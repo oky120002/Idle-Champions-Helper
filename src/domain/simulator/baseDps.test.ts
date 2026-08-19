@@ -46,8 +46,10 @@ describe('computeLevelCurve', () => {
     expect(computeLevelCurve(hero({ costCurves: { '1': 0 } }), 1).toNumber()).toBeCloseTo(1.06, 5)
   })
 
-  it('负 level 截断为 0，levelCurve=1', () => {
-    expect(computeLevelCurve(hero({ costCurves: { '1': 1.1 } }), -5).toNumber()).toBe(1)
+  it('负数、NaN、Infinity level 直接抛异常', () => {
+    expect(() => computeLevelCurve(hero({ costCurves: { '1': 1.1 } }), -5)).toThrow()
+    expect(() => computeLevelCurve(hero({ costCurves: { '1': 1.1 } }), Number.NaN)).toThrow()
+    expect(() => computeLevelCurve(hero({ costCurves: { '1': 1.1 } }), Number.POSITIVE_INFINITY)).toThrow()
   })
 })
 
@@ -57,8 +59,20 @@ describe('computeCarryDps', () => {
     expect(dps.toNumber()).toBeCloseTo(12000 * 1.13 * 3, 3)
   })
 
-  it('baseDamage<=0 仍回退 1，但零 aggregate 保留为零', () => {
-    const dps = computeCarryDps(hero({ baseDamage: 0, costCurves: { '1': 1.1 } }), 1, 0)
+  it('零 aggregate 保留为零', () => {
+    const dps = computeCarryDps(hero({ baseDamage: 10, costCurves: { '1': 1.1 } }), 1, 0)
     expect(dps.toNumber()).toBe(0)
+  })
+
+  it('基础伤害为零、负数或非有限值时直接抛异常', () => {
+    for (const baseDamage of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => computeCarryDps(hero({ baseDamage }), 1, 1)).toThrow()
+    }
+  })
+
+  it('伤害聚合值为负数或非有限值时直接抛异常', () => {
+    for (const aggregate of [-1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => computeCarryDps(hero({ baseDamage: 10 }), 1, aggregate)).toThrow()
+    }
   })
 })
