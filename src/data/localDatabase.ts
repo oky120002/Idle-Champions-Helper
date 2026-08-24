@@ -1,5 +1,5 @@
 export const APP_DATABASE_NAME = 'idle-champions-helper'
-const APP_DATABASE_VERSION = 6
+const APP_DATABASE_VERSION = 7
 
 export const APP_STORE_NAMES = {
   formationDrafts: 'formationDrafts',
@@ -8,6 +8,7 @@ export const APP_STORE_NAMES = {
   credentialVault: 'credentialVault',
   heroAbilityOverrides: 'heroAbilityOverrides',
   dataCollections: 'dataCollections',
+  championFilterPresets: 'championFilterPresets',
 } as const
 
 function getIndexedDb(): IDBFactory {
@@ -54,6 +55,10 @@ export function openAppDatabase(): Promise<IDBDatabase> {
 
       if (!database.objectStoreNames.contains(APP_STORE_NAMES.dataCollections)) {
         database.createObjectStore(APP_STORE_NAMES.dataCollections)
+      }
+
+      if (!database.objectStoreNames.contains(APP_STORE_NAMES.championFilterPresets)) {
+        database.createObjectStore(APP_STORE_NAMES.championFilterPresets)
       }
     }
 

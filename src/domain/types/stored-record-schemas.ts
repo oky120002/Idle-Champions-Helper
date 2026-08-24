@@ -83,6 +83,17 @@ export const championFilterSnapshotSchema = z
   })
   .loose()
 
+export const championFilterPresetSchema = z
+  .object({
+    id: z.string(),
+    schemaVersion: z.literal(1),
+    name: z.string(),
+    filters: championFilterSnapshotSchema,
+    createdAt: z.string(),
+    updatedAt: z.string(),
+  })
+  .loose()
+
 export const formationPresetSchema = z
   .object({
     id: z.string(),

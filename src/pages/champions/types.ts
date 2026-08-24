@@ -2,7 +2,7 @@ import type { RefObject } from 'react'
 import type { AppLocale, MessageRef, TranslateParams } from '../../app/i18n'
 import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type { ChampionMechanicCategoryId } from '../../domain/champion-tags/types'
-import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
+import type { Champion, ChampionFilterPreset, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip, IdLocalizedOption, MechanicOptionGroup } from '../../features/champion-filters/types'
 
 export type ChampionState =
@@ -116,4 +116,8 @@ export interface ChampionsPageModel {
   getMechanicCategoryHint: (groupId: ChampionMechanicCategoryId) => string
   saveListScroll: () => void
   locationSearch: string
+  filterPresets?: ChampionFilterPreset[]
+  saveCurrentFilterPreset?: () => void
+  restoreFilterPreset?: (preset: ChampionFilterPreset) => void
+  deleteFilterPreset?: (presetId: string) => void
 }

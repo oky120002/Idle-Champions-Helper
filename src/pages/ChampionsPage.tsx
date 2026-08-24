@@ -10,6 +10,7 @@ import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
 import { ChampionsWorkbenchContentHeader } from './champions/ChampionsWorkbenchContentHeader'
 import { MAX_VISIBLE_RESULTS } from './champions/constants'
 import { useChampionsPageModel } from './champions/useChampionsPageModel'
+import { ChampionFilterPresets } from './champions/ChampionFilterPresets'
 
 export function ChampionsPage() {
   const model = useChampionsPageModel()
@@ -102,7 +103,13 @@ export function ChampionsPage() {
       sidebar={(
         <div className="workbench-page__sidebar-stack">
           <ChampionsPrimaryFilters model={model} />
-          <ChampionsAdditionalFilters model={model} />
+           <ChampionsAdditionalFilters model={model} />
+           <ChampionFilterPresets
+             presets={model.filterPresets ?? []}
+             onSave={model.saveCurrentFilterPreset ?? (() => undefined)}
+             onRestore={model.restoreFilterPreset ?? (() => undefined)}
+             onDelete={model.deleteFilterPreset ?? (() => undefined)}
+           />
           {model.formationWithFiltersHref !== null ? (
             <Link className="action-button action-button--secondary formation-filter-link" to={model.formationWithFiltersHref}>
               {t("带着当前筛选去摆阵型")}
