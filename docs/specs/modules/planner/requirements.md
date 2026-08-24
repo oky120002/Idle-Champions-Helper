@@ -29,6 +29,8 @@ planner 用 `npm run data:signal-coverage` 审计 definitions 中对模拟器有
 - imported formation saves
 - warnings
 
+传奇效果的存档驱动评分接入已落地：已锻造槽位按等级线性缩放，普通全队加成、按英雄条件加成和按阵型人数叠加的效果分别进入现有统一伤害池；无存档或缺少效果目录时保持空贡献并保守跳过未知效果。无存档传奇假设配置与锻造优先级建议仍未纳入当前需求范围。
+
 ## 计算需求
 
 ### GameNumber
