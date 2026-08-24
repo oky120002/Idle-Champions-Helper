@@ -23,7 +23,7 @@
 
 ## 3. 契约变异实验结果（第四轮历史快照）
 
-> 本节记录第四轮当时的实测行为；当前处置以 `docs/specs/guidelines/testing-methodology.md` §7 为准，避免把历史静默行为误读为现行合同。
+> 本节记录第四轮当时的实测行为；当前处置以 §10 为准，避免把历史静默行为误读为现行合同。
 
 | 接缝 | 变异 | 下游行为 | 分类 |
 |------|------|---------|------|
@@ -34,7 +34,7 @@
 | 4 | `globalBuffMultiplier = NaN` | NaN → addPercent=NaN → poolMultiplier=NaN → **computeCarryDps:33 `Number.isFinite` guard 校正为 1** → 加成被静默吞掉，carryDps 有合法值 | **静默错误**（隐性 guard 掩盖根因） |
 | 5 | 重复 seat 英雄 | expandCandidates `usedSeats.has` 去重 → 重复英雄被跳过 | **静默跳过**（合理行为，无 warning） |
 
-### 关键发现：computeCarryDps:33 隐性 guard（已由方法论 §7 收口）
+### 关键发现：computeCarryDps:33 隐性 guard（已由 §10 收口）
 
 `baseDps.ts:33`：`const aggregate = Number.isFinite(damageAggregate) && damageAggregate > 0 ? damageAggregate : 1`
 
@@ -42,7 +42,7 @@
 
 **影响**：上游数据损坏（NaN/Infinity/非正数）在 carryDps 输出处不可见；debug 时只能看到「carryDps 偏低」而非「某上游值为 NaN」。与 baseDamage≤0 的 guard（:31）同构——两个隐性校正都在同一函数内。
 
-**第四轮处置**：当时暂锁现状，认为 guard 是防御性设计；本轮已完成 NaN 传播影响评估，并按方法论 §7 改为评分边界 fail-fast。
+**第四轮处置**：当时暂锁现状，认为 guard 是防御性设计；本轮已完成 NaN 传播影响评估，并在 §10 改为评分边界 fail-fast。
 
 ## 4. 金标基线（第四轮历史快照）
 
