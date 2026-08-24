@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { unwrap } from '../../../tests/utils/dom-assertions'
 import { compareGameNumbers } from '../gameNumber'
 import type { HeroAbilityProfile, HeroAbilitySignal } from '../abilities/abilityModel'
+import type { LegendaryContribution } from '../buffs/legendaryEffects'
 import { scoreFormation } from './steadyStateScoring'
 import { type OfficialPlannerScenarioModel, EMPTY_VIABILITY_CONTEXT } from './plannerModel'
 
@@ -199,6 +200,43 @@ describe('scoreFormation 不变量守护', () => {
       const withZero = scoreFormation({ placements: { s1: 'carry', s2: 'zero' }, heroesById, scenario })
 
       expect(compareGameNumbers(withZero.objectiveValue, solo.objectiveValue)).toBe(0)
+    })
+  })
+
+  describe('传奇装备贡献的阵型边界', () => {
+    it('只计算阵型内拥有者，并按符合条件的英雄数叠加', () => {
+      const carry = createHero('carry', { seat: 1, baseDamage: 10, tags: ['human'] })
+      const humanSupport = createHero('human-support', { seat: 2, tags: ['human'] })
+      const benchOwner = createHero('bench-owner', { seat: 3, tags: ['human'] })
+      const heroesById = new Map([
+        ['carry', carry],
+        ['human-support', humanSupport],
+        ['bench-owner', benchOwner],
+      ])
+      const legendaryContributions: LegendaryContribution[] = [{
+        ownerHeroId: 'bench-owner',
+        pool: 'global',
+        baseValue: 100,
+        targetQualifier: null,
+        perCrusader: true,
+        countQualifier: { predicate: { op: 'tag', tag: 'human' } },
+      }]
+
+      const withoutOwner = scoreFormation({
+        placements: { s1: 'carry', s2: 'human-support' },
+        heroesById,
+        scenario,
+        legendaryContributions,
+      })
+      const withOwner = scoreFormation({
+        placements: { s1: 'carry', s2: 'human-support', s3: 'bench-owner' },
+        heroesById,
+        scenario,
+        legendaryContributions,
+      })
+
+      expect(compareGameNumbers(withOwner.objectiveValue, withoutOwner.objectiveValue)).toBeGreaterThan(0)
+      expect(withOwner.breakdown?.pools.find((pool) => pool.scope === 'global')?.addPercent).toBe(300)
     })
   })
 

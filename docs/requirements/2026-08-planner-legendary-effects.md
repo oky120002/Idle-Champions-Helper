@@ -1,6 +1,6 @@
 # planner 传奇装备效果接入
 
-**优先级**：待评（阶段一已于 2026-08-10 落地，阶段二/三待后续）
+**优先级**：阶段二/三待评（阶段一已落地，2026-08-24 补齐评分边界回归）
 
 ## 是什么
 
@@ -56,6 +56,8 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 ## 需要做什么
 
 ### 阶段一：评分接入（存档驱动）
+
+**状态**：已落地。证据：`docs/archives/plans/2026-08-planner-legendary-effects.md`；评分边界回归见 `src/domain/planner/steadyStateScoring.invariants.test.ts`。
 
 将已激活传奇效果注入评分链路：
 
