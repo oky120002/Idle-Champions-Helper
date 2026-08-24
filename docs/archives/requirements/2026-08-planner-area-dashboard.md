@@ -1,5 +1,7 @@
 # planner 推图进度仪表盘
 
+**状态**: 已落地（2026-08，证据：`docs/specs/modules/planner/recommendation.md`、`src/domain/simulator/areaDashboard.ts`）
+
 **优先级**：待评
 
 ## 是什么

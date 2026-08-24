@@ -10,6 +10,14 @@
 - 不同关卡 / 变体的阵型布局不同，推荐必须绑定具体 `scenario + formation layout`。
 - 官方不会提供可靠的敌对单位血量模型；planner 也**不需要**考虑敌方血量，只堆高 C 位输出代理值。
 
+## 1.1 推图仪表盘
+
+- `ScoringResult.areaEstimate` 在 `carry-dps` 模式提供区域、击杀上限、存活上限、绑定约束、BUD 和有效生命。
+- planner 结果卡展示独立推图仪表盘：区域预估、击杀/存活上限、目标层生命与伤害对照，以及绑定约束说明。
+- `buildAreaDashboardModel` 将绑定约束解释为伤害墙、存活墙、机制墙或设计上限，并按 BUD 与目标层生命的数量级差距给出保守诊断。
+- 仪表盘中的 BUD、生命和伤害均为静态近似值；界面明确标注绝对值未校准，仅用于相对比较。
+- 仪表盘不执行逐秒战斗模拟，不生成没有候选数据支撑的替代英雄或金币建议。
+
 ## 2. 数据分层与 merge
 - 推算引擎不直接读取零散的 `champion-details`、`variants`、`formations` 和原始 effect string 做现场聚合，而是统一消费 merge 后的 planner model。
 - 官方归一化 hero ability model：由官方数据获取流水线新增一步「阵型推荐归一化」，产出到 `public/data/v1/hero-abilities.json` 与 `public/data/v1/scenarios.json`。

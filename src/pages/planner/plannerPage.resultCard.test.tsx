@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest'
 
 import { I18nProvider } from '../../app/i18n'
 import type { Champion, FormationSlot } from '../../domain/types'
+import { estimateMaxArea } from '../../domain/simulator/areaEstimation'
+import { monsterHealthAt } from '../../domain/simulator/monsterStats'
 import { PlannerResultCard } from './PlannerResultCard'
 
 describe('PlannerResultCard', () => {
@@ -73,6 +75,20 @@ describe('PlannerResultCard', () => {
 
     expect(screen.getByText('布鲁诺负责团队增益。')).toBeInTheDocument()
     expect(screen.getByText('纳耶里补足前排。')).toBeInTheDocument()
+  })
+
+  it('显示推图仪表盘的对照和瓶颈说明', () => {
+    render(
+      <I18nProvider>
+        <PlannerResultCard
+          {...baseProps}
+          areaEstimate={estimateMaxArea({ bud: monsterHealthAt(100), effectiveHealth: null })}
+        />
+      </I18nProvider>,
+    )
+
+    expect(screen.getByTestId('planner-area-comparison')).toBeInTheDocument()
+    expect(screen.getByTestId('planner-area-diagnosis')).toHaveTextContent('当前伤害与目标层生命接近')
   })
 
   it('在不支持时显示警告部分', () => {

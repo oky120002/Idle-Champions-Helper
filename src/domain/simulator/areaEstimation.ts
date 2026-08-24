@@ -79,6 +79,10 @@ export interface AreaEstimationResult {
   killableArea: number
   /** survival 能撑到的最大层数（effectiveHealth 为 null 时 = MAX_AREA）。 */
   survivableArea: number
+  /** BUD 输入，供 planner 仪表盘展示相对对照；绝对值未校准。 */
+  bud: GameNumberValue
+  /** 有效生命输入；null 表示未启用 survival 约束。 */
+  effectiveHealth: GameNumberValue | null
 }
 
 /**
@@ -193,5 +197,5 @@ export function estimateMaxArea(input: AreaEstimationInput): AreaEstimationResul
     boundBy = 'survival'
   }
 
-  return { area, boundBy, killableArea, survivableArea }
+  return { area, boundBy, killableArea, survivableArea, bud: input.bud, effectiveHealth: input.effectiveHealth }
 }

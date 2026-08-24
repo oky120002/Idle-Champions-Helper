@@ -1,4 +1,5 @@
 import type { AreaBound, AreaEstimationResult } from '../../domain/simulator/areaEstimation'
+import { buildAreaDashboardModel } from '../../domain/simulator/areaDashboard'
 import type { ConstraintKind } from '../../domain/planner/recommendationTypes'
 import { useI18n, type MessageRef } from '../../app/i18n'
 
@@ -26,12 +27,27 @@ export interface PlannerAreaEstimateProps {
   readonly activeConstraints?: readonly ConstraintKind[] | undefined
 }
 
+function buildDiagnosisMessage(
+  wall: ReturnType<typeof buildAreaDashboardModel>['wall'],
+  gap: ReturnType<typeof buildAreaDashboardModel>['gap'],
+  t: ReturnType<typeof useI18n>['t'],
+) {
+  if (wall === 'design-limit') return t("已接近设计上限，继续提升阵型不会突破当前区域上限。")
+  if (wall === 'survival') return t("当前主要瓶颈是存活能力，优先提升生命、治疗或减伤。")
+  if (wall === 'mechanic') return t("当前主要瓶颈是场景机制，优先处理护甲或命中次数要求。")
+  if (gap === 'large') return t("当前主要瓶颈是伤害，差距达到质变级别。")
+  if (gap === 'near') return t("当前主要瓶颈是伤害，小幅提升可能突破。")
+  return t("当前伤害与目标层生命接近，可继续比较阵型差异。")
+}
+
 export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: PlannerAreaEstimateProps) {
   const { t } = useI18n()
   const { area, boundBy, killableArea, survivableArea } = areaEstimate
+  const dashboard = buildAreaDashboardModel(areaEstimate)
   const boundLabel = t(BOUND_LABELS[boundBy])
   const killablePct = Math.min(100, (killableArea / MAX_AREA_NORMALIZER) * 100)
   const survivablePct = Math.min(100, (survivableArea / MAX_AREA_NORMALIZER) * 100)
+  const diagnosisMessage = buildDiagnosisMessage(dashboard.wall, dashboard.gap, t)
 
   return (
     <section data-section="area-estimate" className="planner-area-estimate">
@@ -77,6 +93,33 @@ export function PlannerAreaEstimate({ areaEstimate, activeConstraints = [] }: Pl
           </dd>
         </div>
       </dl>
+
+      <dl className="planner-area-estimate__comparison" data-testid="planner-area-comparison">
+        <div>
+          <dt>{t("当前 BUD")}</dt>
+          <dd>{dashboard.bud}</dd>
+        </div>
+        <div>
+          <dt>{t("目标层生命")}</dt>
+          <dd>{dashboard.targetHealth}</dd>
+        </div>
+        {dashboard.effectiveHealth !== null && dashboard.targetDamage !== null ? (
+          <>
+            <div>
+              <dt>{t("有效生命")}</dt>
+              <dd>{dashboard.effectiveHealth}</dd>
+            </div>
+            <div>
+              <dt>{t("目标层伤害")}</dt>
+              <dd>{dashboard.targetDamage}</dd>
+            </div>
+          </>
+        ) : null}
+      </dl>
+
+      <p className="planner-area-estimate__diagnosis" data-testid="planner-area-diagnosis">
+        {diagnosisMessage}
+      </p>
 
       <p className="planner-area-estimate__note">
         {t("绝对值未校准，仅供参考相对比较")}
