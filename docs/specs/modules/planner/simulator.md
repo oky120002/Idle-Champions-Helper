@@ -37,7 +37,7 @@ hero_final_dps = base_dps × level_curve
 
 `global_dps_pool` / `hero_dps_pool` 是 **unified 池**——ability 源（英雄技能）与外部源（patron / blessing / 装备 / 传奇装备）同属一个 IC effect key，按 IC 语义**同 key 全来源加法**（`1 + Σ(all value)/100`），非「ability 池 × 外部池」相乘。`scoreFormation` 把外部加成注入 ability 池副本（`mergePools` 同 key addPercent 相加、保留 multFactor）实现全源加法。
 
-**传奇装备效果**（`legendaryEffects.ts`）：存档驱动（`OwnedHero.legendaryBySlot`），owned-aware + placement-aware + count-aware。简单 global_dps（无 per_crusader）合入 `equipmentGlobalDpsByHero`；per_crusader global_dps 和条件 hero_dps 走 `LegendaryContribution` 在 `aggregateExternalDamagePools` 中按拥有者是否在阵型 + 阵型匹配英雄数求值。等级缩放 `base × level`（线性）。
+**传奇装备效果**（`legendaryEffects.ts`）：支持存档驱动和无存档假设，owned-aware + placement-aware + count-aware。简单 global_dps（无 per_crusader）合入 `equipmentGlobalDpsByHero`；per_crusader global_dps 和条件 hero_dps 走 `LegendaryContribution` 在 `aggregateExternalDamagePools` 中按拥有者是否在阵型 + 阵型匹配英雄数求值。等级缩放 `base × level`（线性）。无存档假设按目录 `heroIds` 反向索引合成全英雄全槽贡献；锻造建议复用相同目录，按当前阵型标签匹配和计数估算贡献并稳定输出前五名。
 
 **加成源唯一性不变式**：unified 池「全源加法」的前提是每个源**只计一次**。装备源 effect（loot / legendary）只走 owned-aware 通道：加性 kind（hero_dps / global_dps / gold / health / crit，`equipmentMult.ts`）+ `buff_upgrade` wrapper（`equipmentBuffSignals.ts` `applyEquipmentBuffsToProfile`：owned loot + loot-catalog → 按 target upgradeId 反查 direct base → 构造 wrapper 注入 profile，与 feat / 专精同层）。build 管线**不得**把装备源信号烘进 base profile 的 scored signals **或 spec catalog**——`buildHeroModels` 过滤 loot / legendary / feat 不进 base，`specialization-catalog` build 同构过滤 `specializationDerived` 的 loot / legendary / feat 源。所有 wrapper 消费路径都必须接 sourceBucket 过滤。违反此不变式 → 双重计数（陷阱与防范纪律见 `modeling-pitfalls.md`）。
 

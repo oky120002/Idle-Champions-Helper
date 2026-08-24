@@ -224,6 +224,9 @@ describe('normalize-idle-champions-definitions', () => {
       raw: { loot: unknown[]; legendaryEffects: unknown[] }
     }
     const version = (await readJson(versionFile)) as { notes: string[] }
+    const legendaryCatalog = (await readJson(path.join(outputDir, 'legendary-effects-catalog.json'))) as {
+      items: Array<{ id: string; heroIds: string[] }>
+    }
 
     expect(champions.items[0]?.name).toEqual({
       original: 'Bruenor',
@@ -735,6 +738,7 @@ describe('normalize-idle-champions-definitions', () => {
     })
 
     expect(version.notes.some((note) => /language_id=7/.test(note))).toBeTruthy()
+    expect(legendaryCatalog.items.find((item) => item.id === '501')?.heroIds).toEqual(['1'])
     expect(version.notes.some((note) => /effect-reference\.json/.test(note))).toBeTruthy()
   })
 

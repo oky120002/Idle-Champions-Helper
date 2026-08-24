@@ -10,3 +10,4 @@
 - `2026-08-system-lint-fix-rules.md`：配套修法表
 - `2026-08-docs-audit-and-cleanup.md`：文档全量审计（58 文件）
 - `2026-08-planner-area-dashboard.md`：planner 推图进度仪表盘
+- `2026-08-planner-legendary-effects.md`：planner 传奇装备效果接入

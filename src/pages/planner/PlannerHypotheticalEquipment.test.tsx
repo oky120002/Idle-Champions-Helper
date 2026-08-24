@@ -9,7 +9,7 @@ describe('PlannerHypotheticalEquipment', () => {
   it('渲染当前稀有度与附魔等级', () => {
     const { container } = render(
       <I18nProvider>
-        <PlannerHypotheticalEquipment rarity={3} enchant={1500} onRarityChange={() => {}} onEnchantChange={() => {}} />
+        <PlannerHypotheticalEquipment rarity={3} enchant={1500} legendaryLevel={5} onRarityChange={() => {}} onEnchantChange={() => {}} onLegendaryLevelChange={() => {}} />
       </I18nProvider>,
     )
     const rarity = container.querySelector('[data-testid="planner-hypothetical-equipment-rarity"]') as HTMLSelectElement
@@ -23,7 +23,7 @@ describe('PlannerHypotheticalEquipment', () => {
     const onRarityChange = vi.fn()
     const { container } = render(
       <I18nProvider>
-        <PlannerHypotheticalEquipment rarity={4} enchant={2000} onRarityChange={onRarityChange} onEnchantChange={() => {}} />
+        <PlannerHypotheticalEquipment rarity={4} enchant={2000} legendaryLevel={5} onRarityChange={onRarityChange} onEnchantChange={() => {}} onLegendaryLevelChange={() => {}} />
       </I18nProvider>,
     )
     const rarity = container.querySelector('[data-testid="planner-hypothetical-equipment-rarity"]') as HTMLSelectElement
@@ -36,7 +36,7 @@ describe('PlannerHypotheticalEquipment', () => {
     const onEnchantChange = vi.fn()
     const { container } = render(
       <I18nProvider>
-        <PlannerHypotheticalEquipment rarity={4} enchant={2000} onRarityChange={() => {}} onEnchantChange={onEnchantChange} />
+        <PlannerHypotheticalEquipment rarity={4} enchant={2000} legendaryLevel={5} onRarityChange={() => {}} onEnchantChange={onEnchantChange} onLegendaryLevelChange={() => {}} />
       </I18nProvider>,
     )
     const enchant = container.querySelector('[data-testid="planner-hypothetical-equipment-enchant"]') as HTMLInputElement

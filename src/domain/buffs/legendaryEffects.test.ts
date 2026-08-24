@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
 import type { OwnedHero, OwnedHeroLegendarySlot } from '../user-profile/types'
-import { collectLegendaryContributions, type LegendaryEffectCatalogEntry } from './legendaryEffects'
+import {
+  collectLegendaryContributions,
+  rankLegendaryForgeCandidates,
+  synthesizeHypotheticalLegendaryContributions,
+  type LegendaryEffectCatalogEntry,
+} from './legendaryEffects'
 
 function makeLegendarySlot(effectId: string | null, level: number): OwnedHeroLegendarySlot {
   return { slotId: '1', level, effectId, effectIds: effectId !== null ? [effectId] : [], resetCurrencyId: null, upgradeCost: 0 }
@@ -135,5 +140,33 @@ describe('collectLegendaryContributions', () => {
     expect(result.contributions).toHaveLength(2)
     expect(result.contributions.some((c) => c.ownerHeroId === '1')).toBe(true)
     expect(result.contributions.some((c) => c.ownerHeroId === '2')).toBe(true)
+  })
+})
+
+describe('hypothetical legendary effects', () => {
+  it('uses only catalog entries owned by the requested hero at the requested level', () => {
+    const result = synthesizeHypotheticalLegendaryContributions(
+      { heroIds: ['1'], level: 3 },
+      [
+        { id: 'simple-global', effectString: 'global_dps_multiplier_mult,100', stackFunc: null, targetFilters: null, filterTargets: null, heroIds: ['1'] },
+        { id: 'per-crusader-all', effectString: 'global_dps_multiplier_mult,10', stackFunc: 'per_crusader', targetFilters: null, filterTargets: null, heroIds: ['2'] },
+      ],
+    )
+    expect(result.globalDpsAddPercent.get('1')).toBe(300)
+    expect(result.contributions).toHaveLength(0)
+  })
+
+  it('ranks forge candidates by current formation impact with stable ties', () => {
+    const result = rankLegendaryForgeCandidates(
+      ['b', 'a'],
+      new Map([['b', ['human']], ['a', ['human']]]),
+      new Map([['s1', 'b'], ['s2', 'a']]),
+      [
+        { id: 'a-global', effectString: 'global_dps_multiplier_mult,20', stackFunc: null, targetFilters: null, filterTargets: null, heroIds: ['a'] },
+        { id: 'b-global', effectString: 'global_dps_multiplier_mult,20', stackFunc: null, targetFilters: null, filterTargets: null, heroIds: ['b'] },
+      ],
+    )
+    expect(result.map((item) => item.heroId)).toEqual(['a', 'b'])
+    expect(result[0]?.score).toBe(20)
   })
 })

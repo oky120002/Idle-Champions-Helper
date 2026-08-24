@@ -153,5 +153,13 @@ export const heroAbilitiesSchema = itemCollection(heroAbilityProfileItemSchema)
 export const scenariosSchema = itemCollection(plannerScenarioItemSchema)
 export const lootCatalogSchema = itemCollection(lootCatalogItemSchema)
 export const effectDefinitionsSchema = itemCollection(effectDefinitionItemSchema)
+export const legendaryEffectsSchema = itemCollection(z.object({
+  id: z.string(),
+  effectString: z.string(),
+  stackFunc: z.string().nullable(),
+  targetFilters: z.array(z.unknown()).nullable(),
+  filterTargets: z.array(z.unknown()).nullable(),
+  heroIds: z.array(z.string()).optional(),
+}).loose())
 export const featCatalogSchema = catalogCollection(featCatalogItemSchema)
 export const specializationCatalogSchema = catalogCollection(specializationCatalogItemSchema)

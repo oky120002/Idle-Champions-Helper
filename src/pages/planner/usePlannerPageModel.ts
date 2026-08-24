@@ -52,6 +52,7 @@ export function usePlannerPageModel() {
   // 有存档时按存档 per-slot 实际，此配置仅无存档分支生效（buildScoringBonusInputs 内部判优先级）。
   const [equipmentRarity, setEquipmentRarity] = useState(4)
   const [equipmentEnchant, setEquipmentEnchant] = useState(2000)
+  const [legendaryLevel, setLegendaryLevel] = useState(1)
   const [lockedCarryHeroId, setLockedCarryHeroId] = useState<string | null>(null)
   const [lockedSlots, setLockedSlots] = useState<Record<string, string>>({})
   // 用户标记的不可造伤害槽位（UI 层 2，默认全可打）。
@@ -102,8 +103,12 @@ export function usePlannerPageModel() {
       },
       featCatalog: collections.featCatalog ?? null,
       legendaryEffectCatalog,
+      hypotheticalLegendary: {
+        heroIds: collections.plannerHeroes.map((hero) => hero.heroId),
+        level: legendaryLevel,
+      },
     }),
-    [profileSnapshot, lootCatalog, legendaryEffectCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant],
+    [profileSnapshot, lootCatalog, legendaryEffectCatalog, effectDefinitions, patronPerkCatalog, collections.plannerHeroes, collections.featCatalog, equipmentRarity, equipmentEnchant, legendaryLevel],
   )
   // 金币/等级换算结果 → heroLevelOverride + goldBudget 入参
   const heroLevelOverride = useMemo(() => {
@@ -224,6 +229,8 @@ export function usePlannerPageModel() {
     computationMode,
     equipmentEnchant,
     equipmentRarity,
+    legendaryLevel,
+    legendaryEffectCatalog,
     goldBudget,
     goldLevelConversion,
     goldLevelMode,
@@ -249,6 +256,10 @@ export function usePlannerPageModel() {
     selectComputationMode,
     selectEquipmentEnchant,
     selectEquipmentRarity,
+    selectLegendaryLevel: useCallback((level: number) => {
+      setLegendaryLevel(level)
+      setSelectedResultIndex(0)
+    }, []),
     selectGoldLevelMode,
     selectManualStackCount,
     selectMinSurvivableArea,

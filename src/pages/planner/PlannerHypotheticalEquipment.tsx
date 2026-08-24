@@ -5,8 +5,10 @@ import { useI18n, type MessageRef } from '../../app/i18n'
 export interface PlannerHypotheticalEquipmentProps {
   readonly rarity: number
   readonly enchant: number
+  readonly legendaryLevel?: number
   readonly onRarityChange: (rarity: number) => void
   readonly onEnchantChange: (enchant: number) => void
+  readonly onLegendaryLevelChange?: (level: number) => void
 }
 
 const RARITY_OPTIONS: ReadonlyArray<{ value: number; label: MessageRef }> = [
@@ -22,7 +24,7 @@ const RARITY_OPTIONS: ReadonlyArray<{ value: number; label: MessageRef }> = [
  * buildScoringBonusInputs 有存档时按存档 per-slot 实际，忽略此配置；故调用方按「未导入存档」条件渲染。
  * 与 manualStackCount 同性质（标量假设入参），复用 planner-scoring-mode 容器样式。
  */
-export function PlannerHypotheticalEquipment({ rarity, enchant, onRarityChange, onEnchantChange }: PlannerHypotheticalEquipmentProps) {
+export function PlannerHypotheticalEquipment({ rarity, enchant, legendaryLevel = 1, onRarityChange, onEnchantChange, onLegendaryLevelChange = () => {} }: PlannerHypotheticalEquipmentProps) {
   const { t } = useI18n()
   // enchant input 本地草稿（同 PlannerStackCount：受控 input 解析失败不抹回旧值，外部变更渲染期同步草稿）。
   const [draft, setDraft] = useState(String(enchant))
@@ -73,6 +75,22 @@ export function PlannerHypotheticalEquipment({ rarity, enchant, onRarityChange, 
             if (Number.isFinite(parsed) && parsed >= 0 && parsed !== enchant) {
               onEnchantChange(parsed)
             }
+          }}
+        />
+      </label>
+      <label className="planner-hypothetical-equipment__field">
+        <span>{t("传奇等级")}</span>
+        <input
+          type="number"
+          min={1}
+          max={20}
+          className="planner-stack-count__input"
+          value={legendaryLevel}
+          aria-label={t("假设传奇等级")}
+          data-testid="planner-hypothetical-legendary-level"
+          onChange={(event) => {
+            const parsed = Number.parseInt(event.target.value, 10)
+            if (Number.isFinite(parsed) && parsed >= 1 && parsed <= 20 && parsed !== legendaryLevel) onLegendaryLevelChange(parsed)
           }}
         />
       </label>

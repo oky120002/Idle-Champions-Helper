@@ -7,6 +7,7 @@
 - `2026-08-planner-formation-viability.md`：阵型通关可行性模型，已落地
 - `2026-08-planner-speed-dimension.md`：planner 速度维度建模，已落地
 - `2026-08-planner-area-dashboard.md`：planner 推图进度仪表盘，已落地
+- `2026-08-planner-legendary-effects.md`：planner 传奇装备效果接入，已落地
 - `animation-repo-size.md`：动画资源外链 / Git LFS 方案，已否决
 
 ## 规则

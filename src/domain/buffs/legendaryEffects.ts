@@ -37,6 +37,13 @@ export interface LegendaryEffectCatalogEntry {
   targetFilters: unknown[] | null
   /** buff 目标限定原始数据（filter_targets，hero_dps 的筛选条件）。 */
   filterTargets: unknown[] | null
+  /** 拥有该传奇效果的英雄 id；用于无存档假设与锻造建议。 */
+  heroIds?: string[]
+}
+
+export interface HypotheticalLegendaryConfig {
+  heroIds: string[]
+  level: number
 }
 
 /** 一个传奇装备贡献（placement-aware + count-aware，在评分引擎中求值）。 */
@@ -61,6 +68,12 @@ export interface LegendaryContributions {
   globalDpsAddPercent: Map<string, number>
   /** per_crusader 和 hero_dps 的贡献列表（在评分引擎中 placement-aware 求值）。 */
   contributions: LegendaryContribution[]
+}
+
+export interface LegendaryForgeRecommendation {
+  heroId: string
+  score: number
+  effectCount: number
 }
 
 /** 按 id 索引目录。 */
@@ -136,4 +149,87 @@ export function collectLegendaryContributions(
   }
 
   return { globalDpsAddPercent, contributions }
+}
+
+/** 为无存档模式合成全英雄全槽传奇；目录缺少英雄归属时保守返回空。 */
+export function synthesizeHypotheticalLegendaryContributions(
+  config: HypotheticalLegendaryConfig,
+  catalog: readonly LegendaryEffectCatalogEntry[],
+): LegendaryContributions {
+  const ownedHeroes: OwnedHero[] = config.heroIds.map((heroId) => ({
+    heroId,
+    level: 1,
+    equipment: {},
+    feats: [],
+    legendaryEffects: [],
+    unlockedFeats: [],
+    activeFeats: [],
+    featSlots: 0,
+    isOwned: true,
+    gildableSlotId: null,
+    lootBySlot: {},
+    legendaryBySlot: Object.fromEntries(
+      catalog
+        .filter((entry) => entry.heroIds?.includes(heroId) === true)
+        .map((entry, index) => [String(index + 1), {
+          slotId: String(index + 1),
+          level: config.level,
+          effectId: entry.id,
+          effectIds: [entry.id],
+          resetCurrencyId: null,
+          upgradeCost: 0,
+        }]),
+    ),
+    specializations: [],
+  }))
+  return collectLegendaryContributions(ownedHeroes, catalog)
+}
+
+/** 按当前阵型估算每位英雄未锻造传奇的潜在伤害贡献，结果稳定按分数降序。 */
+/* eslint-disable-next-line sonarjs/cognitive-complexity -- 单次目录扫描同时处理三种传奇条件，保持建议规则一跳可见。 */
+export function rankLegendaryForgeCandidates(
+  heroIds: readonly string[],
+  heroTagsById: ReadonlyMap<string, readonly string[]>,
+  placements: ReadonlyMap<string, string>,
+  catalog: readonly LegendaryEffectCatalogEntry[],
+  level = 1,
+): LegendaryForgeRecommendation[] {
+  const placedIds = [...placements.values()]
+  const scoreByHero = new Map<string, { score: number; effectCount: number }>()
+  for (const heroId of heroIds) {
+    const entries = catalog.filter((entry) => entry.heroIds?.includes(heroId) === true)
+    let score = 0
+    for (const entry of entries) {
+      const parsed = parseEffectPayload(entry.effectString)
+      if (!parsed) continue
+      const base = Number(parsed.args[0])
+      if (!Number.isFinite(base) || base <= 0) continue
+      const value = base * Math.max(1, level)
+      const isPerCrusader = entry.stackFunc === 'per_crusader'
+      const count = isPerCrusader
+        ? placedIds.filter((placedId) => matchesQualifierTags(heroTagsById.get(placedId) ?? [], entry.targetFilters)).length
+        : 1
+      const targetMatches = parsed.kind === HERO_DPS_KIND
+        ? placedIds.some((placedId) => matchesQualifierTags(heroTagsById.get(placedId) ?? [], entry.filterTargets))
+        : true
+      if (targetMatches) score += value * Math.max(1, count)
+    }
+    if (entries.length > 0 && score !== 0) scoreByHero.set(heroId, { score, effectCount: entries.length })
+  }
+  return [...scoreByHero.entries()]
+    .map(([heroId, value]) => ({ heroId, ...value }))
+    .sort((left, right) => {
+      const scoreDiff = right.score - left.score
+      return scoreDiff !== 0 ? scoreDiff : left.heroId.localeCompare(right.heroId)
+    })
+}
+
+function matchesQualifierTags(tags: readonly string[], filters: unknown[] | null): boolean {
+  if (!filters || filters.length === 0) return true
+  return filters.some((filter) => {
+    if (filter === null || typeof filter !== 'object') return false
+    const record = filter as Record<string, unknown>
+    const required = typeof record.tags === 'string' ? record.tags.split(/[,|]/).filter(Boolean) : []
+    return required.length > 0 && required.every((tag) => tags.includes(tag))
+  })
 }

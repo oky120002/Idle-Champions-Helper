@@ -23,6 +23,7 @@ import { PlannerTopLineups } from './planner/PlannerTopLineups'
 import { PlannerCarryLock } from './planner/PlannerCarryLock'
 import { PlannerSlotLock } from './planner/PlannerSlotLock'
 import { PlannerDamageSlots } from './planner/PlannerDamageSlots'
+import { PlannerLegendaryForgeAdvice } from './planner/PlannerLegendaryForgeAdvice'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
 
 function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnType<typeof useI18n>['t']) {
@@ -59,9 +60,11 @@ export function PlannerPage() {
     candidateMode,
     championById,
     collections,
+    legendaryEffectCatalog,
     computationMode,
     equipmentEnchant,
     equipmentRarity,
+    legendaryLevel,
     goldBudget,
     goldLevelConversion,
     goldLevelMode,
@@ -88,6 +91,7 @@ export function PlannerPage() {
     selectComputationMode,
     selectEquipmentEnchant,
     selectEquipmentRarity,
+    selectLegendaryLevel,
     selectGoldLevelMode,
     selectManualStackCount,
     selectMinSurvivableArea,
@@ -227,8 +231,10 @@ export function PlannerPage() {
                     <PlannerHypotheticalEquipment
                       rarity={equipmentRarity}
                       enchant={equipmentEnchant}
+                      legendaryLevel={legendaryLevel}
                       onRarityChange={selectEquipmentRarity}
                       onEnchantChange={selectEquipmentEnchant}
+                      onLegendaryLevelChange={selectLegendaryLevel}
                     />
                   ) : null}
                   <PlannerSpecializationPanel
@@ -331,6 +337,12 @@ export function PlannerPage() {
                       result={selectedResult}
                       layoutId={plannerRecommendation.layoutId}
                       scenarioRef={plannerRecommendation.scenarioRef}
+                    />
+                    <PlannerLegendaryForgeAdvice
+                      heroes={collections.plannerHeroes}
+                      placements={selectedResult.placements}
+                      catalog={legendaryEffectCatalog}
+                      level={legendaryLevel}
                     />
                   </>
                 ) : null}

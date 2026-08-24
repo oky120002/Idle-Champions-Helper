@@ -27,7 +27,7 @@
  */
 
 import { collectHeroDpsContributions } from '../buffs/externalHeroDpsMult'
-import { collectLegendaryContributions, type LegendaryContribution, type LegendaryEffectCatalogEntry } from '../buffs/legendaryEffects'
+import { collectLegendaryContributions, synthesizeHypotheticalLegendaryContributions, type LegendaryContribution, type LegendaryEffectCatalogEntry } from '../buffs/legendaryEffects'
 import type { EffectDefinitionEntry } from '../buffs/effectDefinitionDps'
 import type { HeroDpsContribution } from '../buffs/externalHeroDpsMult'
 import { collectActiveBlessingEffects, combineGlobalBuffMultipliers, computeActualBlessingGlobalBuff } from '../buffs/blessingGlobalBuff'
@@ -66,6 +66,22 @@ export interface BuildScoringBonusInputsInput {
   featCatalog?: FeatCatalog | null
   /** 传奇效果目录（legendary-effects-catalog.json）；null/undefined = 不接传奇贡献。 */
   legendaryEffectCatalog?: LegendaryEffectCatalogEntry[] | null
+  /** 无存档时的全英雄全槽传奇假设；有存档时忽略。 */
+  hypotheticalLegendary?: { heroIds: string[]; level: number } | null
+}
+
+function resolveLegendaryContributions(
+  profileSnapshot: UserProfileSnapshot | null,
+  legendaryEffectCatalog: readonly LegendaryEffectCatalogEntry[] | null | undefined,
+  hypotheticalLegendary: { heroIds: string[]; level: number } | null | undefined,
+): ReturnType<typeof collectLegendaryContributions> | null {
+  if (!legendaryEffectCatalog || legendaryEffectCatalog.length === 0) return null
+  if (profileSnapshot != null && profileSnapshot.ownedHeroes.length > 0) {
+    return collectLegendaryContributions(profileSnapshot.ownedHeroes, legendaryEffectCatalog)
+  }
+  return hypotheticalLegendary
+    ? synthesizeHypotheticalLegendaryContributions(hypotheticalLegendary, legendaryEffectCatalog)
+    : null
 }
 
 /**
@@ -133,9 +149,8 @@ function mergeFeatBuffsInto(
   }
 }
 
-/* eslint-disable-next-line complexity -- 外部加成装配天然多分支（6 种装备通道+patron+blessing+legendary），拆分损害一跳命中率 */
 export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): ScoringBonusInputs {
-  const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment, featCatalog, legendaryEffectCatalog } = input
+  const { profileSnapshot, lootCatalog, effectDefinitions, patronPerkCatalog, hypotheticalEquipment, featCatalog, legendaryEffectCatalog, hypotheticalLegendary } = input
 
   let equipmentAdjustmentByHero = new Map<string, number>()
   let equipmentHealthByHero = new Map<string, number>()
@@ -181,8 +196,8 @@ export function buildScoringBonusInputs(input: BuildScoringBonusInputsInput): Sc
 
   // 传奇装备效果：仅存档驱动（owned legendaryBySlot）；无存档 → 空（向后兼容）。
   let legendaryContributions: LegendaryContribution[] = []
-  if (hasOwnedHeroes && legendaryEffectCatalog && legendaryEffectCatalog.length > 0) {
-    const legendaryResult = collectLegendaryContributions(profileSnapshot.ownedHeroes, legendaryEffectCatalog)
+  const legendaryResult = resolveLegendaryContributions(profileSnapshot, legendaryEffectCatalog, hypotheticalLegendary)
+  if (legendaryResult) {
     // 简单 global_dps（无 per_crusader）合入 equipmentGlobalDpsByHero（复用 placement-aware 求和）。
     for (const [heroId, addPercent] of legendaryResult.globalDpsAddPercent) {
       equipmentGlobalDpsByHero.set(heroId, (equipmentGlobalDpsByHero.get(heroId) ?? 0) + addPercent)

@@ -6,7 +6,7 @@ import process from 'node:process'
 import type { LocalizedText } from '../src/domain/types/common.ts'
 import { readJson, readJsonIfExists, writeJson } from './data/io-utils.ts'
 import { computePipelineHash, isForceDataRebuild, shouldSkipDataPipeline } from './data/resource-sync-policy.ts'
-import { compareLocalizedText, uniqueLocalizedTexts, uniqueStrings } from './data/normalize-text-utils.ts'
+import { compareLocalizedText, toStringList, uniqueLocalizedTexts, uniqueStrings } from './data/normalize-text-utils.ts'
 import {
   normalizeChampion,
   normalizeChampionDetail,
@@ -69,6 +69,10 @@ function asRawArray(value: unknown): RawDefinition[] {
   return Array.isArray(value) ? (value as RawDefinition[]) : []
 }
 
+function asRawRecord(value: unknown): RawDefinition {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as RawDefinition : {}
+}
+
 /**
  * 构建 loot-catalog（heroId, slotId, rarity → effectString）。
  * 从 raw loot_defines 提取 flat 跨 hero 索引——hero-abilities.json 的 loot signal 不携带
@@ -102,12 +106,16 @@ function buildLootCatalog(lootDefines: RawDefinition[]): Array<{
  * 从 raw legendary_effect_defines 提取 94 条唯一定义（跨英雄共享），供 planner 运行时
  * 按存档 legendaryBySlot[slot].effectId 查表 + 等级缩放注入评分链路。
  */
-function buildLegendaryEffectCatalog(legendaryEffectDefines: RawDefinition[]): Array<{
+function buildLegendaryEffectCatalog(
+  legendaryEffectDefines: RawDefinition[],
+  heroDefinitions: RawDefinition[],
+): Array<{
   id: string
   effectString: string
   stackFunc: string | null
   targetFilters: unknown[] | null
   filterTargets: unknown[] | null
+  heroIds: string[]
 }> {
   const catalog: Array<{
     id: string
@@ -115,7 +123,18 @@ function buildLegendaryEffectCatalog(legendaryEffectDefines: RawDefinition[]): A
     stackFunc: string | null
     targetFilters: unknown[] | null
     filterTargets: unknown[] | null
+    heroIds: string[]
   }> = []
+  const heroIdsByEffectId = new Map<string, string[]>()
+  for (const hero of heroDefinitions) {
+    const heroId = toStr(hero.id)
+    for (const effectId of toStringList(asRawRecord(hero.properties).legendary_effect_id)) {
+      const ids = heroIdsByEffectId.get(effectId) ?? []
+      ids.push(heroId)
+      heroIdsByEffectId.set(effectId, ids)
+    }
+  }
+
   for (const define of legendaryEffectDefines) {
     const effects = asRawArray(define.effects)
     for (const effect of effects) {
@@ -124,12 +143,14 @@ function buildLegendaryEffectCatalog(legendaryEffectDefines: RawDefinition[]): A
       const stackFunc = typeof effect.stack_func === 'string' ? effect.stack_func : null
       const targetFilters = Array.isArray(effect.target_filters) && effect.target_filters.length > 0 ? effect.target_filters : null
       const filterTargets = Array.isArray(effect.filter_targets) && effect.filter_targets.length > 0 ? effect.filter_targets : null
+      const heroIds = heroIdsByEffectId.get(toStr(define.id)) ?? []
       catalog.push({
         id: toStr(define.id),
         effectString,
         stackFunc,
         targetFilters,
         filterTargets,
+        heroIds,
       })
       break // 每条 legendary_effect_define 的 effects 数组只有 1 个元素
     }
@@ -708,7 +729,10 @@ export async function normalizeDefinitionsSnapshot(
   })
   // legendary-effects-catalog（effectId → effectString/stackFunc/filters），94 条唯一定义。
   // planner 运行时按存档 legendaryBySlot[slot].effectId 查表 + 等级缩放注入评分链路。
-  const legendaryEffectCatalog = buildLegendaryEffectCatalog(asRawArray(rawDefinitions.legendary_effect_defines))
+  const legendaryEffectCatalog = buildLegendaryEffectCatalog(
+    asRawArray(rawDefinitions.legendary_effect_defines),
+    asRawArray(rawDefinitions.hero_defines),
+  )
   await writeJson(path.join(outputDir, 'legendary-effects-catalog.json'), {
     items: legendaryEffectCatalog,
     updatedAt,

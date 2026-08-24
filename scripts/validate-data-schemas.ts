@@ -14,6 +14,7 @@ import {
   featCatalogSchema,
   heroAbilitiesSchema,
   lootCatalogSchema,
+  legendaryEffectsSchema,
   scenariosSchema,
   specializationCatalogSchema,
 } from '../src/domain/types/build-product-schemas.ts'
@@ -46,6 +47,7 @@ const collectionChecks: readonly CollectionCheck[] = [
   { name: 'hero-abilities.json', schema: heroAbilitiesSchema },
   { name: 'scenarios.json', schema: scenariosSchema },
   { name: 'loot-catalog.json', schema: lootCatalogSchema },
+  { name: 'legendary-effects-catalog.json', schema: legendaryEffectsSchema },
   { name: 'effect-definitions.json', schema: effectDefinitionsSchema },
   { name: 'feat-catalog.json', schema: featCatalogSchema },
   { name: 'specialization-catalog.json', schema: specializationCatalogSchema },

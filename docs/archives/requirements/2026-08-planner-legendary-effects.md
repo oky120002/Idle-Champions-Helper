@@ -1,6 +1,7 @@
 # planner 传奇装备效果接入
 
-**优先级**：劣后（阶段一已落地，阶段二/三待后续）
+**状态**: 已落地（2026-08，证据：`docs/specs/modules/planner/requirements.md`、`docs/specs/modules/planner/simulator.md`）
+**优先级**：已完成
 
 ## 是什么
 
@@ -39,7 +40,7 @@
 - `OwnedHero.legendaryEffects: string[]` — 已激活的传奇效果 ID 列表
 - `UserProfileSnapshot.legendaryLevelCap: number` — 全局传奇等级上限
 
-但 `buildScoringBonusInputs`（评分加成装配入口）完全不处理传奇数据——它处理装备（loot-catalog）、patron 特权、blessing、feat wrapper，唯独跳过了传奇效果。
+评分装配入口消费 `legendary-effects-catalog` 和用户存档传奇槽位；无存档时消费页面提供的全英雄全槽假设。
 
 ### 数值影响
 
@@ -57,7 +58,7 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 
 ### 阶段一：评分接入（存档驱动）
 
-**状态：已落地（2026-08，证据：`77f2183b`；当前规范：`docs/specs/modules/planner/simulator.md`）**
+**状态：已落地**
 
 将已激活传奇效果注入评分链路：
 
@@ -73,9 +74,13 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 
 ### 阶段二：无存档假设配置
 
-与装备假设配置（`synthesizeHypotheticalLootByHero`）同构：未导入存档时，允许用户假设「全英雄全槽传奇 N 级」，统一估算传奇加成。
+**状态：已落地**
+
+与装备假设配置同构：未导入存档时，允许用户调整传奇等级，按目录中的英雄归属索引合成全英雄全槽传奇贡献；有存档时假设值不生效。
 
 ### 阶段三：锻造优先级建议
+
+**状态：已落地**
 
 回答「鳞片花在哪最值」：
 
@@ -83,6 +88,8 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 - 按 `global_dps` vs `hero_dps` 分类，`per_crusader` 叠加潜力排序
 - 结合当前阵型上下文（阵型中有多少英雄满足条件标签？）
 - 输出「优先锻造 TOP 5 英雄」+ 每个英雄的预期 DPS 增量百分比
+
+当前实现按全队伤害、条件主输出和阵型计数效果计算可解释分数，稳定输出 TOP 5；未知效果保守跳过。
 
 ### 不做的部分
 
@@ -101,12 +108,6 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 | `global_dps` 通道 | `equipmentGlobalDpsByHero` | ✅ 可复用（per-hero addPercent） |
 | `hero_dps` 通道 | `externalHeroDpsContributions` | ✅ 可复用（per-carry 条件） |
 | 搜索索引 | `collectLegendaryEffects` in `build-search-index.ts` | ✅ 已抓取效果描述进搜索 |
-
-## 当前剩余范围
-
-阶段一已完成。当前仅保留阶段二（无存档假设配置）和阶段三（锻造优先级建议），两者都不是推荐结果正确性的必要条件，暂不启动。
-
-阶段三依赖阶段一的评分能力计算「锻造前后的 DPS 差值」；阶段二则需要新的 UI 控件和假设数据口径。
 
 ## 关联
 
