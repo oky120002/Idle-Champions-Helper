@@ -102,9 +102,9 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 
 ## 成长元素
 
-**魔宠**：游戏中的 Familiar，能分配到战场点击、英雄升级、大招、自动推进和药水管理等位置，自动执行对应操作；不是“熟悉”的普通词义。游戏中文数据统一使用“魔宠”。
+**魔宠**：游戏中的 Familiar，能分配到战场点击、英雄升级、大招、自动推进和药水管理等位置，自动执行对应操作。
 代码标识符：`familiar`、`familiars`、`familiar_defines`、`ImportedFormationSave.familiars`
-别名：familiar、熟悉（错误直译，不推荐）
+别名：familiar
 
 **装备**：
 英雄持有的战利品槽位物品，提供被动加成（DPS / 全队 / 生命 / 金币 / 暴击五通道）。玩家叫「装备」，代码与数据源用 loot（战利品）。
