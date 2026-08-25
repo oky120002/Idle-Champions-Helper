@@ -120,7 +120,7 @@ sync 系列「读取产物 + `JSON.parse`」重复内联，平均 130–180 行/
 | `abilities/heroTargetingRelation.ts`（159 行） | ✅ 直接测：`signalSemantics.test.ts:249-288` 有 `describe('normalizeExplicitTargeting')` ~30 case（22 项字符串映射 / distance 组合 / 5 类对象类型 / unsupported / heroes 白名单）。函数在消费方测试中被直接 import，模块级 import grep 漏判 |
 | `planner/placementReasonCode.ts`（83 行） | ✅ 间接：`placementFit.{relations,gating,pools,counting}.test.ts` 断言 `reasonCode` 共 38 处，覆盖 30+ relation→reasonCode 映射 |
 | `planner/placementSlotRelation.ts`（194 行） | ✅ 间接：`placementFit.relations.test.ts`（位置关系家族）+ `stackCountResolver` 测试 |
-| `champion-detail/*`（11 个 helper：detail-json/effect-descriptor/effect-targets/specialization-column-model/upgrade-presentation-model/detail-derived-sections/navigation 等） | ✅ 传递：`championDetailPage.{content,interactions,navigation}.test.tsx` 渲染整页断言分区内容（专精/能力/装备/传奇/天赋/皮肤/故事 tab + 派生文本），任一 helper 断裂则断言红 |
+| `champion-detail/*`（11 个 helper：detail-json/effect-descriptor/effect-targets/specialization-column-model/upgrade-presentation-model/detail-derived-sections/navigation 等） | ✅ 传递：`championDetailPage.{content,interactions,navigation}.test.tsx` 渲染整页断言分区内容（专精/能力/装备/传奇/专长/皮肤/故事 tab + 派生文本），任一 helper 断裂则断言红 |
 | `champion-filters/*`（7 模块） | ✅ 跨目录 co-located：`champions/filterActionBuilder.test.ts` 测 filter-action-builder；`filterQueryState.test.ts` 测 query-state（传递覆盖 query.ts）；options/headerMetrics 由 `championsPage.filterState/filterInteractions.test.tsx` 组件测试传递覆盖 |
 | `domain/formationLayout.ts` | ✅ 传递：`formationPage.layoutFilters.test.tsx` 等 |
 | `rules/illustrationFilter.ts`（85 行 10 维过滤） | ✅ 传递：illustrations 页组件测试 |
@@ -170,4 +170,3 @@ vitest **1297**（批 5 后 1235 + feedback 34 + hook 15 + browser-codec 4 + wal
 | `applyHealthDrain drainRate≥1` | 过时 TODO（已修复+测试 areaEstimation.test.ts:185） | TODO 清理（`atd_d2d4ed72dc` 删除） | `96a89ac` |
 
 度量：vitest 1581→**1596**（+15）；typecheck ✅；全绿。
-

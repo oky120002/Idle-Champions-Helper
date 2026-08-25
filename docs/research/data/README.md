@@ -11,7 +11,7 @@
 - 官方中文链路：`docs/research/data/language-id-7/README.md`
 - 阵型布局字段与唯一布局提取：`docs/research/data/formation-layout/README.md`
 - 英雄详情字段事实（合同见 `specs/modules/champions/detail/`）：`docs/research/data/champion-detail-fields/README.md`
-- 宠物目录与获取方式：`docs/research/data/pet-catalog/README.md`
+- 魔宠目录与获取方式：`docs/research/data/pet-catalog/README.md`
 
 ## 资源链路
 

@@ -4,7 +4,7 @@
 
 ## 当前摘要数据的缺口
 
-`public/data/v1/champions.json` 当前只有：`id`、`name`、`seat`、`roles`、`affiliations`、`tags`、`portrait`。这足够做列表页和基础筛选，但不够支撑：角色卡资料、普攻 / 大招描述、升级轨道、天赋、皮肤、默认天赋槽解锁、availability / event / 时间门 / 商店状态，以及各类原始 `properties` 与曲线字段。
+`public/data/v1/champions.json` 当前只有：`id`、`name`、`seat`、`roles`、`affiliations`、`tags`、`portrait`。这足够做列表页和基础筛选，但不够支撑：角色卡资料、普攻 / 大招描述、升级轨道、专长、皮肤、默认专长槽解锁、availability / event / 时间门 / 商店状态，以及各类原始 `properties` 与曲线字段。
 
 ## `hero_defines`
 

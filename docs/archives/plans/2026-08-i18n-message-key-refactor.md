@@ -51,7 +51,7 @@ function translate(locale: AppLocale, text: string | MessageRef, params?: Transl
 
 | 文案 | 去向 | 入口 |
 |---|---|---|
-| 游戏数据专名（英雄/场景/战役/宠物/联动队伍名等） | 管线 `LocalizedText {original, display}` 保持运行时数据 | `getPrimaryLocalizedText()` / `LocalizedText` 组件 |
+| 游戏数据专名（英雄/场景/战役/魔宠/联动队伍名等） | 管线 `LocalizedText {original, display}` 保持运行时数据 | `getPrimaryLocalizedText()` / `LocalizedText` 组件 |
 | tag 名（种族/职业/阵营/性别/获取/机制） | 保持 domain 独立字典（key=游戏 id，已是查表模式） | `getChampionTagLabel(id, locale)` |
 | 联动队伍手写表 `affiliation-tag-labels.ts` | **删除**，走管线 `champion.affiliations` | — |
 | 数据源单语文本（`scenarioWarnings` 中文、`snapshot.warnings` 英文） | 保持 `string`，UI 边界 `{ literal }` wrap | `t({ literal })` |

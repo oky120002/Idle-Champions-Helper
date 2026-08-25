@@ -38,6 +38,6 @@
 ## 常见误解字段
 
 - `preview_graphic_id`：当前快照只在 `adventure_defines[].rewards[].preview_graphic_id` 出现，对应 `graphic_defines.type = 1` 的 `Icons/...`，本质是奖励预览图标，不是英雄 / 皮肤主立绘。
-- `additional_shop_graphics`：只出现在 `149 / 673` 个皮肤上，资源本身仍是 `graphic_defines.type = 3 (SkelAnim)`；内容多为变身形态、伙伴、宠物或商店额外素材，不能直接替代主 pose 判断。
+- `additional_shop_graphics`：只出现在 `149 / 673` 个皮肤上，资源本身仍是 `graphic_defines.type = 3 (SkelAnim)`；内容多为变身形态、伙伴、魔宠或商店额外素材，不能直接替代主 pose 判断。
 
 结论：`preview_graphic_id` 和 `additional_shop_graphics` 都不能绕过后续解码、选 frame、再合成这一步。

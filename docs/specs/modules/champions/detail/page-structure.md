@@ -19,7 +19,7 @@
 
 - 外层遵循全站工作台上下结构：页面 toolbar 在上，下方内容区承载详情，不做全站级左右结构。
 - 下方内容区内部采用局部左右布局：桌面左侧为英雄资料栏，右侧为当前章节内容；移动端退化为单列上下结构。
-- 左侧资料栏：头像、中英名称、`seat`、`roles`、`affiliations`、`availability`、属性、角色卡核心字段、升级 / 天赋 / 皮肤数量摘要。
+- 左侧资料栏：头像、中英名称、`seat`、`roles`、`affiliations`、`availability`、属性、角色卡核心字段、升级 / 专长 / 皮肤数量摘要。
 - 页面 toolbar 左侧承载章节 tab：`Specializations`、`Abilities`、`Loot`、`Legendary`、`Feats`、`Skins`、`Story & Misc`；toolbar 右侧承载当前章节统计、章节进度、复制链接等操作；不做 `Links`。
 - `Specializations`：默认打开；按专精 / 可被强化能力组织为列式卡片，同列内展示该类型的主升级、关联强化、效果摘要与详情；若有 `specializationGraphicId`，只能展示构建期同步到站内的本地静态图。
 - `Abilities`：基础数值、普攻、大招、事件升级和等级升级 ledger；攻击条目至少保留名称、简介、长描述、冷却、目标数、AOE、`target / tags / damage types`。

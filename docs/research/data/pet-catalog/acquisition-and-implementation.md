@@ -1,4 +1,4 @@
-# 宠物目录：获取方式字段与归类事实
+# 魔宠目录：获取方式字段与归类事实
 
 - 作用：沉淀“获取方式”字段在 definitions 里的落点与可解释归类。
 - 仓库实现（独立同步脚本、SkelAnim 合成 PNG、卡片展示获取方式摘要、不混入 skin）已落地，见 `specs/modules/pets/pets-page-design.md`；本文件只留字段与归类事实。

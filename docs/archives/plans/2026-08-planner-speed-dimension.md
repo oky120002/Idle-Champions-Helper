@@ -9,7 +9,7 @@
 
 将 11 类速度效果建模为「区域推进效率因子」（speedMultiplier），新增 `ScoringMode = 'team-speed'` 评分模式，使用户能按速度效益排序阵型推荐。
 
-**核心约束（用户 2026-08-10 明确）**：速度效果必须建模三层缩放——装备等级、阵型效果、激活专长——它们直接乘在速度数值上。详见 `docs/research/gameplay/speed-scaling-requirements.md`。
+**核心约束**：速度效果必须建模三层缩放——装备等级、阵型效果、激活专精——它们直接乘在速度数值上。详见 `docs/research/gameplay/speed-scaling-requirements.md`。
 
 ## 范围
 

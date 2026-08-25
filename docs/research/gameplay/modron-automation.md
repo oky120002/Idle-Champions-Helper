@@ -104,7 +104,7 @@ Nordom（英雄 100）与 Modron 核心有特殊交互：
 
 2. **Ult 覆盖率折算**（`src/domain/simulator/ultUptime.ts`）：`modronActive` 参数控制是否计入大招 buff——满级核心自动施放时 `uptime = duration / base_cooldown`；未激活则 `uptime = 0`（保守不计）。当前生产调用方均传 `false`（无核心满级假设），实际加成暂未接入评估。
 
-3. **全局 DPS 池**（`src/domain/buffs/blessingGlobalBuff.ts` 注释）：Modron 管道伤害加成与赞助人天赋、祝福共享同一 `global_dps_multiplier_mult` 加法池 `1 + Σ(value)/100`，但当前 planner 未注入 Modron 来源的 multiplier。
+3. **全局 DPS 池**（`src/domain/buffs/blessingGlobalBuff.ts` 注释）：Modron 管道伤害加成与赞助人加成、祝福共享同一 `global_dps_multiplier_mult` 加法池 `1 + Σ(value)/100`，但当前 planner 未注入 Modron 来源的 multiplier。
 
 > **结论**：Modron 管道加成是阵型外全局乘区，但 planner 当前不建模管道伤害/金币/速度 buff；仅建模了自动重置层数上限和 ult 自动施放假设。
 

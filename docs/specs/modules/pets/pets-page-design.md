@@ -1,23 +1,23 @@
-# 宠物图鉴页规范
+# 魔宠图鉴页规范
 
-- 当前状态：已实现，页面入口为 `src/pages/PetsPage.tsx`，导航页签为 `宠物图鉴`。
-- 页面壳层：宠物页当前桌面端已纳入全站页面工作台规范；小导航、左右结构、滚动与动效细节见 `docs/specs/modules/shared-components/page-workbench-design.md`。
+- 当前状态：已实现，页面入口为 `src/pages/PetsPage.tsx`，导航页签为 `魔宠图鉴`。
+- 页面壳层：魔宠页当前桌面端已纳入全站页面工作台规范；小导航、左右结构、滚动与动效细节见 `docs/specs/modules/shared-components/page-workbench-design.md`。
 
 ## 目标
 
-在静态站、local-first、GitHub Pages 兼容前提下，补一个可稳定浏览全部宠物的页签，让用户能：
+在静态站、local-first、GitHub Pages 兼容前提下，补一个可稳定浏览全部魔宠的页签，让用户能：
 
-1. 查看系统里的全部宠物
-2. 看到每只宠物的立绘外观
-3. 直接知道宠物怎么入手，而不是只看原始字段
+1. 查看系统里的全部魔宠
+2. 看到每只魔宠的立绘外观
+3. 直接知道魔宠怎么入手，而不是只看原始字段
 
 ## 页面范围
 
-当前只覆盖宠物本体 `familiar_defines`，不把 `familiar_skin_defines` 换皮皮肤混进主列表。
+当前只覆盖魔宠本体 `familiar_defines`，不把 `familiar_skin_defines` 换皮皮肤混进主列表。
 
-卡片必须展示：宠物名（中英双字段）、主要描述、立绘、获取方式摘要、来源细节、当前 definitions 是否已启用。
+卡片必须展示：魔宠名（中英双字段）、主要描述、立绘、获取方式摘要、来源细节、当前 definitions 是否已启用。
 
-当前不做：宠物皮肤图鉴、宠物效果机制说明、最佳用法推荐、来源历史时间线。
+当前不做：魔宠皮肤图鉴、魔宠效果机制说明、最佳用法推荐、来源历史时间线。
 
 ## 数据口径
 
@@ -29,7 +29,7 @@
 
 构建期来源：`familiar_defines`、`premium_item_defines`、`patron_shop_item_defines`、`patron_defines`、`graphic_defines`。
 
-补充说明：宠物 `graphic_id` 与 `properties.xl_graphic_id` 当前主链路同样是 `SkelAnim` 分件资源，不是直接可展示的整张 PNG；因此 `scripts/sync-idle-champions-pets.ts` 必须在构建期完成 pose 合成，再把图标与立绘写成站内静态 PNG。
+补充说明：魔宠 `graphic_id` 与 `properties.xl_graphic_id` 当前主链路同样是 `SkelAnim` 分件资源，不是直接可展示的整张 PNG；因此 `scripts/sync-idle-champions-pets.ts` 必须在构建期完成 pose 合成，再把图标与立绘写成站内静态 PNG。
 
 ## 获取方式归类
 
@@ -37,7 +37,7 @@
 
 - `gems` -> 宝石商店
 - `patron` -> 赞助商商店
-- `premium` -> 购买（再细分 DLC / 主题包 / Familiar Pack / 限时闪促）
+- `premium` -> 购买（再细分 DLC / 主题包 / 魔宠包 / 限时闪促）
 - `not-yet-available` -> 暂未开放
 - `unknown` -> 来源待确认
 
@@ -48,7 +48,7 @@
 - 卡片顶部用立绘做主舞台，不拆成两张并列小图
 - 筛选区保留搜索、来源过滤、图像完整度过滤三类操作
 - 移动端不允许横向滑动导航或横向筛选条；空间不足时改为纵向堆叠
-- 缺图宠物仍必须可见，并明确说明“当前 definitions 没有可用图像槽位”
+- 缺图魔宠仍必须可见，并明确说明“当前 definitions 没有可用图像槽位”
 
 ## 当前实现落点
 

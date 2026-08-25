@@ -63,7 +63,7 @@ normalize 输出 `champions=164 / championVisuals=164 / championDetails=164 / ad
 当前 `data:official` 整体链路直接引用到的官方表已有 `26` 项（含 `current_time`）：
 
 - 进入核心归一化集合的主线表：`hero_defines / attack_defines / upgrade_defines / effect_defines / hero_feat_defines / hero_skin_defines / loot_defines / legendary_effect_defines / adventure_defines / campaign_defines / affiliation_defines / monster_defines`
-- 主要给资源和宠物链路使用：`graphic_defines / familiar_defines / premium_item_defines / patron_defines / patron_shop_item_defines`
+- 主要给资源和魔宠链路使用：`graphic_defines / familiar_defines / premium_item_defines / patron_defines / patron_shop_item_defines`
 - 已提升为共享规则层：`game_rule_defines / patron_perk_defines / patron_perk_tier_defines / trials_role_defines / trials_difficulty_defines`
 - 已提升为共享效果参考层：`stat_defines / buff_defines / effect_key_defines`
 

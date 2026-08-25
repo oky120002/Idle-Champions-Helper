@@ -19,7 +19,7 @@ planner 评估层消费的 DPS 机制清单。每个机制一个 `id`，三处�
 | `dynamic-stack-multiply` | 动态层数乘算堆叠 | `stacksMultiply: true`（+ 无 stackFunc） | `resolveSignalMultiplier` stacksMultiply 短路 + pool multFactor（`// 机制: dynamic-stack-multiply`） | 蔚「出言不逊永不够」 |
 | `topology-count-stack` | 拓扑计数堆叠 | `stackFunc ∈ {per_col_behind, per_slot_distance_from_source}` | `STACK_COUNT_RESOLVERS`（`// 机制: topology-count-stack`） | 列 / 槽位距离类 support |
 | `bonus-scale-linkage` | 技能联动（A 系数来源于 B） | `bonusScaleOfSignal` 非空 | `applySignalPercent` / stacksMultiply 依赖检查（`// 机制: bonus-scale-linkage`） | 蔚「出言不逊」挂「善良榜样」 |
-| `buff-upgrade-modifier` | 装备 / 专长 / feat 修饰 | 外部源（loot / feat / legendary）或 `stacks_multiply` 或复杂 wrapper 的 `buff_upgrade` / `buff_upgrades` | `applySignalPercent` 按基础 `value`（per-stack 百分比）折算，非聚合倍率；依赖基础 multiplier>1（叠层 0 层不生效）（`// 机制: buff-upgrade-modifier`） | 蔚「时髦披肩」（loot 装备） |
+| `buff-upgrade-modifier` | 装备 / 专长 / 传奇装备修饰 | 外部源（loot / feat / legendary）或 `stacks_multiply` 或复杂 wrapper 的 `buff_upgrade` / `buff_upgrades` | `applySignalPercent` 按基础 `value`（per-stack 百分比）折算，非聚合倍率；依赖基础 multiplier>1（叠层 0 层不生效）（`// 机制: buff-upgrade-modifier`） | 蔚「时髦披肩」（loot 装备） |
 | `static-dps-mult-fallback` | 静态 DPS 乘数兜底 | upgrade 无可解析 signal + 有 `static_dps_mult` | `collectRawEffectEntries` fallback（`// 机制: static-dps-mult-fallback`） | 复杂机制 upgrade 兜底 |
 
 ## ability 源静态 buff_upgrade 排除（归一化期）
@@ -30,7 +30,7 @@ IC 的 effect_def `effect_string` 是满级 snapshot 计算值，已含该 abili
 
 - `stacks_multiply` 动态（area 依赖，如蔚出言不逊）
 - 复杂 wrapper（`buff_upgrade_per_tagged_crusader_mult` / `buff_upgrade_mult_by_distance_*` 等，阵型依赖）
-- 外部源 loot / feat / legendary（装备 / 专长 / feat 运行时修饰，不在 ability snapshot 内）
+- 外部源 loot / feat / legendary（装备 / 专长 / 传奇装备运行时修饰，不在 ability snapshot 内）
 
 `use_computed_amount_for_description` 字段非可靠判据（仅部分 effect_def 有此 flag，且与 snapshot 语义不相关）；判断依据是「CNE export 的 effect_string 普遍为满级值」（蔚善良榜样实证）。全库 ability 源静态 buff_upgrade 均被排除。
 

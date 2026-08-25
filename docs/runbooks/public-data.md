@@ -10,7 +10,7 @@
 | 抓取原始 definitions 快照 | `npm run data:fetch` |
 | 归一化英文/中文 raw | `npm run data:normalize -- --input <en>.json --localizedInput <zh>.json` |
 | 同步头像/主机头像/立绘/专精图/装备 icon | `npm run data:portraits` / `data:console-portraits` / `data:illustrations` / `data:specialization-graphics` / `data:equipment-icons` |
-| 同步宠物目录与图 | `npm run data:pets -- --input <en>.json --localizedInput <zh>.json` |
+| 同步魔宠目录与图 | `npm run data:pets -- --input <en>.json --localizedInput <zh>.json` |
 | 构建搜索索引 | `npm run data:search` |
 | 统计 planner signal 覆盖率 | `npm run data:signal-coverage` |
 | 重生成 idle 动画审片清单 | `npm run data:animation-audit` |

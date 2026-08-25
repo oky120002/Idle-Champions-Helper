@@ -11,7 +11,7 @@
 - `variants.json`
 - `formations.json`
 - `enums.json`
-- 头像、立绘、动画、宠物等资源
+- 头像、立绘、动画、魔宠等资源
 
 planner 用 `npm run data:signal-coverage` 审计 definitions 中对模拟器有用但尚未归一化的字段，不假设数据已经齐全。核实结果见 `docs/research/data/planner/signal-coverage.md`。
 
