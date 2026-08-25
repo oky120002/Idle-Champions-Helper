@@ -9,6 +9,7 @@
 - `2026-08-planner-area-dashboard.md`：planner 推图进度仪表盘，已落地
 - `2026-08-planner-legendary-effects.md`：planner 传奇装备效果接入，已落地
 - `animation-repo-size.md`：动画资源外链 / Git LFS 方案，已否决
+- `2026-08-visual-asset-full-audit.md`：视觉资源全量覆盖、尺寸与体积审计，已落地
 
 ## 规则
 

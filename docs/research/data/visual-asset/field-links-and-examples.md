@@ -5,7 +5,7 @@
 ## 核实结论
 
 - definitions 里不只有头像字段，也能稳定定位英雄本体立绘和皮肤立绘。
-- 当前 `champion-illustrations.json`（`updatedAt: 2026-07-25`）由 definitions 字段链路生成 `164` 个英雄本体与 `713` 个皮肤展示单元。
+- 当前 `champion-illustrations.json`（`updatedAt: 2026-08-10`）由 definitions 字段链路生成 `165` 个英雄本体与 `719` 个皮肤展示单元。
 - 英雄和皮肤资源均通过对应 graphic id 关联 `graphic_defines`，再定位官方 `mobile_assets` 资源。
 - 这些资源可通过 `graphic_defines[].graphic` 拼出官方 `mobile_assets` 地址。
 

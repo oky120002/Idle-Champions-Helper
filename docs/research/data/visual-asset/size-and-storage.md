@@ -5,10 +5,12 @@
 
 ## 已确认的数量
 
-- 当前 `champion-illustrations.json`（`updatedAt: 2026-07-25`）包含 `164` 个英雄本体与 `713` 个皮肤展示单元。
-- 清单中的 `877` 个展示单元都已生成本地静态图；字段链路仍来自英雄与皮肤 definitions 对视觉资源的引用。
+- 当前 `champion-illustrations.json`（`updatedAt: 2026-08-10`）包含 `165` 个英雄本体与 `719` 个皮肤展示单元。
+- 清单中的 `884` 个展示单元都已生成本地静态图；全量文件存在性、清单字节数和 PNG 尺寸一致性见 [`docs/audits/2026-08-visual-asset-full-audit.md`](../../../audits/2026-08-visual-asset-full-audit.md)。
 
 ## 样例尺寸与体积
+
+全量审计结果：页面 PNG 合计 `49,495,485 B`；英雄本体范围为 `148–548 × 236–522`，皮肤范围为 `130–626 × 202–554`。`public/data` 合计 `431,353,645 B`，距离 GitHub Pages `1 GB` 上限仍有 `568,646,355 B`。
 
 | 资源槽位 | 样例路径 | rawBytes | decodedPngBytes | 解包后尺寸 |
 | --- | --- | ---: | ---: | --- |

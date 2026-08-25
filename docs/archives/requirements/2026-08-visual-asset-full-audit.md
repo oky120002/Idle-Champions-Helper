@@ -1,3 +1,5 @@
+**状态**: 已落地（2026-08，证据：`docs/audits/2026-08-visual-asset-full-audit.md`、`docs/specs/modules/champions/illustration/`）
+
 # 视觉资源全量尺寸与体积审计
 
 **优先级**：待评
@@ -16,5 +18,5 @@
 
 ## 关联
 
-- [size-and-storage.md](../research/data/visual-asset/size-and-storage.md)（样例体积结论）
-- [animation-repo-size.md](../archives/requirements/animation-repo-size.md)（动画存储治理提案，已归档）
+- [size-and-storage.md](../../research/data/visual-asset/size-and-storage.md)（样例体积结论）
+- [animation-repo-size.md](animation-repo-size.md)（动画存储治理提案，已归档）
