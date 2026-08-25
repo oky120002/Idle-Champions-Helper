@@ -1,16 +1,16 @@
-# 熟悉分配建议（Familiar Advisor）
+# 魔宠分配建议（Familiar Advisor）
 
 **优先级**：待评
 
 ## 是什么
 
-基于玩家当前阵型和已拥有的熟悉数量，推荐最优熟悉分配方案——哪些放场上点击、哪些放英雄身上自动升级、哪些放大招栏、哪些管药水。以独立面板展示在阵型编辑器旁边。
+基于玩家当前阵型和已拥有的魔宠数量，推荐最优魔宠分配方案——哪些放场上点击、哪些放英雄身上自动升级、哪些放大招栏、哪些管药水。以独立面板展示在阵型编辑器旁边。
 
 ## 背景
 
-### 熟悉是游戏自动化的核心
+### 魔宠是游戏自动化的核心
 
-熟悉（Familiar）是可分配到战场不同位置的小型生物，用于自动化手动操作（调研 `familiars.md`）。在区域 66 解锁后，熟悉决定了玩家能否「挂机无人值守」。
+魔宠（Familiar）是可分配到战场不同位置的小型生物，用于自动化手动操作（调研 `familiars.md`）。在区域 66 解锁后，魔宠决定了玩家能否「挂机无人值守」。
 
 分配槽位与行为：
 
@@ -25,7 +25,7 @@
 
 ### 社区完全依赖手动优先级列表——没有工具
 
-搜索结论：**社区不存在任何熟悉分配优化器或计算器**。玩家完全依赖 Steam 指南和 Reddit 经验帖手动配置。
+搜索结论：**社区不存在任何魔宠分配优化器或计算器**。玩家完全依赖 Steam 指南和 Reddit 经验帖手动配置。
 
 社区共识优先级（综合 Steam 指南 + Reddit 多帖）：
 
@@ -47,19 +47,19 @@
 
 ### 数据现状
 
-- `pets.json`：345 只熟悉目录（获取方式、宝石价格、赞助人商店）✅——但**纯视觉元数据**（图标、获取方式），**无效果/能力数值**（点击速率、阶梯阈值等运行时常量不在游戏公开数据中，仅社区记载）
-- `ImportedFormationSave.familiars`：阵型存档中的熟悉分配（每阵型一份），已导入 ✅
-- **用户熟悉总库存**：**不在 `UserProfileSnapshot` 中**——userDetails 存档有玩家拥有哪些熟悉的原始数据，但当前 normalizer 未提取 ⚠️
+- `pets.json`：345 只魔宠目录（获取方式、宝石价格、赞助人商店）✅——但**纯视觉元数据**（图标、获取方式），**无效果/能力数值**（点击速率、阶梯阈值等运行时常量不在游戏公开数据中，仅社区记载）
+- `ImportedFormationSave.familiars`：阵型存档中的魔宠分配（每阵型一份），已导入 ✅
+- **用户魔宠总库存**：**不在 `UserProfileSnapshot` 中**——userDetails 存档有玩家拥有哪些魔宠的原始数据，但当前 normalizer 未提取 ⚠️
 
 ### 已有页面
 
-pets 页面（`/pets`）目前只展示熟悉目录列表。没有分配建议功能。
+pets 页面（`/pets`）目前只展示魔宠目录列表。没有分配建议功能。
 
 ## 需要做什么
 
-### 子项一：熟悉库存导入
+### 子项一：魔宠库存导入
 
-从 userDetails 存档中提取玩家拥有的熟悉总数（和具体 ID），写入 `UserProfileSnapshot`。
+从 userDetails 存档中提取玩家拥有的魔宠总数（和具体 ID），写入 `UserProfileSnapshot`。
 
 需确认原始存档字段位置——调研 `familiars.md` 记录 `familiars: Record<string,string>` 在 user-profile types，但当前 `UserProfileSnapshot` 无此字段。需检查 userDetails payload 中的 familiars 数据结构。
 
@@ -68,42 +68,42 @@ pets 页面（`/pets`）目前只展示熟悉目录列表。没有分配建议�
 基于以下输入给出推荐：
 
 - **阵型上下文**：当前阵型中的英雄列表（哪些需要自动升级？有没有速度英雄？有没有需要大招爆发的 DPS 英雄？）
-- **熟悉总数**：玩家拥有的熟悉数量
+- **魔宠总数**：玩家拥有的魔宠数量
 - **使用场景**：宝石农场 vs 推图（用户选择）
 
 推荐逻辑（复用社区共识规则）：
 
 ```
-if 熟悉数 <= 6: 全放场上
-elif 熟悉数 <= 7: 6 场上 + 1 点击伤害
+if 魔宠数 <= 6: 全放场上
+elif 魔宠数 <= 7: 6 场上 + 1 点击伤害
 elif 推图模式: 6 场上 + 1 点击 + 4 大招 + 逐个英雄
 elif 宝石农场: 5 场上 + 1 点击 + 速度英雄优先 + 其余英雄
 ```
 
 ### 子项三：拥有量展示与获取建议
 
-- 在 pets 页面标记已拥有 / 未拥有的熟悉
-- 根据当前拥有量和，提示「下一个最值得购买的熟悉」（宝石可购的 11 只按价格排序）
+- 在 pets 页面标记已拥有 / 未拥有的魔宠
+- 根据当前拥有量，提示「下一个最值得购买的魔宠」（宝石可购的 11 只按价格排序）
 
 ## 已有基建
 
 | 组件 | 位置 | 状态 |
 |---|---|---|
-| 熟悉目录 | `public/data/v1/pets.json` | ✅ 345 只，含获取方式 + 宝石价格 |
-| 阵型存档熟悉分配 | `ImportedFormationSave.familiars` | ✅ 已导入 |
+| 魔宠目录 | `public/data/v1/pets.json` | ✅ 345 只，含获取方式 + 宝石价格 |
+| 阵型存档魔宠分配 | `ImportedFormationSave.familiars` | ✅ 已导入 |
 | pets 页面 | `src/pages/pets/` | ✅ 基础目录展示 |
-| 熟悉总库存 | `UserProfileSnapshot` | ❌ 未导入，需确认 userDetails 字段 |
+| 魔宠总库存 | `UserProfileSnapshot` | ❌ 未导入，需确认 userDetails 字段 |
 | 分配逻辑 | — | ❌ 全新 |
 
 ## 为何暂缓
 
 子项一（库存导入）需确认 userDetails 中的 familiar 数据结构。子项二（分配建议）逻辑本身不复杂（规则引擎），但需要阵型上下文接入和 UI 设计。子项三（获取建议）最轻量，可与 pets 页面扩展一起做。
 
-整体优先级取决于是否扩展账号成长辅助范围；若纳入该范围，熟悉分配建议可作为高频辅助决策能力，否则保持为低优先级扩展。
+整体优先级取决于是否扩展账号成长辅助范围；若纳入该范围，魔宠分配建议可作为高频辅助决策能力，否则保持为低优先级扩展。
 
 ## 关联
 
-- 调研：`docs/research/gameplay/familiars.md`（熟悉机制全貌）
+- 调研：`docs/research/gameplay/familiars.md`（魔宠机制全貌）
 - 社区来源：[Steam Modron Gem Farm 指南](https://steamcommunity.com/sharedfiles/filedetails/?id=2184815975)、[Fandom Wiki Familiars](https://idlechampions.fandom.com/wiki/Familiars)
 - 代码：`src/pages/pets/`、`src/domain/user-profile/types.ts`
-- 关联需求：`2026-08-planner-capability-extensions.md`（私有存档深度导入 M2 可包含熟悉库存）
+- 关联需求：`2026-08-planner-capability-extensions.md`（私有存档深度导入 M2 可包含魔宠库存）

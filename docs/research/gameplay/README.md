@@ -16,7 +16,7 @@
 - [`debuff-control-mechanics.md`](./debuff-control-mechanics.md)：减益与控制——击退/眩晕/减速/定身/狂暴机制与英雄盘点
 - [`modron-automation.md`](./modron-automation.md)：Modron 自动化——核心/管道加成、自动化功能、planner 影响
 - [`potions.md`](./potions.md)：药水系统——六大家族/传奇药水/叠加规则/与 BUD 的关系
-- [`familiars.md`](./familiars.md)：熟悉——自动点击/升级/大招/药水的槽位分配、阶梯效果与获取方式
+- [`familiars.md`](./familiars.md)：魔宠——自动点击/升级/大招/药水的槽位分配、阶梯效果与获取方式
 - [`patrons-blessings.md`](./patrons-blessings.md)：赞助人与祝福——5 位赞助人限制规则、Perk 层级、区域加码、两套并行增益系统
 - [`progression-systems.md`](./progression-systems.md)：三大进度系统——赛季（已停办）、提亚马特试炼（10 难度异步多人）、时空门（碎片开老英雄）
 - [`pushing-and-wall.md`](./pushing-and-wall.md)：推图与墙——怪物血量/伤害缩放公式、三种墙类型、boss 狂怒与压制机制
