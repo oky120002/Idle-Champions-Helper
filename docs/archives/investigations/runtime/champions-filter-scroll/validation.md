@@ -7,7 +7,7 @@
 已补并执行的浏览器级回归：
 
 - `tests/e2e/champions.scroll-stability.spec.ts`
-  - 连续点击座位筛选时，整页 `scrollY` 保持稳定
+  - 连续点击出战栏位筛选时，整页 `scrollY` 保持稳定
   - 在长列表场景下收窄到少量结果时，页面会被带回结果区而不是被夹到页面顶部
   - 结果区快捷按钮可一键跳到底部，再返回结果顶部
 - `tests/e2e/filter-layout-stability.spec.ts`
