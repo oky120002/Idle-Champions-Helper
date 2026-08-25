@@ -65,17 +65,13 @@
 
 ## 战斗机制
 
-**勇士**：游戏机制文本中对 Champion 的称呼，指可加入队伍并放入阵型的角色；产品页面和用户界面仍使用“英雄”作为页面称呼。
-代码标识符：`champion`、`champions`、`Champion`
-别名：champion、英雄（常用称呼）
+**勇士**：游戏机制文本中对 Champion 的称呼，指可加入队伍并放入阵型的角色；“英雄”也是官方中文文本中的常用称呼。
+代码标识符：`hero`、`heroes`、`Hero`、`hero_id`
+别名：champion、英雄
 
 **阵型技能**：英雄对阵型中其他位置或整队产生的技能效果，官方文本对应 formation ability；与普通自身技能效果区分。
-代码标识符：`formationAbility`、`formation_ability`、`buff_*_formation_abilities`
+代码标识符：`formation_ability`、`buff_*_formation_abilities`
 别名：formation ability、阵型效果
-
-**金币寻获量**：游戏统计与效果文本中的 gold find，表示队伍获得金币的加成；不等同于单次金币掉落数。
-代码标识符：`goldFind`、`gold_multiplier_mult`、`computeTeamGoldFind`
-别名：gold find、金币发现
 
 **BUD（基础杀招伤害）**：
 Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作杀招（ult）伤害结算基准。推算引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
@@ -166,7 +162,7 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 别名：support、辅助
 
 **金币队**：
-推算优化目标之一：最大化全队金币寻获量。
+推算优化目标之一：最大化全队金币发现。
 代码标识符：`ScoringMode: 'team-gold'`、`computeTeamGoldFind`
 别名：金币评分
 
