@@ -68,7 +68,7 @@ ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放�
 **normalize/build 侧（checksum + pipelineHash 双判定）**：`normalizeDefinitionsSnapshot` 与 `buildModels` 经 `shouldSkipDataPipeline` 判定 skip：raw `checksum` 与管线源码指纹 `pipelineHash` 均未变化时跳过。`checksum` 缺失时使用 `current_time` 作为 `updatedAt` 回退值。三种重跑触发：
 
 - **raw 更新**（游戏数据更新）：raw `checksum` 变（`current_time` 亦单调前进）→ 重跑。
-- **逻辑改动**（开发者改 normalize/build/数据脚本或归一化语义）：`pipelineHash` 变（`scripts/data` + `src/domain/abilities` + `src/domain/effects` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
+- **逻辑改动**（开发者改 normalize/build/数据脚本或归一化语义）：`pipelineHash` 变（`scripts/data` + `src/domain/abilities` + `src/domain/effects` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，确保归一化逻辑变化同步到产物。
 - **`FORCE_DATA_REBUILD=1`**：手动强制逃生口，覆盖「调试 / 嫌疑产物脏」等需要无条件重跑的场景。
 
 ## 13. 正则交替符插值进复合模式时必须用 `(?:...)` 分组
