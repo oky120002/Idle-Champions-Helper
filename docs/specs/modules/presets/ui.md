@@ -13,6 +13,7 @@
 - 来自阵型编辑：`layoutId`、`placements`、`scenarioRef`、当前数据版本 `dataVersion`、`filterSnapshot`（保存时的英雄筛选条件快照）。
 - 来自英雄列表页：有活跃筛选时，筛选面板下方显示「带着当前筛选去摆阵型」入口，跳转到 `/formation?<筛选参数>`，阵型页消费同一 URL 协议（共享 param keys）缩小候选池。
 - 恢复方案回阵型页：候选池按方案携带的 `filterSnapshot` 还原（`null` 时为全量候选）。
+- 英雄列表页：筛选侧栏提供常用筛选组合的保存、恢复和删除；恢复通过共享 URL 查询参数同步 11 维筛选状态。
 
 ## 核心交互
 

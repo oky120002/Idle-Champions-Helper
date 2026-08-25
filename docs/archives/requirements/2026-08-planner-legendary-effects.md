@@ -58,7 +58,7 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 
 ### 阶段一：评分接入（存档驱动）
 
-**状态：已落地**
+**状态**：已落地。证据：`docs/archives/plans/2026-08-planner-legendary-effects.md`；评分边界回归见 `src/domain/planner/steadyStateScoring.invariants.test.ts`。
 
 将已激活传奇效果注入评分链路：
 
@@ -104,7 +104,7 @@ effect = gear_base × (1 + (ilvl - 1) × 0.004)
 | 传奇效果数据 | `champion-details/*.json` → `legendaryEffects` | ✅ 990 条，6 槽 × 165 英雄 |
 | 存档导入 | `OwnedHeroLegendarySlot`（level, effectId, effectIds） | ✅ 已正常化 |
 | 效果解析管线 | `effect_key,amount` 格式 | ✅ 与基础能力同构，可复用 |
-| 评分加成装配 | `buildScoringBonusInputs` | ❌ 待新增传奇通道 |
+ | 评分加成装配 | `buildScoringBonusInputs` | ✅ 已接入存档与假设配置通道 |
 | `global_dps` 通道 | `equipmentGlobalDpsByHero` | ✅ 可复用（per-hero addPercent） |
 | `hero_dps` 通道 | `externalHeroDpsContributions` | ✅ 可复用（per-carry 条件） |
 | 搜索索引 | `collectLegendaryEffects` in `build-search-index.ts` | ✅ 已抓取效果描述进搜索 |

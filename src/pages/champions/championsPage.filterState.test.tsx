@@ -7,6 +7,13 @@ vi.mock('../../data/client', () => ({
   loadVersion: vi.fn(),
 }))
 
+const savedFilterPresets: unknown[] = []
+vi.mock('../../data/championFilterPresetStore', () => ({
+  listChampionFilterPresets: vi.fn(async () => savedFilterPresets),
+  saveChampionFilterPreset: vi.fn(async () => undefined),
+  deleteChampionFilterPreset: vi.fn(async () => undefined),
+}))
+
 import { loadVersion } from '../../data/client'
 import { mockChampionsPageCollections, renderChampionsPage } from './championsPageTestHarness'
 import { manyChampionsFixture } from './championsPageTestData'
@@ -19,6 +26,7 @@ function getMetricByText(text: string) {
 
 describe('ChampionsPage filter state', () => {
   beforeEach(() => {
+    savedFilterPresets.length = 0
     window.sessionStorage.clear()
     mockChampionsPageCollections()
     mockedLoadVersion.mockResolvedValue({
@@ -130,5 +138,19 @@ describe('ChampionsPage filter state', () => {
     expect(screen.getByTestId('location-search')).toHaveTextContent('?seat=3&role=tank')
     expect(screen.getByText('德尔塔')).toBeInTheDocument()
     expect(screen.queryByText('阿尔法')).not.toBeInTheDocument()
+  })
+
+  it('可以保存并恢复常用筛选组合', async () => {
+    const user = userEvent.setup()
+    vi.spyOn(window, 'prompt').mockReturnValue('辅助英雄')
+
+    renderChampionsPage(['/champions?role=support'])
+
+    expect(await screen.findByRole('button', { name: '保存当前筛选' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '保存当前筛选' }))
+
+    expect(await screen.findByRole('button', { name: '辅助英雄' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '辅助英雄' }))
+    await waitFor(() => expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true'))
   })
 })

@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
+import { deleteChampionFilterPreset, listChampionFilterPresets, saveChampionFilterPreset } from '../../data/championFilterPresetStore'
+import type { ChampionFilterPreset } from '../../domain/types'
 import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../../components/workbench/useWorkbenchResultsMotion'
 import { useWorkbenchShareLink } from '../../components/workbench/useWorkbenchShareLink'
 import { getMechanicCategoryHint } from '../../features/champion-filters/mechanicHints'
 import { buildChampionFilterActions } from './champion-filter-actions'
-import { buildFormationFilterHref } from './query-state'
+import { buildFilterSearchParams, buildFormationFilterHref } from './query-state'
 import { useChampionCollectionState } from './useChampionCollectionState'
 import { useChampionsFilterState } from './useChampionsFilterState'
 import { useChampionsPageDerived } from './useChampionsPageDerived'
@@ -14,9 +16,15 @@ import type { ChampionsPageModel } from './types'
 export function useChampionsPageModel(): ChampionsPageModel {
   const { locale, t } = useI18n()
   const location = useLocation()
+  const navigate = useNavigate()
   const state = useChampionCollectionState()
   const filterState = useChampionsFilterState()
   const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
+  const [filterPresets, setFilterPresets] = useState<ChampionFilterPreset[]>([])
+
+  useEffect(() => {
+    void listChampionFilterPresets().then(setFilterPresets).catch(() => setFilterPresets([]))
+  }, [])
 
   const derived = useChampionsPageDerived({
     locale,
@@ -114,5 +122,37 @@ export function useChampionsPageModel(): ChampionsPageModel {
     getMechanicCategoryHint: (groupId) => getMechanicCategoryHint(groupId, t),
     saveListScroll: () => saveWorkbenchResultsPaneScroll('champions', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0),
     locationSearch: filterState.locationSearch,
+    filterPresets,
+    saveCurrentFilterPreset: () => {
+      const name = window.prompt(t("筛选组合名称"))?.trim() ?? ''
+      if (name === '') return
+      const now = new Date().toISOString()
+      const {
+        search, selectedSeats, selectedRoles, selectedAffiliations, selectedRaces,
+        selectedGenders, selectedAlignments, selectedProfessions, selectedAcquisitions,
+        selectedMechanics, selectedPatrons,
+      } = filterState.filters
+      const preset: ChampionFilterPreset = {
+        id: crypto.randomUUID(), schemaVersion: 1, name,
+        filters: {
+          search, selectedSeats, selectedRoles, selectedAffiliations, selectedRaces,
+          selectedGenders, selectedAlignments, selectedProfessions, selectedAcquisitions,
+          selectedMechanics, selectedPatrons,
+        },
+        createdAt: now, updatedAt: now,
+      }
+      void saveChampionFilterPreset(preset)
+        .then(() => setFilterPresets((current) => [preset, ...current]))
+        .catch(() => undefined)
+    },
+    restoreFilterPreset: (preset) => {
+      const search = buildFilterSearchParams({ ...preset.filters, showAllResults: false }).toString()
+       void navigate(search === '' ? '/champions' : `/champions?${search}`)
+    },
+    deleteFilterPreset: (presetId) => {
+      void deleteChampionFilterPreset(presetId)
+        .then(() => setFilterPresets((current) => current.filter((preset) => preset.id !== presetId)))
+        .catch(() => undefined)
+    },
   }
 }

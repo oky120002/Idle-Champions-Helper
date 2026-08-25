@@ -13,6 +13,12 @@ export interface Message {
 
 const DEV_MESSAGES: Record<string, Message> = import.meta.env.DEV
   ? {
+      "筛选组合": { en: "Filter preset" },
+      "常用筛选组合": { en: "Saved filter presets" },
+      "保存当前筛选": { en: "Save current filters" },
+      "筛选组合名称": { en: "Filter preset name" },
+      "删除筛选组合：{p0}": { en: "Delete filter preset: {p0}" },
+      "删除": { en: "Delete" },
       "本地开发快照": { en: "Local dev snapshot" },
       "当前开发数据源：": { en: "Current dev data source: " },
       "正在刷新本地开发快照…": { en: "Refreshing local dev snapshot…" },
@@ -28,6 +34,11 @@ const DEV_MESSAGES: Record<string, Message> = import.meta.env.DEV
 
 export const MESSAGES: Record<string, Message> = {
   ...DEV_MESSAGES,
+  "筛选组合": { en: "Filter preset" },
+  "常用筛选组合": { en: "Saved filter presets" },
+  "保存当前筛选": { en: "Save current filters" },
+  "筛选组合名称": { en: "Filter preset name" },
+  "删除筛选组合：{p0}": { en: "Delete filter preset: {p0}" },
   "跟随系统": { en: "System" },
   "深色": { en: "Dark" },
   "浅色": { en: "Light" },
