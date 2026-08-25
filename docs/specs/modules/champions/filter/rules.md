@@ -6,11 +6,11 @@
 - `seat`：`1..12`，支持多选
 - 定位：来自 `enums.roles`
 - 联动队伍：来自 `enums.affiliations`
-- 赞助人：来自 `enums.patrons`，按 `patronEligibility.eligiblePatronIds` 命中（多选 OR）
+- 赞助者：来自 `enums.patrons`，按 `patronEligibility.eligiblePatronIds` 命中（多选 OR）
 - 标签派生组：种族、性别、职业、阵营、获取方式、特殊机制
 - 特殊机制按 `站位相关 / 控制效果 / 专精方向` 三组展示
 
-统一组合逻辑：各维度之间 `AND`；关键词内部 `OR`；`seat / 定位 / 联动队伍 / 赞助人 / 标签组` 在各自维度内 `OR`；「全部」表示该维度不过滤。
+统一组合逻辑：各维度之间 `AND`；关键词内部 `OR`；`seat / 定位 / 联动队伍 / 赞助者 / 标签组` 在各自维度内 `OR`；「全部」表示该维度不过滤。
 
 ## 状态与架构边界
 

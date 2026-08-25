@@ -12,7 +12,7 @@
 | unsupported 条目 | **1902**（占 14.8%） |
 | 去重 kind 数 | 584（头部 30 kind 占 1274 条 / 67%；长尾 554 kind 散布 628 条，均值 ~1.1） |
 | `shouldIgnoreUnsupportedEffectEntry` 忽略 | 仅 `effect_def` + `buff_upgrade*` wrapper（effect-helpers.ts:153） |
-| 数据源 | 全 1902 条 `source=official-parsed`，来自 champion-details（升级/装备/feat/大招），**不来自外部加成集合** |
+| 数据源 | 全 1902 条 `source=official-parsed`，来自 champion-details（升级/装备/feat/杀招），**不来自外部加成集合** |
 
 unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`health_add`×411、`buff_ultimate`×280、`set_ultimate_attack`×163、`do_nothing`×55、`pre_stack`×47、`pre_stack_amount`×37、`increase_health_by_source_percent`×31、`change_base_attack`×30、`stacks_data_binder_safe`×24、`expression_on_trigger`×21、`add_monster_hit_effects`×18、`add_attack_targets`×17、`favored_foe`×14、`heal`×13、`set_base_crit_chance`×10、`change_upgrade_data`×10、`buff_upgrade_effect_stacks_max_mult`×9、`broadcast_on_trigger`×8、`apply_effects_at_stacks`×8、`increase_revive_effect_post_stack`×7、`healing_add_mult`×7、`hero_dps_multiplier_mult`×6。
 
@@ -20,7 +20,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 14.8% unsupported 率单独看误导。逐 kind 语义判定（对照 effect-reference.json 权威描述 + champion-details 父级游戏文本 + scoring 代码）后，绝大多数是**正确未建模**——它们不影响 BUD（Big Unit Damage，单次基本攻击对单体 Boss 的伤害，planner carry-dps 模式的优化目标）。判定分四类：
 
-- **A. 无 BUD DPS 影响（正确未建模，~1145 条 / 60%）**：大招伤害/生存/治疗/元数据/触发 plumbing/换攻击动作——不进 BUD 计算就正确地无 parser。
+- **A. 无 BUD DPS 影响（正确未建模，~1145 条 / 60%）**：杀招伤害/生存/治疗/元数据/触发 plumbing/换攻击动作——不进 BUD 计算就正确地无 parser。
 - **B. 真 DPS 缺口（P1，~16 条 + 叠层 84 条）**：见 §3。
 - **C. 间接/基础设施（无独立影响，~73 条）**：叠层上限扩展、target 扩展、tag-setter（favored_foe）、乌吉机制 plumbing——其 DPS 效果由另一条已支持信号或伴生 effect 承载。
 - **D. 长尾英雄专属命名 effect（~628 条 / 33%）**：`mehen_grumpy_stack`/`uggie_handler`/`loy_requisition_inc_pre_stack` 等，每条多是某英雄特有机制的实现细节，DPS 相关者通常已有同英雄的 `hero_dps_multiplier_mult` 覆盖。
@@ -97,8 +97,8 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 | kind | 数 | 判定 | 游戏效果（effect-reference 描述） | 影响 | 处置 |
 |---|---|---|---|---|---|
 | `health_add` | 411 | A | flat +生命 | survival 维度约束（非优化目标）；baseHealth 未含升级 flat 血 | P2 记账 |
-| `buff_ultimate` | 280 | A | +大招伤害% | 大招不进 BUD；全部来自装备槽 | 不动 |
-| `set_ultimate_attack` | 163 | A | 解锁/选择大招 | 纯元数据（选哪个大招） | 不动 |
+| `buff_ultimate` | 280 | A | +杀招伤害% | 杀招不进 BUD；全部来自装备槽 | 不动 |
+| `set_ultimate_attack` | 163 | A | 解锁/选择杀招 | 纯元数据（选哪个杀招） | 不动 |
 | `do_nothing` | 55 | A | 占位（desc=空） | 无效果 | **P2：进忽略清单降噪** |
 | `pre_stack`/`pre_stack_amount` | 84 | B | 叠层初始值 | §3.4 | ✅ 维持现状（A5） |
 | `increase_health_by_source_percent` | 31 | A | 按源英雄最大生命%加血 | survival 约束 | P2 记账 |
@@ -121,7 +121,7 @@ unsupported 按 kind 头部（hero-abilities.json 实测，非侦察数）：`he
 
 memory 记 planner 计算器观测值比理论大 ~10^31，大头来自**外部加成源**（vulnerability/modron/成就/药水/gem/feat/legendary），这些不在 hero-abilities.json 内，由独立集合（global-buffs/patron-perks/feat-catalog/loot-catalog/legendary）经 `scoringBonusInputs.ts` 装配。
 
-本审计 1902 条 unsupported 全部 `source=official-parsed`，来自 **champion-details 英雄自身能力**（升级 effect_keys + 装备 + feat + 大招），是**内部盲区**。
+本审计 1902 条 unsupported 全部 `source=official-parsed`，来自 **champion-details 英雄自身能力**（升级 effect_keys + 装备 + feat + 杀招），是**内部盲区**。
 
 二者**无重合**：外部源的未建模（10^31 大头）与内部 unsupported（本审计）是两条独立缺口。轮 1 §2 登记的「外部加成池分裂」（globalBuff/heroDpsPool 与 ability 池相乘应加法）是外部源**已接入部分**的池归属 bug，与本审计的「内部 kind 无 parser」也不同。
 

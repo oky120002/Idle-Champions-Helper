@@ -15,8 +15,8 @@ IC 的冒险有几种模式变体：
 | Regular Adventure | 故事冒险，首次完成解锁英雄/成就 | 对应战役 favor |
 | Variant | 带特殊限制规则的变体 | 对应战役 favor |
 | Free Play | 自由游戏，无限推进 | 仅对应战役 favor |
-| Patron Variant | 带赞助人限制的变体 | favor + 赞助人货币 |
-| Patron Free Play | 带赞助人的自由游戏 | favor（不奖赞助人货币） |
+| Patron Variant | 带赞助者限制的变体 | favor + 赞助者货币 |
+| Patron Free Play | 带赞助者的自由游戏 | favor（不奖赞助者货币） |
 
 ✅ wiki Adventures 页面确认 "除教程外，每个冒险都有 Free Play 变体"
 
@@ -28,7 +28,7 @@ IC 的冒险有几种模式变体：
 
 | 项目 | 重置后 |
 |---|---|
-| 神临恩宠（Divine Favor） | ✅ 保留 |
+| 神恩（Divine Favor） | ✅ 保留 |
 | 宝石（Gems） | ✅ 保留 |
 | 宝箱（Chests） | ✅ 保留 |
 | 英雄等级 | ❌ 归零（Bruenor 起始 Lv1） |

@@ -36,12 +36,12 @@
 页面层只做可解释归类，不直出神秘原始字段：
 
 - `gems` -> 宝石商店
-- `patron` -> 赞助商商店
+- `patron` -> 赞助者商店
 - `premium` -> 购买（再细分 DLC / 主题包 / 魔宠包 / 限时闪促）
 - `not-yet-available` -> 暂未开放
 - `unknown` -> 来源待确认
 
-规则：付费来源优先结合 `premium_item_defines` 给可读礼包名；`flash_sale` 但未命中固定 premium item 时，明确标为“购买 · 限时闪促”；赞助商来源补展示货币成本和影响力门槛。
+规则：付费来源优先结合 `premium_item_defines` 给可读礼包名；`flash_sale` 但未命中固定 premium item 时，明确标为“购买 · 限时闪促”；赞助者来源补展示货币成本和影响力门槛。
 
 ## 视觉与交互
 

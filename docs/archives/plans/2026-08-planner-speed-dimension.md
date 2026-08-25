@@ -50,7 +50,7 @@
 |---|---|---|---|
 | areaSkip（跳层） | Briv | 依赖跨重置冲刺堆叠 | 25%（`briv_unnatural_haste` 基础概率） |
 | conditionalCompletion（条件过关） | Lae'zel | 触发频率依赖 DPS/刷新 | 18%（保守估计） |
-| conditionalCompletion（条件过关） | Halsin | 大招触发 | 11%（保守估计） |
+| conditionalCompletion（条件过关） | Halsin | 杀招触发 | 11%（保守估计） |
 | initialRush（初期冲层） | Thellora | 跳层数依赖 favor | 15%（保守估计，对 50 层刷图等效） |
 
 areaSkip 因子 = 1 + Σ(value/100)，与其他类别乘法叠加。默认值可通过 `dynamicSpeedOverrides` 入参覆盖，UI 可调。取值口径详见架构文档 §取值口径。

@@ -15,7 +15,7 @@
 
 1. `premium`（含 DLC / 主题包 / Familiar Pack / 限时闪促；3 条 `sourceType=null` 也归此类）
 2. `gems`（宝石商店）
-3. `patron`（赞助商商店）
+3. `patron`（赞助者商店）
 4. `not-yet-available`（暂未开放）
 
 补充说明：`flash_sale` 更接近”限时付费来源”，不应直接解释成抽奖；`patron` 还可以从 `patron_shop_item_defines` 里补出成本和影响力门槛；`sourceType=null` 的条目仍可通过 `cost.premium_item` 和 `premium_item_defines.effect` 命中实际礼包，因此归入 `premium` 而非”来源待确认”。页面层的完整归类规则（含 `unknown` 兜底）见 `specs/modules/pets/pets-page-design.md`。

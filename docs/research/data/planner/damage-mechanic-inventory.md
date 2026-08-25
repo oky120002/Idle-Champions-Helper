@@ -25,7 +25,7 @@
 | 12 | 单英雄伤害·特定目标过滤 | `target_hero_dps_multiplier_mult`/`targets_with_tag_hero_dps_mult`/`attacking_monsters_hero_dps_mult`/`dist_from_center_hero_dps_mult_reduce` | 按 id / tag / 正在攻击的怪物 / 与中心距离 | 9 |
 | 13 | 易伤（怪物受伤端） | `increase_monster_damage`/`_additive_pools`/`_multiplicative_pools`/`increase_damage_against_monster_tag`/`_if_favored_foe`/`_when_attacking`/`_when_damaged`/`_per_debuff_mult` | 怪物受伤放大；**additive_pools / multiplicative_pools 是不同池**；多条件触发 | 37 |
 | 14 | 暴击伤害 | `buff_base_crit_damage`/`_add`/`_add_mult`/`_mult`/`global_buff_base_crit_damage` | 暴击伤害基线；add / **add_mult（加算堆叠乘算应用）** / mult | 18 |
-| 15 | 大招（ultimate）伤害 | `buff_ultimate`/`buff_ultimate_per_target_tagged_mult`/`ultimate_damage_override`/`increase_monster_ultimate_damage` | ultimate damage；per_target 计数；override 覆盖 | 14 |
+| 15 | 杀招（ultimate）伤害 | `buff_ultimate`/`buff_ultimate_per_target_tagged_mult`/`ultimate_damage_override`/`increase_monster_ultimate_damage` | ultimate damage；per_target 计数；override 覆盖 | 14 |
 | 16 | 基本攻击 / 点击伤害 | `buff_base_attack`/`buff_attack_damage`/`next_attack_damage_multiplier`/`base_click_damage`/`hero_click_damage_percent`/`unique_hit_multiplier` | base attack / click；next_attack 单次触发；unique_hits 攻击次数乘子 | 35 |
 | 17 | DPS 转移 / 接收 | `transfer_dps`/`receive_transfered_dps`/`use_highest_formation_dmg`/`return_source_dps_when_hit` | 按百分比转移 DPS 给接收方（**依赖循环风险**） | 5 |
 | 18 | buff_upgrade 元机制 | `buff_upgrade`/`_add`/`_add_then_mult`/`_per_any_tagged_crusader_mult`/`_per_column_behind_source_mult`/`_effect_stacks_max_mult` | **放大另一 upgrade 的效果值**；可叠加 tag/distance/column/stacks_max/trigger 全过滤模式 | 48 |
@@ -62,22 +62,22 @@
 | 专精（specialization-catalog，115 spec） | 11 kind 全量注入、全建模（heroDps×83、vulnerability×11、crit×12、health×4、gold×6、damageReduction×8；signal 带 upgradeId——loot 源 target spec 的 DPS/gold/crit/health kind 经 applyEquipmentBuffs owned 接入） | cooldownReduction×12、attackSpeedMult×5 未消费（speed 维度）；feat 源 target spec + vulnerability/damageReduction spec 的 loot wrapper 仍「没算」（c-feat + SUPPORTED 扩展，待续） |
 | effect_def 模板（effect-definitions，552 key） | 全 dps、全建模（patron/blessing 运行时解引用：hero_dps×474 + global_dps×78） | — |
 | patron 特权（patron-perks，110 perk） | global_dps×21（patronPerkGlobalBuff）；effect_def×72 部分（只取 global_dps/hero_dps） | gold×4、health×1、vulnerability×1、area_tags×3、count 变体×3 未建模 |
-| 装备（loot-catalog，4044 item） | hero_dps×160 + global_dps×688 + health×104 + gold×12 + crit×8（equipmentMult，enchant `(1+enchant/250)` 缩放；global_dps/gold 为 global-scope placement-aware per-hero，health/crit 为 hero-scope per-carry）+ `buff_upgrade`×1824 owned-aware wrapper 通道（upgradeId 反查 base + bonusScaleOfSignal 注入，与 feat/专精同层） | `reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/大招）不接；复杂 buff_upgrade 变体（`buff_upgrade_effect_stacks_max_mult` 等，依赖 build 期 stack 元数据）runtime 不构造 |
+| 装备（loot-catalog，4044 item） | hero_dps×160 + global_dps×688 + health×104 + gold×12 + crit×8（equipmentMult，enchant `(1+enchant/250)` 缩放；global_dps/gold 为 global-scope placement-aware per-hero，health/crit 为 hero-scope per-carry）+ `buff_upgrade`×1824 owned-aware wrapper 通道（upgradeId 反查 base + bonusScaleOfSignal 注入，与 feat/专精同层） | `reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/杀招）不接；复杂 buff_upgrade 变体（`buff_upgrade_effect_stacks_max_mult` 等，依赖 build 期 stack 元数据）runtime 不构造 |
 | 药水 / buff（effect-reference.buffs，790） | — | **全量无消费通道**（actual 值在 userdetails 私有存档：event_buff×670、legend_loot×20、global_dps×10…） |
 
 ## 5. 未建模缺口清单（planner 真实缺口，决策依据）
 
 **A. 已解析进模型但 scoring 不消费**（维度未接入，信号浪费）：
 - `attackSpeedMult`（已归一化 22 信号：carry 7 + support 15，但消费层不收——`equipmentBuffSignals.ts` 明确不收 speed/cooldown base 信号，speed/cooldown dimension 无 `evaluatePlacementFit` 消费；BUD 用静态 `baseAttackCooldown` `budCalculation.ts`）；另有少量变体 No parser（如贾拉索 hero 4 `attack_speed_mult` val=3.33，见 §5E）。
-- `cooldownReduction`（专精源 12 信号在 specialization-catalog，装备源 612 条无 owned-aware 通道）：cooldown 维度 scoring 不请求；大招 uptime 只看 ni 布尔，不消费。
+- `cooldownReduction`（专精源 12 信号在 specialization-catalog，装备源 612 条无 owned-aware 通道）：cooldown 维度 scoring 不请求；杀招 uptime 只看 ni 布尔，不消费。
 - 对应根 README「速度队缺口」——speed / cooldown 是已登记的未接入能力。
 
 **B. HeroAbilityKind 曾定义但零产出（死代码，已清理）**：
 - `patronPerkMult`（patron 走独立通道，零产出）、`heroGoldMultiplier`（无 `hero_gold_*` effect 映射）、`adjacentBuff`（0 个 `adjacent_*` effect）、`taggedChampionBuff`（0 个 `tag_*` effect）——四者均已从 `HeroAbilityKind` 类型、维度/pool 映射、resolver、运行时分支与测试全链路删除。
 
 **C. 来源有加成 effect 但无 parser / 无消费通道**（按量级排序）：
-- 装备：`buff_upgrade`×1824 **已接入 owned-aware wrapper 通道**：① `HeroAbilitySignal.upgradeId` build 期写入；② `collectEquipmentBuffsByHero`（loot-catalog + enchant 缩放，产 per-hero wrapper 元数据）；③ `applyEquipmentBuffsToProfile`（按 target upgradeId 反查 direct base，构造 bonusScaleOfSignal wrapper 注入 profile，与 feat/专精同层）；④ 只接 DPS/gold/crit/health target kind，非该范围/递归元家族/复杂变体（`buff_upgrade_effect_stacks_max_mult` 等）→ 没算。真数据 672 collected buff → 201 wrapper（heroDps 132/globalDps 50/gold 16/crit 2/health 1）；`reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/大招）不接。
-- 英雄技能 unsupported：`health_add`×411（flat 血量）、`buff_ultimate`×280（大招）、`global_dps_area_tags`×1、`global_buff_base_crit_damage`×1。
+- 装备：`buff_upgrade`×1824 **已接入 owned-aware wrapper 通道**：① `HeroAbilitySignal.upgradeId` build 期写入；② `collectEquipmentBuffsByHero`（loot-catalog + enchant 缩放，产 per-hero wrapper 元数据）；③ `applyEquipmentBuffsToProfile`（按 target upgradeId 反查 direct base，构造 bonusScaleOfSignal wrapper 注入 profile，与 feat/专精同层）；④ 只接 DPS/gold/crit/health target kind，非该范围/递归元家族/复杂变体（`buff_upgrade_effect_stacks_max_mult` 等）→ 没算。真数据 672 collected buff → 201 wrapper（heroDps 132/globalDps 50/gold 16/crit 2/health 1）；`reduce_ultimate_cooldown`×608、`buff_ultimate`×272 非 DPS（冷却/杀招）不接。
+- 英雄技能 unsupported：`health_add`×411（flat 血量）、`buff_ultimate`×280（杀招）、`global_dps_area_tags`×1、`global_buff_base_crit_damage`×1。
 - patron：`gold`×4、`health`×1、`vulnerability`×1、`area_tags`×3、count 变体×3。
 - effect-reference buffs：全量 790 无消费通道（药水 / 契约 / 事件 buff，actual 在私有存档）。
 

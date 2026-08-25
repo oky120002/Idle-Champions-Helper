@@ -1,4 +1,4 @@
-# 英雄筛选：赞助人（Patron）过滤
+# 英雄筛选：赞助者（Patron）过滤
 
 **状态**: 已落地
 **类型**: change
@@ -7,11 +7,11 @@
 
 ## 目标
 
-英雄列表新增「赞助人」筛选维度——选中某位赞助人后，只显示该赞助人允许上场的英雄（`eligiblePatronIds` 命中），让玩家做赞助人合约冒险时一眼看出谁能出战。
+英雄列表使用「赞助者」筛选维度——选中某位赞助者后，只显示该赞助者允许上场的英雄（`eligiblePatronIds` 命中），让玩家做赞助者合约冒险时一眼看出谁能出战。
 
 ## 范围
 
-数据已就绪：`champions.json` 每位英雄带 `patronEligibility.eligiblePatronIds`（`forceAllowed ∪ ruleQualified` 的合并结果，构建于 `scripts/data/official-rule-helpers.ts:474`）；`enums.json` 有 `patrons` 枚举（5 位赞助人，value 格式 `{id, original, display}`，带独立 id，区别于 affiliations 的 `{original, display}`）。
+数据已就绪：`champions.json` 每位英雄带 `patronEligibility.eligiblePatronIds`（`forceAllowed ∪ ruleQualified` 的合并结果，构建于 `scripts/data/official-rule-helpers.ts:474`）；`enums.json` 有 `patrons` 枚举（5 位赞助者，value 格式 `{id, original, display}`，带独立 id，区别于 affiliations 的 `{original, display}`）。
 
 涉及模块：
 
@@ -31,8 +31,8 @@
 
 ## 验收
 
-- 选中赞助人 X → 只显示 `eligiblePatronIds` 含 X 的英雄
-- 多选赞助人 → OR（命中任一即显示）
+- 选中赞助者 X → 只显示 `eligiblePatronIds` 含 X 的英雄
+- 多选赞助者 → OR（命中任一即显示）
 - 筛选状态持久化到 URL，刷新可恢复
 - active chip 可单独清除
 - 全量测试通过

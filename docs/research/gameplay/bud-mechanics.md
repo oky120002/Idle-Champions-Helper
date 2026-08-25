@@ -2,11 +2,11 @@
 
 **数据快照**：2026-08-08（165 英雄）
 **社区来源**：[Steam 讨论（含开发博客原文）](https://steamcommunity.com/app/627690/discussions/0/4522261213603379633/)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/fnoaal/bud_base_ultimate_damage_101_an_introduction/)、[Fandom Wiki](https://idlechampions.fandom.com/wiki/Base_Ultimate_Damage)
-**可信度**：✅ 已确认 — 定义/衰减规则/大招关系来自开发博客一手来源 + 游戏数据字段交叉验证；衰减参数由 `game-rules.json` rule 14 `ultimate_damage_params` 直证
+**可信度**：✅ 已确认 — 定义/衰减规则/杀招关系来自开发博客一手来源 + 游戏数据字段交叉验证；衰减参数由 `game-rules.json` rule 14 `ultimate_damage_params` 直证
 
 ## 机制
 
-BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大招伤害、火龙息药水和点击伤害的核心基准值。游戏持续追踪阵型中每个英雄的普通攻击，记录其中**单次命中对单个敌人造成的最高伤害**。✅ 社区+数据确认
+BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定杀招伤害、火龙息药水和点击伤害的核心基准值。游戏持续追踪阵型中每个英雄的普通攻击，记录其中**单次命中对单个敌人造成的最高伤害**。✅ 社区+数据确认
 
 ### 追踪规则 ✅
 
@@ -25,21 +25,21 @@ BUD（Base Ultimate Damage，社区俗称 Biggest Unique Damage）是决定大�
 
 > 社区通俗说法「每 15 秒衰减 90%」是指数衰减的粗略近似。精确参数见 `game-rules.json` rule 14（`ultimate_damage_params`）。
 
-### 与大招/点击/火龙息的关系 ✅
+### 与杀招/点击/火龙息的关系 ✅
 
-- **大招伤害** = BUD × `damageModifier`（每个英雄大招有独立系数）
+- **杀招伤害** = BUD × `damageModifier`（每个英雄杀招有独立系数）
 - **点击伤害**（click damage）= BUD × 点击秒数（游戏内 `click_damage` 效果族）
 - **火龙息药水**（fire breath potion）：基于 BUD 计算伤害
 
-> 社区确认 BUD 引入前，大招和火龙息使用旧 DPS 平均值，导致伤害忽高忽低；BUD 使结果更稳定。
+> 社区确认 BUD 引入前，杀招和火龙息使用旧 DPS 平均值，导致伤害忽高忽低；BUD 使结果更稳定。
 
 ## 数据源
 
 | 字段/效果 | 位置 | 说明 |
 |---|---|---|
 | `attacks.base.cooldown` | `champion-details/<id>.json` | 基础攻击间隔（秒/次），决定谁设 BUD |
-| `attacks.ultimate.damageModifier` | `champion-details/<id>.json` | 大招伤害系数（明斯克 = 0.01875），大招伤害 = BUD × 此值 |
-| `attacks.ultimate.cooldown` | `champion-details/<id>.json` | 大招冷却（秒），明斯克 = 180s |
+| `attacks.ultimate.damageModifier` | `champion-details/<id>.json` | 杀招伤害系数（明斯克 = 0.01875），杀招伤害 = BUD × 此值 |
+| `attacks.ultimate.cooldown` | `champion-details/<id>.json` | 杀招冷却（秒），明斯克 = 180s |
 | `bud_setter`（target） | `effect-definitions.json`、`champion-details/141.json`（影心）| 目标标签，只作用于当前设 BUD 的英雄 |
 | `if_not_bud_setting_champion`（amount_func） | `champion-details/15.json`（克朗）| 仅在该英雄非 BUD setter 时生效 |
 | `bud_setter_changed`（listener） | `champion-details/15.json` | BUD setter 切换时重新计算的触发器 |
@@ -76,7 +76,7 @@ BUD(formation)  = max over placed heroes of singleHit(hero)
 |---|---|
 | BUD 取单次最高命中而非 DPS 平均值 | ✅ 社区+数据确认 |
 | 15 秒宽限期 + 每 15 秒衰减 90% | ✅ 社区确认（开发博客原文） |
-| 大招伤害 = BUD × damageModifier | ✅ 数据确认（`ultimate.damageModifier` 字段存在） |
+| 杀招伤害 = BUD × damageModifier | ✅ 数据确认（`ultimate.damageModifier` 字段存在） |
 | click damage 派生自 BUD | ✅ 社区+数据确认（`effect-reference` 含 `click_damage`） |
 | `deal_bud_damage_when_hit` 按秒数换算 BUD | ✅ 数据确认（参数名 `seconds_worth_of_bud`） |
 | 衰减率参数（exponential 模式 + exponent 5/10 + floor 1%） | ✅ 数据确认（`game-rules.json` rule 14 `ultimate_damage_params`） |

@@ -48,13 +48,13 @@
 代码标识符：变体规则 key `slot_escort`；派生计数 `escortCount`
 别名：escort blockers（英文 UI 文案，对话用中文）
 
-**赞助人**：
-游戏限制层：选定赞助人后，只有符合资格的英雄可上场，并提供 perk / blessing 加成。
+**赞助者**：
+游戏限制层：选定赞助者后，只有符合资格的英雄可上场，并提供 perk / blessing 加成。
 代码标识符：`patronId`（0 = 自由玩，null = 未导入存档）
-别名：patron（英文，对话用「赞助人」）
+别名：patron
 
 **白名单**：
-场景或变体规则：只允许列表中的英雄上场，与赞助人资格是叠加的不同限制层（需同时满足）。
+场景或变体规则：只允许列表中的英雄上场，与赞助者资格是叠加的不同限制层（需同时满足）。
 代码标识符：`only_allow_crusaders`、`by_ids`、`by_tags`、`allowedHeroes`
 别名：only allow crusaders、限定英雄
 
@@ -65,10 +65,10 @@
 
 ## 战斗机制
 
-**BUD（基础大招伤害）**：
-Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作大招（ult）伤害结算基准。推算引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
+**BUD（基础杀招伤害）**：
+Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏用作杀招（ult）伤害结算基准。推算引擎区分两个口径：阵型间相对比较用 DPS，推图层数绝对预估用 BUD（怪物血量按 BUD 缩放，见 ADR 0012）。
 代码标识符：`computeSingleHitDamage`、`budCalculation.ts`
-别名：biggest unique damage、大招基准
+别名：biggest unique damage、杀招基准
 
 **易伤**：
 按怪物标签条件匹配的额外伤害加成；只有当场景敌人类型匹配时才生效，是主输出伤害的大头之一。
@@ -102,7 +102,7 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 
 ## 成长元素
 
-**魔宠**：游戏中的 Familiar，能分配到战场点击、英雄升级、大招、自动推进和药水管理等位置，自动执行对应操作。
+**魔宠**：游戏中的 Familiar，能分配到战场点击、英雄升级、杀招、自动推进和药水管理等位置，自动执行对应操作。
 代码标识符：`familiar`、`familiars`、`familiar_defines`、`ImportedFormationSave.familiars`
 别名：familiar
 
@@ -126,10 +126,10 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 代码标识符：`blessing`、`blessings`、`blessingGlobalBuff`、`collectActiveBlessingEffects`
 别名：blessing
 
-**恩宠**：
-战役完成后积累的永久货币，每点未花费的恩宠提供 +1% 全队金币发现。可在祝福上花费（花掉后不再计金币加成）。不同战役有各自的恩宠，互不通用。
+**神恩**：
+战役完成后积累的永久货币，每点未花费的神恩提供 +1% 全队金币发现。可在祝福上花费（花掉后不再计金币加成）。不同战役有各自的神恩，互不通用。
 代码标识符：`favor`（`CampaignFavorBlessings.favor` 存储字段）
-别名：divine favor、神恩
+别名：divine favor、favor
 
 **传奇装备**：
 独立于普通装备（loot）的附加加成层，每英雄 6 个槽位，只提供全队伤害或英雄伤害两类加成。通过提亚马特试炼获取鳞片在熔铸中升级，等级上限 20。与装备五通道不同，传奇效果不进 loot-catalog。

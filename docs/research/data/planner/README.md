@@ -11,7 +11,7 @@
 - 怪物生命、伤害、区域曲线与绝对值校准：`monster-and-area-scaling.md`
 - Patron 特权、祝福数据缺口与效果结构：`patron-perks-and-blessings.md`
 - 冒险限制文本、结构化规则与人工覆盖：`scenario-restrictions.md`
-- 装备曲线、掉落效果与终极技能：`equipment-and-abilities.md`
+- 装备曲线、掉落效果与杀招：`equipment-and-abilities.md`
 - BUD 实测校准：`bud-calibration.md`
 - 加成升级包装效果核实：`buff-upgrade-wrappers.md`
 - 推荐信号覆盖率：`signal-coverage.md`

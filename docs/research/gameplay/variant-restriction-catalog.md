@@ -6,7 +6,7 @@
 
 ## 机制
 
-变体（variant）在基础冒险上叠加规则改写。限制来源有两层：变体自身规则 + 可选的赞助人（patron）全局限制，二者叠加生效。1424 个变体中，850 个带赞助人标记，364 个兼属自由游玩。
+变体（variant）在基础冒险上叠加规则改写。限制来源有两层：变体自身规则 + 可选的赞助者（patron）全局限制，二者叠加生效。1424 个变体中，850 个带赞助者标记，364 个兼属自由游玩。
 
 游戏数据通过 `mechanics` 数组（128 种标记）标注变体使用的底层机制，`restrictions` 数组存人类可读描述。限制效果集中在以下几类。
 
@@ -31,7 +31,7 @@
 | **敌人强化** | 敌人获得额外属性（护甲、血量、伤害、速度） | `add_monster_properties`(39)、`add_monster_properties_by_tag`(56)、`add_monster_properties_by_id`(25) | 未建模；护甲敌人见 [armored-enemies.md](./armored-enemies.md) |
 | **特殊敌人刷新** | 额外或保证出现的敌人波次 | `random_monster_waves`(246)、`guaranteed_monsters`(74)、`random_monster`(31)、`additional_bosses`(39) | 未建模；影响区域推进速度评估 |
 | **金币调整** | 修改金币掉落倍率 | `gold_adjustment`(4)、`gold_adjustment_by_area`(2)、`gold_bonus_adjustment`(1)、`crusader_cost_power`(1) | 未建模；影响金币预算评估 |
-| **点击/大招禁用** | 禁用点击伤害或大招 | `click_damage_area_limit`(33)、`disallow_ultimates`(1) | 未建模；点击伤害归零影响低区域推进 |
+| **点击/杀招禁用** | 禁用点击伤害或杀招 | `click_damage_area_limit`(33)、`disallow_ultimates`(1) | 未建模；点击伤害归零影响低区域推进 |
 | **天气/视野** | 天气效果或视野限制 | `weather`(25)、`darken`(2)、`darken_by_area`(5) | 未建模；`darken` 系列叠加怪物血量增长 |
 | **属性总分** | 按能力值总和过滤（奇/偶/阈值） | `restrictions` 文本描述 | 文本未解析；需能力值求和 + 奇偶判定 |
 
@@ -67,16 +67,16 @@
 - **全局效果 + 敌人强化**：全队 debuff 叠加强化敌人，典型生存挑战
 - **属性门槛 + 特殊敌人**：英雄池受限的同时面对额外敌人波次
 
-## 赞助人叠加
+## 赞助者叠加
 
-赞助人限制独立于变体规则，叠加生效。各赞助人常用限制模式（社区整理，非游戏数据直采）：
+赞助者限制独立于变体规则，叠加生效。各赞助者常用限制模式（社区整理，非游戏数据直采）：
 
 - 限制英雄使用（按年龄、种族、性别、阵营、归属）
-- 不可使用大招或 familiars
-- 关卡目标区域提升（`patronObjectiveTiers` 字段记录各赞助人对应目标层数）
-- 部分赞助人在区域 25 后锁定阵型（不可增删移英雄）
+- 不可使用杀招或 familiars
+- 关卡目标区域提升（`patronObjectiveTiers` 字段记录各赞助者对应目标层数）
+- 部分赞助者在区域 25 后锁定阵型（不可增删移英雄）
 
-> **验证标注**：赞助人具体限制清单来自社区 Wiki，非 `variants.json` 直接字段。游戏数据中仅记录 `patronObjectiveTiers`（目标层数提升），赞助人英雄过滤规则存储于 `patrons.json` 的 `forceAllowedHeroIds` + `eligibilityRules`。
+> **验证标注**：赞助者具体限制清单来自社区 Wiki，非 `variants.json` 直接字段。游戏数据中仅记录 `patronObjectiveTiers`（目标层数提升），赞助者英雄过滤规则存储于 `patrons.json` 的 `forceAllowedHeroIds` + `eligibilityRules`。
 
 ## planner 覆盖现状
 

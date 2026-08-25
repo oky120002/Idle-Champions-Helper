@@ -21,7 +21,7 @@
 | 首次攻击免疫 | Mehen 被动，无标准 effect_string | "damage is prevented and the monster is stunned" |
 | 复活+免疫 | Baeloth `revive_with_health_effect` 系列 | "back to life at 1HP and immune to all damage for X seconds" |
 | 替死+免疫 | Strix 被动 | "about to be killed... instead loses... immune to all damage" |
-| 大招全免 | Shadowheart `relic` 系列 | "prevents all damage to your Champions" |
+| 杀招全免 | Shadowheart `relic` 系列 | "prevents all damage to your Champions" |
 
 **提取**：扫描 `effect_string` 中的 `damage_reduction,100` + `targets:["all"]` 组合，或描述文本中的 `immune to damage` / `prevents all damage`。多数为英雄专属命名效果，无统一 effect key。
 
