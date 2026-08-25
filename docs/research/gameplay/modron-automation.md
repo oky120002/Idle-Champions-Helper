@@ -27,7 +27,7 @@ Modron 核心是完成「分队冒险」（Split The Party）系列任务后获�
 
 核心内部有一张管道地图（Modron Layout Manager），玩家用管道（Modron Components）将输入（Input）连接到各种输出节点（Outputs）。每个核心有独占的输出节点组合。每升一级解锁 2 个新输出节点，有时附带固定管道。
 
-**输出加成类别**（社区确认）：英雄伤害（All Champions Damage）、金币发现（Gold Find）、生命值（Health/Constitution）、速度（Speed，Fast 核心专属）、自动化（Automation）。每个核心有独占的输出节点组合。
+**输出加成类别**（社区确认）：勇士伤害（All Champions Damage）、金币寻获量（Gold Find）、生命值（Health/Constitution）、速度（Speed，Fast 核心专属）、自动化（Automation）。每个核心有独占的输出节点组合。
 
 **节点基础值**（Gaarawarr 指南，以 Modest 核心伤害节点为例）：同一类别（伤害）的节点有不同等级——基础 1600%、中级 1800%（火焰标记）、高级 2400%（大火焰标记）。金币和生命节点同理有不同等级。
 

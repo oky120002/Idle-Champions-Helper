@@ -1,4 +1,4 @@
-# 金币发现与神恩（Gold Find & Divine Favor）
+# 金币寻获量与神恩（Gold Find & Divine Favor）
 
 **数据快照**：2026-08-08（165 英雄）
 **社区来源**：[Fandom Wiki - Gold formulas](https://idlechampions.fandom.com/wiki/Gold_formulas)、[Fandom Wiki - Divine Favor](https://idlechampions.fandom.com/wiki/Divine_Favor)、[Fandom Wiki - Blessings](https://idlechampions.fandom.com/wiki/Blessings)、[Reddit r/idlechampions](https://www.reddit.com/r/idlechampions/comments/1god1yf/gold_farming_101_an_introduction/)、[Steam 讨论](https://steamcommunity.com/app/627690/discussions/0/1630790987579561612/)
@@ -8,7 +8,7 @@
 
 ### 金币掉落公式
 
-金币掉落基于怪物生命值，经指数变换得到基础值，再乘以全部金币发现加成。
+金币掉落基于怪物生命值，经指数变换得到基础值，再乘以全部金币寻获量加成。
 
 | 环节 | 公式 | 适用场景 |
 |---|---|---|
@@ -23,23 +23,23 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
 > **数据验证**：`public/data/v1/game-rules.json` 中 `health_gold_ratio: 0.65` 与 Wiki 低等级公式一致；`gold_multiplier_limit: 10000` 为金币乘数上限。
 
-最终金币 = 基础金币 × 金币发现百分比（含神恩加成、英雄加成、祝福加成、药水等全部乘性叠加）。
+最终金币 = 基础金币 × 金币寻获量（含神恩加成、勇士加成、祝福加成、药水等全部乘性叠加）。
 
-### 金币发现加成来源
+### 金币寻获量加成来源
 
-金币发现（Gold Find）是乘性叠加的总乘数，来源包括：
+金币寻获量（Gold Find）是乘性叠加的总乘数，来源包括：
 
-1. **神恩**：每 1 点未花费神恩 = +1% 金币发现（见下节）
+1. **神恩**：每 1 点未花费神恩 = +1% 金币寻获量（见下节）
 2. **英雄能力**：19 名英雄拥有 `globalGoldMultiplier` 信号（见数据验证表）
-3. **祝福（Blessings）**：用神恩购买，部分祝福提供金币发现百分比
-4. **药水**：金币发现药水临时提升百分比
+3. **祝福（Blessings）**：用神恩购买，部分祝福提供金币寻获量加成
+4. **药水**：金币寻获量药水临时提升百分比
 5. **赏金契约（Bounty Contracts）**：使用时立即在当前关卡生成一波金币掉落
 
 ### 神恩系统
 
 #### 核心循环
 
-金币 → 神恩 → 金币发现 → 更多金币。形成正反馈循环，但递减回报使神恩增长逐渐放缓。
+金币 → 神恩 → 金币寻获量 → 更多金币。形成正反馈循环，但递减回报使神恩增长逐渐放缓。
 
 #### 神恩获取公式
 
@@ -56,7 +56,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
 #### 永久神恩（9 种）
 
-每种神恩绑定一个战役和神系，**未花费的神恩每点永久 +1% 金币发现**。
+每种神恩绑定一个战役和神系，**未花费的神恩每点永久 +1% 金币寻获量**。
 
 | 神恩 | 神系 | 战役 |
 |---|---|---|
@@ -80,9 +80,9 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 
 #### 神恩与祝福的取舍
 
-花在祝福上的神恩不再计入金币发现加成。社区经验法则：单次祝福花费不超过总神恩的 1%（游戏会警告），整体不超过 10%。
+花在祝福上的神恩不再计入金币寻获量加成。社区经验法则：单次祝福花费不超过总神恩的 1%（游戏会警告），整体不超过 10%。
 
-### 金币发现英雄（数据验证）
+### 金币寻获量相关勇士（数据验证）
 
 以下 19 名英雄在 `hero-abilities.json` 中携带 `globalGoldMultiplier` 信号（`supportSignals` 或 `carrySignals`）：
 
@@ -108,7 +108,7 @@ Boss 关基础生命值 ×1.9，大多数 boss 还有约 ×50 的额外倍率。
 | Regis | `per_mithral_hall_stacks` | `gold_multiplier_mult,100` | 秘银厅叠加 |
 | Mehen | `per_other_stack_count` | `gold_multiplier_mult,0` | 按其他叠加数 |
 
-> Rust 另有 `per_gold_find_orders_of_magnitude` stackFunc 影响 DPS（每 10 倍金币发现 = +100% DPS），是金币发现与伤害联动的唯一案例。
+> Rust 另有 `per_gold_find_orders_of_magnitude` stackFunc 影响 DPS（每 10 倍金币寻获量 = +100% DPS），是金币寻获量与伤害联动的唯一案例。
 
 ### 赞助者 perk 对金币的影响
 

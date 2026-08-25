@@ -36,7 +36,7 @@ IC 的冒险有几种模式变体：
 | 装备/专长/属性 | ✅ 保留 |
 
 - 重置 Blessings 升级花费 1% favor（返还 99%）
-- favor 的金币发现加成永久有效（每点 favor +1% gold find），不受重置影响
+- favor 的金币寻获量加成永久有效（每点 favor +1% gold find），不受重置影响
 
 ## 周末促销（Weekends）
 

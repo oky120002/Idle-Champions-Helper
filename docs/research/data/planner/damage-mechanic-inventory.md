@@ -30,7 +30,7 @@
 | 17 | DPS 转移 / 接收 | `transfer_dps`/`receive_transfered_dps`/`use_highest_formation_dmg`/`return_source_dps_when_hit` | 按百分比转移 DPS 给接收方（**依赖循环风险**） | 5 |
 | 18 | buff_upgrade 元机制 | `buff_upgrade`/`_add`/`_add_then_mult`/`_per_any_tagged_crusader_mult`/`_per_column_behind_source_mult`/`_effect_stacks_max_mult` | **放大另一 upgrade 的效果值**；可叠加 tag/distance/column/stacks_max/trigger 全过滤模式 | 48 |
 | 19 | 装备 / 史诗 / 等级 DPS | `hero_epics_dps_mult`/`seat_hero_epics_dps_mult`/`full_equip_dps_mult`/`hero_level_dps_mult`/`golden_loot`/`shiny_loot` | 按装备品质数 / 史诗件数 / 等级阶差乘算 | 8 |
-| 20 | 位置阵型技能元加成 / 复制 | `buff_incoming_formation_abilities`/`buff_outgoing_formation_abilities[_per_crusader]`/`buff_positional_formation_abilities[_per_crusader]`/`receive_all_formation_abilities[_for]`/`duplicate_target_formation_abilities`/`valentine_socialite`/`beadle_share_the_glory`/`invert_formation_ability_targets`/`apply_feats_positionally` | 放大/复制/反转他人位置阵型技能（`buff_upgrade` 同层元加成，对象换成阵型技能）；依赖运行时技能实例集，静态不可求值（8 英雄，§5E） | 12 |
+| 20 | 位置阵型技能元加成 / 复制 | `buff_incoming_formation_abilities`/`buff_outgoing_formation_abilities[_per_crusader]`/`buff_positional_formation_abilities[_per_crusader]`/`receive_all_formation_abilities[_for]`/`duplicate_target_formation_abilities`/`valentine_socialite`/`beadle_share_the_glory`/`invert_formation_ability_targets`/`apply_feats_positionally` | 放大/复制/反转他人位置阵型技能（`buff_upgrade` 同层元加成，对象换成阵型技能）；依赖运行时技能实例集，静态不可求值（8 位勇士，§5E） | 12 |
 | 21 | 伤害回声 / 镜像副本 | `create_echo`/`buff_amplification_amount`/`buff_resolution_chance`/`buff_resolution_amount`/`sentry_aerois_synergy`/`reya_echoes_of_zariel`/`mirror_image[_damage_increase/duration]` | 创造伤害副本/镜像分身；放大回声、决心触发；依赖动态触发与持续时长（哨兵/蕾雅/阿夫伦，§5E） | 11 |
 
 ## 3. 其它加成机制（简表）
