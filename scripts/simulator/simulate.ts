@@ -2,9 +2,9 @@
  * 阵型模拟器 CLI —— 证明"丢掉 webUI，直接调用引擎输出 JSON"。
  *
  * 用法：
- *   npm run simulate -- recommend [variantId]                     # 搜索最佳阵型，输出 Top K JSON
- *   npm run simulate -- evaluate <variantId> --placements '<json>' # 评估指定阵型
- *   npm run simulate -- recommend --profile tmp/.../snapshot.json  # 用真实账号快照
+ *   pnpm run simulate -- recommend [variantId]                     # 搜索最佳阵型，输出 Top K JSON
+ *   pnpm run simulate -- evaluate <variantId> --placements '<json>' # 评估指定阵型
+ *   pnpm run simulate -- recommend --profile tmp/.../snapshot.json  # 用真实账号快照
  *
  * 无 --profile 时合成"全英雄已拥有（level 1）"快照以演示完整链路；真实使用请传账号快照。
  * 数据来源：public/data/v1/*.json（resolvePlannerModel 纯函数解析，无浏览器依赖）。

@@ -2,19 +2,19 @@
 
 ## 何时跑
 
-调整模拟器引擎（scoring / 归一化 / 机制消费）后必须跑 `npm run test:simulator`，不得跳过。CI 列为模拟器相关 PR 的必过门控。
+调整模拟器引擎（scoring / 归一化 / 机制消费）后必须跑 `pnpm run test:simulator`，不得跳过。CI 列为模拟器相关 PR 的必过门控。
 
 ## 命令
 
 ```bash
-npm run test:simulator
+pnpm run test:simulator
 ```
 
 聚合：
 
-- `npm run typecheck`（类型门控）
+- `pnpm run typecheck`（类型门控）
 - vitest run 模拟器 + planner 域：`src/domain/simulator/**/*.test.ts` + `src/domain/planner/**/*.test.ts`（含 `championReferenceVerification` 英雄机制准确性对照）
-- `npm run data:signal-coverage`（机制 supported 白名单一致性）
+- `pnpm run data:signal-coverage`（机制 supported 白名单一致性）
 - 全英雄 evaluateFormation smoke（所有英雄 × 典型 variant 不崩溃、无 warning 外异常）
 
 ## 输出判断
@@ -36,8 +36,8 @@ npm run test:simulator
 `FORCE_DATA_REBUILD=1` 作通用逃生口（如怀疑指纹漏检、产物异常，或强制覆盖增量跳过）：
 
 ```bash
-FORCE_DATA_REBUILD=1 npm run data:official   # 含网络 fetch
+FORCE_DATA_REBUILD=1 pnpm run data:official   # 含网络 fetch
 # 或离线（需指定快照）：
-FORCE_DATA_REBUILD=1 npx tsx scripts/normalize-idle-champions-definitions.ts --input <source.json> --localizedInput <lang7.json>
-FORCE_DATA_REBUILD=1 npx tsx scripts/data/build-models.ts
+FORCE_DATA_REBUILD=1 pnpm exec tsx scripts/normalize-idle-champions-definitions.ts --input <source.json> --localizedInput <lang7.json>
+FORCE_DATA_REBUILD=1 pnpm exec tsx scripts/data/build-models.ts
 ```

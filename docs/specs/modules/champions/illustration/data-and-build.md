@@ -11,7 +11,7 @@
 
 ## 构建期资源流水线
 
-- 入口脚本：`scripts/sync-idle-champions-illustrations.ts`，并挂进 `npm run data:official`。
+- 入口脚本：`scripts/sync-idle-champions-illustrations.ts`，并挂进 `pnpm run data:official`。
 - 脚本职责：读取本地 `champion-animations.json` 与 `champion-visuals.json` 产物；按 hero / skin 枚举展示单元；读取本地 `.bin` 资源、硬编码 `delivery:'zlib-png'`；通过 `resolveWalkPosterPose` 选定单一行走立绘 pose 并渲染为静态 PNG；不做候选挑选、不做透明边裁切；输出页面衍生图与展示清单，打印总体积报告。
 - 当前不做源图候选挑选、透明边裁切或 `WebP` 编码；这些能力不属于现行构建合同。
 

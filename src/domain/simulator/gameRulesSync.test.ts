@@ -10,7 +10,7 @@ import { MAX_AREA, monsterDpsAt, monsterHealthAt } from './monsterStats'
 // monsterStats.ts / modronInfo.ts 把 game-rules.json 的 max_area / monster_base_stats /
 // max_modron_auto_reset_area 内联为硬编码常量（ponytail：稳定值内联，不把 game-rules.json
 // 发布到 runtime，与 steadyStateScoring 硬编码 crit 默认值同模式）。数据重生
-// （npm run data:official）会刷新 game-rules.json；若上游改了这些规则，硬编码常量必须同步，
+// （pnpm run data:official）会刷新 game-rules.json；若上游改了这些规则，硬编码常量必须同步，
 // 否则 areaEstimation / modronInfo 用旧值。
 //
 // 守护策略：

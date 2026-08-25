@@ -23,7 +23,7 @@
 
 - 正面：加/改颜色只动 `tokens.css` 一处；主题切换零条件分支、零双轨；深色视觉零回归（深值逐字保留）；守护脚本阻断未来硬编码回潮。
 - 代价：新颜色须在 `tokens.css` 登记并按需成对提供深浅值；`color-mix` 与 `oklch` 依赖现代浏览器（目标浏览器均支持）。
-- 关注：浅色取值的视觉协调（各组件 L/C/alpha 搭配）需人工切 `npm run dev` 确认；文字可读性不能只靠 L 差经验值「自动保证」——品牌/数据色作文字时须实测 oklch 对比度（`tmp/theme-audit/contrast2.mjs` 思路：oklch→线性亮度→WCAG ratio，含前景 alpha 与背景向上追溯合成），否则亮金属色在浅底会静默不可读。
+- 关注：浅色取值的视觉协调（各组件 L/C/alpha 搭配）需人工切 `pnpm run dev` 确认；文字可读性不能只靠 L 差经验值「自动保证」——品牌/数据色作文字时须实测 oklch 对比度（`tmp/theme-audit/contrast2.mjs` 思路：oklch→线性亮度→WCAG ratio，含前景 alpha 与背景向上追溯合成），否则亮金属色在浅底会静默不可读。
 
 ## 替代方案
 

@@ -4,9 +4,9 @@
 
 | 任务 | 命令 |
 | --- | --- |
-| 日常开发与联调 | `npm run dev` |
-| 验证 GitHub Pages 基线路径 | 先 `npm run build`，再 `npm run preview:pages` |
-| 只检查现有 `dist/` 是否可服务 | `npm run preview` |
+| 日常开发与联调 | `pnpm run dev` |
+| 验证 GitHub Pages 基线路径 | 先 `pnpm run build`，再 `pnpm run preview:pages` |
+| 只检查现有 `dist/` 是否可服务 | `pnpm run preview` |
 
 根路由会重定向到英雄筛选页。验证当前页面范围以 `src/app/App.tsx` 的路由为准，不把未挂载页面当作入口。
 
@@ -26,7 +26,7 @@
 
 1. 运行 `lsof -nP -iTCP:4173 -sTCP:LISTEN`，确认 PID 与工作目录。
 2. 只停止已确认属于旧工作树的预览进程。
-3. 在当前工作树重新执行 `npm run build` 和目标预览命令。
+3. 在当前工作树重新执行 `pnpm run build` 和目标预览命令。
 4. 重新检查页面路由、DOM 与静态资源路径。
 
 不要因为端口已监听就假定它属于当前工作树。

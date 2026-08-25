@@ -148,7 +148,7 @@ async function handleSnapshotRead(
   } catch (error) {
     if (isErrnoException(error) && error.code === 'ENOENT') {
       respondJson(response, 404, {
-        error: 'Local private snapshot not found. Run `npm run private-user-data:fetch` first.',
+        error: 'Local private snapshot not found. Run `pnpm run private-user-data:fetch` first.',
       })
       return
     }

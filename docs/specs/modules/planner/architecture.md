@@ -122,7 +122,7 @@ BUD（Biggest Unique Damage）= 阵型近期最高单次伤害。
 
 两入口共用 `scorePlannerFormation`（`recommendationEngine.ts`）调 `scoreFormation`，结构性锁定透传一致。
 
-CLI 证明「丢 UI 输出 JSON」：`npm run simulate -- recommend|evaluate`（`scripts/simulator/simulate.ts`）读 `public/data/v1/*.json` → 引擎 → stdout JSON。无 `--profile` 时合成「全英雄已拥有（level 1）」快照演示完整链路。
+CLI 证明「丢 UI 输出 JSON」：`pnpm run simulate -- recommend|evaluate`（`scripts/simulator/simulate.ts`）读 `public/data/v1/*.json` → 引擎 → stdout JSON。无 `--profile` 时合成「全英雄已拥有（level 1）」快照演示完整链路。
 
 ## 深入阅读
 

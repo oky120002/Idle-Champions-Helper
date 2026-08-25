@@ -29,7 +29,7 @@
 - 真实产物守护必须断言结构、语义和聚合结果（pool/total/carryDps），不能只断言中间信号存在或流程没有抛错。聚合整体难对照时，断言其组成（addPercent 各来源、各 pool 分量）。
 - 跨边界一致性无法合并为单一来源时，必须配 keys 同步守护测试；任一侧漂移都要失败。
 - zod 守外来数据的运行时形状，TS 守内部代码的编译期类型；二者不能互相替代。外部 collection 只钉消费方核心字段并 passthrough，项目自著数据使用 strict schema。
-- schema 放 `scripts/data/*-schema.ts`，co-located 测试覆盖合法样本、类型、枚举、必填和 nullable 变异；真实产物经 `npm run data:validate-schema` 校验，失败必须非零退出。
+- schema 放 `scripts/data/*-schema.ts`，co-located 测试覆盖合法样本、类型、枚举、必填和 nullable 变异；真实产物经 `pnpm run data:validate-schema` 校验，失败必须非零退出。
 
 ## 4. 隔离与确定性
 

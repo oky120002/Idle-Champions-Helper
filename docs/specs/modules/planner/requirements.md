@@ -4,7 +4,7 @@
 
 ### 公共基座数据
 
-现有 `npm run data:official` 抓取并生成：
+现有 `pnpm run data:official` 抓取并生成：
 
 - `champions.json`
 - `champion-details/<id>.json`
@@ -13,7 +13,7 @@
 - `enums.json`
 - 头像、立绘、动画、魔宠等资源
 
-planner 用 `npm run data:signal-coverage` 审计 definitions 中对模拟器有用但尚未归一化的字段，不假设数据已经齐全。核实结果见 `docs/research/data/planner/signal-coverage.md`。
+planner 用 `pnpm run data:signal-coverage` 审计 definitions 中对模拟器有用但尚未归一化的字段，不假设数据已经齐全。核实结果见 `docs/research/data/planner/signal-coverage.md`。
 
 ### 私人用户快照
 
@@ -54,6 +54,6 @@ planner 用 `npm run data:signal-coverage` 审计 definitions 中对模拟器有
 - 不自动刷新私人快照。
 - 私人数据只写 IndexedDB。
 - 开发私有快照只写 `tmp/private-user-data/`。
-- 必须提供 `npm run privacy:scan`，阻止真实凭证和私人路径进入提交或构建。
+- 必须提供 `pnpm run privacy:scan`，阻止真实凭证和私人路径进入提交或构建。
 
 验收标准见 `acceptance.md`。

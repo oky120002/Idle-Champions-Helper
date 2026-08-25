@@ -33,7 +33,7 @@ repair: rebuild
   - 位置: `src/domain/buffs/equipmentMult.ts（装备五通道缺 speed/cooldown kind）`
   - 详情: 2026-08-09 深度排查根因：624 条 reduce_ultimate_cooldown effect_string（非原记 1860）分两路——12 条专精源正确进 specialization-catalog.json（cooldownReduction 12 条已验证）；612 条装备源被 buildHeroModels loot 过滤丢弃（防双重计数，正确行为），但装备五通道（SIMPLE_VALUE_KINDS）不含 reduce_ultimate_cooldown/reduce_attack_cooldown，无 owned-aware 通道接手。speedResolver 接线正确，pipeline 无 bug。此缺口随 speed 维度需求（2026-08-planner-speed-dimension）一并解决——在装备通道扩展 speed kind 或在 speed 评分实现时统一处理。
     - 影响：装备源 cooldown 缩减信号未建模（speed 维度未消费，当前无评分影响）
-    - 证据：npx tsx 实跑 collectEffectEntries + specialization-catalog.json 验证 + Python 逐源分类（loot 612 / upgrade_ek 12 全专精）
+    - 证据：pnpm exec tsx 实跑 collectEffectEntries + specialization-catalog.json 验证 + Python 逐源分类（loot 612 / upgrade_ek 12 全专精）
     - 优先级：中（随 speed 维度推进时解决）
 
 - Vin Ursa(127) + 4 英雄 vulnerability 数据源缺失——favored_foe 数值 API 不暴露

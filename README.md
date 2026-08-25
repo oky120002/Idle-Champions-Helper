@@ -22,8 +22,8 @@
 ## 快速开始
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 本地开发、Pages 预览与端口排障见 `docs/runbooks/local-development.md`。

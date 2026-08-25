@@ -14,7 +14,7 @@
 
 ## 数据底座
 
-- champions / adventures / variants / formations / enums 等版本化 JSON，由 `npm run data:official` 流水线维护。
+- champions / adventures / variants / formations / enums 等版本化 JSON，由 `pnpm run data:official` 流水线维护。
 - 规则层独立承载冒险限制、Patron 条件、目标模式、用户拥有情况；不散到页面里。
 - 个人数据 local-first：`Support URL` / 日志 / `User ID + Hash` 导入，只存本地 IndexedDB。
 

@@ -29,20 +29,25 @@ jobs:
       - name: 配置 GitHub Pages
         uses: actions/configure-pages@v6
 
+      - name: 配置 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.23.0
+
       - name: 配置 Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: npm
+          cache: pnpm
 
       - name: 安装依赖
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 安装 Playwright Chromium
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: 执行完整回归
-        run: npm run test:regression
+        run: pnpm run test:regression
 
       - name: 上传构建产物
         uses: actions/upload-pages-artifact@v5

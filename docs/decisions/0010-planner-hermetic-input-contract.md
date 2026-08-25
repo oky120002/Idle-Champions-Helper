@@ -5,7 +5,7 @@
 
 ## 背景
 
-planner 计算器需可纯函数单测、可在 Web Worker 跑、可在 CLI 丢 UI 输出 JSON（`npm run simulate`）。若计算器直接读 user profile / 登录态 / 文件 / IndexedDB，则 mock 困难、域外耦合、worker 不可用。需冻结「数据怎么进计算器」。本决策早于 ADR 约定，现回填。
+planner 计算器需可纯函数单测、可在 Web Worker 跑、可在 CLI 丢 UI 输出 JSON（`pnpm run simulate`）。若计算器直接读 user profile / 登录态 / 文件 / IndexedDB，则 mock 困难、域外耦合、worker 不可用。需冻结「数据怎么进计算器」。本决策早于 ADR 约定，现回填。
 
 ## 决策
 

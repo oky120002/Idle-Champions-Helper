@@ -61,7 +61,7 @@ async function main(): Promise<void> {
   10. 宠物目录、静态图与可播放的本地动图清单
 
 推荐入口：
-  npm run data:official
+  pnpm run data:official
 
 可选参数：
   --animationChampionIds <ids>       仅重建这些 championId 的 hero-base / skin 动画与关联静态图（默认全量）

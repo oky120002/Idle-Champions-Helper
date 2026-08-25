@@ -6,15 +6,15 @@
 
 | 目的 | 命令 |
 | --- | --- |
-| 全量同步官方公共数据（主入口） | `npm run data:official` |
-| 抓取原始 definitions 快照 | `npm run data:fetch` |
-| 归一化英文/中文 raw | `npm run data:normalize -- --input <en>.json --localizedInput <zh>.json` |
-| 同步头像/主机头像/立绘/专精图/装备 icon | `npm run data:portraits` / `data:console-portraits` / `data:illustrations` / `data:specialization-graphics` / `data:equipment-icons` |
-| 同步魔宠目录与图 | `npm run data:pets -- --input <en>.json --localizedInput <zh>.json` |
-| 构建搜索索引 | `npm run data:search` |
-| 统计 planner signal 覆盖率 | `npm run data:signal-coverage` |
-| 重生成 idle 动画审片清单 | `npm run data:animation-audit` |
-| 数据与 schema 测试 | `npm run test:data` |
+| 全量同步官方公共数据（主入口） | `pnpm run data:official` |
+| 抓取原始 definitions 快照 | `pnpm run data:fetch` |
+| 归一化英文/中文 raw | `pnpm run data:normalize -- --input <en>.json --localizedInput <zh>.json` |
+| 同步头像/主机头像/立绘/专精图/装备 icon | `pnpm run data:portraits` / `data:console-portraits` / `data:illustrations` / `data:specialization-graphics` / `data:equipment-icons` |
+| 同步魔宠目录与图 | `pnpm run data:pets -- --input <en>.json --localizedInput <zh>.json` |
+| 构建搜索索引 | `pnpm run data:search` |
+| 统计 planner signal 覆盖率 | `pnpm run data:signal-coverage` |
+| 重生成 idle 动画审片清单 | `pnpm run data:animation-audit` |
+| 数据与 schema 测试 | `pnpm run test:data` |
 
 原始快照默认写入 `tmp/idle-champions-api/`，子脚本按需传 `--input`（英文）/ `--localizedInput`（中文）。`data:official` 是主入口，依次拉取 definitions、归一化、同步资源、构建模型与搜索索引；其余命令用于局部重建或单独步骤。
 

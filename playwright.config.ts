@@ -18,7 +18,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: `npm run preview:pages -- --host 127.0.0.1 --port ${port}`,
+    command: `pnpm run preview:pages -- --host 127.0.0.1 --port ${port}`,
     url: `http://127.0.0.1:${port}/Idle-Champions-Helper/`,
     reuseExistingServer: !isCI,
     timeout: 120000,

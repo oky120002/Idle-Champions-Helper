@@ -9,7 +9,7 @@
 - `vite.config.ts` 是 `base` 路径单一事实源：本地 `serve` 走 `/`，构建阶段走 `/${repoName}/`。
 - 路由入口以 `src/main.tsx` 和 `src/app/App.tsx` 为准；保持 `HashRouter`，不要默认切到 `BrowserRouter`。
 - 运行时资源路径必须基于 `import.meta.env.BASE_URL`；不要写死 `/data/...`、`/assets/...` 或假定站点挂在根域名。
-- 本地贴近生产的验收入口优先 `npm run preview:pages` 与 `scripts/serve-github-pages-preview.ts`，不要只看普通 `vite preview`。
+- 本地贴近生产的验收入口优先 `pnpm run preview:pages` 与 `scripts/serve-github-pages-preview.ts`，不要只看普通 `vite preview`。
 
 ## 发布链路与相关落点
 

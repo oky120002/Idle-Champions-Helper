@@ -1,6 +1,6 @@
 /**
  * 阵型模拟器性能基准
- * 用法：npm run simulate:benchmark [样本数]    # OWNED=N 控制持有英雄数（跨 seat 均匀采样）
+ * 用法：pnpm run simulate:benchmark [样本数]    # OWNED=N 控制持有英雄数（跨 seat 均匀采样）
  *
  * 测量三档计算模式（full / p90 / p50）下 buildPlannerRecommendation 单次耗时，
  * 以及单次评估（evaluateFormation）耗时。合成快照默认全英雄已拥有（worst case）。

@@ -3,7 +3,7 @@
 ## 运行前提
 
 - 使用项目的 `@playwright/test`、`playwright.config.ts` 和 `tests/e2e/`。
-- 浏览器缺失时运行 `npm run playwright:install`。
+- 浏览器缺失时运行 `pnpm run playwright:install`。
 - 视觉或 Pages 验收前先构建，避免测试旧 `dist/`。
 
 ## 启动失败

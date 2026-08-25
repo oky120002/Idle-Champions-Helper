@@ -11,9 +11,9 @@
 
 ## 2. script 层（normalize + build）改动后必须重跑对应产物
 
-build 层（effect-helpers / signalSemantics 等）改动后，使用 `buildModels` 从 normalized champion-details 生成对应产物（经 `npx tsx` 或 vitest 运行），或由 CI 守护产物新鲜度。
+build 层（effect-helpers / signalSemantics 等）改动后，使用 `buildModels` 从 normalized champion-details 生成对应产物（经 `pnpm exec tsx` 或 vitest 运行），或由 CI 守护产物新鲜度。
 
-normalize 层（normalize-adventures 等）改动后必须重跑 normalize 同步 `variants.json`，下游 `scenarios.json` 读取归一化后的 `variant.enemyTypes`。normalize 层重跑需要同一快照的 source + ZH(lang-7) 双 raw；本地缺失 ZH raw 时使用完整 `npm run data:official` 周期重建。
+normalize 层（normalize-adventures 等）改动后必须重跑 normalize 同步 `variants.json`，下游 `scenarios.json` 读取归一化后的 `variant.enemyTypes`。normalize 层重跑需要同一快照的 source + ZH(lang-7) 双 raw；本地缺失 ZH raw 时使用完整 `pnpm run data:official` 周期重建。
 
 ## 3. 条件性匹配前核对字段值域，排除集须与消费词表对齐
 
@@ -79,7 +79,7 @@ restrictions-parser 的属性门槛正则将 STAT 名称交替符 `str|strength|
 
 `pipelineHash` 粗粒度覆盖 `scripts/data/` + `src/domain/abilities/` + `src/domain/effects/`：后两个 domain 目录的全部源文件都是数据管线 build 依赖（被 effect-helpers / effect-resolvers / feat-catalog / specialization-catalog 导入），任何数据脚本或归一化语义改动都触发重跑，保守不漏优于精确但漏检。fetch 无法下载前跳过（discovery 只返回 play_server，`current_time` 在 getDefinitions 响应里），故 fetch 仍每次下载；normalize/build 的 skip 在 fetch 之后生效——raw 没变时省 normalize/build 的几秒重生成，但不省 fetch 带宽。
 
-**只改 build 产物时单独跑 build-models，避免上游 timestamp 漂移污染 diff**：feature 只动 `build-models.ts`（新增派生字段，如 `gainProfile`）时，跑全量 `data:official` 会顺带 fetch 上游——CNE definitions `current_time` 每日 ticking（即使内容没变）→ normalize 全刷 → ~180 个 champion-details/*.json + 各 collection 纯 `updatedAt` 时间戳 churn 混进 feature commit。此时用 `FORCE_DATA_REBUILD=1 npx tsx scripts/data/build-models.ts` 单独跑，从已提交的 champion-details 只重生成 hero-abilities.json/scenarios.json，diff 干净（仅 feature 真实改动）。
+**只改 build 产物时单独跑 build-models，避免上游 timestamp 漂移污染 diff**：feature 只动 `build-models.ts`（新增派生字段，如 `gainProfile`）时，跑全量 `data:official` 会顺带 fetch 上游——CNE definitions `current_time` 每日 ticking（即使内容没变）→ normalize 全刷 → ~180 个 champion-details/*.json + 各 collection 纯 `updatedAt` 时间戳 churn 混进 feature commit。此时用 `FORCE_DATA_REBUILD=1 pnpm exec tsx scripts/data/build-models.ts` 单独跑，从已提交的 champion-details 只重生成 hero-abilities.json/scenarios.json，diff 干净（仅 feature 真实改动）。
 
 ## 13. 信号外部化（base→catalog）必须四项核查：base 剔除干净 + catalog 完整 + 端到端接线 + 同构注入器不变量同步
 

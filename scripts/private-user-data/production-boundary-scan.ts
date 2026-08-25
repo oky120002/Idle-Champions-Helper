@@ -43,7 +43,7 @@ function* walkDir(dir: string): Generator<string> {
 
 function runScan(): void {
   if (!existsSync(DIST_DIR)) {
-    console.error('Production boundary scan requires an existing dist/. Run `npm run build` first.')
+    console.error('Production boundary scan requires an existing dist/. Run `pnpm run build` first.')
     process.exit(1)
   }
 

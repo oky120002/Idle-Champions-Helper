@@ -4,7 +4,7 @@
 
 ## 入口与产物
 
-- 脚本：`scripts/data/build-search-index.ts`，npm 入口 `data:search`。
+- 脚本：`scripts/data/build-search-index.ts`，pnpm 入口 `data:search`。
 - 编排接入：`scripts/build-idle-champions-data.ts` 调用 `buildSearchIndex({ versionDir })`，随数据主流程一起产出。
 - 产物：`<versionDir>/search/search-documents.json`，结构为 `{ items: SearchDocument[], updatedAt }`；`updatedAt` 取自 `champions.json` 的 `updatedAt`，标记这批检索文档对应的数据版本。
 - 调试出口：`node scripts/data/build-search-index.ts --dump` 把每英雄抽取明细写到 `tmp/search-extract-dump.txt`，便于人工核对召回与噪声。

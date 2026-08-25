@@ -7,7 +7,7 @@
 1. 仓库 Pages 设置已启用，发布源选择 GitHub Actions。
 2. workflow 已在目标分支，构建、artifact 上传和部署具有显式依赖关系。
 3. Vite `base` 与项目站路径一致，路由继续使用 `HashRouter`。
-4. 本地先完成 `npm run build`、`npm run privacy:scan-build` 和 `npm run preview:pages`。
+4. 本地先完成 `pnpm run build`、`pnpm run privacy:scan-build` 和 `pnpm run preview:pages`。
 
 ## 失败定位
 

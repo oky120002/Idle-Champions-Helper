@@ -1,7 +1,7 @@
 # planner 推荐信号覆盖率核实
 
 - 作用：基于真实 `public/data/v1/champion-details/*.json` 统计 planner 已识别 signal、叠层组合、filter 与 `per_hero_expr` 的覆盖情况。
-- 命令：`npm run data:signal-coverage`
+- 命令：`pnpm run data:signal-coverage`
 - 数据快照日期：`2026-07-21`
 
 ## 核心结论

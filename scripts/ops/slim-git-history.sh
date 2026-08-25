@@ -359,7 +359,7 @@ main() {
     echo ""
 
     echo "=== ✅ 完成 ==="
-    echo "⚠️ 重建的 worktree 缺 node_modules（gitignore），运行项目前先 npm install"
+    echo "⚠️ 重建的 worktree 缺 node_modules（gitignore），运行项目前先 pnpm install"
     echo "重置状态：清空 \"$STATE_DIR\""
     echo "确认不再需要回退后重置备份：清空 \"$BACKUP_BUNDLE\""
 }

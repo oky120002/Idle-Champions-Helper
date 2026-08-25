@@ -2,7 +2,7 @@
 
 > 作用：统计 buff_upgrade wrapper 变体频率、已支持范围、base 未解析根因与稀有度去重机制。
 > wrapper 派生：`collectEffectEntries` 把 `buff_upgrade,SCALE,TARGET` 派生为以 TARGET base 为 `bonusScaleOfSignal` 的 derived signal。
-> 实现见 `scripts/data/effect-helpers.ts`；覆盖率见 `npm run data:signal-coverage`。
+> 实现见 `scripts/data/effect-helpers.ts`；覆盖率见 `pnpm run data:signal-coverage`。
 
 ## 变体频率（按 wrapper 出现数）
 
@@ -49,7 +49,7 @@ base-unresolved 绝大多数是**非 stat 触发器/stack/no-op**（前 5 名 ~2
 
 ## 覆盖率结论
 
-> 统计快照；排除 ability 源静态 buff_upgrade 后 resolved 数与分布已变，重跑 `npm run data:signal-coverage` 可得新值。结论由 base-effect 性质决定的天花板仍有效。
+> 统计快照；排除 ability 源静态 buff_upgrade 后 resolved 数与分布已变，重跑 `pnpm run data:signal-coverage` 可得新值。结论由 base-effect 性质决定的天花板仍有效。
 
 - wrapper resolved 370（65.5%）、family-unsupported 21。
 - **resolved 率 65.5%，未达 80%**：天花板由 base-effect 性质决定（174 base-unresolved 多为非 stat 触发器）。强行解析非 stat base 会引入语义错误，违反「不把控制流当 buff」。
@@ -67,7 +67,7 @@ IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自�
 - 复杂 wrapper（`buff_upgrade_per_tagged_crusader_mult` / `buff_upgrade_mult_by_distance_*` 等，阵型依赖）
 - 外部源 loot/feat/legendary（装备/专长/feat，不在 ability snapshot 内）
 
-> plain `buff_upgrade`/`buff_upgrades` 的 ability 源静态部分不派生，外部源部分继续派生；`npm run data:signal-coverage` 输出当前分布。
+> plain `buff_upgrade`/`buff_upgrades` 的 ability 源静态部分不派生，外部源部分继续派生；`pnpm run data:signal-coverage` 输出当前分布。
 
 ## 派生去重 + bonusScale targeting
 
