@@ -40,7 +40,7 @@ survivableArea  = max area where effectiveHealth × (1 − drainRate) ≥ monste
 estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
 ```
 
-`segmentMultiplier` / `drainRate` / `enemyDamageMult` 来自变体可行性上下文（`ViabilityContext`，经 `scenario` 参数传入）。普通变体全 null → 行为与旧公式一致。约束模型细节见 `simulator.md`。
+`segmentMultiplier` / `drainRate` / `enemyDamageMult` 来自变体可行性上下文（`ViabilityContext`，经 `scenario` 参数传入）。普通变体全 null 时使用基础计算。约束模型细节见 `simulator.md`。
 
 怪物 stats 是全局 game rule（`monster_base_stats.rule`），按 per-area stepped curve 逐层复合累积，内联在 `monsterStats.ts`（非运行时加载 game-rules.json）。数据源字段与缩放公式见 `docs/research/data/planner/monster-and-area-scaling.md`。
 
@@ -60,7 +60,7 @@ estimatedArea   = min(killableArea, survivableArea, MAX_AREA)
 
 `PlannerResult.viability`（`ViabilityAssessment`）：活跃约束标识（`activeConstraints`，如 `['armor', 'health-drain']`）+ 绑定约束（`boundBy`，来自 areaEstimate）。普通变体 activeConstraints 为空。
 
-外部加成未传入时按乘法单位元 `1` 处理；显式伤害聚合值为 `0` 时保留零结果。外部 `effect_def` 的 `$replace` 数值若乘积溢出，解析层按非法值丢弃——这是未建模/不可表达规则的业务降级。进入评分器的必填基础伤害、等级、伤害/生命聚合值、信号类型、池乘数和已提供的运行时假设若为 NaN、Infinity 或违反取值边界，统一直接抛异常，经 worker 返回 `ok:false`；不再跳过 carry、置零或附 warning 掩盖上游契约损坏。
+外部加成未传入时按乘法单位元 `1` 处理；显式伤害聚合值为 `0` 时保留零结果。外部 `effect_def` 的 `$replace` 数值若乘积溢出，解析层按非法值丢弃，作为未建模/不可表达规则的业务降级。进入评分器的必填基础伤害、等级、伤害/生命聚合值、信号类型、池乘数和已提供的运行时假设若为 NaN、Infinity 或违反取值边界，统一直接抛异常，经 worker 返回 `ok:false`。
 
 兼容边界必须有业务语义：未传入的可选加成使用数学单位元；未提供攻击目标数（`null`/`undefined`，以及官方数据使用的 `0` 哨兵）按单目标近似；未建模或手动触发机制继续 warning + 不计入目标值。显式损坏的 override、等级和数值字段不属于这些兼容路径。
 

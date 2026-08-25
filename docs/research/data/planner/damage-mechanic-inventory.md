@@ -72,7 +72,7 @@
 - `cooldownReduction`（专精源 12 信号在 specialization-catalog，装备源 612 条无 owned-aware 通道）：cooldown 维度 scoring 不请求；杀招 uptime 只看 ni 布尔，不消费。
 - 对应根 README「速度队缺口」——speed / cooldown 是已登记的未接入能力。
 
-**B. HeroAbilityKind 曾定义但零产出（死代码，已清理）**：
+**B. HeroAbilityKind 当前无产出**：
 - `patronPerkMult`（patron 走独立通道，零产出）、`heroGoldMultiplier`（无 `hero_gold_*` effect 映射）、`adjacentBuff`（0 个 `adjacent_*` effect）、`taggedChampionBuff`（0 个 `tag_*` effect）——四者均已从 `HeroAbilityKind` 类型、维度/pool 映射、resolver、运行时分支与测试全链路删除。
 
 **C. 来源有加成 effect 但无 parser / 无消费通道**（按量级排序）：

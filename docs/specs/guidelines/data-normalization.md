@@ -9,15 +9,15 @@
 
 `buildSimplePoolSignal` 对 add 省略 amountFunc 字段；任何新维度的消费侧聚合若一律累乘（如原 `computeVulnerabilityFactor`），会把 add 类信号高估（两个 +100% 易伤算成 4 而非 3）。新增维度时核对消费侧分流与解析层约定一致，并写「多 signal 叠加」测试（单 signal 时累乘与 add 同果，漏覆盖）。
 
-## 2. script 层（normalize + build）改动后必须重跑对应产物，否则修复停留在脚本层不生效
+## 2. script 层（normalize + build）改动后必须重跑对应产物
 
-build 层（effect-helpers / signalSemantics 等）改动长期未重跑 build 时，产物停留在旧逻辑（signal 总数 12163→18893、字段补全后才同步）。build 层 commit 后跟一次 `buildModels` 重跑（不需 fetch/资源，直接从 normalized champion-details 生成；裸 `node` 无法解析 src/ extensionless 导入，经 `npx tsx` 或 vitest 运行），或 CI 守护产物新鲜度。
+build 层（effect-helpers / signalSemantics 等）改动后，使用 `buildModels` 从 normalized champion-details 生成对应产物（经 `npx tsx` 或 vitest 运行），或由 CI 守护产物新鲜度。
 
-normalize 层（normalize-adventures 等）同理：改动后必须重跑 normalize 同步 `variants.json`，否则下游 `scenarios.json`（build 层读 `variant.enemyTypes`）继承旧值。`variants.json` 曾停留旧快照，null byte dedup 修复与 boss enemyTypes 修复都停留在脚本层、运行时不生效。normalize 层重跑需同快照的 source + ZH(lang-7) 双 raw，本地缺失 ZH raw 时无法忠实重生（API 现服更新版会引入无关 diff），须在拉取双 raw 的完整 `npm run data:official` 周期一并生效。
+normalize 层（normalize-adventures 等）改动后必须重跑 normalize 同步 `variants.json`，下游 `scenarios.json` 读取归一化后的 `variant.enemyTypes`。normalize 层重跑需要同一快照的 source + ZH(lang-7) 双 raw；本地缺失 ZH raw 时使用完整 `npm run data:official` 周期重建。
 
 ## 3. 条件性匹配前核对字段值域，排除集须与消费词表对齐
 
-vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种族 beast/humanoid/…）做条件性匹配时，两端值域必须相交。曾误判 boss 是独立 `is_boss` 维度、不该进 enemyTypes——实际 raw `monster_defines` 用 `tags:["boss"]` 标记 boss（808/2326 怪），与 fiend 同维；boss 不在 enemyTypes 的真因是 `GENERIC_MONSTER_TAGS` 把 boss 当"非类型通用 tag"排除了（与 melee/ranged 同列），而 vulnerability 词表含 boss → 3 个 boss vulnerability 信号在 `steadyStateScoring` 永远命中不了。修复：从 `GENERIC_MONSTER_TAGS` 移除 boss（melee/ranged 由 attackMix 承载、hits_based/armor_based/static/flying 不在 vulnerability 词表，仍排除）。规则：enemyTypes 的排除集不得包含任何出现在 `monsterTags` 里的 tag——全量枚举两端值域（jq unique）取交集，排除集 ∩ vulnerability 词表 必须为空。
+vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种族 beast/humanoid/…）做条件性匹配时，两端值域必须相交。raw `monster_defines` 使用 `tags:["boss"]` 标记 boss，boss 与 fiend 属于同一 vulnerability 标签值域；`GENERIC_MONSTER_TAGS` 只排除不参与 vulnerability 的通用 tag。规则：enemyTypes 的排除集不得包含任何出现在 `monsterTags` 里的 tag；全量枚举两端值域（jq unique）取交集，排除集 ∩ vulnerability 词表必须为空。
 
 **UI 展示层消费 enemyTypes 须过滤非种族 tag**：enemyTypes 含 boss 是 vulnerability 词表对齐的需要（数据层），但「敌人类型」chip/过滤器/占比面向种族展示——boss 已在 `specialEnemyCount` 独立展示，melee/ranged 由 attackMix 承载。UI 所有消费点（`variant-model` 过滤器选项 + 搜索、`variant-grouping` 聚合、`variant-detail-model` 占比、`VariantAdventureSection` chip）统一经 `variant-labels.ts` 的 `NON_DISPLAY_ENEMY_TAGS` 过滤；planner 侧 `scenario.enemyTypes` 不过滤（vulnerability 匹配需要 boss）。教训：字段同时服务「vulnerability 词表」与「UI 种族展示」两个语义时，在消费层分离视图，不污染展示——别为匹配便利往展示字段塞非展示值。
 
@@ -37,7 +37,7 @@ monsterStats 的 dps boss spike 假设「50,100,150,200...每 50 层」，但 ra
 
 ## 7. 注释 / 文档声称的数据源必须真实存在
 
-clickDamage 注释曾声称来源 `click_damage_seconds_global_dps`，但 raw `click_damage_settings` 只有 `{base_power, base_cost, cost_curve, power_curve}`，该字段在 definitions 快照不存在。引用 raw 字段/effect 时先 jq 确认存在，避免「注释声称有据、实为猜测」。
+clickDamage 的数据来源是 `click_damage_settings`，字段包括 `{base_power, base_cost, cost_curve, power_curve}`。引用 raw 字段/effect 时先用 jq 确认字段存在。
 
 ## 8. 文本解析的回退 / 兜底路径必须限定在语义锚点范围内，禁止全文本扫描取值
 
@@ -65,7 +65,7 @@ ability ult buff 的 uptime 折算（`value × duration/base_cooldown`）若放�
 
 **资源同步侧（两层跳过）**：先比全局资源更新时间，再比单资源 `sourceGraphic`/`sourceVersion`/`path`/本地存在性；全量流水线（如 `data:official`）先比 definitions `updatedAt`，未变整批跳过下载、覆盖、重生成。单资源脚本有可持久化 manifest/collection 就必须基于它增量复用，禁止无条件清空目录后全量重下。
 
-**normalize/build 侧（checksum + pipelineHash 双判定）**：`normalizeDefinitionsSnapshot` 与 `buildModels` 经 `shouldSkipDataPipeline` 判定 skip——① raw `checksum`（稳定数据指纹，主判据）与既有产物记录对比、② 管线源码指纹 `pipelineHash`——两者都没变才 skip。`checksum` 缺失时 fallback 到 `current_time`（→updatedAt），但 `current_time` 每次 fetch 单调递增，曾致 ~191 产物纯时间戳空重写，故仅作 fallback。三种重跑触发：
+**normalize/build 侧（checksum + pipelineHash 双判定）**：`normalizeDefinitionsSnapshot` 与 `buildModels` 经 `shouldSkipDataPipeline` 判定 skip：raw `checksum` 与管线源码指纹 `pipelineHash` 均未变化时跳过。`checksum` 缺失时使用 `current_time` 作为 `updatedAt` 回退值。三种重跑触发：
 
 - **raw 更新**（游戏数据更新）：raw `checksum` 变（`current_time` 亦单调前进）→ 重跑。
 - **逻辑改动**（开发者改 normalize/build/数据脚本或归一化语义）：`pipelineHash` 变（`scripts/data` + `src/domain/abilities` + `src/domain/effects` 下非 test 的 .ts + normalize/fetch/build 三入口 sha256）→ 自动重跑，**不依赖开发者记得 force**——这是核心，避免「改了 normalize 逻辑但产物没刷新」的陷阱（如本次 14.4 ability：若只比 updatedAt，raw 没变则 skip，ability 不进产物；pipelineHash 检测到 normalize-champions.ts 改动 → 自动重跑）。
@@ -86,8 +86,8 @@ restrictions-parser 的属性门槛正则将 STAT 名称交替符 `str|strength|
 把 effect/signal 从 base（如 `hero-abilities.json`）移到独立 catalog（如 `feat-catalog.json`、`specialization-catalog.json`）供 runtime 按玩家选择注入时，必须四项核查，否则要么双重计数（base 残留 + runtime 注入）要么信号丢失：
 
 1. **base 零残留**：grep 原始 effect 串确认在 base 产物 0 命中。如 ADR 0017 专精外部化后，明斯克 `monster_with_tag_more_damage,300,humanoid`（专精自身）与 `buff_upgrades,25,108`（靶向专精的 wrapper 派生）在 `hero-abilities.json` 均 0——证明已离开 base，runtime 注入不会双计。
-2. **catalog 完整**：jq 计 catalog signal 总数与设计预期对齐（如 specialization 125 自身 + 100 派生 = 225 signal，47 hero/115 entry）。ADR 文档声称的计数必须以产物实际值为准（曾出现「80 个专精含派生」实为 77 的漂移）。
+2. **catalog 完整**：jq 计 catalog signal 总数与当前产物契约对齐；文档中的计数以产物实际值为准。
 3. **端到端接线**：确认加载链路（fetch JSON → collections 字段 → runtime 注入函数 → engine 消费）打通，且边界安全（catalog 缺该英雄 / override 含未知 id 均降级跳过，不抛错）。
-4. **同构注入器不变量同步**：两个外部化的注入器（feat / specialization）设计上同构（base 剥离 + runtime 按选择追加 + bucket 路由）。**修其中一个的不变量时必须核查另一个是否也该同步**——否则会留下不对称 bug。实例：ADR 0017 让专精注入不做 scoringMode 维度预过滤（避免漏 vulnerability 维度），但同构的 feat 注入仍残留维度过滤 → carry-dps 模式丢弃 36 个 crit feat + 78 个 survival feat（crit 经 computeCritFactor 直接乘进 carryDps），直到后续审计才发现（commit 7b8a9226）。规则：注入器注入选中项的**全部** signal，scoring 按模式自取所需维度；维度过滤属于 scoring 层（evaluatePlacementFit 的 dimensionFilterSet），不属于注入层。
+4. **同构注入器不变量同步**：feat / specialization 注入器均采用 base 剥离、runtime 按选择追加和 bucket 路由。注入器注入选中项的**全部** signal，scoring 按模式自取所需维度；维度过滤属于 scoring 层（evaluatePlacementFit 的 dimensionFilterSet），不属于注入层。
 
 ADR 0017（专精外部化）即按此模式验证（commit dd31505f 深度审计），feat 外部化同构。

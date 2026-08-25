@@ -67,7 +67,7 @@ IC effect_def `effect_string` 是满级 snapshot 计算值，已含 ability 自�
 - 复杂 wrapper（`buff_upgrade_per_tagged_crusader_mult` / `buff_upgrade_mult_by_distance_*` 等，阵型依赖）
 - 外部源 loot/feat/legendary（装备/专长/feat，不在 ability snapshot 内）
 
-> 「变体频率」与「base 未解析根因」表为排除 ability 源静态 buff_upgrade 前的统计快照；排除后 plain `buff_upgrade`/`buff_upgrades` 的 ability 源部分不再派生（外部源部分仍派生），重跑 `npm run data:signal-coverage` 可得新分布。
+> plain `buff_upgrade`/`buff_upgrades` 的 ability 源静态部分不派生，外部源部分继续派生；`npm run data:signal-coverage` 输出当前分布。
 
 ## 派生去重 + bonusScale targeting
 

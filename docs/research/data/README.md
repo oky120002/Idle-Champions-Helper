@@ -21,7 +21,7 @@
 ## 立绘与动画主线
 
 - 总入口：`docs/research/data/skin-illustration/README.md`
-- 为什么旧静态图会碎、字段边界在哪里：`docs/research/data/skin-illustration/problem.md`
+- 静态图资源边界与字段关系：`docs/research/data/skin-illustration/problem.md`
 - 官方运行时格式与二进制证据：`docs/research/data/skin-illustration/runtime-format.md`
 - 外站动画机制、静态立绘技术约束与当前主线事实：`docs/research/data/skin-illustration/implementation.md`
 - 当前仓库动画 / 默认帧流水线：`docs/research/data/skin-illustration/pipeline.md`

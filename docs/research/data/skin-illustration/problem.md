@@ -33,7 +33,7 @@
 
 - `public/data/v1/champion-details/*.json`、`public/data/v1/champion-visuals.json`、`public/data/v1/champion-illustrations.json` 都没有现成“完整立绘组装坐标表”。
 - `hero_skin_defines.details` 只能给资源引用和少量变体槽位，例如 `noarm_graphic`、`nosword_graphic`、`companion_graphic_ids`、`additional_shop_graphics`；这些字段不能直接回答“怎么把角色拼出来”。
-- 结论：definitions 解决“怎么定位资源”，不解决“怎么组装最终人物 pose”。
+- 结论：definitions 负责资源定位；最终人物 pose 由本地构建链路组装。
 
 ## 常见误解字段
 

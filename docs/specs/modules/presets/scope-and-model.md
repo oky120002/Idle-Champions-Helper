@@ -35,7 +35,7 @@
 | `scenarioRef` | 正式场景身份；手工联调方案可为 `null` |
 | `scenarioTags` | 用户可读标签，不作为恢复主键 |
 | `priority` | `low / medium / high`，仅作为个人排序辅助 |
-| `filterSnapshot` | 保存时的英雄筛选条件快照（11 维 `ChampionFilterSnapshot`）；无筛选或旧方案为 `null`，恢复方案时按此还原阵型页候选池 |
+| `filterSnapshot` | 保存时的英雄筛选条件快照（11 维 `ChampionFilterSnapshot`）；无筛选时为 `null`，恢复方案时按此还原阵型页候选池 |
 | `createdAt / updatedAt` | 创建与最近编辑时间 |
 
 卡片里如果需要 `seat` 摘要，应在读取方案时由 `placements + champions` 运行时推导，而不是把它作为长期持久化源字段。

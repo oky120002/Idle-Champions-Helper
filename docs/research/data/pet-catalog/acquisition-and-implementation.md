@@ -5,7 +5,7 @@
 
 ## 获取方式字段
 
-`familiar_defines[*].collections_source.type` 当前分布（合计 341 条）：`flash_sale` 229、`dlc` 70、`not_yet_available` 12、`gems` 11、`patron` 5、`giveaway` 1、空字符串/空对象 13。2026-04-16 raw 快照曾为 328 条对象 + 13 条空字符串，类型分布与当前结构一致。
+`familiar_defines[*].collections_source.type` 当前分布（合计 341 条）：`flash_sale` 229、`dlc` 70、`not_yet_available` 12、`gems` 11、`patron` 5、`giveaway` 1、空字符串/空对象 13。
 
 补充核对后，不能只依赖 `collections_source`：`premium_item_defines` 中有 `302` 条 `effect.type = familiar`，覆盖 `298` 个独立 familiar_id；`patron_shop_item_defines` 中有 `5` 条 `effect.type = familiar`。
 

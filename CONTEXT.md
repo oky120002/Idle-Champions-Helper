@@ -181,6 +181,6 @@ Biggest Unique Damage，阵型近期造成过的最高单次伤害值，游戏�
 代码标识符：`MESSAGES`、`MessageRef`、`translateRef`
 别名：message catalog、i18n dictionary
 
-**消息引用**：领域或状态层传递给 UI 的可翻译消息。`{ key, params }` 查中央字典，`{ literal }` 原样展示外部单语文本；不再使用内联 `{zh, en}` 对。
+**消息引用**：领域或状态层传递给 UI 的可翻译消息。`{ key, params }` 查中央字典，`{ literal }` 原样展示外部单语文本。
 代码标识符：`MessageRef`
 别名：message ref

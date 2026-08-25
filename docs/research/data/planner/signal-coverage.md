@@ -16,7 +16,7 @@
 
 - **feat 已纳入**：`collectRawEffectEntries` 遍历 `detail.feats`（sourceBucket='feat'，与 loot/legendary 对称）。feat 是英雄专属固定能力，含 568 个 supported DPS signal，进理论最大基线。
 - **buff_upgrade 完全重复去重**：IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 effect 完全相同的 upgrade（仅 id 不同，magnitude 相同），每条各派生 base signal 会巨量累加（Jaheira 38 条同 wrapper 派生 152 重复，91% 过度计算）。`derivedSignalKey` 对完全相同 derived signal 去重。不同 magnitude 的稀有度取最高，核实口径见 `buff-upgrade-wrappers.md`。
-- **`getRawFilters` 单一来源**：`signalSemantics.ts`（生产，读 4 源）与 `signal-coverage.ts`（报告，只读 2 源）曾各有一份且漂移；已统一为 `signalSemantics.ts` 单一来源，报告复用，避免少统计 `target_filters_or`/`targets`。
+- **`getRawFilters` 单一来源**：生产与报告均复用 `signalSemantics.ts`（读取 4 个来源），覆盖 `target_filters_or` / `targets`。
 
 ## 当前高频组合
 

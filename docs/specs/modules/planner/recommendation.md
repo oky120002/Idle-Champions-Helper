@@ -26,7 +26,7 @@
 - 仓库语义补丁：`scripts/data/semantic-overrides.json`，补官方自动解析拿不到或不稳定的语义，例如顶部 / 底部、前后、同列、身后、职业 / 性别 / 阵营 / 角色条件、特殊激活条件。
 - 浏览器本地 override：IndexedDB store `heroAbilityOverrides`，按英雄全局存储，只允许覆盖语义字段；不改原始官方英雄详情，不改公共静态产物，不进生产构建。
 - 固定优先级：`官方 planner model < 仓库语义补丁 < 浏览器本地 override`。
-- 推算引擎、模拟器和所有消费者只读 merge 后的 resolved model，不再分散拼接源数据。
+- 推算引擎、模拟器和所有消费者只读 merge 后的 resolved model；源数据拼接集中在模型构建层。
 
 ## 3. 核心模型
 - `ResolvedHeroAbilityProfile` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`baseDamage`、`costCurves`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。

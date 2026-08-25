@@ -44,7 +44,7 @@
 ## 6. 类型检查门控
 
 - 所有测试入口（`test` / `test:run` / `test:unit` / `test:component` / `test:data`）必须先过 `npm run typecheck`（`test:regression` 经 `test:run` 间接覆盖，不重复显式调用）。
-- vitest 用 esbuild 转译、**不做类型检查**；测试绿不等于类型正确。曾因 `.d.ts` 漏声明（mergeHeroQualifiers）导致 `tsc` 长期红、却被 vitest 绿色掩盖。typecheck 增量 ~5s，相对测试本体（~20-50s）非瓶颈，任何入口都不得绕过。
+- vitest 用 esbuild 转译、**不做类型检查**；测试绿不等于类型正确。typecheck 增量约 5s，相对测试本体（约 20-50s）不是瓶颈，任何入口都不得绕过。
 - 新增测试入口同样必须链 `npm run typecheck &&`。
 
 ## 7. E2E 本地数据夹具
