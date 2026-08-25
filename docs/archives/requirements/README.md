@@ -7,6 +7,7 @@
 - `2026-08-planner-formation-viability.md`：阵型通关可行性模型，已落地
 - `2026-08-planner-speed-dimension.md`：planner 速度维度建模，已落地
 - `animation-repo-size.md`：动画资源外链 / Git LFS 方案，已否决
+- `2026-08-visual-asset-full-audit.md`：视觉资源全量覆盖、尺寸与体积审计，已落地
 
 ## 规则
 

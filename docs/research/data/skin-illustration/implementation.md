@@ -25,7 +25,7 @@
 
 - 主线形态：构建期发布官方原始 `SkelAnim` `.bin` + 小 manifest（`public/data/v1/champion-animations.json`），运行时按需解码 + `canvas` 播放，失败回退静态 PNG。
 - 静态图与动画共用同一 manifest 的默认 `sequence / frame`，skin 与 hero-base 共用同一 pose 决策链路。
-- 当前发布结果（`updatedAt: 2026-07-25`）：`champion-animations.json` 877 项（164 hero-base + 713 skin）；工作树中 `champion-animations/` 约 166 MB，`champion-illustrations/` 约 49 MB；合计远低于 GitHub Pages `1 GB` 站点上限。
+- 当前发布结果（`updatedAt: 2026-08-10`）：`champion-animations.json` 884 项（165 hero-base + 719 skin）；工作树中 `champion-animations/` 约 174.63 MB，`champion-illustrations/` 约 49.50 MB；`public/data` 合计约 431.35 MB，仍低于 GitHub Pages `1 GB` 站点上限。全量审计见 `docs/audits/2026-08-visual-asset-full-audit.md`。
 - 完整构建 / 运行时合同与脚本职责见 `specs/modules/champions/illustration/data-and-build.md` 与 `specs/modules/champions/illustration/runtime.md`；风险证据见 `pipeline-validation.md`，复跑命令见 `docs/runbooks/public-data.md`。
 
 ## 主线边界

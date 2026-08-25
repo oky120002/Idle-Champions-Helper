@@ -4,7 +4,7 @@
 
 ## 页面口径
 
-- 页面消费 `champion-illustrations.json` 的全部展示单元；当前产物是 `164` 个英雄本体立绘 + `713` 个皮肤立绘，共 `877` 个展示单元。
+- 页面消费 `champion-illustrations.json` 的全部展示单元；当前产物是 `165` 个英雄本体立绘 + `719` 个皮肤立绘，共 `884` 个展示单元。
 - 不需要把 `portrait / base / large / xl` 等全部技术槽位原样公开；页面按英雄本体和皮肤展示单元消费清单，不按技术槽位展示。
 - 当前仓库产物为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；`thumbs / display / webp` 不属于当前页面合同。
 
